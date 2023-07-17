@@ -1,0 +1,1 @@
+const isDarkMode = "isdark";
