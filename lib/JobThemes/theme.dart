@@ -1,8 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
-
 
 class JobstopMyThemes {
   static final lightTheme = ThemeData(
@@ -12,11 +10,11 @@ class JobstopMyThemes {
     fontFamily: 'DMSansRegular',
     scaffoldBackgroundColor: Jobstopcolor.backgroud,
     appBarTheme: AppBarTheme(
-      iconTheme:  const IconThemeData(color: Jobstopcolor.black),
+      iconTheme: const IconThemeData(color: Jobstopcolor.black),
       centerTitle: true,
       elevation: 0,
       titleTextStyle: dmsmedium.copyWith(
-        color:Jobstopcolor.black,
+        color: Jobstopcolor.black,
         fontSize: 20,
       ),
       color: Jobstopcolor.transparent,

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 
 import '../../JobGlobalclass/jobstopcolor.dart';
@@ -33,7 +32,7 @@ class _JobstopSplashState extends State<JobstopSplash> {
     height = size.height;
     width = size.width;
     return  Scaffold(
-      backgroundColor: Jobstopcolor.primarycolor,
+      backgroundColor: Jobstopcolor.secondary,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -46,9 +45,6 @@ class _JobstopSplashState extends State<JobstopSplash> {
             ),
           ),
           SizedBox(height: height/96,),
-          Center(
-            child: Text("Job Finder",style: dmsbold.copyWith(fontSize: 26,color: Jobstopcolor.white),),
-          )
         ],
       ),
     );

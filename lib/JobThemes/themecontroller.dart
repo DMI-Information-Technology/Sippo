@@ -1,24 +1,22 @@
-
 import 'package:get/get.dart';
 import 'package:jobspot/JobThemes/theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../JobGlobalclass/jobstopprefname.dart';
 
-
-class JobstopThemecontroler extends GetxController{
+class JobstopThemecontroler extends GetxController {
   @override
-  void onInit()
-  {
+  void onInit() {
     SharedPreferences.getInstance().then((value) {
-      isdark = value.getBool(isDarkMode)!;
+      isdark = value.getBool(isDarkMode) ?? false;
     });
     update();
     super.onInit();
   }
 
   bool isdark = false;
-  Future<void> changeThem (state) async {
+
+  Future<void> changeThem(state) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     isdark = prefs.getBool(isDarkMode) ?? true;
     isdark = !isdark;
@@ -26,12 +24,10 @@ class JobstopThemecontroler extends GetxController{
     if (state == true) {
       Get.changeTheme(JobstopMyThemes.darkTheme);
       isdark = true;
-    }
-    else {
+    } else {
       Get.changeTheme(JobstopMyThemes.lightTheme);
       isdark = false;
     }
     update();
   }
-
 }

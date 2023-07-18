@@ -84,6 +84,7 @@ class JobstopPngImg{
   static String darkmode = "Assets/jobstop_assets/jobpngimg/darkmode.png";
   static String lock = "Assets/jobstop_assets/jobpngimg/lock.png";
   static String logout = "Assets/jobstop_assets/jobpngimg/logout.png";
+  static String signup = "Assets/jobstop_assets/jobpngimg/signup.png";
   static String enddateimg = "Assets/jobstop_assets/jobpngimg/enddateimg.png";
 }
 
