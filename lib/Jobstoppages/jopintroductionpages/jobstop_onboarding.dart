@@ -137,7 +137,7 @@ class _JobOnboardingState extends State<JobOnboarding>
               },
               backgroundColor: Jobstopcolor.primarycolor,
               child: const Icon(
-                Icons.keyboard_arrow_right_sharp,
+                Icons.arrow_right_alt_sharp,
                 color: Jobstopcolor.white,
                 size: 30,
               ),
