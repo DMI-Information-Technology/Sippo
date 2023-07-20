@@ -89,109 +89,86 @@ class _JobstopSignupState extends State<JobstopSignup> {
                 SizedBox(
                   height: height / 30,
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: const [],
+                InputField(
+                  controller: fullname,
+                  hintText: "Full_name".tr,
+                  keyboardType: TextInputType.text,
+                  icon: const Icon(
+                    Icons.person_outlined,
+                    color: Jobstopcolor.primarycolor,
                   ),
-                  child: InputField(
-                    controller: fullname,
-                    hintText: "Full_name".tr,
-                    keyboardType: TextInputType.text,
-                    icon: const Icon(
-                      Icons.person_outlined,
-                      color: Jobstopcolor.primarycolor,
-                    ),
-                    validatorCallback: (value) {
-                      if (value == null || value.trim().isEmpty) {
-                        return "fullname_is_req".tr;
-                      }
-                      if (!ValidatingInput.validateFullName(value)) {
-                        return "invalid full name";
-                      }
-                      return null;
-                    },
-                  ),
+                  validatorCallback: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return "fullname_is_req".tr;
+                    }
+                    if (!ValidatingInput.validateFullName(value)) {
+                      return "invalid full name";
+                    }
+                    return null;
+                  },
                 ),
                 SizedBox(
                   height: height / 46,
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: const [],
+                InputField(
+                  controller: email,
+                  hintText: "phone_number".tr,
+                  keyboardType: TextInputType.phone,
+                  icon: const Icon(
+                    Icons.phone_outlined,
+                    color: Jobstopcolor.primarycolor,
                   ),
-                  child: InputField(
-                    controller: email,
-                    hintText: "phone_number".tr,
-                    keyboardType: TextInputType.phone,
-                    icon: const Icon(
-                      Icons.phone_outlined,
-                      color: Jobstopcolor.primarycolor,
-                    ),
-                    validatorCallback: (value) {
-                      if (value == null || value.trim().isEmpty) {
-                        return "phonenumber_is_req".tr;
-                      }
-                      if (!ValidatingInput.validatePhoneNumber(value)) {
-                        return "invalid phone number";
-                      }
-                      return null;
-                    },
-                  ),
+                  validatorCallback: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return "phonenumber_is_req".tr;
+                    }
+                    if (!ValidatingInput.validatePhoneNumber(value)) {
+                      return "invalid phone number";
+                    }
+                    return null;
+                  },
                 ),
                 SizedBox(
                   height: height / 46,
                 ),
-                Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: const [],
-                    ),
-                    child: PasswordInputField(
-                      controller: password,
-                      hintText: "Password".tr,
-                      icon: const Icon(
-                        Icons.lock_outline,
-                        color: Jobstopcolor.primarycolor,
-                      ),
-                      validatorCallback: (value) {
-                        if (value == null || value.trim().isEmpty) {
-                          return "password_is_req".tr;
-                        }
-                        String accepted =
-                            ValidatingInput.validatePassword(value.trim());
-                        if (accepted.isNotEmpty) {
-                          return accepted;
-                        }
-                        return null;
-                      },
-                    )),
+                PasswordInputField(
+                  controller: password,
+                  hintText: "Password".tr,
+                  icon: const Icon(
+                    Icons.lock_outline,
+                    color: Jobstopcolor.primarycolor,
+                  ),
+                  validatorCallback: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return "password_is_req".tr;
+                    }
+                    String accepted =
+                        ValidatingInput.validatePassword(value.trim());
+                    if (accepted.isNotEmpty) {
+                      return accepted;
+                    }
+                    return null;
+                  },
+                ),
                 SizedBox(
                   height: height / 46,
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: const [],
+                PasswordInputField(
+                  controller: confirmPassword,
+                  hintText: "Confirm_Password".tr,
+                  icon: const Icon(
+                    Icons.lock_outline,
+                    color: Jobstopcolor.primarycolor,
                   ),
-                  child: PasswordInputField(
-                    controller: confirmPassword,
-                    hintText: "Confirm_Password".tr,
-                    icon: const Icon(
-                      Icons.lock_outline,
-                      color: Jobstopcolor.primarycolor,
-                    ),
-                    validatorCallback: (value) {
-                      if (value == null || value.trim().isEmpty) {
-                        return "confpasword_is_req".tr;
-                      }
-                      if (value != password.value.text) {
-                        return "the confirm password is not matches the password";
-                      }
-                      return null;
-                    },
-                  ),
+                  validatorCallback: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return "confpasword_is_req".tr;
+                    }
+                    if (value != password.value.text) {
+                      return "the confirm password is not matches the password";
+                    }
+                    return null;
+                  },
                 ),
                 SizedBox(
                   height: height / 46,
@@ -248,7 +225,7 @@ class _JobstopSignupState extends State<JobstopSignup> {
                   onTappeed: () {
                     Get.offAndToNamed(JopRoutesPages.companysignup);
                   },
-                  text: "Company_Login".tr,
+                  text: "company_signup".tr,
                   backgroundColor: Jobstopcolor.white,
                   textColor: Jobstopcolor.textColor,
                   borderColor: Jobstopcolor.grey,

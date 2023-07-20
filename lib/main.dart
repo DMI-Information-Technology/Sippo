@@ -6,6 +6,7 @@ import 'package:jobspot/JobThemes/theme.dart';
 import 'package:jobspot/JobThemes/themecontroller.dart';
 
 import 'JobGlobalclass/routes.dart';
+import 'JopController/ConnectivityController/internet_connection_controller.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -28,6 +29,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    Get.put(InternetConnectionController());
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: themedata.isdark

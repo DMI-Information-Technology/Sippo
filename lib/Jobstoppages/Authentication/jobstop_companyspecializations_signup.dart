@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
+import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JopCustomWidget/widgets.dart';
 
 import '../../JobGlobalclass/routes.dart';
@@ -17,20 +18,11 @@ class CompanySignUpSpecializations extends StatefulWidget {
 
 class _CompanySignUpSpecializationsState
     extends State<CompanySignUpSpecializations> {
-  final ScrollController _scrollController = ScrollController();
-  bool _isHeaderVisible = true;
 
   @override
   void initState() {
     super.initState();
-    _scrollController.addListener(() {
-      if (_scrollController.offset > 100) {
-        _isHeaderVisible = false;
-      } else {
-        _isHeaderVisible = true;
-      }
-      setState(() {});
-    });
+
   }
 
   @override
@@ -55,22 +47,19 @@ class _CompanySignUpSpecializationsState
                 ),
                 child: Column(
                   children: [
-                    if (_isHeaderVisible) ...[
-                      Text(
-                        "Company Specializations",
-                        style: dmsbold.copyWith(fontSize: height / 25),
-                        textAlign: TextAlign.center,
-                      ),
-                      SizedBox(height: height / 50),
-                      Text(
-                        "Please choose a few specialties for the company\n(maximum 3)",
-                        style: dmsregular.copyWith(fontSize: height / 52),
-                        textAlign: TextAlign.center,
-                      ),
-                      SizedBox(height: height / 50),
-                    ],
+                    Text(
+                      "Company Specializations",
+                      style: dmsbold.copyWith(fontSize: height / 25),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: height / 50),
+                    Text(
+                      "Please choose a few specialties for the company\n(maximum 3)",
+                      style: dmsregular.copyWith(fontSize: height / 52),
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: height / 50),
                     ListView.separated(
-                      controller: _scrollController,
                       itemCount:
                           signUpCompController.companySpecializations.length,
                       itemBuilder: (context, index) {
@@ -99,7 +88,7 @@ class _CompanySignUpSpecializationsState
               padding: EdgeInsets.symmetric(vertical: height / 50),
               child: CustomButton(
                   onTappeed: () {
-                    Get.toNamed(JopRoutesPages.locationselector);
+                    onConfirmButtonClicked();
                   },
                   text: "confirm".tr),
             ),
@@ -135,5 +124,25 @@ class _CompanySignUpSpecializationsState
         activeColor: Jobstopcolor.primarycolor,
       ),
     );
+  }
+
+  void onConfirmButtonClicked() {
+    SignUpCompanyController controller = Get.find();
+    if (controller.selectedIndices.length == 0 ||
+        controller.selectedIndices.length > 3) {
+      Get.dialog(
+        CustomAlertDialog(
+          imageAsset: JobstopPngImg.policyaccepted,
+          title: "chooce_specialization".tr,
+          description: "select_one_three_maximum_special".tr,
+          confirmBtnTitle: "ok".tr,
+          onConfirm: () {
+            Get.back();
+          },
+        ),
+      );
+      return;
+    }
+    Get.toNamed(JopRoutesPages.locationselector);
   }
 }

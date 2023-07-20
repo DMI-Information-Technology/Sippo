@@ -53,6 +53,7 @@ class _JobOnboardingState extends State<JobOnboarding>
   final PageController _pageController = PageController();
 
   OnBoardingController onBoardingController = Get.put(OnBoardingController());
+
   @override
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
@@ -99,8 +100,8 @@ class _JobOnboardingState extends State<JobOnboarding>
                     controller: _pageController,
                     count: onBoardPagesSlides.length,
                     effect: const ColorTransitionEffect(
-                      activeDotColor: Jobstopcolor.primarycolor,
-                    ),
+                        activeDotColor: Jobstopcolor.secondary,
+                        dotColor: Jobstopcolor.greyyy2),
                   ),
                   SizedBox(width: width / 25),
                   Obx(
@@ -160,7 +161,7 @@ class OnBoardSlides extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    OnBoardingController onBoardingController = Get.find();
+    // OnBoardingController onBoardingController = Get.find();
     Size size = MediaQuery.of(context).size;
     double height = size.height;
     // double width = size.width;

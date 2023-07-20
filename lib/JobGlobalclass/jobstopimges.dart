@@ -8,6 +8,8 @@ class JobstopPngImg{
   static String successful = "Assets/jobstop_assets/jobpngimg/successful.png";
   static String successful1 = "Assets/jobstop_assets/jobpngimg/successful1.png";
   static String passwordimg = "Assets/jobstop_assets/jobpngimg/password.png";
+  static String policyaccepted = "Assets/jobstop_assets/jobpngimg/pol.png";
+  static String appuse = "Assets/jobstop_assets/jobpngimg/appuse.png";
   static String newpassword = "Assets/jobstop_assets/jobpngimg/newpass.png";
   static String successchangepassword = "Assets/jobstop_assets/jobpngimg/successchangepassword.png";
   static String onboard1 = "Assets/jobstop_assets/jobpngimg/onboard1.png";

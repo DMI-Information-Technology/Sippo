@@ -6,6 +6,7 @@ import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import '../../JobGlobalclass/jobstopprefname.dart';
 import '../../JobGlobalclass/routes.dart';
 import '../../JobThemes/themecontroller.dart';
+import '../../JopController/AuthenticationController/jobstop_login_user_controller.dart';
 import '../../JopCustomWidget/widgets.dart';
 
 class JobstopLogin extends StatefulWidget {
@@ -40,6 +41,8 @@ class _JobstopLoginState extends State<JobstopLogin> {
   TextEditingController password = TextEditingController();
   TextEditingController confirmPassword = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey();
+  final LoginUserController _loginUserController =
+      Get.put(LoginUserController());
 
   void _showAlert() {
     Get.dialog(CustomAlertDialog(
@@ -142,19 +145,20 @@ class _JobstopLoginState extends State<JobstopLogin> {
                   children: [
                     Row(
                       children: [
-                        Checkbox(
-                          checkColor: Jobstopcolor.white,
-                          side: const BorderSide(
-                            color: Jobstopcolor.grey,
-                            width: 1.5,
-                          ),
-                          fillColor:
-                              MaterialStateProperty.resolveWith(getColor),
-                          value: ischecked,
-                          onChanged: (bool? value) {
-                            setState(() => ischecked = value ?? false);
-                          },
-                        ),
+                        Obx(() => Checkbox(
+                              checkColor: Jobstopcolor.white,
+                              side: const BorderSide(
+                                color: Jobstopcolor.grey,
+                                width: 1.5,
+                              ),
+                              fillColor:
+                                  MaterialStateProperty.resolveWith(getColor),
+                              value: _loginUserController.isRembereMeChecked,
+                              onChanged: (bool? value) {
+                                _loginUserController.isRembereMeChecked =
+                                    value ?? false;
+                              },
+                            )),
                         Text(
                           "Remember_me".tr,
                           style: dmsregular.copyWith(
@@ -254,7 +258,9 @@ class _JobstopLoginState extends State<JobstopLogin> {
                   height: height / 52,
                 ),
                 CustomButton(
-                  onTappeed: () {},
+                  onTappeed: () {
+                    Get.offAllNamed(JopRoutesPages.dashboard);
+                  },
                   text: "Guest_login.".tr,
                   backgroundColor: Jobstopcolor.white,
                   textColor: Jobstopcolor.textColor,

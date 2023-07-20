@@ -8,7 +8,7 @@ import '../JobGlobalclass/jopstop_customstyle.dart';
 class CustomAlertDialog extends StatelessWidget {
   final String imageAsset;
   final String title;
-  final String description;
+  final String? description;
   final String? confirmBtnTitle;
   final Color? confirmBtnColor;
   final VoidCallback? onConfirm;
@@ -20,7 +20,7 @@ class CustomAlertDialog extends StatelessWidget {
     super.key,
     required this.imageAsset,
     required this.title,
-    required this.description,
+    this.description,
     this.confirmBtnTitle,
     this.confirmBtnColor = Jobstopcolor.primarycolor,
     this.onConfirm,
@@ -37,12 +37,12 @@ class CustomAlertDialog extends StatelessWidget {
     return AlertDialog(
       shape:
           ContinuousRectangleBorder(borderRadius: BorderRadius.circular(64.0)),
-      contentPadding: const EdgeInsets.all(32.0),
+      contentPadding: EdgeInsets.all(height / 42),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           Image.asset(imageAsset),
-          SizedBox(height: height / 32),
+          SizedBox(height: height / 42),
           Text(
             title,
             style: dmsbold.copyWith(
@@ -52,14 +52,19 @@ class CustomAlertDialog extends StatelessWidget {
             ),
             textAlign: TextAlign.center,
           ),
-          SizedBox(height: height / 64),
-          Text(
-            description,
-            style: dmsregular.copyWith(
-              color: Jobstopcolor.textColor,
+          if (description != null)
+            Column(
+              children: [
+                SizedBox(height: height / 64),
+                Text(
+                  description ?? "",
+                  style: dmsregular.copyWith(
+                    color: Jobstopcolor.textColor,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ],
             ),
-            textAlign: TextAlign.center,
-          ),
         ],
       ),
       actionsAlignment: MainAxisAlignment.center,
@@ -101,11 +106,13 @@ class InputField extends StatelessWidget {
     required this.controller,
     this.keyboardType = TextInputType.text,
     this.icon,
+    this.suffixIcon,
     this.hintText = "",
     this.onChangedCallback,
     this.validatorCallback,
   });
 
+  final Widget? suffixIcon;
   final Widget? icon;
   final TextEditingController controller;
   final TextInputType keyboardType;
@@ -125,6 +132,7 @@ class InputField extends StatelessWidget {
       cursorColor: Jobstopcolor.grey,
       decoration: InputDecoration(
         prefixIcon: icon,
+        suffixIcon: suffixIcon,
         hintText: hintText,
         hintStyle: dmsregular.copyWith(
             fontSize: height / 59, color: Jobstopcolor.grey),

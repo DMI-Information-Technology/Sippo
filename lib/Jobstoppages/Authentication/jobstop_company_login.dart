@@ -6,6 +6,7 @@ import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import '../../JobGlobalclass/jobstopprefname.dart';
 import '../../JobGlobalclass/routes.dart';
 import '../../JobThemes/themecontroller.dart';
+import '../../JopController/AuthenticationController/jobstop_login_company_controller.dart';
 import '../../JopCustomWidget/widgets.dart';
 import '../../utils/helper.dart';
 
@@ -41,17 +42,19 @@ class _CompanyLoginState extends State<CompanyLogin> {
   TextEditingController password = TextEditingController();
   TextEditingController confirmPassword = TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey();
+  LoginCompanyController _loginCompanyController =
+      Get.put(LoginCompanyController());
 
   void _showAlert() {
     showAlert(
         context,
         CustomAlertDialog(
           imageAsset: JobstopPngImg.successful1,
-          title: "Success",
-          description: "the account has been created successfully.",
+          title: "success".tr,
+          description: "You Login successfully".tr,
           confirmBtnColor: Jobstopcolor.primarycolor,
           onConfirm: () {
-            Get.toNamed(JopRoutesPages.dashboard);
+            Get.offAllNamed(JopRoutesPages.dashboard);
           },
         ));
   }
@@ -93,49 +96,38 @@ class _CompanyLoginState extends State<CompanyLogin> {
                 SizedBox(
                   height: height / 45,
                 ),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: const [],
+                InputField(
+                  controller: phoneNumberController,
+                  hintText: "phone_number".tr,
+                  keyboardType: TextInputType.phone,
+                  icon: const Icon(
+                    Icons.phone_outlined,
+                    color: Jobstopcolor.primarycolor,
                   ),
-                  child: InputField(
-                    controller: phoneNumberController,
-                    hintText: "phone_number".tr,
-                    keyboardType: TextInputType.phone,
-                    icon: const Icon(
-                      Icons.phone_outlined,
-                      color: Jobstopcolor.primarycolor,
-                    ),
-                    validatorCallback: (value) {
-                      if (value == null || value.trim().isEmpty) {
-                        return "phonenumber_is_req".tr;
-                      }
-                      return null;
-                    },
-                  ),
+                  validatorCallback: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return "phonenumber_is_req".tr;
+                    }
+                    return null;
+                  },
                 ),
                 SizedBox(
                   height: height / 25,
                 ),
-                Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: const [],
-                    ),
-                    child: PasswordInputField(
-                      controller: password,
-                      hintText: "Password".tr,
-                      icon: const Icon(
-                        Icons.lock_outline,
-                        color: Jobstopcolor.primarycolor,
-                      ),
-                      validatorCallback: (value) {
-                        if (value == null || value.trim().isEmpty) {
-                          return "password_is_req".tr;
-                        }
-                        return null;
-                      },
-                    )),
+                PasswordInputField(
+                  controller: password,
+                  hintText: "Password".tr,
+                  icon: const Icon(
+                    Icons.lock_outline,
+                    color: Jobstopcolor.primarycolor,
+                  ),
+                  validatorCallback: (value) {
+                    if (value == null || value.trim().isEmpty) {
+                      return "password_is_req".tr;
+                    }
+                    return null;
+                  },
+                ),
                 SizedBox(
                   height: height / 35,
                 ),
@@ -144,19 +136,20 @@ class _CompanyLoginState extends State<CompanyLogin> {
                   children: [
                     Row(
                       children: [
-                        Checkbox(
-                          checkColor: Jobstopcolor.white,
-                          side: const BorderSide(
-                            color: Jobstopcolor.grey,
-                            width: 1.5,
-                          ),
-                          fillColor:
-                              MaterialStateProperty.resolveWith(getColor),
-                          value: ischecked,
-                          onChanged: (bool? value) {
-                            setState(() => ischecked = value ?? false);
-                          },
-                        ),
+                        Obx(() => Checkbox(
+                              checkColor: Jobstopcolor.white,
+                              side: const BorderSide(
+                                color: Jobstopcolor.grey,
+                                width: 1.5,
+                              ),
+                              fillColor:
+                                  MaterialStateProperty.resolveWith(getColor),
+                              value: _loginCompanyController.isRembereMeChecked,
+                              onChanged: (bool? value) {
+                                _loginCompanyController.isRembereMeChecked =
+                                    value ?? false;
+                              },
+                            )),
                         Text(
                           "Remember_me".tr,
                           style: dmsregular.copyWith(
@@ -256,7 +249,9 @@ class _CompanyLoginState extends State<CompanyLogin> {
                   height: height / 52,
                 ),
                 CustomButton(
-                  onTappeed: () {},
+                  onTappeed: () {
+                    Get.offAllNamed(JopRoutesPages.dashboard);
+                  },
                   text: "Guest_login.".tr,
                   backgroundColor: Jobstopcolor.white,
                   textColor: Jobstopcolor.textColor,

@@ -30,7 +30,7 @@ class SignUpCompanyController extends GetxController {
     'Item 18',
   ];
 
-  final List<int> _selectedIndices = <int>[].obs;
+  final List<int> _selectedSpecialIndices = <int>[].obs;
 
   String get companyAddress => _companyAddress.toString();
 
@@ -46,13 +46,13 @@ class SignUpCompanyController extends GetxController {
 
   List<String> get companySpecializations => _companySpecializations;
 
-  List<int> get selectedIndices => _selectedIndices;
+  List<int> get selectedIndices => _selectedSpecialIndices;
 
   void toggleSpecial(int index) {
-    if (_selectedIndices.contains(index)) {
-      _selectedIndices.remove(index);
+    if (_selectedSpecialIndices.contains(index)) {
+      _selectedSpecialIndices.remove(index);
     } else {
-      _selectedIndices.add(index);
+      _selectedSpecialIndices.add(index);
     }
   }
 
@@ -61,7 +61,7 @@ class SignUpCompanyController extends GetxController {
   }
 
   bool isSpecialSelected(int index) {
-    return _selectedIndices.contains(index);
+    return _selectedSpecialIndices.contains(index);
   }
 
   set fullname(String value) {

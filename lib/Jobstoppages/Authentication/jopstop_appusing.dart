@@ -6,7 +6,9 @@ import 'package:jobspot/JopController/AuthenticationController/jopstop_appusing_
 
 import '../../JobGlobalclass/jobstopcolor.dart';
 import '../../JobGlobalclass/jobstopfontstyle.dart';
+import '../../JobGlobalclass/jobstopimges.dart';
 import '../../JobGlobalclass/routes.dart';
+import '../../JopCustomWidget/widgets.dart';
 
 class JopAppUsing extends StatelessWidget {
   const JopAppUsing({Key? key}) : super(key: key);
@@ -103,7 +105,7 @@ class JopAppUsing extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Get.toNamed(JopRoutesPages.signuppage);
+          onConfirmButtonClicked();
         },
         backgroundColor: Jobstopcolor.primarycolor,
         child: const Icon(
@@ -113,6 +115,24 @@ class JopAppUsing extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  void onConfirmButtonClicked() {
+    AppUsingController controller = Get.find();
+    if (!controller.findEmployee && !controller.findJop) {
+      Get.dialog(
+        CustomAlertDialog(
+          imageAsset: JobstopPngImg.appuse,
+          title: "Chooce how you would to use the app",
+          confirmBtnTitle: "ok".tr,
+          onConfirm: () {
+            Get.back();
+          },
+        ),
+      );
+      return;
+    }
+    Get.toNamed(JopRoutesPages.signuppage);
   }
 }
 
