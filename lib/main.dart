@@ -36,7 +36,7 @@ class _MyAppState extends State<MyApp> {
       fallbackLocale: const Locale('en', 'US'),
       translations: Apptranslation(),
       locale: const Locale('en', 'US'),
-      initialRoute: JopRoutesPages.loginpage,
+      initialRoute: JopRoutesPages.homepage,
       getPages: JopRoutesPages.routes,
       // home: const JobstopSplash(),
     );

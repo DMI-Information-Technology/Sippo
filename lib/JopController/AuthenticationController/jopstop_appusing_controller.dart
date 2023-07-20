@@ -10,7 +10,6 @@ class AppUsingController extends GetxController {
   bool get findJop => _findJop.isTrue;
 
 
-  bool isdark = false;
 
   Future<void> findOnJop() async {
     if (_findJop.value) return;

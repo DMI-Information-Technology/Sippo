@@ -5,36 +5,35 @@ import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import '../JobGlobalclass/jobstopfontstyle.dart';
 import '../JobGlobalclass/jopstop_customstyle.dart';
 
-class CustomAlertDialog extends StatefulWidget {
+class CustomAlertDialog extends StatelessWidget {
   final String imageAsset;
   final String title;
   final String description;
-  final VoidCallback onConfirm;
+  final String? confirmBtnTitle;
   final Color? confirmBtnColor;
+  final VoidCallback? onConfirm;
+  final String? cancelBtnTitle;
+  final Color? cancelBtnColor;
+  final VoidCallback? onCancel;
 
   const CustomAlertDialog({
     super.key,
     required this.imageAsset,
     required this.title,
     required this.description,
-    required this.onConfirm,
-    this.confirmBtnColor,
+    this.confirmBtnTitle,
+    this.confirmBtnColor = Jobstopcolor.primarycolor,
+    this.onConfirm,
+    this.cancelBtnTitle,
+    this.cancelBtnColor = Jobstopcolor.primarycolor,
+    this.onCancel,
   });
 
   @override
-  State<CustomAlertDialog> createState() => _CustomAlertDialogState();
-}
-
-class _CustomAlertDialogState extends State<CustomAlertDialog> {
-  dynamic size = 0.0;
-  double height = 0.00;
-  double width = 0.00;
-
-  @override
   Widget build(BuildContext context) {
-    size = MediaQuery.of(context).size;
-    height = size.height;
-    width = size.width;
+    Size size = MediaQuery.of(context).size;
+    double height = size.height;
+    // double width = size.width;
     return AlertDialog(
       shape:
           ContinuousRectangleBorder(borderRadius: BorderRadius.circular(64.0)),
@@ -42,39 +41,55 @@ class _CustomAlertDialogState extends State<CustomAlertDialog> {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Image.asset(widget.imageAsset),
+          Image.asset(imageAsset),
           SizedBox(height: height / 32),
           Text(
-            widget.title,
-            style: const TextStyle(
+            title,
+            style: dmsbold.copyWith(
               fontWeight: FontWeight.bold,
-              fontSize: 35.0,
+              fontSize: height / 36.0,
               color: Jobstopcolor.primarycolor,
             ),
+            textAlign: TextAlign.center,
           ),
           SizedBox(height: height / 64),
           Text(
-            widget.description,
+            description,
+            style: dmsregular.copyWith(
+              color: Jobstopcolor.textColor,
+            ),
             textAlign: TextAlign.center,
           ),
         ],
       ),
+      actionsAlignment: MainAxisAlignment.center,
       actions: [
-        Center(
-          child: ElevatedButton(
+        if (onConfirm != null)
+          ElevatedButton(
             onPressed: () {
-              Navigator.of(context).pop();
-              widget.onConfirm();
+              if (onConfirm != null) onConfirm!();
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: widget.confirmBtnColor,
+              backgroundColor: confirmBtnColor,
             ),
-            child: const Text(
-              'Confirm',
-              style: TextStyle(color: Jobstopcolor.white),
+            child: Text(
+              confirmBtnTitle ?? "",
+              style: dmsregular.copyWith(color: Jobstopcolor.white),
             ),
           ),
-        ),
+        if (onCancel != null)
+          ElevatedButton(
+            onPressed: () {
+              onCancel!();
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: confirmBtnColor,
+            ),
+            child: Text(
+              cancelBtnTitle ?? "",
+              style: dmsregular.copyWith(color: Jobstopcolor.white),
+            ),
+          ),
       ],
     );
   }
@@ -87,24 +102,32 @@ class InputField extends StatelessWidget {
     this.keyboardType = TextInputType.text,
     this.icon,
     this.hintText = "",
+    this.onChangedCallback,
+    this.validatorCallback,
   });
 
   final Widget? icon;
   final TextEditingController controller;
   final TextInputType keyboardType;
   final String hintText;
+  final void Function(String)? onChangedCallback;
+  final String? Function(String?)? validatorCallback;
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    Size size = MediaQuery.of(context).size;
+    double height = size.height;
+    // double width = size.width;
+    return TextFormField(
       controller: controller,
-      style:
-          dmsregular.copyWith(fontSize: 12, color: Jobstopcolor.primarycolor),
+      style: dmsregular.copyWith(
+          fontSize: height / 59, color: Jobstopcolor.primarycolor),
       cursorColor: Jobstopcolor.grey,
       decoration: InputDecoration(
         prefixIcon: icon,
         hintText: hintText,
-        hintStyle: dmsregular.copyWith(fontSize: 13, color: Jobstopcolor.grey),
+        hintStyle: dmsregular.copyWith(
+            fontSize: height / 59, color: Jobstopcolor.grey),
         border: UnderlineInputBorder(
           borderRadius: BorderRadius.circular(25),
         ),
@@ -113,6 +136,8 @@ class InputField extends StatelessWidget {
         errorBorder: errorUnderLineBorder,
       ),
       keyboardType: keyboardType,
+      onChanged: onChangedCallback,
+      validator: validatorCallback,
     );
   }
 }
@@ -123,11 +148,17 @@ class PasswordInputField extends StatefulWidget {
     required this.controller,
     this.icon,
     this.hintText = "",
+    this.suffixIconColor,
+    this.onChangedCallback,
+    this.validatorCallback,
   });
 
+  final Color? suffixIconColor;
   final Widget? icon;
   final TextEditingController controller;
   final String hintText;
+  final void Function(String)? onChangedCallback;
+  final String? Function(String?)? validatorCallback;
 
   @override
   State<PasswordInputField> createState() => _PasswordInputFieldState();
@@ -144,10 +175,12 @@ class _PasswordInputFieldState extends State<PasswordInputField> {
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    Size size = MediaQuery.of(context).size;
+    double height = size.height;
+    return TextFormField(
       controller: widget.controller,
       style: dmsregular.copyWith(
-        fontSize: 12,
+        fontSize: height / 59,
         color: Jobstopcolor.primarycolor,
       ),
       cursorColor: Jobstopcolor.grey,
@@ -158,10 +191,13 @@ class _PasswordInputFieldState extends State<PasswordInputField> {
             _obscureText ? Icons.visibility_off : Icons.visibility,
           ),
           onPressed: _togglePasswordStatus,
-          color: Jobstopcolor.primarycolor,
+          color: widget.suffixIconColor != null
+              ? widget.suffixIconColor ?? Jobstopcolor.primarycolor
+              : null,
         ),
         hintText: widget.hintText,
-        hintStyle: dmsregular.copyWith(fontSize: 13, color: Jobstopcolor.grey),
+        hintStyle: dmsregular.copyWith(
+            fontSize: height / 59, color: Jobstopcolor.grey),
         border: UnderlineInputBorder(
           borderRadius: BorderRadius.circular(5),
         ),
@@ -170,12 +206,14 @@ class _PasswordInputFieldState extends State<PasswordInputField> {
         errorBorder: errorUnderLineBorder,
       ),
       obscureText: _obscureText,
+      onChanged: widget.onChangedCallback,
+      validator: widget.validatorCallback,
     );
   }
 }
 
-class CustomButtonAuth extends StatelessWidget {
-  const CustomButtonAuth({
+class CustomButton extends StatelessWidget {
+  const CustomButton({
     super.key,
     required this.onTappeed,
     this.text = "",
@@ -206,7 +244,7 @@ class CustomButtonAuth extends StatelessWidget {
       child: Center(
         child: Container(
           height: height / 15,
-          width: width / 1.3,
+          width: width / 1.1,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(50),
             color: backgroundColor,
@@ -254,7 +292,10 @@ class SeparatorLine extends StatelessWidget {
           ),
         ),
         const SizedBox(width: 10),
-        Text(text ?? 'or'.tr),
+        Text(
+          text ?? 'or'.tr,
+          style: dmsregular.copyWith(color: Jobstopcolor.textColor),
+        ),
         const SizedBox(width: 10),
         Expanded(
           child: SizedBox(
@@ -266,6 +307,64 @@ class SeparatorLine extends StatelessWidget {
           ),
         ),
       ],
+    );
+  }
+}
+
+class PhoneResetPasswordCard extends StatelessWidget {
+  final String phoneNumber;
+  final Color? borderColor;
+  final String description;
+
+  const PhoneResetPasswordCard(
+      {super.key,
+      required this.phoneNumber,
+      this.borderColor,
+      this.description = ""});
+
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    double height = size.height;
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.grey[100],
+        borderRadius: BorderRadius.circular(50),
+        border: borderColor != null
+            ? Border.all(
+                color: borderColor ?? Colors.transparent,
+              )
+            : null,
+      ),
+      child: ListTile(
+        leading: Container(
+          width: height / 15,
+          height: height / 15,
+          decoration: const BoxDecoration(
+            shape: BoxShape.circle,
+            color: Jobstopcolor.lightsecondary,
+          ),
+          child: CircleAvatar(
+            backgroundColor: Colors.transparent,
+            child: Icon(
+              Icons.message,
+              color: Jobstopcolor.primarycolor,
+              size: height / 25,
+            ),
+          ),
+        ),
+        title: Text(
+          phoneNumber,
+          style: dmsbold.copyWith(
+            fontSize: height / 59,
+          ),
+        ),
+        subtitle: Text(
+          description,
+          style: dmsbold.copyWith(
+              fontSize: height / 72, color: Jobstopcolor.textColor),
+        ),
+      ),
     );
   }
 }

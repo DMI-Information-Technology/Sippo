@@ -11,7 +11,6 @@ class JobstopMyThemes {
     scaffoldBackgroundColor: Jobstopcolor.backgroud,
     appBarTheme: AppBarTheme(
       iconTheme: const IconThemeData(color: Jobstopcolor.black),
-      centerTitle: true,
       elevation: 0,
       titleTextStyle: dmsmedium.copyWith(
         color: Jobstopcolor.black,

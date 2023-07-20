@@ -4,8 +4,15 @@ class JobstopPngImg{
   static String google = "Assets/jobstop_assets/jobpngimg/google.png";
   static String forget = "Assets/jobstop_assets/jobpngimg/forget.png";
   static String checkmsg = "Assets/jobstop_assets/jobpngimg/checkmsg.png";
+  static String phonenymberempty = "Assets/jobstop_assets/jobpngimg/phonenymberempty.png";
   static String successful = "Assets/jobstop_assets/jobpngimg/successful.png";
   static String successful1 = "Assets/jobstop_assets/jobpngimg/successful1.png";
+  static String passwordimg = "Assets/jobstop_assets/jobpngimg/password.png";
+  static String newpassword = "Assets/jobstop_assets/jobpngimg/newpass.png";
+  static String successchangepassword = "Assets/jobstop_assets/jobpngimg/successchangepassword.png";
+  static String onboard1 = "Assets/jobstop_assets/jobpngimg/onboard1.png";
+  static String onboard2 = "Assets/jobstop_assets/jobpngimg/onboard2.png";
+  static String companysignup = "Assets/jobstop_assets/jobpngimg/comp.png";
   static String home = "Assets/jobstop_assets/jobpngimg/home.png";
   static String posting = "Assets/jobstop_assets/jobpngimg/posting.png";
   static String message = "Assets/jobstop_assets/jobpngimg/message.png";

@@ -16,12 +16,13 @@ class Jobstopcolor {
   static const red = Color(0xffFF4D46);
   static const grey = Colors.grey;
   static const darkgrey = Color(0xff524B6B);
-  static const backgroud = Color(0xffF9F9F9);
+  static const backgroud = white;
   static const shedo = Colors.black12;
   static const black = Colors.black;
   static const white = Colors.white;
   static const transparent = Colors.transparent;
   static const greyyy = Color(0xffF3F2F2);
+  static const greyyy2 = Color(0xffedecec);
   static const lightorenge = Color(0xffFFD6AD);
   static const light = Color(0xffFFF5F3);
   static const textColor = Color(0xff585858);

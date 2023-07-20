@@ -7,15 +7,16 @@ import '../../JobGlobalclass/jobstopprefname.dart';
 import '../../JobGlobalclass/routes.dart';
 import '../../JobThemes/themecontroller.dart';
 import '../../JopCustomWidget/widgets.dart';
+import '../../utils/helper.dart';
 
-class JobstopLogin extends StatefulWidget {
-  const JobstopLogin({Key? key}) : super(key: key);
+class CompanyLogin extends StatefulWidget {
+  const CompanyLogin({Key? key}) : super(key: key);
 
   @override
-  State<JobstopLogin> createState() => _JobstopLoginState();
+  State<CompanyLogin> createState() => _CompanyLoginState();
 }
 
-class _JobstopLoginState extends State<JobstopLogin> {
+class _CompanyLoginState extends State<CompanyLogin> {
   dynamic size;
   double height = 0.00;
   double width = 0.00;
@@ -42,16 +43,17 @@ class _JobstopLoginState extends State<JobstopLogin> {
   final GlobalKey<FormState> _formKey = GlobalKey();
 
   void _showAlert() {
-    Get.dialog(CustomAlertDialog(
-      imageAsset: JobstopPngImg.successful1,
-      title: "Success",
-      description: "the account has been created successfully.",
-      confirmBtnColor: Jobstopcolor.primarycolor,
-      confirmBtnTitle: "ok".tr,
-      onConfirm: () {
-        Get.toNamed(JopRoutesPages.dashboard);
-      },
-    ));
+    showAlert(
+        context,
+        CustomAlertDialog(
+          imageAsset: JobstopPngImg.successful1,
+          title: "Success",
+          description: "the account has been created successfully.",
+          confirmBtnColor: Jobstopcolor.primarycolor,
+          onConfirm: () {
+            Get.toNamed(JopRoutesPages.dashboard);
+          },
+        ));
   }
 
   @override
@@ -220,7 +222,7 @@ class _JobstopLoginState extends State<JobstopLogin> {
                     ),
                     TextButton(
                       onPressed: () {
-                        Get.offAndToNamed(JopRoutesPages.signuppage);
+                        Get.offAndToNamed(JopRoutesPages.companysignup);
                       },
                       child: Text(
                         "Sign_up".tr,
@@ -243,9 +245,9 @@ class _JobstopLoginState extends State<JobstopLogin> {
                 ),
                 CustomButton(
                   onTappeed: () {
-                    Get.offAndToNamed(JopRoutesPages.companylogin);
+                    Get.offAndToNamed(JopRoutesPages.loginpage);
                   },
-                  text: "Company_Login".tr,
+                  text: "User_Login".tr,
                   backgroundColor: Jobstopcolor.white,
                   textColor: Jobstopcolor.textColor,
                   borderColor: Jobstopcolor.grey,
