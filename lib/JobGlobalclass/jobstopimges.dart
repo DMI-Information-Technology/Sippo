@@ -21,6 +21,9 @@ class JobstopPngImg{
   static String order = "Assets/jobstop_assets/jobpngimg/order.png";
   static String photo = "Assets/jobstop_assets/jobpngimg/photo.png";
   static String photo1 = "Assets/jobstop_assets/jobpngimg/photo1.png";
+  static String maleIcon = "Assets/jobstop_assets/jobpngimg/male.png";
+  static String femaleIcon = "Assets/jobstop_assets/jobpngimg/female.png";
+  static String backgroundProf = "Assets/jobstop_assets/jobpngimg/backgroundProf.png";
   static String photo2 = "Assets/jobstop_assets/jobpngimg/photo2.png";
   static String photo3 = "Assets/jobstop_assets/jobpngimg/photo3.png";
   static String photo4 = "Assets/jobstop_assets/jobpngimg/photo4.png";

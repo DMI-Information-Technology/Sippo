@@ -36,7 +36,7 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   get:
-  intl:
+  intl: ^0.18.1
   shared_preferences: ^2.0.15
   flutter_svg: ^1.1.6
   flutter_slidable: ^3.0.0
@@ -48,6 +48,9 @@ dependencies:
   geolocator: ^9.0.2
   geocoding: ^2.1.0
   connectivity_plus: ^4.0.1
+  cached_network_image: ^3.2.3
+  readmore: ^2.2.0
+  image_picker: ^1.0.1
 
 
 dev_dependencies:

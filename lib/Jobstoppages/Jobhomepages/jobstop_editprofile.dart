@@ -61,12 +61,6 @@ class _JobEditprofileState extends State<JobEditprofile> {
                     SizedBox(height: height/36,),
                     Row(
                       children: [
-                        Text("120k ",style: dmsbold.copyWith(fontSize: 14,color: Jobstopcolor.white),),
-                        Text("Follower",style: dmsregular.copyWith(fontSize: 12,color: Jobstopcolor.white),),
-                        SizedBox(width: width/10,),
-                        Text("23k ",style: dmsbold.copyWith(fontSize: 14,color: Jobstopcolor.white),),
-                        Text("Following",style: dmsregular.copyWith(fontSize: 12,color: Jobstopcolor.white),),
-                        SizedBox(width: width/10,),
                         Text("Edit profile ",style: dmsregular.copyWith(fontSize: 12,color: Jobstopcolor.white),),
                         Image.asset(JobstopPngImg.edit, height: height/36,color: Jobstopcolor.white,),
                       ],

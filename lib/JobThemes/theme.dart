@@ -5,10 +5,10 @@ import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 class JobstopMyThemes {
   static final lightTheme = ThemeData(
     primaryColor: Jobstopcolor.black,
-    primarySwatch: Jobstopcolor.grey,
+    primarySwatch: Jobstopcolor.primarycolorSwatch,
     textTheme: const TextTheme(),
     fontFamily: 'DMSansRegular',
-    scaffoldBackgroundColor: Jobstopcolor.backgroud,
+    scaffoldBackgroundColor: Jobstopcolor.backgroudHome,
     appBarTheme: AppBarTheme(
       iconTheme: const IconThemeData(color: Jobstopcolor.black),
       elevation: 0,

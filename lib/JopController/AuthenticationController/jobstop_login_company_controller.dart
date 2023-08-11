@@ -5,7 +5,6 @@ class LoginCompanyController extends GetxController {
   final _phoneNumber = "".obs;
   final _password = "".obs;
   final _isRembereMeChecked = false.obs;
-
   bool get isRembereMeChecked => _isRembereMeChecked.isTrue;
 
   String get password => _password.toString();

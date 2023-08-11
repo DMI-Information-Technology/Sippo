@@ -5,6 +5,7 @@ import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import '../../JobGlobalclass/routes.dart';
+import '../../JobGlobalclass/text_font_size.dart';
 import '../../JopController/onBoardingController/jobstop_onboarding_controller.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -89,11 +90,11 @@ class _JobOnboardingState extends State<JobOnboarding>
                               "Skip",
                               style: dmsmedium.copyWith(
                                 color: Jobstopcolor.primarycolor,
-                                fontSize: height / 36,
+                                fontSize: FontSize.buttonFontSize(context),
                               ),
                             ),
                           )
-                        : const SizedBox(),
+                        : const SizedBox.shrink(),
                   ),
                   SizedBox(width: width / 25),
                   SmoothPageIndicator(
@@ -117,11 +118,11 @@ class _JobOnboardingState extends State<JobOnboarding>
                               "Next",
                               style: dmsmedium.copyWith(
                                 color: Jobstopcolor.primarycolor,
-                                fontSize: height / 36,
+                                fontSize: FontSize.buttonFontSize(context),
                               ),
                             ),
                           )
-                        : const SizedBox(),
+                        : const SizedBox.shrink(),
                   )
                 ],
               ),
@@ -196,7 +197,7 @@ class OnBoardSlides extends StatelessWidget {
                   .map((title) => Text(
                         title,
                         style: dmsbold.copyWith(
-                          fontSize: height / 25,
+                          fontSize: FontSize.titleFontSize(context),
                           color: Jobstopcolor.primarycolor,
                         ),
                         textAlign: TextAlign.center,
@@ -208,7 +209,7 @@ class OnBoardSlides extends StatelessWidget {
               Text(
                 description,
                 style: dmsregular.copyWith(
-                  fontSize: height / 59,
+                  fontSize: FontSize.paragraphFontSize(context),
                   color: Jobstopcolor.textColor,
                 ),
                 textAlign: TextAlign.center,

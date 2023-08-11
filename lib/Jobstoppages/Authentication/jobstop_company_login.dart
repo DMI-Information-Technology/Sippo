@@ -8,22 +8,16 @@ import '../../JobGlobalclass/routes.dart';
 import '../../JobThemes/themecontroller.dart';
 import '../../JopController/AuthenticationController/jobstop_login_company_controller.dart';
 import '../../JopCustomWidget/widgets.dart';
-import '../../utils/helper.dart';
 
 class CompanyLogin extends StatefulWidget {
-  const CompanyLogin({Key? key}) : super(key: key);
+ const CompanyLogin({Key? key}) : super(key: key);
 
   @override
   State<CompanyLogin> createState() => _CompanyLoginState();
 }
 
 class _CompanyLoginState extends State<CompanyLogin> {
-  dynamic size;
-  double height = 0.00;
-  double width = 0.00;
-
-  final themedata = Get.put(JobstopThemecontroler());
-  bool ischecked = true;
+  final JobstopThemecontroler themedata = Get.put(JobstopThemecontroler());
 
   Color getColor(Set<MaterialState> states) {
     const Set<MaterialState> interactiveStates = <MaterialState>{
@@ -37,33 +31,36 @@ class _CompanyLoginState extends State<CompanyLogin> {
     return Jobstopcolor.lightprimary;
   }
 
-  TextEditingController fullname = TextEditingController();
-  TextEditingController phoneNumberController = TextEditingController();
-  TextEditingController password = TextEditingController();
-  TextEditingController confirmPassword = TextEditingController();
+  final TextEditingController fullname = TextEditingController();
+
+  final TextEditingController phoneNumberController = TextEditingController();
+
+  final TextEditingController password = TextEditingController();
+
+  final TextEditingController confirmPassword = TextEditingController();
+
   final GlobalKey<FormState> _formKey = GlobalKey();
-  LoginCompanyController _loginCompanyController =
+
+  final LoginCompanyController _loginCompanyController =
       Get.put(LoginCompanyController());
 
   void _showAlert() {
-    showAlert(
-        context,
-        CustomAlertDialog(
-          imageAsset: JobstopPngImg.successful1,
-          title: "success".tr,
-          description: "You Login successfully".tr,
-          confirmBtnColor: Jobstopcolor.primarycolor,
-          onConfirm: () {
-            Get.offAllNamed(JopRoutesPages.dashboard);
-          },
-        ));
+    Get.dialog(CustomAlertDialog(
+      imageAsset: JobstopPngImg.successful1,
+      title: "success".tr,
+      description: "You Login successfully".tr,
+      confirmBtnColor: Jobstopcolor.primarycolor,
+      onConfirm: () {
+        Get.offAllNamed(JopRoutesPages.dashboard);
+      },
+    ));
   }
 
   @override
   Widget build(BuildContext context) {
-    size = MediaQuery.of(context).size;
-    height = size.height;
-    width = size.width;
+    Size size = MediaQuery.of(context).size;
+    double height = size.height;
+    double width = size.width;
     return Scaffold(
       appBar: AppBar(automaticallyImplyLeading: true),
       body: SingleChildScrollView(

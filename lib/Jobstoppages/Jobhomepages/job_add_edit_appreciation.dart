@@ -4,31 +4,37 @@ import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopprefname.dart';
 import 'package:jobspot/JopCustomWidget/widgets.dart';
-import 'package:jobspot/Jopstobdata/model/profile_model/jobstop_work_experience_info_card_model.dart';
-
+import 'package:jobspot/Jopstobdata/model/profile_model/jobstop_appreciation_info_card_model.dart';
 import '../../JobThemes/themecontroller.dart';
 
-class JobExperiences extends StatefulWidget {
-  const JobExperiences({Key? key}) : super(key: key);
+class JobAppreciationAddEdit extends StatefulWidget {
+  const JobAppreciationAddEdit({Key? key}) : super(key: key);
 
   @override
-  State<JobExperiences> createState() => _JobExperiencesState();
+  State<JobAppreciationAddEdit> createState() => _JobAppreciationAddEditState();
 }
 
-class _JobExperiencesState extends State<JobExperiences> {
+class _JobAppreciationAddEditState extends State<JobAppreciationAddEdit> {
   bool check = true;
   final themedata = Get.put(JobstopThemecontroler());
-  TextEditingController title = TextEditingController();
-  TextEditingController company = TextEditingController();
-  TextEditingController startdate = TextEditingController();
-  TextEditingController enddate = TextEditingController();
+  TextEditingController awardCon = TextEditingController();
+  TextEditingController categoryAchieveCon = TextEditingController();
+  TextEditingController endDateCon = TextEditingController();
   TextEditingController description = TextEditingController();
-  WorkExperienceInfoCardModel? wei =
-      WorkExperienceInfoCardModel.fromJson(Get.arguments[workExperienceArg]);
+  AppreciationInfoCardModel? appreci;
+
+  @override
+  void initState() {
+    appreci =
+        AppreciationInfoCardModel.fromJson(Get.arguments[appreciationArg]);
+    awardCon.text = appreci?.awardName ?? "";
+    categoryAchieveCon.text = appreci?.categoryAchieve ?? "";
+    endDateCon.text = appreci?.year ?? "";
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    print(wei);
     Size size = MediaQuery.of(context).size;
     double height = size.height;
     double width = size.width;
@@ -42,7 +48,7 @@ class _JobExperiencesState extends State<JobExperiences> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Change work experience",
+                "Edit Appreciation",
                 style: dmsbold.copyWith(
                     fontSize: 16,
                     color: themedata.isdark
@@ -53,7 +59,7 @@ class _JobExperiencesState extends State<JobExperiences> {
                 height: height / 36,
               ),
               Text(
-                "Job title",
+                "Award name",
                 style: dmsbold.copyWith(
                     fontSize: 12,
                     color: themedata.isdark
@@ -66,13 +72,13 @@ class _JobExperiencesState extends State<JobExperiences> {
               InputBorderedField(
                 height: height / 12.5,
                 fontSize: height / 68,
-                controller: title..text = wei?.position ?? "",
+                controller: awardCon,
               ),
               SizedBox(
                 height: height / 36,
               ),
               Text(
-                "Company",
+                "Category/Achievement achieved",
                 style: dmsbold.copyWith(
                     fontSize: 12,
                     color: themedata.isdark
@@ -85,60 +91,30 @@ class _JobExperiencesState extends State<JobExperiences> {
               InputBorderedField(
                 height: height / 12.5,
                 fontSize: height / 68,
-                controller: company..text = wei?.company ?? "",
+                controller: categoryAchieveCon,
               ),
               SizedBox(
-                height: height / 36,
+                height: height / 66,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Start date",
-                        style: dmsbold.copyWith(
-                          fontSize: 12,
-                          color: themedata.isdark
-                              ? Jobstopcolor.white
-                              : Jobstopcolor.primarycolor,
-                        ),
-                      ),
-                      SizedBox(
-                        height: height / 66,
-                      ),
-                      InputBorderedField(
-                        height: height / 12.5,
-                        fontSize: height / 68,
-                        width: width / 2.3,
-                        controller: startdate
-                          ..text = wei?.periodic?.split("-")[0] ?? "",
-                      ),
-                    ],
+                  Text(
+                    "End date",
+                    style: dmsbold.copyWith(
+                        fontSize: 12,
+                        color: themedata.isdark
+                            ? Jobstopcolor.white
+                            : Jobstopcolor.primarycolor),
                   ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "End date",
-                        style: dmsbold.copyWith(
-                            fontSize: 12,
-                            color: themedata.isdark
-                                ? Jobstopcolor.white
-                                : Jobstopcolor.primarycolor),
-                      ),
-                      SizedBox(
-                        height: height / 66,
-                      ),
-                      InputBorderedField(
-                        height: height / 12.5,
-                        fontSize: height / 68,
-                        width: width / 2.3,
-                        controller: enddate
-                          ..text = wei?.periodic?.split("-")[1] ?? "",
-                      ),
-                    ],
+                  SizedBox(
+                    height: height / 66,
+                  ),
+                  InputBorderedField(
+                    height: height / 12.5,
+                    fontSize: height / 68,
+                    width: width / 2.3,
+                    controller: endDateCon,
                   ),
                 ],
               ),
@@ -322,105 +298,56 @@ class _JobExperiencesState extends State<JobExperiences> {
             borderRadius: BorderRadius.only(
                 topRight: Radius.circular(15), topLeft: Radius.circular(15)),
           ),
-          height: height / 3,
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: width / 26, vertical: height / 66),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Container(
-                  height: height / 500,
-                  width: width / 8,
-                  decoration: BoxDecoration(
-                    color: Jobstopcolor.primarycolor,
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                ),
-                SizedBox(
-                  height: height / 26,
-                ),
-                Text(
-                  "Remove Work Experience ?",
-                  style: dmsbold.copyWith(
-                      fontSize: 16, color: Jobstopcolor.primarycolor),
-                ),
-                SizedBox(
-                  height: height / 100,
-                ),
-                Text(
-                  "Are you sure you want to change what you entered?",
-                  style: dmsregular.copyWith(
-                      fontSize: 12, color: Jobstopcolor.darkgrey),
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(
-                  height: height / 26,
-                ),
-                CustomButton(
-                  onTappeed: () {},
-                  text: "Continue Filling".tr,
-                ),
-                SizedBox(
-                  height: height / 56,
-                ),
-                CustomButton(
-                  onTappeed: () {},
-                  text: "Undo Changes",
-                  backgroundColor: Jobstopcolor.lightprimary,
-                ),
-                InkWell(
-                  highlightColor: Jobstopcolor.transparent,
-                  splashColor: Jobstopcolor.transparent,
-                  onTap: () {
-                    // Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    //   return const JobAddPost();
-                    // },));
-                  },
-                  child: Center(
-                    child: Container(
-                      height: height / 15,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: Jobstopcolor.primarycolor),
-                      child: Center(
-                          child: Text(
-                        "Continue Filling".tr,
-                        style: dmsbold.copyWith(
-                            fontSize: 14, color: Jobstopcolor.white),
-                      )),
+          height: height * 0.4,
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                  horizontal: width / 26, vertical: height / 66),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    height: height / 500,
+                    width: width / 8,
+                    decoration: BoxDecoration(
+                      color: Jobstopcolor.primarycolor,
+                      borderRadius: BorderRadius.circular(5),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: height / 56,
-                ),
-                InkWell(
-                  highlightColor: Jobstopcolor.transparent,
-                  splashColor: Jobstopcolor.transparent,
-                  onTap: () {
-                    // Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    //   return const JobstopAddjob();
-                    // },));
-                  },
-                  child: Center(
-                    child: Container(
-                      height: height / 15,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: Jobstopcolor.lightprimary),
-                      child: Center(
-                          child: Text(
-                        "Undo Changes".tr,
-                        style: dmsbold.copyWith(
-                          fontSize: 14,
-                          color: Jobstopcolor.white,
-                        ),
-                      )),
-                    ),
+                  SizedBox(
+                    height: height / 26,
                   ),
-                ),
-              ],
+                  Text(
+                    "Remove Appreciation ?",
+                    style: dmsbold.copyWith(
+                        fontSize: 16, color: Jobstopcolor.primarycolor),
+                  ),
+                  SizedBox(
+                    height: height / 100,
+                  ),
+                  Text(
+                    "Are you sure you want to change what you entered?",
+                    style: dmsregular.copyWith(
+                        fontSize: 12, color: Jobstopcolor.darkgrey),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(
+                    height: height / 26,
+                  ),
+                  CustomButton(
+                    onTappeed: () {},
+                    text: "Continue Filling".tr,
+                  ),
+                  SizedBox(
+                    height: height / 56,
+                  ),
+                  CustomButton(
+                    onTappeed: () {},
+                    text: "Undo Changes",
+                    backgroundColor: Jobstopcolor.lightprimary,
+                  ),
+                ],
+              ),
             ),
           ),
         );
@@ -428,3 +355,4 @@ class _JobExperiencesState extends State<JobExperiences> {
     );
   }
 }
+

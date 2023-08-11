@@ -40,7 +40,6 @@ class _MyAppState extends State<MyApp> {
       locale: const Locale('en', 'US'),
       initialRoute: JopRoutesPages.homepage,
       getPages: JopRoutesPages.routes,
-      // home: const JobstopSplash(),
     );
   }
 }

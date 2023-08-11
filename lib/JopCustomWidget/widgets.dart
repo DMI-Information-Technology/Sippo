@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 
@@ -372,6 +373,115 @@ class PhoneResetPasswordCard extends StatelessWidget {
           style: dmsbold.copyWith(
               fontSize: height / 72, color: Jobstopcolor.textColor),
         ),
+      ),
+    );
+  }
+}
+
+class CustomChip extends StatelessWidget {
+  const CustomChip({
+    super.key,
+    this.height,
+    this.width,
+    this.borderRadius,
+    required this.onTap,
+    this.backgroundColor = Jobstopcolor.greyyy,
+    this.paddingValue,
+    required this.child,
+  });
+
+  final VoidCallback onTap;
+  final double? height;
+  final double? width;
+  final double? borderRadius;
+  final Widget child;
+  final Color? backgroundColor;
+  final double? paddingValue;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        height: height,
+        width: width,
+        padding:
+            paddingValue != null ? EdgeInsets.all(paddingValue ?? 0.0) : null,
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          borderRadius: borderRadius != null
+              ? BorderRadius.circular(borderRadius!)
+              : null,
+          color: backgroundColor,
+        ),
+        child: child,
+      ),
+    );
+  }
+}
+
+class InputBorderedField extends StatelessWidget {
+  const InputBorderedField({
+    super.key,
+    this.height,
+    this.width,
+    this.hintText,
+    this.hintStyle,
+    this.keyboardType,
+    this.maxLine,
+    this.fontSize,
+    this.onTap,
+    this.onTextChanged,
+    this.suffixIcon,
+    this.prefixIcon,
+    this.readOnly = false,
+    this.controller,
+  });
+
+  final String? hintText;
+  final TextStyle? hintStyle;
+  final double? height;
+  final double? width;
+  final TextEditingController? controller;
+  final TextInputType? keyboardType;
+  final int? maxLine;
+  final double? fontSize;
+  final bool readOnly;
+  final VoidCallback? onTap;
+  final void Function(String)? onTextChanged;
+  final Widget? suffixIcon;
+  final Widget? prefixIcon;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: height,
+      width: width,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Jobstopcolor.white,
+      ),
+      child: TextField(
+        readOnly: readOnly,
+        controller: controller,
+        style: dmsmedium.copyWith(fontSize: fontSize),
+        cursorColor: Jobstopcolor.grey,
+        decoration: InputDecoration(
+          filled: true,
+          hintText: hintText,
+          hintStyle: hintStyle,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(15),
+            borderSide: BorderSide.none,
+          ),
+          fillColor: Jobstopcolor.white,
+          suffixIcon: suffixIcon,
+          prefixIcon: prefixIcon,
+        ),
+        keyboardType: keyboardType,
+        maxLines: maxLine,
+        onTap: onTap,
+        onChanged: onTextChanged,
       ),
     );
   }

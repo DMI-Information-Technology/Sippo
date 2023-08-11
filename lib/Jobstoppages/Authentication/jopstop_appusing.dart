@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/JopController/AuthenticationController/jopstop_appusing_controller.dart';
 
 import '../../JobGlobalclass/jobstopcolor.dart';
@@ -36,7 +37,7 @@ class JopAppUsing extends StatelessWidget {
                 child: Text(
                   "Choose_App_Using_Page".tr,
                   style: dmsbold.copyWith(
-                    fontSize: height / 28,
+                    fontSize: FontSize.titleFontSize2(context),
                     color: Jobstopcolor.primarycolor,
                   ),
                   textAlign: TextAlign.center,
@@ -47,7 +48,9 @@ class JopAppUsing extends StatelessWidget {
               ),
               Text(
                 'If you are a user and you want to find a job, please choose "Job Search." If you want to search for employees, please choose "Employee Search."',
-                style: dmsregular.copyWith(fontSize: height / (28 + 28)),
+                style: dmsregular.copyWith(
+                  fontSize: FontSize.paragraphFontSize(context),
+                ),
                 textAlign: TextAlign.center,
               ),
               SizedBox(
@@ -200,7 +203,7 @@ class JopSelctedUsingAppCard extends StatelessWidget {
                 title,
                 style: dmsbold.copyWith(
                   color: Jobstopcolor.black,
-                  fontSize: width / 21,
+                  fontSize: FontSize.titleFontSize3(context),
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -213,7 +216,7 @@ class JopSelctedUsingAppCard extends StatelessWidget {
                   description,
                   style: dmsregular.copyWith(
                     color: Jobstopcolor.textColor,
-                    fontSize: width / 28,
+                    fontSize: FontSize.paragraphFontSize2(context),
                   ),
                   textAlign: TextAlign.center,
                 ),

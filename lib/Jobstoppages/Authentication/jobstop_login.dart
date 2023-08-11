@@ -5,6 +5,7 @@ import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import '../../JobGlobalclass/jobstopprefname.dart';
 import '../../JobGlobalclass/routes.dart';
+import '../../JobGlobalclass/text_font_size.dart';
 import '../../JobThemes/themecontroller.dart';
 import '../../JopController/AuthenticationController/jobstop_login_user_controller.dart';
 import '../../JopCustomWidget/widgets.dart';
@@ -75,7 +76,7 @@ class _JobstopLoginState extends State<JobstopLogin> {
                 Text(
                   "welcome_back_login_title".tr,
                   style: dmsbold.copyWith(
-                    fontSize: height / 30,
+                    fontSize: FontSize.titleFontSize2(context),
                     color: themedata.isdark
                         ? Jobstopcolor.white
                         : Jobstopcolor.primarycolor,
@@ -88,7 +89,9 @@ class _JobstopLoginState extends State<JobstopLogin> {
                 Text(
                   "lorem ipsum dolor sit amet, consectetur adipiscing elit n elementum",
                   style: dmsregular.copyWith(
-                      color: Jobstopcolor.textColor, fontSize: height / 64),
+                    color: Jobstopcolor.textColor,
+                    fontSize: FontSize.paragraphFontSize3(context),
+                  ),
                   textAlign: TextAlign.center,
                 ),
                 SizedBox(
@@ -162,7 +165,7 @@ class _JobstopLoginState extends State<JobstopLogin> {
                         Text(
                           "Remember_me".tr,
                           style: dmsregular.copyWith(
-                            fontSize: height / 64,
+                            fontSize: FontSize.labelFontSize(context),
                             color: Jobstopcolor.grey,
                           ),
                         ),
@@ -190,7 +193,7 @@ class _JobstopLoginState extends State<JobstopLogin> {
                       child: Text(
                         "Forget_Password".tr,
                         style: dmsregular.copyWith(
-                            fontSize: height / 75,
+                            fontSize: FontSize.labelFontSize(context),
                             color: themedata.isdark
                                 ? Jobstopcolor.white
                                 : Jobstopcolor.primarycolor),

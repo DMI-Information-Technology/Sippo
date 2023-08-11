@@ -1,12 +1,15 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
-import 'package:jobspot/Jobstoppages/Jobhomepages/job_setting.dart';
-
+import 'package:jobspot/JopCustomWidget/widgets.dart';
+import 'package:jobspot/utils/helper.dart' as helper;
+import 'package:jobspot/utils/image_picker_service.dart';
 import '../../JobThemes/themecontroller.dart';
+import '../../JopController/ProfileController/edit_profile_information_controller.dart';
 
 class JobMyProfile extends StatefulWidget {
   const JobMyProfile({Key? key}) : super(key: key);
@@ -16,341 +19,184 @@ class JobMyProfile extends StatefulWidget {
 }
 
 class _JobMyProfileState extends State<JobMyProfile> {
-  dynamic size;
-  double height = 0.00;
-  double width = 0.00;
-  String? gender;
   final themedata = Get.put(JobstopThemecontroler());
-  TextEditingController fullname = TextEditingController();
-  TextEditingController birth = TextEditingController();
+  TextEditingController username = TextEditingController();
+  TextEditingController dob = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController phone = TextEditingController();
-  TextEditingController location = TextEditingController();
+  TextEditingController genderCon = TextEditingController();
+  EditProfileInformationController editProfileController =
+      Get.put(EditProfileInformationController());
+
   @override
   Widget build(BuildContext context) {
-    size = MediaQuery.of(context).size;
-    height = size.height;
-    width = size.width;
+    Size size = MediaQuery.of(context).size;
+    double height = size.height;
+    double width = size.width;
+
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25),
-                  color: Jobstopcolor.primarycolor
-              ),
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: width/26,vertical: height/46),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: height/66,),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CircleAvatar(
-                          radius: 30,
-                          backgroundImage: AssetImage(JobstopPngImg.photo),
-                        ),
-                        SizedBox(width: width/2,),
-                        Image.asset(JobstopPngImg.union,height: height/36,color: Jobstopcolor.white,),
-                        InkWell(
-                          onTap: () {
-                            Navigator.push(context, MaterialPageRoute(builder: (context) {
-                              return const JobstopSetting();
-                            },));
-                          },
-                            child: Image.asset(JobstopPngImg.setting,height: height/36,color: Jobstopcolor.white)),
-                      ],
-                    ),
-                    SizedBox(height: height/66,),
-                    Text("Orlando Diggs",style: dmsmedium.copyWith(fontSize: 14,color: Jobstopcolor.white),),
-                    SizedBox(height: height/100,),
-                    Text("California, USA",style: dmsregular.copyWith(fontSize: 12,color: Jobstopcolor.white),),
-                    SizedBox(height: height/36,),
-                    InkWell(
-                      onTap: () {
-                        // Navigator.pop(context);
-                      },
-                      child: Container(
-                        height: height / 24,
-                        width: width/3,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: Jobstopcolor.purpal
-                        ),
-                        child: Center(child: Text("Change image",
-                            style: dmsregular.copyWith(fontSize: 12,
-                                color: Jobstopcolor.white))),),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: width/26,vertical: height/36),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text("Fullname",style: dmsmedium.copyWith(fontSize: 12,color: themedata.isdark ? Jobstopcolor.white : Jobstopcolor.primarycolor),),
-                SizedBox(height: height/66,),
-                Container(
-                  height: height/15,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Jobstopcolor.white,
-                      boxShadow: const [
-                        BoxShadow(
-                            color: Jobstopcolor.shedo,
-                            blurRadius: 5
-                        )
-                      ]
-                  ),
-                  child: TextField(
-                    controller:fullname,
-                    style: dmsregular.copyWith(fontSize: 12,color: Jobstopcolor.primarycolor),
-                    cursorColor: Jobstopcolor.grey,
-                    decoration: InputDecoration(
-                        filled: true,
-                        hintText: "Full Name",
-                        hintStyle: dmsregular.copyWith(fontSize: 12,color: Jobstopcolor.grey),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide: BorderSide.none),
-                        fillColor: Jobstopcolor.white),
-                  ),
-                ),
-                SizedBox(height: height/36,),
-                Text("Date of birth",style: dmsmedium.copyWith(fontSize: 12,color: themedata.isdark ? Jobstopcolor.white : Jobstopcolor.primarycolor),),
-                SizedBox(height: height/66,),
-                Container(
-                  height: height/15,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Jobstopcolor.white,
-                      boxShadow: const [
-                        BoxShadow(
-                            color: Jobstopcolor.shedo,
-                            blurRadius: 5
-                        )
-                      ]
-                  ),
-                  child: TextField(
-                    controller:birth,
-                    style: dmsregular.copyWith(fontSize: 12,color: Jobstopcolor.primarycolor),
-                    cursorColor: Jobstopcolor.grey,
-                    decoration: InputDecoration(
-                        filled: true,
-                        hintText: "06 August 1992",
-                        suffixIcon: const Icon(Icons.calendar_month,color: Jobstopcolor.primarycolor,size: 20,),
-                        hintStyle: dmsregular.copyWith(fontSize: 12,color: Jobstopcolor.grey),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide: BorderSide.none),
-                        fillColor: Jobstopcolor.white),
-                  ),
-                ),
-                SizedBox(height: height/36,),
-                Text("Gender",style: dmsmedium.copyWith(fontSize: 12,color: themedata.isdark ? Jobstopcolor.white : Jobstopcolor.primarycolor),),
-                SizedBox(height: height/66,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      height: height/15,
-                      width: width/2.5,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Jobstopcolor.white,
-                          boxShadow: const [
-                            BoxShadow(
-                                color: Jobstopcolor.shedo,
-                                blurRadius: 5
-                            )
-                          ]
-                      ),
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            height: height/20,
-                            child: Radio(
-                              value: "male",
-                              fillColor:const MaterialStatePropertyAll(Jobstopcolor.orenge),
-                              activeColor: Jobstopcolor.orenge,
-                              groupValue: gender,
-                              onChanged: (value){
-                                setState(() {
-                                  gender = value.toString();
-                                });
-                              },
-                            ),
-                          ),
-                          Text("Male",style: dmsregular.copyWith(fontSize: 12,color:Jobstopcolor.darkgrey )),
-                        ],
-                      ),
-                    ),
-
-                    Container(
-                      height: height/15,
-                      width: width/2.5,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          color: Jobstopcolor.white,
-                          boxShadow: const [
-                            BoxShadow(
-                                color: Jobstopcolor.shedo,
-                                blurRadius: 5
-                            )
-                          ]
-                      ),
-                      child: Row(
-                        children: [
-                          SizedBox(
-                            height: height/20,
-                            child: Radio(
-                              fillColor: const MaterialStatePropertyAll(Jobstopcolor.orenge),
-                              activeColor: Jobstopcolor.orenge,
-                              value: "female",
-                              groupValue: gender,
-                              onChanged: (value){
-                                setState(() {
-                                  gender = value.toString();
-                                });
-                              },
-                            ),
-                          ),
-                          Text("Female",style: dmsregular.copyWith(fontSize: 12,color:Jobstopcolor.darkgrey ),),
-                        ],
-                      ),
-                    ),
-
-                  ],
-                ),
-                SizedBox(height: height/36,),
-                Text("Email address",style: dmsmedium.copyWith(fontSize: 12,color: themedata.isdark ? Jobstopcolor.white : Jobstopcolor.primarycolor),),
-                SizedBox(height: height/66,),
-                Container(
-                  height: height/15,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Jobstopcolor.white,
-                      boxShadow: const [
-                        BoxShadow(
-                            color: Jobstopcolor.shedo,
-                            blurRadius: 5
-                        )
-                      ]
-                  ),
-                  child: TextField(
-                    controller:email,
-                    style: dmsregular.copyWith(fontSize: 12,color: Jobstopcolor.primarycolor),
-                    cursorColor: Jobstopcolor.grey,
-                    decoration: InputDecoration(
-                        filled: true,
-                        hintText: "Brandonelouis@gmail.com ",
-                        hintStyle: dmsregular.copyWith(fontSize: 12,color: Jobstopcolor.grey),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide: BorderSide.none),
-                        fillColor: Jobstopcolor.white),
-                  ),
-                ),
-                SizedBox(height: height/36,),
-                Text("Phone number",style: dmsmedium.copyWith(fontSize: 12,color:themedata.isdark ? Jobstopcolor.white : Jobstopcolor.primarycolor),),
-                SizedBox(height: height/66,),
-                Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Jobstopcolor.white,
-                      boxShadow: const [
-                        BoxShadow(
-                            color: Jobstopcolor.shedo,
-                            blurRadius: 5
-                        )
-                      ]
-                  ),
-                  child: IntlPhoneField(
-                    disableLengthCheck: true,
-                    flagsButtonPadding: const EdgeInsets.all(8),
-                    dropdownIconPosition: IconPosition.trailing,
-                    dropdownTextStyle: dmsregular.copyWith(
-                        fontSize: 16, color: Jobstopcolor.grey),
-                    dropdownIcon: Icon(
-                      Icons.arrow_drop_down,
-                      color: Jobstopcolor.grey,
-                      size: height / 36,
-                    ),
-                    style: dmsmedium.copyWith(
-                        fontSize: 12, color: Jobstopcolor.primarycolor),
-                    cursorColor: Jobstopcolor.white,
-                    decoration: InputDecoration(
-                      hintText: 'Phone Number',
-                      hintStyle: dmsmedium.copyWith(
-                          fontSize: 14, color: Jobstopcolor.grey),
-                      focusedBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                          borderSide:  BorderSide.none),
-                      enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(15),
-                          borderSide:  BorderSide.none),
-                    ),
-                    initialCountryCode: 'IN',
-                    onChanged: (phone) {},
-                  ),
-                ),
-                SizedBox(height: height/36,),
-                Text("Location",style: dmsmedium.copyWith(fontSize: 12,color: themedata.isdark ? Jobstopcolor.white : Jobstopcolor.primarycolor),),
-                SizedBox(height: height/66,),
-                Container(
-                  height: height/15,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
-                      color: Jobstopcolor.white,
-                      boxShadow: const [
-                        BoxShadow(
-                            color: Jobstopcolor.shedo,
-                            blurRadius: 5
-                        )
-                      ]
-                  ),
-                  child: TextField(
-                    controller:location,
-                    style: dmsregular.copyWith(fontSize: 12,color: Jobstopcolor.primarycolor),
-                    cursorColor: Jobstopcolor.grey,
-                    decoration: InputDecoration(
-                        filled: true,
-                        hintText: "California, United states",
-                        hintStyle: dmsregular.copyWith(fontSize: 12,color: Jobstopcolor.grey),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(15),
-                            borderSide: BorderSide.none),
-                        fillColor: Jobstopcolor.white),
-                  ),
-                ),
-                SizedBox(height: height/16,),
-                InkWell(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Center(
-                    child: Container(
-                      height: height / 15,
-                      width: width/1.5,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: Jobstopcolor.primarycolor
-                      ),
-                      child: Center(child: Text("SAVE",
-                          style: dmsbold.copyWith(fontSize: 14,
-                              color: Jobstopcolor.white))),),
-                  ),
-                ),
-              ],
-            ),)
-          ],
+      appBar: AppBar(
+        title: Text(
+          "Edit profile",
+          style: dmsmedium.copyWith(fontSize: height / 52),
         ),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: width / 18,
+            vertical: height / 32,
+          ),
+          child: Column(
+            children: [
+              Obx(() {
+                return Stack(
+                  alignment: AlignmentDirectional.bottomEnd,
+                  children: [
+                    ClipOval(
+                      child: editProfileController.profileImagePath.isNotEmpty
+                          ? Image.file(
+                              File(
+                                editProfileController.profileImagePath,
+                              ),
+                              height: height / 5,
+                            )
+                          : Image.asset(
+                              JobstopPngImg.signup,
+                              height: height / 5,
+                            ),
+                    ),
+                    ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          shape: CircleBorder(),
+                          padding: EdgeInsets.all(height / 128),
+                        ),
+                        onPressed: () async {
+                          editProfileController.profileImagePath =
+                              await ImagePickerFile.pickImageFromGalleryPath();
+                        },
+                        child: Icon(
+                          Icons.edit,
+                          color: Jobstopcolor.white,
+                          size: height / 28,
+                        ))
+                  ],
+                );
+              }),
+              SizedBox(height: height / 26),
+              InputBorderedField(
+                hintText: "enter your user name",
+                controller: username,
+                height: height / 13.5,
+                fontSize: height / 75,
+                suffixIcon: Icon(
+                  Icons.person_outline_outlined,
+                  color: Jobstopcolor.primarycolor,
+                ),
+              ),
+              SizedBox(height: height / 38),
+              InputBorderedField(
+                hintText: "enter your birthday",
+                controller: dob,
+                height: height / 13.5,
+                fontSize: height / 75,
+                suffixIcon: IconButton(
+                    onPressed: () {
+                      helper.showMyDatePicker(context, (date) {
+                        dob.text = helper.dobFormatter(date ?? DateTime.now());
+                      });
+                    },
+                    icon: Icon(
+                      Icons.date_range_outlined,
+                      color: Jobstopcolor.primarycolor,
+                    )),
+              ),
+              SizedBox(height: height / 38),
+              InputBorderedField(
+                hintText: "enter your email",
+                controller: email,
+                height: height / 13.5,
+                fontSize: height / 75,
+                suffixIcon: Icon(
+                  Icons.email_outlined,
+                  color: Jobstopcolor.primarycolor,
+                ),
+              ),
+              SizedBox(height: height / 38),
+              _buildInputPhoneNumberField(context),
+              SizedBox(height: height / 38),
+              InputBorderedField(
+                readOnly: true,
+                hintText: "Select your Gender",
+                controller: genderCon,
+                height: height / 13.5,
+                fontSize: height / 75,
+                suffixIcon: Icon(
+                  Icons.arrow_drop_down_sharp,
+                  color: Jobstopcolor.primarycolor,
+                ),
+                onTap: () {
+                  helper.showGenderPicker(
+                    context,
+                    onGenderChange: (gender) {
+                      if (gender != null) {
+                        genderCon.text = gender.name;
+                      }
+                    },
+                  );
+                },
+              ),
+              SizedBox(height: height / 38),
+              CustomButton(onTappeed: () {}, text: "Save"),
+            ],
+          ),
+        ),
+      ),
+      backgroundColor: Jobstopcolor.backgroudHome,
+    );
+  }
+
+  Container _buildInputPhoneNumberField(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    double height = size.height;
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Jobstopcolor.white,
+      ),
+      child: IntlPhoneField(
+        disableLengthCheck: true,
+        flagsButtonPadding: const EdgeInsets.all(8),
+        dropdownIconPosition: IconPosition.trailing,
+        dropdownTextStyle: dmsregular.copyWith(
+          fontSize: height / 75,
+          color: Jobstopcolor.grey,
+        ),
+        dropdownIcon: Icon(
+          Icons.arrow_drop_down,
+          color: Jobstopcolor.grey,
+          size: height / 36,
+        ),
+        style: dmsmedium.copyWith(
+          fontSize: 12,
+        ),
+        cursorColor: Jobstopcolor.white,
+        decoration: InputDecoration(
+            hintText: 'Phone Number',
+            hintStyle: dmsmedium.copyWith(
+                fontSize: height / 75, color: Jobstopcolor.grey),
+            focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15),
+                borderSide: BorderSide.none),
+            enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(15),
+                borderSide: BorderSide.none),
+            suffixIcon: Icon(
+              Icons.phone_outlined,
+              color: Jobstopcolor.primarycolor,
+            )),
+        initialCountryCode: 'LY',
+        onChanged: (phone) {},
       ),
     );
   }
