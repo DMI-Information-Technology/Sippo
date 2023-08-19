@@ -1,10 +1,16 @@
 import 'package:get/get.dart';
-
-import '../../Jopstobdata/model/profile_model/jobstop_language_info_card_model.dart';
+import '../../sippo_data/model/profile_model/jobstop_language_info_card_model.dart';
 
 class LanguageEditAddController extends GetxController {
-  final _languageInfo = LanguageInfoCardModel(firstLanguage: false).obs;
+  final _languageInfo = LanguageInfoCardModel(firstLanguage: false,talkingLevel: "no level",writtenLevel: "no level").obs;
   final _selectedIndexLanguage = (-1).obs;
+  final _selectedLevel = 'no level'.obs;
+
+  String get selectedLevel => _selectedLevel.toString();
+
+  void set selectedLevel(String value) {
+    _selectedLevel.value = value;
+  }
 
   int get selectedIndexLanguage => _selectedIndexLanguage.toInt();
 

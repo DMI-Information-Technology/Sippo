@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
+import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 
 import '../JobGlobalclass/jobstopfontstyle.dart';
-import '../JobGlobalclass/jopstop_customstyle.dart';
+import '../JobGlobalclass/sippo_customstyle.dart';
+import '../JobGlobalclass/sippo_customstyle.dart' as customStyles;
 
 class CustomAlertDialog extends StatelessWidget {
   final String imageAsset;
@@ -22,10 +24,10 @@ class CustomAlertDialog extends StatelessWidget {
     required this.imageAsset,
     required this.title,
     this.description,
-    this.confirmBtnTitle,
+    this.confirmBtnTitle = "ok",
     this.confirmBtnColor = Jobstopcolor.primarycolor,
     this.onConfirm,
-    this.cancelBtnTitle,
+    this.cancelBtnTitle = "cancel",
     this.cancelBtnColor = Jobstopcolor.primarycolor,
     this.onCancel,
   });
@@ -42,13 +44,12 @@ class CustomAlertDialog extends StatelessWidget {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Image.asset(imageAsset),
+          Image.asset(imageAsset, height: height / 4),
           SizedBox(height: height / 42),
           Text(
             title,
             style: dmsbold.copyWith(
-              fontWeight: FontWeight.bold,
-              fontSize: height / 36.0,
+              fontSize: FontSize.titleFontSize2(context),
               color: Jobstopcolor.primarycolor,
             ),
             textAlign: TextAlign.center,
@@ -60,8 +61,10 @@ class CustomAlertDialog extends StatelessWidget {
                 Text(
                   description ?? "",
                   style: dmsregular.copyWith(
-                    color: Jobstopcolor.textColor,
-                  ),
+                      color: Jobstopcolor.textColor,
+                      fontSize: FontSize.paragraphFontSize2(
+                        context,
+                      )),
                   textAlign: TextAlign.center,
                 ),
               ],
@@ -77,6 +80,7 @@ class CustomAlertDialog extends StatelessWidget {
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: confirmBtnColor,
+              shape: customStyles.circularBorderedShapeButton(height / 32),
             ),
             child: Text(
               confirmBtnTitle ?? "",
@@ -90,6 +94,7 @@ class CustomAlertDialog extends StatelessWidget {
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: confirmBtnColor,
+              shape: customStyles.circularBorderedShapeButton(height / 32),
             ),
             child: Text(
               cancelBtnTitle ?? "",
@@ -104,21 +109,21 @@ class CustomAlertDialog extends StatelessWidget {
 class InputField extends StatelessWidget {
   const InputField({
     super.key,
-    required this.controller,
+    this.controller,
     this.keyboardType = TextInputType.text,
     this.icon,
     this.suffixIcon,
     this.hintText = "",
-    this.onChangedCallback,
+    this.onChangedText,
     this.validatorCallback,
   });
 
   final Widget? suffixIcon;
   final Widget? icon;
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final TextInputType keyboardType;
   final String hintText;
-  final void Function(String)? onChangedCallback;
+  final void Function(String value)? onChangedText;
   final String? Function(String?)? validatorCallback;
 
   @override
@@ -145,7 +150,7 @@ class InputField extends StatelessWidget {
         errorBorder: errorUnderLineBorder,
       ),
       keyboardType: keyboardType,
-      onChanged: onChangedCallback,
+      onChanged: onChangedText,
       validator: validatorCallback,
     );
   }
@@ -154,20 +159,20 @@ class InputField extends StatelessWidget {
 class PasswordInputField extends StatefulWidget {
   const PasswordInputField({
     super.key,
-    required this.controller,
+    this.controller,
     this.icon,
     this.hintText = "",
     this.suffixIconColor,
-    this.onChangedCallback,
-    this.validatorCallback,
+    this.validator,
+    this.onChangedText,
   });
 
   final Color? suffixIconColor;
   final Widget? icon;
-  final TextEditingController controller;
+  final TextEditingController? controller;
   final String hintText;
-  final void Function(String)? onChangedCallback;
-  final String? Function(String?)? validatorCallback;
+  final void Function(String)? onChangedText;
+  final String? Function(String?)? validator;
 
   @override
   State<PasswordInputField> createState() => _PasswordInputFieldState();
@@ -215,8 +220,8 @@ class _PasswordInputFieldState extends State<PasswordInputField> {
         errorBorder: errorUnderLineBorder,
       ),
       obscureText: _obscureText,
-      onChanged: widget.onChangedCallback,
-      validator: widget.validatorCallback,
+      onChanged: widget.onChangedText,
+      validator: widget.validator,
     );
   }
 }

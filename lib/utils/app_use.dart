@@ -1,0 +1,1 @@
+enum AppUsingType { user, company }

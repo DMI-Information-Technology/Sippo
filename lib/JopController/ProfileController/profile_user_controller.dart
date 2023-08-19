@@ -1,10 +1,11 @@
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
-
-import '../../Jopstobdata/model/profile_model/jobstop_appreciation_info_card_model.dart';
-import '../../Jopstobdata/model/profile_model/jobstop_education_info_card_model.dart';
-import '../../Jopstobdata/model/profile_model/jobstop_work_experience_info_card_model.dart';
-
+import '../../JobGlobalclass/jobstopimges.dart';
+import '../../sippo_data/model/profile_model/jobstop_appreciation_info_card_model.dart';
+import '../../sippo_data/model/profile_model/jobstop_education_info_card_model.dart';
+import '../../sippo_data/model/profile_model/jobstop_language_info_card_model.dart';
+import '../../sippo_data/model/profile_model/jobstop_resume_file_info.dart';
+import '../../sippo_data/model/profile_model/jobstop_work_experience_info_card_model.dart';
 class ProfileUserController extends GetxController {
   final _aboutMeText =
       "lorem ipsujfm vcxmkmvfkjhkgd jkflmvf lkfvmfdv klffdleoopmmvfmlvk ijggjjm,dfvom,.m,mcxvomfm "
@@ -19,6 +20,14 @@ class ProfileUserController extends GetxController {
 
   void set showAllLangs(bool value) {
     _showAllLangs.value = value;
+  }
+
+  final Rx<ResumeFileInfo?> _resumeFiles = ResumeFileInfo.getNull().obs;
+
+  ResumeFileInfo? get resumeFiles => _resumeFiles.value;
+
+  void set resumeFiles(ResumeFileInfo? value) {
+    _resumeFiles.value = value;
   }
 
   final _wei = <WorkExperienceInfoCardModel>[
@@ -58,7 +67,7 @@ class ProfileUserController extends GetxController {
       periodic: "Jan 2010 - Feb 2013",
     ),
   ].obs;
-  final _skills = [
+  final _skills = <String>[
     "skill 1",
     "skill skill 2",
     "skill 3",
@@ -66,14 +75,19 @@ class ProfileUserController extends GetxController {
     "skill skill 5",
     "skill skill skill skill 6",
   ].obs;
-  final _languages = [
-    "Language 1",
-    "Language 2",
-    "Language Language 3",
-    "Language 4",
-    "Language 5",
-    "Language 6",
-    "Language 7",
+  final _languages = <LanguageInfoCardModel>[
+    LanguageInfoCardModel(
+      countryFlag: JobstopPngImg.english,
+      languageName: "English",
+      talkingLevel: "Advanced",
+      writtenLevel: "Advanced",
+    ),
+    LanguageInfoCardModel(
+      countryFlag: JobstopPngImg.arabic,
+      languageName: "arabic",
+      talkingLevel: "Advanced",
+      writtenLevel: "Advanced",
+    ),
   ].obs;
   final _appreciations = <AppreciationInfoCardModel>[
     AppreciationInfoCardModel(
@@ -99,7 +113,7 @@ class ProfileUserController extends GetxController {
 
   List<EducationInfoCardModel> get edui => _edui.toList();
 
-  List<String> get languages => _languages.toList();
+  List<LanguageInfoCardModel> get languages => _languages.toList();
 
   List<String> get skills => _skills.toList();
 

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -12,7 +13,11 @@ void showAlert(BuildContext context, Widget widget) {
   );
 }
 
-String dateFormatter(DateTime dt) {
+String otpPhoneNumberFormat(String phoneNumber, {String countryCode = "218"}) {
+  return "+$countryCode${phoneNumber.substring(3)}";
+}
+
+String dateTimeFormatter(DateTime dt) {
   return DateFormat("d MMM y 'at' hh:mm a").format(dt);
 }
 
@@ -46,4 +51,23 @@ void showGenderPicker(
   if (selectedGender != null) {
     onGenderChange(selectedGender);
   }
+}
+
+Future<Timer?> startTimer(int value, void Function(int value) onValueChanged,
+    [int until = 0]) async {
+  Timer? _timer;
+  int counter = value;
+  const oneSec = Duration(seconds: 1);
+  _timer = await Timer.periodic(
+    oneSec,
+    (timer) {
+      onValueChanged(counter);
+      if (counter == until) {
+        _timer?.cancel();
+        return;
+      }
+      counter--;
+    },
+  );
+  return _timer;
 }

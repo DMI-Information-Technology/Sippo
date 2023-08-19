@@ -50,6 +50,5 @@ class LocatorService {
   }
   static Future<void> requestPermissionAgain() async {
     await Geolocator.requestPermission();
-
   }
 }

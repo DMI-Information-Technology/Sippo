@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "856202568320",
+    "project_id": "sippo-31b8b",
+    "storage_bucket": "sippo-31b8b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:856202568320:android:b055fceaa935e081f13c65",
+        "android_client_info": {
+          "package_name": "com.example.jobspot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "856202568320-lnikt8s3lldmmguhg6h7tp1un0bs83ta.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.jobspot",
+            "certificate_hash": "729af22a3c0ab796580d75057bd5fe704dfe3bae"
+          }
+        },
+        {
+          "client_id": "856202568320-036t1g9sjmei95k7m4qhh3gc6cccpvqi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUXMfqrZyVGTfzX2XjkwRrBvUZnTapEdY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "856202568320-036t1g9sjmei95k7m4qhh3gc6cccpvqi.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "856202568320-2hkmdbcfeq485ijqjhqollgj659n42gf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.jobspot"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

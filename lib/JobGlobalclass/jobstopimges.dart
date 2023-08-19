@@ -7,6 +7,7 @@ class JobstopPngImg{
   static String phonenymberempty = "Assets/jobstop_assets/jobpngimg/phonenymberempty.png";
   static String successful = "Assets/jobstop_assets/jobpngimg/successful.png";
   static String successful1 = "Assets/jobstop_assets/jobpngimg/successful1.png";
+  static String noconnection = "Assets/jobstop_assets/jobpngimg/noConnection.png";
   static String passwordimg = "Assets/jobstop_assets/jobpngimg/password.png";
   static String policyaccepted = "Assets/jobstop_assets/jobpngimg/pol.png";
   static String appuse = "Assets/jobstop_assets/jobpngimg/appuse.png";

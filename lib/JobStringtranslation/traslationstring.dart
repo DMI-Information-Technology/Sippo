@@ -75,7 +75,7 @@ class Apptranslation extends Translations {
           'selecte_address': "Address",
           'login_success': "You Login successfully",
           'success': "Success",
-          'account_created_successfully': "the account has been created successfully.",
+          'account_created_successfully': "the account has been created successfully, want continue to dashboard?",
           'send': "SEND",
           'accept_terms': "I agree to all the terms and conditions requested by Farasah Company.",
           'address_hint': "Address",

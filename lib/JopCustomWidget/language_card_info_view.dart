@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
-
-import '../Jopstobdata/model/profile_model/jobstop_language_info_card_model.dart';
+import '../sippo_data/model/profile_model/jobstop_language_info_card_model.dart';
 
 class LanguageCardInfoView extends StatelessWidget {
   final LanguageInfoCardModel? licm;
