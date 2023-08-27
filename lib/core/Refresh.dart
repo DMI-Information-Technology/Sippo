@@ -10,13 +10,11 @@ class Refresher {
       updateData(newData);
       return true;
     }
-    final filteredData = newData.where((value) {
-      return !currentData.contains(value);
-    }).toList();
+    final isNew = newData.any((value) => !currentData.contains(value));
     print(
-      "Refresh.listUpdater: is the filteredData list after filtered empty ? = ${filteredData.isEmpty}.",
+      "Refresh.listUpdater: is the there is any new data ? = ${isNew}.",
     );
-    if (filteredData.isNotEmpty) {
+    if (isNew) {
       updateData(newData);
       return true;
     }

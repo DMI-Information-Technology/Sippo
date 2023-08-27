@@ -7,7 +7,9 @@ import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
+import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
+
 import '../../JobGlobalclass/routes.dart';
 import '../../JopController/JobDescriptionController/job_description_controller.dart';
 import '../../sippo_custom_widget/list_item_text.dart';
@@ -44,83 +46,70 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     double width = size.width;
+
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Jobstopcolor.backgroud,
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  topJobDescription(),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: context.fromWidth(CustomStyle.s),
-                      vertical: context.fromHeight(CustomStyle.huge),
-                    ),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Obx(
-                              () => SizedBox(
-                                width: width / 2.3,
-                                child: CustomButton(
-                                  onTappeed: () {
-                                    _jobDesController.switchPageView();
-                                  },
-                                  text: "description".tr,
-                                  backgroundColor: _jobDesController
-                                      .changeDescriptionButtonColor(),
-                                ),
-                              ),
-                            ),
-                            Obx(
-                              () => SizedBox(
-                                width: width / 2.3,
-                                child: CustomButton(
-                                  onTappeed: () {
-                                    _jobDesController.switchPageView();
-                                  },
-                                  text: "company".tr,
-                                  backgroundColor: _jobDesController
-                                      .changeCompanyButtonColor(),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: context.fromHeight(CustomStyle.spaceBetween),
-                        ),
-                        Obx(
-                          () => _jobDesController.selectedPageView == 0
-                              ? detailsJobView()
-                              : companyView(),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+      body: BodyWidget(
+        isScrollable: true,
+        isTopScrollable: true,
+        paddingTop: MediaQuery.of(context).viewPadding,
+        paddingContent: MediaQuery.of(context).viewPadding.copyWith(
+              left: context.fromWidth(CustomStyle.paddingValue),
+              right: context.fromWidth(CustomStyle.paddingValue),
             ),
-          ),
-          Align(
-            alignment: AlignmentDirectional.bottomCenter,
-            child: Padding(
-              padding: EdgeInsets.all(
-                context.fromWidth(CustomStyle.paddingValue),
-              ),
-              child: Obx(
-                () => bottomButtonScreen[_jobDesController.selectedPageView],
-              ),
+        topScreen: topJobDescription(),
+        child: Column(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Obx(
+                      () => SizedBox(
+                        width: width / 2.3,
+                        child: CustomButton(
+                          onTappeed: () {
+                            _jobDesController.switchPageView();
+                          },
+                          text: "description".tr,
+                          backgroundColor:
+                              _jobDesController.changeDescriptionButtonColor(),
+                        ),
+                      ),
+                    ),
+                    Obx(
+                      () => SizedBox(
+                        width: width / 2.3,
+                        child: CustomButton(
+                          onTappeed: () {
+                            _jobDesController.switchPageView();
+                          },
+                          text: "company".tr,
+                          backgroundColor:
+                              _jobDesController.changeCompanyButtonColor(),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: context.fromHeight(CustomStyle.spaceBetween),
+                ),
+                Obx(
+                  () => _jobDesController.selectedPageView == 0
+                      ? detailsJobView()
+                      : companyView(),
+                ),
+              ],
             ),
-          )
-        ],
+          ],
+        ),
+        paddingBottom:
+            EdgeInsets.all(context.fromWidth(CustomStyle.paddingValue)),
+        bottomScreen: Obx(
+          () => bottomButtonScreen[_jobDesController.selectedPageView],
+        ),
       ),
     );
   }
@@ -383,89 +372,123 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
   }
 
   Widget topJobDescription() {
-    Size size = MediaQuery.of(context).size;
-    double height = size.height;
-    double width = size.width;
     return Stack(
       children: [
-        Container(
-          height: height / 4.5,
-          color: Jobstopcolor.backgroud,
-        ),
-        Positioned(
-          bottom: 0,
-          child: Container(
-            height: height / 7,
-            width: width / 1,
-            color: Jobstopcolor.greyyy,
-            child: Column(
-              children: [
-                SizedBox(
-                  height: height / 22,
+        _setBackgroundStack(),
+        _buildBottomDetailsJobStack(),
+        _buildTopImageDetailsJobStack(),
+      ],
+    );
+  }
+
+  Widget _buildTopImageDetailsJobStack() {
+    return Positioned(
+      width: context.width,
+      top: 0,
+      child: Column(
+        children: [
+          Row(
+            children: [
+              IconButton(
+                icon: Icon(Icons.arrow_back, color: Colors.white),
+                onPressed: () => Get.back(),
+              ),
+              Spacer(),
+              IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  Icons.more_vert,
+                  color: Colors.white,
                 ),
-                Text(
-                  "UI/UX Designer",
-                  style: dmsbold.copyWith(
-                      fontSize: 16, color: Jobstopcolor.primarycolor),
-                ),
-                SizedBox(
-                  height: height / 66,
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: width / 20),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        "Google",
-                        style: dmsregular.copyWith(
-                          fontSize: 16,
-                          color: Jobstopcolor.primarycolor,
-                        ),
-                      ),
-                      Image.asset(
-                        JobstopPngImg.dot,
-                        height: height / 96,
-                      ),
-                      Text(
-                        "California",
-                        style: dmsregular.copyWith(
-                          fontSize: 16,
-                          color: Jobstopcolor.primarycolor,
-                        ),
-                      ),
-                      Image.asset(
-                        JobstopPngImg.dot,
-                        height: height / 96,
-                      ),
-                      Text(
-                        "1 day ago",
-                        style: dmsregular.copyWith(
-                          fontSize: 16,
-                          color: Jobstopcolor.primarycolor,
-                        ),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
+              ),
+            ],
           ),
-        ),
-        Positioned(
-          top: 0,
-          left: 30,
-          right: 30,
-          child: CircleAvatar(
+          CircleAvatar(
             radius: 40,
             backgroundColor: Jobstopcolor.sky,
             child: Image.asset(
               JobstopPngImg.google,
-              height: height / 14,
+              height: context.height / 14,
             ),
           ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildBottomDetailsJobStack() {
+    return Positioned(
+      bottom: 0,
+      child: Container(
+        height: context.height / 7,
+        width: context.width / 1,
+        color: Jobstopcolor.greyyy,
+        child: Column(
+          children: [
+            SizedBox(
+              height: context.height / 22,
+            ),
+            Text(
+              "UI/UX Designer",
+              style: dmsbold.copyWith(
+                  fontSize: 16, color: Jobstopcolor.primarycolor),
+            ),
+            SizedBox(
+              height: context.height / 66,
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: context.width / 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Google",
+                    style: dmsregular.copyWith(
+                      fontSize: 16,
+                      color: Jobstopcolor.primarycolor,
+                    ),
+                  ),
+                  Image.asset(
+                    JobstopPngImg.dot,
+                    height: context.height / 96,
+                  ),
+                  Text(
+                    "California",
+                    style: dmsregular.copyWith(
+                      fontSize: 16,
+                      color: Jobstopcolor.primarycolor,
+                    ),
+                  ),
+                  Image.asset(
+                    JobstopPngImg.dot,
+                    height: context.height / 96,
+                  ),
+                  Text(
+                    "1 day ago",
+                    style: dmsregular.copyWith(
+                      fontSize: 16,
+                      color: Jobstopcolor.primarycolor,
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
         ),
-      ],
+      ),
+    );
+  }
+
+  Widget _setBackgroundStack() {
+    return Container(
+      width: context.width,
+      height: context.height / 3.5,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage(JobstopPngImg.backgroundProf),
+          fit: BoxFit.cover,
+        ),
+      ),
     );
   }
 }

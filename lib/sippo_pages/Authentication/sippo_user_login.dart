@@ -136,6 +136,7 @@ class SippoUserLogin extends StatelessWidget {
                               "Remember_me".tr,
                               style: dmsregular.copyWith(
                                 fontSize: FontSize.label(context),
+                                // fontSize: 12.sp,
                                 color: Jobstopcolor.grey,
                               ),
                             ),
@@ -164,6 +165,7 @@ class SippoUserLogin extends StatelessWidget {
                             "Forget_Password".tr,
                             style: dmsregular.copyWith(
                                 fontSize: FontSize.label(context),
+                                // fontSize: 12.sp,
                                 color: Jobstopcolor.primarycolor),
                             textAlign: TextAlign.end,
                           ),

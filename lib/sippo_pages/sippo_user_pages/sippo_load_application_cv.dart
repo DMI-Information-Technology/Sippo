@@ -39,102 +39,102 @@ class _SippoLoadApplicationCVState extends State<SippoLoadApplicationCV> {
   Widget build(BuildContext context) {
     return LoadingScaffold(
       controller: loadingController,
-      appBar: _buildAppBar(),
       body: BodyWidget(
         isScrollable: true,
-        child: Column(
-          children: [
-            _buildTopInformationApplication(context),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: context.fromWidth(CustomStyle.paddingValue),
-                vertical: context.fromHeight(CustomStyle.xxl),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Upload CV".tr,
-                    style: dmsbold.copyWith(
-                      fontSize: FontSize.title5(context),
-                      color: Jobstopcolor.primarycolor,
-                    ),
-                  ),
-                  SizedBox(height: context.fromHeight(CustomStyle.huge)),
-                  Text(
-                    "Add your CV/Resume to apply for a job".tr,
-                    style: dmsregular.copyWith(
-                      fontSize: FontSize.label(context),
-                      color: Jobstopcolor.darkgrey,
-                    ),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                  SizedBox(
-                    height: context.fromHeight(CustomStyle.l),
-                  ),
-                  Obx(
-                    () => FileUploadWidget(
-                      // isJobApplied: true,
-                      title: 'Upload your CV',
-                      onUploadTapped: () async {
-                        loadingController.loading = true;
-                        await _loadCv.uploadCvFile();
-                        Future.delayed(
-                          Duration(seconds: 3),
-                          () => loadingController.loading = false,
-                        );
-                      },
-                      onDeletedFile: () async {
-                        await _loadCv.removeCvFile();
-                      },
-                      isUploaded: !_loadCv.isCvJobApplyNull,
-                    ),
-                  ),
-                  SizedBox(height: context.fromHeight(CustomStyle.l)),
-                  Text(
-                    "Informations".tr,
-                    style: dmsbold.copyWith(fontSize: FontSize.title5(context)),
-                  ),
-                  SizedBox(height: context.fromHeight(CustomStyle.l)),
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      boxShadow: const [
-                        BoxShadow(
-                          blurRadius: 5,
-                          color: Jobstopcolor.greyyy,
-                        )
-                      ],
-                    ),
-                    child: TextField(
-                      controller: information,
-                      style: dmsregular.copyWith(
-                        fontSize: FontSize.label(context),
-                        color: Jobstopcolor.primarycolor,
-                      ),
-                      cursorColor: Jobstopcolor.grey,
-                      maxLines: 4,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          borderSide: BorderSide.none,
-                        ),
-                        fillColor: Jobstopcolor.white,
-                        filled: true,
-                        hintText:
-                            "Explain why you are the right person for this job"
-                                .tr,
-                        hintStyle: dmsregular.copyWith(
-                          fontSize: FontSize.label(context),
-                          color: Jobstopcolor.grey,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
+        isTopScrollable: true,
+        paddingTop: MediaQuery.of(context).viewPadding,
+        paddingContent: MediaQuery.of(context).viewPadding.copyWith(
+              left: context.fromWidth(CustomStyle.paddingValue),
+              right: context.fromWidth(CustomStyle.paddingValue),
             ),
-          ],
+        topScreen: topJobDescription(),
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: context.fromWidth(CustomStyle.paddingValue),
+            vertical: context.fromHeight(CustomStyle.xxl),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Upload CV".tr,
+                style: dmsbold.copyWith(
+                  fontSize: FontSize.title5(context),
+                  color: Jobstopcolor.primarycolor,
+                ),
+              ),
+              SizedBox(height: context.fromHeight(CustomStyle.huge)),
+              Text(
+                "Add your CV/Resume to apply for a job".tr,
+                style: dmsregular.copyWith(
+                  fontSize: FontSize.label(context),
+                  color: Jobstopcolor.darkgrey,
+                ),
+                overflow: TextOverflow.ellipsis,
+              ),
+              SizedBox(
+                height: context.fromHeight(CustomStyle.l),
+              ),
+              Obx(
+                () => FileUploadWidget(
+                  // isJobApplied: true,
+                  title: 'Upload your CV',
+                  onUploadTapped: () async {
+                    loadingController.loading = true;
+                    await _loadCv.uploadCvFile();
+                    Future.delayed(
+                      Duration(seconds: 3),
+                      () => loadingController.loading = false,
+                    );
+                  },
+                  onDeletedFile: () async {
+                    await _loadCv.removeCvFile();
+                  },
+                  isUploaded: !_loadCv.isCvJobApplyNull,
+                ),
+              ),
+              SizedBox(height: context.fromHeight(CustomStyle.l)),
+              Text(
+                "Informations".tr,
+                style: dmsbold.copyWith(fontSize: FontSize.title5(context)),
+              ),
+              SizedBox(height: context.fromHeight(CustomStyle.l)),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: const [
+                    BoxShadow(
+                      blurRadius: 5,
+                      color: Jobstopcolor.greyyy,
+                    )
+                  ],
+                ),
+                child: TextField(
+                  controller: information,
+                  style: dmsregular.copyWith(
+                    fontSize: FontSize.label(context),
+                    color: Jobstopcolor.primarycolor,
+                  ),
+                  cursorColor: Jobstopcolor.grey,
+                  maxLines: 4,
+                  decoration: InputDecoration(
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(20),
+                      borderSide: BorderSide.none,
+                    ),
+                    fillColor: Jobstopcolor.white,
+                    filled: true,
+                    hintText:
+                        "Explain why you are the right person for this job".tr,
+                    hintStyle: dmsregular.copyWith(
+                      fontSize: FontSize.label(context),
+                      color: Jobstopcolor.grey,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
         paddingBottom:
             EdgeInsets.all(context.fromHeight(CustomStyle.paddingValue)),
@@ -242,6 +242,127 @@ class _SippoLoadApplicationCVState extends State<SippoLoadApplicationCV> {
           child: Image.asset(JobstopPngImg.dots),
         ),
       ],
+    );
+  }
+
+  Widget topJobDescription() {
+    return Stack(
+      children: [
+        _setBackgroundStack(),
+        _buildBottomDetailsJobStack(),
+        _buildTopImageDetailsJobStack(),
+      ],
+    );
+  }
+
+  Widget _buildTopImageDetailsJobStack() {
+    return Positioned(
+      width: context.width,
+      top: 0,
+      child: Column(
+        children: [
+          Row(
+            children: [
+              IconButton(
+                icon: Icon(Icons.arrow_back, color: Colors.white),
+                onPressed: () => Get.back(),
+              ),
+              Spacer(),
+              IconButton(
+                onPressed: () {},
+                icon: Icon(
+                  Icons.more_vert,
+                  color: Colors.white,
+                ),
+              ),
+            ],
+          ),
+          CircleAvatar(
+            radius: 40,
+            backgroundColor: Jobstopcolor.sky,
+            child: Image.asset(
+              JobstopPngImg.google,
+              height: context.height / 14,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildBottomDetailsJobStack() {
+    return Positioned(
+      bottom: 0,
+      child: Container(
+        height: context.height / 7,
+        width: context.width / 1,
+        color: Jobstopcolor.greyyy,
+        child: Column(
+          children: [
+            SizedBox(
+              height: context.height / 22,
+            ),
+            Text(
+              "UI/UX Designer",
+              style: dmsbold.copyWith(
+                  fontSize: 16, color: Jobstopcolor.primarycolor),
+            ),
+            SizedBox(
+              height: context.height / 66,
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: context.width / 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Google",
+                    style: dmsregular.copyWith(
+                      fontSize: 16,
+                      color: Jobstopcolor.primarycolor,
+                    ),
+                  ),
+                  Image.asset(
+                    JobstopPngImg.dot,
+                    height: context.height / 96,
+                  ),
+                  Text(
+                    "California",
+                    style: dmsregular.copyWith(
+                      fontSize: 16,
+                      color: Jobstopcolor.primarycolor,
+                    ),
+                  ),
+                  Image.asset(
+                    JobstopPngImg.dot,
+                    height: context.height / 96,
+                  ),
+                  Text(
+                    "1 day ago",
+                    style: dmsregular.copyWith(
+                      fontSize: 16,
+                      color: Jobstopcolor.primarycolor,
+                    ),
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _setBackgroundStack() {
+    return Container(
+      width: context.width,
+      height: context.height / 3.5,
+      decoration: BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage(JobstopPngImg.backgroundProf),
+          fit: BoxFit.cover,
+        ),
+      ),
     );
   }
 }

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
+import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
+import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 
@@ -51,8 +53,9 @@ class _LanguageUserAddState extends State<LanguageUserAdd> {
     return Scaffold(
       appBar: AppBar(),
       body: Padding(
-        padding:
-            EdgeInsets.symmetric(horizontal: width / 26, vertical: height / 96),
+        padding: EdgeInsets.symmetric(
+          horizontal: context.fromWidth(CustomStyle.paddingValue),
+        ),
         child: Column(
           children: [
             SizedBox(
@@ -60,18 +63,19 @@ class _LanguageUserAddState extends State<LanguageUserAdd> {
               child: Text(
                 "add_language".tr,
                 style: dmsbold.copyWith(
-                  fontSize: height / 42,
+                  fontSize: FontSize.title3(context),
                   color: Jobstopcolor.primarycolor,
                 ),
                 textAlign: TextAlign.start,
               ),
             ),
-            SizedBox(height: height / 58),
+            SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
             Container(
-              padding: EdgeInsets.all(height / 52),
+              padding: EdgeInsets.all(context.fromHeight(CustomStyle.xl)),
               decoration: BoxDecoration(
-                  color: Jobstopcolor.white,
-                  borderRadius: BorderRadius.circular(height / 32)),
+                color: Jobstopcolor.white,
+                borderRadius: BorderRadius.circular(height / 32),
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -81,10 +85,7 @@ class _LanguageUserAddState extends State<LanguageUserAdd> {
                     height: height / 28,
                   ),
                   ListTile(
-                    title: Text(
-                      "first_language".tr,
-                      style: dmsbold.copyWith(fontSize: height / 42),
-                    ),
+                    title: _buildTitleText(context, "first_language".tr),
                     trailing: Obx(
                       () => Checkbox(
                         value: langEAController.languageInfo.firstLanguage ??
@@ -99,9 +100,9 @@ class _LanguageUserAddState extends State<LanguageUserAdd> {
                 ],
               ),
             ),
-            SizedBox(height: height / 58),
+            SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
             Container(
-              padding: EdgeInsets.all(height / 52),
+              padding: EdgeInsets.all(context.fromHeight(CustomStyle.xl)),
               decoration: BoxDecoration(
                   color: Jobstopcolor.white,
                   borderRadius: BorderRadius.circular(height / 32)),
@@ -109,10 +110,7 @@ class _LanguageUserAddState extends State<LanguageUserAdd> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   ListTile(
-                    title: Text(
-                      "talking".tr,
-                      style: dmsbold.copyWith(fontSize: height / 42),
-                    ),
+                    title: _buildTitleText(context, "talking".tr),
                     subtitle: Obx(
                       () => Text(
                           langEAController.languageInfo.talkingLevel ?? ""),
@@ -126,10 +124,7 @@ class _LanguageUserAddState extends State<LanguageUserAdd> {
                     height: height / 28,
                   ),
                   ListTile(
-                    title: Text(
-                      "Written",
-                      style: dmsbold.copyWith(fontSize: height / 42),
-                    ),
+                    title: _buildTitleText(context, "Written".tr),
                     subtitle: Obx(
                       () => Text(
                         langEAController.languageInfo.writtenLevel ?? "",
@@ -200,10 +195,7 @@ class _LanguageUserAddState extends State<LanguageUserAdd> {
         padding: EdgeInsets.symmetric(horizontal: height / 68),
         child: Obx(() => Row(
               children: [
-                Text(
-                  "language".tr,
-                  style: dmsbold.copyWith(fontSize: height / 42),
-                ),
+                _buildTitleText(context, "language".tr),
                 Spacer(),
                 ClipOval(
                   child: Image.asset(
@@ -223,6 +215,15 @@ class _LanguageUserAddState extends State<LanguageUserAdd> {
     );
   }
 
+  Text _buildTitleText(BuildContext context, String text) {
+    return Text(
+      text,
+      style: dmsmedium.copyWith(
+        fontSize: FontSize.title4(context),
+      ),
+    );
+  }
+
   // void _showLevelLanguageDialog() {}
 
   void _showAddLanguageDialog() {
@@ -233,7 +234,7 @@ class _LanguageUserAddState extends State<LanguageUserAdd> {
       delegate: CustomSearchDelegate(
           pageTitle: "search_language".tr,
           suggestions: flagList,
-          spaceBetween: height / 38,
+          spaceBetween: context.fromHeight(CustomStyle.spaceBetween),
           onSelectedSearch: (lang) {
             langEAController.setLanguageInfo(
               languageName: lang?.keys.first,
