@@ -1,6 +1,6 @@
 import 'package:jobspot/sippo_data/model/auth_model/property_error_model.dart';
 
-class UserPropError extends PropertyError {
+class UserPropError extends EntityPropertyError {
   UserPropError({
     super.phone,
     super.name,

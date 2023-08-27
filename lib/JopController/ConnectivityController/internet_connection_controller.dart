@@ -1,18 +1,28 @@
+import 'dart:async';
+
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
-import '../../JopCustomWidget/error_messages_dialog_snackbar/error_messages.dart'
+import '../../sippo_custom_widget/error_messages_dialog_snackbar/error_messages.dart'
     as errorMessage;
 
 class InternetConnectionController extends GetxController {
   static InternetConnectionController get instance => Get.find();
+  StreamController<bool> _connectionStreamController =
+      StreamController<bool>.broadcast();
+
+  Stream<bool> get isConnectedStream => _connectionStreamController.stream;
 
   final _isConnected = true.obs;
 
   bool get isConnected => _isConnected.isTrue;
 
-  void set isConnected(bool value) => _isConnected.value = value;
+  void set isConnected(bool value) {
+    print("from is connected: $value");
+    _isConnected.value = value;
+    _connectionStreamController.add(value);
+  }
 
   @override
   void onInit() {
@@ -23,11 +33,11 @@ class InternetConnectionController extends GetxController {
 
   Future<void> checkInternetConnection() async {
     final connectivityResult = await (Connectivity().checkConnectivity());
-    _isConnected.value = connectivityResult != ConnectivityResult.none;
+    isConnected = connectivityResult != ConnectivityResult.none;
   }
 
   void _updateConnectionStatus(ConnectivityResult result) {
-    _isConnected.value = result != ConnectivityResult.none;
+    isConnected = result != ConnectivityResult.none;
   }
 
   bool isConnectionLostWithDialog() {
@@ -36,5 +46,11 @@ class InternetConnectionController extends GetxController {
       return true;
     }
     return false;
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
+    _connectionStreamController.close();
   }
 }

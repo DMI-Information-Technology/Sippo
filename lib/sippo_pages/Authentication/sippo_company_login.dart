@@ -3,24 +3,14 @@ import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
-import 'package:jobspot/JopController/AuthenticationController/sippo_auth_controller.dart';
 import '../../JobGlobalclass/jobstopprefname.dart';
 import '../../JobGlobalclass/routes.dart';
-import '../../JobThemes/themecontroller.dart';
-import '../../JopController/AuthenticationController/sippo_login_company_controller.dart';
-import '../../JopController/ConnectivityController/internet_connection_controller.dart';
-import '../../JopCustomWidget/overly_loading.dart';
-import '../../JopCustomWidget/widgets.dart';
+import '../../JopController/AuthenticationController/sippo_company_login_controller.dart';
+import '../../sippo_custom_widget/loading_view_widgets/overly_loading.dart';
+import '../../sippo_custom_widget/widgets.dart';
 
-class SippoCompanyLogin extends StatefulWidget {
+class SippoCompanyLogin extends StatelessWidget {
   const SippoCompanyLogin({Key? key}) : super(key: key);
-
-  @override
-  State<SippoCompanyLogin> createState() => _SippoCompanyLoginState();
-}
-
-class _SippoCompanyLoginState extends State<SippoCompanyLogin> {
-  final JobstopThemecontroler themedata = Get.put(JobstopThemecontroler());
 
   Color getColor(Set<MaterialState> states) {
     const Set<MaterialState> interactiveStates = <MaterialState>{
@@ -34,23 +24,19 @@ class _SippoCompanyLoginState extends State<SippoCompanyLogin> {
     return Jobstopcolor.lightprimary;
   }
 
-  final GlobalKey<FormState> _formKey = GlobalKey();
-  final _netController = InternetConnectionController.instance;
-  final _loginCompanyController = Get.put(LoginCompanyController());
-  final _authController = AuthController.instance;
-
-  void _showSuccessAlert() {
-    Get.dialog(CustomAlertDialog(
-      imageAsset: JobstopPngImg.successful1,
-      title: "success".tr,
-      description: "You Login successfully".tr,
-      confirmBtnColor: Jobstopcolor.primarycolor,
-      onConfirm: () => Get.offAllNamed(SippoRoutesPages.sippoCompanyDashboard),
-    )).then((value) => Get.offAllNamed(SippoRoutesPages.sippoCompanyDashboard));
-  }
+  // void _showSuccessAlert() {
+  //   Get.dialog(CustomAlertDialog(
+  //     imageAsset: JobstopPngImg.successful1,
+  //     title: "success".tr,
+  //     description: "You Login successfully".tr,
+  //     confirmBtnColor: Jobstopcolor.primarycolor,
+  //     onConfirm: () => Get.offAllNamed(SippoRoutes.sippoCompanyDashboard),
+  //   )).then((value) => Get.offAllNamed(SippoRoutes.sippoCompanyDashboard));
+  // }
 
   @override
   Widget build(BuildContext context) {
+    final controller = CompanyLoginController.instance;
     Size size = MediaQuery.of(context).size;
     double height = size.height;
     double width = size.width;
@@ -65,16 +51,14 @@ class _SippoCompanyLoginState extends State<SippoCompanyLogin> {
                 vertical: height / 26,
               ),
               child: Form(
-                key: _formKey,
+                key: controller.formKey,
                 child: Column(
                   children: [
                     Text(
                       "welcome_back_login_title".tr,
                       style: dmsbold.copyWith(
                         fontSize: height / 30,
-                        color: themedata.isdark
-                            ? Jobstopcolor.white
-                            : Jobstopcolor.primarycolor,
+                        color: Jobstopcolor.primarycolor,
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -97,14 +81,14 @@ class _SippoCompanyLoginState extends State<SippoCompanyLogin> {
                         Icons.phone_outlined,
                         color: Jobstopcolor.primarycolor,
                       ),
-                      validatorCallback: (value) {
+                      validator: (value) {
                         if (value == null || value.trim().isEmpty) {
                           return "phonenumber_is_req".tr;
                         }
                         return null;
                       },
                       onChangedText: (value) {
-                        _loginCompanyController.phoneNumber = value.trim();
+                        controller.phoneNumber = value.trim();
                       },
                     ),
                     SizedBox(
@@ -124,7 +108,7 @@ class _SippoCompanyLoginState extends State<SippoCompanyLogin> {
                         return null;
                       },
                       onChangedText: (value) {
-                        _loginCompanyController.password = value.trim();
+                        controller.password = value.trim();
                       },
                     ),
                     SizedBox(
@@ -145,10 +129,9 @@ class _SippoCompanyLoginState extends State<SippoCompanyLogin> {
                                 fillColor: MaterialStateProperty.resolveWith(
                                   getColor,
                                 ),
-                                value:
-                                    _loginCompanyController.isRememberMeChecked,
+                                value: controller.isRememberMeChecked,
                                 onChanged: (bool? value) {
-                                  _loginCompanyController.isRememberMeChecked =
+                                  controller.isRememberMeChecked =
                                       value ?? false;
                                 },
                               ),
@@ -182,7 +165,10 @@ class _SippoCompanyLoginState extends State<SippoCompanyLogin> {
                       text: "Login".tr,
                       backgroundColor: Jobstopcolor.primarycolor,
                       textColor: Jobstopcolor.white,
-                      onTappeed: _onSubmitLogin,
+                      onTappeed: () async {
+                        await CompanyLoginController.instance
+                            .onSubmittedSignup();
+                      },
                     ),
                     SizedBox(
                       height: height / 35,
@@ -198,7 +184,7 @@ class _SippoCompanyLoginState extends State<SippoCompanyLogin> {
                         ),
                         TextButton(
                           onPressed: () {
-                            Get.offAndToNamed(SippoRoutesPages.companysignup);
+                            Get.offAndToNamed(SippoRoutes.companysignup);
                           },
                           child: Text(
                             "Sign_up".tr,
@@ -221,7 +207,7 @@ class _SippoCompanyLoginState extends State<SippoCompanyLogin> {
                     ),
                     CustomButton(
                       onTappeed: () {
-                        Get.offAndToNamed(SippoRoutesPages.loginpage);
+                        Get.offAndToNamed(SippoRoutes.loginpage);
                       },
                       text: "User_Login".tr,
                       backgroundColor: Jobstopcolor.white,
@@ -246,7 +232,7 @@ class _SippoCompanyLoginState extends State<SippoCompanyLogin> {
           backgroundColor: Jobstopcolor.white,
         ),
         Obx(
-          () => _authController.states.isLoading
+          () => controller.authState.isLoading
               ? const LoadingOverlay()
               : const SizedBox.shrink(),
         ),
@@ -254,24 +240,13 @@ class _SippoCompanyLoginState extends State<SippoCompanyLogin> {
     );
   }
 
-  void _onSubmitLogin() async {
-    if (_formKey.currentState!.validate()) {
-      if (!_netController.isConnectionLostWithDialog()) {
-        await _authController.companyLogin(
-          _loginCompanyController.companyForm,
-        );
-      }
-    }
-    if (_authController.states.isSuccess) {
-      _showSuccessAlert();
-    }
-  }
-
   void _onPressedForgetPassword() {
-    if (_loginCompanyController.phoneNumber.isNotEmpty) {
+    final controller = CompanyLoginController.instance;
+
+    if (controller.phoneNumber.isNotEmpty) {
       Get.toNamed(
-        SippoRoutesPages.forgetpasswordpage,
-        arguments: {phoneNumberArg: _loginCompanyController.phoneNumber},
+        SippoRoutes.forgetpasswordpage,
+        arguments: {phoneNumberArg: controller.phoneNumber},
       );
     } else {
       Get.dialog(

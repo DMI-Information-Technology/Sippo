@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
-import 'package:jobspot/JobThemes/themecontroller.dart';
-import '../Joborderpages/jobstop_oderpage.dart';
-import '../Jobpostpages/jobstop_posting.dart';
-import '../sippo_message_pages/jobstop_messageing.dart';
-import 'sippo_user_home.dart';
+import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
+import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
+import '../../JopController/UserDashboardController/user_dashboard_controller.dart';
 
 class SippoUserDashboard extends StatefulWidget {
   const SippoUserDashboard({Key? key}) : super(key: key);
@@ -16,110 +14,82 @@ class SippoUserDashboard extends StatefulWidget {
 }
 
 class _SippoUserDashboardState extends State<SippoUserDashboard> {
-  dynamic size;
-  double height = 0.00;
-  double width = 0.00;
+  final controller = Get.put(UserDashBoardController());
 
-  final themedata = Get.put(JobstopThemecontroler());
-
-  int _selectedItemIndex = 0;
-
-  final List<Widget> _pages = const [
-    SippoUserHome(),
-    JobstopPosting(),
-    JobMessageing(),
-    JobstopOrder(),
-  ];
-
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void setState(fn) {
-    if (mounted) super.setState(fn);
-  }
-
-  Widget _bottomTabBar() {
-    return BottomNavigationBar(
-      currentIndex: _selectedItemIndex,
-      onTap: _onTap,
-      backgroundColor: Jobstopcolor.transparent,
-      type: BottomNavigationBarType.fixed,
-      showSelectedLabels: false,
-      showUnselectedLabels: false,
-      fixedColor: themedata.isdark ? Jobstopcolor.white : Jobstopcolor.grey,
-      elevation: 0,
-      items: <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
-          icon: Image.asset(
-            JobstopPngImg.home,
-            height: height / 36,
+  Widget _bottomTabBar(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return Obx(
+      () => BottomNavigationBar(
+        currentIndex: controller.selectedItemIndex,
+        onTap: (value) => controller.selectedItemIndex = value,
+        backgroundColor: Jobstopcolor.transparent,
+        type: BottomNavigationBarType.fixed,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        fixedColor: Jobstopcolor.grey,
+        elevation: 0,
+        items: <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Image.asset(
+              JobstopPngImg.home,
+              height: context.fromHeight(CustomStyle.l),
+            ),
+            activeIcon: Image.asset(
+              JobstopPngImg.home,
+              height: context.fromHeight(CustomStyle.l),
+              color: Jobstopcolor.primarycolor,
+            ),
+            label: '',
           ),
-          activeIcon: Image.asset(
-            JobstopPngImg.home,
-            height: height / 36,
-            color: themedata.isdark
-                ? Jobstopcolor.white
-                : Jobstopcolor.primarycolor,
+          BottomNavigationBarItem(
+            icon: Image.asset(
+              JobstopPngImg.posting,
+              height: context.fromHeight(CustomStyle.l),
+            ),
+            activeIcon: Image.asset(
+              JobstopPngImg.posting,
+              height: context.fromHeight(CustomStyle.l),
+              color: Jobstopcolor.primarycolor,
+            ),
+            label: '',
           ),
-          label: '',
-        ),
-        BottomNavigationBarItem(
-          icon: Image.asset(
-            JobstopPngImg.posting,
-            height: height / 36,
+          BottomNavigationBarItem(
+            icon: Image.asset(
+              JobstopPngImg.notifiBell,
+              height: context.fromHeight(CustomStyle.l),
+              color: Jobstopcolor.grey,
+              colorBlendMode: BlendMode.srcIn,
+            ),
+            activeIcon: Image.asset(
+              JobstopPngImg.notifiBell,
+              height: context.fromHeight(CustomStyle.l),
+              color: Jobstopcolor.primarycolor,
+              colorBlendMode: BlendMode.srcIn,
+            ),
+            label: '',
           ),
-          activeIcon: Image.asset(JobstopPngImg.posting,
-              height: height / 36,
-              color: themedata.isdark
-                  ? Jobstopcolor.white
-                  : Jobstopcolor.primarycolor),
-          label: "",
-        ),
-        BottomNavigationBarItem(
-          icon: Image.asset(
-            JobstopPngImg.message,
-            height: height / 36,
+          BottomNavigationBarItem(
+            icon: Image.asset(
+              JobstopPngImg.order,
+              height: context.fromHeight(CustomStyle.l),
+            ),
+            activeIcon: Image.asset(
+              JobstopPngImg.order,
+              height: context.fromHeight(CustomStyle.l),
+              color: Jobstopcolor.primarycolor,
+            ),
+            label: '',
           ),
-          activeIcon: Image.asset(JobstopPngImg.message,
-              height: height / 36,
-              color: themedata.isdark
-                  ? Jobstopcolor.white
-                  : Jobstopcolor.primarycolor),
-          label: "",
-        ),
-        BottomNavigationBarItem(
-          icon: Image.asset(
-            JobstopPngImg.order,
-            height: height / 36,
-          ),
-          activeIcon: Image.asset(JobstopPngImg.order,
-              height: height / 36,
-              color: themedata.isdark
-                  ? Jobstopcolor.white
-                  : Jobstopcolor.primarycolor),
-          label: '',
-        ),
-      ],
+        ],
+      ),
     );
-  }
-
-  void _onTap(int index) {
-    setState(() {
-      _selectedItemIndex = index;
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    size = MediaQuery.of(context).size;
-    height = size.height;
-    width = size.width;
     return Scaffold(
-      bottomNavigationBar: _bottomTabBar(),
-      body: _pages[_selectedItemIndex],
+      bottomNavigationBar: _bottomTabBar(context),
+      body: Obx(() => controller.pages[controller.selectedItemIndex]),
       floatingActionButtonLocation:
           FloatingActionButtonLocation.miniCenterDocked,
       floatingActionButton: FloatingActionButton(

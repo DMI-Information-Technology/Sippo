@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:jobspot/utils/api_endpoints.dart' as endpoints;
+import 'package:jobspot/core/api_endpoints.dart' as endpoints;
 
 import 'package:http/http.dart' as http;
 
@@ -13,10 +13,8 @@ class SpecializationRepo {
         Uri.parse("${endpoints.baseUrl}/${endpoints.specializationEndpoint}"),
       );
       if (response.statusCode == 200) {
-        final responseData =
-            jsonDecode(response.body) as List<dynamic>;
+        final responseData = jsonDecode(response.body) as List<dynamic>;
         print(responseData);
-
         return responseData
             .map((item) => SpecializationModel.fromJson(item))
             .toList();

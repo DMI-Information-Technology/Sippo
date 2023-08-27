@@ -1,8 +1,17 @@
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
+import 'package:jobspot/JobGlobalclass/text_font_size.dart';
+import 'package:jobspot/sippo_custom_widget/rounded_border_radius_card_widget.dart';
+import 'package:jobspot/sippo_custom_widget/widgets.dart';
+
+import '../../sippo_custom_widget/container_bottom_sheet_widget.dart';
+import '../../sippo_custom_widget/setting_item_widget.dart';
+import '../sippo_user_pages/no_resource_screen.dart';
 
 class JobstopOrder extends StatefulWidget {
   const JobstopOrder({Key? key}) : super(key: key);
@@ -16,10 +25,27 @@ class _JobstopOrderState extends State<JobstopOrder> {
   double height = 0.00;
   double width = 0.00;
   int selectlist = 0;
-  List<String> imagelist = [JobstopPngImg.google,JobstopPngImg.dribbble,JobstopPngImg.twitterlogo];
-  List<String> bottomimg = [JobstopPngImg.subtract,JobstopPngImg.union,JobstopPngImg.deleted,JobstopPngImg.applay];
-  List<String> bottomname = ["Send message", "Shared","Delete","Apply"];
-  List<String> name = ["UI/UX Designer", "Lead Designer","UX Researcher"];
+  final List<String> imagelist = [
+    JobstopPngImg.google,
+    JobstopPngImg.dribbble,
+    JobstopPngImg.twitterlogo,
+    JobstopPngImg.apple,
+    JobstopPngImg.facebooklogo,
+  ];
+  List<String> bottomimg = [
+    JobstopPngImg.subtract,
+    JobstopPngImg.union,
+    JobstopPngImg.deleted,
+    JobstopPngImg.applay
+  ];
+  final List<String> bottomname = ["Send message", "Shared", "Delete", "Apply"];
+  final List<String> name = [
+    "UI/UX Designer",
+    "Lead Designer",
+    "UX Researcher",
+  ];
+  int _selectedOption = -1;
+
   @override
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
@@ -27,209 +53,340 @@ class _JobstopOrderState extends State<JobstopOrder> {
     width = size.width;
     return Scaffold(
       appBar: AppBar(
-        leading: Container(),
-        title:  Text("Save_Job".tr,style: dmsbold.copyWith(fontSize: 20),),
+        centerTitle: true,
+        title: Text(
+          "Save_Job".tr,
+          style: dmsbold.copyWith(fontSize: 20),
+        ),
         actions: [
           Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Text("Delete all",style: dmsbold.copyWith(fontSize: 14,color: Jobstopcolor.orenge),),
+            padding: const EdgeInsets.all(kToolbarHeight / 3),
+            child: InkWell(
+              onTap: () {},
+              child: AutoSizeText(
+                "Delete all",
+                style: dmsregular.copyWith(
+                  fontSize: FontSize.label(context),
+                  color: Jobstopcolor.secondary,
+                ),
+              ),
+            ),
           )
         ],
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding:  EdgeInsets.symmetric(horizontal: width/26,vertical: height/96),
-          child: Column(
-            children: [
-              // SizedBox(height: height/36,),
-              // Text("No Savings",style: dmsbold.copyWith(fontSize: 16,color: Jobstopcolor.primarycolor),),
-              // SizedBox(height: height/36,),
-              // Text("You don't have any jobs saved, please\nfind it in search to save jobs",style: dmsregular.copyWith(fontSize: 12,color: Jobstopcolor.darkgrey),textAlign: TextAlign.center,),
-              // SizedBox(height: height/10,),
-              // Image.asset(JobstopPngImg.nosavejob,height: height/4,),
-              // SizedBox(height: height/8,),
-              // Center(
-              //   child: Container(
-              //     height: height/18,
-              //     width: width/1.5,
-              //     decoration: BoxDecoration(
-              //       borderRadius: BorderRadius.circular(5),
-              //       color: Jobstopcolor.primarycolor,
-              //     ),
-              //     child: Center(child: Text("Find a job",style: dmsbold.copyWith(fontSize: 14,color: Jobstopcolor.white),)),
-              //   ),
-              // ),
-
-              ListView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemCount: imagelist.length,
-                itemBuilder: (context, index) {
-                  return InkWell(
-                    highlightColor: Jobstopcolor.transparent,
-                    splashColor: Jobstopcolor.transparent,
-                    onTap: () {
-                      // Navigator.push(context, MaterialPageRoute(builder: (context) {
-                      //   return const Specialization();
-                      // },));
-                    },
-                    child: Container(
-                      margin: EdgeInsets.only(bottom: height/36),
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: Jobstopcolor.white,
-                          boxShadow: const [
-                            BoxShadow(
-                              blurRadius: 5,
-                              color: Jobstopcolor.greyyy,
-                            )
-                          ]
-                      ),
-                      child:  Padding(
-                        padding:  EdgeInsets.symmetric(horizontal: width/26,vertical: height/46),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              children: [
-                                CircleAvatar(
-                                  radius: 22,
-                                  backgroundColor: Jobstopcolor.greyyy,
-                                  child: Image.asset(imagelist[index].toString(),height: height/26,),
-                                ),
-                                const Spacer(),
-                                InkWell(
-                                  onTap: () {
-                                    _showlist();
-                                  },
-                                    child: Image.asset(JobstopPngImg.dots,height: height/36,color: Jobstopcolor.black,)),
-                              ],
-                            ),
-                            SizedBox(height: height/66,),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(name[index].toString(),style: dmsbold.copyWith(fontSize: 14,color: Jobstopcolor.black),),
-                                SizedBox(height: height/150,),
-                                Text("Google inc . California, USA",style: dmsregular.copyWith(fontSize: 12,color: Jobstopcolor.darkgrey),),
-                              ],
-                            ),
-                            SizedBox(height: height/46,),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  height: height/28,
-                                  width: width/4.2,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5),
-                                      color: Jobstopcolor.greyyy
-                                  ),
-                                  child:  Center(child: Text("Design",style: dmsregular.copyWith(fontSize: 10,color: Jobstopcolor.darkgrey))),),
-                                Container(
-                                  height: height/28,
-                                  width: width/4.2,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5),
-                                      color: Jobstopcolor.greyyy
-                                  ),
-                                  child:  Center(child: Text("Full time",style: dmsregular.copyWith(fontSize: 10,color: Jobstopcolor.darkgrey))),),
-                                Container(
-                                  height: height/28,
-                                  width: width/3.3,
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(5),
-                                      color: Jobstopcolor.greyyy
-                                  ),
-                                  child:  Center(child: Text("Senior designer",style: dmsregular.copyWith(fontSize: 10,color: Jobstopcolor.darkgrey))),),
-                              ],
-                            ),
-                            SizedBox(height: height/46,),
-                            Row(
-                              children: [
-                                Text("25 minute ago",style: dmsregular.copyWith(fontSize: 10,color: Jobstopcolor.grey),),
-                                const Spacer(),
-                                Text("\$15K",style: dmsbold.copyWith(fontSize: 14,color: Jobstopcolor.primarycolor),),
-                                Text("/Mo",style: dmsregular.copyWith(fontSize: 12,color: Jobstopcolor.grey),),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ],
-          ),
-        ),
+      body: Column(
+        mainAxisAlignment: imagelist.isEmpty
+            ? MainAxisAlignment.center
+            : MainAxisAlignment.start,
+        children: [
+          imagelist.isEmpty ? _buildNoResourceMessage() : _buildSavedJobList(),
+        ],
       ),
     );
   }
-  _showlist() {
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: Jobstopcolor.transparent,
-      builder: (context) {
-        return StatefulBuilder(
-            builder: (BuildContext context, StateSetter setState) {
-              return Container(
-                decoration: const BoxDecoration(
-                  color: Jobstopcolor.white,
-                  borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(20), topLeft: Radius.circular(20)),
-                ),
-                height: height / 2.5,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: width / 26, vertical: height / 66),
-                  child: Column(
-                    children: [
-                      Container(
-                        height: height / 500,
-                        width: width / 8,
-                        decoration: BoxDecoration(
-                          color: Jobstopcolor.primarycolor,
-                          borderRadius: BorderRadius.circular(5),
-                        ),
-                      ),
-                      SizedBox(height: height / 15,),
-                      ListView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: bottomimg.length,
-                        itemBuilder: (context, index) {
-                        return  InkWell(
-                          splashColor: Jobstopcolor.transparent,
-                          highlightColor: Jobstopcolor.transparent,
-                          onTap: () {
-                            setState(() {
-                              selectlist = index;
-                            });
-                            },
-                          child: Container(
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5),
-                                color: selectlist == index ? Jobstopcolor.primarycolor : Jobstopcolor.white
-                            ),
-                            child: Padding(
-                              padding:  EdgeInsets.symmetric(horizontal: width/26,vertical: height/46),
-                              child: Row(
-                                children: [
-                                  Image.asset(bottomimg[index].toString(),height: height/46,color: selectlist == index ? Jobstopcolor.white : Jobstopcolor.primarycolor,),
-                                  SizedBox(width: width/36,),
-                                  Text(bottomname[index].toString(),style: dmsregular.copyWith(fontSize: 14,color: selectlist == index ? Jobstopcolor.white : Jobstopcolor.primarycolor),)
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
-                      },)
-                    ],
-                  ),
-                ),
-              );
-            });
-      },);
+
+  NoResourceScreen _buildNoResourceMessage() {
+    return NoResourceScreen(
+      title: 'No Savings',
+      description:
+          "You don't have any jobs saved, please\nfind it in search to save jobs",
+      image: JobstopPngImg.nosavejob,
+    );
   }
+
+  Expanded _buildSavedJobList() {
+    return Expanded(
+      child: ListView.builder(
+        itemCount: imagelist.length,
+        itemBuilder: (context, index) {
+          return InkWell(
+            highlightColor: Jobstopcolor.transparent,
+            splashColor: Jobstopcolor.transparent,
+            onTap: () {
+              // const Specialization();
+            },
+            child: SavedJobCard(
+              imagePath: imagelist[index],
+              jobTitle: 'Job Title',
+              companyLocation: 'Company Location',
+              jobType: 'Full time',
+              jobCategory: 'Design',
+              jobPosition: 'Senior Designer',
+              timeAgo: '25 minutes ago',
+              salary: '\$15K',
+              showList: () => _openBottomSheetOption(context, index),
+              isLastWidget: index == imagelist.length - 1,
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  void _openBottomSheetOption(
+    BuildContext context,
+    int savedJobID,
+  ) {
+    Size size = MediaQuery.of(context).size;
+    double width = size.width;
+    Get.bottomSheet(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(25),
+        ),
+      ),
+      backgroundColor: Colors.white,
+      isScrollControlled: true,
+      ContainerBottomSheetWidget.statefulBuilder(
+        builder: (context, setState) => Column(
+          children: [
+            // Obx(
+            //   () =>
+            SettingItemWidget(
+              title: "Shared",
+              icon: Image.asset(
+                JobstopPngImg.union,
+                color: _selectedOption == 0
+                    ? Colors.white
+                    : Jobstopcolor.primarycolor,
+                height: height / 32,
+              ),
+              onTap: () {
+                setState(() => _selectedOption = 0);
+                print("shared saved job with id: $savedJobID");
+              },
+              isHavingTrailingIcon: false,
+              isBordered: false,
+              contentPadding: width / 12,
+              isSelected: _selectedOption == 0,
+            ),
+            // ),
+            // Obx(
+            //   () =>
+            SettingItemWidget(
+              title: 'Delete',
+              icon: Image.asset(
+                JobstopPngImg.deleted,
+                color: _selectedOption == 1
+                    ? Colors.white
+                    : Jobstopcolor.primarycolor,
+                height: height / 32,
+              ),
+              onTap: () {
+                setState(() => _selectedOption = 1);
+                print("delete saved job with id: $savedJobID");
+              },
+              isHavingTrailingIcon: false,
+              isBordered: false,
+              contentPadding: width / 12,
+              isSelected: _selectedOption == 1,
+            ),
+            // ),
+            // Obx(
+            //   () =>
+            SettingItemWidget(
+              title: 'Apply'.tr,
+              icon: Image.asset(
+                JobstopPngImg.applay,
+                color: _selectedOption == 2
+                    ? Colors.white
+                    : Jobstopcolor.primarycolor,
+                height: height / 32,
+              ),
+              onTap: () {
+                setState(() => _selectedOption = 2);
+
+                print("apply saved job with id: $savedJobID");
+              },
+              isHavingTrailingIcon: false,
+              isBordered: false,
+              contentPadding: width / 12,
+              isSelected: _selectedOption == 2,
+            ),
+            // ),
+          ],
+        ),
+      ),
+    ).then((value) => setState(() => _selectedOption = -1));
+  }
+}
+
+class SavedJobCard extends StatelessWidget {
+  final String imagePath;
+  final String jobTitle;
+  final String companyLocation;
+  final String jobType;
+  final String jobCategory;
+  final String jobPosition;
+  final String timeAgo;
+  final String salary;
+  final VoidCallback showList;
+  final bool isLastWidget;
+
+  const SavedJobCard({
+    required this.imagePath,
+    required this.jobTitle,
+    required this.companyLocation,
+    required this.jobType,
+    required this.jobCategory,
+    required this.jobPosition,
+    required this.timeAgo,
+    required this.salary,
+    required this.showList,
+    this.isLastWidget = false,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    double height = size.height;
+    double width = size.width;
+    return RoundedBorderRadiusCardWidget(
+      margin: EdgeInsets.only(
+        right: width / 24,
+        left: width / 24,
+        top: width / 32,
+        bottom: isLastWidget ? width / 16 : 0.0,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _buildTopImageButtonOptionCard(context),
+          SizedBox(height: height / 64),
+          _buildTitleAndDescriptionColumn(context),
+          SizedBox(height: height / 64),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              _buildCustomChip(context, jobType),
+              _buildCustomChip(context, jobCategory),
+              _buildCustomChip(context, jobPosition),
+            ],
+          ),
+          SizedBox(height: height / 64),
+          _buildArriveTimeAndPriceRow(),
+        ],
+      ),
+    );
+  }
+
+  Row _buildTopImageButtonOptionCard(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    double height = size.height;
+    double width = size.width;
+    return Row(
+      children: [
+        CircleAvatar(
+          radius: 22,
+          backgroundColor: Colors.grey[200],
+          child: Image.asset(
+            imagePath,
+            height: height / 28,
+          ),
+        ),
+        const Spacer(),
+        InkWell(
+          onTap: showList, // Replace with your function
+          child: Image.asset(
+            JobstopPngImg.dots,
+            height: (kIsWeb ? height : width) / 16,
+            color: Colors.black,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Column _buildTitleAndDescriptionColumn(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        AutoSizeText(
+          jobTitle,
+          style: TextStyle(
+            fontSize: FontSize.title6(context),
+            color: Colors.black,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 2),
+        AutoSizeText(
+          companyLocation,
+          style:  TextStyle(
+            fontSize: FontSize.paragraph4(context),
+            color: Colors.grey,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Row _buildArriveTimeAndPriceRow() {
+    return Row(
+      children: [
+        Text(
+          timeAgo,
+          style: const TextStyle(
+            fontSize: 10,
+            color: Colors.grey,
+          ),
+        ),
+        const Spacer(),
+        Text(
+          salary,
+          style: const TextStyle(
+            fontSize: 14,
+            color: Jobstopcolor.primarycolor, // Use appropriate color
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        Text(
+          '/Mo',
+          style: const TextStyle(
+            fontSize: 12,
+            color: Colors.grey,
+          ),
+        ),
+      ],
+    );
+  }
+
+  CustomChip _buildCustomChip(BuildContext context, String text) {
+    Size size = MediaQuery.of(context).size;
+    // double height = size.height;
+    double width = size.width;
+    return CustomChip(
+      onTap: () {},
+      backgroundColor: Colors.grey[200],
+      child: AutoSizeText(
+        text,
+        style: dmsregular.copyWith(
+          fontSize: FontSize.label(context),
+          color: Colors.black54,
+        ),
+      ),
+      paddingValue: width / 64,
+      borderRadius: width / 64,
+    );
+  }
+
+  // Widget _buildTag(String text) {
+  //   return Container(
+  //     height: 28,
+  //     padding: const EdgeInsets.symmetric(horizontal: 8),
+  //     decoration: BoxDecoration(
+  //       borderRadius: BorderRadius.circular(5),
+  //       color: Colors.grey[200],
+  //     ),
+  //     child: Center(
+  //       child: Text(
+  //         text,
+  //         style: const TextStyle(
+  //           fontSize: 12,
+  //           color: Colors.grey,
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 }

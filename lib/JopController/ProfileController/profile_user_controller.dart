@@ -1,12 +1,24 @@
+import 'dart:async';
+
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
-import '../../JobGlobalclass/jobstopimges.dart';
-import '../../sippo_data/model/profile_model/jobstop_appreciation_info_card_model.dart';
-import '../../sippo_data/model/profile_model/jobstop_education_info_card_model.dart';
-import '../../sippo_data/model/profile_model/jobstop_language_info_card_model.dart';
-import '../../sippo_data/model/profile_model/jobstop_resume_file_info.dart';
-import '../../sippo_data/model/profile_model/jobstop_work_experience_info_card_model.dart';
+import 'package:jobspot/JopController/ConnectivityController/internet_connection_controller.dart';
+import 'package:jobspot/core/Refresh.dart';
+import '../../core/resource.dart';
+import '../../sippo_data/model/profile_model/profile_resource_model/validate_property_work_experiences_model.dart';
+import '../../sippo_data/model/profile_model/profile_resource_model/work_experiences_model.dart';
+import '../../sippo_data/model/profile_model/profile_widget_model/jobstop_education_info_card_model.dart';
+import '../../sippo_data/model/profile_model/profile_widget_model/jobstop_appreciation_info_card_model.dart';
+
+import '../../sippo_data/model/profile_model/profile_widget_model/jobstop_language_info_card_model.dart';
+import '../../sippo_data/model/profile_model/profile_widget_model/jobstop_resume_file_info.dart';
+import '../../sippo_data/profile_user/work_experiences_repo.dart';
+
 class ProfileUserController extends GetxController {
+  final netController = InternetConnectionController.instance;
+  StreamSubscription<bool>? _connectionSubscription;
+
+  static ProfileUserController get instance => Get.find();
   final _aboutMeText =
       "lorem ipsujfm vcxmkmvfkjhkgd jkflmvf lkfvmfdv klffdleoopmmvfmlvk ijggjjm,dfvom,.m,mcxvomfm "
           .obs;
@@ -16,100 +28,17 @@ class ProfileUserController extends GetxController {
   final _showAllSkills = false.obs;
   final _showAllLangs = false.obs;
 
-  bool get showAllLangs => _showAllLangs.isTrue;
-
-  void set showAllLangs(bool value) {
-    _showAllLangs.value = value;
-  }
-
-  final Rx<ResumeFileInfo?> _resumeFiles = ResumeFileInfo.getNull().obs;
-
-  ResumeFileInfo? get resumeFiles => _resumeFiles.value;
-
-  void set resumeFiles(ResumeFileInfo? value) {
-    _resumeFiles.value = value;
-  }
-
-  final _wei = <WorkExperienceInfoCardModel>[
-    WorkExperienceInfoCardModel(
-      position: "Manager",
-      company: "Amazon Inc",
-      periodic: "Jan 2015 - Feb 2022",
-    ),
-    WorkExperienceInfoCardModel(
-      position: "Manager",
-      company: "Amazon Inc",
-      periodic: "Jan 2015 - Feb 2022",
-    ),
-    WorkExperienceInfoCardModel(
-      position: "Manager",
-      company: "Amazon Inc",
-      periodic: "Jan 2015 - Feb 2022",
-    ),
-  ].obs;
-  final _edui = <EducationInfoCardModel>[
-    EducationInfoCardModel(
-      level: "Bachelor of Information Technology",
-      university: "University of Oxford",
-      fieldStudy: "Information Technology",
-      periodic: "Jan 2010 - Feb 2013",
-    ),
-    EducationInfoCardModel(
-      level: "Bachelor of Information Technology",
-      university: "University of Oxford",
-      fieldStudy: "Information Technology",
-      periodic: "Jan 2010 - Feb 2013",
-    ),
-    EducationInfoCardModel(
-      level: "Bachelor of Information Technology",
-      university: "University of Oxford",
-      fieldStudy: "Information Technology",
-      periodic: "Jan 2010 - Feb 2013",
-    ),
-  ].obs;
-  final _skills = <String>[
-    "skill 1",
-    "skill skill 2",
-    "skill 3",
-    "skill skill skill 4",
-    "skill skill 5",
-    "skill skill skill skill 6",
-  ].obs;
-  final _languages = <LanguageInfoCardModel>[
-    LanguageInfoCardModel(
-      countryFlag: JobstopPngImg.english,
-      languageName: "English",
-      talkingLevel: "Advanced",
-      writtenLevel: "Advanced",
-    ),
-    LanguageInfoCardModel(
-      countryFlag: JobstopPngImg.arabic,
-      languageName: "arabic",
-      talkingLevel: "Advanced",
-      writtenLevel: "Advanced",
-    ),
-  ].obs;
-  final _appreciations = <AppreciationInfoCardModel>[
-    AppreciationInfoCardModel(
-      awardName: "Wireless Symposium (RWS)",
-      categoryAchieve: "Young Scientist",
-      year: "2014",
-    ),
-    AppreciationInfoCardModel(
-      awardName: "Wireless Symposium (RWS)",
-      categoryAchieve: "Young Scientist",
-      year: "2014",
-    ),
-    AppreciationInfoCardModel(
-      awardName: "Wireless Symposium (RWS)",
-      categoryAchieve: "Young Scientist",
-      year: "2014",
-    ),
-  ].obs;
+  final _wei = <WorkExperiencesModel>[].obs;
+  final _edui = <EducationInfoCardModel>[].obs;
+  final _skills = <String>[].obs;
+  final _languages = <LanguageInfoCardModel>[].obs;
+  final _appreciations = <AppreciationInfoCardModel>[].obs;
 
   List<AppreciationInfoCardModel> get appreciations => _appreciations.toList();
 
-  List<WorkExperienceInfoCardModel> get wei => _wei.toList();
+  List<WorkExperiencesModel> get wei => _wei.toList();
+
+  void set wei(List<WorkExperiencesModel> value) => _wei.value = value;
 
   List<EducationInfoCardModel> get edui => _edui.toList();
 
@@ -119,27 +48,81 @@ class ProfileUserController extends GetxController {
 
   String get aboutMeText => _aboutMeText.toString();
 
-  bool get showAllAppreciations => _showAllAppreciations.isTrue;
-
   bool get showAllWei => _showAllWei.isTrue;
 
   bool get showAllEdui => _showAllEdui.isTrue;
 
   bool get showAllSkills => _showAllSkills.isTrue;
 
-  void set showAllSkills(bool value) {
-    _showAllSkills.value = value;
+  bool get showAllLangs => _showAllLangs.isTrue;
+
+  bool get showAllAppreciations => _showAllAppreciations.isTrue;
+
+  final Rx<ResumeFileInfo?> _resumeFiles = ResumeFileInfo.getNull().obs;
+
+  void set showAllWei(bool value) => _showAllWei.value = value;
+
+  void set showAllEdui(bool value) => _showAllEdui.value = value;
+
+  void set showAllSkills(bool value) => _showAllSkills.value = value;
+
+  void set showAllLangs(bool value) => _showAllLangs.value = value;
+
+  void set showAllAppreciations(bool value) =>
+      _showAllAppreciations.value = value;
+
+  ResumeFileInfo? get resumeFiles => _resumeFiles.value;
+
+  void set resumeFiles(ResumeFileInfo? value) {
+    _resumeFiles.value = value;
   }
 
-  void set showAllWei(bool value) {
-    _showAllWei.value = value;
+  final _editingId = (-1).obs;
+
+  int get editingId => _editingId.toInt();
+
+  void set editingId(int value) =>
+      _editingId.value = value;
+
+  Future<void> fetchAllWorkExperience() async {
+    Resource<List<WorkExperiencesModel>, ValidatePropertyWorkExperiencesModel>?
+        response = await WorkExperiencesRepo.fetchWorkExperiences();
+    await response?.checkStatusResponse(
+      onSuccess: (data, statusType) {
+        Refresher.listUpdater(
+          newData: data,
+          currentData: wei,
+          updateData: (data) => _wei.value = data,
+        );
+      },
+      onValidateError: (validateError, statusType) {},
+      onError: (message, statusType) {},
+    );
   }
 
-  void set showAllEdui(bool value) {
-    _showAllEdui.value = value;
+  void _startListeningToConnection() {
+    _connectionSubscription =
+        netController.isConnectedStream.listen((isConnected) async {
+      print("hello");
+      if (isConnected) {
+        print("fetchSpecializations is target");
+        await fetchAllWorkExperience();
+      }
+    });
   }
 
-  set showAllAppreciations(bool value) {
-    _showAllAppreciations.value = value;
+  @override
+  void onInit() {
+    (() async {
+      await fetchAllWorkExperience();
+      _startListeningToConnection();
+    })();
+    super.onInit();
+  }
+
+  @override
+  void onClose() {
+    _connectionSubscription?.cancel();
+    super.onClose();
   }
 }

@@ -3,8 +3,7 @@ import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
-
-import '../../JobThemes/themecontroller.dart';
+import '../../sippo_themes/themecontroller.dart';
 
 class JobstopPosition extends StatefulWidget {
   final String? type;

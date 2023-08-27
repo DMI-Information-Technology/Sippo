@@ -4,7 +4,7 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
-import 'package:jobspot/JopCustomWidget/widgets.dart';
+import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:get/get.dart';
 import '../../JobGlobalclass/jobstopimges.dart';
 import '../../JobGlobalclass/routes.dart';
@@ -128,7 +128,7 @@ class _SippoLocationCompanySelectorState extends State<SippoLocationCompanySelec
   void _onSubmitConfirm() async {
     if (_signUpCompanyController.confirmOnPolicy &&
         _signUpCompanyController.cordLocation.isRequiredCord()) {
-      Get.toNamed(SippoRoutesPages.identityverification);
+      Get.toNamed(SippoRoutes.identityverification);
     } else {
       _showBadConfirmDialog();
     }

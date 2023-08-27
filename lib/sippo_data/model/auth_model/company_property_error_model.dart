@@ -1,6 +1,6 @@
 import 'package:jobspot/sippo_data/model/auth_model/property_error_model.dart';
 
-class CompanyPropError extends PropertyError {
+class CompanyPropError extends EntityPropertyError {
   List<String>? longitude;
   List<String>? latitude;
   List<String>? specializations;

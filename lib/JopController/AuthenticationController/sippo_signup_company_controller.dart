@@ -1,12 +1,15 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_model.dart';
 import 'package:jobspot/sippo_data/model/auth_model/cord_location.dart';
 
+import '../../JobGlobalclass/routes.dart';
 import '../../sippo_data/model/specializations_model/specializations_model.dart';
 
 class SignUpCompanyController extends GetxController {
   static SignUpCompanyController get instance => Get.find();
+  final GlobalKey<FormState> formKey = GlobalKey();
+
   final _fullname = "".obs;
   final _phoneNumber = "".obs;
   final _password = "".obs;
@@ -113,5 +116,11 @@ class SignUpCompanyController extends GetxController {
 
   void set companyAddress(String value) {
     _companyAddress.value = value;
+  }
+
+  Future<void> onSubmitSignup() async {
+    if (formKey.currentState!.validate()) {
+      Get.toNamed(SippoRoutes.companysignupspecializations);
+    }
   }
 }

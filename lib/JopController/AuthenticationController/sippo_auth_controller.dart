@@ -25,6 +25,16 @@ class AuthController extends GetxController {
   final Rx<String?> _tokenLogged = "".obs;
   final box = GetStorage();
 
+  LightSubscription<States> addStateListener(
+    void Function(States states) listener,
+  ) {
+    return _states.subject.listen(listener, cancelOnError: true);
+  }
+
+  void closeStateListener(LightSubscription<States> subs) {
+    _states.subject.removeSubscription(subs);
+  }
+
   String get tokenLogged => _tokenLogged.toString();
 
   bool get isLogged => _isLogged.isTrue;
@@ -45,6 +55,8 @@ class AuthController extends GetxController {
   void set successState(bool value) {
     _states.value = states.copyWith(isSuccess: value);
   }
+
+  void resetAllAuthStates() => _states.value = States();
 
   States get states => _states.value;
 

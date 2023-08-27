@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
-import 'package:jobspot/JobThemes/themecontroller.dart';
 import 'package:jobspot/sippo_pages/sippo_company_pages/sippo_company_home.dart';
+
+import '../../sippo_themes/themecontroller.dart';
 
 class SippoCompanyDashboard extends StatefulWidget {
   const SippoCompanyDashboard({Key? key}) : super(key: key);

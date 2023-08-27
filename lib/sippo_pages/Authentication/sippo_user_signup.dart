@@ -4,49 +4,20 @@ import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import '../../JobGlobalclass/routes.dart';
-import '../../JobThemes/themecontroller.dart';
-import '../../JopController/AuthenticationController/sippo_auth_controller.dart';
 import '../../JopController/AuthenticationController/sippo_signup_user_controller.dart';
-import '../../JopCustomWidget/overly_loading.dart';
-import '../../JopCustomWidget/widgets.dart';
+import '../../sippo_custom_widget/loading_view_widgets/overly_loading.dart';
+import '../../sippo_custom_widget/widgets.dart';
 import '../../utils/validating_input.dart';
 
-
-class SippoUserSignup extends StatefulWidget {
+class SippoUserSignup extends StatelessWidget {
   const SippoUserSignup({Key? key}) : super(key: key);
 
   @override
-  State<SippoUserSignup> createState() => _SippoUserSignupState();
-}
-
-class _SippoUserSignupState extends State<SippoUserSignup> {
-  dynamic size;
-  double height = 0.00;
-  double width = 0.00;
-
-  final themedata = Get.put(JobstopThemecontroler());
-  final AuthController _authController = Get.find();
-  final signUpUserController = Get.put(SignUpUserController());
-
-  Color getColor(Set<MaterialState> states) {
-    const Set<MaterialState> interactiveStates = <MaterialState>{
-      MaterialState.pressed,
-      MaterialState.hovered,
-      MaterialState.focused,
-    };
-    if (states.any(interactiveStates.contains)) {
-      return Jobstopcolor.grey;
-    }
-    return Jobstopcolor.lightprimary;
-  }
-
-  final GlobalKey<FormState> _formKey = GlobalKey();
-
-  @override
   Widget build(BuildContext context) {
-    size = MediaQuery.of(context).size;
-    height = size.height;
-    width = size.width;
+    final controller = SignUpUserController.instance;
+    Size size = MediaQuery.of(context).size;
+    double height = size.height;
+    double width = size.width;
     return Stack(
       children: [
         Scaffold(
@@ -56,7 +27,7 @@ class _SippoUserSignupState extends State<SippoUserSignup> {
               padding: EdgeInsets.symmetric(
                   horizontal: width / 26, vertical: height / 26),
               child: Form(
-                key: _formKey,
+                key: controller.formKey,
                 child: Column(
                   children: [
                     Image.asset(
@@ -70,9 +41,7 @@ class _SippoUserSignupState extends State<SippoUserSignup> {
                       "Create_an_Account".tr,
                       style: dmsbold.copyWith(
                         fontSize: height / 30,
-                        color: themedata.isdark
-                            ? Jobstopcolor.white
-                            : Jobstopcolor.primarycolor,
+                        color: Jobstopcolor.primarycolor,
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -87,7 +56,7 @@ class _SippoUserSignupState extends State<SippoUserSignup> {
                         Icons.person_outlined,
                         color: Jobstopcolor.primarycolor,
                       ),
-                      validatorCallback: (value) {
+                      validator: (value) {
                         if (value == null || value.trim().isEmpty) {
                           return "fullname_is_req".tr;
                         }
@@ -96,8 +65,7 @@ class _SippoUserSignupState extends State<SippoUserSignup> {
                         }
                         return null;
                       },
-                      onChangedText: (val) =>
-                          signUpUserController.fullname = val.trim(),
+                      onChangedText: (val) => controller.fullname = val.trim(),
                     ),
                     SizedBox(
                       height: height / 46,
@@ -110,7 +78,7 @@ class _SippoUserSignupState extends State<SippoUserSignup> {
                         Icons.phone_outlined,
                         color: Jobstopcolor.primarycolor,
                       ),
-                      validatorCallback: (value) {
+                      validator: (value) {
                         if (value == null || value.trim().isEmpty) {
                           return "phonenumber_is_req".tr;
                         }
@@ -120,7 +88,7 @@ class _SippoUserSignupState extends State<SippoUserSignup> {
                         return null;
                       },
                       onChangedText: (val) =>
-                          signUpUserController.phoneNumber = val.trim(),
+                          controller.phoneNumber = val.trim(),
                     ),
                     SizedBox(
                       height: height / 46,
@@ -144,7 +112,7 @@ class _SippoUserSignupState extends State<SippoUserSignup> {
                           return null;
                         },
                         onChangedText: (val) =>
-                            signUpUserController.password = val.trim()),
+                            controller.password = val.trim()),
                     SizedBox(
                       height: height / 46,
                     ),
@@ -159,13 +127,13 @@ class _SippoUserSignupState extends State<SippoUserSignup> {
                         if (value == null || value.trim().isEmpty) {
                           return "confpasword_is_req".tr;
                         }
-                        if (value != signUpUserController.password) {
+                        if (value != controller.password) {
                           return "the confirm password is not matches the password";
                         }
                         return null;
                       },
                       onChangedText: (val) =>
-                          signUpUserController.confirmPassword = val.trim(),
+                          controller.confirmPassword = val.trim(),
                     ),
                     SizedBox(
                       height: height / 46,
@@ -174,7 +142,9 @@ class _SippoUserSignupState extends State<SippoUserSignup> {
                       text: "Sign_up".tr,
                       backgroundColor: Jobstopcolor.primarycolor,
                       textColor: Jobstopcolor.white,
-                      onTappeed: _onSubmitForm,
+                      onTappeed: () async {
+                        await controller.onSubmittedSignup();
+                      },
                     ),
                     SizedBox(height: height / 40),
                     Row(
@@ -193,7 +163,7 @@ class _SippoUserSignupState extends State<SippoUserSignup> {
                           splashColor: Jobstopcolor.transparent,
                           onTap: () {
                             Get.offAndToNamed(
-                              SippoRoutesPages.loginpage,
+                              SippoRoutes.loginpage,
                             );
                           },
                           child: Text(
@@ -214,7 +184,7 @@ class _SippoUserSignupState extends State<SippoUserSignup> {
                     SizedBox(height: height / 52),
                     CustomButton(
                       onTappeed: () {
-                        Get.offAndToNamed(SippoRoutesPages.companysignup);
+                        Get.offAndToNamed(SippoRoutes.companysignup);
                       },
                       text: "company_signup".tr,
                       backgroundColor: Jobstopcolor.white,
@@ -237,38 +207,11 @@ class _SippoUserSignupState extends State<SippoUserSignup> {
           backgroundColor: Jobstopcolor.white,
         ),
         Obx(
-          () => _authController.states.isLoading
+          () => controller.authState.isLoading
               ? const LoadingOverlay()
               : const SizedBox.shrink(),
         ),
       ],
     );
   }
-
-  void _onSubmitForm() async {
-    if (_formKey.currentState!.validate()) {
-        await _authController.userRegister(signUpUserController.userForm);
-    }
-    if (_authController.states.isSuccess) {
-      _authController.successState = false;
-      _showRegisterSuccessAlert();
-    }
-  }
-
-  void _showRegisterSuccessAlert() {
-    Get.dialog(
-      CustomAlertDialog(
-        imageAsset: JobstopPngImg.successful1,
-        title: "success".tr,
-        description: "account_created_successfully".tr,
-        confirmBtnColor: Jobstopcolor.primarycolor,
-        confirmBtnTitle: "ok".tr,
-        onConfirm: () {
-          Get.offAllNamed(SippoRoutesPages.userdashboard);
-        },
-      ),
-    ).then((value) => Get.offAllNamed(SippoRoutesPages.userdashboard));
-  }
 }
-
-

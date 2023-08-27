@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-import '../JopCustomWidget/GenderPickerWidget.dart';
+import '../sippo_custom_widget/gender_picker_widget.dart';
 
 void showAlert(BuildContext context, Widget widget) {
   showDialog(
@@ -14,15 +14,25 @@ void showAlert(BuildContext context, Widget widget) {
 }
 
 String otpPhoneNumberFormat(String phoneNumber, {String countryCode = "218"}) {
-  return "+$countryCode${phoneNumber.substring(3)}";
+  return "+$countryCode${phoneNumber.substring(1)}";
 }
 
 String dateTimeFormatter(DateTime dt) {
   return DateFormat("d MMM y 'at' hh:mm a").format(dt);
 }
 
+String periodicDateFormatter(String? strDate) {
+  return strDate != null
+      ? DateFormat('MMMM y', 'en_US').format(DateTime.parse(strDate))
+      : "Unknown";
+}
+
 String dobFormatter(DateTime dt) {
   return DateFormat("d MMM y").format(dt);
+}
+
+String customDateFormatter(DateTime dt, String format) {
+  return DateFormat(format).format(dt);
 }
 
 void showMyDatePicker(
@@ -53,8 +63,12 @@ void showGenderPicker(
   }
 }
 
-Future<Timer?> startTimer(int value, void Function(int value) onValueChanged,
-    [int until = 0]) async {
+Future<Timer?> startTimer(
+  int value,
+  void Function(int value) onValueChanged, {
+  int until = 0,
+  void Function()? onTimerDone,
+}) async {
   Timer? _timer;
   int counter = value;
   const oneSec = Duration(seconds: 1);
@@ -63,7 +77,8 @@ Future<Timer?> startTimer(int value, void Function(int value) onValueChanged,
     (timer) {
       onValueChanged(counter);
       if (counter == until) {
-        _timer?.cancel();
+        if (onTimerDone != null) onTimerDone();
+        timer.cancel();
         return;
       }
       counter--;

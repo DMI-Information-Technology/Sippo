@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
@@ -6,10 +7,9 @@ import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/JopController/AuthenticationController/specialization_list_controller.dart';
 import 'package:jobspot/JopController/ConnectivityController/internet_connection_controller.dart';
-import 'package:jobspot/JopCustomWidget/widgets.dart';
+import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import '../../JobGlobalclass/routes.dart';
 import '../../JopController/AuthenticationController/sippo_signup_company_controller.dart';
-
 
 class CompanySignUpSpecializations extends StatefulWidget {
   const CompanySignUpSpecializations({super.key});
@@ -45,18 +45,18 @@ class _CompanySignUpSpecializationsState
                 ),
                 child: Column(
                   children: [
-                    Text(
+                    AutoSizeText(
                       "Company Specializations",
                       style: dmsbold.copyWith(
-                        fontSize: FontSize.titleFontSize2(context),
+                        fontSize: FontSize.title2(context),
                       ),
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(height: height / 50),
-                    Text(
+                    AutoSizeText(
                       "Please choose a few specialties for the company\n(maximum 3)",
                       style: dmsregular.copyWith(
-                        fontSize: FontSize.paragraphFontSize2(context),
+                        fontSize: FontSize.paragraph2(context),
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -92,7 +92,7 @@ class _CompanySignUpSpecializationsState
                             shrinkWrap: true,
                             physics: const NeverScrollableScrollPhysics(),
                           );
-                        return _buildLoadingSpecialMessage();
+                        return _buildLoadingSpecialMessage(context);
                       },
                     ),
                   ],
@@ -118,12 +118,13 @@ class _CompanySignUpSpecializationsState
     );
   }
 
-  Widget _buildLoadingSpecialMessage() {
+  Widget _buildLoadingSpecialMessage(BuildContext context) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        const Text("Date is fetching from the server..."),
+        const Text("Data is fetching from the server..."),
+        SizedBox(height: MediaQuery.of(context).size.height / 36),
         const LinearProgressIndicator(),
       ],
     );
@@ -150,12 +151,12 @@ class _CompanySignUpSpecializationsState
         color: isSelected ? Colors.blue.withOpacity(0.2) : Colors.white,
       ),
       child: CheckboxListTile(
-        title: Text(
+        title: AutoSizeText(
           textAlign: TextAlign.start,
           title,
           style: dmsbold.copyWith(
             color: isSelected ? Jobstopcolor.primarycolor : null,
-            fontSize: FontSize.titleFontSize5(context),
+            fontSize: FontSize.title5(context),
           ),
         ),
         value: isSelected,
@@ -184,6 +185,6 @@ class _CompanySignUpSpecializationsState
       return;
     }
     print(_signUpCompController.companyForm);
-    Get.toNamed(SippoRoutesPages.locationselector);
+    Get.toNamed(SippoRoutes.locationselector);
   }
 }

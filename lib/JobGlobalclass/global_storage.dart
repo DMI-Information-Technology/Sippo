@@ -1,3 +1,4 @@
+
 import 'package:get_storage/get_storage.dart';
 import 'package:jobspot/utils/app_use.dart';
 
@@ -8,7 +9,9 @@ class GlobalStorage {
 
   static final box = GetStorage();
   static final first_app_lunch_time = "firstapplunchtime";
-  static bool isLogged = false;
+  static bool _isLogged = false;
+
+  static bool get isLogged => _isLogged;
   static String? _tokenLogged = "";
 
   static String? get tokenLogged => _tokenLogged;
@@ -19,35 +22,34 @@ class GlobalStorage {
   static Future<void> removeSavedToken() async {
     await box.remove(global.tokenKey);
     _tokenLogged = "";
-    isLogged = false;
+    _isLogged = false;
   }
 
   static Future<void> savedToken(String? token, int? use) async {
     await box.write(global.tokenKey, token);
     await box.write(global.app_logged_use, use);
-    if ((token != null && token.isNotEmpty) &&
-        (use != null && (use >= 0 && use <= 1))) {
-      _tokenLogged = token;
-      isLogged = true;
-      _appUse = use;
-    }
+    _setGlobalVariable(token, use);
   }
 
   // static Future<void> savedTokenPhoneNumber
   static Future<void> checkSavedToken() async {
     final String? token = await box.read(global.tokenKey);
     final int? use = await box.read(global.app_logged_use);
-    if ((token != null && token.isNotEmpty) &&
-        (use != null && (use >= 0 && use <= 1))) {
-      _tokenLogged = token;
-      isLogged = true;
-      _appUse = use;
-    }
+    _setGlobalVariable(token, use);
   }
 
-  static Future<bool?> isAppOpenBefore() async {
-    final isOpen = await box.read(first_app_lunch_time);
-    return isOpen;
+  static bool _setGlobalVariable(String? token, int? use) {
+    if (token == null || use == null) return false;
+    if (token.isEmpty || (use < 0 && use > 1)) false;
+    _tokenLogged = token;
+    _isLogged = true;
+    _appUse = use;
+    return true;
+  }
+
+  static Future<bool> isAppOpenBefore() async {
+    final isOpen = await box.read(first_app_lunch_time) as bool?;
+    return isOpen != null && isOpen;
   }
 
   static Future<void> appIsLunched() async {

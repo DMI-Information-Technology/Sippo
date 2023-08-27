@@ -5,44 +5,18 @@ import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JopController/AuthenticationController/sippo_signup_company_controller.dart';
 import '../../JobGlobalclass/routes.dart';
-import '../../JobThemes/themecontroller.dart';
-import '../../JopCustomWidget/widgets.dart';
+import '../../sippo_custom_widget/widgets.dart';
 import '../../utils/validating_input.dart';
 
-class SippoCompanySignup extends StatefulWidget {
+class SippoCompanySignup extends StatelessWidget {
   const SippoCompanySignup({Key? key}) : super(key: key);
 
   @override
-  State<SippoCompanySignup> createState() => _SippoCompanySignupState();
-}
-
-class _SippoCompanySignupState extends State<SippoCompanySignup> {
-  dynamic size;
-  double height = 0.00;
-  double width = 0.00;
-
-  final themedata = Get.put(JobstopThemecontroler());
-
-  Color getColor(Set<MaterialState> states) {
-    const Set<MaterialState> interactiveStates = <MaterialState>{
-      MaterialState.pressed,
-      MaterialState.hovered,
-      MaterialState.focused,
-    };
-    if (states.any(interactiveStates.contains)) {
-      return Jobstopcolor.grey;
-    }
-    return Jobstopcolor.lightprimary;
-  }
-
-  final GlobalKey<FormState> _formKey = GlobalKey();
-  final _signUpCompanyController = Get.put(SignUpCompanyController());
-
-  @override
   Widget build(BuildContext context) {
-    size = MediaQuery.of(context).size;
-    height = size.height;
-    width = size.width;
+    final controller = SignUpCompanyController.instance;
+    Size size = MediaQuery.of(context).size;
+    double height = size.height;
+    double width = size.width;
     return Scaffold(
       appBar: AppBar(automaticallyImplyLeading: true),
       body: SingleChildScrollView(
@@ -52,7 +26,7 @@ class _SippoCompanySignupState extends State<SippoCompanySignup> {
             vertical: height / 26,
           ),
           child: Form(
-            key: _formKey,
+            key: controller.formKey,
             child: Column(
               children: [
                 Image.asset(
@@ -66,9 +40,7 @@ class _SippoCompanySignupState extends State<SippoCompanySignup> {
                   "Create_an_Account".tr,
                   style: dmsbold.copyWith(
                     fontSize: height / 30,
-                    color: themedata.isdark
-                        ? Jobstopcolor.white
-                        : Jobstopcolor.primarycolor,
+                    color: Jobstopcolor.primarycolor,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -76,15 +48,14 @@ class _SippoCompanySignupState extends State<SippoCompanySignup> {
                   height: height / 30,
                 ),
                 InputField(
-                  onChangedText: (value) =>
-                      _signUpCompanyController.fullname = value.trim(),
+                  onChangedText: (value) => controller.fullname = value.trim(),
                   hintText: "Full_name".tr,
                   keyboardType: TextInputType.text,
                   icon: const Icon(
                     Icons.person_outlined,
                     color: Jobstopcolor.primarycolor,
                   ),
-                  validatorCallback: (value) {
+                  validator: (value) {
                     if (value == null || value.trim().isEmpty) {
                       return "fullname_is_req".tr;
                     }
@@ -100,7 +71,7 @@ class _SippoCompanySignupState extends State<SippoCompanySignup> {
                 InputField(
                   // controller: email,
                   onChangedText: (value) =>
-                      _signUpCompanyController.phoneNumber = value.trim(),
+                      controller.phoneNumber = value.trim(),
 
                   hintText: "phone_number".tr,
                   keyboardType: TextInputType.phone,
@@ -108,7 +79,7 @@ class _SippoCompanySignupState extends State<SippoCompanySignup> {
                     Icons.phone_outlined,
                     color: Jobstopcolor.primarycolor,
                   ),
-                  validatorCallback: (value) {
+                  validator: (value) {
                     if (value == null || value.trim().isEmpty) {
                       return "phonenumber_is_req".tr;
                     }
@@ -123,8 +94,7 @@ class _SippoCompanySignupState extends State<SippoCompanySignup> {
                 ),
                 PasswordInputField(
                   // controller: password,
-                  onChangedText: (value) =>
-                      _signUpCompanyController.password = value.trim(),
+                  onChangedText: (value) => controller.password = value.trim(),
                   hintText: "Password".tr,
                   icon: const Icon(
                     Icons.lock_outline,
@@ -147,7 +117,7 @@ class _SippoCompanySignupState extends State<SippoCompanySignup> {
                 ),
                 PasswordInputField(
                   onChangedText: (value) =>
-                      _signUpCompanyController.confirmPassword = value.trim(),
+                      controller.confirmPassword = value.trim(),
                   hintText: "Confirm_Password".tr,
                   icon: const Icon(
                     Icons.lock_outline,
@@ -157,7 +127,7 @@ class _SippoCompanySignupState extends State<SippoCompanySignup> {
                     if (value == null || value.trim().isEmpty) {
                       return "confpasword_is_req".tr;
                     }
-                    if (value != _signUpCompanyController.password) {
+                    if (value != controller.password) {
                       return "the confirm password is not matches the password";
                     }
                     return null;
@@ -170,7 +140,9 @@ class _SippoCompanySignupState extends State<SippoCompanySignup> {
                   text: "Sign_up".tr,
                   backgroundColor: Jobstopcolor.primarycolor,
                   textColor: Jobstopcolor.white,
-                  onTappeed: _onSubmitRegister,
+                  onTappeed: () async {
+                    await controller.onSubmitSignup();
+                  },
                 ),
                 SizedBox(
                   height: height / 40,
@@ -187,7 +159,7 @@ class _SippoCompanySignupState extends State<SippoCompanySignup> {
                     ),
                     TextButton(
                       onPressed: () {
-                        Get.offAndToNamed(SippoRoutesPages.sippoCompanyLogin);
+                        Get.offAndToNamed(SippoRoutes.sippoCompanyLogin);
                       },
                       child: Text(
                         "Login".tr,
@@ -211,7 +183,7 @@ class _SippoCompanySignupState extends State<SippoCompanySignup> {
                 ),
                 CustomButton(
                   onTappeed: () {
-                    Get.offAndToNamed(SippoRoutesPages.signuppage);
+                    Get.offAndToNamed(SippoRoutes.signuppage);
                   },
                   text: "user_signup".tr,
                   backgroundColor: Jobstopcolor.white,
@@ -220,8 +192,7 @@ class _SippoCompanySignupState extends State<SippoCompanySignup> {
                 ),
                 SizedBox(height: height / 52),
                 CustomButton(
-                  onTappeed: () {
-                  },
+                  onTappeed: () {},
                   text: "Guest_login.".tr,
                   backgroundColor: Jobstopcolor.white,
                   textColor: Jobstopcolor.textColor,
@@ -234,12 +205,5 @@ class _SippoCompanySignupState extends State<SippoCompanySignup> {
       ),
       backgroundColor: Jobstopcolor.white,
     );
-  }
-
-  void _onSubmitRegister() async {
-    if (_formKey.currentState!.validate()) {
-      print(_signUpCompanyController.companyForm);
-      Get.toNamed(SippoRoutesPages.companysignupspecializations);
-    }
   }
 }

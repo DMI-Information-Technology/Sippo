@@ -1,70 +1,102 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class FontSize {
   static const double _labelSize = 32;
+
   static const double _titleSize = 12;
+
   static const double _paragraphSize = 24;
+
   static const double _buttonFontSize = 18;
+
+  static double _targetPlatformFontSize(BuildContext context, double fSize) {
+    if (kIsWeb) {
+      print("from web");
+      return context.height / (fSize + 3);
+    }
+    switch (defaultTargetPlatform) {
+      case TargetPlatform.android:
+      case TargetPlatform.fuchsia:
+      case TargetPlatform.iOS:
+        return context.width / fSize;
+      case TargetPlatform.linux:
+      case TargetPlatform.macOS:
+      case TargetPlatform.windows:
+        return context.height / fSize;
+    }
+  }
 
   FontSize._();
 
-  static double labelFontSize(BuildContext context) {
-    return MediaQuery.of(context).size.width / _labelSize;
+  static double label(BuildContext context, [sizeLevel = 0]) {
+    return _targetPlatformFontSize(
+      context,
+      (_labelSize + (3 * sizeLevel)),
+    );
   }
 
-  static double labelFontSize2(BuildContext context) {
-    return MediaQuery.of(context).size.width / (_labelSize + 3);
+  static double label2(BuildContext context) {
+    return _targetPlatformFontSize(context, (_labelSize + 3));
   }
 
-  static double labelFontSize3(BuildContext context) {
-    return MediaQuery.of(context).size.width / (_labelSize + 6);
+  static double label3(BuildContext context) {
+    return _targetPlatformFontSize(context, (_labelSize + 6));
   }
 
-  static double titleFontSize(BuildContext context) {
-    return MediaQuery.of(context).size.width / _titleSize;
+  static double title(BuildContext context, [sizeLevel = 0]) {
+    return _targetPlatformFontSize(context, (_titleSize + (3 * sizeLevel)));
   }
 
-  static double titleFontSize2(BuildContext context) {
-    return MediaQuery.of(context).size.width / (_titleSize + 3);
+  static double title2(BuildContext context) {
+    return _targetPlatformFontSize(context, (_titleSize + 3));
   }
 
-  static double titleFontSize3(BuildContext context) {
-    return MediaQuery.of(context).size.width / (_titleSize + 6);
+  static double title3(BuildContext context) {
+    return _targetPlatformFontSize(context, (_titleSize + 6));
   }
 
-  static double titleFontSize4(BuildContext context) {
-    return MediaQuery.of(context).size.width / (_titleSize + 9);
+  static double title4(BuildContext context) {
+    return _targetPlatformFontSize(context, (_titleSize + 9));
   }
 
-  static double titleFontSize5(BuildContext context) {
-    return MediaQuery.of(context).size.width / (_titleSize + 12);
+  static double title5(BuildContext context) {
+    return _targetPlatformFontSize(context, (_titleSize + 12));
   }
 
-  static double titleFontSize6(BuildContext context) {
-    return MediaQuery.of(context).size.width / (_titleSize + 16);
+  static double title6(BuildContext context) {
+    return _targetPlatformFontSize(context, (_titleSize + 16));
   }
 
-  static double paragraphFontSize(BuildContext context) {
-    return MediaQuery.of(context).size.width / _paragraphSize;
+  static double paragraph(BuildContext context, [sizeLevel = 0]) {
+    return _targetPlatformFontSize(context, (_paragraphSize + (3 * sizeLevel)));
   }
 
-  static double paragraphFontSize2(BuildContext context) {
-    return MediaQuery.of(context).size.width / (_paragraphSize + 3);
+  static double paragraph2(BuildContext context) {
+    return _targetPlatformFontSize(context, (_paragraphSize + 3));
   }
 
-  static double paragraphFontSize3(BuildContext context) {
-    return MediaQuery.of(context).size.width / (_paragraphSize + 6);
+  static double paragraph3(BuildContext context) {
+    return _targetPlatformFontSize(context, (_paragraphSize + 6));
   }
 
-  static double buttonFontSize(BuildContext context) {
-    return MediaQuery.of(context).size.width / _buttonFontSize;
+  static double paragraph4(BuildContext context) {
+    return _targetPlatformFontSize(context, (_paragraphSize + 9));
   }
 
-  static double buttonFontSize2(BuildContext context) {
-    return MediaQuery.of(context).size.width / (_buttonFontSize + 3);
+  static double button(BuildContext context, [sizeLevel = 0]) {
+    return _targetPlatformFontSize(
+      context,
+      (_buttonFontSize + (3 * sizeLevel)),
+    );
   }
 
-  static double buttonFontSize3(BuildContext context) {
-    return MediaQuery.of(context).size.width / (_buttonFontSize + 6);
+  static double button2(BuildContext context) {
+    return _targetPlatformFontSize(context, (_buttonFontSize + 3));
+  }
+
+  static double button3(BuildContext context) {
+    return _targetPlatformFontSize(context, (_buttonFontSize + 6));
   }
 }

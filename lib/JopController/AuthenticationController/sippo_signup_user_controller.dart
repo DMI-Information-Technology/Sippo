@@ -1,9 +1,19 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
-
+import 'package:jobspot/JopController/AuthenticationController/sippo_auth_controller.dart';
+import '../../JobGlobalclass/jobstopcolor.dart';
+import '../../JobGlobalclass/jobstopimges.dart';
+import '../../JobGlobalclass/routes.dart';
+import '../../sippo_custom_widget/widgets.dart';
 import '../../sippo_data/model/auth_model/user_model.dart';
+import '../../utils/states.dart';
 
 class SignUpUserController extends GetxController {
+  static SignUpUserController get instance => Get.find();
+  final AuthController _authController = AuthController.instance;
+  final GlobalKey<FormState> formKey = GlobalKey();
+
+  States get authState => _authController.states;
   final _fullname = "".obs;
   final _phoneNumber = "".obs;
   final _password = "".obs;
@@ -38,5 +48,30 @@ class SignUpUserController extends GetxController {
 
   void set confirmPassword(String value) {
     _confirmPassword.value = value;
+  }
+
+  Future<void> onSubmittedSignup() async {
+    if (formKey.currentState!.validate()) {
+      await _authController.userRegister(userForm);
+    }
+    if (authState.isSuccess) {
+      _authController.resetAllAuthStates();
+      _showRegisterSuccessAlert();
+    }
+  }
+
+  void _showRegisterSuccessAlert() {
+    Get.dialog(
+      CustomAlertDialog(
+        imageAsset: JobstopPngImg.successful1,
+        title: "success".tr,
+        description: "account_created_successfully".tr,
+        confirmBtnColor: Jobstopcolor.primarycolor,
+        confirmBtnTitle: "ok".tr,
+        onConfirm: () {
+          Get.offAllNamed(SippoRoutes.userdashboard);
+        },
+      ),
+    ).then((value) => Get.offAllNamed(SippoRoutes.userdashboard));
   }
 }

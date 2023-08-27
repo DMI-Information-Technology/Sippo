@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import '../../sippo_data/model/profile_model/jobstop_language_info_card_model.dart';
+import '../../sippo_data/model/profile_model/profile_widget_model/jobstop_language_info_card_model.dart';
 
 class LanguageEditAddController extends GetxController {
   final _languageInfo = LanguageInfoCardModel(firstLanguage: false,talkingLevel: "no level",writtenLevel: "no level").obs;

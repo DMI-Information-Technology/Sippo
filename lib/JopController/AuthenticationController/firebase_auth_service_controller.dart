@@ -10,11 +10,21 @@ import 'package:jobspot/utils/states.dart';
 import '../ConnectivityController/internet_connection_controller.dart';
 
 class FirebaseAuthServiceController extends GetxController {
-  Timer? timer;
   final _netController = InternetConnectionController.instance;
   final _firebaseAuth = FirebaseAuth.instance;
-  final verificationId = "".obs;
+  var verificationId = "";
   final _states = States().obs;
+
+  LightSubscription<States> addStateListener(
+    void Function(States states) listener,
+  ) {
+    return _states.subject.listen(listener, cancelOnError: true);
+  }
+
+  void closeStateListener(LightSubscription<States> _subs) {
+    // _states.subject.removeSubscription(_subs);
+    _states.close();
+  }
 
   States get states => _states.value;
 
@@ -24,11 +34,6 @@ class FirebaseAuthServiceController extends GetxController {
 
   void set successState(bool value) {
     _states.value = _states.value.copyWith(isSuccess: value);
-  }
-
-  @override
-  void onInit() async {
-    super.onInit();
   }
 
   void set errorState(bool value) {
@@ -52,14 +57,15 @@ class FirebaseAuthServiceController extends GetxController {
           isError: true,
           message: error.message,
         );
-        print("The provided phone number is not valid.");
+        // print("The provided phone number is not valid.");
         Get.snackbar("failed", error.message.toString());
-        print(error.message);
+        print("from phoneAuthentication: ${error.message}");
+        print("from phoneAuthentication: error code => ${error.code}");
       },
       codeSent: (verificationId, forceResendingToken) {
         _states.value = _states.value.copyWith(
           isLoading: false,
-          isSuccess: true,
+          isSuccess: verificationId.isNotEmpty,
           isError: false,
         );
         Get.snackbar(
@@ -68,15 +74,15 @@ class FirebaseAuthServiceController extends GetxController {
           backgroundColor: Jobstopcolor.lightprimary2,
           colorText: Colors.black87,
         );
-        this.verificationId.value = verificationId;
+        this.verificationId = verificationId.trim();
       },
       codeAutoRetrievalTimeout: (verificationId) {
         _states.value = _states.value.copyWith(
           isLoading: false,
-          isSuccess: true,
+          isSuccess: verificationId.isNotEmpty,
           isError: false,
         );
-        this.verificationId.value = verificationId;
+        this.verificationId = verificationId.trim();
       },
     );
     return true;
@@ -84,45 +90,43 @@ class FirebaseAuthServiceController extends GetxController {
 
   Future<void> verifyOTP(String? smsCode) async {
     loadingState = true;
-    if (smsCode != null && verificationId.toString().isNotEmpty) {
-      try {
-        if (_netController.isConnectionLostWithDialog()) {
-          throw Exception("Connection lost.");
-        }
-        final credential = await _firebaseAuth.signInWithCredential(
-          PhoneAuthProvider.credential(
-            verificationId: this.verificationId.toString(),
-            smsCode: smsCode.toString(),
-          ),
-        );
-        _states.value = _states.value.copyWith(
-          isSuccess: credential.user != null,
-          isError: !(credential.user != null),
-          message: credential.user == null ? "verification is failed" : null,
-        );
-      } on FirebaseAuthException catch (e) {
-        _states.value = _states.value.copyWith(
-          isSuccess: false,
-          isError: true,
-          message: e.message,
-        );
-        print(e.message);
-      } catch (e) {
-        _states.value = _states.value.copyWith(
-          isSuccess: false,
-          isError: true,
-          message: e.toString().replaceAll("Exception:", ""),
-        );
-        print(e.toString());
-      } finally {
-        loadingState = false;
+    try {
+      print("verificationId: $verificationId");
+      if (_netController.isConnectionLostWithDialog()) {
+        throw Exception("Connection lost.");
       }
+      if (smsCode == null || verificationId.isEmpty) {
+        throw Exception(
+          "the verification id is not receive it or sms otp code is not found.",
+        );
+      }
+      final credential = await _firebaseAuth.signInWithCredential(
+        PhoneAuthProvider.credential(
+          verificationId: this.verificationId,
+          smsCode: smsCode.toString().trim(),
+        ),
+      );
+      _states.value = _states.value.copyWith(
+        isSuccess: credential.user != null,
+        isError: !(credential.user != null),
+        message: credential.user == null ? "verification is failed" : null,
+      );
+    } on FirebaseAuthException catch (e) {
+      _states.value = _states.value.copyWith(
+        isSuccess: false,
+        isError: true,
+        message: e.message,
+      );
+      print(e.message);
+    } catch (e) {
+      _states.value = _states.value.copyWith(
+        isSuccess: false,
+        isError: true,
+        message: e.toString().replaceAll("Exception:", ""),
+      );
+      print(e.toString());
+    } finally {
+      loadingState = false;
     }
-  }
-
-  @override
-  void onClose() {
-    timer?.cancel();
-    super.onClose();
   }
 }

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 
-import '../../JobThemes/themecontroller.dart';
+import '../../sippo_themes/themecontroller.dart';
 
 class JobUpdatePassword extends StatefulWidget {
   const JobUpdatePassword({Key? key}) : super(key: key);

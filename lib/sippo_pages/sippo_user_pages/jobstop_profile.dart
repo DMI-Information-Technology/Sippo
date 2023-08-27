@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:jobspot/JobGlobalclass/jobstopprefname.dart';
-import 'package:jobspot/JobGlobalclass/routes.dart';
+import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
-import 'package:get/get.dart';
+import 'package:jobspot/JobGlobalclass/jobstopprefname.dart';
+import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
+import 'package:jobspot/JobGlobalclass/routes.dart';
+import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/JopController/ProfileController/profile_user_controller.dart';
-import 'package:jobspot/JopCustomWidget/add_info_profile_card.dart';
-import 'package:jobspot/JopCustomWidget/resume_card_widget.dart';
+import 'package:jobspot/sippo_custom_widget/add_info_profile_card.dart';
+import 'package:jobspot/sippo_custom_widget/circular_image.dart';
+import 'package:jobspot/sippo_custom_widget/resume_card_widget.dart';
+import 'package:jobspot/sippo_pages/sippo_user_pages/job_aboutme.dart';
 import 'package:readmore/readmore.dart';
-import '../../JopCustomWidget/expandable_item_list_widget.dart';
-import '../../sippo_data/model/profile_model/jobstop_appreciation_info_card_model.dart';
-import '../../sippo_data/model/profile_model/jobstop_education_info_card_model.dart';
-import '../../sippo_data/model/profile_model/jobstop_work_experience_info_card_model.dart';
+
+import '../../JobGlobalclass/sippo_customstyle.dart';
+import '../../sippo_custom_widget/error_messages_dialog_snackbar/network_connnection_lost_widget.dart';
+import '../../sippo_custom_widget/expandable_item_list_widget.dart';
 
 class SippoUserProfile extends StatefulWidget {
   const SippoUserProfile({Key? key}) : super(key: key);
@@ -22,324 +26,339 @@ class SippoUserProfile extends StatefulWidget {
 }
 
 class _SippoUserProfileState extends State<SippoUserProfile> {
-  ProfileUserController profileController = Get.put(ProfileUserController());
+  ProfileUserController _controller = ProfileUserController.instance;
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    double height = size.height;
-    double width = size.width;
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [
-            _buildHeaderInfoProfile(),
+            _buildHeaderInfoProfile(context),
             Padding(
               padding: EdgeInsets.symmetric(
-                  horizontal: width / 26, vertical: height / 46),
+                horizontal: context.fromWidth(CustomStyle.paddingValue),
+                vertical: context.fromHeight(CustomStyle.xxxl),
+              ),
               child: Column(
                 children: [
-                  Obx(
-                    () => AddInfoProfileCard(
-                      title: "About me",
-                      noInfoProfile: profileController.aboutMeText.isEmpty,
-                      leading: Image.asset(
-                        JobstopPngImg.aboutme,
-                        height: height / 40,
-                        color: Jobstopcolor.primarycolor,
-                        colorBlendMode: BlendMode.srcIn,
-                      ),
-                      iconAction: profileController.aboutMeText.isNotEmpty
-                          ? Icon(
-                              Icons.mode_edit_outline_outlined,
-                              size: height / 36,
-                              color: Jobstopcolor.primarycolor,
-                            )
-                          : null,
-                      onAddClicked: () {},
-                      profileInfo: [
-                        profileController.aboutMeText.isNotEmpty
-                            ? ReadMoreText(
-                                profileController.aboutMeText,
-                                trimLines: 2,
-                                style: dmsregular.copyWith(
-                                  fontSize: height / 58,
-                                  color: Jobstopcolor.textColor,
-                                ),
-                                colorClickableText: Jobstopcolor.primarycolor,
-                                trimMode: TrimMode.Line,
-                                trimCollapsedText: '...show more',
-                                trimExpandedText: ' show less',
-                              )
-                            : SizedBox.shrink(),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    height: height / 46,
-                  ),
-                  Obx(
-                    () => AddInfoProfileCard(
-                      title: "Work experience",
-                      noInfoProfile: profileController.wei.isEmpty,
-                      leading: Image.asset(
-                        JobstopPngImg.bag,
-                        height: height / 40,
-                        color: Jobstopcolor.primarycolor,
-                        colorBlendMode: BlendMode.srcIn,
-                      ),
-                      onAddClicked: () {
-                        Get.toNamed(
-                          SippoRoutesPages.workexperience,
-                          arguments: {workExperienceArg: null},
-                        );
-                      },
-                      profileInfo: [
-                        ExpandableItemList(
-                          isExpandable: profileController.wei.length > 1,
-                          more: profileController.showAllWei,
-                          titleExpandColor: Jobstopcolor.primarycolor,
-                          spacing: height / 64,
-                          itemCount: profileController.showAllWei
-                              ? profileController.wei.length
-                              : profileController.wei.length > 0
-                                  ? 1
-                                  : 0,
-                          itemBuilder: (BuildContext context, int index) {
-                            final item = profileController.wei[index];
-                            return _buildWorkExperienceInfo(
-                              context,
-                              item,
-                              onEdit: () {
-                                Get.toNamed(
-                                  SippoRoutesPages.workexperience,
-                                  arguments: {workExperienceArg: item.toJson()},
-                                );
-                              },
-                            );
-                          },
-                          onExpandClicked: () {
-                            profileController.showAllWei =
-                                !profileController.showAllWei;
-                          },
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: height / 46),
-                  Obx(() => AddInfoProfileCard(
-                        title: "Education",
-                        noInfoProfile: profileController.edui.isEmpty,
-                        leading: Image.asset(
-                          JobstopPngImg.education,
-                          height: height / 40,
-                          color: Jobstopcolor.primarycolor,
-                          colorBlendMode: BlendMode.srcIn,
-                        ),
-                        onAddClicked: () {
-                          Get.toNamed(
-                            SippoRoutesPages.educationaddedit,
-                            arguments: {educationArg: null},
-                          );
-                        },
-                        profileInfo: [
-                          ExpandableItemList(
-                            isExpandable: profileController.edui.length > 1,
-                            more: profileController.showAllEdui,
-                            titleExpandColor: Jobstopcolor.primarycolor,
-                            spacing: height / 64,
-                            itemCount: profileController.showAllEdui
-                                ? profileController.edui.length
-                                : 1,
-                            itemBuilder: (BuildContext context, int index) {
-                              final item = profileController.edui[index];
-                              return _buildEductionInfo(
-                                context,
-                                item,
-                                onEdit: () {
-                                  Get.toNamed(
-                                    SippoRoutesPages.educationaddedit,
-                                    arguments: {educationArg: item.toJson()},
-                                  );
-                                },
-                              );
-                            },
-                            onExpandClicked: () {
-                              profileController.showAllEdui =
-                                  !profileController.showAllEdui;
-                            },
-                          ),
-                        ],
-                      )),
-                  SizedBox(height: height / 46),
-                  Obx(
-                    () => AddInfoProfileCard(
-                      title: "Skill",
-                      noInfoProfile: profileController.skills.isEmpty,
-                      leading: Image.asset(
-                        JobstopPngImg.skil,
-                        height: height / 40,
-                        color: Jobstopcolor.primarycolor,
-                        colorBlendMode: BlendMode.srcIn,
-                      ),
-                      iconAction: profileController.skills.isNotEmpty
-                          ? Icon(
-                              Icons.mode_edit_outline_outlined,
-                              size: height / 36,
-                              color: Jobstopcolor.primarycolor,
-                            )
-                          : null,
-                      profileInfo: [
-                        ExpandableItemList.wrapBuilder(
-                          isExpandable: profileController.skills.length > 1,
-                          more: profileController.showAllSkills,
-                          titleExpandColor: Jobstopcolor.primarycolor,
-                          spacing: height / 220,
-                          itemCount: profileController.showAllSkills
-                              ? profileController.skills.length
-                              : 1,
-                          itemBuilder: (BuildContext context, int index) {
-                            final item = profileController.skills[index];
-                            return _buildChips(context, item);
-                          },
-                          onExpandClicked: () {
-                            profileController.showAllSkills =
-                                !profileController.showAllSkills;
-                          },
-                        ),
-                      ],
-                      onAddClicked: () {
-                        Get.toNamed(
-                          SippoRoutesPages.skillsaddedit,
-                          arguments: {skillsListArg: profileController.skills},
-                        );
-                      },
-                    ),
-                  ),
-                  SizedBox(height: height / 46),
-                  Obx(
-                    () => AddInfoProfileCard(
-                      title: "Language",
-                      noInfoProfile: profileController.languages.isEmpty,
-                      leading: Image.asset(
-                        JobstopPngImg.language,
-                        height: height / 40,
-                        color: Jobstopcolor.primarycolor,
-                        colorBlendMode: BlendMode.srcIn,
-                      ),
-                      iconAction: profileController.languages.isNotEmpty
-                          ? Icon(
-                              Icons.mode_edit_outline_outlined,
-                              size: height / 36,
-                              color: Jobstopcolor.primarycolor,
-                            )
-                          : null,
-                      profileInfo: [
-                        ExpandableItemList.wrapBuilder(
-                          isExpandable: profileController.languages.length > 1,
-                          more: profileController.showAllLangs,
-                          titleExpandColor: Jobstopcolor.primarycolor,
-                          spacing: height / 220,
-                          itemCount: profileController.showAllLangs
-                              ? profileController.languages.length
-                              : 1,
-                          itemBuilder: (BuildContext context, int index) {
-                            final item = profileController.languages[index];
-                            return _buildChips(
-                              context,
-                              item.languageName ?? "",
-                            );
-                          },
-                          onExpandClicked: () {
-                            profileController.showAllLangs =
-                                !profileController.showAllLangs;
-                          },
-                        ),
-                      ],
-                      onAddClicked: () {
-                        Get.toNamed(
-                          SippoRoutesPages.languageeditadd,
-                          arguments: {
-                            langListArg: profileController.languages
-                                .map((e) => e.toJson())
-                                .toList()
-                          },
-                        );
-                      },
-                    ),
-                  ),
-                  SizedBox(
-                    height: height / 46,
-                  ),
-                  Obx(
-                    () => AddInfoProfileCard(
-                      title: "Appreciation",
-                      noInfoProfile: profileController.appreciations.isEmpty,
-                      leading: Image.asset(
-                        JobstopPngImg.appreciation,
-                        height: height / 40,
-                        color: Jobstopcolor.primarycolor,
-                        colorBlendMode: BlendMode.srcIn,
-                      ),
-                      profileInfo: [
-                        ExpandableItemList(
-                          isExpandable:
-                              profileController.appreciations.length > 1,
-                          more: profileController.showAllAppreciations,
-                          titleExpandColor: Jobstopcolor.primarycolor,
-                          spacing: height / 64,
-                          itemCount: profileController.showAllAppreciations
-                              ? profileController.appreciations.length
-                              : 1,
-                          itemBuilder: (BuildContext context, int index) {
-                            final item = profileController.appreciations[index];
-                            return _buildAppreciationInfo(
-                              context,
-                              item,
-                              onEdit: () {
-                                Get.toNamed(
-                                  SippoRoutesPages.appreciationaddedit,
-                                  arguments: {appreciationArg: item.toJson()},
-                                );
-                              },
-                            );
-                          },
-                          onExpandClicked: () {
-                            profileController.showAllAppreciations =
-                                !profileController.showAllAppreciations;
-                          },
-                        ),
-                      ],
-                      onAddClicked: () {
-                        Get.toNamed(
-                          SippoRoutesPages.appreciationaddedit,
-                          arguments: {appreciationArg: null},
-                        );
-                      },
-                    ),
-                  ),
-                  SizedBox(height: height / 46),
-                  AddInfoProfileCard(
-                    title: "Resume",
-                    leading: Image.asset(
-                      JobstopPngImg.resume,
-                      height: height / 40,
-                      color: Jobstopcolor.primarycolor,
-                      colorBlendMode: BlendMode.srcIn,
-                    ),
-                    onAddClicked: () async {
-                      Get.toNamed(SippoRoutesPages.uploadresume);
-                      print(profileController.resumeFiles);
-                    },
-                    noInfoProfile: false,
-                    profileInfo: [ResumeCardWidget()],
-                  ),
-                  SizedBox(height: height / 46),
+                  _buildAboutMeInfo(context),
+                  SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+                  _buildWorkExperienceInfo(context),
+                  SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+                  _buildEducationInfo(context),
+                  SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+                  _buildSkillsInfo(context),
+                  SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+                  _buildLanguagesInfo(context),
+                  SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+                  _buildAppreciationInfo(context),
+                  SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+                  _buildResumeInfo(context),
+                  SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
                 ],
               ),
             )
           ],
         ),
+      ),
+    );
+  }
+
+  AddInfoProfileCard _buildResumeInfo(BuildContext context) {
+    return AddInfoProfileCard(
+      title: 'resume'.tr,
+      leading: Image.asset(
+        JobstopPngImg.resume,
+        height: context.fromHeight(CustomStyle.l),
+        color: Jobstopcolor.primarycolor,
+        colorBlendMode: BlendMode.srcIn,
+      ),
+      onAddClicked: () async {
+        Get.toNamed(SippoRoutes.uploadresume);
+        print(_controller.resumeFiles);
+      },
+      noInfoProfile: false,
+      profileInfo: [ResumeCardWidget()],
+    );
+  }
+
+  Widget _buildAppreciationInfo(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return Obx(
+      () => AddInfoProfileCard(
+        title: 'appreciation'.tr,
+        noInfoProfile: _controller.appreciations.isEmpty,
+        leading: Image.asset(
+          JobstopPngImg.appreciation,
+          height: context.fromHeight(CustomStyle.l),
+          color: Jobstopcolor.primarycolor,
+          colorBlendMode: BlendMode.srcIn,
+        ),
+        profileInfo: [
+          ExpandableItemList(
+            isExpandable: _controller.appreciations.length > 1,
+            more: _controller.showAllAppreciations,
+            titleExpandColor: Jobstopcolor.primarycolor,
+            spacing: context.fromHeight(CustomStyle.xxxl),
+            itemCount: _controller.appreciations.length,
+            itemBuilder: (BuildContext context, int index) {
+              final item = _controller.appreciations[index];
+              return _buildTextDescriptionInfo(
+                context,
+                item.awardName,
+                item.categoryAchieve,
+                item.year,
+                onEdit: () {
+                  Get.toNamed(
+                    SippoRoutes.appreciationaddedit,
+                    arguments: {appreciationArg: item.toJson()},
+                  );
+                },
+              );
+            },
+            onExpandClicked: () {
+              _controller.showAllAppreciations =
+                  !_controller.showAllAppreciations;
+            },
+          ),
+        ],
+        onAddClicked: () {
+          Get.toNamed(
+            SippoRoutes.appreciationaddedit,
+            arguments: {appreciationArg: null},
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildLanguagesInfo(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    double height = size.height;
+    return Obx(
+      () => AddInfoProfileCard(
+        title: 'language'.tr,
+        noInfoProfile: _controller.languages.isEmpty,
+        leading: Image.asset(
+          JobstopPngImg.language,
+          height: context.fromHeight(CustomStyle.l),
+          color: Jobstopcolor.primarycolor,
+          colorBlendMode: BlendMode.srcIn,
+        ),
+        iconAction: _controller.languages.isNotEmpty
+            ? Icon(
+                Icons.mode_edit_outline_outlined,
+                size: context.fromHeight(CustomStyle.l),
+                color: Jobstopcolor.primarycolor,
+              )
+            : null,
+        profileInfo: [
+          ExpandableItemList.wrapBuilder(
+            isExpandable: _controller.languages.length > 1,
+            more: _controller.showAllLangs,
+            titleExpandColor: Jobstopcolor.primarycolor,
+            spacing: height / 220,
+            itemCount:
+                _controller.showAllLangs ? _controller.languages.length : 1,
+            itemBuilder: (BuildContext context, int index) {
+              final item = _controller.languages[index];
+              return _buildChips(
+                context,
+                item.languageName ?? "",
+              );
+            },
+            onExpandClicked: () {
+              _controller.showAllLangs = !_controller.showAllLangs;
+            },
+          ),
+        ],
+        onAddClicked: () {
+          Get.toNamed(
+            SippoRoutes.languageeditadd,
+            arguments: {
+              langListArg: _controller.languages.map((e) => e.toJson()).toList()
+            },
+          );
+        },
+      ),
+    );
+  }
+
+  Obx _buildSkillsInfo(BuildContext context) {
+    return Obx(
+      () => AddInfoProfileCard(
+        title: 'skill'.tr,
+        noInfoProfile: _controller.skills.isEmpty,
+        leading: Image.asset(
+          JobstopPngImg.skil,
+          height: context.fromHeight(CustomStyle.l),
+          color: Jobstopcolor.primarycolor,
+          colorBlendMode: BlendMode.srcIn,
+        ),
+        iconAction: _controller.skills.isNotEmpty
+            ? Icon(
+                Icons.mode_edit_outline_outlined,
+                size: context.fromHeight(CustomStyle.l),
+                color: Jobstopcolor.primarycolor,
+              )
+            : null,
+        profileInfo: [
+          ExpandableItemList.wrapBuilder(
+            isExpandable: _controller.skills.length > 1,
+            more: _controller.showAllSkills,
+            titleExpandColor: Jobstopcolor.primarycolor,
+            spacing: context.height / 220,
+            itemCount: _controller.skills.length,
+            itemBuilder: (BuildContext context, int index) {
+              final item = _controller.skills[index];
+              return _buildChips(context, item);
+            },
+            onExpandClicked: () {
+              _controller.showAllSkills = !_controller.showAllSkills;
+            },
+          ),
+        ],
+        onAddClicked: () {
+          Get.toNamed(
+            SippoRoutes.skillsaddedit,
+            arguments: {skillsListArg: _controller.skills},
+          );
+        },
+      ),
+    );
+  }
+
+  Obx _buildEducationInfo(BuildContext context) {
+    return Obx(() => AddInfoProfileCard(
+          title: 'education'.tr,
+          noInfoProfile: _controller.edui.isEmpty,
+          leading: Image.asset(
+            JobstopPngImg.education,
+            height: context.fromHeight(CustomStyle.spaceBetween),
+            color: Jobstopcolor.primarycolor,
+            colorBlendMode: BlendMode.srcIn,
+          ),
+          onAddClicked: () {
+            Get.toNamed(
+              SippoRoutes.educationaddedit,
+              arguments: {educationArg: null},
+            );
+          },
+          profileInfo: [
+            ExpandableItemList(
+              isExpandable: _controller.edui.length > 1,
+              more: _controller.showAllEdui,
+              titleExpandColor: Jobstopcolor.primarycolor,
+              spacing: context.fromHeight(CustomStyle.l),
+              itemCount: _controller.edui.length,
+              itemBuilder: (BuildContext context, int index) {
+                final item = _controller.edui[index];
+                return _buildTextDescriptionInfo(
+                  context,
+                  item.level,
+                  item.university,
+                  item.periodic,
+                  onEdit: () {
+                    Get.toNamed(
+                      SippoRoutes.educationaddedit,
+                      arguments: {educationArg: item.toJson()},
+                    );
+                  },
+                );
+              },
+              onExpandClicked: () {
+                _controller.showAllEdui = !_controller.showAllEdui;
+              },
+            ),
+          ],
+        ));
+  }
+
+  Widget _buildWorkExperienceInfo(BuildContext context) {
+    return Obx(
+      () => AddInfoProfileCard(
+        title: 'work_experience'.tr,
+        noInfoProfile: _controller.wei.isEmpty,
+        leading: Image.asset(
+          JobstopPngImg.bag,
+          height: context.fromHeight(CustomStyle.l),
+          color: Jobstopcolor.primarycolor,
+          colorBlendMode: BlendMode.srcIn,
+        ),
+        onAddClicked: () {
+          Get.toNamed(
+            SippoRoutes.workexperience,
+            arguments: {workExperienceArg: null},
+          );
+        },
+        profileInfo: [
+          ExpandableItemList(
+            isExpandable: _controller.wei.length > 1,
+            more: _controller.showAllWei,
+            titleExpandColor: Jobstopcolor.primarycolor,
+            spacing: context.fromHeight(CustomStyle.xxxl),
+            itemCount: _controller.wei.length,
+            itemBuilder: (BuildContext context, int index) {
+              final item = _controller.wei[index];
+              return _buildTextDescriptionInfo(
+                context,
+                item.jobTitle,
+                item.company,
+                item.periodic,
+                onEdit: () {
+                  _controller.editingId = item.id?.toInt() ?? -1;
+                  Get.toNamed(SippoRoutes.workexperience);
+                },
+              );
+            },
+            onExpandClicked: () {
+              _controller.showAllWei = !_controller.showAllWei;
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildAboutMeInfo(BuildContext context) {
+
+    return Obx(
+      () => AddInfoProfileCard(
+        title: 'about_me'.tr,
+        noInfoProfile: _controller.aboutMeText.isEmpty,
+        leading: Image.asset(
+          JobstopPngImg.aboutme,
+          height: context.fromHeight(CustomStyle.l),
+          color: Jobstopcolor.primarycolor,
+          colorBlendMode: BlendMode.srcIn,
+        ),
+        iconAction: _controller.aboutMeText.isNotEmpty
+            ? Icon(
+                Icons.mode_edit_outline_outlined,
+                size: context.fromHeight(CustomStyle.l),
+                color: Jobstopcolor.primarycolor,
+              )
+            : null,
+        onAddClicked: () {
+          Get.to(JobAboutme());
+        },
+        profileInfo: [
+          _controller.aboutMeText.isNotEmpty
+              ? ReadMoreText(
+                  _controller.aboutMeText,
+                  trimLines: 2,
+                  style: dmsregular.copyWith(
+                    fontSize: context.fromHeight(CustomStyle.xxxl),
+                    color: Jobstopcolor.textColor,
+                  ),
+                  colorClickableText: Jobstopcolor.primarycolor,
+                  trimMode: TrimMode.Line,
+                  trimCollapsedText: 'show_more'.tr,
+                  trimExpandedText: 'show_less'.tr,
+                )
+              : const SizedBox.shrink(),
+        ],
       ),
     );
   }
@@ -359,61 +378,24 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
     );
   }
 
-  Widget _buildWorkExperienceInfo(
-      BuildContext context, WorkExperienceInfoCardModel? wei,
-      {required VoidCallback onEdit}) {
-    Size size = MediaQuery.of(context).size;
-    double height = size.height;
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Row(
-        children: [
-          Text(
-            wei?.position ?? "",
-            style: dmsbold.copyWith(
-                fontSize: 14, color: Jobstopcolor.primarycolor),
-          ),
-          const Spacer(),
-          InkWell(
-              onTap: onEdit,
-              child: Image.asset(
-                JobstopPngImg.edit,
-                height: height / 36,
-                color: Jobstopcolor.primarycolor,
-                colorBlendMode: BlendMode.srcIn,
-              )),
-        ],
-      ),
-      SizedBox(
-        height: height / 100,
-      ),
-      Text(
-        wei?.company ?? "",
-        style: dmsregular.copyWith(fontSize: 12, color: Jobstopcolor.darkgrey),
-      ),
-      SizedBox(
-        height: height / 150,
-      ),
-      Text(
-        wei?.periodic ?? "",
-        style: dmsregular.copyWith(fontSize: 12, color: Jobstopcolor.darkgrey),
-      ),
-    ]);
-  }
-
-  Widget _buildEductionInfo(BuildContext context, EducationInfoCardModel? edui,
-      {required VoidCallback onEdit}) {
-    Size size = MediaQuery.of(context).size;
-    double height = size.height;
-    double width = size.width;
+  Widget _buildTextDescriptionInfo(
+    BuildContext context,
+    String? title,
+    String? from,
+    String? periodic, {
+    required VoidCallback onEdit,
+  }) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Row(
         children: [
           SizedBox(
-            width: width / 2,
+            width: context.fromWidth(CustomStyle.halfFullSize),
             child: Text(
-              edui?.level ?? "",
+              title ?? "",
               style: dmsbold.copyWith(
-                  fontSize: 14, color: Jobstopcolor.primarycolor),
+                fontSize: FontSize.title6(context),
+                color: Jobstopcolor.primarycolor,
+              ),
               overflow: TextOverflow.ellipsis,
             ),
           ),
@@ -422,169 +404,135 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
               onTap: onEdit,
               child: Image.asset(
                 JobstopPngImg.edit,
-                height: height / 36,
+                height: context.fromHeight(CustomStyle.l),
                 color: Jobstopcolor.primarycolor,
                 colorBlendMode: BlendMode.srcIn,
               )),
         ],
       ),
       SizedBox(
-        height: height / 100,
+        height: context.fromHeight(CustomStyle.huge2),
       ),
       Text(
-        edui?.university ?? "",
-        style: dmsregular.copyWith(fontSize: 12, color: Jobstopcolor.darkgrey),
+        from ?? "",
+        style: dmsregular.copyWith(
+            fontSize: FontSize.label(context), color: Jobstopcolor.darkgrey),
       ),
       SizedBox(
-        height: height / 150,
+        height: context.fromHeight(CustomStyle.huge2),
       ),
       Text(
-        edui?.periodic ?? "",
-        style: dmsregular.copyWith(fontSize: 12, color: Jobstopcolor.darkgrey),
+        periodic ?? "",
+        style: dmsregular.copyWith(
+            fontSize: FontSize.label(context), color: Jobstopcolor.darkgrey),
       ),
     ]);
   }
 
-  Widget _buildAppreciationInfo(
-      BuildContext context, AppreciationInfoCardModel? apper,
-      {required VoidCallback onEdit}) {
-    Size size = MediaQuery.of(context).size;
-    double height = size.height;
-    double width = size.width;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            SizedBox(
-              width: width / 2,
-              child: Text(
-                apper?.awardName ?? "",
-                style: dmsbold.copyWith(
-                    fontSize: 14, color: Jobstopcolor.primarycolor),
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-            const Spacer(),
-            InkWell(
-                onTap: onEdit,
-                child: Image.asset(
-                  JobstopPngImg.edit,
-                  height: height / 36,
-                  color: Jobstopcolor.primarycolor,
-                  colorBlendMode: BlendMode.srcIn,
-                )),
-          ],
-        ),
-        SizedBox(
-          height: height / 100,
-        ),
-        Text(
-          apper?.categoryAchieve ?? "",
-          style:
-              dmsregular.copyWith(fontSize: 12, color: Jobstopcolor.darkgrey),
-        ),
-        SizedBox(
-          height: height / 150,
-        ),
-        Text(
-          apper?.year ?? "",
-          style:
-              dmsregular.copyWith(fontSize: 12, color: Jobstopcolor.darkgrey),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildHeaderInfoProfile() {
-    Size size = MediaQuery.of(context).size;
-    double height = size.height;
-    double width = size.width;
+  Widget _buildHeaderInfoProfile(BuildContext context) {
+    double topPaddingValue = MediaQuery.of(context).viewPadding.top;
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(25),
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(25),
+          bottomRight: Radius.circular(25),
+        ),
         color: Jobstopcolor.primarycolor,
         image: DecorationImage(
           image: AssetImage(JobstopPngImg.backgroundProf),
           fit: BoxFit.cover,
         ),
       ),
-      child: Padding(
-        padding:
-            EdgeInsets.symmetric(horizontal: width / 26, vertical: height / 26),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      padding: EdgeInsets.only(top: topPaddingValue),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Obx(
+            () => !_controller.netController.isConnected
+                ? const NetworkConnectionLostWidget()
+                : const SizedBox.shrink(),
+          ),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: context.fromWidth(CustomStyle.xs),
+              vertical: context.fromHeight(CustomStyle.huge2),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                CircleAvatar(
-                  radius: 25,
-                  backgroundImage: AssetImage(JobstopPngImg.photo),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    CircularImage(
+                      JobstopPngImg.photo,
+                      size: context.fromHeight(CustomStyle.imageSize1),
+                    ),
+                    Spacer(),
+                    Image.asset(
+                      JobstopPngImg.union,
+                      height: context.fromHeight(CustomStyle.l),
+                      color: Jobstopcolor.white,
+                    ),
+                    InkWell(
+                      onTap: () {
+                        Get.toNamed(SippoRoutes.sippoprofilesetting);
+                      },
+                      child: Image.asset(
+                        JobstopPngImg.setting,
+                        height: context.fromHeight(CustomStyle.l),
+                        color: Jobstopcolor.white,
+                      ),
+                    ),
+                  ],
                 ),
-                SizedBox(
-                  width: width / 2,
-                ),
-                Image.asset(
-                  JobstopPngImg.union,
-                  height: height / 36,
-                  color: Jobstopcolor.white,
-                ),
-                InkWell(
-                  onTap: () {
-                    Get.toNamed(SippoRoutesPages.sippoprofilesetting);
-                  },
-                  child: Image.asset(
-                    JobstopPngImg.setting,
-                    height: height / 36,
+                SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+                Text(
+                  "Orlando Diggs",
+                  style: dmsmedium.copyWith(
+                    fontSize: FontSize.title5(context),
                     color: Jobstopcolor.white,
                   ),
                 ),
-              ],
-            ),
-            SizedBox(
-              height: height / 46,
-            ),
-            Text(
-              "Orlando Diggs",
-              style:
-                  dmsmedium.copyWith(fontSize: 14, color: Jobstopcolor.white),
-            ),
-            SizedBox(
-              height: height / 100,
-            ),
-            Text(
-              "California, USA",
-              style:
-                  dmsregular.copyWith(fontSize: 12, color: Jobstopcolor.white),
-            ),
-            SizedBox(
-              height: height / 36,
-            ),
-            Row(
-              children: [
-                Spacer(),
-                InkWell(
-                  onTap: () => Get.toNamed(SippoRoutesPages.edituserprofile),
-                  child: Row(
-                    children: [
-                      Text(
-                        "Edit profile ",
-                        style: dmsregular.copyWith(
-                            fontSize: 12, color: Jobstopcolor.white),
-                      ),
-                      Image.asset(
-                        JobstopPngImg.edit,
-                        height: height / 36,
-                        color: Jobstopcolor.white,
-                      ),
-                    ],
+                SizedBox(height: context.fromHeight(CustomStyle.huge2)),
+                Text(
+                  "California, USA",
+                  style: dmsregular.copyWith(
+                    fontSize: FontSize.label(context),
+                    color: Jobstopcolor.white,
                   ),
-                )
+                ),
+                SizedBox(
+                  height: context.fromHeight(CustomStyle.l),
+                ),
+                Row(
+                  children: [
+                    Spacer(),
+                    InkWell(
+                      onTap: () => Get.toNamed(SippoRoutes.edituserprofile),
+                      child: Row(
+                        children: [
+                          Text(
+                            "edit_profile".tr,
+                            style: dmsregular.copyWith(
+                              fontSize: FontSize.label(context),
+                              color: Jobstopcolor.white,
+                            ),
+                          ),
+                          Image.asset(
+                            JobstopPngImg.edit,
+                            height: context.fromHeight(CustomStyle.l),
+                            color: Jobstopcolor.white,
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
               ],
-            )
-          ],
-        ),
+            ),
+          )
+        ],
       ),
     );
   }

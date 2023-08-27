@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
-import 'package:jobspot/JopCustomWidget/widgets.dart';
+import 'package:jobspot/sippo_custom_widget/widgets.dart';
 
 class UpdatePasswordAfterVerification extends StatefulWidget {
   const UpdatePasswordAfterVerification({Key? key}) : super(key: key);

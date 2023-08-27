@@ -5,8 +5,8 @@ import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
 import '../../JobGlobalclass/jobstopprefname.dart';
-import '../../JobThemes/themecontroller.dart';
-import '../../JopCustomWidget/widgets.dart';
+import '../../sippo_custom_widget/widgets.dart';
+import '../../sippo_themes/themecontroller.dart';
 
 class JobstopForget extends StatefulWidget {
   const JobstopForget({Key? key}) : super(key: key);
@@ -63,7 +63,7 @@ class _JobstopForgetState extends State<JobstopForget> {
               ),
               CustomButton(
                 onTappeed: () {
-                  Get.toNamed(SippoRoutesPages.otpresetpassmsgpage);
+                  Get.toNamed(SippoRoutes.otpresetpassmsgpage);
                 },
                 text: "RESENT_PASSWORD".tr,
               ),

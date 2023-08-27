@@ -4,15 +4,16 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:jobspot/JobStringtranslation/traslationstring.dart';
-import 'package:jobspot/JobThemes/theme.dart';
-import 'package:jobspot/JobThemes/themecontroller.dart';
 import 'package:jobspot/JobGlobalclass/global_storage.dart';
+import 'package:jobspot/sippo_themes/theme.dart';
 import 'JobGlobalclass/routes.dart';
+import 'JopController/AuthenticationController/sippo_auth_controller.dart';
 import 'JopController/ConnectivityController/internet_connection_controller.dart';
 import 'firebase_options.dart';
 
 void main() async {
   await GetStorage.init();
+  // WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -22,12 +23,13 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+
   runApp(const MyApp());
 }
 
 Future<void> lunchApp() async {
   final check = await GlobalStorage.isAppOpenBefore();
-  if (check == null) {
+  if (!check) {
     await GlobalStorage.appIsLunched();
   } else {
     GlobalStorage.isAppLunchFirstTime = false;
@@ -42,21 +44,27 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final themedata = Get.put(JobstopThemecontroler());
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    Get.put(InternetConnectionController());
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: themedata.isdark
-          ? JobstopMyThemes.darkTheme
-          : JobstopMyThemes.lightTheme,
+      theme: JobstopMyThemes.lightTheme,
       fallbackLocale: const Locale('en', 'US'),
+      initialBinding: BindingsBuilder(() {
+        Get.put(InternetConnectionController());
+        Get.put(AuthController());
+      }),
       translations: Apptranslation(),
       locale: const Locale('en', 'US'),
-      initialRoute: SippoRoutesPages.homepage,
-      getPages: SippoRoutesPages.routes,
+      initialRoute: SippoRoutes.homepage,
+      // initialRoute: SippoRoutes.identityverification,
+      // home: const JobNotification(),
+      getPages: SippoRoutes.routes,
     );
   }
 }

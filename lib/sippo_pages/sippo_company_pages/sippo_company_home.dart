@@ -5,9 +5,9 @@ import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
-import 'package:jobspot/sippo_data/model/profile_model/jobstop_jobdetailspost.dart';
-import '../../JobThemes/themecontroller.dart';
-import '../../JopCustomWidget/widgets.dart';
+import '../../sippo_custom_widget/widgets.dart';
+import '../../sippo_data/model/profile_model/profile_widget_model/jobstop_jobdetailspost.dart';
+import '../../sippo_themes/themecontroller.dart';
 
 class SippoCompanyHomePage extends StatefulWidget {
   const SippoCompanyHomePage({Key? key}) : super(key: key);
@@ -234,7 +234,7 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
                 width: width / 52,
               ),
               InkWell(
-                onTap: () => Get.toNamed(SippoRoutesPages.sippocompanyprofile),
+                onTap: () => Get.toNamed(SippoRoutes.sippocompanyprofile),
                 child: CircleAvatar(
                   radius: 20,
                   child: Image.asset(JobstopPngImg.photo),

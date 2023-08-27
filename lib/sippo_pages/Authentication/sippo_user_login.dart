@@ -1,31 +1,21 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
+import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
+import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
+
 import '../../JobGlobalclass/jobstopprefname.dart';
 import '../../JobGlobalclass/routes.dart';
 import '../../JobGlobalclass/text_font_size.dart';
-import '../../JobThemes/themecontroller.dart';
-import '../../JopController/AuthenticationController/sippo_auth_controller.dart';
-import '../../JopController/AuthenticationController/sippo_login_user_controller.dart';
-import '../../JopCustomWidget/overly_loading.dart';
-import '../../JopCustomWidget/widgets.dart';
+import '../../JopController/AuthenticationController/sippo_user_login_controller.dart';
+import '../../sippo_custom_widget/loading_view_widgets/overly_loading.dart';
+import '../../sippo_custom_widget/widgets.dart';
 
-class SippoUserLogin extends StatefulWidget {
+class SippoUserLogin extends StatelessWidget {
   const SippoUserLogin({Key? key}) : super(key: key);
-
-  @override
-  State<SippoUserLogin> createState() => _SippoUserLoginState();
-}
-
-class _SippoUserLoginState extends State<SippoUserLogin> {
-  dynamic size;
-  double height = 0.00;
-  double width = 0.00;
-
-  final themedata = Get.put(JobstopThemecontroler());
-  final AuthController _authController = Get.find();
 
   Color getColor(Set<MaterialState> states) {
     const Set<MaterialState> interactiveStates = <MaterialState>{
@@ -39,28 +29,11 @@ class _SippoUserLoginState extends State<SippoUserLogin> {
     return Jobstopcolor.lightprimary;
   }
 
-  final GlobalKey<FormState> _formKey = GlobalKey();
-  final LoginUserController _loginUserController =
-      Get.put(LoginUserController());
-
-  // void _showAlert() {
-  //   Get.dialog(CustomAlertDialog(
-  //     imageAsset: JobstopPngImg.successful1,
-  //     title: "Success",
-  //     description: "the account has been created successfully.",
-  //     confirmBtnColor: Jobstopcolor.primarycolor,
-  //     confirmBtnTitle: "ok".tr,
-  //     onConfirm: () {
-  //       Get.toNamed(SippoRoutesPages.userdashboard);
-  //     },
-  //   ));
-  // }
-
   @override
   Widget build(BuildContext context) {
-    size = MediaQuery.of(context).size;
-    height = size.height;
-    width = size.width;
+    final controller = UserLoginController.instance;
+    Size size = MediaQuery.of(context).size;
+    double height = size.height;
     return Stack(
       children: [
         Scaffold(
@@ -68,39 +41,34 @@ class _SippoUserLoginState extends State<SippoUserLogin> {
           body: SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.symmetric(
-                  horizontal: width / 26, vertical: height / 26),
+                horizontal: context.fromWidth(CustomStyle.paddingValue),
+                vertical: context.fromHeight(CustomStyle.paddingValue),
+              ),
               child: Form(
-                key: _formKey,
+                key: controller.formKey,
                 child: Column(
                   children: [
                     Text(
                       "welcome_back_login_title".tr,
                       style: dmsbold.copyWith(
-                        fontSize: FontSize.titleFontSize2(context),
-                        color: themedata.isdark
-                            ? Jobstopcolor.white
-                            : Jobstopcolor.primarycolor,
+                        fontSize: FontSize.title2(context),
+                        color: Jobstopcolor.primarycolor,
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    SizedBox(
-                      height: height / 64,
-                    ),
-                    Text(
+                    SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+                    AutoSizeText(
                       "lorem ipsum dolor sit amet, consectetur adipiscing elit n elementum",
                       style: dmsregular.copyWith(
                         color: Jobstopcolor.textColor,
-                        fontSize: FontSize.paragraphFontSize3(context),
+                        fontSize: FontSize.paragraph3(context),
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    SizedBox(
-                      height: height / 45,
-                    ),
+                    SizedBox(height: context.fromHeight(CustomStyle.xxl)),
                     Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        boxShadow: const [],
                       ),
                       child: InputField(
                         hintText: "phone_number".tr,
@@ -109,19 +77,19 @@ class _SippoUserLoginState extends State<SippoUserLogin> {
                           Icons.phone_outlined,
                           color: Jobstopcolor.primarycolor,
                         ),
-                        validatorCallback: (value) {
+                        validator: (value) {
                           if (value == null || value.trim().isEmpty) {
                             return "phonenumber_is_req".tr;
                           }
                           return null;
                         },
                         onChangedText: (value) {
-                          _loginUserController.phoneNumber = value.trim();
+                          controller.phoneNumber = value.trim();
                         },
                       ),
                     ),
                     SizedBox(
-                      height: height / 25,
+                      height: context.fromHeight(CustomStyle.s),
                     ),
                     PasswordInputField(
                       hintText: "Password".tr,
@@ -136,11 +104,11 @@ class _SippoUserLoginState extends State<SippoUserLogin> {
                         return null;
                       },
                       onChangedText: (value) {
-                        _loginUserController.password = value.trim();
+                        controller.password = value.trim();
                       },
                     ),
                     SizedBox(
-                      height: height / 35,
+                      height: context.fromHeight(CustomStyle.spaceBetween),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -157,17 +125,17 @@ class _SippoUserLoginState extends State<SippoUserLogin> {
                                 fillColor: MaterialStateProperty.resolveWith(
                                   getColor,
                                 ),
-                                value: _loginUserController.isRememberMeChecked,
+                                value: controller.isRememberMeChecked,
                                 onChanged: (bool? value) {
-                                  _loginUserController.isRememberMeChecked =
+                                  controller.isRememberMeChecked =
                                       value ?? false;
                                 },
                               ),
                             ),
-                            Text(
+                            AutoSizeText(
                               "Remember_me".tr,
                               style: dmsregular.copyWith(
-                                fontSize: FontSize.labelFontSize(context),
+                                fontSize: FontSize.label(context),
                                 color: Jobstopcolor.grey,
                               ),
                             ),
@@ -175,14 +143,11 @@ class _SippoUserLoginState extends State<SippoUserLogin> {
                         ),
                         TextButton(
                           onPressed: () {
-                            if (_loginUserController.phoneNumber
-                                .trim()
-                                .isNotEmpty) {
+                            if (controller.phoneNumber.trim().isNotEmpty) {
                               Get.toNamed(
-                                SippoRoutesPages.forgetpasswordpage,
+                                SippoRoutes.forgetpasswordpage,
                                 arguments: {
-                                  phoneNumberArg:
-                                      _loginUserController.phoneNumber
+                                  phoneNumberArg: controller.phoneNumber
                                 },
                               );
                             } else {
@@ -195,29 +160,29 @@ class _SippoUserLoginState extends State<SippoUserLogin> {
                               );
                             }
                           },
-                          child: Text(
+                          child: AutoSizeText(
                             "Forget_Password".tr,
                             style: dmsregular.copyWith(
-                                fontSize: FontSize.labelFontSize(context),
-                                color: themedata.isdark
-                                    ? Jobstopcolor.white
-                                    : Jobstopcolor.primarycolor),
+                                fontSize: FontSize.label(context),
+                                color: Jobstopcolor.primarycolor),
                             textAlign: TextAlign.end,
                           ),
                         ),
                       ],
                     ),
                     SizedBox(
-                      height: height / 35,
+                      height: context.fromHeight(CustomStyle.spaceBetween),
                     ),
                     CustomButton(
                       text: "Login".tr,
                       backgroundColor: Jobstopcolor.primarycolor,
                       textColor: Jobstopcolor.white,
-                      onTappeed: _onSubmitLogin,
+                      onTappeed: () async {
+                        await UserLoginController.instance.onSubmittedLogin();
+                      },
                     ),
                     SizedBox(
-                      height: height / 35,
+                      height: context.fromHeight(CustomStyle.spaceBetween),
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -225,12 +190,12 @@ class _SippoUserLoginState extends State<SippoUserLogin> {
                         Text(
                           "You_dont_have_an_account_yet".tr,
                           style: dmsregular.copyWith(
-                              fontSize: height / 65,
+                              fontSize: FontSize.title6(context),
                               color: Jobstopcolor.textColor),
                         ),
                         TextButton(
                           onPressed: () {
-                            Get.offAndToNamed(SippoRoutesPages.signuppage);
+                            Get.offAndToNamed(SippoRoutes.signuppage);
                           },
                           child: Text(
                             "Sign_up".tr,
@@ -243,17 +208,15 @@ class _SippoUserLoginState extends State<SippoUserLogin> {
                       ],
                     ),
                     SizedBox(
-                      height: height / 35,
+                      height: context.fromHeight(CustomStyle.spaceBetween),
                     ),
-                    const SeparatorLine(
-                      text: 'or',
-                    ),
+                    SeparatorLine(text: 'or'.tr),
                     SizedBox(
-                      height: height / 35,
+                      height: context.fromHeight(CustomStyle.spaceBetween),
                     ),
                     CustomButton(
                       onTappeed: () {
-                        Get.offAndToNamed(SippoRoutesPages.sippoCompanyLogin);
+                        Get.offAndToNamed(SippoRoutes.sippoCompanyLogin);
                       },
                       text: "Company_Login".tr,
                       backgroundColor: Jobstopcolor.white,
@@ -265,7 +228,7 @@ class _SippoUserLoginState extends State<SippoUserLogin> {
                     ),
                     CustomButton(
                       onTappeed: () {
-                        Get.offAllNamed(SippoRoutesPages.userdashboard);
+                        Get.offAllNamed(SippoRoutes.userdashboard);
                       },
                       text: "Guest_login.".tr,
                       backgroundColor: Jobstopcolor.white,
@@ -280,21 +243,11 @@ class _SippoUserLoginState extends State<SippoUserLogin> {
           backgroundColor: Jobstopcolor.white,
         ),
         Obx(
-          () => _authController.states.isLoading
+          () => controller.authState.isLoading
               ? const LoadingOverlay()
               : const SizedBox.shrink(),
         ),
       ],
     );
-  }
-
-  void _onSubmitLogin() async {
-    if (_formKey.currentState!.validate()) {
-      await _authController.userLogin(_loginUserController.userForm);
-    }
-    if (_authController.states.isSuccess) {
-      _authController.successState = false;
-      Get.offAllNamed(SippoRoutesPages.userdashboard);
-    }
   }
 }

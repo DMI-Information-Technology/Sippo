@@ -1,4 +1,6 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -9,10 +11,10 @@ import '../../JobGlobalclass/jobstopcolor.dart';
 import '../../JobGlobalclass/jobstopfontstyle.dart';
 import '../../JobGlobalclass/jobstopimges.dart';
 import '../../JobGlobalclass/routes.dart';
-import '../../JopCustomWidget/widgets.dart';
+import '../../sippo_custom_widget/widgets.dart';
 
-class JopAppUsing extends StatelessWidget {
-  const JopAppUsing({Key? key}) : super(key: key);
+class SippoAppUsing extends StatelessWidget {
+  const SippoAppUsing({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,10 +36,10 @@ class JopAppUsing extends StatelessWidget {
               // Row(mainAxisAlignment: MainAxisAlignment.end, children: []),
 
               Center(
-                child: Text(
+                child: AutoSizeText(
                   "Choose_App_Using_Page".tr,
                   style: dmsbold.copyWith(
-                    fontSize: FontSize.titleFontSize2(context),
+                    fontSize: FontSize.title2(context),
                     color: Jobstopcolor.primarycolor,
                   ),
                   textAlign: TextAlign.center,
@@ -46,18 +48,18 @@ class JopAppUsing extends StatelessWidget {
               SizedBox(
                 height: height / 32,
               ),
-              Text(
+              AutoSizeText(
                 'If you are a user and you want to find a job, please choose "Job Search." If you want to search for employees, please choose "Employee Search."',
                 style: dmsregular.copyWith(
-                  fontSize: FontSize.paragraphFontSize(context),
+                  fontSize: FontSize.paragraph(context),
                 ),
+                maxLines: 4,
                 textAlign: TextAlign.center,
               ),
               SizedBox(
                 height: height / 32,
               ),
               SizedBox(
-                width: double.infinity,
                 child: Column(
                   children: [
                     Row(
@@ -107,9 +109,7 @@ class JopAppUsing extends StatelessWidget {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          onConfirmButtonClicked();
-        },
+        onPressed: _onConfirmButtonClicked,
         backgroundColor: Jobstopcolor.primarycolor,
         child: const Icon(
           Icons.arrow_right_alt_sharp,
@@ -120,7 +120,7 @@ class JopAppUsing extends StatelessWidget {
     );
   }
 
-  void onConfirmButtonClicked() {
+  void _onConfirmButtonClicked() {
     AppUsingController controller = Get.find();
     if (!controller.findEmployee && !controller.findJop) {
       Get.dialog(
@@ -135,20 +135,24 @@ class JopAppUsing extends StatelessWidget {
       );
       return;
     }
-    Get.toNamed(SippoRoutesPages.signuppage);
+    if (controller.findJop)
+      Get.toNamed(SippoRoutes.signuppage);
+    else
+      Get.toNamed(SippoRoutes.companysignup);
   }
 }
 
 class JopSelctedUsingAppCard extends StatelessWidget {
-  const JopSelctedUsingAppCard(
-      {super.key,
-      required this.color,
-      required this.isSelected,
-      required this.onTapped,
-      this.icon = Icons.insert_emoticon,
-      this.backGroundIconColor = DefaultSelectionStyle.defaultColor,
-      this.title = "",
-      this.description = ""});
+  const JopSelctedUsingAppCard({
+    super.key,
+    required this.color,
+    required this.isSelected,
+    required this.onTapped,
+    this.icon = Icons.insert_emoticon,
+    this.backGroundIconColor = DefaultSelectionStyle.defaultColor,
+    this.title = "",
+    this.description = "",
+  });
 
   final VoidCallback onTapped;
   final bool isSelected;
@@ -164,7 +168,6 @@ class JopSelctedUsingAppCard extends StatelessWidget {
     double height = size.height;
     double width = size.width;
     return SizedBox(
-      height: height / 2.5,
       child: InkWell(
         onTap: () {
           onTapped();
@@ -172,17 +175,20 @@ class JopSelctedUsingAppCard extends StatelessWidget {
         child: Card(
           elevation: isSelected ? 4.0 : 2.0,
           shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(25.0),
-              side: BorderSide(
-                  width: 2, color: isSelected ? color : Colors.grey)),
+            borderRadius: BorderRadius.circular(25.0),
+            side: BorderSide(
+              width: 2,
+              color: isSelected ? color : Colors.grey,
+            ),
+          ),
           child: Column(
             children: [
               SizedBox(
                 height: height / 32,
               ),
               Container(
-                width: width / 5,
-                height: width / 5,
+                width: (kIsWeb ? height : width) / 5,
+                height: (kIsWeb ? height : width) / 5,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: backGroundIconColor,
@@ -192,18 +198,18 @@ class JopSelctedUsingAppCard extends StatelessWidget {
                   child: Icon(
                     icon,
                     color: color,
-                    size: width / 8.0,
+                    size: (kIsWeb ? height : width) / 8.0,
                   ),
                 ),
               ),
               SizedBox(
                 height: height / 32,
               ),
-              Text(
+              AutoSizeText(
                 title,
                 style: dmsbold.copyWith(
                   color: Jobstopcolor.black,
-                  fontSize: FontSize.titleFontSize3(context),
+                  fontSize: FontSize.title3(context),
                 ),
                 textAlign: TextAlign.center,
               ),
@@ -212,11 +218,11 @@ class JopSelctedUsingAppCard extends StatelessWidget {
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: width / 25),
-                child: Text(
+                child: AutoSizeText(
                   description,
                   style: dmsregular.copyWith(
                     color: Jobstopcolor.textColor,
-                    fontSize: FontSize.paragraphFontSize2(context),
+                    fontSize: FontSize.paragraph2(context),
                   ),
                   textAlign: TextAlign.center,
                 ),

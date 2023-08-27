@@ -5,7 +5,7 @@ import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JopCustomWidget/add_info_profile_card.dart';
+import 'package:jobspot/sippo_custom_widget/add_info_profile_card.dart';
 
 class SippoCompanyProfile extends StatefulWidget {
   const SippoCompanyProfile({Key? key}) : super(key: key);
@@ -118,7 +118,7 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
                     profileInfo: [],
                     onAddClicked: () {
                       Get.toNamed(
-                        SippoRoutesPages.appreciationaddedit,
+                        SippoRoutes.appreciationaddedit,
                         arguments: {appreciationArg: null},
                       );
                     },
@@ -169,7 +169,7 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
                 ),
                 InkWell(
                   onTap: () =>
-                      Get.toNamed(SippoRoutesPages.sippoprofilesetting),
+                      Get.toNamed(SippoRoutes.sippoprofilesetting),
                   child: Image.asset(
                     JobstopPngImg.setting,
                     height: height / 36,
@@ -201,7 +201,7 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
               children: [
                 Spacer(),
                 InkWell(
-                  onTap: () => Get.toNamed(SippoRoutesPages.edituserprofile),
+                  onTap: () => Get.toNamed(SippoRoutes.edituserprofile),
                   child: Row(
                     children: [
                       Text(

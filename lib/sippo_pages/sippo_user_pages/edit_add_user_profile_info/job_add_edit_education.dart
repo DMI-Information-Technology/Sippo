@@ -1,14 +1,18 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
-import 'package:jobspot/JobGlobalclass/jobstopprefname.dart';
+import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
-import 'package:jobspot/JopCustomWidget/widgets.dart';
+import 'package:jobspot/sippo_custom_widget/body_widget.dart';
+import 'package:jobspot/sippo_custom_widget/widgets.dart';
 
-import '../../../JobThemes/themecontroller.dart';
-import '../../../JopCustomWidget/SearchDelegteImpl.dart';
-import '../../../sippo_data/model/profile_model/jobstop_education_info_card_model.dart';
+import '../../../JobGlobalclass/sippo_customstyle.dart';
+import '../../../JopController/ProfileController/edit_add_education_controller.dart';
+import '../../../sippo_custom_widget/SearchDelegteImpl.dart';
+import '../../../sippo_custom_widget/confirmation_bottom_sheet.dart';
+import '../../../sippo_custom_widget/container_bottom_sheet_widget.dart';
 
 class JobEducationAddEdit extends StatefulWidget {
   const JobEducationAddEdit({Key? key}) : super(key: key);
@@ -18,33 +22,27 @@ class JobEducationAddEdit extends StatefulWidget {
 }
 
 class _JobEducationAddEditState extends State<JobEducationAddEdit> {
-  bool check = true;
-  final themedata = Get.put(JobstopThemecontroler());
-  TextEditingController levelEduCon = TextEditingController();
-  TextEditingController institutionCon = TextEditingController();
-  TextEditingController fieldStudyCon = TextEditingController();
-  TextEditingController startDateCon = TextEditingController();
-  TextEditingController endDateCon = TextEditingController();
-  TextEditingController description = TextEditingController();
-  EducationInfoCardModel? edui;
+  final _controller = EditAddEducationController.instance;
   final data = [
-    "education 1",
-    "education 2",
-    "education 3",
-    "education 4",
-    "education 5",
-    "education 6",
-    "education 7",
+    "Associate's Degree",
+    "Bachelor's Degree",
+    "Master's Degree",
+    "Doctorate (Ph.D.)",
+    "Doctor of Education (Ed.D.)",
+    "Doctor of Philosophy in Education (Ph.D. in Education)",
+    "Bachelor of Arts in Education (B.A.Ed.)",
+    "Bachelor of Science in Education (B.S.Ed.)",
+    "Master of Arts in Teaching (M.A.T.)",
+    "Master of Education (M.Ed.)",
+    "Master of Science in Education (M.S.Ed.)",
+    "Education Specialist (Ed.S.)",
+    "Postgraduate Certificate in Education (PGCE)",
+    "Certificate in Education (Cert.Ed.)",
+    "Professional Development Programs"
   ];
 
   @override
   void initState() {
-    final Map<String, dynamic>? arg = Get.arguments[educationArg];
-    edui = arg != null ? EducationInfoCardModel.fromJson(arg) : null;
-    levelEduCon.text = edui != null ? edui?.level ?? "" : "";
-    fieldStudyCon.text = edui != null ? edui?.fieldStudy ?? "" : "";
-    startDateCon.text = edui != null ? edui?.periodic?.split("-")[0] ?? "" : "";
-    endDateCon.text = edui != null ? edui?.periodic?.split("-")[1] ?? "" : "";
     super.initState();
   }
 
@@ -55,413 +53,307 @@ class _JobEducationAddEditState extends State<JobEducationAddEdit> {
     double width = size.width;
     return Scaffold(
       appBar: AppBar(),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-              horizontal: width / 26, vertical: height / 96),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                "${edui != null ? "Change" : "Add"} Education",
-                style: dmsbold.copyWith(
-                    fontSize: FontSize.titleFontSize3(context),
-                    color: themedata.isdark
-                        ? Jobstopcolor.white
-                        : Jobstopcolor.primarycolor),
-              ),
-              SizedBox(
-                height: height / 36,
-              ),
-              Text(
-                "Level of education",
-                style: dmsbold.copyWith(
-                    fontSize: FontSize.labelFontSize(context),
-                    color: themedata.isdark
-                        ? Jobstopcolor.white
-                        : Jobstopcolor.primarycolor),
-              ),
-              SizedBox(
-                height: height / 64,
-              ),
-              InputBorderedField(
+      body: BodyWidget(
+        isScrollable: true,
+        paddingContent: EdgeInsets.symmetric(
+            horizontal: context.fromWidth(CustomStyle.paddingValue)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            AutoSizeText(
+              "${_controller.isEditing ? "Change" : "Add"} Education",
+              style: dmsbold.copyWith(
+                  fontSize: FontSize.title3(context),
+                  color: Jobstopcolor.primarycolor),
+            ),
+            SizedBox(
+              height: context.fromHeight(CustomStyle.spaceBetween),
+            ),
+            AutoSizeText(
+              "Level of education",
+              style: dmsbold.copyWith(
+                  fontSize: FontSize.label(context),
+                  color: Jobstopcolor.primarycolor),
+            ),
+            SizedBox(
+              height: context.fromHeight(CustomStyle.xxxl),
+            ),
+            InputBorderedField(
+              readOnly: true,
+              height: context.fromHeight(CustomStyle.inputBorderedSize),
+              fontSize: FontSize.label(context),
+              controller: _controller.levelEduCon,
+              onTap: () {
+                showSearch(
+                  context: context,
+                  delegate: MySearchDelegate(
+                    hintText: "search on level of education",
+                    textFieldStyle:
+                        TextStyle(fontSize: FontSize.title6(context)),
+                    pageTitle: "Level of education",
+                    suggestions: data,
+                    onSelectedSearch: (value) {
+                      _controller.levelEduCon.text = value;
+                    },
+                    buildResultSearch: (context, i, value) {
+                      return ListTile(title: Text(value));
+                    },
+                  ),
+                );
+              },
+            ),
+            SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
+            AutoSizeText(
+              "Institution name",
+              style: dmsbold.copyWith(
+                  fontSize: FontSize.label(context),
+                  color: Jobstopcolor.primarycolor),
+            ),
+            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+            InputBorderedField(
+                height: context.fromHeight(CustomStyle.inputBorderedSize),
+                fontSize: FontSize.label(context),
+                controller: _controller.institutionCon,
                 readOnly: true,
-                height: height / 12.5,
-                fontSize: height / 68,
-                controller: levelEduCon,
                 onTap: () {
                   showSearch(
                     context: context,
                     delegate: MySearchDelegate(
-                      hintText: "search on level of education",
-                      textFieldStyle: TextStyle(fontSize: height / 58),
-                      pageTitle: "Level of education",
+                      hintText: "search on institution name",
+                      textFieldStyle: dmsmedium.copyWith(
+                        fontSize: FontSize.title6(context),
+                      ),
+                      pageTitle: "Institution name",
                       suggestions: data,
-                      onSelectedSearch: (value) => levelEduCon.text = value,
+                      onSelectedSearch: (value) =>
+                          _controller.institutionCon.text = value,
                       buildResultSearch: (context, i, value) {
                         return ListTile(title: Text(value));
                       },
                     ),
                   );
-                },
-              ),
-              SizedBox(
-                height: height / 36,
-              ),
-              Text(
-                "Institution name",
-                style: dmsbold.copyWith(
-                    fontSize: FontSize.labelFontSize(context),
-                    color: themedata.isdark
-                        ? Jobstopcolor.white
-                        : Jobstopcolor.primarycolor),
-              ),
-              SizedBox(
-                height: height / 66,
-              ),
-              InputBorderedField(
-                  height: height / 12.5,
-                  fontSize: height / 68,
-                  controller: institutionCon,
-                  readOnly: true,
-                  onTap: () {
-                    showSearch(
-                      context: context,
-                      delegate: MySearchDelegate(
-                        hintText: "search on institution name",
-                        textFieldStyle: TextStyle(fontSize: height / 58),
-                        pageTitle: "Institution name",
-                        suggestions: data,
-                        onSelectedSearch: (value) =>
-                            institutionCon.text = value,
-                        buildResultSearch: (context, i, value) {
-                          return ListTile(title: Text(value));
-                        },
-                      ),
-                    );
-                  }),
-              SizedBox(
-                height: height / 66,
-              ),
-              Text(
-                "Field of study",
-                style: dmsbold.copyWith(
-                    fontSize: FontSize.labelFontSize(context),
-                    color: themedata.isdark
-                        ? Jobstopcolor.white
-                        : Jobstopcolor.primarycolor),
-              ),
-              SizedBox(
-                height: height / 66,
-              ),
-              InputBorderedField(
-                  height: height / 12.5,
-                  fontSize: height / 68,
-                  controller: fieldStudyCon,
-                  readOnly: true,
-                  onTap: () {
-                    showSearch(
-                      context: context,
-                      delegate: MySearchDelegate(
-                        hintText: "search on field of study",
-                        textFieldStyle: TextStyle(fontSize: height / 58),
-                        pageTitle: "Field of study",
-                        suggestions: data,
-                        onSelectedSearch: (value) => fieldStudyCon.text = value,
-                        buildResultSearch: (context, i, value) {
-                          return ListTile(title: Text(value));
-                        },
-                      ),
-                    );
-                  }),
-              SizedBox(
-                height: height / 36,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Start date",
-                        style: dmsbold.copyWith(
-                          fontSize: FontSize.labelFontSize(context),
-                          color: themedata.isdark
-                              ? Jobstopcolor.white
-                              : Jobstopcolor.primarycolor,
-                        ),
-                      ),
-                      SizedBox(
-                        height: height / 66,
-                      ),
-                      InputBorderedField(
-                        height: height / 12.5,
-                        fontSize: height / 68,
-                        width: width / 2.3,
-                        controller: startDateCon,
-                      ),
-                    ],
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "End date",
-                        style: dmsbold.copyWith(
-                            fontSize: FontSize.labelFontSize(context),
-                            color: themedata.isdark
-                                ? Jobstopcolor.white
-                                : Jobstopcolor.primarycolor),
-                      ),
-                      SizedBox(
-                        height: height / 66,
-                      ),
-                      InputBorderedField(
-                        height: height / 12.5,
-                        fontSize: height / 68,
-                        width: width / 2.3,
-                        controller: endDateCon,
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: height / 36,
-              ),
-              Row(
-                children: [
-                  InkWell(
-                    onTap: () {
-                      setState(() {
-                        check == false ? check = true : check = false;
-                      });
-                    },
-                    child: Container(
-                      height: height / 30,
-                      width: height / 30,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: Jobstopcolor.white,
-                          boxShadow: const [
-                            BoxShadow(color: Jobstopcolor.shedo, blurRadius: 5)
-                          ]),
-                      child: Icon(Icons.check,
-                          size: 15,
-                          color: check == true
-                              ? Jobstopcolor.primarycolor
-                              : Jobstopcolor.transparent),
-                    ),
-                  ),
-                  SizedBox(
-                    width: width / 16,
-                  ),
-                  Text(
-                    "This is my position now",
-                    style: dmsregular.copyWith(
-                        fontSize: FontSize.paragraphFontSize3(context), color: Jobstopcolor.darkgrey),
-                  )
-                ],
-              ),
-              SizedBox(
-                height: height / 36,
-              ),
-              Text(
-                "Description",
-                style: dmsbold.copyWith(
-                    fontSize: FontSize.labelFontSize(context),
-                    color: themedata.isdark
-                        ? Jobstopcolor.white
-                        : Jobstopcolor.primarycolor),
-              ),
-              SizedBox(
-                height: height / 66,
-              ),
-              InputBorderedField(
-                controller: description,
-                height: height / 5,
-                hintText: "Write additional information here",
-                hintStyle: dmsregular.copyWith(
-                  fontSize: 12,
-                  color: Jobstopcolor.grey,
-                ),
-                keyboardType: TextInputType.multiline,
-                maxLine: 5,
-              ),
-              SizedBox(
-                height: height / 36,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  if (edui != null)
-                    SizedBox(
-                      width: width / 2.3,
-                      child: CustomButton(
-                        onTappeed: () {
-                          _showremove();
-                        },
-                        text: "REMOVE".tr,
-                        backgroundColor: Jobstopcolor.lightprimary,
-                      ),
-                    ),
-                  SizedBox(
-                    width: edui != null ? width / 2.3 : null,
-                    child: CustomButton(
-                      onTappeed: () {
-                        _showundo();
+                }),
+            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+            AutoSizeText(
+              "Field of study",
+              style: dmsbold.copyWith(
+                  fontSize: FontSize.label(context),
+                  color: Jobstopcolor.primarycolor),
+            ),
+            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+            InputBorderedField(
+                height: context.fromHeight(CustomStyle.inputBorderedSize),
+                fontSize: FontSize.label(context),
+                controller: _controller.fieldStudyCon,
+                readOnly: true,
+                onTap: () {
+                  showSearch(
+                    context: context,
+                    delegate: MySearchDelegate(
+                      hintText: "search on field of study",
+                      textFieldStyle:
+                          TextStyle(fontSize: FontSize.title6(context)),
+                      pageTitle: "Field of study",
+                      suggestions: data,
+                      onSelectedSearch: (value) {
+                        _controller.fieldStudyCon.text = value;
                       },
-                      text: "SAVE".tr,
-                      backgroundColor: Jobstopcolor.primarycolor,
+                      buildResultSearch: (context, i, value) {
+                        return ListTile(title: Text(value));
+                      },
                     ),
-                  ),
-                ],
-              )
-            ],
-          ),
-        ),
-      ),
-      backgroundColor: Jobstopcolor.backgroudHome,
-    );
-  }
-
-  _showundo() {
-    Size size = MediaQuery.of(context).size;
-    double height = size.height;
-    double width = size.width;
-    Get.bottomSheet(
-      isScrollControlled: true,
-      Container(
-        height: height * 0.4,
-        decoration: const BoxDecoration(
-          color: Jobstopcolor.white,
-          borderRadius: BorderRadius.only(
-              topRight: Radius.circular(15), topLeft: Radius.circular(15)),
-        ),
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(
-                horizontal: width / 26, vertical: height / 66),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
+                  );
+                }),
+            SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  height: height / 500,
-                  width: width / 8,
-                  decoration: BoxDecoration(
-                    color: Jobstopcolor.primarycolor,
-                    borderRadius: BorderRadius.circular(5),
-                  ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AutoSizeText(
+                      "Start date",
+                      style: dmsbold.copyWith(
+                        fontSize: FontSize.label(context),
+                        color: Jobstopcolor.primarycolor,
+                      ),
+                    ),
+                    SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+                    InputBorderedField(
+                      height: context.fromHeight(CustomStyle.inputBorderedSize),
+                      fontSize: FontSize.label(context),
+                      width: width / 2.3,
+                      controller: _controller.startDateCon,
+                    ),
+                  ],
                 ),
-                SizedBox(
-                  height: height / 26,
-                ),
-                Text(
-                  "Undo Changes ?",
-                  style: dmsbold.copyWith(
-                      fontSize: 16, color: Jobstopcolor.primarycolor),
-                ),
-                SizedBox(
-                  height: height / 100,
-                ),
-                Text(
-                  "Are you sure you want to change what you entered?",
-                  style: dmsregular.copyWith(
-                      fontSize: 12, color: Jobstopcolor.darkgrey),
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(
-                  height: height / 26,
-                ),
-                CustomButton(
-                  onTappeed: () {},
-                  text: "Continue Filling".tr,
-                ),
-                SizedBox(
-                  height: height / 56,
-                ),
-                CustomButton(
-                  onTappeed: () {},
-                  text: "Undo Changes",
-                  backgroundColor: Jobstopcolor.lightprimary,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    AutoSizeText(
+                      "End date",
+                      style: dmsbold.copyWith(
+                          fontSize: FontSize.label(context),
+                          color: Jobstopcolor.primarycolor),
+                    ),
+                    SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+                    InputBorderedField(
+                      height: context.fromHeight(CustomStyle.inputBorderedSize),
+                      fontSize: FontSize.label(context),
+                      width: width / 2.3,
+                      controller: _controller.endDateCon,
+                    ),
+                  ],
                 ),
               ],
             ),
-          ),
+            SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
+            Row(
+              children: [
+                InkWell(
+                  onTap: () {
+                    _controller.isMyLastDegree = !_controller.isMyLastDegree;
+                  },
+                  child: Container(
+                    height: height / 30,
+                    width: height / 30,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: Jobstopcolor.white,
+                        boxShadow: const [
+                          BoxShadow(color: Jobstopcolor.shedo, blurRadius: 5)
+                        ]),
+                    child: Obx(
+                      () => Icon(
+                        Icons.check,
+                        size: 15,
+                        color: _controller.isMyLastDegree
+                            ? Jobstopcolor.primarycolor
+                            : Jobstopcolor.transparent,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  width: context.fromWidth(CustomStyle.xs),
+                ),
+                AutoSizeText(
+                  "This is my position now",
+                  style: dmsregular.copyWith(
+                    fontSize: FontSize.paragraph3(context),
+                    color: Jobstopcolor.darkgrey,
+                  ),
+                )
+              ],
+            ),
+            SizedBox(
+              height: context.fromHeight(CustomStyle.spaceBetween),
+            ),
+            AutoSizeText(
+              "Description",
+              style: dmsbold.copyWith(
+                fontSize: FontSize.label(context),
+                color: Jobstopcolor.primarycolor,
+              ),
+            ),
+            SizedBox(
+              height: context.fromHeight(CustomStyle.xxxl),
+            ),
+            InputBorderedField(
+              controller: _controller.description,
+              height: height / 6,
+              hintText: "Write additional information here",
+              hintStyle: dmsregular.copyWith(
+                fontSize: 12,
+                color: Jobstopcolor.grey,
+              ),
+              keyboardType: TextInputType.multiline,
+              maxLine: 3,
+            ),
+          ],
         ),
+        paddingBottom:
+            EdgeInsets.all(context.fromWidth(CustomStyle.paddingValue)),
+        bottomScreen: _buildBottomButtons(context),
       ),
     );
   }
 
-  _showremove() {
+  Row _buildBottomButtons(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    double height = size.height;
+    // double height = size.height;
     double width = size.width;
-    showModalBottomSheet(
-      context: context,
-      backgroundColor: Jobstopcolor.transparent,
-      builder: (context) {
-        return Container(
-          decoration: const BoxDecoration(
-            color: Jobstopcolor.white,
-            borderRadius: BorderRadius.only(
-                topRight: Radius.circular(15), topLeft: Radius.circular(15)),
-          ),
-          height: height * 0.4,
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: width / 26, vertical: height / 66),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    height: height / 500,
-                    width: width / 8,
-                    decoration: BoxDecoration(
-                      color: Jobstopcolor.primarycolor,
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                  ),
-                  SizedBox(
-                    height: height / 26,
-                  ),
-                  Text(
-                    "Remove Education ?",
-                    style: dmsbold.copyWith(
-                        fontSize: 16, color: Jobstopcolor.primarycolor),
-                  ),
-                  SizedBox(
-                    height: height / 100,
-                  ),
-                  Text(
-                    "Are you sure you want to change what you entered?",
-                    style: dmsregular.copyWith(
-                        fontSize: 12, color: Jobstopcolor.darkgrey),
-                    textAlign: TextAlign.center,
-                  ),
-                  SizedBox(
-                    height: height / 26,
-                  ),
-                  CustomButton(
-                    onTappeed: () {},
-                    text: "Continue Filling".tr,
-                  ),
-                  SizedBox(
-                    height: height / 56,
-                  ),
-                  CustomButton(
-                    onTappeed: () {},
-                    text: "Undo Changes",
-                    backgroundColor: Jobstopcolor.lightprimary,
-                  ),
-                ],
-              ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        if (_controller.isEditing)
+          SizedBox(
+            width: width / 2.3,
+            child: CustomButton(
+              onTappeed: () {
+                _showremove();
+              },
+              text: "REMOVE".tr,
+              backgroundColor: Jobstopcolor.lightprimary,
             ),
           ),
-        );
-      },
+        SizedBox(
+          width: _controller.isEditing ? width / 2.3 : null,
+          child: CustomButton(
+            onTappeed: () {
+              _showundo();
+            },
+            text: "SAVE".tr,
+            backgroundColor: Jobstopcolor.primarycolor,
+          ),
+        ),
+      ],
+    );
+  }
+
+  void _showundo() {
+    Get.bottomSheet(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(25),
+        ),
+      ),
+      backgroundColor: Colors.white,
+      isScrollControlled: true,
+      ContainerBottomSheetWidget(
+        notchColor: Jobstopcolor.primarycolor,
+        children: [
+          ConfirmationBottomSheet(
+            title: "Are you sure you want to change what you entered?",
+            description: "Are you sure you want to change what you entered?",
+            onConfirm: () {},
+            onUndo: () {},
+          )
+        ],
+      ),
+    );
+  }
+
+  void _showremove() {
+    Get.bottomSheet(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(25),
+        ),
+      ),
+      backgroundColor: Colors.white,
+      isScrollControlled: true,
+      ContainerBottomSheetWidget(
+        notchColor: Jobstopcolor.primarycolor,
+        children: [
+          ConfirmationBottomSheet(
+            title: "Remove Appreciation ?",
+            description: "Are you sure you want to change what you entered?",
+            onConfirm: () {},
+            onUndo: () {},
+          )
+        ],
+      ),
     );
   }
 }

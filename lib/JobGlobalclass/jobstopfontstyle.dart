@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 
-const TextStyle dmsbold =TextStyle(
+const TextStyle dmsbold = const TextStyle(
   fontFamily: "DMSansBold",
 );
-const TextStyle dmsmedium =TextStyle(
+const TextStyle dmsmedium = const TextStyle(
   fontFamily: "DMSansMedium",
 );
-const TextStyle dmsregular = TextStyle(
+const TextStyle dmsregular = const TextStyle(
   fontFamily: "DMSansRegular",
 );

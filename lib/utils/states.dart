@@ -1,4 +1,4 @@
-class States {
+class States<T> {
   final bool isLoading;
   final bool isSuccess;
   final bool isError;
@@ -19,6 +19,7 @@ class States {
     bool? isError,
     String? message,
     String? error,
+    T? data,
   }) {
     return States(
       isLoading: isLoading ?? this.isLoading,

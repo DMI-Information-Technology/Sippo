@@ -1,14 +1,15 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
-import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
-import 'package:jobspot/JobThemes/themecontroller.dart';
-import 'package:jobspot/JopCustomWidget/widgets.dart';
+import 'package:jobspot/sippo_custom_widget/widgets.dart';
 
 import '../../../JobGlobalclass/jobstopcolor.dart';
 import '../../../JopController/ProfileController/language_edit_add_controller.dart';
-import '../../../JopCustomWidget/SearchDelegteImpl.dart';
+import '../../../sippo_custom_widget/SearchDelegteImpl.dart';
+import '../../../sippo_themes/themecontroller.dart';
 
 class LanguageUserAdd extends StatefulWidget {
   @override
@@ -57,12 +58,11 @@ class _LanguageUserAddState extends State<LanguageUserAdd> {
             SizedBox(
               width: width,
               child: Text(
-                "Add Language",
+                "add_language".tr,
                 style: dmsbold.copyWith(
-                    fontSize: height / 42,
-                    color: themedata.isdark
-                        ? Jobstopcolor.white
-                        : Jobstopcolor.primarycolor),
+                  fontSize: height / 42,
+                  color: Jobstopcolor.primarycolor,
+                ),
                 textAlign: TextAlign.start,
               ),
             ),
@@ -82,7 +82,7 @@ class _LanguageUserAddState extends State<LanguageUserAdd> {
                   ),
                   ListTile(
                     title: Text(
-                      "First Language",
+                      "first_language".tr,
                       style: dmsbold.copyWith(fontSize: height / 42),
                     ),
                     trailing: Obx(
@@ -110,7 +110,7 @@ class _LanguageUserAddState extends State<LanguageUserAdd> {
                 children: [
                   ListTile(
                     title: Text(
-                      "Talking",
+                      "talking".tr,
                       style: dmsbold.copyWith(fontSize: height / 42),
                     ),
                     subtitle: Obx(
@@ -201,7 +201,7 @@ class _LanguageUserAddState extends State<LanguageUserAdd> {
         child: Obx(() => Row(
               children: [
                 Text(
-                  "Language",
+                  "language".tr,
                   style: dmsbold.copyWith(fontSize: height / 42),
                 ),
                 Spacer(),
@@ -231,7 +231,7 @@ class _LanguageUserAddState extends State<LanguageUserAdd> {
     showSearch(
       context: context,
       delegate: CustomSearchDelegate(
-          pageTitle: "Search Language",
+          pageTitle: "search_language".tr,
           suggestions: flagList,
           spaceBetween: height / 38,
           onSelectedSearch: (lang) {
@@ -303,7 +303,6 @@ class LanguageSkillLevelDialog extends StatefulWidget {
 }
 
 class _LanguageSkillLevelDialogState extends State<LanguageSkillLevelDialog> {
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -322,10 +321,10 @@ class _LanguageSkillLevelDialogState extends State<LanguageSkillLevelDialog> {
       shape: ContinuousRectangleBorder(
         borderRadius: BorderRadius.circular(width / 25),
       ),
-      title: Text(
-        'Select Language Skill Level',
+      title: AutoSizeText(
+        'select_language_skill_Level'.tr,
         style: dmsbold.copyWith(
-          fontSize: FontSize.titleFontSize4(context),
+          fontSize: FontSize.title4(context),
         ),
       ),
       content: Column(
@@ -334,13 +333,13 @@ class _LanguageSkillLevelDialogState extends State<LanguageSkillLevelDialog> {
           ListTile(
             title: Text("Beginner"),
             trailing: Radio(
-              value: "Beginner",
+              value: "beginner".tr,
               groupValue: widget.levelSelect,
               onChanged: (value) => widget.onLevelChange(value),
             ),
           ),
           ListTile(
-            title: Text("Intermediate"),
+            title: Text("intermediate".tr),
             trailing: Radio(
               value: "Intermediate",
               groupValue: widget.levelSelect,
@@ -348,7 +347,7 @@ class _LanguageSkillLevelDialogState extends State<LanguageSkillLevelDialog> {
             ),
           ),
           ListTile(
-            title: Text("Advanced"),
+            title: Text("advanced".tr),
             trailing: Radio(
               value: "Advanced",
               groupValue: widget.levelSelect,

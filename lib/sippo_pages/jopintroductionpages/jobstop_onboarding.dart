@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -9,14 +10,14 @@ import '../../JobGlobalclass/text_font_size.dart';
 import '../../JopController/onBoardingController/jobstop_onboarding_controller.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
-class JobOnboarding extends StatefulWidget {
-  const JobOnboarding({Key? key}) : super(key: key);
+class SippoOnboarding extends StatefulWidget {
+  const SippoOnboarding({Key? key}) : super(key: key);
 
   @override
-  State<JobOnboarding> createState() => _JobOnboardingState();
+  State<SippoOnboarding> createState() => _SippoOnboardingState();
 }
 
-class _JobOnboardingState extends State<JobOnboarding>
+class _SippoOnboardingState extends State<SippoOnboarding>
     with SingleTickerProviderStateMixin {
   dynamic size;
   double height = 0.00;
@@ -86,11 +87,11 @@ class _JobOnboardingState extends State<JobOnboarding>
                               _pageController
                                   .jumpToPage(onBoardPagesSlides.length - 1);
                             },
-                            child: Text(
+                            child: AutoSizeText(
                               "Skip",
                               style: dmsmedium.copyWith(
                                 color: Jobstopcolor.primarycolor,
-                                fontSize: FontSize.buttonFontSize(context),
+                                fontSize: FontSize.button(context),
                               ),
                             ),
                           )
@@ -101,8 +102,9 @@ class _JobOnboardingState extends State<JobOnboarding>
                     controller: _pageController,
                     count: onBoardPagesSlides.length,
                     effect: const ColorTransitionEffect(
-                        activeDotColor: Jobstopcolor.secondary,
-                        dotColor: Jobstopcolor.greyyy2),
+                      activeDotColor: Jobstopcolor.secondary,
+                      dotColor: Jobstopcolor.white,
+                    ),
                   ),
                   SizedBox(width: width / 25),
                   Obx(
@@ -114,11 +116,11 @@ class _JobOnboardingState extends State<JobOnboarding>
                                 curve: Curves.easeIn,
                               );
                             },
-                            child: Text(
+                            child: AutoSizeText(
                               "Next",
                               style: dmsmedium.copyWith(
                                 color: Jobstopcolor.primarycolor,
-                                fontSize: FontSize.buttonFontSize(context),
+                                fontSize: FontSize.button(context),
                               ),
                             ),
                           )
@@ -134,7 +136,7 @@ class _JobOnboardingState extends State<JobOnboarding>
           ? FloatingActionButton(
               heroTag: "go",
               onPressed: () {
-                Get.toNamed(SippoRoutesPages.appusingpage);
+                Get.toNamed(SippoRoutes.appusingpage);
                 return;
               },
               backgroundColor: Jobstopcolor.primarycolor,
@@ -194,24 +196,26 @@ class OnBoardSlides extends StatelessWidget {
           child: Column(
             children: [
               ...titleList
-                  .map((title) => Text(
+                  .map((title) => AutoSizeText(
                         title,
                         style: dmsbold.copyWith(
-                          fontSize: FontSize.titleFontSize(context),
+                          fontSize: FontSize.title(context),
                           color: Jobstopcolor.primarycolor,
                         ),
+                        maxLines: 2,
                         textAlign: TextAlign.center,
                       ))
                   .toList(),
               SizedBox(
                 height: height / 96,
               ),
-              Text(
+              AutoSizeText(
                 description,
                 style: dmsregular.copyWith(
-                  fontSize: FontSize.paragraphFontSize(context),
+                  fontSize: FontSize.paragraph(context),
                   color: Jobstopcolor.textColor,
                 ),
+                maxLines: 3,
                 textAlign: TextAlign.center,
               ),
             ],
