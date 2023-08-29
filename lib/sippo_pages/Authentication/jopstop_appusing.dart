@@ -23,15 +23,16 @@ class SippoAppUsing extends StatelessWidget {
     double height = size.height;
     double width = size.width;
     return Scaffold(
-      appBar: AppBar(automaticallyImplyLeading: true),
+      appBar: AppBar(automaticallyImplyLeading: false),
       body: SingleChildScrollView(
-        child: Padding(
+        child: 
+        Padding(
           padding: EdgeInsets.symmetric(
             horizontal: width / 26,
             vertical: height / 26,
           ),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               // Row(mainAxisAlignment: MainAxisAlignment.end, children: []),
 
@@ -63,6 +64,7 @@ class SippoAppUsing extends StatelessWidget {
                 child: Column(
                   children: [
                     Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         Expanded(
                           child: Obx(
@@ -70,10 +72,10 @@ class SippoAppUsing extends StatelessWidget {
                               return JopSelctedUsingAppCard(
                                 color: Jobstopcolor.primarycolor,
                                 isSelected: appUsingController.findEmployee,
-                                icon: Icons.person,
+                                image: JobstopPngImg.find_empLogo,
                                 backGroundIconColor: Jobstopcolor.lightprimary,
-                                title: "Find\nEmployee",
-                                description: "I want to search for a job",
+                                title: "Find Employees",
+                                description: "I want to search for a job seekers",
                                 onTapped: () {
                                   appUsingController.findOnEmployee();
                                 },
@@ -89,10 +91,10 @@ class SippoAppUsing extends StatelessWidget {
                             return JopSelctedUsingAppCard(
                               color: Jobstopcolor.secondary,
                               isSelected: appUsingController.findJop,
-                              icon: Icons.business_center_outlined,
+                               image: JobstopPngImg.find_jobLog,
                               backGroundIconColor: Jobstopcolor.lightsecondary,
-                              title: "Find Jop",
-                              description: "I want to search for employees.",
+                              title: "Find Job",
+                              description: "I want to search for a job.",
                               onTapped: () {
                                 appUsingController.findOnJop();
                               },
@@ -148,7 +150,7 @@ class JopSelctedUsingAppCard extends StatelessWidget {
     required this.color,
     required this.isSelected,
     required this.onTapped,
-    this.icon = Icons.insert_emoticon,
+    required this.image,
     this.backGroundIconColor = DefaultSelectionStyle.defaultColor,
     this.title = "",
     this.description = "",
@@ -157,7 +159,7 @@ class JopSelctedUsingAppCard extends StatelessWidget {
   final VoidCallback onTapped;
   final bool isSelected;
   final Color color;
-  final IconData icon;
+  final String image;
   final Color backGroundIconColor;
   final String title;
   final String description;
@@ -168,6 +170,7 @@ class JopSelctedUsingAppCard extends StatelessWidget {
     double height = size.height;
     double width = size.width;
     return SizedBox(
+      height: height/3,
       child: InkWell(
         onTap: () {
           onTapped();
@@ -195,10 +198,12 @@ class JopSelctedUsingAppCard extends StatelessWidget {
                 ),
                 child: CircleAvatar(
                   backgroundColor: Colors.transparent,
-                  child: Icon(
-                    icon,
-                    color: color,
-                    size: (kIsWeb ? height : width) / 8.0,
+                  child: Image.asset(
+                    image,
+                    height: height,
+                    width: width,
+                    //color: color,
+                    //size: (kIsWeb ? height : width) / 8.0,
                   ),
                 ),
               ),

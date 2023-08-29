@@ -5,6 +5,7 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
+import 'package:lottie/lottie.dart';
 import '../../JobGlobalclass/routes.dart';
 import '../../JobGlobalclass/text_font_size.dart';
 import '../../JopController/onBoardingController/jobstop_onboarding_controller.dart';
@@ -78,26 +79,9 @@ class _SippoOnboardingState extends State<SippoOnboarding>
             Align(
               alignment: const Alignment(0, 0.85),
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              
                 children: [
-                  Obx(
-                    () => onBoardingController.hideNextButton
-                        ? TextButton(
-                            onPressed: () {
-                              _pageController
-                                  .jumpToPage(onBoardPagesSlides.length - 1);
-                            },
-                            child: AutoSizeText(
-                              "Skip",
-                              style: dmsmedium.copyWith(
-                                color: Jobstopcolor.primarycolor,
-                                fontSize: FontSize.button(context),
-                              ),
-                            ),
-                          )
-                        : const SizedBox.shrink(),
-                  ),
-                  SizedBox(width: width / 25),
                   SmoothPageIndicator(
                     controller: _pageController,
                     count: onBoardPagesSlides.length,
@@ -106,32 +90,15 @@ class _SippoOnboardingState extends State<SippoOnboarding>
                       dotColor: Jobstopcolor.white,
                     ),
                   ),
-                  SizedBox(width: width / 25),
-                  Obx(
-                    () => onBoardingController.hideNextButton
-                        ? TextButton(
-                            onPressed: () {
-                              _pageController.nextPage(
-                                duration: const Duration(milliseconds: 300),
-                                curve: Curves.easeIn,
-                              );
-                            },
-                            child: AutoSizeText(
-                              "Next",
-                              style: dmsmedium.copyWith(
-                                color: Jobstopcolor.primarycolor,
-                                fontSize: FontSize.button(context),
-                              ),
-                            ),
-                          )
-                        : const SizedBox.shrink(),
-                  )
+                
                 ],
               ),
-            )
+            ),
+           
           ],
         ),
       ),
+      
       floatingActionButton: Obx(() => !onBoardingController.hideNextButton
           ? FloatingActionButton(
               heroTag: "go",
@@ -184,7 +151,7 @@ class OnBoardSlides extends StatelessWidget {
           height: height / 12,
         ),
         Center(
-            child: Image.asset(
+            child :Lottie.asset(
           imageAssests,
           height: height / 3,
         )),

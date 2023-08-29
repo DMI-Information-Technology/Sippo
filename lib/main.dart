@@ -1,3 +1,6 @@
+
+import 'dart:io';
+import 'package:flutter/foundation.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -70,7 +73,9 @@ class _MyAppState extends State<MyApp> {
       }),
       translations: Apptranslation(),
       locale: const Locale('en', 'US'),
-      initialRoute: SippoRoutes.homepage,
+      initialRoute: kIsWeb? 
+      SippoRoutes.userdashboard:
+      SippoRoutes.homepage,
       // initialRoute: SippoRoutes.identityverification,
       // home: const JobNotification(),
       getPages: SippoRoutes.routes,
