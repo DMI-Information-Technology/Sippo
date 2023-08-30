@@ -1,6 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
@@ -62,10 +61,11 @@ class CustomAlertDialog extends StatelessWidget {
                 AutoSizeText(
                   description ?? "",
                   style: dmsregular.copyWith(
-                      color: Jobstopcolor.textColor,
-                      fontSize: FontSize.paragraph2(
-                        context,
-                      )),
+                    color: Jobstopcolor.textColor,
+                    fontSize: FontSize.paragraph2(
+                      context,
+                    ),
+                  ),
                   textAlign: TextAlign.center,
                 ),
               ],
@@ -485,12 +485,15 @@ class InputBorderedField extends StatelessWidget {
         initialValue: initialValue,
         readOnly: readOnly,
         controller: controller,
-        style: dmsmedium.copyWith(fontSize: fontSize),
+        style: dmsregular.copyWith(fontSize: fontSize, color: Colors.black87),
         cursorColor: Jobstopcolor.grey,
         decoration: InputDecoration(
           filled: true,
           hintText: hintText,
-          hintStyle: hintStyle,
+          hintStyle: hintStyle ??
+              dmsregular.copyWith(
+                fontSize: FontSize.title6(context),
+              ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
             borderSide: BorderSide.none,

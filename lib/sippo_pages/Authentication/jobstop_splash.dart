@@ -11,11 +11,7 @@ class JobstopSplash extends StatefulWidget {
 }
 
 class _JobstopSplashState extends State<JobstopSplash> {
-  @override
-  void initState() {
-    super.initState();
-    // goup();
-  }
+
 
   dynamic size;
   double height = 0.00;
@@ -23,6 +19,7 @@ class _JobstopSplashState extends State<JobstopSplash> {
 
   @override
   Widget build(BuildContext context) {
+    
     size = MediaQuery.of(context).size;
     height = size.height;
     width = size.width;

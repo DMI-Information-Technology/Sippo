@@ -1,5 +1,6 @@
-import 'package:get/get_navigation/src/routes/get_route.dart';
+import 'package:get/get.dart';
 import 'package:jobspot/SippoControllerBinding/profile_binding/user_profile_controller_binding.dart';
+import 'package:jobspot/sippo_pages/jopintroductionpages/jobstop_onboarding.dart';
 import 'package:jobspot/sippo_pages/sippo_user_pages/jobstop_description.dart';
 
 import '../SippoControllerBinding/auth_binding/identity_verification_controller_binding.dart';
@@ -7,6 +8,7 @@ import '../SippoControllerBinding/auth_binding/login_company_binding_controller.
 import '../SippoControllerBinding/auth_binding/login_user_binding_controller.dart';
 import '../SippoControllerBinding/auth_binding/signup_company_binding_controller.dart';
 import '../SippoControllerBinding/auth_binding/signup_user_binding_controller.dart';
+import '../SippoControllerBinding/dashboard_binding/user_dashboard_controller_binding.dart';
 import '../SippoControllerBinding/profile_binding/edit_add_education_controller_binding.dart';
 import '../SippoControllerBinding/profile_binding/edit_add_work_experience_controller_binding.dart';
 import '../sippo_pages/Authentication/jobstop_check_resetpass_otp_msg.dart';
@@ -41,6 +43,8 @@ class SippoRoutes {
   const SippoRoutes._();
 
   static const String _homepage = "/";
+  static const String _onboarding = "/onboardingscreen";
+
   static const String _loginpage = "/log-in";
   static const String _signuppage = "/sign-up";
   static const String _userdashboard = "/user-dashboard";
@@ -90,6 +94,8 @@ class SippoRoutes {
 
   static const String _otpresetpassmsgpage = "/reset-pass-otp";
 
+  static String get onboarding => _onboarding;
+
   static String get userdashboard => _userdashboard;
 
   static String get signuppage => _signuppage;
@@ -114,6 +120,7 @@ class SippoRoutes {
 
   static List<GetPage> routes = [
     GetPage(name: _homepage, page: () => const JobstopSplash()),
+    GetPage(name: _onboarding, page: () => const SippoOnboarding()),
     GetPage(
       name: _loginpage,
       page: () => const SippoUserLogin(),
@@ -134,7 +141,11 @@ class SippoRoutes {
       page: () => const SippoCompanySignup(),
       binding: const SignupCompanyBindingController(),
     ),
-    GetPage(name: _userdashboard, page: () => const SippoUserDashboard()),
+    GetPage(
+      name: _userdashboard,
+      page: () => const SippoUserDashboard(),
+      binding: const UserDashBoardControllerBinding(),
+    ),
     GetPage(name: _appusing, page: () => const SippoAppUsing()),
     GetPage(name: _forgetpassword, page: () => const JobstopForget()),
     GetPage(
@@ -176,7 +187,7 @@ class SippoRoutes {
     ),
     GetPage(
         name: _identityverification,
-        page: () => const SippoCompanyIdentityVerification(),
+        page: () => SippoCompanyIdentityVerification(),
         binding: const IdentityVerificationBindingController()),
     GetPage(name: _jobSearch, page: () => const JobSearch()),
     GetPage(

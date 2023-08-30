@@ -6,8 +6,8 @@
 /// is_current_job : ["is current job مطلوب."]
 /// description : ["الوصف مطلوب."]
 
-class ValidatePropertyWorkExperiencesModel {
-  ValidatePropertyWorkExperiencesModel({
+class ValidatePropWorkExperiencesModel {
+  ValidatePropWorkExperiencesModel({
     this.jobTitle,
     this.company,
     this.startDate,
@@ -16,7 +16,7 @@ class ValidatePropertyWorkExperiencesModel {
     this.description,
   });
 
-  ValidatePropertyWorkExperiencesModel.fromJson(Map<String, dynamic> json) {
+  ValidatePropWorkExperiencesModel.fromJson(Map<String, dynamic> json) {
     jobTitle =
         json['job_title'] != null ? json['job_title'].cast<String>() : [];
     company = json['company'] != null ? json['company'].cast<String>() : [];
@@ -37,7 +37,7 @@ class ValidatePropertyWorkExperiencesModel {
   List<String>? isCurrentJob;
   List<String>? description;
 
-  ValidatePropertyWorkExperiencesModel copyWith({
+  ValidatePropWorkExperiencesModel copyWith({
     List<String>? jobTitle,
     List<String>? company,
     List<String>? startDate,
@@ -45,7 +45,7 @@ class ValidatePropertyWorkExperiencesModel {
     List<String>? isCurrentJob,
     List<String>? description,
   }) =>
-      ValidatePropertyWorkExperiencesModel(
+      ValidatePropWorkExperiencesModel(
         jobTitle: jobTitle ?? this.jobTitle,
         company: company ?? this.company,
         startDate: startDate ?? this.startDate,

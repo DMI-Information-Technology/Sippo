@@ -25,7 +25,7 @@ class SippoAppUsing extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(automaticallyImplyLeading: false),
       body: SingleChildScrollView(
-        child: 
+        child:
         Padding(
           padding: EdgeInsets.symmetric(
             horizontal: width / 26,

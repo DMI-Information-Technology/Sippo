@@ -1,6 +1,10 @@
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
+import '../../JobGlobalclass/jobstopimges.dart';
+import '../../JobGlobalclass/routes.dart';
+import '../../sippo_custom_widget/widgets.dart';
+
 class AppUsingController extends GetxController {
   final _findEmployee = false.obs;
 
@@ -21,5 +25,25 @@ class AppUsingController extends GetxController {
     if (_findEmployee.value) return;
     _findEmployee.value = true;
     _findJop.value = !_findEmployee.value;
+  }
+
+  void onConfirmButtonClicked() {
+    if (!findEmployee && !findJop) {
+      Get.dialog(
+        CustomAlertDialog(
+          imageAsset: JobstopPngImg.appuse,
+          title: "Chooce how you would to use the app",
+          confirmBtnTitle: "ok".tr,
+          onConfirm: () {
+            Get.back();
+          },
+        ),
+      );
+      return;
+    }
+    if (findJop)
+      Get.toNamed(SippoRoutes.signuppage);
+    else
+      Get.toNamed(SippoRoutes.companysignup);
   }
 }

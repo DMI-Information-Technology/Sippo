@@ -1,13 +1,17 @@
 import 'dart:convert';
+
+import 'package:http/http.dart' as http;
 import 'package:jobspot/core/resource.dart';
 import 'package:jobspot/core/validate_error.dart';
+import 'package:jobspot/sippo_data/model/auth_model/entity_model.dart';
+
 import '../sippo_data/model/auth_model/auth_response.dart';
-import 'package:http/http.dart' as http;
 import '../sippo_data/model/auth_model/register_model.dart';
 import '../sippo_data/model/auth_model/user_register_type_response.dart';
 
 class StatusResponseCodeChecker {
-  static Future<AuthResponse<T, E>?> checkStatusAuthResponseCode<T, E>(
+  static Future<AuthResponse<T, E>?>
+      checkStatusAuthResponseCode<T extends EntityModel, E>(
     http.Response response,
     T Function(Map<String, dynamic> entity) entityModel,
     E Function(Map<String, dynamic> errors) entityErrorsModel,

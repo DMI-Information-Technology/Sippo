@@ -9,8 +9,8 @@ import '../../sippo_custom_widget/error_messages_dialog_snackbar/error_messages.
 
 class InternetConnectionController extends GetxController {
   static InternetConnectionController get instance => Get.find();
-  StreamController<bool> _connectionStreamController =
-      StreamController<bool>.broadcast();
+ late StreamController<bool> _connectionStreamController ;
+      // StreamController<bool>.broadcast();
 
   Stream<bool> get isConnectedStream => _connectionStreamController.stream;
 
@@ -19,7 +19,7 @@ class InternetConnectionController extends GetxController {
   bool get isConnected => _isConnected.isTrue;
 
   void set isConnected(bool value) {
-    print("from is connected: $value");
+    // print("from is connected: $value");
     _isConnected.value = value;
     _connectionStreamController.add(value);
   }
@@ -27,6 +27,7 @@ class InternetConnectionController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    _connectionStreamController = StreamController<bool>.broadcast();
     checkInternetConnection();
     Connectivity().onConnectivityChanged.listen(_updateConnectionStatus);
   }
@@ -50,7 +51,7 @@ class InternetConnectionController extends GetxController {
 
   @override
   void onClose() {
-    super.onClose();
     _connectionStreamController.close();
+    super.onClose();
   }
 }

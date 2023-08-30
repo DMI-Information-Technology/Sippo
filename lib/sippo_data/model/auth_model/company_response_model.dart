@@ -1,3 +1,5 @@
+import 'package:jobspot/utils/app_use.dart';
+
 import 'cord_location.dart';
 import 'entity_model.dart';
 
@@ -30,5 +32,19 @@ class CompanyResponseModel extends EntityModel {
           .toList(),
     );
   }
+
+  @override
+  // TODO: implement locationCity
+  String? get locationCity => this.city;
+
+  @override
+  Map<String, dynamic> toJson() {
+    // TODO: implement toJson
+    throw UnimplementedError();
+  }
+
+  @override
+  // TODO: implement userType
+  AppUsingType get userType => AppUsingType.company;
 //
 }

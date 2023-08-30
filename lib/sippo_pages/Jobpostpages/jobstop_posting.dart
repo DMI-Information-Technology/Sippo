@@ -5,14 +5,14 @@ import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 
 import 'jobstop_aboutus.dart';
 
-class JobstopPosting extends StatefulWidget {
-  const JobstopPosting({Key? key}) : super(key: key);
+class SippoUserSocial extends StatefulWidget {
+  const SippoUserSocial({Key? key}) : super(key: key);
 
   @override
-  State<JobstopPosting> createState() => _JobstopPostingState();
+  State<SippoUserSocial> createState() => _SippoUserSocialState();
 }
 
-class _JobstopPostingState extends State<JobstopPosting> {
+class _SippoUserSocialState extends State<SippoUserSocial> {
   dynamic size;
   double height = 0.00;
   double width = 0.00;

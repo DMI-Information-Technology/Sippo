@@ -1,18 +1,19 @@
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:jobspot/JobGlobalclass/global_storage.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_property_error_model.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_response_model.dart';
-import 'package:jobspot/JobGlobalclass/global_storage.dart';
+import 'package:jobspot/sippo_data/model/auth_model/entity_model.dart';
 import 'package:jobspot/sippo_data/model/auth_model/user_model.dart';
 import 'package:jobspot/utils/app_use.dart';
+
 import '../../sippo_data/auth/auth_repo.dart';
 import '../../sippo_data/model/auth_model/auth_response.dart';
 import '../../sippo_data/model/auth_model/company_model.dart';
 import '../../sippo_data/model/auth_model/company_response_login_user_model.dart';
-import '../../sippo_data/model/auth_model/user_response_model.dart';
 import '../../sippo_data/model/auth_model/user_propery_error_model.dart';
 import '../../sippo_data/model/auth_model/user_register_type_response.dart';
+import '../../sippo_data/model/auth_model/user_response_model.dart';
 import '../../utils/states.dart';
 import '../ConnectivityController/internet_connection_controller.dart';
 
@@ -68,6 +69,7 @@ class AuthController extends GetxController {
         await AuthRepo.userRegister(user);
     loadingState = false;
     await checkAuthResponseState(response, AppUsingType.user);
+    // await GlobalStorage.saveLoggedUser(response?.data?.model?.toJson());
   }
 
   Future<void> userLogin(UserModel user) async {
@@ -77,6 +79,7 @@ class AuthController extends GetxController {
         await AuthRepo.userLogin(user);
     loadingState = false;
     await checkAuthResponseState(response, AppUsingType.user);
+    // await GlobalStorage.saveLoggedUser(response?.data?.model?.toJson());
   }
 
   /////////////////////////
@@ -92,26 +95,30 @@ class AuthController extends GetxController {
   Future<void> companyLogin(CompanyModel company) async {
     if (_netController.isConnectionLostWithDialog()) return;
     loadingState = true;
-    AuthResponse<UserCompanyResponseModel, CompanyPropError>? response =
+    AuthResponse<LoginCompanyResponseModel, CompanyPropError>? response =
         await AuthRepo.companyLogin(company);
     loadingState = false;
     await checkAuthResponseState(response, AppUsingType.company);
   }
 
   /////////////////////////
-  Future<void> checkAuthResponseState<T, E>(
+  Future<void> checkAuthResponseState<T extends EntityModel, E>(
     AuthResponse<T, E>? response,
     AppUsingType appUse,
   ) async {
     switch (response?.type) {
       case RegisterTypeResponse.success:
-        await GlobalStorage.savedToken(
+        await GlobalStorage.saveToken(
           response?.data?.token,
           appUse.index,
         );
         print(
           "from checkAuthResponseState on success: ${response?.data?.token}",
         );
+        print(
+          "from checkAuthResponseState data on success: ${response?.data?.token}",
+        );
+        await GlobalStorage.saveLoggedUser(response?.data?.model?.toJson());
         successState = true;
         break;
       case RegisterTypeResponse.auth_error:

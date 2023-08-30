@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:jobspot/sippo_custom_widget/rounded_border_radius_card_widget.dart';
+
 import '../JobGlobalclass/jobstopcolor.dart';
 import '../JobGlobalclass/jobstopfontstyle.dart';
 
@@ -27,6 +28,7 @@ class AddInfoProfileCard extends StatelessWidget {
     double height = size.height;
     double width = size.width;
     return RoundedBorderRadiusCardWidget(
+      paddingType: PaddingType.all,
       child: Column(
         children: [
           Row(

@@ -1,4 +1,5 @@
 import 'package:jobspot/sippo_data/model/auth_model/entity_model.dart';
+import 'package:jobspot/utils/app_use.dart';
 
 class CompanyDetails {
   final int? id;
@@ -30,9 +31,21 @@ class CompanyDetails {
       updatedAt: json['updated_at'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "id": this.id,
+      "company_id": this.companyId,
+      "city": this.city,
+      "longitude": this.longitude,
+      "latitude": this.latitude,
+      "created_at": this.createdAt,
+      "updated_at": this.updatedAt,
+    };
+  }
 }
 
-class UserCompanyResponseModel extends EntityModel {
+class LoginCompanyResponseModel extends EntityModel {
   final int? type;
   final String? role;
   final int? status;
@@ -40,7 +53,7 @@ class UserCompanyResponseModel extends EntityModel {
   final String? updatedAt;
   final CompanyDetails? companyDetails;
 
-  UserCompanyResponseModel({
+  LoginCompanyResponseModel({
     super.id,
     super.name,
     super.phone,
@@ -54,8 +67,25 @@ class UserCompanyResponseModel extends EntityModel {
     this.companyDetails,
   });
 
-  factory UserCompanyResponseModel.fromJson(Map<String, dynamic> json) {
-    return UserCompanyResponseModel(
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      'id': super.id,
+      'name': super.name,
+      'phone': super.phone,
+      'secondary_pone': super.secondaryPhone,
+      'email': super.email,
+      "type": this.type,
+      "role": this.role,
+      "status": this.status,
+      "created_at": this.createdAt,
+      "updated_at": this.updatedAt,
+      "company_details": this.companyDetails?.toJson(),
+    };
+  }
+
+  factory LoginCompanyResponseModel.fromJson(Map<String, dynamic> json) {
+    return LoginCompanyResponseModel(
       id: json['id'],
       name: json['name'],
       phone: json['phone'],
@@ -69,4 +99,12 @@ class UserCompanyResponseModel extends EntityModel {
       companyDetails: CompanyDetails.fromJson(json['company_details']),
     );
   }
+
+  @override
+  // TODO: implement locationCity
+  String? get locationCity => companyDetails?.city;
+
+  @override
+  // TODO: implement userType
+  AppUsingType get userType => AppUsingType.company;
 }

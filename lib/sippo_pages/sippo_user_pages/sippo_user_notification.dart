@@ -302,6 +302,7 @@ class NotificationApplicationWidget extends StatelessWidget {
       highlightColor: Colors.transparent,
       onTap: onTap,
       child: RoundedBorderRadiusCardWidget(
+        paddingType: PaddingType.all,
         color: isSelected ? Jobstopcolor.primary : Colors.white,
         margin: EdgeInsets.only(
           right: context.fromWidth(CustomStyle.s),

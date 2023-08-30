@@ -1,15 +1,14 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:jobspot/JopController/ConnectivityController/internet_connection_controller.dart';
+import 'package:jobspot/JopController/UserDashboardController/user_dashboard_controller.dart';
 import 'package:jobspot/core/Refresh.dart';
-import '../../core/resource.dart';
-import '../../sippo_data/model/profile_model/profile_resource_model/validate_property_work_experiences_model.dart';
-import '../../sippo_data/model/profile_model/profile_resource_model/work_experiences_model.dart';
-import '../../sippo_data/model/profile_model/profile_widget_model/jobstop_education_info_card_model.dart';
-import '../../sippo_data/model/profile_model/profile_widget_model/jobstop_appreciation_info_card_model.dart';
+import 'package:jobspot/sippo_data/model/auth_model/user_response_model.dart';
 
+import '../../sippo_data/model/profile_model/profile_resource_model/work_experiences_model.dart';
+import '../../sippo_data/model/profile_model/profile_widget_model/jobstop_appreciation_info_card_model.dart';
+import '../../sippo_data/model/profile_model/profile_widget_model/jobstop_education_info_card_model.dart';
 import '../../sippo_data/model/profile_model/profile_widget_model/jobstop_language_info_card_model.dart';
 import '../../sippo_data/model/profile_model/profile_widget_model/jobstop_resume_file_info.dart';
 import '../../sippo_data/profile_user/work_experiences_repo.dart';
@@ -17,6 +16,9 @@ import '../../sippo_data/profile_user/work_experiences_repo.dart';
 class ProfileUserController extends GetxController {
   final netController = InternetConnectionController.instance;
   StreamSubscription<bool>? _connectionSubscription;
+  final dashboard = UserDashBoardController.instance;
+
+  UserResponseModel get user => dashboard.user;
 
   static ProfileUserController get instance => Get.find();
   final _aboutMeText =
@@ -81,15 +83,13 @@ class ProfileUserController extends GetxController {
 
   int get editingId => _editingId.toInt();
 
-  void set editingId(int value) =>
-      _editingId.value = value;
+  void set editingId(int value) => _editingId.value = value;
 
   Future<void> fetchAllWorkExperience() async {
-    Resource<List<WorkExperiencesModel>, ValidatePropertyWorkExperiencesModel>?
-        response = await WorkExperiencesRepo.fetchWorkExperiences();
+    final response = await WorkExperiencesRepo.fetchWorkExperiences();
     await response?.checkStatusResponse(
       onSuccess: (data, statusType) {
-        Refresher.listUpdater(
+        Refresher.dataListUpdater(
           newData: data,
           currentData: wei,
           updateData: (data) => _wei.value = data,
@@ -101,14 +101,14 @@ class ProfileUserController extends GetxController {
   }
 
   void _startListeningToConnection() {
-    _connectionSubscription =
-        netController.isConnectedStream.listen((isConnected) async {
-      print("hello");
-      if (isConnected) {
-        print("fetchSpecializations is target");
-        await fetchAllWorkExperience();
-      }
-    });
+    _connectionSubscription = netController.isConnectedStream.listen(
+      (isConnected) async {
+        if (isConnected) {
+          print("fetchAllWorkExperience is target");
+          await fetchAllWorkExperience();
+        }
+      },
+    );
   }
 
   @override

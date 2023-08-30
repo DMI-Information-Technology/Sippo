@@ -32,10 +32,6 @@ class SpecializationCompanyController extends GetxController {
     );
   }
 
-  Future<void> closeConnectionSubscription() async {
-    await _connectionSubscription?.cancel();
-  }
-
   void _startListeningToConnection() {
     print("hello 1");
     _connectionSubscription = InternetConnectionController
@@ -85,7 +81,7 @@ class SpecializationCompanyController extends GetxController {
 
   @override
   void onClose() {
+    _connectionSubscription?.cancel();
     super.onClose();
-    closeConnectionSubscription();
   }
 }

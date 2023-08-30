@@ -265,7 +265,7 @@ class JobExperiences extends StatelessWidget {
             title: "Save Work Experience ?",
             description: "Are you sure you want to change what you entered?",
             onConfirm: () async {
-              await controller.addNewWorkExperience();
+              await controller.onSaveSubmitted();
             },
             onUndo: () {},
           )

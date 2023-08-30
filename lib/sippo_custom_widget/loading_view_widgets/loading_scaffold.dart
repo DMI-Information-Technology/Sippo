@@ -32,7 +32,7 @@ class LoadingScaffold extends StatelessWidget {
     this.backgroundColor,
   });
 
-  final AppBar? appBar;
+  final PreferredSizeWidget? appBar;
   final Widget? body;
   final Color? backgroundColor;
   final LoadingOverlayController? controller;
@@ -61,8 +61,8 @@ class LoadingScaffold extends StatelessWidget {
 
   Widget _buildLoadingWidget(bool show) => show
       ? GestureDetector(
-        onTap: () => controller?.loading = false,
-        child: const LoadingOverlay(),
-      )
+          onTap: () => controller?.loading = false,
+          child: const LoadingOverlay(),
+        )
       : const SizedBox.shrink();
 }

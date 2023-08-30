@@ -31,9 +31,9 @@ class EditAddWorkExperienceController extends GetxController {
   final _profileUserController = ProfileUserController.instance;
   final Rx<WorkExperiencesModel?> _workExperience = WorkExperiencesModel().obs;
 
-  Future<WorkExperiencesModel?> _getWorkExperienceById(int id) async {
-    return null;
-  }
+  // Future<WorkExperiencesModel?> _getWorkExperienceById(int id) async {
+  //   return null;
+  // }
 
   bool get isEditing => _profileUserController.editingId != -1;
 
@@ -47,8 +47,20 @@ class EditAddWorkExperienceController extends GetxController {
     );
     // check response
     await response?.checkStatusResponse(
-      onSuccess: (data, statusType) {
-        /* handle success response */
+      onSuccess: (data, statusType) async {
+        if (data == null) {
+          await _profileUserController.fetchAllWorkExperience();
+          return;
+        }
+        final oldDataIndex = _profileUserController.wei.indexWhere((e) {
+          return e.id == data.id;
+        });
+        if (oldDataIndex == -1) {
+          print("updateWorkExperienceById: not found.");
+          return;
+        }
+        _profileUserController.wei = _profileUserController.wei
+          ..[oldDataIndex] = data;
       },
       onValidateError: (validateError, statusType) {
         /* handle validation errors response */
@@ -84,9 +96,15 @@ class EditAddWorkExperienceController extends GetxController {
 
   Future<void> openEditing() async {
     if (!isEditing) return;
-    _workExperience.value = await _getWorkExperienceById(
-      _profileUserController.editingId,
-    );
+    // _workExperience.value = await _getWorkExperienceById(
+    //   _profileUserController.editingId,
+    // );
+    final editingWorkEx = _profileUserController.wei.firstWhereOrNull((e) {
+      return e.id == _profileUserController.editingId;
+    });
+    print("openEditing: is editing work experience is null ? ${editingWorkEx == null}");
+    if (editingWorkEx == null) return;
+    _workExperience.value = editingWorkEx;
     _title.value = _workExperience.value?.jobTitle ?? "";
     _company.value = _workExperience.value?.company ?? "";
     startDate.text = _workExperience.value?.startDate ?? "";
@@ -106,6 +124,7 @@ class EditAddWorkExperienceController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    openEditing();
   }
 
   @override

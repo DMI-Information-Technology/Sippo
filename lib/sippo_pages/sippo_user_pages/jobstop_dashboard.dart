@@ -4,6 +4,7 @@ import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
+
 import '../../JopController/UserDashboardController/user_dashboard_controller.dart';
 
 class SippoUserDashboard extends StatefulWidget {
@@ -14,14 +15,13 @@ class SippoUserDashboard extends StatefulWidget {
 }
 
 class _SippoUserDashboardState extends State<SippoUserDashboard> {
-  final controller = Get.put(UserDashBoardController());
+  final _controller = UserDashBoardController.instance;
 
   Widget _bottomTabBar(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return Obx(
       () => BottomNavigationBar(
-        currentIndex: controller.selectedItemIndex,
-        onTap: (value) => controller.selectedItemIndex = value,
+        currentIndex: _controller.selectedItemIndex,
+        onTap: (value) => _controller.selectedItemIndex = value,
         backgroundColor: Jobstopcolor.transparent,
         type: BottomNavigationBarType.fixed,
         showSelectedLabels: false,
@@ -89,7 +89,7 @@ class _SippoUserDashboardState extends State<SippoUserDashboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       bottomNavigationBar: _bottomTabBar(context),
-      body: Obx(() => controller.pages[controller.selectedItemIndex]),
+      body: Obx(() => _controller.pages[_controller.selectedItemIndex]),
       floatingActionButtonLocation:
           FloatingActionButtonLocation.miniCenterDocked,
       floatingActionButton: FloatingActionButton(

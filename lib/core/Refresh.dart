@@ -1,5 +1,5 @@
 class Refresher {
-  static bool listUpdater<T>({
+  static bool dataListUpdater<T>({
     List<T>? newData,
     required List<T> currentData,
     required void Function(List<T> data) updateData,

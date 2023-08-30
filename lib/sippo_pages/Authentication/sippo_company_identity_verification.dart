@@ -1,7 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
+import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/sippo_custom_widget/loading_view_widgets/loading_scaffold.dart';
+
 import '../../JobGlobalclass/jobstopcolor.dart';
 import '../../JobGlobalclass/jobstopfontstyle.dart';
 import '../../JobGlobalclass/jobstopimges.dart';
@@ -10,7 +12,7 @@ import '../../sippo_custom_widget/body_widget.dart';
 import '../../sippo_custom_widget/widgets.dart';
 
 class SippoCompanyIdentityVerification extends StatelessWidget {
-  const SippoCompanyIdentityVerification({super.key});
+  SippoCompanyIdentityVerification({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -21,58 +23,76 @@ class SippoCompanyIdentityVerification extends StatelessWidget {
     return LoadingScaffold(
       controller: controller.loadingController,
       appBar: _buildAppBar(context),
-      body: BodyWidget(
-        isScrollable: true,
-        paddingContent: EdgeInsets.symmetric(horizontal: width / 32),
-        child: Column(
-          children: [
-            Image.asset(
-              JobstopPngImg.passwordimg,
-              height: height / 3,
-            ),
-            SizedBox(height: height / 18),
-            Obx(
-              () => PhoneResetPasswordCard(
-                phoneNumber:
-                  controller.phoneNumber,
-
-                description:
-                    'Secret code message will be sent after ${controller.initTimer}',
-                borderColor: Jobstopcolor.primarycolor,
-              ),
-            ),
-            SizedBox(height: height / 18),
-            InputField(
-              hintText: "Secret_code_hint_text".tr,
-              icon: const Icon(Icons.lock_outline),
-              onChangedText: (value) => controller.otpCode = value.trim(),
-            ),
-            Align(
-              alignment: AlignmentDirectional.centerStart,
-              child: Obx(
-                () => TextButton(
-                  onPressed: () async {
-                    await controller.resendOTPClicked();
-                  },
-                  child: Text(
-                    "resend ${controller.isResendTimerNotFinish() ? "after " + controller.resendTimer.toString() : ""}",
-                  ),
+      // appBar: null,
+      body: Obx(
+        () => BodyWidget(
+          isConnectionLost: !controller.isNetworkConnect,
+          isScrollable: true,
+          paddingContent: EdgeInsets.symmetric(horizontal: width / 32),
+          child: Column(
+            children: [
+              if (!controller.isNetworkConnect)
+                SizedBox(
+                  height: context.fromHeight(CustomStyle.connectionLostHeight),
                 ),
+              Image.asset(
+                JobstopPngImg.passwordimg,
+                height: height / 3,
               ),
-            ),
-            SizedBox(height: height / 18),
-          ],
-        ),
-        paddingBottom: EdgeInsets.all(width / 32),
-        bottomScreen: CustomButton(
-          onTappeed: () async => await controller.onSubmitSend(),
-          text: "send".tr,
+              SizedBox(height: height / 18),
+              _buildPhoneResetPasswordCard(),
+              SizedBox(height: height / 18),
+              InputField(
+                hintText: "Secret_code_hint_text".tr,
+                icon: const Icon(Icons.lock_outline),
+                onChangedText: (value) => controller.otpCode = value.trim(),
+              ),
+              _buildResendOtpCodeButton(),
+              SizedBox(height: height / 18),
+            ],
+          ),
+          paddingBottom: EdgeInsets.all(width / 32),
+          bottomScreen: CustomButton(
+            onTappeed: () async => await controller.onSubmitSend(),
+            text: "send".tr,
+          ),
         ),
       ),
     );
   }
 
-  AppBar _buildAppBar(BuildContext context) {
+  Widget _buildPhoneResetPasswordCard() {
+    final controller = IdentityVerificationController.instance;
+    return Obx(
+      () => PhoneResetPasswordCard(
+        phoneNumber: controller.phoneNumber,
+        description:
+            'Secret code message will be sent after ${controller.initTimer}',
+        borderColor: Jobstopcolor.primarycolor,
+      ),
+    );
+  }
+
+  Widget _buildResendOtpCodeButton() {
+    final controller = IdentityVerificationController.instance;
+
+    return Align(
+      alignment: AlignmentDirectional.centerStart,
+      child: Obx(
+        () => TextButton(
+          onPressed: () async {
+            await controller.resendOTPClicked();
+          },
+          child: Text(
+            "resend ${controller.isResendTimerNotFinish() ? "after " + controller.resendTimer.toString() : ""}",
+          ),
+        ),
+      ),
+    );
+  }
+
+  PreferredSizeWidget _buildAppBar(BuildContext context) {
+    // final controller = IdentityVerificationController.instance;
     Size size = MediaQuery.of(context).size;
     double height = size.height;
     return AppBar(
@@ -82,6 +102,7 @@ class SippoCompanyIdentityVerification extends StatelessWidget {
         style: dmsbold.copyWith(fontSize: height / 52),
         textAlign: TextAlign.start,
       ),
+      backgroundColor: Jobstopcolor.backgroudHome,
     );
   }
 }

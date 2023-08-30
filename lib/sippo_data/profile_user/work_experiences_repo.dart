@@ -9,7 +9,7 @@ import 'package:jobspot/core/api_endpoints.dart' as endpoints;
 
 class WorkExperiencesRepo {
   static Future<
-          Resource<WorkExperiencesModel, ValidatePropertyWorkExperiencesModel>?>
+          Resource<WorkExperiencesModel, ValidatePropWorkExperiencesModel>?>
       addWorkExperiences(WorkExperiencesModel workEx) async {
     final httpController = HttpClientController.instance;
     try {
@@ -25,7 +25,7 @@ class WorkExperiencesRepo {
         responseData,
         response.statusCode,
         (data) => WorkExperiencesModel.fromJson(data),
-        (errors) => ValidatePropertyWorkExperiencesModel.fromJson(errors),
+        (errors) => ValidatePropWorkExperiencesModel.fromJson(errors),
       );
     } on SocketException catch (e) {
       print(
@@ -40,7 +40,7 @@ class WorkExperiencesRepo {
   }
 
   static Future<
-          Resource<WorkExperiencesModel, ValidatePropertyWorkExperiencesModel>?>
+          Resource<WorkExperiencesModel, ValidatePropWorkExperiencesModel>?>
       updateWorkExperiencesById(WorkExperiencesModel workEx,int? workExId) async {
     final httpController = HttpClientController.instance;
     try {
@@ -57,23 +57,23 @@ class WorkExperiencesRepo {
         responseData,
         response.statusCode,
         (data) => WorkExperiencesModel.fromJson(data),
-        (errors) => ValidatePropertyWorkExperiencesModel.fromJson(errors),
+        (errors) => ValidatePropWorkExperiencesModel.fromJson(errors),
       );
     } on SocketException catch (e) {
       print(
-        "WorkExperiencesRepo.addWorkExperiences SocketException: ${e.message}\n"
+        "WorkExperiencesRepo.updateWorkExperiences SocketException: ${e.message}\n"
         "WorkExperiencesRepo.addWorkExperiences SocketException: ${e.osError}",
       );
       return null;
     } catch (e) {
-      print("WorkExperiencesRepo.addWorkExperiences error: $e");
+      print("WorkExperiencesRepo.updateWorkExperiences error: $e");
       return null;
     }
   }
 
   static Future<
       Resource<List<WorkExperiencesModel>,
-          ValidatePropertyWorkExperiencesModel>?> fetchWorkExperiences() async {
+          ValidatePropWorkExperiencesModel>?> fetchWorkExperiences() async {
     final httpController = HttpClientController.instance;
     try {
       final response = await httpController.client.get(
@@ -81,6 +81,8 @@ class WorkExperiencesRepo {
       );
       print(
         "WorkExperiencesRepo.addWorkExperiences: response data before decode = ${response.body}",
+      );  print(
+        "WorkExperiencesRepo.addWorkExperiences: response status code = ${response.statusCode}",
       );
       late final Map<String, dynamic> responseDataWrapper;
       final responseData = jsonDecode(response.body);
@@ -100,7 +102,7 @@ class WorkExperiencesRepo {
               .map((e) => WorkExperiencesModel.fromJson(e))
               .toList();
         },
-        (errors) => ValidatePropertyWorkExperiencesModel.fromJson(errors),
+        (errors) => ValidatePropWorkExperiencesModel.fromJson(errors),
       );
     } on SocketException catch (e) {
       print(

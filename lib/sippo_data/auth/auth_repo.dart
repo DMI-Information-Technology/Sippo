@@ -88,9 +88,9 @@ class AuthRepo {
     }
   }
 
-  static Future<AuthResponse<UserCompanyResponseModel, CompanyPropError>?>
+  static Future<AuthResponse<LoginCompanyResponseModel, CompanyPropError>?>
       companyLogin(CompanyModel company) async {
-    AuthResponse<UserCompanyResponseModel, CompanyPropError>? companyResponse;
+    AuthResponse<LoginCompanyResponseModel, CompanyPropError>? companyResponse;
     try {
       final url =
           Uri.parse("${endpoints.baseUrl}/${endpoints.companyLoginEndpoint}");
@@ -103,7 +103,7 @@ class AuthRepo {
       companyResponse =
           await StatusResponseCodeChecker.checkStatusAuthResponseCode(
         response,
-        (entity) => UserCompanyResponseModel.fromJson(entity['user']),
+        (entity) => LoginCompanyResponseModel.fromJson(entity['user']),
         (errors) => CompanyPropError.fromJson(errors),
       );
     } catch (error) {

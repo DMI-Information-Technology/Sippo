@@ -1,8 +1,8 @@
+import 'package:jobspot/utils/app_use.dart';
 
 import 'entity_model.dart';
 
 class UserResponseModel extends EntityModel {
-
   UserResponseModel({
     super.id,
     super.name,
@@ -20,7 +20,7 @@ class UserResponseModel extends EntityModel {
       email: json["email"],
     );
   }
-
+  @override
   Map<String, dynamic> toJson() {
     return {
       "id": this.id,
@@ -30,5 +30,17 @@ class UserResponseModel extends EntityModel {
       "email": this.email,
     };
   }
+
+  @override
+  String toString() {
+    return 'UserResponseModel{id: $id, name: $name, phone: $phone, secondaryPhone: $secondaryPhone, email: $email}';
+  }
+  @override
+  // TODO: implement locationCity
+  String? get locationCity => null;
+
+  @override
+  // TODO: implement userType
+  AppUsingType get userType => AppUsingType.user;
 //
 }

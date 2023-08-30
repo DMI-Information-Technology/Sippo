@@ -19,7 +19,7 @@ OutlinedBorder circularBorderedShapeButton(double radius) =>
 
 // These values are used with media queries,
 // where each value from these measurements is divided by the dimensions of the screen's width and height.
-// The smaller the value used, the larger the resulting elements
+// The smaller value used, giving you larger elements
 class CustomStyle {
   static const xs = 16.0;
   static const s = 24.0;
@@ -40,8 +40,14 @@ class CustomStyle {
   static const jobCardWidth = 1.4;
   static const imageSize = 6.0;
   static const imageSize1 = 10.0;
-  static const imageSize2 = 16.0;
+  static const imageSize2 = 14.0;
+  static const imageSize3 = 16.0;
   static const overBy3 = 3.0;
   static const overBy2 = 2.0;
   static const inputBorderedSize = 13.5;
+  static const expandedTopBarHeight = 3.5;
+  static const expandedTopBarHeight2 = 4.0;
+  static const expandedTopBarHeight3 = 4.5;
+  static const connectionLostHeight = 25.0;
+
 }

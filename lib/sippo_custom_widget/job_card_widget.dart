@@ -30,6 +30,7 @@ class JobCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RoundedBorderRadiusCardWidget(
+      paddingType: PaddingType.all,
       child: SizedBox(
         width: context.fromWidth(CustomStyle.jobCardWidth),
         child: Column(
@@ -64,8 +65,8 @@ class JobCard extends StatelessWidget {
           ClipOval(
             child: CachedNetworkImage(
               imageUrl: jobDetails.companyLogo,
-              width: context.fromHeight(CustomStyle.imageSize2),
-              height: context.fromHeight(CustomStyle.imageSize2),
+              width: context.fromHeight(CustomStyle.imageSize3),
+              height: context.fromHeight(CustomStyle.imageSize3),
               placeholder: (context, url) => Image.asset(
                 JobstopPngImg.google,
               ),

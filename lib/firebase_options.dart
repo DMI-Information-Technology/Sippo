@@ -67,7 +67,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '856202568320',
     projectId: 'sippo-31b8b',
     storageBucket: 'sippo-31b8b.appspot.com',
-    iosClientId: '856202568320-2hkmdbcfeq485ijqjhqollgj659n42gf.apps.googleusercontent.com',
+    iosClientId:
+        '856202568320-2hkmdbcfeq485ijqjhqollgj659n42gf.apps.googleusercontent.com',
     iosBundleId: 'com.example.jobspot',
   );
 
@@ -77,7 +78,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '856202568320',
     projectId: 'sippo-31b8b',
     storageBucket: 'sippo-31b8b.appspot.com',
-    iosClientId: '856202568320-2hkmdbcfeq485ijqjhqollgj659n42gf.apps.googleusercontent.com',
+    iosClientId:
+        '856202568320-2hkmdbcfeq485ijqjhqollgj659n42gf.apps.googleusercontent.com',
     iosBundleId: 'com.example.jobspot',
   );
 }
