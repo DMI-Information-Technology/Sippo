@@ -443,7 +443,7 @@ class InputBorderedField extends StatelessWidget {
     this.hintText,
     this.hintStyle,
     this.keyboardType,
-    this.maxLine,
+    this.maxLine = 1,
     this.fontSize,
     this.onTap,
     this.onTextChanged,
@@ -453,6 +453,9 @@ class InputBorderedField extends StatelessWidget {
     this.controller,
     this.initialValue,
     this.validator,
+    this.textInputAction = TextInputAction.done,
+    this.onFieldSubmitted,
+    this.borderRadiusValue,
   });
 
   final String? Function(String? value)? validator;
@@ -469,8 +472,11 @@ class InputBorderedField extends StatelessWidget {
   final bool readOnly;
   final VoidCallback? onTap;
   final void Function(String value)? onTextChanged;
+  final void Function(String value)? onFieldSubmitted;
   final Widget? suffixIcon;
   final Widget? prefixIcon;
+  final TextInputAction? textInputAction;
+  final double? borderRadiusValue;
 
   @override
   Widget build(BuildContext context) {
@@ -482,12 +488,15 @@ class InputBorderedField extends StatelessWidget {
         // color: Jobstopcolor.white,
       ),
       child: TextFormField(
+        textInputAction: textInputAction,
         initialValue: initialValue,
         readOnly: readOnly,
         controller: controller,
         style: dmsregular.copyWith(fontSize: fontSize, color: Colors.black87),
         cursorColor: Jobstopcolor.grey,
+        textAlignVertical: TextAlignVertical.center,
         decoration: InputDecoration(
+          contentPadding: EdgeInsets.zero,
           filled: true,
           hintText: hintText,
           hintStyle: hintStyle ??
@@ -495,7 +504,7 @@ class InputBorderedField extends StatelessWidget {
                 fontSize: FontSize.title6(context),
               ),
           border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(15),
+            borderRadius: BorderRadius.circular(borderRadiusValue ?? 15),
             borderSide: BorderSide.none,
           ),
           fillColor: Jobstopcolor.white,
@@ -507,6 +516,7 @@ class InputBorderedField extends StatelessWidget {
         onTap: onTap,
         onChanged: onTextChanged,
         validator: validator,
+        onFieldSubmitted: onFieldSubmitted,
       ),
     );
   }

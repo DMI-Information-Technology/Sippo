@@ -13,7 +13,6 @@ import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/resume_card_widget.dart';
 import 'package:jobspot/sippo_pages/sippo_user_pages/job_aboutme.dart';
 import 'package:readmore/readmore.dart';
-
 import '../../JobGlobalclass/sippo_customstyle.dart';
 import '../../sippo_custom_widget/expandable_item_list_widget.dart';
 import '../../sippo_custom_widget/user_profile_header.dart';
@@ -537,33 +536,33 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
   //   );
   // }
 
-  Row _buildPhoneNumberLabels(
-    BuildContext context,
-    String phone1, [
-    String? phone2,
-  ]) {
-    return Row(
-      children: [
-        Text(
-          phone1,
-          style: dmsregular.copyWith(
-            fontSize: FontSize.label(context),
-            color: Jobstopcolor.white,
-          ),
-        ),
-        if (phone2 != null) ...[
-          SizedBox(
-            width: context.fromWidth(CustomStyle.spaceBetween),
-          ),
-          Text(
-            phone2,
-            style: dmsregular.copyWith(
-              fontSize: FontSize.label(context),
-              color: Jobstopcolor.white,
-            ),
-          ),
-        ]
-      ],
-    );
-  }
+  // Row _buildPhoneNumberLabels(
+  //   BuildContext context,
+  //   String phone1, [
+  //   String? phone2,
+  // ]) {
+  //   return Row(
+  //     children: [
+  //       Text(
+  //         phone1,
+  //         style: dmsregular.copyWith(
+  //           fontSize: FontSize.label(context),
+  //           color: Jobstopcolor.white,
+  //         ),
+  //       ),
+  //       if (phone2 != null) ...[
+  //         SizedBox(
+  //           width: context.fromWidth(CustomStyle.spaceBetween),
+  //         ),
+  //         Text(
+  //           phone2,
+  //           style: dmsregular.copyWith(
+  //             fontSize: FontSize.label(context),
+  //             color: Jobstopcolor.white,
+  //           ),
+  //         ),
+  //       ]
+  //     ],
+  //   );
+  // }
 }

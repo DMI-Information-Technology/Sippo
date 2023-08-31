@@ -72,6 +72,7 @@ class _CustomBodyWidgetState extends State<CustomBodyWidget> {
             automaticallyImplyLeading: false,
             expandedHeight: expandedHeight + widget.extraAppBarHeight,
             toolbarHeight: widget.toolBarHeight ?? kToolbarHeight,
+            floating: true,
             flexibleSpace: FlexibleSpaceBar(
               background: Container(
                 key: _flexibleChildKey,

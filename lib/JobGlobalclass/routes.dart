@@ -32,6 +32,7 @@ import '../sippo_pages/sippo_user_pages/edit_add_user_profile_info/jobstop_add_e
 import '../sippo_pages/sippo_user_pages/job_editprofile.dart';
 import '../sippo_pages/sippo_user_pages/job_experience.dart';
 import '../sippo_pages/sippo_user_pages/jobstop_dashboard.dart';
+import '../sippo_pages/sippo_user_pages/jobstop_filter.dart';
 import '../sippo_pages/sippo_user_pages/jobstop_profile.dart';
 import '../sippo_pages/sippo_user_pages/jobstop_search.dart';
 import '../sippo_pages/sippo_user_pages/jobstop_upload_resume.dart';
@@ -64,6 +65,9 @@ class SippoRoutes {
   static const String _sippoloadapplicationcv = "/sippo-load-application-cv";
   static const String _sippojobnotification = "/sippo-job-notification";
   static const String _sippoJobDescription = "/sippo-job-description";
+  static const String _filterjobsearch = "/sippo-filter-job-search";
+
+  static String get filterjobsearch => _filterjobsearch;
 
   static String get sippoJobDescription => _sippoJobDescription;
 
@@ -180,6 +184,9 @@ class SippoRoutes {
     GetPage(
       name: _updatenewpassword,
       page: () => const UpdatePasswordAfterVerification(),
+    ), GetPage(
+      name: _filterjobsearch,
+      page: () => const JobstopFilter(),
     ),
     GetPage(
       name: _otpresetpassmsgpage,

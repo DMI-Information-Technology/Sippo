@@ -45,9 +45,9 @@ class CustomStyle {
   static const overBy3 = 3.0;
   static const overBy2 = 2.0;
   static const inputBorderedSize = 13.5;
+  static const topSearchBarHeight = 3.08;
   static const expandedTopBarHeight = 3.5;
   static const expandedTopBarHeight2 = 4.0;
   static const expandedTopBarHeight3 = 4.5;
   static const connectionLostHeight = 25.0;
-
 }

@@ -59,7 +59,7 @@ dependencies:
   firebase_auth: ^4.7.3
   auto_size_text: ^3.0.0
   flutter_screenutil: ^5.9.0
-
+  lottie: ^2.6.0
 
 dev_dependencies:
   flutter_test:
@@ -91,6 +91,7 @@ flutter:
   assets:
     - Assets/jobstop_assets/jobpngimg/
     - Assets/jobstop_assets/jovsvgimg/
+    - Assets/jobstop_assets/json_animation/
     - Assets/jobstop_assets/icons/icon.png
 
   # To add assets to your application, add an assets section, like this:
