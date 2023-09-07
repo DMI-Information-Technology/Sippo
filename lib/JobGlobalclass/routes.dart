@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:jobspot/SippoControllerBinding/profile_binding/edit_add_skills_controller_binding.dart';
 import 'package:jobspot/SippoControllerBinding/profile_binding/user_profile_controller_binding.dart';
 import 'package:jobspot/sippo_pages/jopintroductionpages/jobstop_onboarding.dart';
 import 'package:jobspot/sippo_pages/sippo_user_pages/jobstop_description.dart';
@@ -28,6 +29,7 @@ import '../sippo_pages/sippo_company_pages/sippo_company_profile.dart';
 import '../sippo_pages/sippo_user_pages/edit_add_user_profile_info/job_add_edit_appreciation.dart';
 import '../sippo_pages/sippo_user_pages/edit_add_user_profile_info/job_add_edit_education.dart';
 import '../sippo_pages/sippo_user_pages/edit_add_user_profile_info/job_add_edit_language.dart';
+import '../sippo_pages/sippo_user_pages/edit_add_user_profile_info/job_add_language_user.dart';
 import '../sippo_pages/sippo_user_pages/edit_add_user_profile_info/jobstop_add_edit_skills.dart';
 import '../sippo_pages/sippo_user_pages/job_editprofile.dart';
 import '../sippo_pages/sippo_user_pages/job_experience.dart';
@@ -66,6 +68,9 @@ class SippoRoutes {
   static const String _sippojobnotification = "/sippo-job-notification";
   static const String _sippoJobDescription = "/sippo-job-description";
   static const String _filterjobsearch = "/sippo-filter-job-search";
+  static const String _languageUserAdd = "/sippo-lang-user-add";
+
+  static String get languageUserAdd => _languageUserAdd;
 
   static String get filterjobsearch => _filterjobsearch;
 
@@ -172,7 +177,11 @@ class SippoRoutes {
       binding: const EditAddEducationBindingController(),
     ),
     GetPage(name: _languageeditadd, page: () => const LanguageEditAdd()),
-    GetPage(name: _skillsaddedit, page: () => const JobSkillsAddEdit()),
+    GetPage(
+      name: _skillsaddedit,
+      page: () => const JobSkillsAddEdit(),
+      binding: const EditAddSkillsBindingController(),
+    ),
     GetPage(name: _uploadresume, page: () => const SippoUploadCV()),
     GetPage(
         name: _sippocompanyprofile, page: () => const SippoCompanyProfile()),
@@ -184,9 +193,14 @@ class SippoRoutes {
     GetPage(
       name: _updatenewpassword,
       page: () => const UpdatePasswordAfterVerification(),
-    ), GetPage(
+    ),
+    GetPage(
       name: _filterjobsearch,
       page: () => const JobstopFilter(),
+    ),
+    GetPage(
+      name: _languageUserAdd,
+      page: () => const LanguageUserAdd(),
     ),
     GetPage(
       name: _otpresetpassmsgpage,

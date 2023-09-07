@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 import 'package:jobspot/core/header_api.dart';
 
@@ -17,11 +18,11 @@ class HttpClient {
     String endpoint, {
     Map<String, dynamic>? queryParameter,
     String? resourceId,
+    Map<String, String>? headers,
   }) async {
     final response = await _client.get(
-      // Uri.parse('$baseUrl/$endpoint'),
       _buildUri(endpoint, resourceId: resourceId, parameters: queryParameter),
-      headers: _buildHeaders(),
+      headers: headers ?? _buildHeaders(),
     );
     return response;
   }

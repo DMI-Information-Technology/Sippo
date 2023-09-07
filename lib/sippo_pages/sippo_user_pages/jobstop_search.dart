@@ -38,9 +38,11 @@ class _JobSearchState extends State<JobSearch> {
 
     return Scaffold(
       body: CustomBodyWidget.itemBuilder(
-        expandedAppBarHeight:
-            context.fromHeight(CustomStyle.topSearchBarHeight),
-        expandedAppBar: _buildScrollableTopAppBar(context),
+        automaticallyImplyLeading: true,
+        expandedAppBarHeight: context.fromHeight(
+          CustomStyle.topSearchBarHeight,
+        ),
+        expandedAppBar: _buildScrollableTopAppBar(context, haveToolBar: true),
         itemCount: 250,
         itemBuilder: (context, index) {
           return SavedJobCard(
@@ -60,13 +62,14 @@ class _JobSearchState extends State<JobSearch> {
     );
   }
 
-  Widget _buildScrollableTopAppBar(BuildContext context) {
+  Widget _buildScrollableTopAppBar(BuildContext context,
+      {bool haveToolBar = false}) {
     return SingleChildScrollView(
       child: ColoredBox(
         color: Jobstopcolor.backgroudHome,
         child: Column(
           children: [
-            _buildTopSearchBar(context),
+            _buildTopSearchBar(context, haveToolBar: haveToolBar),
             SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
             _buildRequiredJobChipsList(context),
             SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
@@ -79,7 +82,8 @@ class _JobSearchState extends State<JobSearch> {
   Row _buildRequiredJobChipsList(BuildContext context) {
     return Row(
       children: [
-        InkWell(onTap: () => Get.toNamed(SippoRoutes.filterjobsearch),
+        InkWell(
+          onTap: () => Get.toNamed(SippoRoutes.filterjobsearch),
           child: Padding(
             padding: EdgeInsets.symmetric(
               horizontal: context.fromWidth(CustomStyle.paddingValue2),
@@ -135,7 +139,8 @@ class _JobSearchState extends State<JobSearch> {
     );
   }
 
-  Container _buildTopSearchBar(BuildContext context) {
+  Container _buildTopSearchBar(BuildContext context,
+      {bool haveToolBar = false}) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.only(
@@ -156,6 +161,7 @@ class _JobSearchState extends State<JobSearch> {
           ),
           child: Column(
             children: [
+              if (haveToolBar) SizedBox(height: kToolbarHeight),
               InputBorderedField(
                 keyboardType: TextInputType.text,
                 controller: searchText,
@@ -172,6 +178,7 @@ class _JobSearchState extends State<JobSearch> {
                     width: context.fromHeight(CustomStyle.l),
                   ),
                 ),
+                textInputAction: TextInputAction.next,
               ),
               SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
               InputBorderedField(

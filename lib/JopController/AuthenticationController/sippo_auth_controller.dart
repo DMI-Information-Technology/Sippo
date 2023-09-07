@@ -1,8 +1,6 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:jobspot/JobGlobalclass/global_storage.dart';
-import 'package:jobspot/sippo_data/model/auth_model/company_property_error_model.dart';
-import 'package:jobspot/sippo_data/model/auth_model/company_response_model.dart';
 import 'package:jobspot/sippo_data/model/auth_model/entity_model.dart';
 import 'package:jobspot/sippo_data/model/auth_model/user_model.dart';
 import 'package:jobspot/utils/app_use.dart';
@@ -10,10 +8,7 @@ import 'package:jobspot/utils/app_use.dart';
 import '../../sippo_data/auth/auth_repo.dart';
 import '../../sippo_data/model/auth_model/auth_response.dart';
 import '../../sippo_data/model/auth_model/company_model.dart';
-import '../../sippo_data/model/auth_model/company_response_login_user_model.dart';
-import '../../sippo_data/model/auth_model/user_propery_error_model.dart';
 import '../../sippo_data/model/auth_model/user_register_type_response.dart';
-import '../../sippo_data/model/auth_model/user_response_model.dart';
 import '../../utils/states.dart';
 import '../ConnectivityController/internet_connection_controller.dart';
 
@@ -46,7 +41,8 @@ class AuthController extends GetxController {
   }
 
   Future<void> logout() async {
-    await GlobalStorage.removeSavedToken();
+    await userLogout();
+    if (states.isSuccess) await GlobalStorage.removeSavedToken();
   }
 
   void set loadingState(bool value) {
@@ -65,8 +61,7 @@ class AuthController extends GetxController {
   Future<void> userRegister(UserModel user) async {
     if (_netController.isConnectionLostWithDialog()) return;
     loadingState = true;
-    AuthResponse<UserResponseModel, UserPropError>? response =
-        await AuthRepo.userRegister(user);
+    final response = await AuthRepo.userRegister(user);
     loadingState = false;
     await checkAuthResponseState(response, AppUsingType.user);
     // await GlobalStorage.saveLoggedUser(response?.data?.model?.toJson());
@@ -75,10 +70,28 @@ class AuthController extends GetxController {
   Future<void> userLogin(UserModel user) async {
     if (_netController.isConnectionLostWithDialog()) return;
     loadingState = true;
-    AuthResponse<UserResponseModel, UserPropError>? response =
-        await AuthRepo.userLogin(user);
+    final response = await AuthRepo.userLogin(user);
     loadingState = false;
     await checkAuthResponseState(response, AppUsingType.user);
+    // await GlobalStorage.saveLoggedUser(response?.data?.model?.toJson());
+  }
+
+  Future<void> userLogout() async {
+    if (_netController.isConnectionLostWithDialog()) return;
+    loadingState = true;
+    final response = await AuthRepo.userLogout();
+    loadingState = false;
+    if (response == null) {
+      print("null response");
+      _states.value = states.copyWith(
+        isSuccess: false,
+        isError: true,
+        message: "something wrong happened, log out is not possible",
+      );
+      return;
+    }
+    print("AuthController.userLogout success: $response");
+    successState = true;
     // await GlobalStorage.saveLoggedUser(response?.data?.model?.toJson());
   }
 
@@ -86,8 +99,7 @@ class AuthController extends GetxController {
   Future<void> companyRegister(CompanyModel company) async {
     if (_netController.isConnectionLostWithDialog()) return;
     loadingState = true;
-    AuthResponse<CompanyResponseModel, CompanyPropError>? response =
-        await AuthRepo.companyRegister(company);
+    final response = await AuthRepo.companyRegister(company);
     loadingState = false;
     await checkAuthResponseState(response, AppUsingType.company);
   }
@@ -95,8 +107,7 @@ class AuthController extends GetxController {
   Future<void> companyLogin(CompanyModel company) async {
     if (_netController.isConnectionLostWithDialog()) return;
     loadingState = true;
-    AuthResponse<LoginCompanyResponseModel, CompanyPropError>? response =
-        await AuthRepo.companyLogin(company);
+    final response = await AuthRepo.companyLogin(company);
     loadingState = false;
     await checkAuthResponseState(response, AppUsingType.company);
   }

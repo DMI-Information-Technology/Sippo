@@ -248,10 +248,20 @@ class _SippoProfileSettingState extends State<SippoProfileSetting> {
             undoTitle: "undo".tr,
             onConfirm: () async {
               await authController.logout();
-              if (GlobalStorage.appUse == AppUsingType.user)
-                Get.offAllNamed(SippoRoutes.loginpage);
-              else
-                Get.offAllNamed(SippoRoutes.sippoCompanyLogin);
+              if (authController.states.isError) {
+                Get.snackbar(
+                  "logout is failed",
+                  authController.states.message ?? "",
+                  backgroundColor: Colors.red,
+                );
+                authController.resetAllAuthStates();
+              } else if (authController.states.isSuccess) {
+                authController.resetAllAuthStates();
+                if (GlobalStorage.appUse == AppUsingType.user)
+                  Get.offAllNamed(SippoRoutes.loginpage);
+                else
+                  Get.offAllNamed(SippoRoutes.sippoCompanyLogin);
+              }
             },
             onUndo: () => Get.back(),
           )

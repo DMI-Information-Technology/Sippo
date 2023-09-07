@@ -143,7 +143,8 @@ class Apptranslation extends Translations {
           'job_title': "Job title",
           'company': "Company",
           'find_your_dream_job': "Find your dream job\nhere!",
-          'like_post_your_tips_and_experiences': "like to post your tips and experiences",
+          'like_post_your_tips_and_experiences':
+              "like to post your tips and experiences",
           'make_job': "Make a job",
           'edit_profile': "Edit profile",
           'show_less': "show less",
@@ -154,11 +155,12 @@ class Apptranslation extends Translations {
           'talking': "Talking",
           'written': "Written",
           'search_language': "Search Language",
-          'select_language_skill_Leve': "Select Language Skill Leve",
+          'select_language_skill_Level': "Select Language Skill Level",
           'beginner': "Beginner",
           'intermediate': "Intermediate",
           'advanced': "Advanced",
           'language_kills': "Language Skills",
+          'change': "Change",
         },
         'ar_ab': {
           'Email': "Email",

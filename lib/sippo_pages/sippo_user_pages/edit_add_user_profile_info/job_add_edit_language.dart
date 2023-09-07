@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
+import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/sippo_custom_widget/language_card_info_view.dart';
-import 'package:jobspot/sippo_custom_widget/widgets.dart';
+import 'package:jobspot/sippo_custom_widget/success_message_widget.dart';
 
-import './job_add_language_user.dart';
 import '../../../JobGlobalclass/jobstopcolor.dart';
 import '../../../JobGlobalclass/jobstopfontstyle.dart';
-import '../../../JobGlobalclass/jobstopprefname.dart';
+import '../../../JopController/ProfileController/language_edit_add_controller.dart';
 import '../../../sippo_custom_widget/body_widget.dart';
-import '../../../sippo_data/model/profile_model/profile_widget_model/jobstop_language_info_card_model.dart';
-import '../../../sippo_themes/themecontroller.dart';
+import '../../../sippo_custom_widget/confirmation_bottom_sheet.dart';
+import '../../../sippo_custom_widget/container_bottom_sheet_widget.dart';
 
 class LanguageEditAdd extends StatefulWidget {
   @override
@@ -20,31 +19,7 @@ class LanguageEditAdd extends StatefulWidget {
 }
 
 class _LanguageEditAddState extends State<LanguageEditAdd> {
-  List<LanguageInfoCardModel> languageData = [
-    LanguageInfoCardModel(
-      countryFlag: JobstopPngImg.english,
-      languageName: "English",
-      talkingLevel: "Advanced",
-      writtenLevel: "Advanced",
-    ),
-    LanguageInfoCardModel(
-      countryFlag: JobstopPngImg.arabic,
-      languageName: "arabic",
-      talkingLevel: "Advanced",
-      writtenLevel: "Advanced",
-    ),
-  ];
-  final themedata = Get.put(JobstopThemecontroler());
-  List<LanguageInfoCardModel>? langList;
-
-  @override
-  void initState() {
-    final List<Map<String, dynamic>>? arg = Get.arguments[langListArg];
-    langList = arg != null
-        ? arg.map((e) => LanguageInfoCardModel.fromJson(e)).toList()
-        : [];
-    super.initState();
-  }
+  final _controller = Get.put(LanguageEditAddController());
 
   @override
   Widget build(BuildContext context) {
@@ -81,58 +56,74 @@ class _LanguageEditAddState extends State<LanguageEditAdd> {
                     color: Jobstopcolor.primarycolor,
                   ),
                 ),
-                onPressed: () {
-                  _showAddLanguageDialog();
-                },
+                onPressed: _goTAddLanguage,
               ),
             ],
           ),
           SizedBox(height: height / 64),
+          Obx(() => CardNotifyMessage.success(
+                state: _controller.states,
+                onCancelTap: () => _controller.successState(false),
+              )),
+          Obx(() => CardNotifyMessage.warning(
+                state: _controller.states,
+                onCancelTap: () => _controller.warningState(false),
+              )),
           Expanded(
-            child: ListView.separated(
-              separatorBuilder: (context, index) => SizedBox(
-                height: height / 48,
+            child: Obx(
+              () => ListView.separated(
+                separatorBuilder: (context, index) => SizedBox(
+                  height: height / 48,
+                ),
+                itemCount: _controller.langProfileList.length,
+                itemBuilder: (context, index) {
+                  final lang = _controller.langProfileList[index];
+                  return LanguageCardInfoView(
+                    lang: lang,
+                    onDelete: () async {
+                      print("lang.id = ${lang.id}");
+                      _showConfirmDeleteBottomSheet(lang.id, index);
+                    },
+                  );
+                },
               ),
-              itemCount: langList?.length ?? 0,
-              itemBuilder: (context, index) {
-                return LanguageCardInfoView(
-                  licm: langList?[index],
-                  onDelete: () {},
-                );
-              },
             ),
           ),
         ]),
-        paddingBottom: EdgeInsets.all(width / 32),
-        bottomScreen: CustomButton(
-          onTappeed: () {},
-          text: "save".tr,
-        ),
       ),
     );
   }
 
-  void _showAddLanguageDialog() {
-    // Size size = MediaQuery.of(context).size;
-    // double height = size.height;
-    // showSearch(
-    //   context: context,
-    //   delegate: MySearchDelegate(
-    //     hintText: "search Language",
-    //     textFieldStyle: TextStyle(fontSize: height / 58),
-    //     pageTitle: "Add Language",
-    //     onSelectedSearch: (value) {},
-    //     buildResultSearch: (context, i, value) {
-    //       return ListTile(title: Text(value));
-    //     },
-    //   ),
-    // );
-    Get.to(LanguageUserAdd());
+  void _goTAddLanguage() async {
+    _controller.resetState();
+    await Get.toNamed(SippoRoutes.languageUserAdd);
+    _controller.resetNewLanguage();
+    _controller.resetState();
   }
 
-  // void _saveLanguageData() {
-  //   // Implement the logic to save the language data here
-  //   // For example, you could save it to a database or a file.
-  //   print('Saving language data: $languageData');
-  // }
+  void _showConfirmDeleteBottomSheet(int? langId, int index) {
+    Get.bottomSheet(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(25),
+        ),
+      ),
+      backgroundColor: Colors.white,
+      isScrollControlled: true,
+      ContainerBottomSheetWidget(
+        notchColor: Jobstopcolor.primarycolor,
+        children: [
+          ConfirmationBottomSheet(
+            title: "Remove Work Experience ?",
+            description: "Are you sure you want to deleted this language?",
+            onConfirm: () async {
+              Get.back();
+              await _controller.onDeletedSubmitted(langId, index);
+            },
+            onUndo: () => Get.back(),
+          )
+        ],
+      ),
+    );
+  }
 }

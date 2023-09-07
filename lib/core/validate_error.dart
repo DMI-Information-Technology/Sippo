@@ -8,7 +8,7 @@ class ValidateError<T> {
 
   factory ValidateError.fromJson(
     Map<String, dynamic> json,
-    T Function(Map<String, dynamic> errors) validateProperty,
+    T? Function(Map<String, dynamic> errors) validateProperty,
   ) {
     return ValidateError<T>(
       message: json['message'].toString(),

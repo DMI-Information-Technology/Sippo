@@ -16,7 +16,6 @@ class SignUpCompanyController extends GetxController {
   final _confirmPassword = "".obs;
   final _companyAddress = "".obs;
   final _confirmOnPolicy = false.obs;
-
   final _cordLocation = CordLocation().obs;
 
   CompanyModel get companyForm => CompanyModel(

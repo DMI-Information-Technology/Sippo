@@ -2,7 +2,9 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
+import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
+import 'package:jobspot/utils/getx_text_editing_controller.dart';
 
 import '../JobGlobalclass/jobstopfontstyle.dart';
 import '../JobGlobalclass/sippo_customstyle.dart';
@@ -456,10 +458,14 @@ class InputBorderedField extends StatelessWidget {
     this.textInputAction = TextInputAction.done,
     this.onFieldSubmitted,
     this.borderRadiusValue,
+    this.verticalPaddingValue,
+    this.gController,
+    // this.isLoading = false,
   });
 
+  final double? verticalPaddingValue;
   final String? Function(String? value)? validator;
-
+  final GetXTextEditingController? gController;
   final String? initialValue;
   final String? hintText;
   final TextStyle? hintStyle;
@@ -478,6 +484,8 @@ class InputBorderedField extends StatelessWidget {
   final TextInputAction? textInputAction;
   final double? borderRadiusValue;
 
+  // final bool isLoading;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -491,17 +499,21 @@ class InputBorderedField extends StatelessWidget {
         textInputAction: textInputAction,
         initialValue: initialValue,
         readOnly: readOnly,
-        controller: controller,
+        controller: gController?.controller ?? controller,
         style: dmsregular.copyWith(fontSize: fontSize, color: Colors.black87),
         cursorColor: Jobstopcolor.grey,
         textAlignVertical: TextAlignVertical.center,
         decoration: InputDecoration(
-          contentPadding: EdgeInsets.zero,
+          contentPadding: EdgeInsets.symmetric(
+            vertical: verticalPaddingValue ?? 0.0,
+            horizontal: context.fromWidth(CustomStyle.paddingValue),
+          ),
           filled: true,
           hintText: hintText,
           hintStyle: hintStyle ??
               dmsregular.copyWith(
-                fontSize: FontSize.title6(context),
+                fontSize: FontSize.label(context),
+                color: Colors.grey,
               ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(borderRadiusValue ?? 15),

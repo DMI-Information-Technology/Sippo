@@ -37,14 +37,22 @@ class CompanyResponseModel extends EntityModel {
   // TODO: implement locationCity
   String? get locationCity => this.city;
 
-  @override
-  Map<String, dynamic> toJson() {
-    // TODO: implement toJson
-    throw UnimplementedError();
-  }
+
 
   @override
   // TODO: implement userType
   AppUsingType get userType => AppUsingType.company;
+  @override
+  Map<String, dynamic> toJson() {
+    return {
+      "id": super.id,
+      "name": super.name,
+      "phone": super.phone,
+      "secondaryPhone": super.secondaryPhone,
+      "email": super.email,
+      "city": this.city,
+      "locations": this.locations,
+    };
+  }
 //
 }

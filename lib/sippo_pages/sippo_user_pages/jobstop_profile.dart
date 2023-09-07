@@ -7,13 +7,14 @@ import 'package:jobspot/JobGlobalclass/jobstopprefname.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
-import 'package:jobspot/JopController/ProfileController/profile_user_controller.dart';
 import 'package:jobspot/sippo_custom_widget/add_info_profile_card.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/resume_card_widget.dart';
 import 'package:jobspot/sippo_pages/sippo_user_pages/job_aboutme.dart';
 import 'package:readmore/readmore.dart';
+
 import '../../JobGlobalclass/sippo_customstyle.dart';
+import '../../JopController/ProfileController/profile_user_controller.dart';
 import '../../sippo_custom_widget/expandable_item_list_widget.dart';
 import '../../sippo_custom_widget/user_profile_header.dart';
 
@@ -71,7 +72,7 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
   Widget _buildUserProfileHeader() {
     return UserProfileHeaderWidget(
       showConnectionLostBar: !_controller.netController.isConnected,
-      userModel: _controller.user,
+      profileInfo: _controller.user,
       onSettingsPressed: () => Get.toNamed(SippoRoutes.sippoprofilesetting),
       onEditProfilePressed: () => Get.toNamed(SippoRoutes.edituserprofile),
       profileImage: JobstopPngImg.photo,
@@ -89,7 +90,7 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
       ),
       onAddClicked: () async {
         Get.toNamed(SippoRoutes.uploadresume);
-        print(_controller.resumeFiles);
+        print(_controller.profileState.resumeFiles);
       },
       noInfoProfile: false,
       profileInfo: [ResumeCardWidget()],
@@ -100,7 +101,7 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
     return Obx(
       () => AddInfoProfileCard(
         title: 'appreciation'.tr,
-        noInfoProfile: _controller.appreciations.isEmpty,
+        noInfoProfile: _controller.profileState.appreciations.isEmpty,
         leading: Image.asset(
           JobstopPngImg.appreciation,
           height: context.fromHeight(CustomStyle.l),
@@ -109,13 +110,13 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
         ),
         profileInfo: [
           ExpandableItemList(
-            isExpandable: _controller.appreciations.length > 1,
-            more: _controller.showAllAppreciations,
+            isExpandable: _controller.profileState.appreciations.length > 1,
+            more: _controller.profileState.showAllAppreciations,
             titleExpandColor: Jobstopcolor.primarycolor,
             spacing: context.fromHeight(CustomStyle.xxxl),
-            itemCount: _controller.appreciations.length,
+            itemCount: _controller.profileState.appreciations.length,
             itemBuilder: (BuildContext context, int index) {
-              final item = _controller.appreciations[index];
+              final item = _controller.profileState.appreciations[index];
               return _buildTextDescriptionInfo(
                 context,
                 item.awardName,
@@ -130,8 +131,8 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
               );
             },
             onExpandClicked: () {
-              _controller.showAllAppreciations =
-                  !_controller.showAllAppreciations;
+              _controller.profileState.showAllAppreciations =
+                  !_controller.profileState.showAllAppreciations;
             },
           ),
         ],
@@ -151,14 +152,14 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
     return Obx(
       () => AddInfoProfileCard(
         title: 'language'.tr,
-        noInfoProfile: _controller.languages.isEmpty,
+        noInfoProfile: _controller.profileState.languages.isEmpty,
         leading: Image.asset(
           JobstopPngImg.language,
           height: context.fromHeight(CustomStyle.l),
           color: Jobstopcolor.primarycolor,
           colorBlendMode: BlendMode.srcIn,
         ),
-        iconAction: _controller.languages.isNotEmpty
+        iconAction: _controller.profileState.languages.isNotEmpty
             ? Icon(
                 Icons.mode_edit_outline_outlined,
                 size: context.fromHeight(CustomStyle.l),
@@ -167,21 +168,23 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
             : null,
         profileInfo: [
           ExpandableItemList.wrapBuilder(
-            isExpandable: _controller.languages.length > 1,
-            more: _controller.showAllLangs,
+            isExpandable: _controller.profileState.languages.length > 1,
+            more: _controller.profileState.showAllLangs,
             titleExpandColor: Jobstopcolor.primarycolor,
             spacing: height / 220,
-            itemCount:
-                _controller.showAllLangs ? _controller.languages.length : 1,
+            itemCount: _controller.profileState.showAllLangs
+                ? _controller.profileState.languages.length
+                : 1,
             itemBuilder: (BuildContext context, int index) {
-              final item = _controller.languages[index];
+              final item = _controller.profileState.languages[index];
               return _buildChips(
                 context,
-                item.languageName ?? "",
+                item.name ?? "",
               );
             },
             onExpandClicked: () {
-              _controller.showAllLangs = !_controller.showAllLangs;
+              _controller.profileState.showAllLangs =
+                  !_controller.profileState.showAllLangs;
             },
           ),
         ],
@@ -189,7 +192,9 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
           Get.toNamed(
             SippoRoutes.languageeditadd,
             arguments: {
-              langListArg: _controller.languages.map((e) => e.toJson()).toList()
+              langListArg: _controller.profileState.languages
+                  .map((e) => e.toJson())
+                  .toList()
             },
           );
         },
@@ -201,14 +206,14 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
     return Obx(
       () => AddInfoProfileCard(
         title: 'skill'.tr,
-        noInfoProfile: _controller.skills.isEmpty,
+        noInfoProfile: _controller.profileState.skillsList.isEmpty,
         leading: Image.asset(
           JobstopPngImg.skil,
           height: context.fromHeight(CustomStyle.l),
           color: Jobstopcolor.primarycolor,
           colorBlendMode: BlendMode.srcIn,
         ),
-        iconAction: _controller.skills.isNotEmpty
+        iconAction: _controller.profileState.skillsList.isNotEmpty
             ? Icon(
                 Icons.mode_edit_outline_outlined,
                 size: context.fromHeight(CustomStyle.l),
@@ -217,24 +222,25 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
             : null,
         profileInfo: [
           ExpandableItemList.wrapBuilder(
-            isExpandable: _controller.skills.length > 1,
-            more: _controller.showAllSkills,
+            isExpandable: _controller.profileState.skillsList.length > 1,
+            more: _controller.profileState.showAllSkills,
             titleExpandColor: Jobstopcolor.primarycolor,
             spacing: context.height / 220,
-            itemCount: _controller.skills.length,
+            itemCount: _controller.profileState.skillsList.length,
             itemBuilder: (BuildContext context, int index) {
-              final item = _controller.skills[index];
+              final item = _controller.profileState.skillsList[index];
               return _buildChips(context, item);
             },
             onExpandClicked: () {
-              _controller.showAllSkills = !_controller.showAllSkills;
+              _controller.profileState.showAllSkills =
+                  !_controller.profileState.showAllSkills;
             },
           ),
         ],
         onAddClicked: () {
           Get.toNamed(
             SippoRoutes.skillsaddedit,
-            arguments: {skillsListArg: _controller.skills},
+            arguments: {skillsListArg: _controller.profileState.skillsList},
           );
         },
       ),
@@ -244,7 +250,7 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
   Obx _buildEducationInfo(BuildContext context) {
     return Obx(() => AddInfoProfileCard(
           title: 'education'.tr,
-          noInfoProfile: _controller.edui.isEmpty,
+          noInfoProfile: _controller.profileState.educationList.isEmpty,
           leading: Image.asset(
             JobstopPngImg.education,
             height: context.fromHeight(CustomStyle.spaceBetween),
@@ -259,28 +265,27 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
           },
           profileInfo: [
             ExpandableItemList(
-              isExpandable: _controller.edui.length > 1,
-              more: _controller.showAllEdui,
+              isExpandable: _controller.profileState.educationList.length > 1,
+              more: _controller.profileState.showAllEdui,
               titleExpandColor: Jobstopcolor.primarycolor,
               spacing: context.fromHeight(CustomStyle.l),
-              itemCount: _controller.edui.length,
+              itemCount: _controller.profileState.educationList.length,
               itemBuilder: (BuildContext context, int index) {
-                final item = _controller.edui[index];
+                final item = _controller.profileState.educationList[index];
                 return _buildTextDescriptionInfo(
                   context,
                   item.level,
-                  item.university,
+                  item.institution,
                   item.periodic,
                   onEdit: () {
-                    Get.toNamed(
-                      SippoRoutes.educationaddedit,
-                      arguments: {educationArg: item.toJson()},
-                    );
+                    Get.toNamed(SippoRoutes.educationaddedit);
+                    _controller.editingId = item.id ?? -1;
                   },
                 );
               },
               onExpandClicked: () {
-                _controller.showAllEdui = !_controller.showAllEdui;
+                _controller.profileState.showAllEdui =
+                    !_controller.profileState.showAllEdui;
               },
             ),
           ],
@@ -291,7 +296,7 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
     return Obx(
       () => AddInfoProfileCard(
         title: 'work_experience'.tr,
-        noInfoProfile: _controller.wei.isEmpty,
+        noInfoProfile: _controller.profileState.workExList.isEmpty,
         leading: Image.asset(
           JobstopPngImg.bag,
           height: context.fromHeight(CustomStyle.l),
@@ -306,13 +311,13 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
         },
         profileInfo: [
           ExpandableItemList(
-            isExpandable: _controller.wei.length > 1,
-            more: _controller.showAllWei,
+            isExpandable: _controller.profileState.workExList.length > 1,
+            more: _controller.profileState.showAllWei,
             titleExpandColor: Jobstopcolor.primarycolor,
             spacing: context.fromHeight(CustomStyle.xxxl),
-            itemCount: _controller.wei.length,
+            itemCount: _controller.profileState.workExList.length,
             itemBuilder: (BuildContext context, int index) {
-              final item = _controller.wei[index];
+              final item = _controller.profileState.workExList[index];
               return _buildTextDescriptionInfo(
                 context,
                 item.jobTitle,
@@ -325,7 +330,8 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
               );
             },
             onExpandClicked: () {
-              _controller.showAllWei = !_controller.showAllWei;
+              _controller.profileState.showAllWei =
+                  !_controller.profileState.showAllWei;
             },
           ),
         ],
@@ -337,14 +343,14 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
     return Obx(
       () => AddInfoProfileCard(
         title: 'about_me'.tr,
-        noInfoProfile: _controller.aboutMeText.isEmpty,
+        noInfoProfile: _controller.profileState.aboutMeText.isEmpty,
         leading: Image.asset(
           JobstopPngImg.aboutme,
           height: context.fromHeight(CustomStyle.l),
           color: Jobstopcolor.primarycolor,
           colorBlendMode: BlendMode.srcIn,
         ),
-        iconAction: _controller.aboutMeText.isNotEmpty
+        iconAction: _controller.profileState.aboutMeText.isNotEmpty
             ? Icon(
                 Icons.mode_edit_outline_outlined,
                 size: context.fromHeight(CustomStyle.l),
@@ -355,9 +361,9 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
           Get.to(JobAboutme());
         },
         profileInfo: [
-          _controller.aboutMeText.isNotEmpty
+          _controller.profileState.aboutMeText.isNotEmpty
               ? ReadMoreText(
-                  _controller.aboutMeText,
+                  _controller.profileState.aboutMeText,
                   trimLines: 2,
                   style: dmsregular.copyWith(
                     fontSize: context.fromHeight(CustomStyle.xxxl),
@@ -440,129 +446,129 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
     ]);
   }
 
-  // Widget _buildHeaderInfoProfile(BuildContext context) {
-  //   // double topPaddingValue = MediaQuery.of(context).viewPadding.top;
-  //   return Container(
-  //     decoration: BoxDecoration(
-  //       borderRadius: BorderRadius.only(
-  //         bottomLeft: Radius.circular(25),
-  //         bottomRight: Radius.circular(25),
-  //       ),
-  //       color: Jobstopcolor.primarycolor,
-  //       image: DecorationImage(
-  //         image: AssetImage(JobstopPngImg.backgroundProf),
-  //         fit: BoxFit.cover,
-  //       ),
-  //     ),
-  //     // padding: EdgeInsets.only(top: kToolbarHeight),
-  //     child: SafeArea(
-  //       child: Padding(
-  //         padding: EdgeInsets.symmetric(
-  //           horizontal: context.fromWidth(CustomStyle.xs),
-  //           vertical: context.fromHeight(CustomStyle.huge2),
-  //         ),
-  //         child: Column(
-  //           crossAxisAlignment: CrossAxisAlignment.start,
-  //           mainAxisAlignment: MainAxisAlignment.start,
-  //           children: [
-  //             Row(
-  //               mainAxisAlignment: MainAxisAlignment.start,
-  //               crossAxisAlignment: CrossAxisAlignment.center,
-  //               children: [
-  //                 CircularImage(
-  //                   JobstopPngImg.photo,
-  //                   size: context.fromHeight(CustomStyle.imageSize2),
-  //                 ),
-  //                 Spacer(),
-  //                 InkWell(
-  //                   onTap: () {
-  //                     Get.toNamed(SippoRoutes.sippoprofilesetting);
-  //                   },
-  //                   child: Image.asset(
-  //                     JobstopPngImg.setting,
-  //                     height: context.fromHeight(CustomStyle.l),
-  //                     color: Jobstopcolor.white,
-  //                   ),
-  //                 ),
-  //               ],
-  //             ),
-  //             SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-  //             Text(
-  //               "Orlando Diggs",
-  //               style: dmsmedium.copyWith(
-  //                 fontSize: FontSize.title5(context),
-  //                 color: Jobstopcolor.white,
-  //               ),
-  //             ),
-  //             SizedBox(height: context.fromHeight(CustomStyle.huge2)),
-  //             Text(
-  //               "California, USA",
-  //               style: dmsregular.copyWith(
-  //                 fontSize: FontSize.label(context),
-  //                 color: Jobstopcolor.white,
-  //               ),
-  //             ),
-  //             SizedBox(height: context.fromHeight(CustomStyle.huge2)),
-  //             _buildPhoneNumberLabels(context, "0922698540", "0910663477"),
-  //             SizedBox(height: context.fromHeight(CustomStyle.xl)),
-  //             Row(
-  //               children: [
-  //                 Spacer(),
-  //                 InkWell(
-  //                   onTap: () => Get.toNamed(SippoRoutes.edituserprofile),
-  //                   child: Row(
-  //                     children: [
-  //                       Text(
-  //                         "edit_profile".tr,
-  //                         style: dmsregular.copyWith(
-  //                           fontSize: FontSize.label(context),
-  //                           color: Jobstopcolor.white,
-  //                         ),
-  //                       ),
-  //                       Image.asset(
-  //                         JobstopPngImg.edit,
-  //                         height: context.fromHeight(CustomStyle.l),
-  //                         color: Jobstopcolor.white,
-  //                       ),
-  //                     ],
-  //                   ),
-  //                 )
-  //               ],
-  //             ),
-  //           ],
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
+// Widget _buildHeaderInfoProfile(BuildContext context) {
+//   // double topPaddingValue = MediaQuery.of(context).viewPadding.top;
+//   return Container(
+//     decoration: BoxDecoration(
+//       borderRadius: BorderRadius.only(
+//         bottomLeft: Radius.circular(25),
+//         bottomRight: Radius.circular(25),
+//       ),
+//       color: Jobstopcolor.primarycolor,
+//       image: DecorationImage(
+//         image: AssetImage(JobstopPngImg.backgroundProf),
+//         fit: BoxFit.cover,
+//       ),
+//     ),
+//     // padding: EdgeInsets.only(top: kToolbarHeight),
+//     child: SafeArea(
+//       child: Padding(
+//         padding: EdgeInsets.symmetric(
+//           horizontal: context.fromWidth(CustomStyle.xs),
+//           vertical: context.fromHeight(CustomStyle.huge2),
+//         ),
+//         child: Column(
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           mainAxisAlignment: MainAxisAlignment.start,
+//           children: [
+//             Row(
+//               mainAxisAlignment: MainAxisAlignment.start,
+//               crossAxisAlignment: CrossAxisAlignment.center,
+//               children: [
+//                 CircularImage(
+//                   JobstopPngImg.photo,
+//                   size: context.fromHeight(CustomStyle.imageSize2),
+//                 ),
+//                 Spacer(),
+//                 InkWell(
+//                   onTap: () {
+//                     Get.toNamed(SippoRoutes.sippoprofilesetting);
+//                   },
+//                   child: Image.asset(
+//                     JobstopPngImg.setting,
+//                     height: context.fromHeight(CustomStyle.l),
+//                     color: Jobstopcolor.white,
+//                   ),
+//                 ),
+//               ],
+//             ),
+//             SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+//             Text(
+//               "Orlando Diggs",
+//               style: dmsmedium.copyWith(
+//                 fontSize: FontSize.title5(context),
+//                 color: Jobstopcolor.white,
+//               ),
+//             ),
+//             SizedBox(height: context.fromHeight(CustomStyle.huge2)),
+//             Text(
+//               "California, USA",
+//               style: dmsregular.copyWith(
+//                 fontSize: FontSize.label(context),
+//                 color: Jobstopcolor.white,
+//               ),
+//             ),
+//             SizedBox(height: context.fromHeight(CustomStyle.huge2)),
+//             _buildPhoneNumberLabels(context, "0922698540", "0910663477"),
+//             SizedBox(height: context.fromHeight(CustomStyle.xl)),
+//             Row(
+//               children: [
+//                 Spacer(),
+//                 InkWell(
+//                   onTap: () => Get.toNamed(SippoRoutes.edituserprofile),
+//                   child: Row(
+//                     children: [
+//                       Text(
+//                         "edit_profile".tr,
+//                         style: dmsregular.copyWith(
+//                           fontSize: FontSize.label(context),
+//                           color: Jobstopcolor.white,
+//                         ),
+//                       ),
+//                       Image.asset(
+//                         JobstopPngImg.edit,
+//                         height: context.fromHeight(CustomStyle.l),
+//                         color: Jobstopcolor.white,
+//                       ),
+//                     ],
+//                   ),
+//                 )
+//               ],
+//             ),
+//           ],
+//         ),
+//       ),
+//     ),
+//   );
+// }
 
-  // Row _buildPhoneNumberLabels(
-  //   BuildContext context,
-  //   String phone1, [
-  //   String? phone2,
-  // ]) {
-  //   return Row(
-  //     children: [
-  //       Text(
-  //         phone1,
-  //         style: dmsregular.copyWith(
-  //           fontSize: FontSize.label(context),
-  //           color: Jobstopcolor.white,
-  //         ),
-  //       ),
-  //       if (phone2 != null) ...[
-  //         SizedBox(
-  //           width: context.fromWidth(CustomStyle.spaceBetween),
-  //         ),
-  //         Text(
-  //           phone2,
-  //           style: dmsregular.copyWith(
-  //             fontSize: FontSize.label(context),
-  //             color: Jobstopcolor.white,
-  //           ),
-  //         ),
-  //       ]
-  //     ],
-  //   );
-  // }
+// Row _buildPhoneNumberLabels(
+//   BuildContext context,
+//   String phone1, [
+//   String? phone2,
+// ]) {
+//   return Row(
+//     children: [
+//       Text(
+//         phone1,
+//         style: dmsregular.copyWith(
+//           fontSize: FontSize.label(context),
+//           color: Jobstopcolor.white,
+//         ),
+//       ),
+//       if (phone2 != null) ...[
+//         SizedBox(
+//           width: context.fromWidth(CustomStyle.spaceBetween),
+//         ),
+//         Text(
+//           phone2,
+//           style: dmsregular.copyWith(
+//             fontSize: FontSize.label(context),
+//             color: Jobstopcolor.white,
+//           ),
+//         ),
+//       ]
+//     ],
+//   );
+// }
 }

@@ -12,14 +12,14 @@ import 'circular_image.dart';
 
 class UserProfileHeaderWidget extends StatelessWidget {
   final String profileImage;
-  final EntityModel userModel;
+  final EntityModel profileInfo;
   final VoidCallback onSettingsPressed;
   final VoidCallback onEditProfilePressed;
   final bool showConnectionLostBar;
 
   UserProfileHeaderWidget({
     super.key,
-    required this.userModel,
+    required this.profileInfo,
     required this.onSettingsPressed,
     required this.onEditProfilePressed,
     required this.profileImage,
@@ -59,8 +59,8 @@ class UserProfileHeaderWidget extends StatelessWidget {
                   SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
                   _buildNameText(context),
                   SizedBox(height: context.fromHeight(CustomStyle.huge2)),
-                  if (userModel.locationCity != null &&
-                      userModel.locationCity!.trim().isNotEmpty) ...[
+                  if (profileInfo.locationCity != null &&
+                      profileInfo.locationCity!.trim().isNotEmpty) ...[
                     _buildLocationText(context),
                     SizedBox(height: context.fromHeight(CustomStyle.huge2)),
                   ],
@@ -99,7 +99,7 @@ class UserProfileHeaderWidget extends StatelessWidget {
 
   Widget _buildNameText(BuildContext context) {
     return Text(
-      userModel.name ?? "unknown",
+      profileInfo.name ?? "unknown",
       style: dmsmedium.copyWith(
         fontSize: FontSize.title5(context),
         color: Jobstopcolor.white,
@@ -109,7 +109,7 @@ class UserProfileHeaderWidget extends StatelessWidget {
 
   Widget _buildLocationText(BuildContext context) {
     return Text(
-      userModel.locationCity ?? "unknown",
+      profileInfo.locationCity ?? "unknown",
       style: dmsregular.copyWith(
         fontSize: FontSize.label(context),
         color: Jobstopcolor.white,
@@ -121,16 +121,16 @@ class UserProfileHeaderWidget extends StatelessWidget {
     return Row(
       children: [
         Text(
-          userModel.phone ?? "unknown",
+          profileInfo.phone ?? "unknown",
           style: dmsregular.copyWith(
             fontSize: FontSize.label(context),
             color: Jobstopcolor.white,
           ),
         ),
-        if (userModel.secondaryPhone != null) ...[
+        if (profileInfo.secondaryPhone != null) ...[
           SizedBox(width: context.fromWidth(CustomStyle.spaceBetween)),
           Text(
-            userModel.secondaryPhone!,
+            profileInfo.secondaryPhone!,
             style: dmsregular.copyWith(
               fontSize: FontSize.label(context),
               color: Jobstopcolor.white,

@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
-import '../sippo_data/model/profile_model/profile_widget_model/jobstop_language_info_card_model.dart';
+import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
+
+import '../sippo_data/model/profile_model/profile_resource_model/language_model.dart';
 
 class LanguageCardInfoView extends StatelessWidget {
-  final LanguageInfoCardModel? licm;
+  final LanguageModel? lang;
   final Function onDelete;
 
-  const LanguageCardInfoView({this.licm, required this.onDelete});
+  const LanguageCardInfoView({this.lang, required this.onDelete});
 
   @override
   Widget build(BuildContext context) {
@@ -29,12 +31,20 @@ class LanguageCardInfoView extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(25),
                 image: DecorationImage(
-                  image: AssetImage(licm?.countryFlag ?? ""),
+                  colorFilter: lang?.countryFlag == null
+                      ? ColorFilter.mode(
+                          Jobstopcolor.primarycolor,
+                          BlendMode.srcIn,
+                        )
+                      : null,
+                  image: AssetImage(
+                    lang?.countryFlag ?? JobstopPngImg.language,
+                  ),
                   fit: BoxFit.cover,
                 ),
               ),
             ),
-            title: Text(licm?.languageName ?? ""),
+            title: Text(lang?.name ?? ""),
             trailing: IconButton(
               icon: Icon(
                 Icons.delete_outline,
@@ -49,29 +59,12 @@ class LanguageCardInfoView extends StatelessWidget {
             children: [
               SizedBox(width: width / 26),
               Icon(
-                Icons.volume_up,
+                Icons.star_half_rounded,
                 color: Colors.grey,
               ),
               SizedBox(width: 4),
               Text(
-                licm?.talkingLevel ?? "",
-                style: dmsregular.copyWith(
-                  color: Colors.grey,
-                ),
-              ),
-            ],
-          ),
-          SizedBox(height: height / 64),
-          Row(
-            children: [
-              SizedBox(width: width / 26),
-              Icon(
-                Icons.create,
-                color: Colors.grey,
-              ),
-              SizedBox(width: 4),
-              Text(
-                licm?.writtenLevel ?? "",
+                lang?.level ?? "",
                 style: dmsregular.copyWith(
                   color: Colors.grey,
                 ),

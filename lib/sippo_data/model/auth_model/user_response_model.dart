@@ -16,7 +16,7 @@ class UserResponseModel extends EntityModel {
       id: json["id"],
       name: json["name"],
       phone: json["phone"],
-      secondaryPhone: json["secondaryPhone"],
+      secondaryPhone: json["secondary_phone"],
       email: json["email"],
     );
   }
@@ -26,7 +26,7 @@ class UserResponseModel extends EntityModel {
       "id": this.id,
       "name": this.name,
       "phone": this.phone,
-      "secondaryPhone": this.secondaryPhone,
+      "secondary_phone": this.secondaryPhone,
       "email": this.email,
     };
   }

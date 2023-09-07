@@ -9,6 +9,7 @@ import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 
+import '../../JopController/UserDashboardController/user_dashboard_controller.dart';
 import '../../sippo_custom_widget/find_yor_jop_dashboard_cards.dart';
 import '../../sippo_custom_widget/job_card_widget.dart';
 import '../../sippo_custom_widget/widgets.dart';
@@ -93,23 +94,7 @@ class _SippoUserHomeState extends State<SippoUserHome> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: context.fromWidth(CustomStyle.s),
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Hello\nHatem Emhemed.".tr,
-                    style: dmsbold.copyWith(
-                      fontSize: FontSize.title3(context),
-                      color: Jobstopcolor.primarycolor,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            _buildWelcomeUser(context),
             SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
             Padding(
               padding: EdgeInsets.symmetric(
@@ -180,6 +165,39 @@ class _SippoUserHomeState extends State<SippoUserHome> {
     );
   }
 
+  Padding _buildWelcomeUser(BuildContext context) {
+    final dashboardController = UserDashBoardController.instance;
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: context.fromWidth(CustomStyle.s),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Hello",
+            style: dmsbold.copyWith(
+              fontSize: FontSize.title3(context),
+              color: Jobstopcolor.primarycolor,
+            ),
+          ),
+          Obx(
+            () => dashboardController.user.name != null
+                ? Text(
+                    "${dashboardController.user.name}.",
+                    style: dmsbold.copyWith(
+                      fontSize: FontSize.title3(context),
+                      color: Jobstopcolor.primarycolor,
+                    ),
+                  )
+                : const CircularProgressIndicator(strokeWidth: 1.8),
+          ),
+        ],
+      ),
+    );
+  }
+
   SizedBox _buildWorkExListView(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     double height = size.height;
@@ -192,8 +210,7 @@ class _SippoUserHomeState extends State<SippoUserHome> {
         itemBuilder: (context, index) {
           return Row(
             children: [
-              if (index == 0)
-                SizedBox(width: context.fromWidth(CustomStyle.s)),
+              if (index == 0) SizedBox(width: context.fromWidth(CustomStyle.s)),
               CustomChip(
                 height: height,
                 onTap: () {},
@@ -208,8 +225,7 @@ class _SippoUserHomeState extends State<SippoUserHome> {
                 borderRadius: width / 32,
                 paddingValue: context.fromHeight(CustomStyle.xxxl),
               ),
-              if (index == 9)
-                SizedBox(width: context.fromWidth(CustomStyle.s)),
+              if (index == 9) SizedBox(width: context.fromWidth(CustomStyle.s)),
             ],
           );
         },

@@ -1,38 +1,167 @@
 import 'package:get/get.dart';
-import '../../sippo_data/model/profile_model/profile_widget_model/jobstop_language_info_card_model.dart';
+import 'package:jobspot/JopController/ProfileController/profile_user_controller.dart';
+
+import '../../core/Refresh.dart';
+import '../../sippo_data/model/profile_model/profile_resource_model/language_model.dart';
+import '../../sippo_data/profile_user/language_repo.dart';
+import '../../utils/states.dart';
 
 class LanguageEditAddController extends GetxController {
-  final _languageInfo = LanguageInfoCardModel(firstLanguage: false,talkingLevel: "no level",writtenLevel: "no level").obs;
-  final _selectedIndexLanguage = (-1).obs;
-  final _selectedLevel = 'no level'.obs;
+  final _profileController = ProfileUserController.instance;
 
-  String get selectedLevel => _selectedLevel.toString();
+  List<LanguageModel> get langProfileList =>
+      _profileController.profileState.languages;
 
-  void set selectedLevel(String value) {
-    _selectedLevel.value = value;
-  }
+  final _suggestionsLanguage = <LanguageModel>[].obs;
 
-  int get selectedIndexLanguage => _selectedIndexLanguage.toInt();
+  List<LanguageModel> get suggestionsLanguage => _suggestionsLanguage.toList();
 
-  void set selectedIndexLanguage(int value) {
-    _selectedIndexLanguage.value = value;
-  }
-
-  LanguageInfoCardModel get languageInfo => _languageInfo.value;
-
-  void setLanguageInfo({
-    String? languageName,
-    String? countryFlag,
-    String? talkingLevel,
-    String? writtenLevel,
-    bool? firstLanguage,
-  }) {
-    _languageInfo.value = _languageInfo.value.copyWith(
-      languageName: languageName,
-      countryFlag: countryFlag,
-      talkingLevel: talkingLevel,
-      writtenLevel: writtenLevel,
-      firstLanguage: firstLanguage,
+  Future<void> fetchSuggestionsLanguages() async {
+    final response = await LanguageRepo.fetchLanguages();
+    await response?.checkStatusResponse(
+      onSuccess: (data, statusType) {
+        Refresher.dataListUpdater(
+          newData: data,
+          currentData: suggestionsLanguage,
+          updateData: (data) => _suggestionsLanguage.value = data,
+        );
+      },
+      onValidateError: (validateError, statusType) {},
+      onError: (message, statusType) {},
     );
   }
+
+  static LanguageEditAddController get instance => Get.find();
+
+  final _states = States().obs;
+
+  States get states => _states.value;
+
+  void successState(bool value, [String? message]) {
+    _states.value = states.copyWith(isSuccess: value, message: message);
+  }
+
+  void warningState(bool value, [String? message]) {
+    _states.value = states.copyWith(isWarning: value, message: message);
+  }
+
+  void resetState() {
+    _states.value = States();
+  }
+
+  final _newLanguage = LanguageModel().obs;
+
+  void resetNewLanguage() {
+    _newLanguage.value = LanguageModel();
+  }
+
+  LanguageModel get newLanguage => _newLanguage.value;
+
+  void setNewLanguage({
+    int? id,
+    String? name,
+    bool? isNative,
+    String? level,
+  }) {
+    _newLanguage.value = _newLanguage.value.copyWith(
+      id: id,
+      isNative: isNative,
+      level: level,
+      name: name,
+    );
+  }
+
+  Future<void> addNewLanguage() async {
+    final response = await LanguageRepo.addNewLanguage(newLanguage);
+    await response?.checkStatusResponse(
+      onSuccess: (data, statusType) async {
+        if (data != null) {
+          _profileController.profileState.languages = langProfileList
+            ..add(data);
+          print(langProfileList);
+        } else {
+          await _profileController.fetchUserLanguage();
+        }
+        successState(true, 'New language added successfully.');
+      },
+      onValidateError: (validateError, _) {
+        _states.value =
+            states.copyWith(isError: true, error: validateError?.message);
+      },
+      onError: (message, _) {
+        _states.value = states.copyWith(isError: true, message: message);
+      },
+    );
+  }
+
+  Future<void> deleteLanguageById(int? id, int index) async {
+    if (id == null) {
+      return;
+    }
+    final response = await LanguageRepo.deleteLanguageById(id);
+    await response?.checkStatusResponse(
+      onSuccess: (data, _) async {
+        if (data != null && data) {
+          _profileController.profileState.languages = langProfileList
+            ..removeAt(index);
+        } else {
+          await _profileController.fetchUserLanguage();
+        }
+        successState(true, 'Language deleted successfully.');
+      },
+      onValidateError: (validateError, _) {
+        _states.value =
+            states.copyWith(isError: true, error: validateError?.message);
+      },
+      onError: (message, _) {
+        _states.value = states.copyWith(isError: true, message: message);
+      },
+    );
+  }
+
+  Future<void> onSavedSubmitted() async {
+    if (!_profileController.netController.isConnected) {
+      warningState(
+        true,
+        "sorry your connection is lost, please check your settings before continuing.",
+      );
+      return;
+    }
+    _states.value = states.copyWith(isLoading: true);
+    if (newLanguage.id == null) {
+      print("Lang.onSavedSubmitted: select language before submission.");
+      warningState(true, "select language before submission.");
+    } else if (!langProfileList.any((e) => e.id == newLanguage.id)) {
+      await addNewLanguage();
+    }
+    _states.value = states.copyWith(isLoading: false);
+  }
+
+  Future<void> onDeletedSubmitted(int? id, int index) async {
+    if (!_profileController.netController.isConnected) {
+      warningState(
+        true,
+        "sorry your connection is lost, please check your settings before continuing.",
+      );
+      return;
+    }
+    _states.value = states.copyWith(isLoading: true);
+    await deleteLanguageById(id, index);
+    _states.value = states.copyWith(isLoading: false);
+  }
+
+  @override
+  void onInit() {
+    (() async {
+      await fetchSuggestionsLanguages();
+    })();
+    super.onInit();
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
+  }
 }
+
+class LanguageState {}

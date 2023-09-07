@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -107,8 +106,9 @@ class MySearchDelegate extends SearchDelegate {
               height: height / 100,
             )
           ],
-          Expanded(
-            child: ListView.builder(
+          if (filteredSuggestions.isNotEmpty)
+            Expanded(
+              child: ListView.builder(
                 itemCount: filteredSuggestions.length,
                 itemBuilder: (context, index) {
                   final suggestion = filteredSuggestions[index] ?? "";
@@ -120,8 +120,17 @@ class MySearchDelegate extends SearchDelegate {
                       close(context, null);
                     },
                   );
-                }),
-          ),
+                },
+              ),
+            ),
+          if (filteredSuggestions.isEmpty)
+            InkWell(
+              child: buildResultSearch(context, 0, query),
+              onTap: () {
+                onSelectedSearch(query);
+                close(context, null);
+              },
+            )
         ],
       ),
     );

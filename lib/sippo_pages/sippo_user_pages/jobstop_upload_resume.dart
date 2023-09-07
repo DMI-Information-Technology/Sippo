@@ -52,13 +52,13 @@ class _SippoUploadCVState extends State<SippoUploadCV> {
                 () => FileUploadWidget(
                   title: 'Upload your CV'.tr,
                   onUploadTapped: () async {
-                    profileController.resumeFiles =
+                    profileController.profileState.resumeFiles =
                         await FilePickerService.uploadResume();
                   },
                   onDeletedFile: () {
-                    profileController.resumeFiles = ResumeFileInfo.getNull();
+                    profileController.profileState.resumeFiles = ResumeFileInfo.getNull();
                   },
-                  isUploaded: profileController.resumeFiles != null,
+                  isUploaded: profileController.profileState.resumeFiles != null,
                 ),
               ),
             ],

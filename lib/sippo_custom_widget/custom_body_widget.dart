@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CustomBodyWidget extends StatefulWidget {
   const CustomBodyWidget({
@@ -9,21 +10,25 @@ class CustomBodyWidget extends StatefulWidget {
     this.contentPadding,
     this.child,
     this.extraAppBarHeight = 0.0,
+    this.automaticallyImplyLeading = false,
+    this.leading,
   })  : this.itemCount = 0,
         this.itemBuilder = null;
 
-  CustomBodyWidget.itemBuilder({
-    super.key,
-    required this.expandedAppBarHeight,
-    this.toolBarHeight,
-    this.expandedAppBar,
-    this.contentPadding,
-    this.extraAppBarHeight = 0.0,
-    this.itemCount = 0,
-    this.itemBuilder,
-  }) : this.child = null;
+  CustomBodyWidget.itemBuilder(
+      {super.key,
+      required this.expandedAppBarHeight,
+      this.toolBarHeight,
+      this.expandedAppBar,
+      this.contentPadding,
+      this.extraAppBarHeight = 0.0,
+      this.itemCount = 0,
+      this.itemBuilder,
+      this.automaticallyImplyLeading = false,
+      this.leading})
+      : this.child = null;
 
-  // final  children;
+  final bool automaticallyImplyLeading;
   final int itemCount;
   final double extraAppBarHeight;
   final double expandedAppBarHeight;
@@ -32,6 +37,7 @@ class CustomBodyWidget extends StatefulWidget {
   final EdgeInsets? contentPadding;
   final Widget? child;
   final Widget? Function(BuildContext context, int index)? itemBuilder;
+  final Widget? leading;
 
   @override
   State<CustomBodyWidget> createState() => _CustomBodyWidgetState();
@@ -49,17 +55,26 @@ class _CustomBodyWidgetState extends State<CustomBodyWidget> {
     //     .addPostFrameCallback((_) => _updateExpandedHeight());
   }
 
-  // void _updateExpandedHeight() {
-  //   final RenderBox renderBox =
-  //       _flexibleChildKey.currentContext!.findRenderObject() as RenderBox;
-  //   final childHeight = renderBox.size.height;
-  //   if (childHeight > expandedHeight) {
-  //     print("CustomBodyWidget expandedHeight: $expandedHeight");
-  //     print("CustomBodyWidget childHeight: $childHeight");
-  //     expandedHeight = childHeight;
-  //     setState(() {});
-  //   }
-  // }
+  Widget? _inLeading() {
+    return widget.automaticallyImplyLeading && widget.leading == null
+        ? InkWell(
+            onTap: () => Get.back(),
+            child: Icon(
+              Icons.arrow_back,
+              color: Colors.white,
+            ),
+          )
+        : widget.leading;
+  }
+
+  double _expandedAppBarHeight() {
+    return expandedHeight +
+        widget.extraAppBarHeight +
+        (widget.automaticallyImplyLeading && widget.leading == null ||
+                widget.leading != null
+            ? kToolbarHeight
+            : 0);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,12 +84,13 @@ class _CustomBodyWidgetState extends State<CustomBodyWidget> {
       slivers: [
         if (widget.expandedAppBar != null)
           SliverAppBar(
-            automaticallyImplyLeading: false,
-            expandedHeight: expandedHeight + widget.extraAppBarHeight,
-            toolbarHeight: widget.toolBarHeight ?? kToolbarHeight,
+            automaticallyImplyLeading: widget.automaticallyImplyLeading,
+            leading: _inLeading(),
+            expandedHeight: _expandedAppBarHeight(),
+            // toolbarHeight: widget.toolBarHeight ?? kToolbarHeight,
             floating: true,
             flexibleSpace: FlexibleSpaceBar(
-              background: Container(
+              background: SizedBox(
                 key: _flexibleChildKey,
                 child: widget.expandedAppBar,
               ),
@@ -100,4 +116,15 @@ class _CustomBodyWidgetState extends State<CustomBodyWidget> {
       ],
     );
   }
+// void _updateExpandedHeight() {
+//   final RenderBox renderBox =
+//       _flexibleChildKey.currentContext!.findRenderObject() as RenderBox;
+//   final childHeight = renderBox.size.height;
+//   if (childHeight > expandedHeight) {
+//     print("CustomBodyWidget expandedHeight: $expandedHeight");
+//     print("CustomBodyWidget childHeight: $childHeight");
+//     expandedHeight = childHeight;
+//     setState(() {});
+//   }
+// }
 }

@@ -1,8 +1,7 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
-import '../sippo_custom_widget/gender_picker_widget.dart';
 
 void showAlert(BuildContext context, Widget widget) {
   showDialog(
@@ -31,8 +30,12 @@ String dobFormatter(DateTime dt) {
   return DateFormat("d MMM y").format(dt);
 }
 
-String customDateFormatter(DateTime dt, String format) {
-  return DateFormat(format).format(dt);
+String customDateFormatter(String dt, String format) {
+  try {
+    return DateFormat(format).format(DateTime.parse(dt));
+  } on FormatException catch (_) {
+    return "invalid date format";
+  }
 }
 
 void showMyDatePicker(
@@ -47,19 +50,6 @@ void showMyDatePicker(
   );
   if (selectedDate != null) {
     onDatePickerSelector(selectedDate);
-  }
-}
-
-void showGenderPicker(
-  BuildContext context, {
-  required void Function(Gender?) onGenderChange,
-}) async {
-  final selectedGender = await showDialog<Gender>(
-    context: context,
-    builder: (context) => GenderPickerDialog(),
-  );
-  if (selectedGender != null) {
-    onGenderChange(selectedGender);
   }
 }
 

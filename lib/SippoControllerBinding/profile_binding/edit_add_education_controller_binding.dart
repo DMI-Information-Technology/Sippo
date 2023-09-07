@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:get/get_instance/src/bindings_interface.dart';
 import '../../JopController/ProfileController/edit_add_education_controller.dart';
 
 

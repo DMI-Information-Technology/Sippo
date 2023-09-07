@@ -1,16 +1,19 @@
 import "dart:convert";
+
 import "package:http/http.dart" as http;
-import "package:jobspot/sippo_data/model/auth_model/user_model.dart";
+import "package:jobspot/JopController/HttpClientController/http_client_controller.dart";
 import "package:jobspot/core/api_endpoints.dart" as endpoints;
 import "package:jobspot/core/header_api.dart";
+import "package:jobspot/sippo_data/model/auth_model/user_model.dart";
+
 import '../../core/status_response_code_checker.dart';
 import "../model/auth_model/auth_response.dart";
 import "../model/auth_model/company_model.dart";
 import "../model/auth_model/company_property_error_model.dart";
 import "../model/auth_model/company_response_login_user_model.dart";
 import "../model/auth_model/company_response_model.dart";
-import "../model/auth_model/user_response_model.dart";
 import "../model/auth_model/user_propery_error_model.dart";
+import "../model/auth_model/user_response_model.dart";
 
 class AuthRepo {
   static Future<AuthResponse<UserResponseModel, UserPropError>?> userRegister(
@@ -85,6 +88,35 @@ class AuthRepo {
       print(error);
     } finally {
       return userResponse;
+    }
+  }
+
+  static Future<String?> userLogout() async {
+    try {
+      final response = await HttpClientController.instance.client.post(
+        endpoints.userLogoutEndpoint,
+        data: {},
+      );
+      final responseData = jsonDecode(response.body);
+      final logoutMessage = responseData["message"];
+      if (!(response.statusCode == 200 || response.statusCode == 204)) {
+        throw Exception(
+          "AuthRepo.userLogout Exception: bad response status code: ${response.statusCode} - and response body: ${response.body}",
+        );
+      } else if (logoutMessage == null) {
+        throw Exception(
+            "AuthRepo.userLogout Exception: the logout message is null.");
+      } else if (!(logoutMessage is String)) {
+        throw Exception(
+            "AuthRepo.userLogout Exception: the response is not a message of type string.");
+      } else if (logoutMessage.isEmpty) {
+        throw Exception(
+            "AuthRepo.userLogout Exception: the logout message is empty.");
+      }
+      return logoutMessage;
+    } catch (error) {
+      print(error);
+      return null;
     }
   }
 

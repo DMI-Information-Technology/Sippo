@@ -51,15 +51,17 @@ class StatusResponseCodeChecker {
     return null;
   }
 
-  static Future<Resource<T, E>?> checkStatusResponseCode<T, E>(
+  static Future<Resource<T, E?>> checkStatusResponseCode<T, E>(
     Map<String, dynamic> responseData,
     int statusCode,
     T Function(Map<String, dynamic> data) dataModel,
-    E Function(Map<String, dynamic> errors) errorsModel,
+    E? Function(Map<String, dynamic> errors) errorsModel,
   ) async {
-    print("checkStatusResponseCode: status Code = $statusCode");
     print(
-        "checkStatusResponseCode: response data after decode = $responseData");
+        "StatusResponseCodeChecker.checkStatusResponseCode: status Code = $statusCode");
+    print(
+      "StatusResponseCodeChecker.checkStatusResponseCode: response data after decode = $responseData",
+    );
     switch (statusCode) {
       case 200:
         return Resource.success(
@@ -95,7 +97,10 @@ class StatusResponseCodeChecker {
           type: StatusType.VALIDATE_ERROR,
         );
       default:
-        return null;
+        return Resource.error(
+          errorMessage: "invalid response.",
+          type: StatusType.INVALID_RESPONSE,
+        );
     }
   }
 }

@@ -33,7 +33,6 @@ class BodyWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("internet not connected: $isConnectionLost");
     return _isHaveContent()
         ? Stack(
             children: [

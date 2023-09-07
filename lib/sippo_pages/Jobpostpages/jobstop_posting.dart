@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:get/utils.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
+import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 
 import 'jobstop_aboutus.dart';
 
@@ -42,448 +44,293 @@ class _SippoUserSocialState extends State<SippoUserSocial> {
     width = size.width;
     return Scaffold(
       appBar: AppBar(),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-              horizontal: width / 26, vertical: height / 96),
-          child: Column(
-            children: [
-              Container(
-                height: height / 3.2,
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20),
-                    color: Jobstopcolor.white,
-                    boxShadow: const [
-                      BoxShadow(blurRadius: 5, color: Jobstopcolor.shedo)
-                    ]),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    SizedBox(
-                      height: height / 4.1,
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: width / 26, vertical: height / 66),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
+      body: BodyWidget(
+        isScrollable: true,
+        paddingContent: EdgeInsets.symmetric(horizontal: context.width / 36),
+        child: Column(
+          children: [
+            if (selected == 0) ...[
+              ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: 1,
+                itemBuilder: (context, index) {
+                  return Container(
+                    margin: EdgeInsets.only(bottom: height / 36),
+                    height: height / 3.2,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20),
+                        color: Jobstopcolor.white,
+                        boxShadow: const [
+                          BoxShadow(blurRadius: 5, color: Jobstopcolor.shedo)
+                        ]),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        SizedBox(
+                          height: height / 4.1,
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: width / 26, vertical: height / 66),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                CircleAvatar(
-                                  radius: 25,
-                                  backgroundImage:
-                                      AssetImage(JobstopPngImg.photo),
-                                ),
-                                SizedBox(
-                                  width: width / 46,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                Row(
                                   children: [
-                                    Text(
-                                      "Arnold Leonardo",
-                                      style: dmsbold.copyWith(
-                                          fontSize: 12,
-                                          color: Jobstopcolor.black),
+                                    CircleAvatar(
+                                      radius: 25,
+                                      backgroundImage:
+                                          AssetImage(JobstopPngImg.photo),
                                     ),
                                     SizedBox(
-                                      height: height / 150,
+                                      width: width / 46,
                                     ),
-                                    Row(
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        Image.asset(
-                                          JobstopPngImg.watch,
-                                          height: height / 56,
+                                        Text(
+                                          "Arnold Leonardo",
+                                          style: dmsbold.copyWith(
+                                              fontSize: 12,
+                                              color: Jobstopcolor.black),
                                         ),
                                         SizedBox(
-                                          width: width / 46,
+                                          height: height / 150,
                                         ),
-                                        Text(
-                                          "21 minuts ago",
-                                          style: dmsregular.copyWith(
-                                              fontSize: 10,
-                                              color: Jobstopcolor.grey),
-                                        ),
+                                        Row(
+                                          children: [
+                                            Image.asset(
+                                              JobstopPngImg.watch,
+                                              height: height / 56,
+                                            ),
+                                            SizedBox(
+                                              width: width / 46,
+                                            ),
+                                            Text(
+                                              "21 minuts ago",
+                                              style: dmsregular.copyWith(
+                                                  fontSize: 10,
+                                                  color: Jobstopcolor.grey),
+                                            ),
+                                          ],
+                                        )
                                       ],
                                     )
                                   ],
-                                )
+                                ),
+                                SizedBox(
+                                  height: height / 46,
+                                ),
+                                Text(
+                                  "What are the characteristics of a fake job call form?",
+                                  style: dmsbold.copyWith(
+                                      fontSize: 12,
+                                      color: Jobstopcolor.primarycolor),
+                                ),
+                                SizedBox(
+                                  height: height / 96,
+                                ),
+                                Text(
+                                  "Because I always find fake job calls so I'm confused which job to take can you share your knowledge here? thank you",
+                                  style: dmsregular.copyWith(
+                                      fontSize: 12,
+                                      color: Jobstopcolor.darkgrey),
+                                ),
                               ],
                             ),
-                            SizedBox(
-                              height: height / 46,
-                            ),
-                            Text(
-                              "What are the characteristics of a fake job call form?",
-                              style: dmsbold.copyWith(
-                                  fontSize: 12,
-                                  color: Jobstopcolor.primarycolor),
-                            ),
-                            SizedBox(
-                              height: height / 96,
-                            ),
-                            Text(
-                              "Because I always find fake job calls so I'm confused which job to take can you share your knowledge here? thank you",
-                              style: dmsregular.copyWith(
-                                fontSize: 12,
-                                color: Jobstopcolor.darkgrey,
-                              ),
-                            ),
-                          ],
+                          ),
                         ),
-                      ),
+                        Container(
+                          height: height / 15,
+                          decoration: const BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                  bottomLeft: Radius.circular(20),
+                                  bottomRight: Radius.circular(20)),
+                              color: Jobstopcolor.primary),
+                          child: Padding(
+                            padding:
+                                EdgeInsets.symmetric(horizontal: width / 15),
+                            child: Row(
+                              children: [
+                                const Icon(
+                                  Icons.favorite,
+                                  color: Jobstopcolor.red,
+                                  size: 20,
+                                ),
+                                SizedBox(
+                                  width: width / 96,
+                                ),
+                                Text(
+                                  "12",
+                                  style: dmsregular.copyWith(
+                                      fontSize: 10, color: Jobstopcolor.grey),
+                                ),
+                                SizedBox(
+                                  width: width / 16,
+                                ),
+                                Image.asset(
+                                  JobstopPngImg.message,
+                                  color: Jobstopcolor.grey,
+                                  height: height / 46,
+                                ),
+                                SizedBox(
+                                  width: width / 96,
+                                ),
+                                Text(
+                                  "10",
+                                  style: dmsregular.copyWith(
+                                      fontSize: 10, color: Jobstopcolor.grey),
+                                ),
+                                SizedBox(
+                                  width: width / 2.5,
+                                ),
+                                Image.asset(
+                                  JobstopPngImg.union,
+                                  color: Jobstopcolor.grey,
+                                  height: height / 46,
+                                ),
+                                SizedBox(
+                                  width: width / 96,
+                                ),
+                                Text(
+                                  "2",
+                                  style: dmsregular.copyWith(
+                                      fontSize: 10, color: Jobstopcolor.grey),
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
                     ),
-                    Container(
-                      height: height / 15,
-                      decoration: const BoxDecoration(
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(20),
-                          bottomRight: Radius.circular(20),
-                        ),
-                        color: Jobstopcolor.primary,
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(horizontal: width / 15),
-                        child: Row(
-                          children: [
-                            const Icon(
-                              Icons.favorite,
-                              color: Jobstopcolor.red,
-                              size: 20,
-                            ),
-                            SizedBox(
-                              width: width / 96,
-                            ),
-                            Text(
-                              "12",
-                              style: dmsregular.copyWith(
-                                  fontSize: 10, color: Jobstopcolor.grey),
-                            ),
-                            SizedBox(
-                              width: width / 16,
-                            ),
-                            Image.asset(
-                              JobstopPngImg.message,
-                              color: Jobstopcolor.grey,
-                              height: height / 46,
-                            ),
-                            SizedBox(
-                              width: width / 96,
-                            ),
-                            Text(
-                              "10",
-                              style: dmsregular.copyWith(
-                                  fontSize: 10, color: Jobstopcolor.grey),
-                            ),
-                            SizedBox(
-                              width: width / 2.5,
-                            ),
-                            Image.asset(
-                              JobstopPngImg.union,
-                              color: Jobstopcolor.grey,
-                              height: height / 46,
-                            ),
-                            SizedBox(
-                              width: width / 96,
-                            ),
-                            Text(
-                              "2",
-                              style: dmsregular.copyWith(
-                                  fontSize: 10, color: Jobstopcolor.grey),
-                            ),
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
+                  );
+                },
+              )
+            ] else ...[
+              GridView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: connectionimg.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 15,
+                  crossAxisSpacing: 15,
+                  childAspectRatio: 2 / 2.2,
                 ),
-              ),
-              SizedBox(
-                height: height / 26,
-              ),
-              SizedBox(
-                height: height / 20,
-                width: width / 1,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  shrinkWrap: true,
-                  itemCount: list.length,
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                      highlightColor: Jobstopcolor.transparent,
-                      splashColor: Jobstopcolor.transparent,
-                      onTap: () {
-                        setState(() {
-                          selected = index;
-                        });
-                      },
-                      child: Container(
-                        width: width / 2.25,
-                        margin: EdgeInsets.only(right: width / 36),
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: selected == index
-                                ? Jobstopcolor.primarycolor
-                                : Jobstopcolor.lightprimary),
-                        child: Center(
-                            child: Text(
-                          list[index],
-                          style: selected == index
-                              ? dmsbold.copyWith(
-                                  fontSize: 14, color: Jobstopcolor.white)
-                              : dmsbold.copyWith(
-                                  fontSize: 14,
-                                  color: Jobstopcolor.primarycolor),
-                        )),
-                      ),
-                    );
-                  },
-                ),
-              ),
-              SizedBox(
-                height: height / 26,
-              ),
-              if (selected == 0) ...[
-                ListView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: 1,
-                  itemBuilder: (context, index) {
-                    return Container(
-                      margin: EdgeInsets.only(bottom: height / 36),
-                      height: height / 3.2,
+                itemBuilder: (context, index) {
+                  return InkWell(
+                    onTap: () {
+                      Navigator.push(context, MaterialPageRoute(
+                        builder: (context) {
+                          return const JobstopAbouts();
+                        },
+                      ));
+                    },
+                    child: Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                           color: Jobstopcolor.white,
                           boxShadow: const [
-                            BoxShadow(blurRadius: 5, color: Jobstopcolor.shedo)
+                            BoxShadow(
+                              blurRadius: 5,
+                              color: Jobstopcolor.greyyy,
+                            )
                           ]),
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.end,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
+                          Image.asset(
+                            connectionimg[index].toString(),
+                            height: height / 16,
+                          ),
                           SizedBox(
-                            height: height / 4.1,
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: width / 26,
-                                  vertical: height / 66),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    children: [
-                                      CircleAvatar(
-                                        radius: 25,
-                                        backgroundImage:
-                                            AssetImage(JobstopPngImg.photo),
-                                      ),
-                                      SizedBox(
-                                        width: width / 46,
-                                      ),
-                                      Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            "Arnold Leonardo",
-                                            style: dmsbold.copyWith(
-                                                fontSize: 12,
-                                                color: Jobstopcolor.black),
-                                          ),
-                                          SizedBox(
-                                            height: height / 150,
-                                          ),
-                                          Row(
-                                            children: [
-                                              Image.asset(
-                                                JobstopPngImg.watch,
-                                                height: height / 56,
-                                              ),
-                                              SizedBox(
-                                                width: width / 46,
-                                              ),
-                                              Text(
-                                                "21 minuts ago",
-                                                style: dmsregular.copyWith(
-                                                    fontSize: 10,
-                                                    color: Jobstopcolor.grey),
-                                              ),
-                                            ],
-                                          )
-                                        ],
-                                      )
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: height / 46,
-                                  ),
-                                  Text(
-                                    "What are the characteristics of a fake job call form?",
-                                    style: dmsbold.copyWith(
-                                        fontSize: 12,
-                                        color: Jobstopcolor.primarycolor),
-                                  ),
-                                  SizedBox(
-                                    height: height / 96,
-                                  ),
-                                  Text(
-                                    "Because I always find fake job calls so I'm confused which job to take can you share your knowledge here? thank you",
-                                    style: dmsregular.copyWith(
-                                        fontSize: 12,
-                                        color: Jobstopcolor.darkgrey),
-                                  ),
-                                ],
-                              ),
-                            ),
+                            height: height / 46,
+                          ),
+                          Text(
+                            connectionname[index].toString(),
+                            style: dmsbold.copyWith(
+                                fontSize: 14, color: Jobstopcolor.primarycolor),
+                          ),
+                          SizedBox(
+                            height: height / 100,
+                          ),
+                          Text(
+                            "1M Followers",
+                            style: dmsregular.copyWith(
+                                fontSize: 12, color: Jobstopcolor.grey),
+                          ),
+                          SizedBox(
+                            height: height / 60,
                           ),
                           Container(
-                            height: height / 15,
-                            decoration: const BoxDecoration(
-                                borderRadius: BorderRadius.only(
-                                    bottomLeft: Radius.circular(20),
-                                    bottomRight: Radius.circular(20)),
-                                color: Jobstopcolor.primary),
-                            child: Padding(
-                              padding:
-                                  EdgeInsets.symmetric(horizontal: width / 15),
-                              child: Row(
-                                children: [
-                                  const Icon(
-                                    Icons.favorite,
-                                    color: Jobstopcolor.red,
-                                    size: 20,
-                                  ),
-                                  SizedBox(
-                                    width: width / 96,
-                                  ),
-                                  Text(
-                                    "12",
-                                    style: dmsregular.copyWith(
-                                        fontSize: 10, color: Jobstopcolor.grey),
-                                  ),
-                                  SizedBox(
-                                    width: width / 16,
-                                  ),
-                                  Image.asset(
-                                    JobstopPngImg.message,
-                                    color: Jobstopcolor.grey,
-                                    height: height / 46,
-                                  ),
-                                  SizedBox(
-                                    width: width / 96,
-                                  ),
-                                  Text(
-                                    "10",
-                                    style: dmsregular.copyWith(
-                                        fontSize: 10, color: Jobstopcolor.grey),
-                                  ),
-                                  SizedBox(
-                                    width: width / 2.5,
-                                  ),
-                                  Image.asset(
-                                    JobstopPngImg.union,
-                                    color: Jobstopcolor.grey,
-                                    height: height / 46,
-                                  ),
-                                  SizedBox(
-                                    width: width / 96,
-                                  ),
-                                  Text(
-                                    "2",
-                                    style: dmsregular.copyWith(
-                                        fontSize: 10, color: Jobstopcolor.grey),
-                                  ),
-                                ],
+                            height: height / 25,
+                            width: width / 3.5,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(50),
+                                border: Border.all(
+                                    color: Jobstopcolor.lightprimary)),
+                            child: Center(
+                              child: Text(
+                                "Follow",
+                                style: dmsregular.copyWith(
+                                    fontSize: 12,
+                                    color: Jobstopcolor.primarycolor),
                               ),
                             ),
                           )
                         ],
                       ),
-                    );
-                  },
-                )
-              ] else ...[
-                GridView.builder(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: connectionimg.length,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 15,
-                    crossAxisSpacing: 15,
-                    childAspectRatio: 2 / 2.2,
+                    ),
+                  );
+                },
+              )
+            ]
+          ],
+        ),
+        paddingBottom: EdgeInsets.symmetric(
+          vertical: context.height / 36,
+          horizontal: context.width / 36,
+        ),
+        bottomScreen: SizedBox(
+          height: height / 20,
+          width: width / 1,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            shrinkWrap: true,
+            itemCount: list.length,
+            itemBuilder: (context, index) {
+              return InkWell(
+                highlightColor: Jobstopcolor.transparent,
+                splashColor: Jobstopcolor.transparent,
+                onTap: () {
+                  setState(() {
+                    selected = index;
+                  });
+                },
+                child: Container(
+                  width: width / 2.25,
+                  margin: EdgeInsets.only(right: width / 36),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(5),
+                    color: selected == index
+                        ? Jobstopcolor.primarycolor
+                        : Jobstopcolor.lightprimary,
                   ),
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                      onTap: () {
-                        Navigator.push(context, MaterialPageRoute(
-                          builder: (context) {
-                            return const JobstopAbouts();
-                          },
-                        ));
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: Jobstopcolor.white,
-                            boxShadow: const [
-                              BoxShadow(
-                                blurRadius: 5,
-                                color: Jobstopcolor.greyyy,
-                              )
-                            ]),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Image.asset(
-                              connectionimg[index].toString(),
-                              height: height / 16,
-                            ),
-                            SizedBox(
-                              height: height / 46,
-                            ),
-                            Text(
-                              connectionname[index].toString(),
-                              style: dmsbold.copyWith(
-                                  fontSize: 14,
-                                  color: Jobstopcolor.primarycolor),
-                            ),
-                            SizedBox(
-                              height: height / 100,
-                            ),
-                            Text(
-                              "1M Followers",
-                              style: dmsregular.copyWith(
-                                  fontSize: 12, color: Jobstopcolor.grey),
-                            ),
-                            SizedBox(
-                              height: height / 60,
-                            ),
-                            Container(
-                              height: height / 25,
-                              width: width / 3.5,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(50),
-                                  border: Border.all(
-                                      color: Jobstopcolor.lightprimary)),
-                              child: Center(
-                                child: Text(
-                                  "Follow",
-                                  style: dmsregular.copyWith(
-                                      fontSize: 12,
-                                      color: Jobstopcolor.primarycolor),
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                )
-              ]
-            ],
+                  child: Center(
+                    child: Text(
+                      list[index],
+                      style: selected == index
+                          ? dmsbold.copyWith(
+                              fontSize: 14, color: Jobstopcolor.white)
+                          : dmsbold.copyWith(
+                              fontSize: 14, color: Jobstopcolor.primarycolor),
+                    ),
+                  ),
+                ),
+              );
+            },
           ),
         ),
       ),

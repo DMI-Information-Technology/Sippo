@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
+import 'package:jobspot/sippo_custom_widget/widgets.dart';
 
 enum Gender {
   Male,
@@ -7,22 +9,31 @@ enum Gender {
 }
 
 class GenderPickerDialog extends StatelessWidget {
-  void _onGenderSelected(BuildContext context, Gender gender) {
-    Navigator.of(context).pop(gender);
-  }
+  const GenderPickerDialog({
+    super.key,
+    this.genderValue,
+    required this.onSelectedGender,
+  });
+
+  final void Function(Gender? value) onSelectedGender;
+  final Gender? genderValue;
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     double height = size.height;
     return AlertDialog(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(
+          context.width / 24,
+        ),
+      ),
       title: Text('Select Gender'),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           ListTile(
             title: Text('Male'),
-            onTap: () => _onGenderSelected(context, Gender.Male),
             leading: Image.asset(
               JobstopPngImg.maleIcon,
               height: height / 36,
@@ -30,10 +41,14 @@ class GenderPickerDialog extends StatelessWidget {
               color: Colors.blue,
               colorBlendMode: BlendMode.srcIn,
             ),
+            trailing: Radio(
+              value: Gender.Male,
+              groupValue: genderValue,
+              onChanged: (value) => onSelectedGender(value),
+            ),
           ),
           ListTile(
             title: Text('Female'),
-            onTap: () => _onGenderSelected(context, Gender.Female),
             leading: Image.asset(
               JobstopPngImg.femaleIcon,
               height: height / 34,
@@ -41,9 +56,25 @@ class GenderPickerDialog extends StatelessWidget {
               color: Colors.pinkAccent,
               colorBlendMode: BlendMode.srcIn,
             ),
+            trailing: Radio(
+              value: Gender.Female,
+              groupValue: genderValue,
+              onChanged: (value) => onSelectedGender(value),
+            ),
           ),
         ],
       ),
+      actionsAlignment: MainAxisAlignment.center,
+      actions: [
+        SizedBox(
+          width: context.width / 4,
+          height: context.height / 21,
+          child: CustomButton(
+            onTappeed: () => Get.back(),
+            text: "Done",
+          ),
+        )
+      ],
     );
   }
 }

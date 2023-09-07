@@ -1,7 +1,8 @@
-class States<T> {
+class States {
   final bool isLoading;
   final bool isSuccess;
   final bool isError;
+  final bool isWarning;
   final String? message;
   final String? error;
 
@@ -9,6 +10,7 @@ class States<T> {
     this.isLoading = false,
     this.isSuccess = false,
     this.isError = false,
+    this.isWarning = false,
     this.message,
     this.error,
   });
@@ -17,14 +19,15 @@ class States<T> {
     bool? isLoading,
     bool? isSuccess,
     bool? isError,
+    bool? isWarning,
     String? message,
     String? error,
-    T? data,
   }) {
     return States(
       isLoading: isLoading ?? this.isLoading,
       isSuccess: isSuccess ?? this.isSuccess,
       isError: isError ?? this.isError,
+      isWarning: isWarning ?? this.isWarning,
       message: message ?? this.message,
       error: error ?? this.error,
     );

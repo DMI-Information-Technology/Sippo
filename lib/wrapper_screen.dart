@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/global_storage.dart';
@@ -26,10 +27,10 @@ class _WrapperScreenState extends State<WrapperScreen>
   void initState() {
     super.initState();
     _animationController = AnimationController(
-      duration: const Duration(seconds: 2),
+      duration: const Duration(seconds: 1),
       vsync: this,
     );
-    _timer = Timer.periodic(Duration(seconds: 2), (Timer timer) {
+    _timer = Timer.periodic(Duration(seconds: 1), (Timer timer) {
       _isRotating = !_isRotating;
       // });
       if (_isRotating) {
@@ -41,6 +42,11 @@ class _WrapperScreenState extends State<WrapperScreen>
     Future.delayed(
       Duration(seconds: 2),
       () {
+        if (kIsWeb) {
+          Get.offAllNamed(SippoRoutes.appusingpage);
+          return;
+        }
+
         if (GlobalStorage.isLogged) {
           dashboardScreens();
         } else {

@@ -2,14 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
-import 'package:jobspot/JobGlobalclass/jobstopprefname.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 
 import '../../../JopController/ProfileController/edit_add_skills_controller.dart';
+import '../../../sippo_custom_widget/ConditionalWidget.dart';
 import '../../../sippo_custom_widget/SearchDelegteImpl.dart';
 import '../../../sippo_custom_widget/confirmation_bottom_sheet.dart';
 import '../../../sippo_custom_widget/container_bottom_sheet_widget.dart';
+import '../../../sippo_custom_widget/success_message_widget.dart';
 import '../../../sippo_themes/themecontroller.dart';
 
 class JobSkillsAddEdit extends StatefulWidget {
@@ -26,15 +27,15 @@ class _JobJobSkillsAddEditState extends State<JobSkillsAddEdit> {
 
   @override
   void initState() {
-    skillsList = Get.arguments[skillsListArg] ?? [];
+    // skillsList = Get.arguments[skillsListArg] ?? [];
     super.initState();
   }
 
-  EditAddSkillsController editAddSkillsController =
-      Get.put(EditAddSkillsController());
+  final _controller = EditAddSkillsController.instance;
 
   @override
   Widget build(BuildContext context) {
+    final skillsState = _controller.skillsState;
     Size size = MediaQuery.of(context).size;
     double height = size.height;
     double width = size.width;
@@ -48,41 +49,45 @@ class _JobJobSkillsAddEditState extends State<JobSkillsAddEdit> {
           children: [
             Obx(
               () => Text(
-                !editAddSkillsController.isChangeSkills
-                    ? "Skills(${skillsList?.length ?? 0})"
+                !skillsState.isChangeSkills
+                    ? "Skills(${skillsState.skillsList.length})"
                     : "Add skills",
                 style: dmsbold.copyWith(
                     fontSize: 16, color: Jobstopcolor.primarycolor),
               ),
             ),
             SizedBox(height: height / 36),
-            Obx(
-              () => editAddSkillsController.isChangeSkills
-                  ? InputBorderedField(
-                      readOnly: true,
-                      height: height / 13.5,
-                      hintText: "search skills",
-                      fontSize: height / 68,
-                      prefixIcon: Icon(Icons.search),
-                      onTap: () {
-                        showSearch(
-                          context: context,
-                          delegate: MySearchDelegate(
-                            hintText: "search skills",
-                            textFieldStyle: TextStyle(fontSize: height / 58),
-                            pageTitle: "Skills",
-                            suggestions: [],
-                            onSelectedSearch: (value) {},
-                            buildResultSearch: (context, i, value) {
-                              return ListTile(title: Text(value));
-                            },
-                          ),
-                        );
-                      },
-                    )
-                  : const SizedBox.shrink(),
-            ),
+            Obx(() => ConditionalWidget(
+                  skillsState.isChangeSkills,
+                  data: skillsState.suggestionsSkills,
+                  guaranteedBuilder: (context, data) => InputBorderedField(
+                    readOnly: true,
+                    height: height / 13.5,
+                    hintText: "search skills",
+                    fontSize: height / 68,
+                    prefixIcon: Icon(Icons.search),
+                    onTap: () {
+                      showSearch(
+                        context: context,
+                        delegate: MySearchDelegate(
+                          hintText: "search skills",
+                          textFieldStyle: TextStyle(fontSize: height / 58),
+                          pageTitle: "Skills",
+                          suggestions: data,
+                          onSelectedSearch: (value) {
+                            _controller.pushSkill(value);
+                          },
+                          buildResultSearch: (context, i, value) {
+                            return ListTile(title: Text(value));
+                          },
+                        ),
+                      );
+                    },
+                  ),
+                )),
             SizedBox(height: height / 36),
+            _buildSuccessMessage(),
+            _buildWarningMessage(),
             _buildSkillsChipsWrapper(context),
           ],
         ),
@@ -93,54 +98,79 @@ class _JobJobSkillsAddEditState extends State<JobSkillsAddEdit> {
   }
 
   SizedBox _buildSkillsChipsWrapper(BuildContext context) {
+    final skillsState = _controller.skillsState;
+
     Size size = MediaQuery.of(context).size;
     // double height = size.height;
     double width = size.width;
     return SizedBox(
       width: width,
-      child: Wrap(
-        runSpacing: width / 32,
-        alignment: WrapAlignment.start,
-        spacing: width / 32,
-        children: skillsList != null
-            ? skillsList!
-                .map((e) => Obx(
-                      () => Chip(
-                        padding: EdgeInsets.all(
-                          width / 36,
-                        ),
-                        label: Text(e),
-                        deleteIcon: Icon(Icons.cancel_outlined),
-                        onDeleted: editAddSkillsController.isChangeSkills
-                            ? () {}
-                            : null,
-                      ),
-                    ))
-                .toList()
-            : [],
-      ),
+      child: Obx(() {
+        final skills = skillsState.skillsList;
+
+        return Wrap(
+          runSpacing: width / 32,
+          alignment: WrapAlignment.start,
+          spacing: width / 32,
+          children: [
+            for (var i = 0; i < skills.length; i++)
+              InkWell(
+                onTap: () {
+                  skillsState.selectedChip = i;
+                },
+                child: Chip(
+                  padding: EdgeInsets.all(
+                    width / 36,
+                  ),
+                  label: Text(
+                    skills[i],
+                    style: dmsregular.copyWith(
+                      color:
+                          skillsState.selectedChip == i ? Colors.white : null,
+                    ),
+                  ),
+                  backgroundColor: skillsState.selectedChip == i
+                      ? Jobstopcolor.primarycolor
+                      : null,
+                  deleteIcon: Icon(
+                    Icons.cancel_outlined,
+                    color: skillsState.selectedChip == i ? Colors.white : null,
+                  ),
+                  onDeleted: skillsState.isChangeSkills
+                      ? () => _controller.removeSkill(i)
+                      : null,
+                ),
+              ),
+          ],
+        );
+      }),
     );
   }
 
   Row _buildBottomButtonRow() {
+    final skillsState = _controller.skillsState;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Obx(() => CustomButton(
-              onTappeed: () async {
-                if (editAddSkillsController.isChangeSkills) await _showundo();
-                editAddSkillsController.isChangeSkills =
-                    !editAddSkillsController.isChangeSkills;
-              },
-              text:
-                  editAddSkillsController.isChangeSkills ? "SAVE" : "CHANGE".tr,
-              backgroundColor: Jobstopcolor.primarycolor,
-            )),
+        Obx(
+          () => CustomButton(
+            onTappeed: () async {
+              if (skillsState.isChangeSkills) {
+                await _showSaveChanged();
+              } else {
+                skillsState.isChangeSkills = !skillsState.isChangeSkills;
+              }
+            },
+            text: skillsState.isChangeSkills ? "SAVE" : "CHANGE".tr,
+            backgroundColor: Jobstopcolor.primarycolor,
+          ),
+        ),
       ],
     );
   }
 
-  Future<void> _showundo() async {
+  Future<void> _showSaveChanged() async {
+    final skillsState = _controller.skillsState;
     await Get.bottomSheet(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
@@ -155,34 +185,44 @@ class _JobJobSkillsAddEditState extends State<JobSkillsAddEdit> {
           ConfirmationBottomSheet(
             title: "Are you sure you want to change what you entered?",
             description: "Are you sure you want to change what you entered?",
-            onConfirm: () {},
-            onUndo: () {},
+            onConfirm: () async {
+              Get.back();
+              await _controller.onSaveSubmitted();
+              skillsState.isChangeSkills = !skillsState.isChangeSkills;
+            },
+            onUndo: () {
+              _controller.resetSkillsState();
+              skillsState.isChangeSkills = !skillsState.isChangeSkills;
+              Get.back();
+            },
           )
         ],
       ),
     );
   }
-  //
-  // void _showremove() {
-  //   Get.bottomSheet(
-  //     shape: RoundedRectangleBorder(
-  //       borderRadius: BorderRadius.vertical(
-  //         top: Radius.circular(25),
-  //       ),
-  //     ),
-  //     backgroundColor: Colors.white,
-  //     isScrollControlled: true,
-  //     ContainerBottomSheetWidget(
-  //       notchColor: Jobstopcolor.primarycolor,
-  //       children: [
-  //         ConfirmationBottomSheet(
-  //           title: "Remove Appreciation ?",
-  //           description: "Are you sure you want to change what you entered?",
-  //           onConfirm: () {},
-  //           onUndo: () {},
-  //         )
-  //       ],
-  //     ),
-  //   );
-  // }
+
+  Widget _buildSuccessMessage() {
+    final controller = EditAddSkillsController.instance;
+    return Obx(() => ConditionalWidget(
+          controller.states.isSuccess,
+          data: controller.states,
+          guaranteedBuilder: (context, data) => CardNotifyMessage.success(
+            state: data,
+            onCancelTap: () => controller.successState(false),
+          ),
+        ));
+  }
+
+  Widget _buildWarningMessage() {
+    final controller = EditAddSkillsController.instance;
+
+    return Obx(() => ConditionalWidget(
+          controller.states.isWarning,
+          data: controller.states,
+          guaranteedBuilder: (context, data) => CardNotifyMessage.warning(
+            state: data,
+            onCancelTap: () => controller.warningState(false),
+          ),
+        ));
+  }
 }

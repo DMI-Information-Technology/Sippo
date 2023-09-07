@@ -71,28 +71,10 @@ class _JobstopFilterState extends State<JobstopFilter> {
             SizedBox(height: height / 46),
             TitleLabelWidget("Salary".tr),
             SizedBox(height: height / 46),
-            RangeSlider(
-              values: _currentRangeValues,
-              max: 100,
-              activeColor: Jobstopcolor.primarycolor,
-              labels: RangeLabels(
-                _currentRangeValues.start.roundToDouble().toString(),
-                _currentRangeValues.end.round().toString(),
-              ),
-              onChanged: (RangeValues values) {
-                setState(() {
-                  _currentRangeValues = values;
-                });
-              },
-            ),
+            _buildRangeSalarySlider(),
             const Divider(color: Jobstopcolor.grey),
-            SizedBox(
-              height: height / 46,
-            ),
-            Text(
-              "Job_Type".tr,
-              style: dmsbold.copyWith(fontSize: 14),
-            ),
+            SizedBox(height: height / 46),
+            TitleLabelWidget("Job_Type".tr),
             SizedBox(height: height / 36),
             // chips
           ],
@@ -105,6 +87,23 @@ class _JobstopFilterState extends State<JobstopFilter> {
           text: "Apply now",
         ),
       ),
+    );
+  }
+
+  RangeSlider _buildRangeSalarySlider() {
+    return RangeSlider(
+      values: _currentRangeValues,
+      max: 100,
+      activeColor: Jobstopcolor.primarycolor,
+      labels: RangeLabels(
+        _currentRangeValues.start.roundToDouble().toString(),
+        _currentRangeValues.end.round().toString(),
+      ),
+      onChanged: (RangeValues values) {
+        setState(() {
+          _currentRangeValues = values;
+        });
+      },
     );
   }
 

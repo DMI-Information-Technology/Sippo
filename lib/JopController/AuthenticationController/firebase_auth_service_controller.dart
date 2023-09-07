@@ -1,7 +1,8 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
-  import 'package:flutter/foundation.dart';
+import 'package:firebase_auth_platform_interface/firebase_auth_platform_interface.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
@@ -41,6 +42,15 @@ class FirebaseAuthServiceController extends GetxController {
     _states.value = _states.value.copyWith(isError: value);
   }
 
+  Future<void> _webPhoneAuth(String? phoneNumber) async {
+    if (phoneNumber != null)
+      confirmationResult = await _firebaseAuth.signInWithPhoneNumber(
+        phoneNumber,
+      );
+    else
+      print("phone number is null");
+  }
+
   Future<bool?> phoneAuthentication(
     String? phoneNumber, {
     int? secondDuration,
@@ -48,11 +58,7 @@ class FirebaseAuthServiceController extends GetxController {
     if (_netController.isConnectionLostWithDialog()) return false;
     _states.value = _states.value.copyWith(isLoading: true);
     if (kIsWeb) {
-      if (phoneNumber != null)
-        confirmationResult =
-            await _firebaseAuth.signInWithPhoneNumber(phoneNumber);
-      else
-        print("phone number is null");
+      await _webPhoneAuth(phoneNumber);
     } else {
       await _firebaseAuth.verifyPhoneNumber(
         timeout: Duration(seconds: secondDuration ?? 30),
@@ -77,7 +83,7 @@ class FirebaseAuthServiceController extends GetxController {
             isError: false,
           );
           Get.snackbar(
-            "Sent OTP",
+            "Send OTP",
             "the code is sent",
             backgroundColor: Jobstopcolor.lightprimary2,
             colorText: Colors.black87,
@@ -109,7 +115,7 @@ class FirebaseAuthServiceController extends GetxController {
           "the verification id is not receive it or sms otp code is not found.",
         );
       }
-      UserCredential? credential;
+      late final UserCredential? credential;
       if (kIsWeb) {
         credential =
             await confirmationResult?.confirm(smsCode.toString().trim());
