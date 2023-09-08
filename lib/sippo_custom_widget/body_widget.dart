@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:jobspot/sippo_custom_widget/error_messages_dialog_snackbar/network_connnection_lost_widget.dart';
 
 class BodyWidget extends StatelessWidget {
   const BodyWidget({
@@ -13,6 +12,7 @@ class BodyWidget extends StatelessWidget {
     this.isScrollable = false,
     this.isTopScrollable = false,
     this.isConnectionLost = false,
+    this.connectionStatusBar,
   });
 
   final bool isConnectionLost;
@@ -24,12 +24,8 @@ class BodyWidget extends StatelessWidget {
   final EdgeInsets? paddingBottom;
   final bool isScrollable;
   final bool isTopScrollable;
-  static const connLostWidget = const Positioned(
-    top: 0,
-    child: SafeArea(
-      child: NetworkStatusNonWidget(),
-    ),
-  );
+  final Widget? connectionStatusBar;
+  // static const connLostWidget = const NetworkStatusNonWidget();
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +78,7 @@ class BodyWidget extends StatelessWidget {
                     )
                 ],
               ),
-              if (isConnectionLost) connLostWidget
+              if (connectionStatusBar != null) connectionStatusBar!,
             ],
           )
         : const Center(

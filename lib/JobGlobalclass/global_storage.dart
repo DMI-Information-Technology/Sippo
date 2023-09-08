@@ -1,4 +1,3 @@
-import 'dart:convert';
 
 import 'package:get_storage/get_storage.dart';
 import 'package:jobspot/utils/app_use.dart';
@@ -11,9 +10,9 @@ class GlobalStorage {
   static final box = GetStorage();
   static const first_app_lunch_time = "firstapplunchtime";
   static bool _isLogged = false;
-  static Map<String, dynamic> _userJson = {};
+  // static Map<String, dynamic> _userJson = {};
 
-  static Map<String, dynamic> get userJson => _userJson;
+  // static Map<String, dynamic> get userJson => _userJson;
 
   static bool get isLogged => _isLogged;
   static String? _tokenLogged = "";
@@ -26,30 +25,30 @@ class GlobalStorage {
   static Future<void> removeSavedToken() async {
     await box.remove(global.tokenKey);
     await box.remove(global.loggedUserKey);
-    _userJson = {};
+    // _userJson = {};
     _tokenLogged = "";
     _isLogged = false;
   }
 
-  static Future<void> saveLoggedUser(Map<String, dynamic>? userJson) async {
-    print("saveLoggedUser: the user is $userJson");
-    if (userJson == null) {
-      print("saveLoggedUser: the user is not saved.");
-      return;
-    }
-    final encodedUser = jsonEncode(userJson);
-    await box.write(global.loggedUserKey, encodedUser);
-    _userJson = userJson;
-  }
+  // static Future<void> saveLoggedUser(Map<String, dynamic>? userJson) async {
+  //   print("saveLoggedUser: the user is $userJson");
+  //   if (userJson == null) {
+  //     print("saveLoggedUser: the user is not saved.");
+  //     return;
+  //   }
+  //   final encodedUser = jsonEncode(userJson);
+  //   await box.write(global.loggedUserKey, encodedUser);
+  //   _userJson = userJson;
+  // }
 
-  static Future<void> checkLoggedUser() async {
-    final String? encodedUser = await box.read(global.loggedUserKey);
-    if (encodedUser == null) {
-      print("saveLoggedUser: the user is not found.");
-      return;
-    }
-    _userJson = jsonDecode(encodedUser) as Map<String, dynamic>;
-  }
+  // static Future<void> checkLoggedUser() async {
+  //   final String? encodedUser = await box.read(global.loggedUserKey);
+  //   if (encodedUser == null) {
+  //     print("saveLoggedUser: the user is not found.");
+  //     return;
+  //   }
+  //   // _userJson = jsonDecode(encodedUser) as Map<String, dynamic>;
+  // }
 
   static Future<void> saveToken(String? token, int? use) async {
     await box.write(global.tokenKey, token);
@@ -61,9 +60,9 @@ class GlobalStorage {
   static Future<void> checkSavedToken() async {
     final String? token = await box.read(global.tokenKey);
     final int? use = await box.read(global.app_logged_use);
-    if (_setGlobalVariable(token, use)) {
-      await checkLoggedUser();
-    }
+    _setGlobalVariable(token, use);
+      // await checkLoggedUser();
+
   }
 
   static bool _setGlobalVariable(String? token, int? use) {

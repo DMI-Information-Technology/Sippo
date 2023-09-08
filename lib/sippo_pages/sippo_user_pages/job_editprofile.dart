@@ -71,11 +71,10 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
                       onCancelTap: () => _controller.warningState(false),
                     ),
                   )),
-              SizedBox(height: context.fromHeight(CustomStyle.s)),
               InputBorderedField(
                 hintText: "enter your name",
                 gController: profileEditState.name,
-                height: context.fromHeight(CustomStyle.inputBorderedSize),
+                // height: context.fromHeight(CustomStyle.inputBorderedSize),
                 fontSize: FontSize.label(context),
                 suffixIcon: Icon(
                   Icons.person_outline_outlined,
@@ -167,7 +166,7 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
               _controller.profileImagePath.isNotEmpty,
               data: _controller.profileImagePath,
               guaranteedBuilder: (_, data) => CircularImage.file(
-                File(data),
+                data != null ? File(data) : null,
                 size: context.height / 6,
               ),
               avoidBuilder: (_, __) => CircularImage(

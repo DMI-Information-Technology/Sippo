@@ -35,22 +35,20 @@ class ContainerBottomSheetWidget extends StatelessWidget {
   final Widget Function(BuildContext, void Function(void Function()))? builder;
 
   Widget _buildWidget() {
-    switch (conType) {
-      case ContainerType.statefulBuilder:
-        return builder != null
-            ? StatefulBuilder(
-                builder: (context, setState) => builder!(context, setState),
-              )
-            : const SizedBox.shrink();
-      case ContainerType.v_list:
-        return children != null
-            ? Column(children: children!)
-            : const SizedBox.shrink();
+    return switch (conType) {
+      ContainerType.statefulBuilder => builder != null
+          ? StatefulBuilder(
+              builder: (context, setState) => builder!(context, setState),
+            )
+          : const SizedBox.shrink(),
+      ContainerType.v_list => children != null
+          ? Column(children: children!)
+          : const SizedBox.shrink(),
       // case ContainerType.h_list:
       //   return children != null
       //       ? Row(children: children!)
       //       : const SizedBox.shrink();
-    }
+    };
   }
 
   @override

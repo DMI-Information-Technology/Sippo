@@ -117,7 +117,7 @@ class CardNotifyMessage extends StatelessWidget {
                             state?.message ?? message,
                             style: dmsregular.copyWith(
                               color: Colors.black87,
-                              fontSize: FontSize.paragraph(context),
+                              fontSize: FontSize.paragraph2(context),
                               overflow: TextOverflow.fade,
                             ),
                           ),

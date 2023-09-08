@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
+import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
+import 'package:jobspot/sippo_custom_widget/error_messages_dialog_snackbar/network_connnection_lost_widget.dart';
 import 'package:jobspot/sippo_custom_widget/loading_view_widgets/loading_scaffold.dart';
 
 import '../../JobGlobalclass/jobstopcolor.dart';
@@ -24,38 +26,43 @@ class SippoCompanyIdentityVerification extends StatelessWidget {
       controller: controller.loadingController,
       appBar: _buildAppBar(context),
       // appBar: null,
-      body: Obx(
-        () => BodyWidget(
-          isConnectionLost: !controller.isNetworkConnect,
-          isScrollable: true,
-          paddingContent: EdgeInsets.symmetric(horizontal: width / 32),
-          child: Column(
-            children: [
-              if (!controller.isNetworkConnect)
-                SizedBox(
-                  height: context.fromHeight(CustomStyle.connectionLostHeight),
-                ),
-              Image.asset(
-                JobstopPngImg.passwordimg,
-                height: height / 3,
-              ),
-              SizedBox(height: height / 18),
-              _buildPhoneResetPasswordCard(),
-              SizedBox(height: height / 18),
-              InputField(
-                hintText: "Secret_code_hint_text".tr,
-                icon: const Icon(Icons.lock_outline),
-                onChangedText: (value) => controller.otpCode = value.trim(),
-              ),
-              _buildResendOtpCodeButton(),
-              SizedBox(height: height / 18),
-            ],
-          ),
-          paddingBottom: EdgeInsets.all(width / 32),
-          bottomScreen: CustomButton(
-            onTappeed: () async => await controller.onSubmitSend(),
-            text: "send".tr,
-          ),
+      body: BodyWidget(
+        connectionStatusBar: Obx(() => ConditionalWidget(
+              !controller.isNetworkConnect,
+              guaranteedBuilder: (_, __) => NetworkStatusNonWidget(),
+            )),
+        isScrollable: true,
+        paddingContent: EdgeInsets.symmetric(horizontal: width / 32),
+        child: Column(
+          children: [
+            Obx(() => ConditionalWidget(
+                  !controller.isNetworkConnect,
+                  guaranteedBuilder: (context, __) => SizedBox(
+                    height: context.fromHeight(
+                      CustomStyle.connectionLostHeight,
+                    ),
+                  ),
+                )),
+            Image.asset(
+              JobstopPngImg.passwordimg,
+              height: height / 3,
+            ),
+            SizedBox(height: height / 18),
+            _buildPhoneResetPasswordCard(),
+            SizedBox(height: height / 18),
+            InputField(
+              hintText: "Secret_code_hint_text".tr,
+              icon: const Icon(Icons.lock_outline),
+              onChangedText: (value) => controller.otpCode = value.trim(),
+            ),
+            _buildResendOtpCodeButton(),
+            SizedBox(height: height / 18),
+          ],
+        ),
+        paddingBottom: EdgeInsets.all(width / 32),
+        bottomScreen: CustomButton(
+          onTappeed: () async => await controller.onSubmitSend(),
+          text: "send".tr,
         ),
       ),
     );

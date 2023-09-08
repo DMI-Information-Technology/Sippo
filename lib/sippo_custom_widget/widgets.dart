@@ -135,13 +135,12 @@ class InputField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    double height = size.height;
-    // double width = size.width;
     return TextFormField(
       controller: controller,
       style: dmsregular.copyWith(
-          fontSize: height / 59, color: Jobstopcolor.primarycolor),
+        fontSize: context.height / 59,
+        color: Jobstopcolor.primarycolor,
+      ),
       cursorColor: Jobstopcolor.grey,
       initialValue: initialValue,
       decoration: InputDecoration(
@@ -149,7 +148,7 @@ class InputField extends StatelessWidget {
         suffixIcon: suffixIcon,
         hintText: hintText,
         hintStyle: dmsregular.copyWith(
-          fontSize: height / 59,
+          fontSize: context.height / 59,
           color: Jobstopcolor.grey,
         ),
         border: UnderlineInputBorder(

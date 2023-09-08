@@ -129,7 +129,7 @@ class AuthController extends GetxController {
         print(
           "from checkAuthResponseState data on success: ${response?.data?.token}",
         );
-        await GlobalStorage.saveLoggedUser(response?.data?.model?.toJson());
+        // await GlobalStorage.saveLoggedUser(response?.data?.model?.toJson());
         successState = true;
         break;
       case RegisterTypeResponse.auth_error:

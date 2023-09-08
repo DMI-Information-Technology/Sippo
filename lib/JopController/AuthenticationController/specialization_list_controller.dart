@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
-import 'package:jobspot/JopController/AuthenticationController/sippo_signup_company_controller.dart';
 import 'package:jobspot/JopController/ConnectivityController/internet_connection_controller.dart';
 import 'package:jobspot/utils/states.dart';
 
@@ -10,6 +9,12 @@ import '../../sippo_data/specializations/specializations_repo.dart';
 import '../../sippo_excepstions/specialization_exception/specialization_exception.dart';
 
 class SpecializationCompanyController extends GetxController {
+  final _netController = InternetConnectionController.instance;
+
+  bool get isNetworkConnected => _netController.isConnected;
+
+  bool get isConnectionLostWithDialog =>
+      _netController.isConnectionLostWithDialog();
   var specializations = <SpecializationModel>[].obs;
   final _states = States().obs;
 
@@ -25,32 +30,60 @@ class SpecializationCompanyController extends GetxController {
     _states.value = _states.value.copyWith(isSuccess: value);
   }
 
-  void errorStates(bool value, String? message) {
+  void errorStates(bool value, [String? message]) {
     _states.value = _states.value.copyWith(
       isError: value,
       message: message.toString(),
     );
   }
 
-  void _startListeningToConnection() {
-    print("hello 1");
-    _connectionSubscription = InternetConnectionController
-        .instance.isConnectedStream
-        .listen((isConnected) async {
-      if (isConnected) {
-        print("fetchSpecializations is target");
-        await fetchSpecializations();
-      }
-    });
+  void _startListeningToConnection() async {
+    _connectionSubscription = _netController.isConnectedStream.listen(
+      (isConnected) async {
+        if (isConnected) {
+          await fetchSpecializations();
+        }
+      },
+    );
+    await fetchSpecializations();
   }
+
+  final _companySpecializations = [
+    SpecializationModel(id: 12, name: 'Item 2'),
+    SpecializationModel(id: 15, name: 'Item 3'),
+    SpecializationModel(id: 13, name: 'Item 4'),
+    SpecializationModel(id: 14, name: 'Item 5'),
+  ].obs;
+
+  void set companySpecializations(List<SpecializationModel> value) {
+    _companySpecializations.assignAll(value);
+  }
+
+  final _selectedSpecialIndices = <int>[].obs;
+
+  List<String> get companySpecializationsName =>
+      _companySpecializations.isNotEmpty
+          ? _companySpecializations.toList().map((e) => e.name).toList()
+          : [];
+
+  List<int> get selectedIdSpecializations => _companySpecializations.isNotEmpty
+      ? selectedIndices.map((e) => _companySpecializations[e].id).toList()
+      : [];
+
+  List<int> get selectedIndices => _selectedSpecialIndices.toList();
+
+  void toggleSpecial(int index) {
+    if (_selectedSpecialIndices.contains(index))
+      _selectedSpecialIndices.remove(index);
+    else
+      _selectedSpecialIndices.add(index);
+  }
+
+  bool isSpecialSelected(int index) => _selectedSpecialIndices.contains(index);
 
   @override
   void onInit() {
-    (() async {
-      await fetchSpecializations();
-      _startListeningToConnection();
-    })();
-
+    _startListeningToConnection();
     super.onInit();
   }
 
@@ -58,12 +91,13 @@ class SpecializationCompanyController extends GetxController {
     try {
       loadingStates = true;
       successStates = false;
+      errorStates(false);
       final List<SpecializationModel>? fetchedSpecializations =
           await SpecializationRepo.fetchSpecializations();
       print(fetchedSpecializations);
+
       if (fetchedSpecializations != null && fetchedSpecializations.isNotEmpty) {
-        SignUpCompanyController.instance.companySpecializations =
-            fetchedSpecializations;
+        _companySpecializations.value = fetchedSpecializations;
         successStates = true;
       } else {
         throw FailedFetchingSpecializationException();

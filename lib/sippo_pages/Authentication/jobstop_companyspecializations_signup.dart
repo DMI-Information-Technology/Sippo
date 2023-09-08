@@ -6,8 +6,8 @@ import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/JopController/AuthenticationController/specialization_list_controller.dart';
-import 'package:jobspot/JopController/ConnectivityController/internet_connection_controller.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
+
 import '../../JobGlobalclass/routes.dart';
 import '../../JopController/AuthenticationController/sippo_signup_company_controller.dart';
 
@@ -22,8 +22,7 @@ class CompanySignUpSpecializations extends StatefulWidget {
 class _CompanySignUpSpecializationsState
     extends State<CompanySignUpSpecializations> {
   final _signUpCompController = SignUpCompanyController.instance;
-  final _specialController = Get.put(SpecializationCompanyController());
-  final _netController = InternetConnectionController.instance;
+  final _controller = Get.put(SpecializationCompanyController());
 
   @override
   Widget build(BuildContext context) {
@@ -63,26 +62,24 @@ class _CompanySignUpSpecializationsState
                     SizedBox(height: height / 50),
                     Obx(
                       () {
-                        if (!_netController.isConnected) {
+                        if (!_controller.isNetworkConnected) {
                           return SizedBox.shrink();
                         }
-                        final state = _specialController.states;
+                        final state = _controller.states;
                         if (state.isError)
                           return _buildErrorSpecialMessage(
                             state.message.toString(),
                           );
                         if (state.isSuccess)
                           return ListView.separated(
-                            itemCount: _signUpCompController
-                                .companySpecializationsName.length,
+                            itemCount:
+                                _controller.companySpecializationsName.length,
                             itemBuilder: (context, index) {
                               return Obx(
                                 () => _buildCheckboxListTile(
                                   index,
-                                  _signUpCompController
-                                      .companySpecializationsName[index],
-                                  _signUpCompController
-                                      .isSpecialSelected(index),
+                                  _controller.companySpecializationsName[index],
+                                  _controller.isSpecialSelected(index),
                                 ),
                               );
                             },
@@ -106,7 +103,7 @@ class _CompanySignUpSpecializationsState
               padding: EdgeInsets.symmetric(vertical: height / 50),
               child: CustomButton(
                 onTappeed: () {
-                  if (!_netController.isConnectionLostWithDialog())
+                  if (!_controller.isConnectionLostWithDialog)
                     _onConfirmButtonClicked();
                 },
                 text: "confirm".tr,
@@ -161,7 +158,7 @@ class _CompanySignUpSpecializationsState
         ),
         value: isSelected,
         onChanged: (value) {
-          _signUpCompController.toggleSpecial(index);
+          _controller.toggleSpecial(index);
         },
         activeColor: Jobstopcolor.primarycolor,
       ),
@@ -169,8 +166,8 @@ class _CompanySignUpSpecializationsState
   }
 
   void _onConfirmButtonClicked() {
-    if (_signUpCompController.selectedIndices.length == 0 ||
-        _signUpCompController.selectedIndices.length > 3) {
+    if (_controller.selectedIndices.length == 0 ||
+        _controller.selectedIndices.length > 3) {
       Get.dialog(
         CustomAlertDialog(
           imageAsset: JobstopPngImg.policyaccepted,
@@ -184,6 +181,8 @@ class _CompanySignUpSpecializationsState
       );
       return;
     }
+    _signUpCompController.selectedIdSpecializations =
+        _controller.selectedIdSpecializations;
     print(_signUpCompController.companyForm);
     Get.toNamed(SippoRoutes.locationselector);
   }

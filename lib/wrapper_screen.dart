@@ -40,13 +40,12 @@ class _WrapperScreenState extends State<WrapperScreen>
       }
     });
     Future.delayed(
-      Duration(seconds: 2),
+      Duration(seconds: 5),
       () {
         if (kIsWeb) {
           Get.offAllNamed(SippoRoutes.appusingpage);
           return;
         }
-
         if (GlobalStorage.isLogged) {
           dashboardScreens();
         } else {

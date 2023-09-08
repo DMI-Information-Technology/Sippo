@@ -10,28 +10,45 @@ class NetworkStatusNonWidget extends StatelessWidget {
   const NetworkStatusNonWidget({
     super.key,
     this.color = Colors.black87,
+    this.top,
+    this.bottom,
+    this.left,
+    this.right,
   });
 
+  final double? top;
+  final double? bottom;
+  final double? left;
+  final double? right;
   final Color color;
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     double width = size.width;
-    return Container(
-      alignment: Alignment.center,
-      width: width,
-      height: context.fromHeight(CustomStyle.connectionLostHeight),
-      decoration: BoxDecoration(
-        color: color,
-      ),
-      child: AutoSizeText(
-        'network connection is lost',
-        style: dmsregular.copyWith(
-          color: Colors.red,
-          fontSize: FontSize.label3(context),
+
+    return Positioned(
+      top: top ?? 0,
+      bottom: bottom,
+      left: left,
+      right: right,
+      child: SafeArea(
+        child: Container(
+          alignment: Alignment.center,
+          width: width,
+          height: context.fromHeight(CustomStyle.connectionLostHeight),
+          decoration: BoxDecoration(
+            color: color,
+          ),
+          child: AutoSizeText(
+            'network connection is lost',
+            style: dmsregular.copyWith(
+              color: Colors.red,
+              fontSize: FontSize.label3(context),
+            ),
+            textAlign: TextAlign.center,
+          ),
         ),
-        textAlign: TextAlign.center,
       ),
     );
   }

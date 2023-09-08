@@ -11,28 +11,32 @@ class RoundedBorderRadiusCardWidget extends StatelessWidget {
     this.margin = EdgeInsets.zero,
     this.color = Colors.white,
     required this.paddingType,
+    this.paddingValue,
   });
 
   final PaddingType paddingType;
   final Color? color;
   final EdgeInsets? margin;
+  final double? paddingValue;
   final Widget child;
 
   EdgeInsetsGeometry _getPaddingType(BuildContext context) {
     switch (paddingType) {
       case PaddingType.vertical:
         return EdgeInsets.symmetric(
-          vertical: context.fromWidth(CustomStyle.roundedCardPadding),
+          vertical:
+              paddingValue ?? context.fromWidth(CustomStyle.roundedCardPadding),
         );
 
       case PaddingType.horizontal:
         return EdgeInsets.symmetric(
-          horizontal: context.fromWidth(CustomStyle.roundedCardPadding),
+          horizontal:
+              paddingValue ?? context.fromWidth(CustomStyle.roundedCardPadding),
         );
 
       case PaddingType.all:
         return EdgeInsets.all(
-          context.fromWidth(CustomStyle.roundedCardPadding),
+          paddingValue ?? context.fromWidth(CustomStyle.roundedCardPadding),
         );
     }
   }
