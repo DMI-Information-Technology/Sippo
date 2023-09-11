@@ -67,8 +67,10 @@ class _MyAppState extends State<MyApp> {
           permanent: true,
         );
         Get.lazyPut<AuthController>(() => AuthController(), fenix: true);
-        Get.lazyPut<HttpClientController>(() => HttpClientController(),
-            fenix: true);
+        Get.lazyPut<HttpClientController>(
+          () => HttpClientController(),
+          fenix: true,
+        );
       }),
       translations: Apptranslation(),
       locale: const Locale('en', 'US'),

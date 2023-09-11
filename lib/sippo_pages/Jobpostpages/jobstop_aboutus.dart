@@ -34,10 +34,11 @@ class _JobstopAboutsState extends State<JobstopAbouts> {
           Padding(
             padding: const EdgeInsets.all(15.0),
             child: InkWell(
-                onTap: () {},
-                child: Image.asset(
-                  JobstopPngImg.dots,
-                )),
+              onTap: () {},
+              child: Image.asset(
+                JobstopPngImg.dots,
+              ),
+            ),
           ),
         ],
       ),

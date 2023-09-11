@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
-import 'package:jobspot/JopController/ProfileController/profile_user_controller.dart';
+import 'package:jobspot/JopController/user_profile_controller/profile_user_controller.dart';
 import 'package:jobspot/utils/states.dart';
 
 import '../../core/Refresh.dart';

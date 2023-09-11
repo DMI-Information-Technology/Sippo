@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JopController/ProfileController/profile_user_controller.dart';
+import 'package:jobspot/JopController/user_profile_controller/profile_user_controller.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/work_experiences_model.dart';
 import 'package:jobspot/sippo_data/profile_user/work_experiences_repo.dart';
 
@@ -26,7 +26,7 @@ class EditAddWorkExperienceController extends GetxController {
   }
 
   final _profileUserController = ProfileUserController.instance;
-  final Rx<WorkExperiencesModel> _workExperience = WorkExperiencesModel().obs;
+  final _workExperience = WorkExperiencesModel().obs;
 
   bool isTextLoading(bool isEmptyValue) {
     return isEmptyValue && states.isLoading;

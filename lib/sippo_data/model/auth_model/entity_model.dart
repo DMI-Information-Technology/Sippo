@@ -6,8 +6,11 @@ abstract class EntityModel {
   final String? phone;
   final String? secondaryPhone;
   final String? email;
+
   String? get locationCity;
+
   AppUsingType get userType;
+
   EntityModel({
     this.id,
     this.name,
@@ -16,8 +19,11 @@ abstract class EntityModel {
     this.email,
   });
 
-  Map<String, dynamic> toJson();
+  bool get isProfileBlank =>
+      (name == null || (name != null && name!.trim().isEmpty)) ||
+      (phone == null || (phone != null && phone!.trim().isEmpty));
 
+  Map<String, dynamic> toJson();
 
 //
 

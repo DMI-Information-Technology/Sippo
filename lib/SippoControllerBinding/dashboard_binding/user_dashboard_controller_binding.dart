@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:jobspot/JopController/UserDashboardController/user_dashboard_controller.dart';
+import 'package:jobspot/JopController/dashboards_controller/user_dashboard_controller.dart';
 
 class UserDashBoardControllerBinding implements Bindings {
   @override

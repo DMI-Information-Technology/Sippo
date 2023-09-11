@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:jobspot/JopController/ProfileController/profile_user_controller.dart';
+import 'package:jobspot/JopController/user_profile_controller/profile_user_controller.dart';
 
 import '../../core/Refresh.dart';
 import '../../sippo_data/model/profile_model/profile_resource_model/language_model.dart';

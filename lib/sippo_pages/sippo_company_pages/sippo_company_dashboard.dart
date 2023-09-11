@@ -2,9 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
+import 'package:jobspot/JobGlobalclass/routes.dart';
+import 'package:jobspot/JopController/dashboards_controller/company_dashboard_controller.dart';
 import 'package:jobspot/sippo_pages/sippo_company_pages/sippo_company_home.dart';
+import 'package:jobspot/sippo_pages/sippo_company_pages/sippo_jobs_posts_company_wrapper.dart';
 
-import '../../sippo_themes/themecontroller.dart';
+import '../../sippo_custom_widget/confirmation_bottom_sheet.dart';
+import '../../sippo_custom_widget/container_bottom_sheet_widget.dart';
 
 class SippoCompanyDashboard extends StatefulWidget {
   const SippoCompanyDashboard({Key? key}) : super(key: key);
@@ -14,116 +18,119 @@ class SippoCompanyDashboard extends StatefulWidget {
 }
 
 class _SippoCompanyDashboardState extends State<SippoCompanyDashboard> {
-  dynamic size;
-  double height = 0.00;
-  double width = 0.00;
+  final _controller = CompanyDashBoardController.instance;
+  final _pages = const [SippoCompanyHomePage(), SippoJobsPostsCompanyWrapper()];
 
-  final themedata = Get.put(JobstopThemecontroler());
-
-  int _selectedItemIndex = 0;
-
-  final List<Widget> _pages = const [SippoCompanyHomePage()];
-
-  @override
-  void initState() {
-    super.initState();
+  Widget _bottomTabBar(BuildContext context) {
+    return Obx(() => BottomNavigationBar(
+          currentIndex: _controller.selectedItemIndex,
+          onTap: _onTap,
+          backgroundColor: Jobstopcolor.transparent,
+          type: BottomNavigationBarType.fixed,
+          showSelectedLabels: false,
+          showUnselectedLabels: false,
+          fixedColor: Jobstopcolor.grey,
+          elevation: 0,
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: Image.asset(
+                JobstopPngImg.home,
+                height: context.height / 36,
+              ),
+              activeIcon: Image.asset(
+                JobstopPngImg.home,
+                height: context.height / 36,
+                color: Jobstopcolor.primarycolor,
+              ),
+              label: '',
+            ),
+            BottomNavigationBarItem(
+              icon: Image.asset(
+                JobstopPngImg.posting,
+                height: context.height / 36,
+              ),
+              activeIcon: Image.asset(
+                JobstopPngImg.posting,
+                height: context.height / 36,
+                color: Jobstopcolor.primarycolor,
+              ),
+              label: "",
+            ),
+            BottomNavigationBarItem(
+              icon: Image.asset(
+                JobstopPngImg.message,
+                height: context.height / 36,
+              ),
+              activeIcon: Image.asset(JobstopPngImg.message,
+                  height: context.height / 36,
+                  color: Jobstopcolor.primarycolor),
+              label: "",
+            ),
+            BottomNavigationBarItem(
+              icon: Image.asset(
+                JobstopPngImg.order,
+                height: context.height / 36,
+              ),
+              activeIcon: Image.asset(JobstopPngImg.order,
+                  height: context.height / 36,
+                  color: Jobstopcolor.primarycolor),
+              label: '',
+            ),
+          ],
+        ));
   }
 
-  @override
-  void setState(fn) {
-    if (mounted) super.setState(fn);
-  }
-
-  Widget _bottomTabBar() {
-    return BottomNavigationBar(
-      currentIndex: _selectedItemIndex,
-      onTap: _onTap,
-      backgroundColor: Jobstopcolor.transparent,
-      type: BottomNavigationBarType.fixed,
-      showSelectedLabels: false,
-      showUnselectedLabels: false,
-      fixedColor: themedata.isdark ? Jobstopcolor.white : Jobstopcolor.grey,
-      elevation: 0,
-      items: <BottomNavigationBarItem>[
-        BottomNavigationBarItem(
-          icon: Image.asset(
-            JobstopPngImg.home,
-            height: height / 36,
-          ),
-          activeIcon: Image.asset(
-            JobstopPngImg.home,
-            height: height / 36,
-            color: themedata.isdark
-                ? Jobstopcolor.white
-                : Jobstopcolor.primarycolor,
-          ),
-          label: '',
-        ),
-        BottomNavigationBarItem(
-          icon: Image.asset(
-            JobstopPngImg.posting,
-            height: height / 36,
-          ),
-          activeIcon: Image.asset(JobstopPngImg.posting,
-              height: height / 36,
-              color: themedata.isdark
-                  ? Jobstopcolor.white
-                  : Jobstopcolor.primarycolor),
-          label: "",
-        ),
-        BottomNavigationBarItem(
-          icon: Image.asset(
-            JobstopPngImg.message,
-            height: height / 36,
-          ),
-          activeIcon: Image.asset(JobstopPngImg.message,
-              height: height / 36,
-              color: themedata.isdark
-                  ? Jobstopcolor.white
-                  : Jobstopcolor.primarycolor),
-          label: "",
-        ),
-        BottomNavigationBarItem(
-          icon: Image.asset(
-            JobstopPngImg.order,
-            height: height / 36,
-          ),
-          activeIcon: Image.asset(JobstopPngImg.order,
-              height: height / 36,
-              color: themedata.isdark
-                  ? Jobstopcolor.white
-                  : Jobstopcolor.primarycolor),
-          label: '',
-        ),
-      ],
-    );
-  }
-
-  void _onTap(int index) {
-    // setState(() {
-      _selectedItemIndex = 0;
-    // });
+  _onTap(int index) {
+    if (index < _pages.length) _controller.selectedItemIndex = index;
   }
 
   @override
   Widget build(BuildContext context) {
-    size = MediaQuery.of(context).size;
-    height = size.height;
-    width = size.width;
     return Scaffold(
-      bottomNavigationBar: _bottomTabBar(),
-      body: _pages[_selectedItemIndex],
+      bottomNavigationBar: _bottomTabBar(context),
+      body: Obx(() => _pages[_controller.selectedItemIndex]),
       floatingActionButtonLocation:
           FloatingActionButtonLocation.miniCenterDocked,
       floatingActionButton: FloatingActionButton(
         mini: true,
-        onPressed: () {},
+        onPressed: _chooseAddNewBottomSheet,
         backgroundColor: Jobstopcolor.primarycolor,
         child: const Icon(
           Icons.add,
           size: 20,
           color: Jobstopcolor.white,
         ),
+      ),
+    );
+  }
+
+  void _chooseAddNewBottomSheet() {
+    Get.bottomSheet(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(25),
+        ),
+      ),
+      backgroundColor: Colors.white,
+      isScrollControlled: true,
+      ContainerBottomSheetWidget(
+        notchColor: Jobstopcolor.primarycolor,
+        children: [
+          ConfirmationBottomSheet(
+            title: "What would you like to add?",
+            description:
+                "Would you like to post your tips and experiences or create a job?",
+            confirmTitle: "POST",
+            onConfirm: () async {
+              Get.back();
+              Get.toNamed(SippoRoutes.companyAddPost);
+            },
+            undoTitle: "JOB",
+            onUndo: () async {
+              Get.back();
+            },
+          )
+        ],
       ),
     );
   }

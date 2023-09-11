@@ -167,7 +167,7 @@ class SippoCompanyLogin extends StatelessWidget {
                       textColor: Jobstopcolor.white,
                       onTappeed: () async {
                         await CompanyLoginController.instance
-                            .onSubmittedSignup();
+                            .onSubmittedLogin();
                       },
                     ),
                     SizedBox(

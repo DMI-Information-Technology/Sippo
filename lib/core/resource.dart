@@ -56,7 +56,7 @@ class Resource<T, E> {
           print(
               "the response is field: with status type = ${StatusType.INVALID_RESPONSE}");
           print("the response is field: with response error = null");
-          throw InvalidResponseException(message: "Invalid response");
+          throw InvalidResponseException(message: "something is wrong with the response, please try again");
       }
     } on InvalidResponseException catch (e) {
       print(e.message);

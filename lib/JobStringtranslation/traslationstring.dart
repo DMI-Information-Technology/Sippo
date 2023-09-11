@@ -114,6 +114,8 @@ class Apptranslation extends Translations {
           'applications': "Applications",
           'notifications': "Notifications",
           'read_all': "Read all",
+          'read_more': "read more",
+          'hide': " hide",
           'turn_off_notifi': "Turn off notification",
           'check_details': "heck Details",
           'Edit_profile': "Edit profile",

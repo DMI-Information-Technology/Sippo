@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:jobspot/JopController/ConnectivityController/internet_connection_controller.dart';
-import 'package:jobspot/JopController/UserDashboardController/user_dashboard_controller.dart';
+import 'package:jobspot/JopController/dashboards_controller/user_dashboard_controller.dart';
 import 'package:jobspot/core/Refresh.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/education_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/language_model.dart';

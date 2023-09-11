@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 
 class LocatorService {
-  static Future<Position> determinePosition({
+  static Future<Position?> determinePosition({
     required VoidCallback onLocationServiceDisabled,
     required VoidCallback onLocationPermissionDenied,
   }) async {
@@ -45,10 +46,45 @@ class LocatorService {
     return await Geolocator.getCurrentPosition();
   }
 
-  static Future<bool> openLocationSettings() async {
-    return await Geolocator.openLocationSettings();
+  static Future<List<Placemark>?> getMyAddress(
+    double latitude,
+    double longitude,
+  ) async {
+    try {
+      return await placemarkFromCoordinates(
+        latitude,
+        longitude,
+        localeIdentifier: "en_US",
+      );
+    } on Exception catch (e, s) {
+      print(s);
+      return null;
+    }
   }
+
+  static Future<bool> openLocationSettings() async {
+    try {
+      return await Geolocator.openLocationSettings();
+    } catch (e, s) {
+      print(s);
+      return false;
+    }
+  }
+
   static Future<void> requestPermissionAgain() async {
-    await Geolocator.requestPermission();
+    try {
+      await Geolocator.requestPermission();
+    } catch (e, s) {
+      print(s);
+    }
+  }
+
+  static String filterAddress(List<Placemark> address) {
+    return address
+        .map((e) => e.locality)
+        .toSet()
+        .where((e) => e != null && e.trim().isNotEmpty)
+        .toList()
+        .join(", ");
   }
 }

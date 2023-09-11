@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JopController/ProfileController/profile_user_controller.dart';
+import 'package:jobspot/JopController/user_profile_controller/profile_user_controller.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/education_model.dart';
 import 'package:jobspot/sippo_data/profile_user/education_repo.dart';
 

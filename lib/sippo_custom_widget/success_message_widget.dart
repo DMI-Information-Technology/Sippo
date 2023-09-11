@@ -44,12 +44,14 @@ class CardNotifyMessage extends StatelessWidget {
     super.key,
     this.onCancelTap,
     this.messageType,
+    this.bottomSpaceValue,
   }) : this.state = null;
 
   const CardNotifyMessage.success({
     super.key,
     this.state,
     this.onCancelTap,
+    this.bottomSpaceValue,
   })  : this.message = "",
         this.messageType = MessageType.SUCCESS;
 
@@ -57,6 +59,7 @@ class CardNotifyMessage extends StatelessWidget {
     super.key,
     this.state,
     this.onCancelTap,
+    this.bottomSpaceValue,
   })  : this.message = "",
         this.messageType = MessageType.WARNING;
 
@@ -64,6 +67,7 @@ class CardNotifyMessage extends StatelessWidget {
     super.key,
     this.state,
     this.onCancelTap,
+    this.bottomSpaceValue,
   })  : this.message = "",
         this.messageType = MessageType.ERROR;
 
@@ -71,6 +75,7 @@ class CardNotifyMessage extends StatelessWidget {
   final String message;
   final VoidCallback? onCancelTap;
   final MessageType? messageType;
+  final double? bottomSpaceValue;
   static const Widget empty = const SizedBox.shrink();
 
   bool _buildState() {
@@ -90,52 +95,56 @@ class CardNotifyMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _buildState()
-        ? Column(
-            children: [
-              SizedBox(
-                width: context.width,
-                child: Card(
-                  margin: EdgeInsets.zero,
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(context.fromWidth(64)),
-                    side: BorderSide(
-                      width: context.width / 256,
-                      color:
-                          ColoredMessageCard.colors[messageType]?.borderColor ??
-                              Colors.transparent,
+        ? SafeArea(
+            child: Column(
+              children: [
+                SizedBox(
+                  width: context.width,
+                  child: Card(
+                    margin: EdgeInsets.zero,
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius:
+                          BorderRadius.circular(context.fromWidth(64)),
+                      side: BorderSide(
+                        width: context.width / 256,
+                        color: ColoredMessageCard
+                                .colors[messageType]?.borderColor ??
+                            Colors.transparent,
+                      ),
                     ),
-                  ),
-                  color: ColoredMessageCard.colors[messageType]?.filledColor,
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Expanded(
-                          child: Text(
-                            state?.message ?? message,
-                            style: dmsregular.copyWith(
-                              color: Colors.black87,
-                              fontSize: FontSize.paragraph2(context),
-                              overflow: TextOverflow.fade,
+                    color: ColoredMessageCard.colors[messageType]?.filledColor,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: Text(
+                              state?.message ?? message,
+                              style: dmsregular.copyWith(
+                                color: Colors.black87,
+                                fontSize: FontSize.paragraph2(context),
+                                overflow: TextOverflow.fade,
+                              ),
                             ),
                           ),
-                        ),
-                        if (onCancelTap != null)
-                          IconButton(
-                            onPressed: onCancelTap,
-                            icon: Icon(Icons.close),
-                          ),
-                      ],
+                          if (onCancelTap != null)
+                            IconButton(
+                              onPressed: onCancelTap,
+                              icon: Icon(Icons.close),
+                            ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: context.fromHeight(CustomStyle.spaceBetween),
-              ),
-            ],
+                SizedBox(
+                  height: bottomSpaceValue ??
+                      context.fromHeight(CustomStyle.spaceBetween),
+                ),
+              ],
+            ),
           )
         : empty;
   }

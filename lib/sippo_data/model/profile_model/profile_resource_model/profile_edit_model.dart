@@ -12,9 +12,6 @@ class ProfileInfoModel extends EntityModel {
     this.bio,
   });
 
-  bool get isProfileBlank =>
-      (name == null || (name != null && name!.trim().isEmpty)) ||
-      (phone == null || (phone != null && phone!.trim().isEmpty));
 
   factory ProfileInfoModel.fromJson(dynamic json) => ProfileInfoModel(
         name: json["name"],

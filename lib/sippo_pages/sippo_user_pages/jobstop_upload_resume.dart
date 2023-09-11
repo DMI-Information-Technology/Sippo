@@ -5,7 +5,7 @@ import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
-import 'package:jobspot/JopController/ProfileController/profile_user_controller.dart';
+import 'package:jobspot/JopController/user_profile_controller/profile_user_controller.dart';
 import 'package:jobspot/utils/file_picker_service.dart';
 
 import '../../JobGlobalclass/sippo_customstyle.dart';

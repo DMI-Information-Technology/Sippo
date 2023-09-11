@@ -18,10 +18,11 @@ class ConditionalWidget<T> extends StatelessWidget {
   }) : this.condition = false;
 
   final T? data;
-  final Widget Function(BuildContext context, T? data)? guaranteedBuilder;
-  final Widget Function(BuildContext context, T? data)? avoidBuilder;
+  final Widget? Function(BuildContext context, T? data)? guaranteedBuilder;
+  final Widget? Function(BuildContext context, T? data)? avoidBuilder;
   final bool Function(T? data)? predict;
   final bool condition;
+  static const empty = const SizedBox.shrink();
 
   Widget _buildCases(BuildContext context) {
     late final bool result;
@@ -32,11 +33,10 @@ class ConditionalWidget<T> extends StatelessWidget {
     }
     return switch (result) {
       true => guaranteedBuilder != null
-          ? guaranteedBuilder!(context, data)
-          : const SizedBox.shrink(),
-      false => avoidBuilder != null
-          ? avoidBuilder!(context, data)
-          : const SizedBox.shrink(),
+          ? guaranteedBuilder!(context, data) ?? empty
+          : empty,
+      false =>
+        avoidBuilder != null ? avoidBuilder!(context, data) ?? empty : empty,
     };
   }
 

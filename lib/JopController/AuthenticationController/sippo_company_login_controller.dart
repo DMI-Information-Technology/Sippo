@@ -39,7 +39,7 @@ class CompanyLoginController extends GetxController {
   void set isRememberMeChecked(bool value) =>
       _isRememberMeChecked.value = value;
 
-  Future<void> onSubmittedSignup() async {
+  Future<void> onSubmittedLogin() async {
     if (!formKey.currentState!.validate()) return;
     if (!netController.isConnectionLostWithDialog()) {
       await _authController.companyLogin(companyForm);

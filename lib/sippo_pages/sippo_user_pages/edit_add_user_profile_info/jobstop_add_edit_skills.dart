@@ -5,7 +5,7 @@ import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 
-import '../../../JopController/ProfileController/edit_add_skills_controller.dart';
+import '../../../JopController/user_profile_controller/edit_add_skills_controller.dart';
 import '../../../sippo_custom_widget/ConditionalWidget.dart';
 import '../../../sippo_custom_widget/SearchDelegteImpl.dart';
 import '../../../sippo_custom_widget/confirmation_bottom_sheet.dart';

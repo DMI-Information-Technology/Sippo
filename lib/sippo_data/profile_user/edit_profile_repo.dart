@@ -1,10 +1,8 @@
 import 'dart:convert';
-
 import 'package:jobspot/core/api_endpoints.dart' as endpoints;
 import 'package:jobspot/core/resource.dart';
 import 'package:jobspot/core/status_response_code_checker.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/profile_edit_model.dart';
-
 import '../../JopController/HttpClientController/http_client_controller.dart';
 import '../model/profile_model/profile_resource_model/validate_property_profile_edit.dart';
 

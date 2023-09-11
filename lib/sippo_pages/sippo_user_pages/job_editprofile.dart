@@ -17,7 +17,7 @@ import 'package:jobspot/utils/image_picker_service.dart';
 import 'package:jobspot/utils/validating_input.dart';
 
 import '../../JobGlobalclass/sippo_customstyle.dart';
-import '../../JopController/ProfileController/edit_profile_information_controller.dart';
+import '../../JopController/user_profile_controller/edit_profile_information_controller.dart';
 import '../../sippo_custom_widget/gender_picker_widget.dart';
 import '../../sippo_custom_widget/success_message_widget.dart';
 

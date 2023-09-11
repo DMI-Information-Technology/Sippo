@@ -5,7 +5,7 @@ import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 
 import '../Jobpostpages/jobstop_addjob.dart';
-import '../Jobpostpages/jobstop_addpost.dart';
+import '../sippo_company_pages/sippo_company_edit_add_post.dart';
 import 'jobstop_filter.dart';
 import 'sippo_user_notification.dart';
 
@@ -334,7 +334,7 @@ class _SpecializationState extends State<Specialization> {
                   onTap: () {
                     Navigator.push(context, MaterialPageRoute(
                       builder: (context) {
-                        return const JobAddPost();
+                        return  SippoCompanyEditAddPost();
                       },
                     ));
                   },

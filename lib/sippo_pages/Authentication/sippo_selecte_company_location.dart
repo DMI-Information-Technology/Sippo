@@ -1,11 +1,13 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
+import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
+import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
+import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
-import 'package:get/get.dart';
+
 import '../../JobGlobalclass/jobstopimges.dart';
 import '../../JobGlobalclass/routes.dart';
 import '../../JobServices/locator_service.dart';
@@ -17,12 +19,15 @@ class SippoLocationCompanySelector extends StatefulWidget {
   const SippoLocationCompanySelector({super.key});
 
   @override
-  State<SippoLocationCompanySelector> createState() => _SippoLocationCompanySelectorState();
+  State<SippoLocationCompanySelector> createState() =>
+      _SippoLocationCompanySelectorState();
 }
 
-class _SippoLocationCompanySelectorState extends State<SippoLocationCompanySelector> {
-  TextEditingController _myLocationController = TextEditingController();
+class _SippoLocationCompanySelectorState
+    extends State<SippoLocationCompanySelector> {
+  final _myLocationController = TextEditingController();
   final netConnController = InternetConnectionController.instance;
+  final _signUpCompanyController = SignUpCompanyController.instance;
 
   @override
   void initState() {
@@ -30,14 +35,25 @@ class _SippoLocationCompanySelectorState extends State<SippoLocationCompanySelec
     setLocation();
   }
 
-  final SignUpCompanyController _signUpCompanyController = Get.find();
+  @override
+  void dispose() {
+    _myLocationController.dispose();
+    super.dispose();
+  }
 
   Future<void> setLocation() async {
     if (netConnController.isConnected) {
-      Position myLocation = await _detectedMyLocation();
-      List<Placemark> myAddress =
-          await _getMyAddress(myLocation.latitude, myLocation.longitude);
-      String address = await _filterMyAddress(myAddress);
+      final myLocation = await _detectedMyLocation();
+      print("setLocation myLocation==null? ${myLocation == null}");
+      if (myLocation == null) return;
+      final myAddress = await LocatorService.getMyAddress(
+        myLocation.latitude,
+        myLocation.longitude,
+      );
+      print("setLocation myAddress==null? ${myAddress == null}");
+      if (myAddress == null) return;
+
+      String address = LocatorService.filterAddress(myAddress);
       _myLocationController.text = address;
       _signUpCompanyController.setCordLocation(
         long: myLocation.longitude,
@@ -57,70 +73,60 @@ class _SippoLocationCompanySelectorState extends State<SippoLocationCompanySelec
         automaticallyImplyLeading: true,
         title: Text("selecte_address".tr, style: dmsbold),
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  vertical: width / 26,
-                  horizontal: width / 26,
-                ),
-                child: Column(
-                  children: [
-                    _buildInputAddressField(),
-                    SizedBox(
-                      height: height / 42,
-                    ),
-                    Obx(
-                      () => !netConnController.isConnected
-                          ? _buildMessageNoConnectionToGetAddress(height)
-                          : SizedBox(),
-                    ),
-                    Image.asset(JobstopPngImg.locationmap),
-                    SizedBox(
-                      height: height / 21,
-                    ),
-                    SizedBox(
-                      width: width,
-                      child: Text(
-                        "terms_policy_title".tr,
-                        textAlign: TextAlign.start,
-                        style: dmsbold.copyWith(fontSize: height / 42),
-                      ),
-                    ),
-                    SizedBox(
-                      height: height / 64,
-                    ),
-                    Obx(
-                      () => CheckboxListTile(
-                        title: Text(
-                          "accept_terms".tr,
-                          style: dmsregular.copyWith(fontSize: height / 52),
-                        ),
-                        value: _signUpCompanyController.confirmOnPolicy,
-                        onChanged: (value) {
-                          _signUpCompanyController.toggleConfirmPolicy();
-                        },
-                        activeColor: Jobstopcolor.primarycolor,
-                      ),
-                    ),
-                  ],
-                ),
+      body: BodyWidget(
+        isScrollable: true,
+        paddingContent: EdgeInsets.symmetric(
+          vertical: width / 26,
+          horizontal: width / 26,
+        ),
+        child: Column(
+          children: [
+            _buildInputAddressField(),
+            SizedBox(
+              height: height / 42,
+            ),
+            Obx(
+              () => !netConnController.isConnected
+                  ? _buildMessageNoConnectionToGetAddress(height)
+                  : SizedBox(),
+            ),
+            Image.asset(JobstopPngImg.locationmap),
+            SizedBox(
+              height: height / 21,
+            ),
+            SizedBox(
+              width: width,
+              child: Text(
+                "terms_policy_title".tr,
+                textAlign: TextAlign.start,
+                style: dmsbold.copyWith(fontSize: height / 42),
               ),
             ),
-          ),
-          Align(
-            alignment: AlignmentDirectional.bottomCenter,
-            child: Container(
-              margin: EdgeInsets.only(bottom: height / 64),
-              child: CustomButton(
-                onTappeed: _onSubmitConfirm,
-                text: "confirm".tr,
+            SizedBox(
+              height: height / 64,
+            ),
+            Obx(
+              () => CheckboxListTile(
+                title: Text(
+                  "accept_terms".tr,
+                  style: dmsregular.copyWith(fontSize: height / 52),
+                ),
+                value: _signUpCompanyController.confirmOnPolicy,
+                onChanged: (value) {
+                  _signUpCompanyController.toggleConfirmPolicy();
+                },
+                activeColor: Jobstopcolor.primarycolor,
               ),
             ),
-          ),
-        ],
+          ],
+        ),
+        paddingBottom: EdgeInsets.all(
+          context.fromWidth(CustomStyle.paddingValue),
+        ),
+        bottomScreen: CustomButton(
+          onTappeed: _onSubmitConfirm,
+          text: "confirm".tr,
+        ),
       ),
     );
   }
@@ -182,7 +188,7 @@ class _SippoLocationCompanySelectorState extends State<SippoLocationCompanySelec
     );
   }
 
-  Future<Position> _detectedMyLocation() async {
+  Future<Position?> _detectedMyLocation() async {
     var result = await LocatorService.determinePosition(
       onLocationServiceDisabled: () async {
         showAlert(
@@ -219,31 +225,8 @@ class _SippoLocationCompanySelectorState extends State<SippoLocationCompanySelec
         );
       },
     );
-    print("latitude: ${result.latitude}");
-    print("longitude: ${result.longitude}");
+    print("latitude: ${result?.latitude}");
+    print("longitude: ${result?.longitude}");
     return result;
-  }
-
-  Future<String> _filterMyAddress(List<Placemark> myAddress) async {
-    return myAddress
-        .map((element) => element.locality)
-        .toList()
-        .where(
-          (element) => element != null && element.toString().trim().isNotEmpty,
-        )
-        .toSet()
-        .toList()
-        .join(", ");
-  }
-
-  Future<List<Placemark>> _getMyAddress(
-    double latitude,
-    double longitude,
-  ) async {
-    return await placemarkFromCoordinates(
-      latitude,
-      longitude,
-      localeIdentifier: "en_US",
-    );
   }
 }

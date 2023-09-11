@@ -14,4 +14,10 @@ class HttpClientController extends GetxController {
   void onInit() {
     super.onInit();
   }
+
+  @override
+  void onClose() {
+    // client.close();
+    super.onClose();
+  }
 }

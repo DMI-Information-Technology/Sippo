@@ -43,7 +43,7 @@ class SettingItemWidget extends StatelessWidget {
       leading: icon,
       title: AutoSizeText(
         title,
-        style: dmsmedium.copyWith(
+        style: dmsregular.copyWith(
           fontSize: FontSize.title6(context),
           color: isSelected ? Colors.white : null,
         ),

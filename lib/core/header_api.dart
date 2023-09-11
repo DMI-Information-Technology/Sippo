@@ -19,8 +19,8 @@ class Header {
   };
 
   // SECURE MULTIPART HEADER
-  static Map<String, String> secureMultipartHeader = {
-    "Authorization": "Bearer 'token'",
+  static Map<String, String> secureMultipartHeader(String? token)=> {
+    "Authorization": "Bearer $token",
     'Accept': 'application/json',
     'Content-Type': 'multipart/form-data',
   };

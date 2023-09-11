@@ -1,4 +1,3 @@
-
 import 'package:get_storage/get_storage.dart';
 import 'package:jobspot/utils/app_use.dart';
 
@@ -10,6 +9,7 @@ class GlobalStorage {
   static final box = GetStorage();
   static const first_app_lunch_time = "firstapplunchtime";
   static bool _isLogged = false;
+
   // static Map<String, dynamic> _userJson = {};
 
   // static Map<String, dynamic> get userJson => _userJson;
@@ -61,14 +61,14 @@ class GlobalStorage {
     final String? token = await box.read(global.tokenKey);
     final int? use = await box.read(global.app_logged_use);
     _setGlobalVariable(token, use);
-      // await checkLoggedUser();
-
+    // await checkLoggedUser();
   }
 
   static bool _setGlobalVariable(String? token, int? use) {
     if (token == null || use == null) return false;
     if (token.isEmpty || (use < 0 && use > 1)) false;
     _tokenLogged = token;
+    print(_tokenLogged);
     _isLogged = true;
     _appUse = use;
     return true;

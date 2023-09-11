@@ -16,3 +16,8 @@ const String educationsEndpoint = "user/educations";
 const String userSkillsEndpoint = "user/skills";
 const String userLanguageEndpoint = "user/languages";
 /////////////////////////////////////////////////////////
+// /////////// company profile resource endpoints ///////////////////
+const String companyInfoProfileEndpoint = "company/profile";
+const String companyPostEndpoint = "company/profile/posts";
+const String companyJobsEndpoint = "company/profile/jobs";
+/////////////////////////////////////////////////////////

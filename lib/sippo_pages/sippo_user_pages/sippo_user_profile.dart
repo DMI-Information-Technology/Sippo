@@ -14,7 +14,9 @@ import 'package:jobspot/sippo_pages/sippo_user_pages/job_aboutme.dart';
 import 'package:readmore/readmore.dart';
 
 import '../../JobGlobalclass/sippo_customstyle.dart';
-import '../../JopController/ProfileController/profile_user_controller.dart';
+import '../../JopController/user_profile_controller/profile_user_controller.dart';
+import '../../sippo_custom_widget/ConditionalWidget.dart';
+import '../../sippo_custom_widget/error_messages_dialog_snackbar/network_connnection_lost_widget.dart';
 import '../../sippo_custom_widget/expandable_item_list_widget.dart';
 import '../../sippo_custom_widget/user_profile_header.dart';
 
@@ -30,48 +32,50 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => Scaffold(
-          extendBodyBehindAppBar: _controller.netController.isConnected,
-          appBar: AppBar(
-            toolbarHeight: 0,
-            backgroundColor: _controller.netController.isConnected
-                ? Colors.black54
-                : Colors.black87,
-          ),
-          body: BodyWidget(
-            isTopScrollable: true,
-            isScrollable: true,
-            isConnectionLost: !_controller.netController.isConnected,
-            topScreen: _buildUserProfileHeader(),
-            paddingContent: EdgeInsets.symmetric(
-              horizontal: context.fromWidth(CustomStyle.paddingValue),
-            ),
-            child: Column(
-              children: [
-                SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-                _buildAboutMeInfo(context),
-                SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-                _buildWorkExperienceInfo(context),
-                SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-                _buildEducationInfo(context),
-                SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-                _buildSkillsInfo(context),
-                SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-                _buildLanguagesInfo(context),
-                SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-                _buildAppreciationInfo(context),
-                SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-                _buildResumeInfo(context),
-                SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-              ],
-            ),
-          ),
-        ));
+    return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 0,
+        backgroundColor: Colors.black87,
+      ),
+      body: BodyWidget(
+        isTopScrollable: true,
+        isScrollable: true,
+        connectionStatusBar: Obx(() => ConditionalWidget(
+              !_controller.netController.isConnected,
+              guaranteedBuilder: (_, __) => NetworkStatusNonWidget(),
+            )),
+        topScreen: Obx(
+          () => _buildUserProfileHeader(!_controller.netController.isConnected),
+        ),
+        paddingContent: EdgeInsets.symmetric(
+          horizontal: context.fromWidth(CustomStyle.paddingValue),
+        ),
+        child: Column(
+          children: [
+            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+            _buildAboutMeInfo(context),
+            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+            _buildWorkExperienceInfo(context),
+            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+            _buildEducationInfo(context),
+            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+            _buildSkillsInfo(context),
+            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+            _buildLanguagesInfo(context),
+            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+            _buildAppreciationInfo(context),
+            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+            _buildResumeInfo(context),
+            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+          ],
+        ),
+      ),
+    );
   }
 
-  Widget _buildUserProfileHeader() {
+  Widget _buildUserProfileHeader([bool isLostConnect = false]) {
     return UserProfileHeaderWidget(
-      showConnectionLostBar: !_controller.netController.isConnected,
+      showConnectionLostBar: isLostConnect,
       profileInfo: _controller.user,
       onSettingsPressed: () => Get.toNamed(SippoRoutes.sippoprofilesetting),
       onEditProfilePressed: () => Get.toNamed(SippoRoutes.edituserprofile),
@@ -364,12 +368,12 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
           _controller.profileState.aboutMeText.isNotEmpty
               ? ReadMoreText(
                   _controller.profileState.aboutMeText,
-                  trimLines: 2,
                   style: dmsregular.copyWith(
                     fontSize: context.fromHeight(CustomStyle.xxxl),
                     color: Jobstopcolor.textColor,
                   ),
                   colorClickableText: Jobstopcolor.primarycolor,
+                  trimLines: 2,
                   trimMode: TrimMode.Line,
                   trimCollapsedText: 'show_more'.tr,
                   trimExpandedText: 'show_less'.tr,

@@ -10,8 +10,7 @@ import '../../core/status_response_code_checker.dart';
 import "../model/auth_model/auth_response.dart";
 import "../model/auth_model/company_model.dart";
 import "../model/auth_model/company_property_error_model.dart";
-import "../model/auth_model/company_response_login_user_model.dart";
-import "../model/auth_model/company_response_model.dart";
+import "../model/auth_model/company_response_details.dart";
 import "../model/auth_model/user_propery_error_model.dart";
 import "../model/auth_model/user_response_model.dart";
 
@@ -41,9 +40,9 @@ class AuthRepo {
     }
   }
 
-  static Future<AuthResponse<CompanyResponseModel, CompanyPropError>?>
+  static Future<AuthResponse<CompanyResponseDetailsModel, CompanyPropError>?>
       companyRegister(CompanyModel company) async {
-    AuthResponse<CompanyResponseModel, CompanyPropError>? companyResponse;
+    AuthResponse<CompanyResponseDetailsModel, CompanyPropError>? companyResponse;
     try {
       final url = Uri.parse(
           "${endpoints.baseUrl}/${endpoints.companyRegisterEndpoint}");
@@ -56,7 +55,7 @@ class AuthRepo {
       companyResponse =
           await StatusResponseCodeChecker.checkStatusAuthResponseCode(
         response,
-        (entity) => CompanyResponseModel.fromJson(entity['company']),
+        (entity) => CompanyResponseDetailsModel.fromJson(entity['company']),
         (errors) => CompanyPropError.fromJson(errors),
       );
     } catch (error) {
@@ -120,9 +119,9 @@ class AuthRepo {
     }
   }
 
-  static Future<AuthResponse<LoginCompanyResponseModel, CompanyPropError>?>
+  static Future<AuthResponse<CompanyResponseDetailsModel, CompanyPropError>?>
       companyLogin(CompanyModel company) async {
-    AuthResponse<LoginCompanyResponseModel, CompanyPropError>? companyResponse;
+    AuthResponse<CompanyResponseDetailsModel, CompanyPropError>? companyResponse;
     try {
       final url =
           Uri.parse("${endpoints.baseUrl}/${endpoints.companyLoginEndpoint}");
@@ -135,7 +134,7 @@ class AuthRepo {
       companyResponse =
           await StatusResponseCodeChecker.checkStatusAuthResponseCode(
         response,
-        (entity) => LoginCompanyResponseModel.fromJson(entity['user']),
+        (entity) => CompanyResponseDetailsModel.fromJson(entity['company']),
         (errors) => CompanyPropError.fromJson(errors),
       );
     } catch (error) {

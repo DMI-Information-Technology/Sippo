@@ -81,7 +81,6 @@ class ContainerBottomSheetWidget extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: width / 16),
             child: Divider(thickness: height / 256, color: Colors.grey[300]),
           ),
-          SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
           _buildWidget(),
           SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
         ],

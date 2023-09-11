@@ -1,13 +1,16 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
+import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
+import 'package:jobspot/JopController/dashboards_controller/company_dashboard_controller.dart';
+
+import '../../JobGlobalclass/sippo_customstyle.dart';
+import '../../JobGlobalclass/text_font_size.dart';
 import '../../sippo_custom_widget/widgets.dart';
 import '../../sippo_data/model/profile_model/profile_widget_model/jobstop_jobdetailspost.dart';
-import '../../sippo_themes/themecontroller.dart';
 
 class SippoCompanyHomePage extends StatefulWidget {
   const SippoCompanyHomePage({Key? key}) : super(key: key);
@@ -17,10 +20,9 @@ class SippoCompanyHomePage extends StatefulWidget {
 }
 
 class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
-  final themedata = Get.put(JobstopThemecontroler());
   final List<JobDetailsModel> jobData = [
     JobDetailsModel(
-      companyLogo: 'https://example.com/company_logo.png',
+      companyLogo: 'https://picsum.photos/200',
       jobName: 'Flutter Developerrrrrrrrrrrrrrrrr',
       companyName: 'Example Company',
       location: 'New York, USA',
@@ -29,7 +31,7 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
       chips: ['Full-time', 'Remote', 'Experienced'],
     ),
     JobDetailsModel(
-      companyLogo: 'https://example.com/company_logo.png',
+      companyLogo: 'https://picsum.photos/200',
       jobName: 'Flutter Developer',
       companyName: 'Example Company',
       location: 'New York, USA',
@@ -38,7 +40,7 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
       chips: ['Full-time', 'Remote', 'Experienced'],
     ),
     JobDetailsModel(
-      companyLogo: 'https://example.com/company_logo.png',
+      companyLogo: 'https://picsum.photos/200',
       jobName: 'Flutter Developer',
       companyName: 'Example Company',
       location: 'New York, USA',
@@ -47,7 +49,7 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
       chips: ['Full-time', 'Remote', 'Experienced'],
     ),
     JobDetailsModel(
-      companyLogo: 'https://example.com/company_logo.png',
+      companyLogo: 'https://picsum.photos/200',
       jobName: 'Flutter Developer',
       companyName: 'Example Company',
       location: 'New York, USA',
@@ -56,7 +58,7 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
       chips: ['Full-time', 'Remote', 'Experienced'],
     ),
     JobDetailsModel(
-      companyLogo: 'https://example.com/company_logo.png',
+      companyLogo: 'https://picsum.photos/200',
       jobName: 'Flutter Developer',
       companyName: 'Example Company',
       location: 'New York, USA',
@@ -89,25 +91,7 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: height / 96),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: width / 26,
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Hello\nDMI Company",
-                      style: dmsbold.copyWith(
-                          fontSize: 22,
-                          color: themedata.isdark
-                              ? Jobstopcolor.white
-                              : Jobstopcolor.primarycolor),
-                    ),
-                  ],
-                ),
-              ),
+              _buildWelcomeUser(context),
               SizedBox(height: height / 36),
               Padding(
                 padding: EdgeInsets.symmetric(
@@ -177,26 +161,27 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
               SizedBox(
                 height: height / 36,
               ),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    for (var i = 0; i < jobData.length; i++)
-                      Row(
-                        children: [
-                          SizedBox(width: width / 26),
-                          JobCard(
-                            jobDetails: jobData[i],
-                            onFavoritePressed: () {
-                              print('${jobData[i].jobName} added to favorites');
-                            },
-                          ),
-                        ],
-                      ),
-                    SizedBox(width: width / 26),
-                  ],
-                ),
-              ),
+              // SingleChildScrollView(
+              //   scrollDirection: Axis.horizontal,
+              //   child: Row(
+              //     children: [
+              //       for (var i = 0; i < jobData.length; i++)
+              //         Row(
+              //           children: [
+              //             SizedBox(width: width / 26),
+              //             JobCard(
+              //               jobDetails: jobData[i],
+              //               onFavoriteClicked: () {
+              //                 print('${jobData[i].jobName} added to favorites');
+              //               },
+              //               onCardClicked: () {},
+              //             ),
+              //           ],
+              //         ),
+              //       SizedBox(width: width / 26),
+              //     ],
+              //   ),
+              // ),
             ],
           ),
         ),
@@ -244,6 +229,39 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
           ),
         )
       ],
+    );
+  }
+
+  Padding _buildWelcomeUser(BuildContext context) {
+    final dashboardController = CompanyDashBoardController.instance;
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: context.fromWidth(CustomStyle.s),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Hello",
+            style: dmsbold.copyWith(
+              fontSize: FontSize.title3(context),
+              color: Jobstopcolor.primarycolor,
+            ),
+          ),
+          Obx(
+            () => dashboardController.company.name != null
+                ? Text(
+                    "${dashboardController.company.name}",
+                    style: dmsbold.copyWith(
+                      fontSize: FontSize.title3(context),
+                      color: Jobstopcolor.primarycolor,
+                    ),
+                  )
+                : const CircularProgressIndicator(strokeWidth: 1.8),
+          ),
+        ],
+      ),
     );
   }
 
@@ -389,120 +407,6 @@ class FindYorJopDashBoardCards extends StatelessWidget {
           ],
         )
       ],
-    );
-  }
-}
-
-class JobCard extends StatelessWidget {
-  final JobDetailsModel jobDetails;
-  final Function()? onFavoritePressed; // Callback for the favorite button press
-
-  JobCard({
-    required this.jobDetails,
-    this.onFavoritePressed,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    double height = size.height;
-    double width = size.width;
-    return Container(
-      decoration: BoxDecoration(
-        color: Jobstopcolor.white,
-        borderRadius: BorderRadius.circular(height / 32),
-      ),
-      child: Padding(
-        padding: EdgeInsets.all(height / 48.0),
-        child: SizedBox(
-          width: width / 1.4,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  CachedNetworkImage(
-                    imageUrl: jobDetails.companyLogo,
-                    width: height / 16,
-                    height: height / 16,
-                    placeholder: (context, url) => Image.asset(
-                      JobstopPngImg.google,
-                    ),
-                    errorWidget: (context, url, error) => Image.asset(
-                      JobstopPngImg.google,
-                    ),
-                  ),
-                  SizedBox(width: width / 32.0),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        width: width / 3,
-                        child: Text(
-                          jobDetails.jobName,
-                          style: dmsbold.copyWith(
-                              fontSize: height / 52,
-                              fontWeight: FontWeight.bold,
-                              overflow: TextOverflow.ellipsis),
-                        ),
-                      ),
-                      SizedBox(
-                        width: width / 3,
-                        child: Text(jobDetails.companyName,
-                            style: dmsregular.copyWith(
-                              fontSize: height / 62,
-                              color: Colors.grey,
-                            ),
-                            overflow: TextOverflow.ellipsis),
-                      ),
-                      SizedBox(
-                        width: width / 3,
-                        child: Text(jobDetails.location,
-                            style: dmsregular.copyWith(
-                              fontSize: height / 62,
-                              color: Colors.grey,
-                            ),
-                            overflow: TextOverflow.ellipsis),
-                      ),
-                    ],
-                  ),
-                  Spacer(),
-                  IconButton(
-                    onPressed: onFavoritePressed,
-                    icon: Icon(Icons.favorite_border),
-                  ),
-                ],
-              ),
-              SizedBox(height: height / 56),
-              Text(
-                '${jobDetails.salary}',
-                style: dmsbold.copyWith(
-                  fontSize: height / 52.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              SizedBox(height: height / 56),
-              SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: jobDetails.chips.map((chipText) {
-                    return Padding(
-                      padding: EdgeInsets.only(right: width / 60),
-                      child: Chip(
-                        label: Text(chipText),
-                        backgroundColor: Jobstopcolor.greyyy2,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                    );
-                  }).toList(),
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }

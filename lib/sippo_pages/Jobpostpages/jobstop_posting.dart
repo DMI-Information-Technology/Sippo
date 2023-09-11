@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:get/utils.dart';
+import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
-import 'package:jobspot/sippo_custom_widget/rounded_border_radius_card_widget.dart';
+import 'package:jobspot/sippo_custom_widget/company_post_widget.dart';
 
 import 'jobstop_aboutus.dart';
 
@@ -18,33 +18,14 @@ class SippoUserSocial extends StatefulWidget {
 }
 
 class _SippoUserSocialState extends State<SippoUserSocial> {
-  dynamic size;
-  double height = 0.00;
-  double width = 0.00;
-  List<String> list = ["Posting", "My connection"];
-  List<String> connectionimg = [
-    JobstopPngImg.googlelogo,
-    JobstopPngImg.dribbblelogo,
-    JobstopPngImg.twitterlogo,
-    JobstopPngImg.applelogo,
-    JobstopPngImg.facebooklogo,
-    JobstopPngImg.microsoft
-  ];
-  List<String> connectionname = [
-    "Google Inc",
-    "Dribbble Inc",
-    "Twitter Inc",
-    "Apple Inc",
-    "Facebook Inc",
-    "Microsoft Inc"
-  ];
+  static const List<String> list = ["Posting", "My connection"];
+
   int selected = 0;
 
   @override
   Widget build(BuildContext context) {
-    size = MediaQuery.of(context).size;
-    height = size.height;
-    width = size.width;
+    double height = MediaQuery.sizeOf(context).height;
+    double width = MediaQuery.sizeOf(context).width;
     return Scaffold(
       appBar: AppBar(),
       body: BodyWidget(
@@ -61,16 +42,13 @@ class _SippoUserSocialState extends State<SippoUserSocial> {
                         "What are the characteristics of a fake job call form?",
                     postContent:
                         "Because I always find fake job calls so I'm confused which job to take can you share your knowledge here? thank you",
-                    likes: 12,
-                    comments: 10,
-                    shares: 2,
                   );
                 },
                 separatorBuilder: (context, index) => SizedBox(
                     height: context.fromHeight(CustomStyle.spaceBetween)),
               )
             : GridView.builder(
-                itemCount: connectionimg.length,
+                itemCount: 0,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   mainAxisSpacing: 15,
@@ -79,16 +57,10 @@ class _SippoUserSocialState extends State<SippoUserSocial> {
                 ),
                 itemBuilder: (context, index) {
                   return InkWell(
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(
-                        builder: (context) {
-                          return const JobstopAbouts();
-                        },
-                      ));
-                    },
+                    onTap: () => Get.to(() => const JobstopAbouts()),
                     child: ConnectionCard(
-                      imageAsset: connectionimg[index].toString(),
-                      connectionName: connectionname[index].toString(),
+                      imageAsset: JobstopPngImg.facebooklogo,
+                      connectionName: "Facebook",
                       followerCount: "1M Followers",
                     ),
                   );
@@ -138,123 +110,6 @@ class _SippoUserSocialState extends State<SippoUserSocial> {
             },
           ),
         ),
-      ),
-    );
-  }
-}
-
-class PostWidget extends StatelessWidget {
-  final String authorName;
-  final String timeAgo;
-  final String postTitle;
-  final String postContent;
-  final int likes;
-  final int comments;
-  final int shares;
-
-  const PostWidget({
-    Key? key,
-    required this.authorName,
-    required this.timeAgo,
-    required this.postTitle,
-    required this.postContent,
-    required this.likes,
-    required this.comments,
-    required this.shares,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    final height = MediaQuery.of(context).size.height;
-    final width = MediaQuery.of(context).size.width;
-
-    return RoundedBorderRadiusCardWidget(
-      paddingValue: context.fromWidth(CustomStyle.paddingValue),
-      paddingType: PaddingType.all,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          SizedBox(
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: width / 26,
-                vertical: height / 66,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    children: [
-                      CircleAvatar(
-                        radius: 25,
-                        backgroundImage: AssetImage(JobstopPngImg.photo),
-                      ),
-                      SizedBox(
-                        width: width / 46,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            authorName,
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(
-                            height: height / 150,
-                          ),
-                          Row(
-                            children: [
-                              Image.asset(
-                                JobstopPngImg.watch,
-                                height: height / 56,
-                              ),
-                              SizedBox(
-                                width: width / 46,
-                              ),
-                              Text(
-                                timeAgo,
-                                style: TextStyle(
-                                  fontSize: 10,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                            ],
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                  SizedBox(
-                    height: height / 46,
-                  ),
-                  Text(
-                    postTitle,
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Jobstopcolor.primarycolor,
-                      // Change to your desired color
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                  SizedBox(
-                    height: height / 96,
-                  ),
-                  Text(
-                    postContent,
-                    style: TextStyle(
-                      fontSize: 12,
-                      color: Colors.grey, // Change to your desired color
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }

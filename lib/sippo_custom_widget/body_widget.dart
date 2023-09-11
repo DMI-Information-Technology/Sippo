@@ -25,6 +25,7 @@ class BodyWidget extends StatelessWidget {
   final bool isScrollable;
   final bool isTopScrollable;
   final Widget? connectionStatusBar;
+
   // static const connLostWidget = const NetworkStatusNonWidget();
 
   @override
@@ -34,7 +35,7 @@ class BodyWidget extends StatelessWidget {
             children: [
               Column(
                 children: [
-                  if (topScreen != null && !isTopScrollable)
+                  if (topScreen != null && !isTopScrollable || !isScrollable)
                     Align(
                       alignment: Alignment.topCenter,
                       child: Padding(

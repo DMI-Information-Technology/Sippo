@@ -24,6 +24,7 @@ class HttpClient {
       _buildUri(endpoint, resourceId: resourceId, parameters: queryParameter),
       headers: headers ?? _buildHeaders(),
     );
+
     return response;
   }
 
@@ -42,6 +43,64 @@ class HttpClient {
       body: body,
       headers: _buildHeaders(),
     );
+    return response;
+  }
+
+  Future<http.StreamedResponse> postMultipartRequest(
+    String endpoint, {
+    Map<String, String?>? fields,
+    http.MultipartFile? multipartFile,
+    Map<String, dynamic>? queryParameter,
+    String? resourceId,
+  }) async {
+    final request = http.MultipartRequest(
+        'POST', _buildUri(endpoint, resourceId: resourceId));
+    request.headers.addAll(_buildHeaders(isMultipart: true));
+    if (fields != null) {
+      final data = <String, String>{};
+      fields.forEach((k, v) => {if (v != null) data[k] = v});
+      request.fields.addAll(data);
+      print("HttpClient.postMultipartRequest: fields: $data");
+    }
+
+    if (multipartFile != null) request.files.add(multipartFile);
+    print(
+      "HttpClient.postMultipartRequest: multipart file: ${multipartFile?.contentType}",
+    );
+
+    print("HttpClient.postMultipartRequest: file is uploaded...");
+    final response = await request.send();
+    print("HttpClient.postMultipartRequest: upload file is done!");
+    return response;
+  }
+
+  Future<http.StreamedResponse> putMultipartRequest(
+    String endpoint, {
+    Map<String, String?>? fields,
+    http.MultipartFile? multipartFile,
+    Map<String, dynamic>? queryParameter,
+    String? resourceId,
+  }) async {
+    final request = http.MultipartRequest(
+      'PUT',
+      _buildUri(endpoint, resourceId: resourceId),
+    );
+    request.headers.addAll(_buildHeaders(isMultipart: true));
+    if (fields != null) {
+      final data = <String, String>{};
+      fields.forEach((k, v) => {if (v != null) data[k] = v});
+      request.fields.addAll(data);
+      print("HttpClient.postMultipartRequest: fields: $data");
+    }
+
+    if (multipartFile != null) request.files.add(multipartFile);
+    print(
+      "HttpClient.postMultipartRequest: multipart file: ${multipartFile?.contentType}",
+    );
+
+    print("HttpClient.postMultipartRequest: file is uploaded...");
+    final response = await request.send();
+    print("HttpClient.postMultipartRequest: upload file is done!");
     return response;
   }
 
@@ -91,14 +150,20 @@ class HttpClient {
     return Uri.parse(url.join("/"));
   }
 
-  Map<String, String> _buildHeaders() {
+  Map<String, String> _buildHeaders({bool isMultipart = false}) {
     if (_authToken.trim().isNotEmpty) {
       print(
-          "HttpClient._buildHeaders: secureHeader is built - the token is = $_authToken.");
-      return Header.secureHeader(_authToken);
+          "HttpClient._buildHeaders: secureHeader is built - the token is = $_authToken / is multipart ? $isMultipart");
+      return isMultipart
+          ? Header.secureMultipartHeader(_authToken)
+          : Header.secureHeader(_authToken);
     }
     print("HttpClient._buildHeaders: auth token is empty.");
     print("HttpClient._buildHeaders: defaultHeader is built.");
-    return Header.defaultHeader;
+    return !isMultipart ? Header.defaultHeader : Header.defaultMultipartHeader;
+  }
+
+  void close() {
+    _client.close();
   }
 }

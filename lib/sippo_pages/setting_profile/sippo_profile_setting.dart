@@ -15,7 +15,7 @@ import '../../sippo_custom_widget/confirmation_bottom_sheet.dart';
 import '../../sippo_custom_widget/container_bottom_sheet_widget.dart';
 import '../../sippo_custom_widget/setting_item_widget.dart';
 import '../../sippo_themes/themecontroller.dart';
-import 'job_updatepassword.dart';
+import '../sippo_user_pages/job_updatepassword.dart';
 
 class SippoProfileSetting extends StatefulWidget {
   const SippoProfileSetting({Key? key}) : super(key: key);
