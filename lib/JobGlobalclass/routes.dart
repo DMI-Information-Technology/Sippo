@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:jobspot/SippoControllerBinding/company_binding/company_job_controller_binding.dart';
 import 'package:jobspot/SippoControllerBinding/profile_binding/edit_add_skills_controller_binding.dart';
 import 'package:jobspot/SippoControllerBinding/profile_binding/user_profile_controller_binding.dart';
 import 'package:jobspot/sippo_pages/jopintroductionpages/jobstop_onboarding.dart';
@@ -30,6 +31,7 @@ import '../sippo_pages/Authentication/sippo_user_login.dart';
 import '../sippo_pages/Authentication/sippo_user_signup.dart';
 import '../sippo_pages/setting_profile/sippo_profile_setting.dart';
 import '../sippo_pages/sippo_company_pages/sippo_company_dashboard.dart';
+import '../sippo_pages/sippo_company_pages/sippo_company_edit_add_jobs.dart';
 import '../sippo_pages/sippo_company_pages/sippo_company_profile.dart';
 import '../sippo_pages/sippo_company_pages/sippo_edit_company_profile.dart';
 import '../sippo_pages/sippo_user_pages/edit_add_user_profile_info/job_add_edit_appreciation.dart';
@@ -248,6 +250,11 @@ class SippoRoutes {
       page: () => SippoCompanyEditAddPost(),
       binding: const CompanyPostBindingController(),
     ),
+    GetPage(
+      name: _companyAddJobs,
+      page: () => SippoCompanyEditAddJobs(),
+      binding: const CompanyJobBindingController(),
+    ),
   ];
 
   // company
@@ -258,8 +265,12 @@ class SippoRoutes {
   static const String _companylogin = "/company-login";
   static const String _locationselector = "/location-selector";
   static const String _companyAddPost = "/company-add-post";
+  static const String _companyAddJobs = "/company-add-jobs";
+
   static const String _companyCompanyDisplayJobPost =
-      "/_company-company-display-job-post";
+      "/company-company-display-job-post";
+
+  static String get companyAddJobs => _companyAddJobs;
 
   static String get companyCompanyDisplayJobPost =>
       _companyCompanyDisplayJobPost;

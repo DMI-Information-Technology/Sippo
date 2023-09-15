@@ -1,8 +1,8 @@
 class SpecializationModel {
-  final int id;
-  final String name;
+  final int? id;
+  final String? name;
 
-  SpecializationModel({required this.id, required this.name});
+  SpecializationModel({this.id, this.name});
 
   factory SpecializationModel.fromJson(Map<String, dynamic> json) {
     return SpecializationModel(
@@ -16,5 +16,21 @@ class SpecializationModel {
       "id": this.id,
       "name": this.name,
     };
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is SpecializationModel &&
+          runtimeType == other.runtimeType &&
+          id == other.id &&
+          name == other.name;
+
+  @override
+  int get hashCode => id.hashCode ^ name.hashCode;
+
+  @override
+  String toString() {
+    return 'SpecializationModel{id: $id, name: $name}';
   }
 }

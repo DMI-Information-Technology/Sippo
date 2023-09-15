@@ -128,6 +128,7 @@ class _SippoCompanyDashboardState extends State<SippoCompanyDashboard> {
             undoTitle: "JOB",
             onUndo: () async {
               Get.back();
+              Get.toNamed(SippoRoutes.companyAddJobs);
             },
           )
         ],

@@ -147,7 +147,7 @@ class _ShowCompanyPostsListState extends State<ShowCompanyPostsList> {
               icon: Icon(Icons.delete_forever_outlined),
               onTap: () async {
                 Get.back();
-                await _controller.onDeletePostSubmitted(postId);
+                _showConfirmDeleteDialog(context, postId);
               },
               isHavingTrailingIcon: false,
               isBordered: false,
@@ -175,6 +175,23 @@ class _ShowCompanyPostsListState extends State<ShowCompanyPostsList> {
             ),
           ],
         ),
+      ),
+    );
+  }
+
+  void _showConfirmDeleteDialog(BuildContext context, int? postId) {
+    Get.dialog(
+      CustomAlertDialog(
+        title: 'Delete Post',
+        description: 'Are you sure you want delete this post.',
+        onConfirm: () async {
+          Get.back();
+          await _controller.onDeletePostSubmitted(postId);
+        },
+        onCancel: () {
+          Get.back();
+        },
+
       ),
     );
   }

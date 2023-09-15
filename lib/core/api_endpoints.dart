@@ -6,8 +6,12 @@ const String userLogoutEndpoint = "user/logout";
 const String specializationEndpoint = "specializations";
 const String companyRegisterEndpoint = "auth/company/register";
 const String companyLoginEndpoint = "auth/company/login";
+const String companyLogoutEndpoint = "company/logout";
 const String skillsEndpoint = "skills";
 const String languageEndpoint = "languages";
+const String experienceLevelsEndpoint = "experience-levels";
+const String employmentTypesEndpoint = "employment-types";
+const String companyChangeStatusJobParam = "change-status";
 /////////////////////////////////////////////////////////////
 ///////////// profile resource endpoints ///////////////////
 const String workExperiencesEndpoint = "user/work-experiences";

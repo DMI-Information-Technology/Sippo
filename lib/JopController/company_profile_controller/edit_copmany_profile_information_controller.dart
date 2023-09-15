@@ -27,12 +27,20 @@ class EditCompanyProfileInfoController extends GetxController {
   }
 
   Future<void> updateProfileInfo() async {
+    final newProfileInfo = profileEditState.form
+      ..id = _profileController.company.id;
+    if (newProfileInfo == _profileController.company) {
+      return warningState(true, "Nothing is Changed in Profile Information.");
+    }
     final response = await EditCompanyProfileInfoRepo.updateCompanyProfile(
-      profileEditState.form,
+      newProfileInfo,
     );
     await response.checkStatusResponse(
       onSuccess: (data, _) {
-        if (data != null) _profileController.dashboard.company = data;
+        if (data != null) {
+          _profileController.dashboard.company = data;
+          profileEditState.setAll(_profileController.dashboard.company);
+        }
         successState(true, 'company Profile is updated successfully.');
       },
       onValidateError: (validateError, _) {},

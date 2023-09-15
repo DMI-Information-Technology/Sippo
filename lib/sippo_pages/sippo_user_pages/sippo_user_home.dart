@@ -144,8 +144,8 @@ class _SippoUserHomeState extends State<SippoUserHome> {
                   for (var i = 0; i < jobData.length; i++) ...[
                     SizedBox(width: context.fromWidth(CustomStyle.s)),
                     JobCard(
-                      jobDetails: jobData[i],
-                      onFavoriteClicked: () {
+                      width: width / 1.3,
+                      onActionTap: () {
                         print('${jobData[i].jobName} added to favorites');
                       },
                       onCardClicked: () {

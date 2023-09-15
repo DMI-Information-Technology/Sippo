@@ -2,6 +2,24 @@ class CordLocation {
   String? longitude;
   String? latitude;
 
+  double? get dLatitude {
+    try {
+      return double.parse(latitude ?? '0');
+    } catch (e, s) {
+      print(s);
+      return null;
+    }
+  }
+
+  double? get dLongitude {
+    try {
+      return double.parse(longitude ?? "0");
+    } catch (e, s) {
+      print(s);
+      return null;
+    }
+  }
+
   CordLocation({
     this.longitude,
     this.latitude,
@@ -45,4 +63,15 @@ class CordLocation {
       latitude: map['latitude'] as String,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is CordLocation &&
+          runtimeType == other.runtimeType &&
+          longitude == other.longitude &&
+          latitude == other.latitude;
+
+  @override
+  int get hashCode => longitude.hashCode ^ latitude.hashCode;
 }

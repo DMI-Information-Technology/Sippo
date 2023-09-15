@@ -13,8 +13,10 @@ class AddInfoProfileCard extends StatelessWidget {
     this.profileInfo,
     this.iconAction,
     required this.onAddClicked,
+    this.alignmentFromStart,
   });
 
+  final bool? alignmentFromStart;
   final bool noInfoProfile;
   final VoidCallback onAddClicked;
   final String title;
@@ -30,6 +32,9 @@ class AddInfoProfileCard extends StatelessWidget {
     return RoundedBorderRadiusCardWidget(
       paddingType: PaddingType.all,
       child: Column(
+        crossAxisAlignment: alignmentFromStart == true
+            ? CrossAxisAlignment.start
+            : CrossAxisAlignment.center,
         children: [
           Row(
             children: [

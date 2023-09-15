@@ -36,106 +36,124 @@ class PostWidget extends StatelessWidget {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
 
-    return RoundedBorderRadiusCardWidget(
+    return RoundedBorderRadiusCardWidget.top(
       paddingValue: context.fromWidth(CustomStyle.paddingValue),
-      paddingType: PaddingType.all,
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: [
-          SizedBox(
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: width / 26,
-                vertical: height / 66,
+      paddingType: PaddingType.vertical,
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          vertical: height / CustomStyle.huge2,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: width / 32),
+              child: _buildPostHeader(context),
+            ),
+            SizedBox(height: height / 46),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: width / 32),
+              child: _buildPostContent(context),
+            ),
+            SizedBox(height: height / 96),
+            _buildImagePost(context),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildPostContent(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    double height = size.height;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          postTitle,
+          style: dmsmedium.copyWith(
+            fontSize: FontSize.label(context),
+            color: Jobstopcolor.primarycolor,
+            // Change to your desired color
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        SizedBox(height: height / CustomStyle.huge2),
+        ReadMoreText(
+          postContent,
+          style: dmsregular.copyWith(
+            fontSize: FontSize.label(context),
+            color: Colors.grey, // Change to your desired color
+          ),
+          colorClickableText: Jobstopcolor.primarycolor,
+          trimLines: 3,
+          trimMode: TrimMode.Line,
+          trimCollapsedText: 'read_more'.tr,
+          trimExpandedText: 'hide'.tr,
+          lessStyle: dmsmedium.copyWith(
+            color: Jobstopcolor.primarycolor,
+          ),
+          moreStyle: dmsmedium.copyWith(
+            color: Jobstopcolor.primarycolor,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPostHeader(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    double height = size.height;
+    double width = size.width;
+    return Row(
+      children: [
+        CircleAvatar(
+          radius: 28,
+          backgroundImage: AssetImage(JobstopPngImg.photo),
+        ),
+        SizedBox(
+          width: width / 46,
+        ),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                authorName,
+                style: dmsmedium.copyWith(
+                  fontSize: FontSize.label(context),
+                  color: Colors.black,
+                ),
+                overflow: TextOverflow.ellipsis,
+                maxLines: 2,
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+              SizedBox(
+                height: height / CustomStyle.huge2,
+              ),
+              Row(
                 children: [
-                  Row(
-                    children: [
-                      CircleAvatar(
-                        radius: 25,
-                        backgroundImage: AssetImage(JobstopPngImg.photo),
-                      ),
-                      SizedBox(
-                        width: width / 46,
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            authorName,
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          SizedBox(
-                            height: height / 150,
-                          ),
-                          Row(
-                            children: [
-                              Image.asset(
-                                JobstopPngImg.watch,
-                                height: height / 56,
-                              ),
-                              SizedBox(
-                                width: width / 46,
-                              ),
-                              Text(
-                                timeAgo,
-                                style: TextStyle(
-                                  fontSize: 10,
-                                  color: Colors.grey,
-                                ),
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                      ..._buildShowCompanyMenuOptionsButton()
-                    ],
+                  Image.asset(
+                    JobstopPngImg.watch,
+                    height: height / 56,
                   ),
                   SizedBox(
-                    height: height / 46,
+                    width: width / 46,
                   ),
                   Text(
-                    postTitle,
-                    style: dmsmedium.copyWith(
-                      fontSize: FontSize.label(context),
-                      color: Jobstopcolor.primarycolor,
-                      // Change to your desired color
-                      fontWeight: FontWeight.bold,
+                    timeAgo,
+                    style: TextStyle(
+                      fontSize: 10,
+                      color: Colors.grey,
                     ),
                   ),
-                  SizedBox(height: height / 96),
-                  ReadMoreText(
-                    postContent,
-                    style: dmsregular.copyWith(
-                      fontSize: FontSize.label(context),
-                      color: Colors.grey, // Change to your desired color
-                    ),
-                    colorClickableText: Jobstopcolor.primarycolor,
-                    trimLines: 3,
-                    trimMode: TrimMode.Line,
-                    trimCollapsedText: 'read_more'.tr,
-                    trimExpandedText: 'hide'.tr,
-                    lessStyle: dmsmedium.copyWith(
-                      color: Jobstopcolor.primarycolor,
-                    ),
-                    moreStyle: dmsmedium.copyWith(
-                      color: Jobstopcolor.primarycolor,
-                    ),
-                  ),
-                  SizedBox(height: height / 96),
-                  _buildImagePost(context),
                 ],
-              ),
-            ),
+              )
+            ],
           ),
-        ],
-      ),
+        ),
+        _buildShowCompanyMenuOptionsButton()
+      ],
     );
   }
 
@@ -153,15 +171,12 @@ class PostWidget extends StatelessWidget {
         : const SizedBox.shrink();
   }
 
-  List<Widget> _buildShowCompanyMenuOptionsButton() {
-    return [
-      if (isCompany == true) ...[
-        const Spacer(),
-        InkWell(
-          onTap: onActionButtonPresses,
-          child: Icon(Icons.more_vert_rounded),
-        ),
-      ]
-    ];
+  Widget _buildShowCompanyMenuOptionsButton() {
+    return isCompany == true
+        ? InkWell(
+            onTap: onActionButtonPresses,
+            child: Icon(Icons.more_vert_rounded),
+          )
+        : const SizedBox.shrink();
   }
 }

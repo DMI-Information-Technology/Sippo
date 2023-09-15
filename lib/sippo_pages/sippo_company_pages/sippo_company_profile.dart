@@ -1,8 +1,12 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
+import 'package:jobspot/sippo_custom_widget/expandable_item_list_widget.dart';
+import 'package:readmore/readmore.dart';
 
 import '../../JobGlobalclass/jobstopcolor.dart';
 import '../../JobGlobalclass/sippo_customstyle.dart';
@@ -30,113 +34,283 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
         toolbarHeight: 0,
         backgroundColor: Colors.black87,
       ),
-      body: BodyWidget(
-        isTopScrollable: true,
-        isScrollable: true,
-        connectionStatusBar: Obx(() => ConditionalWidget(
-              !_controller.netController.isConnected,
-              guaranteedBuilder: (_, __) => NetworkStatusNonWidget(),
-            )),
-        topScreen: Obx(
-          () => _buildUserProfileHeader(!_controller.netController.isConnected),
-        ),
-        paddingContent: EdgeInsets.symmetric(
-          horizontal: context.fromWidth(CustomStyle.paddingValue),
-        ),
-        child: Column(
-          children: [
-            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-            AddInfoProfileCard(
-              title: 'Personal Info'.tr,
-              noInfoProfile: true,
-              leading: Image.asset(
-                JobstopPngImg.companysignup,
-                height: context.fromHeight(CustomStyle.l),
-                color: Jobstopcolor.primarycolor,
-                colorBlendMode: BlendMode.srcIn,
-              ),
-              onAddClicked: () {},
-              profileInfo: [],
-            ),
-            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-            AddInfoProfileCard(
-              title: 'Work Places'.tr,
-              noInfoProfile: true,
-              leading: Image.asset(
-                JobstopPngImg.aboutme,
-                height: context.fromHeight(CustomStyle.l),
-                color: Jobstopcolor.primarycolor,
-                colorBlendMode: BlendMode.srcIn,
-              ),
-              onAddClicked: () {},
-              profileInfo: [],
-            ),
-            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-            AddInfoProfileCard(
-              title: 'Website Company'.tr,
-              noInfoProfile: true,
-              leading: Image.asset(
-                JobstopPngImg.aboutme,
-                height: context.fromHeight(CustomStyle.l),
-                color: Jobstopcolor.primarycolor,
-                colorBlendMode: BlendMode.srcIn,
-              ),
-              onAddClicked: () {},
-              profileInfo: [],
-            ),
-            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-            AddInfoProfileCard(
-              title: 'Company specializations'.tr,
-              noInfoProfile: true,
-              leading: Image.asset(
-                JobstopPngImg.aboutme,
-                height: context.fromHeight(CustomStyle.l),
-                color: Jobstopcolor.primarycolor,
-                colorBlendMode: BlendMode.srcIn,
-              ),
-              onAddClicked: () {},
-              profileInfo: [],
-            ),
-            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-            AddInfoProfileCard(
-              title: 'Employee Count'.tr,
-              noInfoProfile: true,
-              leading: Image.asset(
-                JobstopPngImg.aboutme,
-                height: context.fromHeight(CustomStyle.l),
-                color: Jobstopcolor.primarycolor,
-                colorBlendMode: BlendMode.srcIn,
-              ),
-              onAddClicked: () {},
-              profileInfo: [],
-            ),
-            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-            AddInfoProfileCard(
-              title: 'Establishment Date'.tr,
-              noInfoProfile: true,
-              leading: Image.asset(
-                JobstopPngImg.aboutme,
-                height: context.fromHeight(CustomStyle.l),
-                color: Jobstopcolor.primarycolor,
-                colorBlendMode: BlendMode.srcIn,
-              ),
-              onAddClicked: () {},
-              profileInfo: [],
-            ),
-            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-          ],
+      body: RefreshIndicator(
+        onRefresh: () async {
+          await _controller.dashboard.refreshUserProfileInfo();
+        },
+        child: BodyWidget(
+          isTopScrollable: true,
+          isScrollable: true,
+          connectionStatusBar: Obx(() => ConditionalWidget(
+                !_controller.netController.isConnected,
+                guaranteedBuilder: (_, __) => NetworkStatusNonWidget(),
+              )),
+          topScreen: _buildUserProfileHeader(),
+          paddingContent: EdgeInsets.symmetric(
+            horizontal: context.fromWidth(CustomStyle.paddingValue),
+          ),
+          child: Column(
+            children: [
+              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+              _buildBioCompanyProfile(context),
+              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+              _buildWorkPlacesCompany(context),
+              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+              _buildWebsiteCompanyLink(context),
+              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+              _buildCompanySpecializations(context),
+              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+              _buildEmployeeCompanyCount(context),
+              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+              _buildEstablishmentCompanyDate(context),
+              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildUserProfileHeader([bool isLostConnect = false]) {
-    return UserProfileHeaderWidget(
-      showConnectionLostBar: isLostConnect,
-      profileInfo: _controller.company,
-      onSettingsPressed: () => Get.toNamed(SippoRoutes.sippoprofilesetting),
-      onEditProfilePressed: () => Get.toNamed(SippoRoutes.editCompanyProfile),
-      profileImage: JobstopPngImg.photo,
+  Widget _buildEstablishmentCompanyDate(BuildContext context) {
+
+    return Obx(() => AddInfoProfileCard(
+          title: 'Establishment Date'.tr,
+          noInfoProfile:
+              _controller.company.establishmentDate?.isEmpty == true ||
+                  _controller.company.establishmentDate?.isEmpty == null,
+          leading: Image.asset(
+            JobstopPngImg.aboutme,
+            height: context.fromHeight(CustomStyle.l),
+            color: Jobstopcolor.primarycolor,
+            colorBlendMode: BlendMode.srcIn,
+          ),
+          iconAction: _controller.company.establishmentDate != null
+              ? Icon(
+                  Icons.mode_edit_outline_outlined,
+                  size: context.fromHeight(CustomStyle.l),
+                  color: Jobstopcolor.primarycolor,
+                )
+              : null,
+          onAddClicked: () {},
+          profileInfo: [],
+        ));
+  }
+
+  Widget _buildEmployeeCompanyCount(BuildContext context) {
+    return Obx(() => AddInfoProfileCard(
+          title: 'Employee Count'.tr,
+          noInfoProfile: _controller.company.employeesCount == null,
+          leading: Image.asset(
+            JobstopPngImg.aboutme,
+            height: context.fromHeight(CustomStyle.l),
+            color: Jobstopcolor.primarycolor,
+            colorBlendMode: BlendMode.srcIn,
+          ),
+          iconAction: _controller.company.employeesCount != null
+              ? Icon(
+                  Icons.mode_edit_outline_outlined,
+                  size: context.fromHeight(CustomStyle.l),
+                  color: Jobstopcolor.primarycolor,
+                )
+              : null,
+          alignmentFromStart: true,
+          onAddClicked: () {
+            Get.toNamed(SippoRoutes.editCompanyProfile);
+          },
+          profileInfo: [
+            ConditionalWidget(
+              (_controller.company.employeesCount ?? 0) > 0,
+              data: _controller.company.employeesCount,
+              guaranteedBuilder: (context, data) {
+                return AutoSizeText(
+                  "${data ?? 0} employee work in the company.",
+                  style: dmsregular,
+                );
+              },
+              avoidBuilder: (context, data) {
+                return AutoSizeText(
+                  "No employee yet in the company.",
+                  style: dmsregular,
+                );
+              },
+            )
+          ],
+        ));
+  }
+
+  Widget _buildCompanySpecializations(BuildContext context) {
+    final profileState = _controller.profileState;
+
+    return Obx(() => AddInfoProfileCard(
+          title: 'Company specializations'.tr,
+          noInfoProfile: _controller.company.specializations?.isEmpty == true,
+          leading: Image.asset(
+            JobstopPngImg.aboutme,
+            height: context.fromHeight(CustomStyle.l),
+            color: Jobstopcolor.primarycolor,
+            colorBlendMode: BlendMode.srcIn,
+          ),
+          iconAction: _controller.company.specializations?.isNotEmpty == true
+              ? Icon(
+                  Icons.mode_edit_outline_outlined,
+                  size: context.fromHeight(CustomStyle.l),
+                  color: Jobstopcolor.primarycolor,
+                )
+              : null,
+          alignmentFromStart: true,
+          onAddClicked: () {},
+          profileInfo: [
+            ExpandableItemList.wrapBuilder(
+              isExpandable:
+                  (_controller.company.specializations?.length ?? 0) > 1,
+              itemCount: _controller.company.specializations?.length ?? 0,
+              expandItems: profileState.showAllSpecializations,
+              spacing: context.fromHeight(CustomStyle.xxxl),
+              alignmentFromStart: true,
+              itemBuilder: (context, index) {
+                final item = _controller.company.specializations?[index];
+                return _buildChips(
+                  context,
+                  item?.name ?? 'unknown',
+                );
+              },
+              onExpandClicked: () {
+                profileState.switchShowAllSpecializations();
+              },
+            )
+          ],
+        ));
+  }
+
+  Widget _buildWebsiteCompanyLink(BuildContext context) {
+    return Obx(() => AddInfoProfileCard(
+          title: 'Website Company'.tr,
+          noInfoProfile: _controller.company.website?.isEmpty == true ||
+              _controller.company.website?.isEmpty == null,
+          leading: Image.asset(
+            JobstopPngImg.aboutme,
+            height: context.fromHeight(CustomStyle.l),
+            color: Jobstopcolor.primarycolor,
+            colorBlendMode: BlendMode.srcIn,
+          ),
+          onAddClicked: () {
+            Get.toNamed(SippoRoutes.editCompanyProfile);
+          },
+          iconAction: _controller.company.website != null
+              ? Icon(
+                  Icons.mode_edit_outline_outlined,
+                  size: context.fromHeight(CustomStyle.l),
+                  color: Jobstopcolor.primarycolor,
+                )
+              : null,
+          profileInfo: [
+            InkWell(
+              onTap: () {},
+              child: AutoSizeText(
+                _controller.company.website.toString(),
+                style: dmsregular.copyWith(
+                  color: Jobstopcolor.primarycolor,
+                  decoration: TextDecoration.underline,
+                  decorationColor: Jobstopcolor.primarycolor,
+                ),
+              ),
+            )
+          ],
+        ));
+  }
+
+  Widget _buildWorkPlacesCompany(BuildContext context) {
+    final profileState = _controller.profileState;
+
+    return Obx(() {
+      return AddInfoProfileCard(
+        title: 'Work Places'.tr,
+        noInfoProfile: _controller.company.locations?.isEmpty == true ||
+            _controller.company.locations?.isEmpty == null,
+        leading: Image.asset(
+          JobstopPngImg.aboutme,
+          height: context.fromHeight(CustomStyle.l),
+          color: Jobstopcolor.primarycolor,
+          colorBlendMode: BlendMode.srcIn,
+        ),
+        onAddClicked: () {},
+        profileInfo: [
+          ExpandableItemList(
+            isExpandable: (_controller.company.locations?.length ?? 0) > 1,
+            itemCount: _controller.company.locations?.length ?? 0,
+            expandItems: profileState.showAllLocations,
+            spacing: context.fromHeight(CustomStyle.xxxl),
+            alignmentFromStart: true,
+            itemBuilder: (context, index) {
+              final item = _controller.company.locations?[index];
+              return AutoSizeText(
+                item?.address ?? 'unknown',
+                style: dmsregular.copyWith(
+                  color: Jobstopcolor.primarycolor,
+                ),
+              );
+            },
+            onExpandClicked: () {
+              profileState.switchShowAllLocations();
+            },
+          ),
+        ],
+      );
+    });
+  }
+
+  Widget _buildBioCompanyProfile(BuildContext context) {
+    return Obx(() => AddInfoProfileCard(
+          title: 'Personal Info'.tr,
+          noInfoProfile: _controller.company.bio?.isEmpty == true ||
+              _controller.company.bio?.isEmpty == null,
+          leading: Image.asset(
+            JobstopPngImg.companysignup,
+            height: context.fromHeight(CustomStyle.l),
+            color: Jobstopcolor.primarycolor,
+            colorBlendMode: BlendMode.srcIn,
+          ),
+          iconAction: _controller.company.bio != null
+              ? Icon(
+                  Icons.mode_edit_outline_outlined,
+                  size: context.fromHeight(CustomStyle.l),
+                  color: Jobstopcolor.primarycolor,
+                )
+              : null,
+          onAddClicked: () {},
+          profileInfo: [
+            ReadMoreText(
+              textAlign: TextAlign.start,
+              _controller.company.bio.toString(),
+              style: dmsregular,
+            )
+          ],
+        ));
+  }
+
+  Widget _buildUserProfileHeader() {
+    return Obx(() => UserProfileHeaderWidget(
+          showConnectionLostBar: !_controller.netController.isConnected,
+          profileInfo: _controller.company,
+          onSettingsPressed: () => Get.toNamed(SippoRoutes.sippoprofilesetting),
+          onEditProfilePressed: () =>
+              Get.toNamed(SippoRoutes.editCompanyProfile),
+          profileImage: JobstopPngImg.photo,
+        ));
+  }
+
+  Widget _buildChips(
+    BuildContext context,
+    String value,
+  ) {
+    return Chip(
+      backgroundColor: Jobstopcolor.grey2,
+      label: Text(
+        value,
+        style: dmsregular.copyWith(
+          color: Jobstopcolor.textColor,
+        ),
+      ),
     );
   }
 }

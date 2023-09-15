@@ -12,6 +12,26 @@ void showAlert(BuildContext context, Widget widget) {
   );
 }
 
+String calculateElapsedTime(int startTimeMillis) {
+  int currentTimeMillis = DateTime.now().millisecondsSinceEpoch;
+  Duration duration = Duration(
+    milliseconds: startTimeMillis - currentTimeMillis,
+  );
+  if (duration.inDays > 0) {
+    return '${duration.inDays} days ago';
+  }
+  if (duration.inHours > 0) {
+    return '${duration.inHours} hours ago';
+  }
+  if (duration.inMinutes > 0) {
+    return '${duration.inMinutes} minutes ago';
+  }
+  if (duration.inSeconds > 0) {
+    return '${duration.inSeconds} seconds ago';
+  }
+  return 'just now';
+}
+
 String otpPhoneNumberFormat(String phoneNumber, {String countryCode = "218"}) {
   return "+$countryCode${phoneNumber.substring(1)}";
 }
@@ -75,4 +95,11 @@ Future<Timer?> startTimer(
     },
   );
   return _timer;
+}
+
+bool listEquality<T>(List<T>? list1, List<T>? list2) {
+  if (list1 == null && list2 == null) return true;
+  if (list1 == null || list2 == null) return false;
+  if (list1.length != list2.length) return false;
+  return list2.every((e) => list1.contains(e) == true) == true;
 }

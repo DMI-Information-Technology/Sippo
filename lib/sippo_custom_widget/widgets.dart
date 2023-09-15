@@ -11,7 +11,7 @@ import '../JobGlobalclass/sippo_customstyle.dart';
 import '../JobGlobalclass/sippo_customstyle.dart' as customStyles;
 
 class CustomAlertDialog extends StatelessWidget {
-  final String imageAsset;
+  final String? imageAsset;
   final String title;
   final String? description;
   final String? confirmBtnTitle;
@@ -23,35 +23,39 @@ class CustomAlertDialog extends StatelessWidget {
 
   const CustomAlertDialog({
     super.key,
-    required this.imageAsset,
+    this.imageAsset,
     required this.title,
     this.description,
     this.confirmBtnTitle = "ok",
     this.confirmBtnColor = Jobstopcolor.primarycolor,
     this.onConfirm,
     this.cancelBtnTitle = "cancel",
-    this.cancelBtnColor = Jobstopcolor.primarycolor,
+    this.cancelBtnColor = Jobstopcolor.lightprimary,
     this.onCancel,
   });
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery
+        .of(context)
+        .size;
     double height = size.height;
     // double width = size.width;
     return AlertDialog(
       shape:
-          ContinuousRectangleBorder(borderRadius: BorderRadius.circular(64.0)),
+      ContinuousRectangleBorder(borderRadius: BorderRadius.circular(height / 32)),
       contentPadding: EdgeInsets.all(height / 42),
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Image.asset(imageAsset, height: height / 4),
-          SizedBox(height: height / 42),
+          if(imageAsset != null)...[
+            Image.asset(imageAsset!, height: height / 4),
+            SizedBox(height: height / 42),
+          ],
           AutoSizeText(
             title,
             style: dmsbold.copyWith(
-              fontSize: FontSize.title2(context),
+              fontSize: FontSize.title3(context),
               color: Jobstopcolor.primarycolor,
             ),
             textAlign: TextAlign.center,
@@ -83,7 +87,7 @@ class CustomAlertDialog extends StatelessWidget {
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: confirmBtnColor,
-              shape: customStyles.circularBorderedShapeButton(height / 32),
+              shape: customStyles.circularBorderedShapeButton(height / 64),
             ),
             child: Text(
               confirmBtnTitle ?? "",
@@ -96,12 +100,12 @@ class CustomAlertDialog extends StatelessWidget {
               onCancel!();
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: confirmBtnColor,
-              shape: customStyles.circularBorderedShapeButton(height / 32),
+              backgroundColor: cancelBtnColor,
+              shape: customStyles.circularBorderedShapeButton(height / 64),
             ),
             child: Text(
               cancelBtnTitle ?? "",
-              style: dmsregular.copyWith(color: Jobstopcolor.white),
+              style: dmsregular.copyWith(color: Jobstopcolor.primarycolor),
             ),
           ),
       ],
@@ -199,7 +203,9 @@ class _PasswordInputFieldState extends State<PasswordInputField> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery
+        .of(context)
+        .size;
     double height = size.height;
     return TextFormField(
       controller: widget.controller,
@@ -256,7 +262,9 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery
+        .of(context)
+        .size;
     double height = size.height;
     double width = size.width;
     return InkWell(
@@ -340,15 +348,16 @@ class PhoneResetPasswordCard extends StatelessWidget {
   final Color? borderColor;
   final String description;
 
-  const PhoneResetPasswordCard(
-      {super.key,
-      required this.phoneNumber,
-      this.borderColor,
-      this.description = ""});
+  const PhoneResetPasswordCard({super.key,
+    required this.phoneNumber,
+    this.borderColor,
+    this.description = ""});
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery
+        .of(context)
+        .size;
     double height = size.height;
     return Container(
       decoration: BoxDecoration(
@@ -356,8 +365,8 @@ class PhoneResetPasswordCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(50),
         border: borderColor != null
             ? Border.all(
-                color: borderColor ?? Colors.transparent,
-              )
+          color: borderColor ?? Colors.transparent,
+        )
             : null,
       ),
       child: ListTile(
@@ -424,7 +433,7 @@ class CustomChip extends StatelessWidget {
         height: height,
         width: width,
         padding:
-            paddingValue != null ? EdgeInsets.all(paddingValue ?? 0.0) : null,
+        paddingValue != null ? EdgeInsets.all(paddingValue ?? 0.0) : null,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(borderRadius),
@@ -459,9 +468,12 @@ class InputBorderedField extends StatelessWidget {
     this.borderRadiusValue,
     this.verticalPaddingValue,
     this.gController,
+    this.fillColor,
+    this.maxLength, this.fontColor,
     // this.isLoading = false,
   });
 
+  final Color? fontColor;
   final double? verticalPaddingValue;
   final String? Function(String? value)? validator;
   final GetXTextEditingController? gController;
@@ -482,6 +494,8 @@ class InputBorderedField extends StatelessWidget {
   final Widget? prefixIcon;
   final TextInputAction? textInputAction;
   final double? borderRadiusValue;
+  final Color? fillColor;
+  final int? maxLength;
 
   // final bool isLoading;
 
@@ -495,14 +509,18 @@ class InputBorderedField extends StatelessWidget {
         // color: Jobstopcolor.white,
       ),
       child: TextFormField(
+        maxLength: maxLength,
         textInputAction: textInputAction,
         initialValue: initialValue,
         readOnly: readOnly,
         controller: gController?.controller ?? controller,
-        style: dmsregular.copyWith(fontSize: fontSize, color: Colors.black87),
+        style: dmsregular.copyWith(
+            fontSize: fontSize, color: fontColor ?? Colors.black87),
         cursorColor: Jobstopcolor.grey,
         textAlignVertical: TextAlignVertical.center,
         decoration: InputDecoration(
+          counterStyle: TextStyle(height: 0.0),
+          counterText: '',
           contentPadding: EdgeInsets.symmetric(
             vertical: verticalPaddingValue ?? 0.0,
             horizontal: context.fromWidth(CustomStyle.paddingValue),
@@ -518,7 +536,7 @@ class InputBorderedField extends StatelessWidget {
             borderRadius: BorderRadius.circular(borderRadiusValue ?? 15),
             borderSide: BorderSide.none,
           ),
-          fillColor: Jobstopcolor.white,
+          fillColor: fillColor ?? Jobstopcolor.white,
           suffixIcon: suffixIcon,
           prefixIcon: prefixIcon,
         ),
@@ -532,3 +550,53 @@ class InputBorderedField extends StatelessWidget {
     );
   }
 }
+
+class InputCloser extends StatelessWidget {
+  const InputCloser({
+    super.key,
+    required this.child,
+    required this.onCloseTap,
+    this.inputDone = false,
+    this.paddingHButtonValue,
+    this.paddingVButtonValue,
+  });
+
+  final double? paddingHButtonValue;
+  final double? paddingVButtonValue;
+  final Widget child;
+  final VoidCallback onCloseTap;
+  final bool inputDone;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Expanded(
+          child: child,
+        ),
+        InkWell(
+          onTap: onCloseTap,
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+                horizontal: paddingHButtonValue ??
+                    context.fromWidth(
+                      CustomStyle.xxxl,
+                    ),
+                vertical: paddingVButtonValue ?? 0.0),
+            child: Icon(
+              inputDone ? Icons.done_rounded : Icons.close_rounded,
+              size: context.fromWidth(CustomStyle.xs),
+            ),
+          ),
+        )
+      ],
+    );
+  }
+}
+
+// extension ObxWidget on Widget {
+//   Widget obx() {
+//     return Obx(() => this);
+//   }
+// }

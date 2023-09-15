@@ -6,9 +6,11 @@ import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JopController/dashboards_controller/company_dashboard_controller.dart';
+import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 
 import '../../JobGlobalclass/sippo_customstyle.dart';
 import '../../JobGlobalclass/text_font_size.dart';
+import '../../sippo_custom_widget/job_card_widget.dart';
 import '../../sippo_custom_widget/widgets.dart';
 import '../../sippo_data/model/profile_model/profile_widget_model/jobstop_jobdetailspost.dart';
 
@@ -68,8 +70,6 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
         'Full-time',
         'Remote',
         'Experienced',
-        'Experienced',
-        'Experienced'
       ],
     )
     // Add more job data as needed...
@@ -80,110 +80,110 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
     Size size = MediaQuery.of(context).size;
     double height = size.height;
     double width = size.width;
+
     return Scaffold(
       appBar: _buildHomeAppBar(),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            vertical: height / 32,
-          ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildWelcomeUser(context),
-              SizedBox(height: height / 36),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: width / 26,
-                ),
-                child: _buildAdsBoard(),
+      body: BodyWidget(
+        paddingContent: EdgeInsets.only(
+            bottom: context.fromHeight(CustomStyle.paddingValue)),
+        isScrollable: true,
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            _buildWelcomeUser(context),
+            SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: context.fromWidth(CustomStyle.paddingValue),
               ),
-              SizedBox(height: height / 36),
-              SizedBox(
-                height: height / 16,
-                child: ListView.separated(
-                  scrollDirection: Axis.horizontal,
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    return Row(
-                      children: [
-                        SizedBox(width: width / 64),
-                        CustomChip(
-                          height: height,
-                          onTap: () {},
-                          child: Text(
-                            "abcdefghijk",
-                            style:
-                                dmsregular.copyWith(color: Jobstopcolor.black),
-                          ),
-                          backgroundColor: Jobstopcolor.grey2,
-                          borderRadius: height / 25,
-                          paddingValue: height / 64,
+              child: _buildAdsBoard(),
+            ),
+            SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
+            SizedBox(
+              height: height / 16,
+              child: ListView.separated(
+                padding: EdgeInsets.symmetric(
+                  horizontal: context.fromWidth(CustomStyle.paddingValue),
+                ),
+                scrollDirection: Axis.horizontal,
+                itemCount: 10,
+                itemBuilder: (context, index) {
+                  return Row(
+                    children: [
+                      SizedBox(width: width / 64),
+                      CustomChip(
+                        height: height,
+                        onTap: () {},
+                        child: Text(
+                          "Senior",
+                          style: dmsregular.copyWith(color: Jobstopcolor.black),
                         ),
-                      ],
-                    );
-                  },
-                  separatorBuilder: (context, index) => SizedBox(
-                    width: width / 25,
-                  ),
+                        backgroundColor: Jobstopcolor.grey2,
+                        borderRadius: height / 64,
+                        paddingValue: height / 64,
+                      ),
+                    ],
+                  );
+                },
+                separatorBuilder: (context, index) => SizedBox(
+                  width: width / 32,
                 ),
               ),
-              SizedBox(
-                height: height / 36,
+            ),
+            SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: context.fromWidth(CustomStyle.paddingValue),
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: width / 26,
-                ),
-                child: Text("Find_Your_Job".tr,
-                    style: dmsbold.copyWith(fontSize: 16)),
+              child: Text("Find_Your_Job".tr,
+                  style: dmsbold.copyWith(fontSize: 16)),
+            ),
+            SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: context.fromWidth(CustomStyle.paddingValue),
               ),
-              SizedBox(
-                height: height / 36,
+              child: FindYorJopDashBoardCards(),
+            ),
+            SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: context.fromWidth(CustomStyle.paddingValue),
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: width / 26,
-                ),
-                child: FindYorJopDashBoardCards(),
-              ),
-              SizedBox(
-                height: height / 36,
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: width / 26,
-                ),
-                child: Text("Recent_Job_List".tr,
-                    style: dmsbold.copyWith(fontSize: 16)),
-              ),
-              SizedBox(
-                height: height / 36,
-              ),
-              // SingleChildScrollView(
-              //   scrollDirection: Axis.horizontal,
-              //   child: Row(
-              //     children: [
-              //       for (var i = 0; i < jobData.length; i++)
-              //         Row(
-              //           children: [
-              //             SizedBox(width: width / 26),
-              //             JobCard(
-              //               jobDetails: jobData[i],
-              //               onFavoriteClicked: () {
-              //                 print('${jobData[i].jobName} added to favorites');
-              //               },
-              //               onCardClicked: () {},
-              //             ),
-              //           ],
-              //         ),
-              //       SizedBox(width: width / 26),
-              //     ],
-              //   ),
-              // ),
-            ],
-          ),
+              child: Text("Recent_Job_List".tr,
+                  style: dmsbold.copyWith(fontSize: 16)),
+            ),
+            SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
+            FutureBuilder(
+                future: Future.value(jobData),
+                builder: (context, snapshot) {
+                  final data = snapshot.data;
+                  if (data == null) return const SizedBox.shrink();
+                  return SizedBox(
+                    height: height / 3.8,
+                    child: ListView.separated(
+                      scrollDirection: Axis.horizontal,
+                      itemCount: data.length,
+                      padding: EdgeInsets.symmetric(
+                          horizontal: width / CustomStyle.spaceBetween),
+                      itemBuilder: (context, index) {
+                        return JobCard(
+                          width: context.width / 1.3,
+                          onActionTap: () {
+                            print('${data[index].jobName} added to favorites');
+                          },
+                          onCardClicked: () {},
+                          canApply: false,
+                        );
+                      },
+                      separatorBuilder: (context, index) {
+                        return SizedBox(width: context.width / 32);
+                      },
+                    ),
+                  );
+                })
+          ],
         ),
       ),
       backgroundColor: Jobstopcolor.backgroudHome,
@@ -210,11 +210,12 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
                 width: width / 52,
               ),
               IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.notifications_none,
-                    size: height / 25,
-                  )),
+                onPressed: () {},
+                icon: Icon(
+                  Icons.notifications_none,
+                  size: height / 25,
+                ),
+              ),
               SizedBox(
                 width: width / 52,
               ),
@@ -269,9 +270,7 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
     Size size = MediaQuery.of(context).size;
     double height = size.height;
     double width = size.width;
-    size = MediaQuery.of(context).size;
-    height = size.height;
-    width = size.width;
+
     return Container(
       decoration: BoxDecoration(
           color: Jobstopcolor.primarycolor,

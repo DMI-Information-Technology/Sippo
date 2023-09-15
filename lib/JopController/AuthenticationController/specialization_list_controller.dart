@@ -61,14 +61,24 @@ class SpecializationCompanyController extends GetxController {
 
   final _selectedSpecialIndices = <int>[].obs;
 
-  List<String> get companySpecializationsName =>
-      _companySpecializations.isNotEmpty
-          ? _companySpecializations.toList().map((e) => e.name).toList()
-          : [];
+  List<String> get companySpecializationsName {
+    final result = _companySpecializations.isNotEmpty
+        ? _companySpecializations.map((e) => e.name).toList()
+        : [];
+    final newList = <String>[];
+    for (var i in result) if (i != null) newList.add(i);
 
-  List<int> get selectedIdSpecializations => _companySpecializations.isNotEmpty
-      ? selectedIndices.map((e) => _companySpecializations[e].id).toList()
-      : [];
+    return newList;
+  }
+
+  List<int> get selectedIdSpecializations {
+    final result = _companySpecializations.isNotEmpty
+        ? selectedIndices.map((e) => _companySpecializations[e].id).toList()
+        : <int>[];
+    final newList = <int>[];
+    for (var i in result) if (i != null) newList.add(i);
+    return newList;
+  }
 
   List<int> get selectedIndices => _selectedSpecialIndices.toList();
 

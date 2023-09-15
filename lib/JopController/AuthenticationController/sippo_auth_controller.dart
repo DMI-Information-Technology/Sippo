@@ -41,8 +41,7 @@ class AuthController extends GetxController {
   }
 
   Future<void> logout() async {
-    await userLogout();
-    if (states.isSuccess) await GlobalStorage.removeSavedToken();
+    if (await userLogout()) await GlobalStorage.removeSavedToken();
   }
 
   void set loadingState(bool value) {
@@ -76,22 +75,24 @@ class AuthController extends GetxController {
     // await GlobalStorage.saveLoggedUser(response?.data?.model?.toJson());
   }
 
-  Future<void> userLogout() async {
-    if (_netController.isConnectionLostWithDialog()) return;
+  Future<bool> userLogout() async {
+    if (_netController.isConnectionLostWithDialog()) return false;
     loadingState = true;
     final response = await AuthRepo.userLogout();
     loadingState = false;
-    if (response == null) {
-      print("null response");
+      print(response);
+    if (response?["error"]!=null) {
+      print(response?["error"]);
       _states.value = states.copyWith(
         isSuccess: false,
         isError: true,
         message: "something wrong happened, log out is not possible",
       );
-      return;
+      return false;
     }
     print("AuthController.userLogout success: $response");
     successState = true;
+    return true;
     // await GlobalStorage.saveLoggedUser(response?.data?.model?.toJson());
   }
 

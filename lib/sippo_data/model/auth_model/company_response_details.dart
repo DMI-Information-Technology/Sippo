@@ -1,7 +1,8 @@
-import 'package:jobspot/sippo_data/model/auth_model/cord_location.dart';
 import 'package:jobspot/sippo_data/model/auth_model/entity_model.dart';
 import 'package:jobspot/utils/app_use.dart';
 
+import '../../../utils/helper.dart';
+import '../profile_model/company_profile_resource_model/work_location_model.dart';
 import '../specializations_model/specializations_model.dart';
 
 class CompanyResponseDetailsModel extends EntityModel {
@@ -29,7 +30,7 @@ class CompanyResponseDetailsModel extends EntityModel {
       email: json['email'],
       city: json['city'],
       locations: List.of(json["locations"] ?? [])
-          .map((cord) => CordLocation.fromJson(cord))
+          .map((loc) => WorkLocationModel.fromJson(loc))
           .toList(),
       website: json['website'],
       bio: json['bio'],
@@ -44,7 +45,7 @@ class CompanyResponseDetailsModel extends EntityModel {
   }
 
   final String? city;
-  final List<CordLocation>? locations;
+  final List<WorkLocationModel>? locations;
   final String? website;
   final String? bio;
   final int? employeesCount;
@@ -58,7 +59,7 @@ class CompanyResponseDetailsModel extends EntityModel {
     String? secondaryPhone,
     String? email,
     String? city,
-    List<CordLocation>? locations,
+    List<WorkLocationModel>? locations,
     String? website,
     String? bio,
     int? employeesCount,
@@ -89,8 +90,8 @@ class CompanyResponseDetailsModel extends EntityModel {
       'secondary_phone': secondaryPhone,
       'email': email,
       'city': city,
-      "latitude": locations?.first.latitude,
-      "longitude": locations?.first.longitude,
+      "latitude": locations?.firstOrNull?.location?.latitude,
+      "longitude": locations?.firstOrNull?.location?.longitude,
       'website': website,
       'employees_count': employeesCount,
       'establishment_date': establishmentDate,
@@ -113,22 +114,23 @@ class CompanyResponseDetailsModel extends EntityModel {
   AppUsingType get userType => AppUsingType.company;
 
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is CompanyResponseDetailsModel &&
-          runtimeType == other.runtimeType &&
-          id == other.id &&
-          name == other.name &&
-          phone == other.phone &&
-          secondaryPhone == other.secondaryPhone &&
-          email == other.email &&
-          city == other.city &&
-          locations == other.locations &&
-          website == other.website &&
-          bio == other.bio &&
-          employeesCount == other.employeesCount &&
-          establishmentDate == other.establishmentDate &&
-          specializations == other.specializations;
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        other is CompanyResponseDetailsModel &&
+            runtimeType == other.runtimeType &&
+            id == other.id &&
+            name == other.name &&
+            phone == other.phone &&
+            secondaryPhone == other.secondaryPhone &&
+            email == other.email &&
+            city == other.city &&
+            website == other.website &&
+            bio == other.bio &&
+            employeesCount == other.employeesCount &&
+            establishmentDate == other.establishmentDate &&
+            listEquality(locations, other.locations) &&
+            listEquality(specializations, other.specializations);
+  }
 
   @override
   int get hashCode =>
@@ -144,4 +146,9 @@ class CompanyResponseDetailsModel extends EntityModel {
       employeesCount.hashCode ^
       establishmentDate.hashCode ^
       specializations.hashCode;
+
+  @override
+  String toString() {
+    return 'CompanyResponseDetailsModel{id: $id,name: $name, phone: $phone, secondaryPhone: $secondaryPhone, email: $email, city: $city, locations: $locations, website: $website, bio: $bio, employeesCount: $employeesCount, establishmentDate: $establishmentDate, specializations: $specializations}';
+  }
 }

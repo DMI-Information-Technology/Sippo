@@ -22,6 +22,11 @@ class PaginationModel<T> {
   final List<T>? data;
   final Links? links;
   final Meta? meta;
+
+  @override
+  String toString() {
+    return 'PaginationModel{data: $data, links: $links, meta: $meta}';
+  }
 }
 
 class Meta {

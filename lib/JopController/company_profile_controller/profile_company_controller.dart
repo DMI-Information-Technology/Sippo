@@ -17,7 +17,7 @@ class ProfileCompanyController extends GetxController {
 
   // late final StreamSubscription<bool>? _connectionSubscription;
 
-  // final profileState = ProfileCompanyState();
+  final profileState = ProfileCompanyState();
 
   Future<void> fetchResources() async {
     // final List<Future> futures =
@@ -49,4 +49,28 @@ class ProfileCompanyController extends GetxController {
   }
 }
 
-// class ProfileCompanyState {}
+class ProfileCompanyState {
+  final _showAllLocations = false.obs;
+
+  bool get showAllLocations => _showAllLocations.isTrue;
+
+  void set showAllLocations(bool value) {
+    _showAllLocations.value = value;
+  }
+
+  void switchShowAllLocations() {
+    _showAllLocations.toggle();
+  }
+
+  final _showAllSpecializations = false.obs;
+
+  bool get showAllSpecializations => _showAllSpecializations.isTrue;
+
+  void set showAllSpecializations(bool value) {
+    _showAllLocations.value = value;
+  }
+
+  void switchShowAllSpecializations() {
+    _showAllSpecializations.toggle();
+  }
+}

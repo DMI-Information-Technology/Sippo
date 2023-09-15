@@ -115,8 +115,7 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
         profileInfo: [
           ExpandableItemList(
             isExpandable: _controller.profileState.appreciations.length > 1,
-            more: _controller.profileState.showAllAppreciations,
-            titleExpandColor: Jobstopcolor.primarycolor,
+            expandItems: _controller.profileState.showAllAppreciations,
             spacing: context.fromHeight(CustomStyle.xxxl),
             itemCount: _controller.profileState.appreciations.length,
             itemBuilder: (BuildContext context, int index) {
@@ -173,8 +172,7 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
         profileInfo: [
           ExpandableItemList.wrapBuilder(
             isExpandable: _controller.profileState.languages.length > 1,
-            more: _controller.profileState.showAllLangs,
-            titleExpandColor: Jobstopcolor.primarycolor,
+            expandItems: _controller.profileState.showAllLangs,
             spacing: height / 220,
             itemCount: _controller.profileState.showAllLangs
                 ? _controller.profileState.languages.length
@@ -227,8 +225,7 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
         profileInfo: [
           ExpandableItemList.wrapBuilder(
             isExpandable: _controller.profileState.skillsList.length > 1,
-            more: _controller.profileState.showAllSkills,
-            titleExpandColor: Jobstopcolor.primarycolor,
+            expandItems: _controller.profileState.showAllSkills,
             spacing: context.height / 220,
             itemCount: _controller.profileState.skillsList.length,
             itemBuilder: (BuildContext context, int index) {
@@ -270,8 +267,7 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
           profileInfo: [
             ExpandableItemList(
               isExpandable: _controller.profileState.educationList.length > 1,
-              more: _controller.profileState.showAllEdui,
-              titleExpandColor: Jobstopcolor.primarycolor,
+              expandItems: _controller.profileState.showAllEdui,
               spacing: context.fromHeight(CustomStyle.l),
               itemCount: _controller.profileState.educationList.length,
               itemBuilder: (BuildContext context, int index) {
@@ -316,8 +312,7 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
         profileInfo: [
           ExpandableItemList(
             isExpandable: _controller.profileState.workExList.length > 1,
-            more: _controller.profileState.showAllWei,
-            titleExpandColor: Jobstopcolor.primarycolor,
+            expandItems: _controller.profileState.showAllWei,
             spacing: context.fromHeight(CustomStyle.xxxl),
             itemCount: _controller.profileState.workExList.length,
             itemBuilder: (BuildContext context, int index) {
@@ -449,102 +444,6 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
       ),
     ]);
   }
-
-// Widget _buildHeaderInfoProfile(BuildContext context) {
-//   // double topPaddingValue = MediaQuery.of(context).viewPadding.top;
-//   return Container(
-//     decoration: BoxDecoration(
-//       borderRadius: BorderRadius.only(
-//         bottomLeft: Radius.circular(25),
-//         bottomRight: Radius.circular(25),
-//       ),
-//       color: Jobstopcolor.primarycolor,
-//       image: DecorationImage(
-//         image: AssetImage(JobstopPngImg.backgroundProf),
-//         fit: BoxFit.cover,
-//       ),
-//     ),
-//     // padding: EdgeInsets.only(top: kToolbarHeight),
-//     child: SafeArea(
-//       child: Padding(
-//         padding: EdgeInsets.symmetric(
-//           horizontal: context.fromWidth(CustomStyle.xs),
-//           vertical: context.fromHeight(CustomStyle.huge2),
-//         ),
-//         child: Column(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           mainAxisAlignment: MainAxisAlignment.start,
-//           children: [
-//             Row(
-//               mainAxisAlignment: MainAxisAlignment.start,
-//               crossAxisAlignment: CrossAxisAlignment.center,
-//               children: [
-//                 CircularImage(
-//                   JobstopPngImg.photo,
-//                   size: context.fromHeight(CustomStyle.imageSize2),
-//                 ),
-//                 Spacer(),
-//                 InkWell(
-//                   onTap: () {
-//                     Get.toNamed(SippoRoutes.sippoprofilesetting);
-//                   },
-//                   child: Image.asset(
-//                     JobstopPngImg.setting,
-//                     height: context.fromHeight(CustomStyle.l),
-//                     color: Jobstopcolor.white,
-//                   ),
-//                 ),
-//               ],
-//             ),
-//             SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-//             Text(
-//               "Orlando Diggs",
-//               style: dmsmedium.copyWith(
-//                 fontSize: FontSize.title5(context),
-//                 color: Jobstopcolor.white,
-//               ),
-//             ),
-//             SizedBox(height: context.fromHeight(CustomStyle.huge2)),
-//             Text(
-//               "California, USA",
-//               style: dmsregular.copyWith(
-//                 fontSize: FontSize.label(context),
-//                 color: Jobstopcolor.white,
-//               ),
-//             ),
-//             SizedBox(height: context.fromHeight(CustomStyle.huge2)),
-//             _buildPhoneNumberLabels(context, "0922698540", "0910663477"),
-//             SizedBox(height: context.fromHeight(CustomStyle.xl)),
-//             Row(
-//               children: [
-//                 Spacer(),
-//                 InkWell(
-//                   onTap: () => Get.toNamed(SippoRoutes.edituserprofile),
-//                   child: Row(
-//                     children: [
-//                       Text(
-//                         "edit_profile".tr,
-//                         style: dmsregular.copyWith(
-//                           fontSize: FontSize.label(context),
-//                           color: Jobstopcolor.white,
-//                         ),
-//                       ),
-//                       Image.asset(
-//                         JobstopPngImg.edit,
-//                         height: context.fromHeight(CustomStyle.l),
-//                         color: Jobstopcolor.white,
-//                       ),
-//                     ],
-//                   ),
-//                 )
-//               ],
-//             ),
-//           ],
-//         ),
-//       ),
-//     ),
-//   );
-// }
 
 // Row _buildPhoneNumberLabels(
 //   BuildContext context,

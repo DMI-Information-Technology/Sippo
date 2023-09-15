@@ -103,17 +103,10 @@ class _JobstopOrderState extends State<JobstopOrder> {
             onTap: () {
               // const Specialization();
             },
-            child: SavedJobCard(
+            child: JobPostingCard(
               imagePath: imagelist[index],
-              jobTitle: 'Job Title',
-              companyLocation: 'Company Location',
-              jobType: 'Full time',
-              jobCategory: 'Design',
-              jobPosition: 'Senior Designer',
               timeAgo: '25 minutes ago',
-              salary: '\$15K',
               onActionTap: () => _openBottomSheetOption(context, index),
-              isLastWidget: index == imagelist.length - 1,
               isSaved: true,
             ),
           );

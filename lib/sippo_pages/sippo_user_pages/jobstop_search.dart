@@ -45,17 +45,10 @@ class _JobSearchState extends State<JobSearch> {
         expandedAppBar: _buildScrollableTopAppBar(context, haveToolBar: true),
         itemCount: 250,
         itemBuilder: (context, index) {
-          return SavedJobCard(
+          return JobPostingCard(
             imagePath: JobstopPngImg.google,
-            jobTitle: "UI/UX Designer",
-            companyLocation: 'Company Location',
-            jobType: 'Full time',
-            jobCategory: 'Design',
-            jobPosition: 'Senior Designer',
             timeAgo: '25 minutes ago',
-            salary: '\$155K',
             onActionTap: () {},
-            isLastWidget: index == 249,
           );
         },
       ),

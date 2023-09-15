@@ -1,10 +1,12 @@
 import "dart:convert";
 
 import "package:http/http.dart" as http;
+import "package:jobspot/JobGlobalclass/global_storage.dart";
 import "package:jobspot/JopController/HttpClientController/http_client_controller.dart";
 import "package:jobspot/core/api_endpoints.dart" as endpoints;
 import "package:jobspot/core/header_api.dart";
 import "package:jobspot/sippo_data/model/auth_model/user_model.dart";
+import "package:jobspot/utils/app_use.dart";
 
 import '../../core/status_response_code_checker.dart';
 import "../model/auth_model/auth_response.dart";
@@ -42,7 +44,8 @@ class AuthRepo {
 
   static Future<AuthResponse<CompanyResponseDetailsModel, CompanyPropError>?>
       companyRegister(CompanyModel company) async {
-    AuthResponse<CompanyResponseDetailsModel, CompanyPropError>? companyResponse;
+    AuthResponse<CompanyResponseDetailsModel, CompanyPropError>?
+        companyResponse;
     try {
       final url = Uri.parse(
           "${endpoints.baseUrl}/${endpoints.companyRegisterEndpoint}");
@@ -90,38 +93,31 @@ class AuthRepo {
     }
   }
 
-  static Future<String?> userLogout() async {
+  static Future<Map<String, String>?> userLogout() async {
     try {
       final response = await HttpClientController.instance.client.post(
-        endpoints.userLogoutEndpoint,
+        GlobalStorage.appUse == AppUsingType.user
+            ? endpoints.userLogoutEndpoint
+            : endpoints.companyLogoutEndpoint,
         data: {},
       );
       final responseData = jsonDecode(response.body);
-      final logoutMessage = responseData["message"];
-      if (!(response.statusCode == 200 || response.statusCode == 204)) {
-        throw Exception(
-          "AuthRepo.userLogout Exception: bad response status code: ${response.statusCode} - and response body: ${response.body}",
-        );
-      } else if (logoutMessage == null) {
-        throw Exception(
-            "AuthRepo.userLogout Exception: the logout message is null.");
-      } else if (!(logoutMessage is String)) {
-        throw Exception(
-            "AuthRepo.userLogout Exception: the response is not a message of type string.");
-      } else if (logoutMessage.isEmpty) {
-        throw Exception(
-            "AuthRepo.userLogout Exception: the logout message is empty.");
+
+      if (response.statusCode == 200 || response.statusCode == 204) {
+        return {"success": responseData.toString()};
+      } else {
+        return {"error": responseData.toString()};
       }
-      return logoutMessage;
     } catch (error) {
       print(error);
-      return null;
+      return {"error": error.toString()};
     }
   }
 
   static Future<AuthResponse<CompanyResponseDetailsModel, CompanyPropError>?>
       companyLogin(CompanyModel company) async {
-    AuthResponse<CompanyResponseDetailsModel, CompanyPropError>? companyResponse;
+    AuthResponse<CompanyResponseDetailsModel, CompanyPropError>?
+        companyResponse;
     try {
       final url =
           Uri.parse("${endpoints.baseUrl}/${endpoints.companyLoginEndpoint}");

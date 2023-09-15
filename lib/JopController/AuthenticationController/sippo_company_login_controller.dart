@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:jobspot/JopController/AuthenticationController/sippo_auth_controller.dart';
@@ -46,7 +47,11 @@ class CompanyLoginController extends GetxController {
     }
     if (_authController.states.isSuccess) {
       _authController.resetAllAuthStates();
-      _showSuccessAlert();
+      if (kIsWeb) {
+        Get.offAllNamed(SippoRoutes.sippoCompanyDashboard);
+      } else {
+        _showSuccessAlert();
+      }
     }
   }
 

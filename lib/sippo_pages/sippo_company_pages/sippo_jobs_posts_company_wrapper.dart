@@ -31,16 +31,20 @@ class _SippoJobsPostsCompanyWrapperState
     return Scaffold(
       body: BodyWidget(
         isTopScrollable: true,
-        topScreen: Obx(() => ConditionalWidget(
-              !_controller.isNetworkConnection,
-              guaranteedBuilder: (_, __) => NetworkStatusNonWidget(
-                isPositioned: false,
-                color: Colors.black54,
-              ),
-              avoidBuilder: (_, __) => SizedBox(
-                height: context.fromHeight(CustomStyle.spaceBetween),
-              ),
-            )),
+        topScreen: Column(
+          children: [
+            Obx(() => ConditionalWidget(
+                  !_controller.isNetworkConnected,
+                  guaranteedBuilder: (_, __) => NetworkStatusNonWidget(
+                    isPositioned: false,
+                    color: Colors.black54,
+                  ),
+                  avoidBuilder: (_, __) => SizedBox(
+                    height: context.fromHeight(CustomStyle.spaceBetween),
+                  ),
+                )),
+          ],
+        ),
         paddingContent: EdgeInsets.symmetric(
           horizontal: context.width / 36,
         ),
@@ -81,6 +85,7 @@ class _SippoJobsPostsCompanyWrapperState
               height: context.height / 18,
               child: CustomButton(
                 onTappeed: () {
+                  _controller.resetStates();
                   _controller.switchSelectedTap(1);
                 },
                 text: "Jobs".tr,

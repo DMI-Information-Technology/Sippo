@@ -51,6 +51,7 @@ class _EditCompanyProfilePageState extends State<EditCompanyProfilePage> {
           child: Column(
             children: [
               _buildUploaderImageProfile(context),
+              _buildLoadingProgress(context),
               SizedBox(height: context.fromHeight(CustomStyle.s)),
               Obx(() => ConditionalWidget(
                     _controller.states.isSuccess,
@@ -121,7 +122,7 @@ class _EditCompanyProfilePageState extends State<EditCompanyProfilePage> {
                 height: context.fromHeight(CustomStyle.inputBorderedSize),
                 fontSize: FontSize.label(context),
                 suffixIcon: Icon(
-                  Icons.email_outlined,
+                  Icons.location_on_outlined,
                   color: Jobstopcolor.primarycolor,
                 ),
                 // textInputAction: TextInputAction.newline,
@@ -134,7 +135,7 @@ class _EditCompanyProfilePageState extends State<EditCompanyProfilePage> {
                 height: context.fromHeight(CustomStyle.inputBorderedSize),
                 fontSize: FontSize.label(context),
                 suffixIcon: Icon(
-                  Icons.email_outlined,
+                  Icons.web,
                   color: Jobstopcolor.primarycolor,
                 ),
                 // textInputAction: TextInputAction.newline,
@@ -147,7 +148,7 @@ class _EditCompanyProfilePageState extends State<EditCompanyProfilePage> {
                 height: context.fromHeight(CustomStyle.inputBorderedSize),
                 fontSize: FontSize.label(context),
                 suffixIcon: Icon(
-                  Icons.email_outlined,
+                  Icons.numbers,
                   color: Jobstopcolor.primarycolor,
                 ),
                 // textInputAction: TextInputAction.newline,
@@ -271,5 +272,19 @@ class _EditCompanyProfilePageState extends State<EditCompanyProfilePage> {
             : null,
       ),
     );
+  }
+
+  Widget _buildLoadingProgress(BuildContext context) {
+    double height = MediaQuery.sizeOf(context).height;
+    return Obx(() => ConditionalWidget(
+          _controller.states.isLoading,
+          guaranteedBuilder: (__, _) => Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SizedBox(height: height / 36),
+              const CircularProgressIndicator(),
+            ],
+          ),
+        ));
   }
 }

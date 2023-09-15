@@ -58,6 +58,7 @@ class LocatorService {
       );
     } on Exception catch (e, s) {
       print(s);
+      print(e);
       return null;
     }
   }

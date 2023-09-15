@@ -1,8 +1,8 @@
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
 import 'package:jobspot/sippo_data/model/specializations_model/specializations_model.dart';
 
-class JobPosting {
-  final int? id; // New field
+class CompanyJobModel {
+  int? id; // New field
   final CompanyResponseDetailsModel? company; // New field
   final String? title;
   final String? description;
@@ -11,15 +11,16 @@ class JobPosting {
   final double? longitude;
   final double? latitude;
   final String? employmentType;
-  final String? salaryFrom;
-  final String? salaryTo;
+  final double? salaryFrom;
+  final double? salaryTo;
+  final String? currencyType;
   final ExperienceLevel? experienceLevel;
   final SpecializationModel? specialization;
-  final DateTime? createdAt; // New field
+  final String? createdAt; // New field
   final bool? isExpired; // New field
   final bool? isActive; // New field
 
-  JobPosting({
+  CompanyJobModel({
     this.id,
     this.company,
     this.title,
@@ -36,10 +37,11 @@ class JobPosting {
     this.createdAt,
     this.isExpired,
     this.isActive,
+    this.currencyType,
   });
 
-  factory JobPosting.fromJson(Map<String, dynamic> json) {
-    return JobPosting(
+  factory CompanyJobModel.fromJson(Map<String, dynamic> json) {
+    return CompanyJobModel(
       id: json['id'],
       company: json['company'] != null
           ? CompanyResponseDetailsModel.fromJson(json['company'])
@@ -51,16 +53,31 @@ class JobPosting {
       longitude: json['longitude'],
       latitude: json['latitude'],
       employmentType: json['employment_type'],
-      salaryFrom: json['salary_from'],
-      salaryTo: json['salary_to'],
-      experienceLevel: json['experience_level'] != null
-          ? ExperienceLevel.fromJson(json['experience_level'])
-          : null,
-      createdAt: json['created_at'] != null
-          ? DateTime.parse(json['created_at'])
-          : null,
+      salaryFrom: (() {
+        final result = json['salary_from'];
+        if (result is String && result.runtimeType == String)
+          return double.parse(result);
+        if (result is num) return result.toDouble();
+        return null;
+      })(),
+      salaryTo: (() {
+        final result = json['salary_to'];
+        if (result is String && result.runtimeType == String)
+          return double.parse(result);
+        if (result is num) return result.toDouble();
+        return null;
+      })(),
+      experienceLevel:
+          json['experience_level'] != null && json['experience_level'] is Map
+              ? ExperienceLevel.fromJson(json['experience_level'])
+              : null,
+      createdAt: json['created_at'],
       isExpired: json['is_expired'],
       isActive: json['is_active'],
+      specialization:
+          json['specialization'] != null && json['specialization'] is Map
+              ? SpecializationModel.fromJson(json['specialization'])
+              : null,
     );
   }
 
@@ -79,22 +96,66 @@ class JobPosting {
       'specialization_id': specialization?.id,
     };
   }
+
+  @override
+  String toString() {
+    return 'JobPostingModel{id: $id, company: $company, title: $title, description: $description, requirements: $requirements, workplaceType: $workplaceType, longitude: $longitude, latitude: $latitude, employmentType: $employmentType, salaryFrom: $salaryFrom, salaryTo: $salaryTo, experienceLevel: $experienceLevel, specialization: $specialization, createdAt: $createdAt, isExpired: $isExpired, isActive: $isActive}';
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is CompanyJobModel &&
+          runtimeType == other.runtimeType &&
+          id == other.id &&
+          title == other.title &&
+          description == other.description &&
+          requirements == other.requirements &&
+          workplaceType == other.workplaceType &&
+          longitude == other.longitude &&
+          latitude == other.latitude &&
+          employmentType == other.employmentType &&
+          salaryFrom == other.salaryFrom &&
+          salaryTo == other.salaryTo &&
+          currencyType == other.currencyType &&
+          experienceLevel == other.experienceLevel &&
+          specialization == other.specialization;
+
+  @override
+  int get hashCode =>
+      id.hashCode ^
+      company.hashCode ^
+      title.hashCode ^
+      description.hashCode ^
+      requirements.hashCode ^
+      workplaceType.hashCode ^
+      longitude.hashCode ^
+      latitude.hashCode ^
+      employmentType.hashCode ^
+      salaryFrom.hashCode ^
+      salaryTo.hashCode ^
+      currencyType.hashCode ^
+      experienceLevel.hashCode ^
+      specialization.hashCode ^
+      createdAt.hashCode ^
+      isExpired.hashCode ^
+      isActive.hashCode;
 }
 
 class ExperienceLevel {
   final String? label;
-  final int? value;
+  final String? value;
 
   ExperienceLevel({
     this.label,
     this.value,
   });
 
-  factory ExperienceLevel.fromJson(Map<String, dynamic> json) {
-    return ExperienceLevel(
-      label: json['label'],
-      value: json['value'],
-    );
+  static List<ExperienceLevel>? fromJsonToExperienceLevelList(
+      Map<String, dynamic> json) {
+    return json.keys
+        .map((key) => ExperienceLevel(label: json[key], value: key))
+        .toList();
   }
 
   Map<String, dynamic> toJson() {
@@ -103,4 +164,29 @@ class ExperienceLevel {
       'value': value,
     };
   }
+
+  factory ExperienceLevel.fromJson(Map<String, dynamic> json) {
+    return ExperienceLevel(
+      label: json["label"]?.toString(),
+      value: json["value"]?.toString(),
+    );
+  }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ExperienceLevel &&
+          runtimeType == other.runtimeType &&
+          label == other.label &&
+          value == other.value;
+
+  @override
+  int get hashCode => label.hashCode ^ value.hashCode;
+
+  @override
+  String toString() {
+    return 'ExperienceLevel{label: $label, value: $value}';
+  }
+
+//
 }

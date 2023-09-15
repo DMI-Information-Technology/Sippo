@@ -62,6 +62,10 @@ class CompanyDashBoardController extends GetxController {
     await getCompanyProfile();
   }
 
+  Future<void> refreshUserProfileInfo() async {
+    await getCompanyProfile();
+  }
+
   @override
   void onInit() {
     _startListeningToConnection();

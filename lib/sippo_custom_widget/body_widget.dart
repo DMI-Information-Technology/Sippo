@@ -35,7 +35,7 @@ class BodyWidget extends StatelessWidget {
             children: [
               Column(
                 children: [
-                  if (topScreen != null && !isTopScrollable || !isScrollable)
+                  if (topScreen != null && (!isTopScrollable || !isScrollable))
                     Align(
                       alignment: Alignment.topCenter,
                       child: Padding(

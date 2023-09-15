@@ -9,34 +9,43 @@ class ExpandableItemList extends StatelessWidget {
   final itemCount;
   final Widget Function(BuildContext context, int index) itemBuilder;
   final bool isExpandable;
-  final bool more;
+  final bool expandItems;
+  final String? expandTitle;
+  final String? shrinkTitle;
   final VoidCallback onExpandClicked;
   final Color? titleExpandColor;
   final double? spacing;
   final WrapperType widgetType;
+  final bool? alignmentFromStart;
 
   const ExpandableItemList({
     this.isExpandable = false,
-    this.more = false,
+    this.expandItems = false,
     this.titleExpandColor,
     this.spacing = 0.0,
     required this.itemCount,
     required this.itemBuilder,
     required this.onExpandClicked,
+    this.expandTitle,
+    this.shrinkTitle,
+    this.alignmentFromStart,
   }) : widgetType = WrapperType.VERTICAL;
 
   const ExpandableItemList.wrapBuilder({
     this.isExpandable = false,
-    this.more = false,
+    this.expandItems = false,
     this.titleExpandColor,
     this.spacing = 0.0,
     required this.itemCount,
     required this.itemBuilder,
     required this.onExpandClicked,
+    this.expandTitle,
+    this.shrinkTitle,
+    this.alignmentFromStart,
   }) : widgetType = WrapperType.WRAP;
 
   Widget _wrapperBuilder(BuildContext context, WrapperType wrapperType) {
-    final count = more
+    final count = expandItems
         ? itemCount
         : itemCount > 0
             ? 1
@@ -52,23 +61,28 @@ class ExpandableItemList extends StatelessWidget {
         TextButton(
           onPressed: onExpandClicked,
           child: Text(
-            more ? 'Show Less' : 'Show More',
+            expandItems
+                ? shrinkTitle ?? 'Show Less'
+                : expandTitle ?? 'Show More',
             style: dmsregular.copyWith(
-              color: titleExpandColor ?? Jobstopcolor.grey,
+              color: titleExpandColor ?? Jobstopcolor.primarycolor,
             ),
           ),
         ),
     ];
-    switch (wrapperType) {
-      case WrapperType.WRAP:
-        return Wrap(
+    return switch (wrapperType) {
+      WrapperType.WRAP => Wrap(
           crossAxisAlignment: WrapCrossAlignment.start,
           alignment: WrapAlignment.start,
           children: listOfWidgets,
-        );
-      case WrapperType.VERTICAL:
-        return Column(children: listOfWidgets);
-    }
+        ),
+      WrapperType.VERTICAL => Column(
+          crossAxisAlignment: alignmentFromStart == true
+              ? CrossAxisAlignment.start
+              : CrossAxisAlignment.center,
+          children: listOfWidgets,
+        ),
+    };
   }
 
   @override

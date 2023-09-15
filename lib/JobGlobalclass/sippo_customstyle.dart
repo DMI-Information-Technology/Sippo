@@ -30,6 +30,7 @@ class CustomStyle {
   static const xxxl = 64.0;
   static const huge = 72.0;
   static const huge2 = 128.0;
+  static const varyHuge = 256.0;
   static const halfFullSize = 2.0;
   static const paddingValue = 32.0;
   static const paddingValue2 = 36.0;
