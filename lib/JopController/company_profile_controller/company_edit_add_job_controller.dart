@@ -25,7 +25,10 @@ class CompanyEditAddJobController extends GetxController {
 
   CompanyResponseDetailsModel get company => _dashboardController.company;
 
-  bool get isEditing => _dashboardController.dashboardState.editId != -1;
+  bool get isEditing {
+    print(_dashboardController.dashboardState.editId);
+    return _dashboardController.dashboardState.editId != -1;
+  }
 
   void changeState({
     bool? isLoading,
@@ -49,10 +52,24 @@ class CompanyEditAddJobController extends GetxController {
     final response = await CompanyJobRepo.addNewJob(newJobState.form);
     await response?.checkStatusResponse(
       onSuccess: (data, _) {
-        if (data != null) ;
+        if (data != null)
+          changeState(
+            isSuccess: true,
+            message: "the job is updated successfully.",
+          );
       },
-      onValidateError: (validateError, _) {},
-      onError: (message, _) {},
+      onValidateError: (validateError, _) {
+        changeState(
+          isError: true,
+          message: "Please fill the required field before submitting.",
+        );
+      },
+      onError: (message, _) {
+        changeState(
+          isError: true,
+          message: "some error occurred i can not tell you about it now.",
+        );
+      },
     );
   }
 
@@ -74,11 +91,23 @@ class CompanyEditAddJobController extends GetxController {
           _job.value = data;
           newJobState.setAll(_job.value);
           changeState(
-              isSuccess: true, message: "the job is updated successfully.");
+            isSuccess: true,
+            message: "the job is updated successfully.",
+          );
         }
       },
-      onValidateError: (validateError, _) {},
-      onError: (message, _) {},
+      onValidateError: (validateError, _) {
+        changeState(
+          isError: true,
+          message: "Please fill the required field before submitting.",
+        );
+      },
+      onError: (message, _) {
+        changeState(
+          isError: true,
+          message: "some error occurred i can not tell you about it now.",
+        );
+      },
     );
   }
 

@@ -7,7 +7,6 @@ import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/pr
 
 import '../../sippo_data/user_repos/edit_profile_repo.dart';
 import '../../sippo_pages/Joborderpages/jobstop_oderpage.dart';
-
 import '../../sippo_pages/sippo_user_pages/sippo_user_community.dart';
 import '../../sippo_pages/sippo_user_pages/sippo_user_home.dart';
 import '../../sippo_pages/sippo_user_pages/sippo_user_notification.dart';
@@ -51,7 +50,7 @@ class UserDashBoardController extends GetxController {
     _selectedItemIndex.value = value;
   }
 
-  void _connected(bool isConn) async {
+  Future<void> _connected(bool isConn) async {
     print("UserDashboardController: is connected ? = $isConn");
     print("UserDashboardController: name ? = ${user.name}");
     print("UserDashboardController: name ? = ${user.phone}");
@@ -59,14 +58,20 @@ class UserDashBoardController extends GetxController {
     if (!user.isProfileBlank) {
       _connectionSubscription?.cancel();
       _connectionSubscription = null;
-      return;
+      // return true;
     }
     if (isConn) {
       await getUserProfile();
     }
+    // return false;
   }
 
   void _startListeningToConnection() async {
+    // Timer.periodic(Duration(seconds: 1), (timer) async {
+    //   if (await _connected(InternetConnectionController.instance.isConnected)) {
+    //     timer.cancel();
+    //   }
+    // });
     _connectionSubscription = InternetConnectionController
         .instance.isConnectedStream
         .listen(_connected);

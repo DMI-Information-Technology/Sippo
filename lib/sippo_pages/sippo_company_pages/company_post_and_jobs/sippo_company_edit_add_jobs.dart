@@ -51,7 +51,7 @@ class _SippoCompanyEditAddJobsState extends State<SippoCompanyEditAddJobs> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-             (_controller.isEditing ? "add_a_job" : "edit_job").tr,
+              (_controller.isEditing ? "edit_job" : "add_a_job").tr,
               style: dmsbold.copyWith(
                 fontSize: FontSize.title3(context),
                 color: Jobstopcolor.primarycolor,
@@ -570,14 +570,14 @@ class _SippoCompanyEditAddJobsState extends State<SippoCompanyEditAddJobs> {
   Widget _buildLoadingProgress(BuildContext context) {
     double height = MediaQuery.sizeOf(context).height;
     return Obx(() => ConditionalWidget(
-      _controller.states.isLoading,
-      guaranteedBuilder: (__, _) => Column(
-        children: [
-          SizedBox(height: height / 36),
-          const Center(child: CircularProgressIndicator()),
-        ],
-      ),
-    ));
+          _controller.states.isLoading,
+          guaranteedBuilder: (__, _) => Column(
+            children: [
+              SizedBox(height: height / 36),
+              const Center(child: CircularProgressIndicator()),
+            ],
+          ),
+        ));
   }
 }
 
@@ -683,4 +683,3 @@ class _AddJobOptionsCardState extends State<AddJobOptionsCard> {
     );
   }
 }
-

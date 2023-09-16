@@ -1,21 +1,18 @@
 import 'package:get/get.dart';
-import 'package:jobspot/SippoControllerBinding/company_binding/company_job_controller_binding.dart';
-import 'package:jobspot/SippoControllerBinding/profile_binding/edit_add_skills_controller_binding.dart';
-import 'package:jobspot/SippoControllerBinding/profile_binding/user_profile_controller_binding.dart';
-import 'package:jobspot/sippo_pages/jopintroductionpages/jobstop_onboarding.dart';
-import 'package:jobspot/sippo_pages/sippo_company_pages/company_post_and_jobs/sippo_company_edit_add_post.dart';
-import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_job_description/sippo_job_description.dart';
 import 'package:jobspot/SippoControllerBinding/auth_binding/identity_verification_controller_binding.dart';
 import 'package:jobspot/SippoControllerBinding/auth_binding/login_company_binding_controller.dart';
 import 'package:jobspot/SippoControllerBinding/auth_binding/login_user_binding_controller.dart';
 import 'package:jobspot/SippoControllerBinding/auth_binding/signup_company_binding_controller.dart';
 import 'package:jobspot/SippoControllerBinding/auth_binding/signup_user_binding_controller.dart';
+import 'package:jobspot/SippoControllerBinding/company_binding/company_job_controller_binding.dart';
 import 'package:jobspot/SippoControllerBinding/company_binding/company_post_controller_binding.dart';
 import 'package:jobspot/SippoControllerBinding/company_binding/company_profile_controller_binding.dart';
 import 'package:jobspot/SippoControllerBinding/dashboard_binding/company_dashbord_controller_binding.dart';
 import 'package:jobspot/SippoControllerBinding/dashboard_binding/user_dashboard_controller_binding.dart';
 import 'package:jobspot/SippoControllerBinding/profile_binding/edit_add_education_controller_binding.dart';
+import 'package:jobspot/SippoControllerBinding/profile_binding/edit_add_skills_controller_binding.dart';
 import 'package:jobspot/SippoControllerBinding/profile_binding/edit_add_work_experience_controller_binding.dart';
+import 'package:jobspot/SippoControllerBinding/profile_binding/user_profile_controller_binding.dart';
 import 'package:jobspot/sippo_pages/Authentication/jobstop_check_resetpass_otp_msg.dart';
 import 'package:jobspot/sippo_pages/Authentication/jobstop_companyspecializations_signup.dart';
 import 'package:jobspot/sippo_pages/Authentication/jobstop_forget.dart';
@@ -28,9 +25,11 @@ import 'package:jobspot/sippo_pages/Authentication/sippo_company_signup.dart';
 import 'package:jobspot/sippo_pages/Authentication/sippo_selecte_company_location.dart';
 import 'package:jobspot/sippo_pages/Authentication/sippo_user_login.dart';
 import 'package:jobspot/sippo_pages/Authentication/sippo_user_signup.dart';
+import 'package:jobspot/sippo_pages/jopintroductionpages/jobstop_onboarding.dart';
 import 'package:jobspot/sippo_pages/setting_profile/sippo_profile_setting.dart';
-import 'package:jobspot/sippo_pages/sippo_company_pages/sippo_company_dashboard.dart';
 import 'package:jobspot/sippo_pages/sippo_company_pages/company_post_and_jobs/sippo_company_edit_add_jobs.dart';
+import 'package:jobspot/sippo_pages/sippo_company_pages/company_post_and_jobs/sippo_company_edit_add_post.dart';
+import 'package:jobspot/sippo_pages/sippo_company_pages/sippo_company_dashboard.dart';
 import 'package:jobspot/sippo_pages/sippo_company_pages/sippo_company_profile.dart';
 import 'package:jobspot/sippo_pages/sippo_company_pages/sippo_edit_company_profile.dart';
 import 'package:jobspot/sippo_pages/sippo_user_pages/edit_add_user_profile_info/job_add_edit_appreciation.dart';
@@ -40,16 +39,16 @@ import 'package:jobspot/sippo_pages/sippo_user_pages/edit_add_user_profile_info/
 import 'package:jobspot/sippo_pages/sippo_user_pages/edit_add_user_profile_info/job_edit_add_experience.dart';
 import 'package:jobspot/sippo_pages/sippo_user_pages/edit_add_user_profile_info/jobstop_add_edit_skills.dart';
 import 'package:jobspot/sippo_pages/sippo_user_pages/job_editprofile.dart';
-
 import 'package:jobspot/sippo_pages/sippo_user_pages/jobstop_filter.dart';
 import 'package:jobspot/sippo_pages/sippo_user_pages/jobstop_search.dart';
-
+import 'package:jobspot/sippo_pages/sippo_user_pages/jobstop_upload_cv.dart';
 import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_job_description/sippo_apply_job.dart';
+import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_job_description/sippo_job_description.dart';
+import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_user_dashboard.dart';
 import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_user_notification.dart';
 import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_user_profile.dart';
 
-import 'package:jobspot/sippo_pages/sippo_user_pages/jobstop_upload_cv.dart';
-import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_user_dashboard.dart';
+import '../SippoControllerBinding/profile_binding/user_home_controller_binding.dart';
 
 class SippoRoutes {
   const SippoRoutes._();
@@ -163,7 +162,10 @@ class SippoRoutes {
     GetPage(
       name: _userDashboard,
       page: () => const SippoUserDashboard(),
-      binding: const UserDashBoardControllerBinding(),
+      bindings: const [
+        UserDashBoardControllerBinding(),
+        UserHomeBindingController(),
+      ],
     ),
     GetPage(name: _appUsingPage, page: () => const SippoAppUsing()),
     GetPage(name: _forgetPassword, page: () => const JobstopForget()),

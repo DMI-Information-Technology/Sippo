@@ -56,7 +56,7 @@ class JobHomeCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _buildJobCardHeader(context),
-              SizedBox(height: context.fromHeight(CustomStyle.xxl)),
+              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
               AutoSizeText(
                 '${jobDetailsPost?.salaryFrom?.toString().salaryValue} -'
                 ' ${jobDetailsPost?.salaryTo?.toString().salaryValue} LYD/Mo',
@@ -64,7 +64,7 @@ class JobHomeCard extends StatelessWidget {
                   fontSize: FontSize.title6(context),
                 ),
               ),
-              SizedBox(height: context.fromHeight(CustomStyle.xxl)),
+              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
               _buildJobCardChipsAndApply(context),
             ],
           ),
@@ -96,7 +96,7 @@ class JobHomeCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 AutoSizeText(
-                  "${jobDetailsPost?.title} Helllllllllo" ?? 'unknown',
+                  jobDetailsPost?.title ?? 'unknown',
                   style: dmsbold.copyWith(
                     fontSize: FontSize.title5(context),
                     fontWeight: FontWeight.bold,

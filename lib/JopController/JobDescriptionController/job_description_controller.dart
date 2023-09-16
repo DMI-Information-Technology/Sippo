@@ -7,11 +7,11 @@ import '../../JobGlobalclass/jobstopcolor.dart';
 import '../../sippo_data/model/profile_model/profile_widget_model/jobstop_resume_file_info.dart';
 import '../../utils/file_picker_service.dart';
 
-class JobDescriptionController extends GetxController {
+class JobCompanyDetailsController extends GetxController {
   final _cvJobApply = ResumeFileInfo.getNull().obs;
   final _selectedPageView = 0.obs;
 
-  static JobDescriptionController get instance => Get.find();
+  static JobCompanyDetailsController get instance => Get.find();
 
   int get selectedPageView => _selectedPageView.toInt();
 

@@ -68,7 +68,7 @@ class JobsHomeState {
       isLoading: isLoading,
       isSuccess: isLoading == true ? false : isSuccess,
       isError: isLoading == true ? false : isError,
-      message: message,
+      message: isLoading == true ? '' : message,
       isWarning: isLoading == true ? false : isWarning,
       error: error,
     );
@@ -118,16 +118,17 @@ class JobsHomeState {
 
   void refreshJobs() {
     if (!isNetworkConnected) {
-      changeJobsStates(
-        isError: true,
-        isSuccess: false,
-        message:
-            "sorry your connection is lost, please check your settings before continuing.",
-      );
+      if (jobsList.isEmpty)
+        changeJobsStates(
+          isError: true,
+          isSuccess: false,
+          message:
+              "sorry your connection is lost, please check your settings before continuing.",
+        );
       return;
     }
     if (jobStates.isLoading) return;
-    resetJobStates();
+    // resetJobStates();
     pageJobsRequester(1);
   }
 }

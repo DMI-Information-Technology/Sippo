@@ -27,68 +27,74 @@ class SippoUserHome extends StatefulWidget {
 }
 
 class _SippoUserHomeState extends State<SippoUserHome> {
-  final _controller = Get.put(UserHomeController());
+  // final _controller = Get.put(UserHomeController());
+  final _controller = UserHomeController.instance;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _buildHomeAppBar(),
-      body: BodyWidget(
-        paddingContent: EdgeInsets.only(
-          bottom: context.fromHeight(CustomStyle.paddingValue),
-        ),
-        isScrollable: true,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildWelcomeUser(context),
-            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: context.fromWidth(CustomStyle.s)),
-              child: _buildAdsBoard(),
-            ),
-            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-            _buildWorkExListView(context),
-            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: context.fromWidth(CustomStyle.s),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          _controller.jobsHomeState.refreshJobs();
+        },
+        child: BodyWidget(
+          paddingContent: EdgeInsets.only(
+            bottom: context.fromHeight(CustomStyle.paddingValue),
+          ),
+          isScrollable: true,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildWelcomeUser(context),
+              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: context.fromWidth(CustomStyle.s)),
+                child: _buildAdsBoard(),
               ),
-              child: Text(
-                "Find_Your_Job".tr,
-                style: dmsbold.copyWith(fontSize: FontSize.title5(context)),
+              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+              _buildWorkExListView(context),
+              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: context.fromWidth(CustomStyle.s),
+                ),
+                child: Text(
+                  "Find_Your_Job".tr,
+                  style: dmsbold.copyWith(fontSize: FontSize.title5(context)),
+                ),
               ),
-            ),
-            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: context.fromWidth(CustomStyle.s)),
-              child: FindYorJopDashBoardCards(
-                firstCardTitle: "44.5k",
-                firstCardSubtitle: "Remote Job",
-                secondCardTitle: "66.8k",
-                secondCardSubtitle: "Full Time",
-                thirdCardTitle: "38.9k",
-                thirdCardSubtitle: "Part Time",
+              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: context.fromWidth(CustomStyle.s)),
+                child: FindYorJopDashBoardCards(
+                  firstCardTitle: "44.5k",
+                  firstCardSubtitle: "Remote Job",
+                  secondCardTitle: "66.8k",
+                  secondCardSubtitle: "Full Time",
+                  thirdCardTitle: "38.9k",
+                  thirdCardSubtitle: "Part Time",
+                ),
               ),
-            ),
-            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: context.fromWidth(CustomStyle.s),
+              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: context.fromWidth(CustomStyle.s),
+                ),
+                child: Text(
+                  "Recent_Job_List".tr,
+                  style: dmsbold.copyWith(fontSize: FontSize.title5(context)),
+                ),
               ),
-              child: Text(
-                "Recent_Job_List".tr,
-                style: dmsbold.copyWith(fontSize: FontSize.title5(context)),
-              ),
-            ),
-            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-            // _buildShowHomeJobPagination(context),
-            _buildShowHomeJobsList(context),
-            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-          ],
+              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+              // _buildShowHomeJobPagination(context),
+              _buildShowHomeJobsList(context),
+              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+            ],
+          ),
         ),
       ),
       backgroundColor: Jobstopcolor.backgroudHome,
@@ -103,9 +109,10 @@ class _SippoUserHomeState extends State<SippoUserHome> {
             final data = _controller.jobsHomeState.jobsList;
             print(states);
             if (states == null) return const SizedBox.shrink();
-            if (states.isError) return _buildFieldJobsMessage(context, states);
-            if (states.isSuccess && data.isNotEmpty)
-              return _buildJobList(context, data);
+            if (states.isError && data.isEmpty)
+              return _buildFieldJobsMessage(context, states);
+            if (states.isSuccess || data.isNotEmpty)
+              return _buildJobCardList(context, data);
             if (states.isLoading)
               return const Center(child: CircularProgressIndicator());
             return const SizedBox.shrink();
@@ -113,7 +120,7 @@ class _SippoUserHomeState extends State<SippoUserHome> {
         ));
   }
 
-  SingleChildScrollView _buildJobList(
+  SingleChildScrollView _buildJobCardList(
     BuildContext context,
     List<CompanyJobModel> data,
   ) {

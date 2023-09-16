@@ -13,6 +13,8 @@ import 'package:jobspot/sippo_custom_widget/widgets.dart';
 
 import '../../../JobGlobalclass/routes.dart';
 import '../../../JopController/JobDescriptionController/job_description_controller.dart';
+import '../../../sippo_custom_widget/ConditionalWidget.dart';
+import '../../../sippo_custom_widget/error_messages_dialog_snackbar/network_connnection_lost_widget.dart';
 import '../../../sippo_custom_widget/list_item_text.dart';
 
 class SippoJobDescription extends StatefulWidget {
@@ -31,7 +33,7 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
     'Specialization'.tr,
   ];
   List<String> gallery = [JobstopPngImg.gallery1, JobstopPngImg.gallery2];
-  final _jobDesController = Get.put(JobDescriptionController());
+  final _controller = Get.put(JobCompanyDetailsController());
   int selected = 0;
   final bottomButtonScreen = [
     CustomButton(
@@ -48,80 +50,77 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
     Size size = MediaQuery.of(context).size;
     double width = size.width;
 
-    return Obx(
-      () => Scaffold(
-        extendBodyBehindAppBar:
-            InternetConnectionController.instance.isConnected,
-        appBar: AppBar(
-          toolbarHeight: 0,
-          backgroundColor: InternetConnectionController.instance.isConnected
-              ? Colors.black54
-              : Colors.black87,
+    return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        toolbarHeight: 0,
+        backgroundColor: Colors.black87,
+      ),
+      body: BodyWidget(
+        isScrollable: true,
+        isTopScrollable: true,
+        paddingContent: MediaQuery.of(context).viewPadding.copyWith(
+              left: context.fromWidth(CustomStyle.paddingValue),
+              right: context.fromWidth(CustomStyle.paddingValue),
+            ),
+        connectionStatusBar: Obx(() => ConditionalWidget(
+              !InternetConnectionController.instance.isConnected,
+              guaranteedBuilder: (_, __) => NetworkStatusNonWidget(),
+            )),
+        topScreen: topJobDescription(),
+        child: Column(
+          children: [
+            _buildButtonTaps(context),
+            SizedBox(
+              height: context.fromHeight(CustomStyle.spaceBetween),
+            ),
+            Obx(
+              () => _controller.selectedPageView == 0
+                  ? detailsJobView()
+                  : companyView(),
+            ),
+          ],
         ),
-        body: BodyWidget(
-          isScrollable: true,
-          isTopScrollable: true,
-          paddingContent: MediaQuery.of(context).viewPadding.copyWith(
-                left: context.fromWidth(CustomStyle.paddingValue),
-                right: context.fromWidth(CustomStyle.paddingValue),
-              ),
-          isConnectionLost: !InternetConnectionController.instance.isConnected,
-          topScreen: topJobDescription(),
-          child: Column(
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Obx(
-                        () => SizedBox(
-                          width: width / 2.3,
-                          child: CustomButton(
-                            onTappeed: () {
-                              _jobDesController.switchPageView();
-                            },
-                            text: "description".tr,
-                            backgroundColor: _jobDesController
-                                .changeDescriptionButtonColor(),
-                          ),
-                        ),
-                      ),
-                      Obx(
-                        () => SizedBox(
-                          width: width / 2.3,
-                          child: CustomButton(
-                            onTappeed: () {
-                              _jobDesController.switchPageView();
-                            },
-                            text: "company".tr,
-                            backgroundColor:
-                                _jobDesController.changeCompanyButtonColor(),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: context.fromHeight(CustomStyle.spaceBetween),
-                  ),
-                  Obx(
-                    () => _jobDesController.selectedPageView == 0
-                        ? detailsJobView()
-                        : companyView(),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          paddingBottom:
-              EdgeInsets.all(context.fromWidth(CustomStyle.paddingValue)),
-          bottomScreen: Obx(
-            () => bottomButtonScreen[_jobDesController.selectedPageView],
-          ),
+        paddingBottom:
+            EdgeInsets.all(context.fromWidth(CustomStyle.paddingValue)),
+        bottomScreen: Obx(
+          () => bottomButtonScreen[_controller.selectedPageView],
         ),
       ),
+    );
+  }
+
+  Widget _buildButtonTaps(BuildContext) {
+    Size size = MediaQuery.of(context).size;
+    double width = size.width;
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Obx(
+          () => SizedBox(
+            width: width / 2.3,
+            child: CustomButton(
+              onTappeed: () {
+                _controller.switchPageView();
+              },
+              text: "description".tr,
+              backgroundColor: _controller.changeDescriptionButtonColor(),
+            ),
+          ),
+        ),
+        Obx(
+          () => SizedBox(
+            width: width / 2.3,
+            child: CustomButton(
+              onTappeed: () {
+                _controller.switchPageView();
+              },
+              text: "company".tr,
+              backgroundColor: _controller.changeCompanyButtonColor(),
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -379,14 +378,12 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
       top: 0,
       child: Column(
         children: [
-          Obx(
-            () => !InternetConnectionController.instance.isConnected
-                ? SizedBox(
-                    height:
-                        context.fromHeight(CustomStyle.connectionLostHeight),
-                  )
-                : const SizedBox.shrink(),
-          ),
+          Obx(() => ConditionalWidget(
+                !InternetConnectionController.instance.isConnected,
+                guaranteedBuilder: (context, _) => SizedBox(
+                  height: context.fromHeight(CustomStyle.connectionLostHeight),
+                ),
+              )),
           Row(
             children: [
               IconButton(

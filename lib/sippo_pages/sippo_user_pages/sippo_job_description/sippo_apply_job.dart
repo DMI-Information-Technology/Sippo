@@ -10,7 +10,6 @@ import 'package:jobspot/JopController/JobDescriptionController/job_description_c
 import '../../../JobGlobalclass/sippo_customstyle.dart';
 import '../../../JopController/ConnectivityController/internet_connection_controller.dart';
 import '../../../sippo_custom_widget/body_widget.dart';
-import '../../../sippo_custom_widget/circular_image.dart';
 import '../../../sippo_custom_widget/file_upload_widget.dart';
 import '../../../sippo_custom_widget/loading_view_widgets/loading_scaffold.dart';
 import '../../../sippo_custom_widget/widgets.dart';
@@ -27,7 +26,7 @@ class SippoApplyJob extends StatefulWidget {
 class _SippoApplyJobState extends State<SippoApplyJob> {
   TextEditingController information = TextEditingController();
   final themedata = Get.put(JobstopThemecontroler());
-  final _loadCv = JobDescriptionController.instance;
+  final _controller = JobCompanyDetailsController.instance;
   final LoadingOverlayController loadingController = LoadingOverlayController();
 
   @override
@@ -44,9 +43,9 @@ class _SippoApplyJobState extends State<SippoApplyJob> {
         isScrollable: true,
         isTopScrollable: true,
         paddingContent: MediaQuery.of(context).viewPadding.copyWith(
-          left: context.fromWidth(CustomStyle.paddingValue),
-          right: context.fromWidth(CustomStyle.paddingValue),
-        ),
+              left: context.fromWidth(CustomStyle.paddingValue),
+              right: context.fromWidth(CustomStyle.paddingValue),
+            ),
         isConnectionLost: !InternetConnectionController.instance.isConnected,
         topScreen: topJobDescription(),
         child: Padding(
@@ -82,16 +81,16 @@ class _SippoApplyJobState extends State<SippoApplyJob> {
                   title: 'Upload your CV',
                   onUploadTapped: () async {
                     loadingController.loading = true;
-                    await _loadCv.uploadCvFile();
+                    await _controller.uploadCvFile();
                     Future.delayed(
                       Duration(seconds: 3),
                       () => loadingController.loading = false,
                     );
                   },
                   onDeletedFile: () async {
-                    await _loadCv.removeCvFile();
+                    await _controller.removeCvFile();
                   },
-                  isUploaded: !_loadCv.isCvJobApplyNull,
+                  isUploaded: !_controller.isCvJobApplyNull,
                 ),
               ),
               SizedBox(height: context.fromHeight(CustomStyle.l)),
@@ -149,111 +148,26 @@ class _SippoApplyJobState extends State<SippoApplyJob> {
     );
   }
 
-  // Widget _buildTopInformationApplication(BuildContext context) {
-  //   Size size = MediaQuery.of(context).size;
-  //   double height = size.height;
-  //   double width = size.width;
-  //   return Stack(
-  //     children: [
-  //       Container(
-  //         height: height / 4.5,
-  //         color: Jobstopcolor.backgroud,
-  //       ),
-  //       Positioned(
-  //         bottom: 0,
-  //         child: Container(
-  //           height: height / 7,
-  //           width: width / 1,
-  //           color: Jobstopcolor.greyyy,
-  //           child: Column(
-  //             children: [
-  //               SizedBox(
-  //                 height: context.fromHeight(CustomStyle.s),
-  //               ),
-  //               Text(
-  //                 "UI/UX Designer",
-  //                 style: dmsbold.copyWith(
-  //                     fontSize: FontSize.title5(context),
-  //                     color: Jobstopcolor.primarycolor),
-  //               ),
-  //               SizedBox(
-  //                 height: context.fromHeight(CustomStyle.xxxl),
-  //               ),
-  //               Padding(
-  //                 padding: EdgeInsets.symmetric(
-  //                   horizontal: context.fromWidth(CustomStyle.s),
-  //                 ),
-  //                 child: Row(
-  //                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                   children: [
-  //                     Text(
-  //                       "Google",
-  //                       style: dmsregular.copyWith(
-  //                           fontSize: FontSize.title5(context),
-  //                           color: Jobstopcolor.primarycolor),
-  //                     ),
-  //                     Image.asset(
-  //                       JobstopPngImg.dot,
-  //                       height: context.fromHeight(CustomStyle.huge2),
-  //                     ),
-  //                     Text(
-  //                       "California",
-  //                       style: dmsregular.copyWith(
-  //                           fontSize: FontSize.title5(context),
-  //                           color: Jobstopcolor.primarycolor),
-  //                     ),
-  //                     Image.asset(
-  //                       JobstopPngImg.dot,
-  //                       height: context.fromHeight(CustomStyle.huge2),
-  //                     ),
-  //                     Text(
-  //                       "1 day ago",
-  //                       style: dmsregular.copyWith(
-  //                           fontSize: FontSize.title5(context),
-  //                           color: Jobstopcolor.primarycolor),
-  //                     ),
-  //                   ],
-  //                 ),
-  //               )
-  //             ],
-  //           ),
-  //         ),
-  //       ),
-  //       Positioned(
-  //         top: 0,
-  //         left: 30,
-  //         right: 30,
-  //         child: CircularImage(
-  //           JobstopPngImg.google,
-  //           backgroundColor: Jobstopcolor.secondary,
-  //           size: width / 4.5,
-  //           paddingValue: width / 38,
-  //         ),
-  //       ),
-  //     ],
-  //   );
-  // }
-
   Widget topJobDescription() {
     return Obx(() => Container(
-      width: context.width,
-      height: context.height /
-          (InternetConnectionController.instance.isConnected ? 3.2 : 2.9),
-      decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage(JobstopPngImg.backgroundProf),
-          fit: BoxFit.cover,
-        ),
-      ),
-      child: SafeArea(
-        child: Stack(
-          children: [
-            _buildBottomDetailsJobStack(),
-            _buildTopImageDetailsJobStack(),
-          ],
-        ),
-      ),
-    ));
+          width: context.width,
+          height: context.height /
+              (InternetConnectionController.instance.isConnected ? 3.2 : 2.9),
+          decoration: BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage(JobstopPngImg.backgroundProf),
+              fit: BoxFit.cover,
+            ),
+          ),
+          child: SafeArea(
+            child: Stack(
+              children: [
+                _buildBottomDetailsJobStack(),
+                _buildTopImageDetailsJobStack(),
+              ],
+            ),
+          ),
+        ));
   }
 
   Widget _buildTopImageDetailsJobStack() {
@@ -263,11 +177,11 @@ class _SippoApplyJobState extends State<SippoApplyJob> {
       child: Column(
         children: [
           Obx(
-                () => !InternetConnectionController.instance.isConnected
+            () => !InternetConnectionController.instance.isConnected
                 ? SizedBox(
-              height:
-              context.fromHeight(CustomStyle.connectionLostHeight),
-            )
+                    height:
+                        context.fromHeight(CustomStyle.connectionLostHeight),
+                  )
                 : const SizedBox.shrink(),
           ),
           Row(
