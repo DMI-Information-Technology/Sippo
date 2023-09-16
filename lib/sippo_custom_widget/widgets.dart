@@ -36,79 +36,91 @@ class CustomAlertDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery
-        .of(context)
-        .size;
+    Size size = MediaQuery.of(context).size;
     double height = size.height;
     // double width = size.width;
-    return AlertDialog(
-      shape:
-      ContinuousRectangleBorder(borderRadius: BorderRadius.circular(height / 32)),
-      contentPadding: EdgeInsets.all(height / 42),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          if(imageAsset != null)...[
-            Image.asset(imageAsset!, height: height / 4),
-            SizedBox(height: height / 42),
-          ],
-          AutoSizeText(
-            title,
-            style: dmsbold.copyWith(
-              fontSize: FontSize.title3(context),
-              color: Jobstopcolor.primarycolor,
+    return Dialog(
+      shape: ContinuousRectangleBorder(
+          borderRadius: BorderRadius.circular(height / 32)),
+      // insetPadding: EdgeInsets.symmetric(horizontal: height /32),
+      child: Padding(
+        padding: EdgeInsets.all(context.fromWidth(CustomStyle.paddingValue)),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (imageAsset != null) ...[
+              Image.asset(imageAsset!, height: height / 4),
+              SizedBox(height: height / 42),
+            ],
+            AutoSizeText(
+              title,
+              style: dmsbold.copyWith(
+                fontSize: FontSize.title3(context),
+                color: Jobstopcolor.primarycolor,
+              ),
+              textAlign: TextAlign.center,
             ),
-            textAlign: TextAlign.center,
-          ),
-          if (description != null)
-            Column(
+            if (description != null)
+              Column(
+                children: [
+                  SizedBox(height: height / 64),
+                  AutoSizeText(
+                    description ?? "",
+                    style: dmsregular.copyWith(
+                      color: Jobstopcolor.textColor,
+                      fontSize: FontSize.paragraph2(
+                        context,
+                      ),
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
+              ),
+            SizedBox(height: height / 64),
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SizedBox(height: height / 64),
-                AutoSizeText(
-                  description ?? "",
-                  style: dmsregular.copyWith(
-                    color: Jobstopcolor.textColor,
-                    fontSize: FontSize.paragraph2(
-                      context,
+                if (onConfirm != null) ...[
+                  ElevatedButton(
+                    onPressed: () {
+                      if (onConfirm != null) onConfirm!();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: confirmBtnColor,
+                      shape:
+                          customStyles.circularBorderedShapeButton(height / 64),
+                    ),
+                    child: Text(
+                      confirmBtnTitle ?? "",
+                      style: dmsregular.copyWith(color: Jobstopcolor.white),
                     ),
                   ),
-                  textAlign: TextAlign.center,
-                ),
+                  SizedBox(width: context.fromWidth(CustomStyle.spaceBetween)),
+                ],
+                if (onCancel != null)
+                  ElevatedButton(
+                    onPressed: () {
+                      onCancel!();
+                    },
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: cancelBtnColor,
+                      shape:
+                          customStyles.circularBorderedShapeButton(height / 64),
+                    ),
+                    child: Text(
+                      cancelBtnTitle ?? "",
+                      style:
+                          dmsregular.copyWith(color: Jobstopcolor.primarycolor),
+                    ),
+                  ),
               ],
-            ),
-        ],
+            )
+          ],
+        ),
       ),
-      actionsAlignment: MainAxisAlignment.center,
-      actions: [
-        if (onConfirm != null)
-          ElevatedButton(
-            onPressed: () {
-              if (onConfirm != null) onConfirm!();
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: confirmBtnColor,
-              shape: customStyles.circularBorderedShapeButton(height / 64),
-            ),
-            child: Text(
-              confirmBtnTitle ?? "",
-              style: dmsregular.copyWith(color: Jobstopcolor.white),
-            ),
-          ),
-        if (onCancel != null)
-          ElevatedButton(
-            onPressed: () {
-              onCancel!();
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: cancelBtnColor,
-              shape: customStyles.circularBorderedShapeButton(height / 64),
-            ),
-            child: Text(
-              cancelBtnTitle ?? "",
-              style: dmsregular.copyWith(color: Jobstopcolor.primarycolor),
-            ),
-          ),
-      ],
     );
   }
 }
@@ -203,9 +215,7 @@ class _PasswordInputFieldState extends State<PasswordInputField> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery
-        .of(context)
-        .size;
+    Size size = MediaQuery.of(context).size;
     double height = size.height;
     return TextFormField(
       controller: widget.controller,
@@ -262,9 +272,7 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery
-        .of(context)
-        .size;
+    Size size = MediaQuery.of(context).size;
     double height = size.height;
     double width = size.width;
     return InkWell(
@@ -348,16 +356,15 @@ class PhoneResetPasswordCard extends StatelessWidget {
   final Color? borderColor;
   final String description;
 
-  const PhoneResetPasswordCard({super.key,
-    required this.phoneNumber,
-    this.borderColor,
-    this.description = ""});
+  const PhoneResetPasswordCard(
+      {super.key,
+      required this.phoneNumber,
+      this.borderColor,
+      this.description = ""});
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery
-        .of(context)
-        .size;
+    Size size = MediaQuery.of(context).size;
     double height = size.height;
     return Container(
       decoration: BoxDecoration(
@@ -365,8 +372,8 @@ class PhoneResetPasswordCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(50),
         border: borderColor != null
             ? Border.all(
-          color: borderColor ?? Colors.transparent,
-        )
+                color: borderColor ?? Colors.transparent,
+              )
             : null,
       ),
       child: ListTile(
@@ -433,7 +440,7 @@ class CustomChip extends StatelessWidget {
         height: height,
         width: width,
         padding:
-        paddingValue != null ? EdgeInsets.all(paddingValue ?? 0.0) : null,
+            paddingValue != null ? EdgeInsets.all(paddingValue ?? 0.0) : null,
         alignment: Alignment.center,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(borderRadius),
@@ -469,7 +476,8 @@ class InputBorderedField extends StatelessWidget {
     this.verticalPaddingValue,
     this.gController,
     this.fillColor,
-    this.maxLength, this.fontColor,
+    this.maxLength,
+    this.fontColor,
     // this.isLoading = false,
   });
 

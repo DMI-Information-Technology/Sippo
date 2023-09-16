@@ -1,38 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
-import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/company_post_widget.dart';
 
-import 'jobstop_aboutus.dart';
+import '../../JopController/user_community_controller/user_community_controller.dart';
+import '../../sippo_custom_widget/widgets.dart';
+import '../Jobpostpages/jobstop_aboutus.dart';
 
-class SippoUserSocial extends StatefulWidget {
-  const SippoUserSocial({Key? key}) : super(key: key);
+class SippoUserCommunity extends StatefulWidget {
+  const SippoUserCommunity({Key? key}) : super(key: key);
 
   @override
-  State<SippoUserSocial> createState() => _SippoUserSocialState();
+  State<SippoUserCommunity> createState() => _SippoUserCommunityState();
 }
 
-class _SippoUserSocialState extends State<SippoUserSocial> {
-  static const List<String> list = ["Posting", "My connection"];
-
+class _SippoUserCommunityState extends State<SippoUserCommunity> {
+  final _controller = Get.put(UserCommunityController());
   int selected = 0;
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.sizeOf(context).height;
-    double width = MediaQuery.sizeOf(context).width;
     return Scaffold(
       appBar: AppBar(),
       body: BodyWidget(
         isScrollable: false,
         paddingContent: EdgeInsets.symmetric(horizontal: context.width / 36),
-        child: (selected == 0)
-            ? ListView.separated(
+        child: Obx(() => [
+              ListView.separated(
                 itemCount: 10,
                 itemBuilder: (context, index) {
                   return PostWidget(
@@ -45,10 +43,11 @@ class _SippoUserSocialState extends State<SippoUserSocial> {
                   );
                 },
                 separatorBuilder: (context, index) => SizedBox(
-                    height: context.fromHeight(CustomStyle.spaceBetween)),
-              )
-            : GridView.builder(
-                itemCount: 0,
+                  height: context.fromHeight(CustomStyle.spaceBetween),
+                ),
+              ),
+              GridView.builder(
+                itemCount: 5,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   mainAxisSpacing: 15,
@@ -65,52 +64,55 @@ class _SippoUserSocialState extends State<SippoUserSocial> {
                     ),
                   );
                 },
-              ),
+              )
+            ][_controller.selected]),
         paddingBottom: EdgeInsets.symmetric(
           vertical: context.height / 36,
           horizontal: context.width / 36,
         ),
-        bottomScreen: SizedBox(
-          height: height / 20,
-          width: width / 1,
-          child: ListView.builder(
-            scrollDirection: Axis.horizontal,
-            shrinkWrap: true,
-            itemCount: list.length,
-            itemBuilder: (context, index) {
-              return InkWell(
-                highlightColor: Jobstopcolor.transparent,
-                splashColor: Jobstopcolor.transparent,
-                onTap: () {
-                  setState(() {
-                    selected = index;
-                  });
-                },
-                child: Container(
-                  width: width / 2.25,
-                  margin: EdgeInsets.only(right: width / 36),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5),
-                    color: selected == index
-                        ? Jobstopcolor.primarycolor
-                        : Jobstopcolor.lightprimary,
-                  ),
-                  child: Center(
-                    child: Text(
-                      list[index],
-                      style: selected == index
-                          ? dmsbold.copyWith(
-                              fontSize: 14, color: Jobstopcolor.white)
-                          : dmsbold.copyWith(
-                              fontSize: 14, color: Jobstopcolor.primarycolor),
-                    ),
-                  ),
-                ),
-              );
-            },
-          ),
-        ),
+        bottomScreen: _buildBottomControlButtons(context),
       ),
+    );
+  }
+
+  Widget _buildBottomControlButtons(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Obx(() => SizedBox(
+              width: context.width / 2.4,
+              height: context.height / 18,
+              child: CustomButton(
+                onTappeed: () {
+                  _controller.switchSelectedTap(0);
+                },
+                text: "Posts".tr,
+                backgroundColor: _controller.selected == 0
+                    ? Jobstopcolor.primarycolor
+                    : Jobstopcolor.lightprimary,
+                textColor: _controller.selected == 0
+                    ? Jobstopcolor.white
+                    : Jobstopcolor.primarycolor,
+              ),
+            )),
+        Obx(() => SizedBox(
+              width: context.width / 2.4,
+              height: context.height / 18,
+              child: CustomButton(
+                onTappeed: () {
+                  _controller.resetStates();
+                  _controller.switchSelectedTap(1);
+                },
+                text: "My Connections".tr,
+                backgroundColor: _controller.selected == 1
+                    ? Jobstopcolor.primarycolor
+                    : Jobstopcolor.lightprimary,
+                textColor: _controller.selected == 1
+                    ? Jobstopcolor.white
+                    : Jobstopcolor.primarycolor,
+              ),
+            )),
+      ],
     );
   }
 }

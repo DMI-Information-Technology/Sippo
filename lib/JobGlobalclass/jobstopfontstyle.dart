@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
 
+// const TextStyle dmsbold = const TextStyle(
+//   fontFamily: "DMSansBold",
+// );
+// const TextStyle dmsmedium = const TextStyle(
+//   fontFamily: "DMSansMedium",
+// );
+// const TextStyle dmsregular = const TextStyle(
+//   fontFamily: "DMSansRegular",
+// );
 const TextStyle dmsbold = const TextStyle(
-  fontFamily: "DMSansBold",
+  fontFamily: "TajawalBold",
 );
 const TextStyle dmsmedium = const TextStyle(
-  fontFamily: "DMSansMedium",
+  fontFamily: "TajawalMedium",
 );
 const TextStyle dmsregular = const TextStyle(
-  fontFamily: "DMSansRegular",
+  fontFamily: "TajawalRegular",
 );

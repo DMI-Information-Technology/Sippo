@@ -8,13 +8,16 @@ import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
+import 'package:jobspot/sippo_custom_widget/body_widget.dart';
+import 'package:jobspot/sippo_custom_widget/job_card_widget.dart';
+import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
+import 'package:jobspot/utils/states.dart';
 
 import '../../JopController/dashboards_controller/user_dashboard_controller.dart';
+import '../../JopController/home_controllers/user_home_controllers.dart';
 import '../../sippo_custom_widget/find_yor_jop_dashboard_cards.dart';
-import '../../sippo_custom_widget/job_card_widget.dart';
 import '../../sippo_custom_widget/widgets.dart';
-import '../../sippo_data/model/profile_model/profile_widget_model/jobstop_jobdetailspost.dart';
-import '../../sippo_themes/themecontroller.dart';
+import '../../utils/helper.dart' as helper;
 
 class SippoUserHome extends StatefulWidget {
   const SippoUserHome({Key? key}) : super(key: key);
@@ -24,72 +27,17 @@ class SippoUserHome extends StatefulWidget {
 }
 
 class _SippoUserHomeState extends State<SippoUserHome> {
-  dynamic size;
-  double height = 0.00;
-  double width = 0.00;
-  final themedata = Get.put(JobstopThemecontroler());
-  final List<JobDetailsModel> jobData = [
-    JobDetailsModel(
-      companyLogo: 'https://picsum.photos/200',
-      jobName: 'Flutter Developerrrrrrrrrrrrrrrrr',
-      companyName: 'Example Company',
-      location: 'New York, USA',
-      description: 'We are looking for a skilled Flutter developer...',
-      salary: '\$70,000 - \$90,000',
-      chips: ['Full-time', 'Remote', 'Experienced'],
-    ),
-    JobDetailsModel(
-      companyLogo: 'https://picsum.photos/200',
-      jobName: 'Flutter Developer',
-      companyName: 'Example Company',
-      location: 'New York, USA',
-      description: 'We are looking for a skilled Flutter developer...',
-      salary: '\$70,000 - \$90,000',
-      chips: ['Full-time', 'Remote', 'Experienced'],
-    ),
-    JobDetailsModel(
-      companyLogo: 'https://picsum.photos/200',
-      jobName: 'Flutter Developer',
-      companyName: 'Example Company',
-      location: 'New York, USA',
-      description: 'We are looking for a skilled Flutter developer...',
-      salary: '\$70,000 - \$90,000',
-      chips: ['Full-time', 'Remote', 'Experienced'],
-    ),
-    JobDetailsModel(
-      companyLogo: 'https://picsum.photos/200',
-      jobName: 'Flutter Developer',
-      companyName: 'Example Company',
-      location: 'New York, USA',
-      description: 'We are looking for a skilled Flutter developer...',
-      salary: '\$70,000 - \$90,000',
-      chips: ['Full-time', 'Remote', 'Experienced'],
-    ),
-    JobDetailsModel(
-      companyLogo: 'https://picsum.photos/200',
-      jobName: 'Flutter Developer',
-      companyName: 'Example Company',
-      location: 'New York, USA',
-      description: 'We are looking for a skilled Flutter developer...',
-      salary: '\$70,000 - \$90,000',
-      chips: [
-        'Full-time',
-        'Remote',
-        'Experienced',
-        'Experienced',
-        'Experienced'
-      ],
-    )
-  ];
+  final _controller = Get.put(UserHomeController());
 
   @override
   Widget build(BuildContext context) {
-    size = MediaQuery.of(context).size;
-    height = size.height;
-    width = size.width;
     return Scaffold(
       appBar: _buildHomeAppBar(),
-      body: SingleChildScrollView(
+      body: BodyWidget(
+        paddingContent: EdgeInsets.only(
+          bottom: context.fromHeight(CustomStyle.paddingValue),
+        ),
+        isScrollable: true,
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -137,26 +85,8 @@ class _SippoUserHomeState extends State<SippoUserHome> {
               ),
             ),
             SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: [
-                  for (var i = 0; i < jobData.length; i++) ...[
-                    SizedBox(width: context.fromWidth(CustomStyle.s)),
-                    JobCard(
-                      width: width / 1.3,
-                      onActionTap: () {
-                        print('${jobData[i].jobName} added to favorites');
-                      },
-                      onCardClicked: () {
-                        Get.toNamed(SippoRoutes.sippoJobDescription);
-                      },
-                    ),
-                  ],
-                  SizedBox(width: context.fromWidth(CustomStyle.s)),
-                ],
-              ),
-            ),
+            // _buildShowHomeJobPagination(context),
+            _buildShowHomeJobsList(context),
             SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
           ],
         ),
@@ -165,7 +95,116 @@ class _SippoUserHomeState extends State<SippoUserHome> {
     );
   }
 
-  Padding _buildWelcomeUser(BuildContext context) {
+  Widget _buildShowHomeJobsList(BuildContext context) {
+    return Obx(() => FutureBuilder(
+          future: Future.value(_controller.jobsHomeState.jobStates),
+          builder: (context, snapshot) {
+            final states = snapshot.data;
+            final data = _controller.jobsHomeState.jobsList;
+            print(states);
+            if (states == null) return const SizedBox.shrink();
+            if (states.isError) return _buildFieldJobsMessage(context, states);
+            if (states.isSuccess && data.isNotEmpty)
+              return _buildJobList(context, data);
+            if (states.isLoading)
+              return const Center(child: CircularProgressIndicator());
+            return const SizedBox.shrink();
+          },
+        ));
+  }
+
+  SingleChildScrollView _buildJobList(
+    BuildContext context,
+    List<CompanyJobModel> data,
+  ) {
+    return SingleChildScrollView(
+      scrollDirection: Axis.horizontal,
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: context.fromWidth(CustomStyle.spaceBetween),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            ...List.generate(data.length, (index) {
+              final item = data[index];
+              return JobHomeCard(
+                padding: EdgeInsets.only(
+                  right: index == data.length - 1
+                      ? 0.0
+                      : context.fromWidth(CustomStyle.paddingValue),
+                ),
+                width: context.width / 1.3,
+                jobDetailsPost: item,
+                imagePath: [
+                  'https://www.designbust.com/download/1060/png/microsoft_logo_transparent512.png',
+                  'https://logodownload.org/wp-content/uploads/2014/09/facebook-logo-1-2.png',
+                ][1],
+                onCardClicked: () {
+                  Get.toNamed(SippoRoutes.sippoJobDescription);
+                },
+                isEditable: false,
+                onAddressTextTap: (location) async {
+                  helper.lunchMapWithLocation(
+                    location.dLatitude,
+                    location.dLongitude,
+                  );
+                },
+              );
+            }),
+            InkWell(
+              onTap: () {},
+              child: Padding(
+                padding: EdgeInsets.all(
+                  context.fromWidth(CustomStyle.xxl),
+                ),
+                child: Icon(
+                  Icons.arrow_circle_right_rounded,
+                  color: Jobstopcolor.secondary,
+                  size: context.fromHeight(12),
+                ),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Center _buildFieldJobsMessage(BuildContext context, States states) {
+    return Center(
+      child: Padding(
+        padding:
+            EdgeInsets.symmetric(horizontal: context.fromWidth(CustomStyle.s)),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              states.message ?? 'something wrong is happened.',
+              style: dmsregular.copyWith(
+                fontSize: FontSize.paragraph3(context),
+              ),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: context.fromHeight(CustomStyle.huge)),
+            SizedBox(
+              width: context.fromWidth(CustomStyle.overBy3),
+              height: context.fromHeight(12),
+              child: CustomButton(
+                onTappeed: () {
+                  _controller.jobsHomeState.refreshJobs();
+                },
+                text: 'Try again',
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildWelcomeUser(BuildContext context) {
     final dashboardController = UserDashBoardController.instance;
     return Padding(
       padding: EdgeInsets.symmetric(
@@ -237,6 +276,9 @@ class _SippoUserHomeState extends State<SippoUserHome> {
   }
 
   AppBar _buildHomeAppBar() {
+    Size size = MediaQuery.of(context).size;
+    double height = size.height;
+    double width = size.width;
     return AppBar(
       actions: [
         Padding(
@@ -266,9 +308,9 @@ class _SippoUserHomeState extends State<SippoUserHome> {
   }
 
   Widget _buildAdsBoard() {
-    size = MediaQuery.of(context).size;
-    height = size.height;
-    width = size.width;
+    Size size = MediaQuery.of(context).size;
+    double height = size.height;
+    double width = size.width;
     return Container(
       decoration: BoxDecoration(
           color: Jobstopcolor.primarycolor,

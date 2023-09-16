@@ -6,7 +6,7 @@ import 'package:jobspot/utils/states.dart';
 
 import '../../core/Refresh.dart';
 import '../../sippo_data/model/profile_model/profile_resource_model/skills_model.dart';
-import '../../sippo_data/profile_user/skills_repo.dart';
+import '../../sippo_data/user_repos/skills_repo.dart';
 
 class EditAddSkillsController extends GetxController {
   static EditAddSkillsController get instance => Get.find();

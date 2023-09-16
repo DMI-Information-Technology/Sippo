@@ -11,9 +11,9 @@ import 'package:jobspot/JopController/company_profile_controller/company_edit_ad
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 
-import '../../sippo_custom_widget/ConditionalWidget.dart';
-import '../../sippo_custom_widget/success_message_widget.dart';
-import '../../utils/validating_input.dart';
+import '../../../sippo_custom_widget/ConditionalWidget.dart';
+import '../../../sippo_custom_widget/success_message_widget.dart';
+import '../../../utils/validating_input.dart';
 
 class SippoCompanyEditAddPost extends StatelessWidget {
   SippoCompanyEditAddPost({Key? key}) : super(key: key);

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 void showAlert(BuildContext context, Widget widget) {
   showDialog(
@@ -102,4 +103,14 @@ bool listEquality<T>(List<T>? list1, List<T>? list2) {
   if (list1 == null || list2 == null) return false;
   if (list1.length != list2.length) return false;
   return list2.every((e) => list1.contains(e) == true) == true;
+}
+Future<void> lunchMapWithLocation(double? lat, double? long) async {
+  print("is work place is null? ${long == null || lat == null}");
+  if (long == null || lat == null) return;
+  try {
+    !await launchUrl(Uri.parse("http://maps.google.com/?ll=$lat,$long"));
+  } catch (e, s) {
+    print(e);
+    print(s);
+  }
 }

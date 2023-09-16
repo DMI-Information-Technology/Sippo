@@ -32,4 +32,9 @@ class States {
       error: error ?? this.error,
     );
   }
+
+  @override
+  String toString() {
+    return 'States{isLoading: $isLoading, isSuccess: $isSuccess, isError: $isError, isWarning: $isWarning, message: $message, error: $error}';
+  }
 }

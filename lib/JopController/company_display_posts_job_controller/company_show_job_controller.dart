@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:jobspot/JopController/company_display_posts_job_controller/company_show_job_post_wrapper_controller.dart';
-import 'package:jobspot/sippo_data/company_user/company_job_repo.dart';
+import 'package:jobspot/sippo_data/company_repos/company_job_repo.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 

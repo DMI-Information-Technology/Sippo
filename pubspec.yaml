@@ -125,6 +125,16 @@ flutter:
     - family: DMSansRegular
       fonts:
         - asset: Assets/jobstop_assets/fonts/DMSans-Regular.ttf
+    ########
+    - family: TajawalBold
+      fonts:
+        - asset: Assets/jobstop_assets/fonts/Tajawal-Bold.ttf
+    - family: TajawalMedium
+      fonts:
+        - asset: Assets/jobstop_assets/fonts/Tajawal-Medium.ttf
+    - family: TajawalRegular
+      fonts:
+        - asset: Assets/jobstop_assets/fonts/Tajawal-Regular.ttf
   # fonts:
   #   - family: Schyler
   #     fonts:

@@ -6,15 +6,15 @@ import 'package:jobspot/JopController/dashboards_controller/user_dashboard_contr
 import 'package:jobspot/core/Refresh.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/education_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/language_model.dart';
-import 'package:jobspot/sippo_data/profile_user/education_repo.dart';
-import 'package:jobspot/sippo_data/profile_user/language_repo.dart';
-import 'package:jobspot/sippo_data/profile_user/skills_repo.dart';
+import 'package:jobspot/sippo_data/user_repos/education_repo.dart';
+import 'package:jobspot/sippo_data/user_repos/language_repo.dart';
+import 'package:jobspot/sippo_data/user_repos/skills_repo.dart';
 
 import '../../sippo_data/model/profile_model/profile_resource_model/profile_edit_model.dart';
 import '../../sippo_data/model/profile_model/profile_resource_model/work_experiences_model.dart';
 import '../../sippo_data/model/profile_model/profile_widget_model/jobstop_appreciation_info_card_model.dart';
 import '../../sippo_data/model/profile_model/profile_widget_model/jobstop_resume_file_info.dart';
-import '../../sippo_data/profile_user/work_experiences_repo.dart';
+import '../../sippo_data/user_repos/work_experiences_repo.dart';
 
 class ProfileUserController extends GetxController {
   final netController = InternetConnectionController.instance;

@@ -10,11 +10,11 @@ import 'package:jobspot/JopController/company_profile_controller/company_edit_ad
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/rounded_border_radius_card_widget.dart';
 
-import '../../sippo_custom_widget/ConditionalWidget.dart';
-import '../../sippo_custom_widget/container_bottom_sheet_widget.dart';
-import '../../sippo_custom_widget/custom_drop_down_button.dart';
-import '../../sippo_custom_widget/success_message_widget.dart';
-import '../../sippo_custom_widget/widgets.dart';
+import '../../../sippo_custom_widget/ConditionalWidget.dart';
+import '../../../sippo_custom_widget/container_bottom_sheet_widget.dart';
+import '../../../sippo_custom_widget/custom_drop_down_button.dart';
+import '../../../sippo_custom_widget/success_message_widget.dart';
+import '../../../sippo_custom_widget/widgets.dart';
 
 class SippoCompanyEditAddJobs extends StatefulWidget {
   const SippoCompanyEditAddJobs({Key? key}) : super(key: key);

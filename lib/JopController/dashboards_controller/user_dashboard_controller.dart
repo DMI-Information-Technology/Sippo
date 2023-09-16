@@ -5,9 +5,10 @@ import 'package:get/get.dart';
 import 'package:jobspot/JopController/ConnectivityController/internet_connection_controller.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/profile_edit_model.dart';
 
-import '../../sippo_data/profile_user/edit_profile_repo.dart';
+import '../../sippo_data/user_repos/edit_profile_repo.dart';
 import '../../sippo_pages/Joborderpages/jobstop_oderpage.dart';
-import '../../sippo_pages/Jobpostpages/jobstop_posting.dart';
+
+import '../../sippo_pages/sippo_user_pages/sippo_user_community.dart';
 import '../../sippo_pages/sippo_user_pages/sippo_user_home.dart';
 import '../../sippo_pages/sippo_user_pages/sippo_user_notification.dart';
 
@@ -23,7 +24,7 @@ class UserDashBoardController extends GetxController {
   final _selectedItemIndex = 0.obs;
   final List<Widget> _pages = const [
     SippoUserHome(),
-    SippoUserSocial(),
+    SippoUserCommunity(),
     SippoUserJobNotification(),
     JobstopOrder(),
   ];

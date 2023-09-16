@@ -3,7 +3,7 @@ import 'package:jobspot/JopController/user_profile_controller/profile_user_contr
 
 import '../../core/Refresh.dart';
 import '../../sippo_data/model/profile_model/profile_resource_model/language_model.dart';
-import '../../sippo_data/profile_user/language_repo.dart';
+import '../../sippo_data/user_repos/language_repo.dart';
 import '../../utils/states.dart';
 
 class LanguageEditAddController extends GetxController {

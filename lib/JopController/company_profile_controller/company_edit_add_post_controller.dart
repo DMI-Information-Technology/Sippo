@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JopController/ConnectivityController/internet_connection_controller.dart';
 import 'package:jobspot/JopController/dashboards_controller/company_dashboard_controller.dart';
-import 'package:jobspot/sippo_data/company_user/company_posts_repo.dart';
+import 'package:jobspot/sippo_data/company_repos/company_posts_repo.dart';
 import 'package:jobspot/sippo_data/model/custom_file_model/custom_file_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_post_model.dart';
 import 'package:jobspot/utils/getx_text_editing_controller.dart';

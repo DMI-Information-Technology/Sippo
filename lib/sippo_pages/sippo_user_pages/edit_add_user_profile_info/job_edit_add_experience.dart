@@ -9,13 +9,13 @@ import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/utils/validating_input.dart';
 
-import '../../JobGlobalclass/text_font_size.dart';
-import '../../JopController/user_profile_controller/edit_add_work_experience_controller.dart';
-import '../../sippo_custom_widget/confirmation_bottom_sheet.dart';
-import '../../sippo_custom_widget/container_bottom_sheet_widget.dart';
-import '../../sippo_custom_widget/loading_empty_feild_widget.dart';
-import '../../sippo_custom_widget/success_message_widget.dart';
-import '../../utils/helper.dart' as helper;
+import '../../../JobGlobalclass/text_font_size.dart';
+import '../../../JopController/user_profile_controller/edit_add_work_experience_controller.dart';
+import '../../../sippo_custom_widget/confirmation_bottom_sheet.dart';
+import '../../../sippo_custom_widget/container_bottom_sheet_widget.dart';
+import '../../../sippo_custom_widget/loading_empty_feild_widget.dart';
+import '../../../sippo_custom_widget/success_message_widget.dart';
+import '../../../utils/helper.dart' as helper;
 
 class JobExperiences extends StatelessWidget {
   const JobExperiences({Key? key}) : super(key: key);

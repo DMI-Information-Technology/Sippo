@@ -160,6 +160,7 @@ class PostWidget extends StatelessWidget {
   Widget _buildImagePost(BuildContext context) {
     return imageUrl != null
         ? CachedNetworkImage(
+            width: context.width,
             progressIndicatorBuilder: (___, __, _) => const Align(
               alignment: Alignment.center,
               child: CircularProgressIndicator(),
@@ -167,6 +168,7 @@ class PostWidget extends StatelessWidget {
             imageUrl: imageUrl!,
             errorWidget: (___, __, _) => const SizedBox.shrink(),
             fit: BoxFit.cover,
+            alignment: Alignment.center,
           )
         : const SizedBox.shrink();
   }

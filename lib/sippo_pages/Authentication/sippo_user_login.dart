@@ -14,9 +14,14 @@ import '../../JopController/AuthenticationController/sippo_user_login_controller
 import '../../sippo_custom_widget/loading_view_widgets/overly_loading.dart';
 import '../../sippo_custom_widget/widgets.dart';
 
-class SippoUserLogin extends StatelessWidget {
+class SippoUserLogin extends StatefulWidget {
   const SippoUserLogin({Key? key}) : super(key: key);
 
+  @override
+  State<SippoUserLogin> createState() => _SippoUserLoginState();
+}
+
+class _SippoUserLoginState extends State<SippoUserLogin> {
   Color getColor(Set<MaterialState> states) {
     const Set<MaterialState> interactiveStates = <MaterialState>{
       MaterialState.pressed,
@@ -29,9 +34,10 @@ class SippoUserLogin extends StatelessWidget {
     return Jobstopcolor.lightprimary;
   }
 
+  final _controller = UserLoginController.instance;
+
   @override
   Widget build(BuildContext context) {
-    final controller = UserLoginController.instance;
     Size size = MediaQuery.of(context).size;
     double height = size.height;
     return Stack(
@@ -45,7 +51,7 @@ class SippoUserLogin extends StatelessWidget {
                 vertical: context.fromHeight(CustomStyle.paddingValue),
               ),
               child: Form(
-                key: controller.formKey,
+                key: _controller.formKey,
                 child: Column(
                   children: [
                     Text(
@@ -84,7 +90,7 @@ class SippoUserLogin extends StatelessWidget {
                           return null;
                         },
                         onChangedText: (value) {
-                          controller.phoneNumber = value.trim();
+                          _controller.phoneNumber = value.trim();
                         },
                       ),
                     ),
@@ -104,7 +110,7 @@ class SippoUserLogin extends StatelessWidget {
                         return null;
                       },
                       onChangedText: (value) {
-                        controller.password = value.trim();
+                        _controller.password = value.trim();
                       },
                     ),
                     SizedBox(
@@ -125,9 +131,9 @@ class SippoUserLogin extends StatelessWidget {
                                 fillColor: MaterialStateProperty.resolveWith(
                                   getColor,
                                 ),
-                                value: controller.isRememberMeChecked,
+                                value: _controller.isRememberMeChecked,
                                 onChanged: (bool? value) {
-                                  controller.isRememberMeChecked =
+                                  _controller.isRememberMeChecked =
                                       value ?? false;
                                 },
                               ),
@@ -144,11 +150,11 @@ class SippoUserLogin extends StatelessWidget {
                         ),
                         TextButton(
                           onPressed: () {
-                            if (controller.phoneNumber.trim().isNotEmpty) {
+                            if (_controller.phoneNumber.trim().isNotEmpty) {
                               Get.toNamed(
                                 SippoRoutes.forgetpasswordpage,
                                 arguments: {
-                                  phoneNumberArg: controller.phoneNumber
+                                  phoneNumberArg: _controller.phoneNumber
                                 },
                               );
                             } else {
@@ -180,7 +186,7 @@ class SippoUserLogin extends StatelessWidget {
                       backgroundColor: Jobstopcolor.primarycolor,
                       textColor: Jobstopcolor.white,
                       onTappeed: () async {
-                        await UserLoginController.instance.onSubmittedLogin();
+                        _controller.onSubmittedLogin();
                       },
                     ),
                     SizedBox(
@@ -245,7 +251,7 @@ class SippoUserLogin extends StatelessWidget {
           backgroundColor: Jobstopcolor.white,
         ),
         Obx(
-          () => controller.authState.isLoading
+          () => _controller.authState.isLoading
               ? const LoadingOverlay()
               : const SizedBox.shrink(),
         ),

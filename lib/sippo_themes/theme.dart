@@ -7,7 +7,7 @@ class JobstopMyThemes {
     primaryColor: Jobstopcolor.black,
     primarySwatch: Jobstopcolor.primarycolorSwatch,
     textTheme: const TextTheme(),
-    fontFamily: 'DMSansRegular',
+    fontFamily: 'TajawalRegular',
     scaffoldBackgroundColor: Jobstopcolor.backgroudHome,
     appBarTheme: AppBarTheme(
       iconTheme: const IconThemeData(color: Jobstopcolor.black),

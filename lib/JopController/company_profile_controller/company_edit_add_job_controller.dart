@@ -6,7 +6,7 @@ import 'package:jobspot/sippo_data/model/specializations_model/specializations_m
 import 'package:jobspot/utils/states.dart';
 import 'package:jobspot/utils/string_formtter.dart';
 
-import '../../sippo_data/company_user/company_job_repo.dart';
+import '../../sippo_data/company_repos/company_job_repo.dart';
 import '../../sippo_data/model/auth_model/company_response_details.dart';
 import '../../sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
 import '../../sippo_data/model/profile_model/company_profile_resource_model/work_location_model.dart';
@@ -214,7 +214,7 @@ class CompanyEditAddJobState {
         description: description,
         workplaceType: workPLaceType,
         employmentType: employmentType,
-        longitude: jobLocation.location?.dLatitude,
+        longitude: jobLocation.location?.dLongitude,
         latitude: jobLocation.location?.dLatitude,
         salaryFrom: salary.from,
         salaryTo: salary.to,

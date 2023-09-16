@@ -59,8 +59,8 @@ class CordLocation {
 
   factory CordLocation.fromJson(Map<String, dynamic> map) {
     return CordLocation(
-      longitude: map['longitude'] as String,
-      latitude: map['latitude'] as String,
+      longitude: map['longitude'].toString(),
+      latitude: map['latitude'].toString(),
     );
   }
 

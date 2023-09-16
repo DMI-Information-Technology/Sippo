@@ -168,7 +168,7 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
                       padding: EdgeInsets.symmetric(
                           horizontal: width / CustomStyle.spaceBetween),
                       itemBuilder: (context, index) {
-                        return JobCard(
+                        return JobHomeCard(
                           width: context.width / 1.3,
                           onActionTap: () {
                             print('${data[index].jobName} added to favorites');

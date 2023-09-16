@@ -11,9 +11,9 @@ import 'package:jobspot/JopController/ConnectivityController/internet_connection
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 
-import '../../JobGlobalclass/routes.dart';
-import '../../JopController/JobDescriptionController/job_description_controller.dart';
-import '../../sippo_custom_widget/list_item_text.dart';
+import '../../../JobGlobalclass/routes.dart';
+import '../../../JopController/JobDescriptionController/job_description_controller.dart';
+import '../../../sippo_custom_widget/list_item_text.dart';
 
 class SippoJobDescription extends StatefulWidget {
   const SippoJobDescription({Key? key}) : super(key: key);
@@ -242,31 +242,6 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              "Salary",
-              style: dmsregular.copyWith(
-                  fontSize: 14, color: Jobstopcolor.primarycolor),
-            ),
-            Text(
-              "Job Type",
-              style: dmsregular.copyWith(
-                  fontSize: 14, color: Jobstopcolor.primarycolor),
-            ),
-            Text(
-              "Postion",
-              style: dmsregular.copyWith(
-                fontSize: 14,
-                color: Jobstopcolor.primarycolor,
-              ),
-            ),
-          ],
-        ),
-        SizedBox(
-          height: height / 40,
-        ),
         Text(
           "Job_Description".tr,
           style: dmsbold.copyWith(fontSize: 14),
@@ -282,9 +257,7 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
           maxLines: 5,
           overflow: TextOverflow.ellipsis,
         ),
-        SizedBox(
-          height: height / 36,
-        ),
+        SizedBox(height: height / 36),
         Text(
           "Requirements".tr,
           style: dmsbold.copyWith(fontSize: 14),
@@ -369,10 +342,6 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
               fontSize: FontSize.title6(context),
               color: Jobstopcolor.primarycolor,
             ),
-          ),
-          SizedBox(
-            height: height / 22,
-            child: InputField(hintText: "job"),
           ),
           SizedBox(
             height: height / 46,

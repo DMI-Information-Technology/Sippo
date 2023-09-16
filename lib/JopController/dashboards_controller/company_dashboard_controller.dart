@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 
-import '../../sippo_data/company_user/company_profile_info_repo.dart';
+import '../../sippo_data/company_repos/company_profile_info_repo.dart';
 import '../../sippo_data/model/auth_model/company_response_details.dart';
 import '../ConnectivityController/internet_connection_controller.dart';
 

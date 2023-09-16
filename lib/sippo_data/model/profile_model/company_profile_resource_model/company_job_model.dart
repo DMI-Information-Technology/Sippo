@@ -99,7 +99,7 @@ class CompanyJobModel {
 
   @override
   String toString() {
-    return 'JobPostingModel{id: $id, company: $company, title: $title, description: $description, requirements: $requirements, workplaceType: $workplaceType, longitude: $longitude, latitude: $latitude, employmentType: $employmentType, salaryFrom: $salaryFrom, salaryTo: $salaryTo, experienceLevel: $experienceLevel, specialization: $specialization, createdAt: $createdAt, isExpired: $isExpired, isActive: $isActive}';
+    return 'JobPostingModel{id: $id, title: $title, description: $description, requirements: $requirements, workplaceType: $workplaceType, longitude: $longitude, latitude: $latitude, employmentType: $employmentType, salaryFrom: $salaryFrom, salaryTo: $salaryTo, experienceLevel: $experienceLevel, specialization: $specialization, createdAt: $createdAt, isExpired: $isExpired, isActive: $isActive}';
   }
 
   @override

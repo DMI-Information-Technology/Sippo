@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JopController/AuthenticationController/sippo_auth_controller.dart';
+
 import '../../JobGlobalclass/jobstopcolor.dart';
 import '../../JobGlobalclass/jobstopimges.dart';
 import '../../JobGlobalclass/routes.dart';

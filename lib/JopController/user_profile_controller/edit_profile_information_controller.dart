@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:jobspot/JopController/user_profile_controller/profile_user_controller.dart';
 import 'package:jobspot/sippo_custom_widget/gender_picker_widget.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/profile_edit_model.dart';
-import 'package:jobspot/sippo_data/profile_user/edit_profile_repo.dart';
+import 'package:jobspot/sippo_data/user_repos/edit_profile_repo.dart';
 import 'package:jobspot/utils/states.dart';
 
 import '../../utils/getx_text_editing_controller.dart';
