@@ -13,7 +13,7 @@ class ProfileCompanyController extends GetxController {
 
   final dashboard = CompanyDashBoardController.instance;
 
-  CompanyResponseDetailsModel get company => dashboard.company;
+  CompanyDetailsResponseModel get company => dashboard.company;
 
   // late final StreamSubscription<bool>? _connectionSubscription;
 

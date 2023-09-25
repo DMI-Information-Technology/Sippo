@@ -10,9 +10,9 @@ import '../model/profile_model/company_profile_resource_model/validate_property_
 
 class EditCompanyProfileInfoRepo {
   static Future<
-      Resource<CompanyResponseDetailsModel,
+      Resource<CompanyDetailsResponseModel,
           ValidatePropCompanyProfileDetailsModel?>> updateCompanyProfile(
-    CompanyResponseDetailsModel profile,
+    CompanyDetailsResponseModel profile,
   ) async {
     final httpController = HttpClientController.instance;
     try {
@@ -28,7 +28,7 @@ class EditCompanyProfileInfoRepo {
       return StatusResponseCodeChecker.checkStatusResponseCode(
         responseData,
         response.statusCode,
-        (data) => CompanyResponseDetailsModel.fromJson(data),
+        (data) => CompanyDetailsResponseModel.fromJson(data),
         (errors) => ValidatePropCompanyProfileDetailsModel.fromJson(errors),
       );
     } catch (e) {
@@ -41,7 +41,7 @@ class EditCompanyProfileInfoRepo {
   }
 
   static Future<
-      Resource<CompanyResponseDetailsModel,
+      Resource<CompanyDetailsResponseModel,
           ValidatePropCompanyProfileDetailsModel?>?> getCompanyProfile() async {
     final httpController = HttpClientController.instance;
     try {
@@ -55,7 +55,7 @@ class EditCompanyProfileInfoRepo {
       return StatusResponseCodeChecker.checkStatusResponseCode(
         responseData,
         response.statusCode,
-        (data) => CompanyResponseDetailsModel.fromJson(data),
+        (data) => CompanyDetailsResponseModel.fromJson(data),
         (errors) => ValidatePropCompanyProfileDetailsModel.fromJson(errors),
       );
     } catch (e) {

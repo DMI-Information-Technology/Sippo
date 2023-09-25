@@ -11,7 +11,7 @@ import '../../utils/states.dart';
 
 class CompanyShowPostsController extends GetxController {
   final pagingController =
-      PagingController<int, CompanyResponsePostModel>(firstPageKey: 0);
+      PagingController<int, CompanyDetailsPostModel>(firstPageKey: 0);
   final showWrapperController = CompanyShowJobPostWrapperController.instance;
 
   States get states => showWrapperController.states;
@@ -24,7 +24,7 @@ class CompanyShowPostsController extends GetxController {
 
   final postsState = CompanyShowPostsState();
 
-  CompanyResponseDetailsModel get company => showWrapperController.company;
+  CompanyDetailsResponseModel get company => showWrapperController.company;
 
   Future<void> fetchPostPages(int pageKey) async {
     final query = {'page': "${postsState.pageNumber}"};

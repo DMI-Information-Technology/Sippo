@@ -7,6 +7,8 @@ class ConditionalWidget<T> extends StatelessWidget {
     this.data,
     this.guaranteedBuilder,
     this.avoidBuilder,
+    this.isLoading = false,
+    this.onLoadingProgress,
   }) : this.predict = null;
 
   const ConditionalWidget.predict(
@@ -15,14 +17,20 @@ class ConditionalWidget<T> extends StatelessWidget {
     this.data,
     this.guaranteedBuilder,
     this.avoidBuilder,
+    this.isLoading = false,
+    this.onLoadingProgress,
   }) : this.condition = false;
 
   final T? data;
   final Widget? Function(BuildContext context, T? data)? guaranteedBuilder;
   final Widget? Function(BuildContext context, T? data)? avoidBuilder;
+  final Widget? Function(BuildContext context)? onLoadingProgress;
   final bool Function(T? data)? predict;
   final bool condition;
+  final bool isLoading;
   static const empty = const SizedBox.shrink();
+  static const circularIndicatorProgress =
+      const Center(child: CircularProgressIndicator());
 
   Widget _buildCases(BuildContext context) {
     late final bool result;
@@ -31,13 +39,25 @@ class ConditionalWidget<T> extends StatelessWidget {
     } else {
       result = condition;
     }
-    return switch (result) {
-      true => guaranteedBuilder != null
+    if (isLoading)
+      return onLoadingProgress != null
+          ? onLoadingProgress!(context) ?? circularIndicatorProgress
+          : circularIndicatorProgress;
+    return Visibility(
+      visible: result,
+      child: guaranteedBuilder != null
           ? guaranteedBuilder!(context, data) ?? empty
           : empty,
-      false =>
-        avoidBuilder != null ? avoidBuilder!(context, data) ?? empty : empty,
-    };
+      replacement:
+          avoidBuilder != null ? avoidBuilder!(context, data) ?? empty : empty,
+    );
+    // return switch (result) {
+    //   true => guaranteedBuilder != null
+    //       ? guaranteedBuilder!(context, data) ?? empty
+    //       : empty,
+    //   false =>
+    //     avoidBuilder != null ? avoidBuilder!(context, data) ?? empty : empty,
+    // };
   }
 
   @override

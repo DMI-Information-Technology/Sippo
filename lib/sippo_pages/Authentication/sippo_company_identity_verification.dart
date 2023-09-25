@@ -61,7 +61,7 @@ class SippoCompanyIdentityVerification extends StatelessWidget {
         ),
         paddingBottom: EdgeInsets.all(width / 32),
         bottomScreen: CustomButton(
-          onTappeed: () async => await controller.onSubmitSend(),
+          onTapped: () async => await controller.onSubmitSend(),
           text: "send".tr,
         ),
       ),

@@ -9,7 +9,7 @@ class CompanyShowJobPostWrapperController extends GetxController {
   static CompanyShowJobPostWrapperController get instance => Get.find();
   final _dashboardController = CompanyDashBoardController.instance;
 
-  CompanyResponseDetailsModel get company => _dashboardController.company;
+  CompanyDetailsResponseModel get company => _dashboardController.company;
 
   int get editPostId => _dashboardController.dashboardState.editId;
 

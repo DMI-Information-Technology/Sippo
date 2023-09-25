@@ -124,7 +124,7 @@ class _SippoLocationCompanySelectorState
           context.fromWidth(CustomStyle.paddingValue),
         ),
         bottomScreen: CustomButton(
-          onTappeed: _onSubmitConfirm,
+          onTapped: _onSubmitConfirm,
           text: "confirm".tr,
         ),
       ),

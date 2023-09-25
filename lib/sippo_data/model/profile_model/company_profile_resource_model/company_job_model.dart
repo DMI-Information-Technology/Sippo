@@ -1,9 +1,10 @@
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
+import 'package:jobspot/sippo_data/model/salary_model/range_salary_model.dart';
 import 'package:jobspot/sippo_data/model/specializations_model/specializations_model.dart';
 
 class CompanyJobModel {
   int? id; // New field
-  final CompanyResponseDetailsModel? company; // New field
+  final CompanyDetailsResponseModel? company; // New field
   final String? title;
   final String? description;
   final String? requirements;
@@ -19,6 +20,7 @@ class CompanyJobModel {
   final String? createdAt; // New field
   final bool? isExpired; // New field
   final bool? isActive; // New field
+  final bool? hasApplied;
 
   CompanyJobModel({
     this.id,
@@ -38,13 +40,17 @@ class CompanyJobModel {
     this.isExpired,
     this.isActive,
     this.currencyType,
+    this.hasApplied,
   });
+
+  RangeSalaryModel get salaryRange =>
+      RangeSalaryModel(from: salaryFrom, to: salaryTo);
 
   factory CompanyJobModel.fromJson(Map<String, dynamic> json) {
     return CompanyJobModel(
       id: json['id'],
       company: json['company'] != null
-          ? CompanyResponseDetailsModel.fromJson(json['company'])
+          ? CompanyDetailsResponseModel.fromJson(json['company'])
           : null,
       title: json['title'],
       description: json['description'],
@@ -73,6 +79,7 @@ class CompanyJobModel {
               : null,
       createdAt: json['created_at'],
       isExpired: json['is_expired'],
+      hasApplied: json['has_applied'],
       isActive: json['is_active'],
       specialization:
           json['specialization'] != null && json['specialization'] is Map
@@ -85,10 +92,10 @@ class CompanyJobModel {
     return {
       'title': title,
       'description': description,
-      'requirements': requirements,
-      'workplace_type': workplaceType,
       'longitude': longitude,
       'latitude': latitude,
+      'requirements': requirements,
+      'workplace_type': workplaceType,
       'employment_type': employmentType,
       'salary_from': salaryFrom,
       'salary_to': salaryTo,
@@ -99,7 +106,7 @@ class CompanyJobModel {
 
   @override
   String toString() {
-    return 'JobPostingModel{id: $id, title: $title, description: $description, requirements: $requirements, workplaceType: $workplaceType, longitude: $longitude, latitude: $latitude, employmentType: $employmentType, salaryFrom: $salaryFrom, salaryTo: $salaryTo, experienceLevel: $experienceLevel, specialization: $specialization, createdAt: $createdAt, isExpired: $isExpired, isActive: $isActive}';
+    return 'JobPostingModel{id: $id, title: $title, description: $description, requirements: $requirements, workplaceType: $workplaceType, longitude: $longitude, latitude: $latitude, employmentType: $employmentType, salaryFrom: $salaryFrom, salaryTo: $salaryTo, experienceLevel: $experienceLevel, specialization: $specialization, createdAt: $createdAt, isExpired: $isExpired, hasApplied: $hasApplied, isActive: $isActive}';
   }
 
   @override
@@ -119,6 +126,7 @@ class CompanyJobModel {
           salaryTo == other.salaryTo &&
           currencyType == other.currencyType &&
           experienceLevel == other.experienceLevel &&
+          hasApplied == other.hasApplied &&
           specialization == other.specialization;
 
   @override
@@ -139,6 +147,7 @@ class CompanyJobModel {
       specialization.hashCode ^
       createdAt.hashCode ^
       isExpired.hashCode ^
+      hasApplied.hashCode ^
       isActive.hashCode;
 }
 

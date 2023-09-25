@@ -1,16 +1,12 @@
 import 'package:get/get.dart';
-import 'package:jobspot/JopController/dashboards_controller/user_dashboard_controller.dart';
-import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/profile_edit_model.dart';
 
 import '../../utils/states.dart';
 import '../ConnectivityController/internet_connection_controller.dart';
 
 class UserCommunityController extends GetxController {
   static UserCommunityController get instance => Get.find();
-  final _dashboardController = UserDashBoardController.instance;
-
-  ProfileInfoModel get company => _dashboardController.user;
-
+  // final _dashboardController = UserDashBoardController.instance;
+  //
 
   bool get isNetworkConnected =>
       InternetConnectionController.instance.isConnected;

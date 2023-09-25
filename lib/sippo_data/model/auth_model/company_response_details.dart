@@ -1,28 +1,28 @@
 import 'package:jobspot/sippo_data/model/auth_model/entity_model.dart';
 import 'package:jobspot/utils/app_use.dart';
-
+import 'package:collection/collection.dart';
 import '../../../utils/helper.dart';
 import '../profile_model/company_profile_resource_model/work_location_model.dart';
 import '../specializations_model/specializations_model.dart';
 
-class CompanyResponseDetailsModel extends EntityModel {
-  CompanyResponseDetailsModel({
-    super.id,
-    super.name,
-    super.phone,
-    super.secondaryPhone,
-    super.email,
-    this.city,
-    this.locations,
-    this.website,
-    this.bio,
-    this.employeesCount,
-    this.establishmentDate,
-    this.specializations,
-  });
+class CompanyDetailsResponseModel extends EntityModel {
+  CompanyDetailsResponseModel(
+      {super.id,
+      super.name,
+      super.phone,
+      super.secondaryPhone,
+      super.email,
+      this.city,
+      this.locations,
+      this.website,
+      this.bio,
+      this.employeesCount,
+      this.establishmentDate,
+      this.specializations,
+      this.isFollowed,this.hasApplied});
 
-  factory CompanyResponseDetailsModel.fromJson(Map<String, dynamic> json) {
-    return CompanyResponseDetailsModel(
+  factory CompanyDetailsResponseModel.fromJson(Map<String, dynamic> json) {
+    return CompanyDetailsResponseModel(
       id: json['id'],
       name: json['name'],
       phone: json['phone'],
@@ -41,6 +41,8 @@ class CompanyResponseDetailsModel extends EntityModel {
       specializations: List.of(json["specializations"] ?? [])
           .map((cord) => SpecializationModel.fromJson(cord))
           .toList(),
+      isFollowed: json['is_followed'],
+      hasApplied: json['has_applied'],
     );
   }
 
@@ -50,9 +52,11 @@ class CompanyResponseDetailsModel extends EntityModel {
   final String? bio;
   final int? employeesCount;
   final String? establishmentDate;
+  final bool? isFollowed;
+  final bool? hasApplied;
   final List<SpecializationModel>? specializations;
 
-  CompanyResponseDetailsModel copyWith({
+  CompanyDetailsResponseModel copyWith({
     int? id,
     String? name,
     String? phone,
@@ -64,9 +68,10 @@ class CompanyResponseDetailsModel extends EntityModel {
     String? bio,
     int? employeesCount,
     String? establishmentDate,
+    bool? isFollowed,
     List<SpecializationModel>? specializations,
   }) =>
-      CompanyResponseDetailsModel(
+      CompanyDetailsResponseModel(
         id: id ?? this.id,
         name: name ?? this.name,
         phone: phone ?? this.phone,
@@ -78,6 +83,8 @@ class CompanyResponseDetailsModel extends EntityModel {
         bio: bio ?? this.bio,
         employeesCount: employeesCount ?? this.employeesCount,
         establishmentDate: establishmentDate ?? this.establishmentDate,
+        isFollowed: isFollowed ?? this.isFollowed,
+        hasApplied: hasApplied ?? this.hasApplied,
         specializations: specializations ?? this.specializations,
       );
 
@@ -116,7 +123,7 @@ class CompanyResponseDetailsModel extends EntityModel {
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
-        other is CompanyResponseDetailsModel &&
+        other is CompanyDetailsResponseModel &&
             runtimeType == other.runtimeType &&
             id == other.id &&
             name == other.name &&
@@ -128,6 +135,8 @@ class CompanyResponseDetailsModel extends EntityModel {
             bio == other.bio &&
             employeesCount == other.employeesCount &&
             establishmentDate == other.establishmentDate &&
+            isFollowed == other.isFollowed &&
+            hasApplied == other.hasApplied &&
             listEquality(locations, other.locations) &&
             listEquality(specializations, other.specializations);
   }
@@ -145,10 +154,12 @@ class CompanyResponseDetailsModel extends EntityModel {
       bio.hashCode ^
       employeesCount.hashCode ^
       establishmentDate.hashCode ^
+      isFollowed.hashCode ^
+      hasApplied.hashCode ^
       specializations.hashCode;
 
   @override
   String toString() {
-    return 'CompanyResponseDetailsModel{id: $id,name: $name, phone: $phone, secondaryPhone: $secondaryPhone, email: $email, city: $city, locations: $locations, website: $website, bio: $bio, employeesCount: $employeesCount, establishmentDate: $establishmentDate, specializations: $specializations}';
+    return 'CompanyResponseDetailsModel{id: $id,name: $name, phone: $phone, secondaryPhone: $secondaryPhone, email: $email, city: $city, locations: $locations, website: $website, bio: $bio, employeesCount: $employeesCount, establishmentDate: $establishmentDate, hasApplied: $hasApplied ,isFollowed: $isFollowed, specializations: $specializations}';
   }
 }

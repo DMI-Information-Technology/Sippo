@@ -12,6 +12,10 @@ const String languageEndpoint = "languages";
 const String experienceLevelsEndpoint = "experience-levels";
 const String employmentTypesEndpoint = "employment-types";
 const String companyChangeStatusJobParam = "change-status";
+const String toggleFollowCompaniesParam = "toggle-follow";
+const String userJobsAboutsCompanies = "jobs";
+const String userPostsAboutsCompanies = "posts";
+const String applyCompanyParam = "apply";
 /////////////////////////////////////////////////////////////
 ///////////// profile resource endpoints ///////////////////
 const String workExperiencesEndpoint = "user/work-experiences";
@@ -24,7 +28,12 @@ const String userLanguageEndpoint = "user/languages";
 const String companyInfoProfileEndpoint = "company/profile";
 const String companyPostEndpoint = "company/profile/posts";
 const String companyJobsEndpoint = "company/profile/jobs";
+const String companyApplicationEndpoint = "company/applications";
 /////////////////////////////////////////////////////////
 /////////////////// user core functions endpoints ///////////////////
 const String userJobsEndpoint = "jobs";
+const String userCompaniesAboutsEndpoint = "companies";
+const String userCommunityCompaniesEndpoint = "social";
+const String userCommunityPostsEndpoint = "social/posts";
+const String userCommunityJobsEndpoint = "social/jobs";
 /////////////////////////////////////////////////////////////////////

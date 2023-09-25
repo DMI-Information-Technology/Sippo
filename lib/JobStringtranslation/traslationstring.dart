@@ -125,6 +125,8 @@ class Apptranslation extends Translations {
           'app_rejected': "Application rejected",
           'app_sent': "Application sent",
           'about_me': "About me",
+          'about_us': "About us",
+          'posts': "Posts",
           'work_experience': ' Work experience',
           'education': 'Education',
           'skill': 'Skill',
@@ -148,6 +150,7 @@ class Apptranslation extends Translations {
           'find_your_dream_job': "Find your dream job\nhere!",
           'like_post_your_tips_and_experiences':
               "like to post your tips and experiences",
+          'jobs': "Jobs",
           'make_job': "Make a job",
           'edit_profile': "Edit profile",
           'show_less': "show less",
@@ -164,6 +167,11 @@ class Apptranslation extends Translations {
           'advanced': "Advanced",
           'language_kills': "Language Skills",
           'change': "Change",
+          'work_place': "Work Place",
+          'invented_date': "Invented Date",
+          'follow': "Follow",
+          'followed': "Followed",
+          'visit_website': "Visit Website",
         },
         'ar_ab': {
           'Email': "Email",
@@ -221,6 +229,9 @@ class Apptranslation extends Translations {
           'new_password_title': "New password",
           'password_has_been_changed': "Tha password has been changed",
           'identity_verification': "Identity Verification",
+          'follow': "Follow",
+          'followed': "Followed",
+          'visit_website': "Visit Website",
         }
       };
 }

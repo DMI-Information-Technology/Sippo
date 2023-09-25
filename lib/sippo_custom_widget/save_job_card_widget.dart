@@ -15,15 +15,13 @@ import '../JobGlobalclass/jobstopimges.dart';
 import '../JobGlobalclass/text_font_size.dart';
 import '../sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
 import '../sippo_data/model/profile_model/company_profile_resource_model/cord_location.dart';
+import '../sippo_data/model/profile_model/company_profile_resource_model/work_location_model.dart';
 
 class JobPostingCard extends StatelessWidget {
   final String? imagePath;
-
-  // final String jobTitle;
-  // final String companyLocation;
-  // final String jobType;
-  // final String jobCategory;
-  // final String jobPosition;
+  final List<WorkLocationModel>? companyLocations;
+  final String? companyName;
+  final bool? isActive;
   final String timeAgo;
   final bool isEditable;
   final void Function(CordLocation? location)? onAddressTextTap;
@@ -31,16 +29,19 @@ class JobPostingCard extends StatelessWidget {
   // final String salary;
   final VoidCallback onActionTap;
   final bool isSaved;
-  final CompanyJobModel? jobDetailsPost;
+  final CompanyJobModel? jobDetails;
 
   const JobPostingCard({
     this.imagePath,
     required this.timeAgo,
     required this.onActionTap,
     this.isSaved = false,
-    this.jobDetailsPost,
+    this.jobDetails,
     this.isEditable = false,
     this.onAddressTextTap,
+    this.companyLocations,
+    this.companyName,
+    this.isActive,
   });
 
   @override
@@ -62,14 +63,14 @@ class JobPostingCard extends StatelessWidget {
               children: [
                 _buildCustomChip(
                   context,
-                  jobDetailsPost?.specialization?.name,
+                  jobDetails?.specialization?.name,
                   true,
                 ),
-                _buildCustomChip(context, jobDetailsPost?.employmentType),
-                _buildCustomChip(context, jobDetailsPost?.workplaceType),
+                _buildCustomChip(context, jobDetails?.employmentType),
+                _buildCustomChip(context, jobDetails?.workplaceType),
                 _buildCustomChip(
                   context,
-                  jobDetailsPost?.experienceLevel?.label,
+                  jobDetails?.experienceLevel?.label,
                 ),
               ],
             ),
@@ -79,6 +80,14 @@ class JobPostingCard extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  Color? checkActivityColor(BuildContext _) {
+    return switch (isActive) {
+      null => Colors.grey[300],
+      true => Colors.greenAccent,
+      false => Colors.redAccent,
+    };
   }
 
   Widget _buildTopImageButtonOptionCard(BuildContext context) {
@@ -91,9 +100,7 @@ class JobPostingCard extends StatelessWidget {
           NetworkBorderedCircularImage(
             imageUrl: imagePath ?? '',
             size: context.fromHeight(CustomStyle.imageSize3),
-            outerBorderColor: jobDetailsPost?.isActive == true
-                ? Colors.greenAccent
-                : Colors.redAccent,
+            outerBorderColor: checkActivityColor(context),
             errorWidget: (context, url, error) =>
                 Image.asset(JobstopPngImg.companysignup),
           ),
@@ -132,7 +139,7 @@ class JobPostingCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           AutoSizeText(
-            jobDetailsPost?.title ?? "unknown",
+            jobDetails?.title ?? "unknown",
             style: dmsbold.copyWith(
               fontSize: FontSize.title6(context),
               color: Colors.black,
@@ -142,7 +149,7 @@ class JobPostingCard extends StatelessWidget {
           Wrap(
             children: [
               AutoSizeText(
-                "${jobDetailsPost?.company?.name ?? 'unknown'}, ",
+                "${(jobDetails?.company?.name ?? companyName) ?? 'unknown'}, ",
                 style: dmsregular.copyWith(
                   fontSize: FontSize.title6(context),
                   color: Colors.grey,
@@ -152,27 +159,42 @@ class JobPostingCard extends StatelessWidget {
                 onTap: () {
                   if (onAddressTextTap != null)
                     onAddressTextTap!(
-                      jobDetailsPost?.company?.locations?.first.location,
+                      CordLocation(
+                        latitude: jobDetails?.latitude.toString(),
+                        longitude: jobDetails?.longitude.toString(),
+                      ),
                     );
                 },
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    Icon(
-                      Icons.location_on_outlined,
-                      color: Jobstopcolor.primarycolor,
-                      size: context.fromHeight(CustomStyle.xxl),
+                child: FutureBuilder(
+                    future: Future.value(
+                      jobDetails?.company?.locations ?? companyLocations,
                     ),
-                    AutoSizeText(
-                      jobDetailsPost?.company?.city?.capitalize ?? 'unknown',
-                      style: dmsregular.copyWith(
-                          fontSize: FontSize.paragraph4(context),
-                          color: Jobstopcolor.primarycolor,
-                          decoration: TextDecoration.underline,
-                          decorationColor: Jobstopcolor.primarycolor),
-                    ),
-                  ],
-                ),
+                    builder: (context, snapshot) {
+                      final result = snapshot.data;
+                      if (result == null) return const SizedBox.shrink();
+                      final workPlace = result.firstWhereOrNull((e) {
+                        return e.location?.dLatitude == jobDetails?.latitude &&
+                            e.location?.dLongitude == jobDetails?.longitude;
+                      });
+                      return Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Icon(
+                            Icons.location_on_outlined,
+                            color: Jobstopcolor.primarycolor,
+                            size: context.fromHeight(CustomStyle.xxl),
+                          ),
+                          AutoSizeText(
+                            workPlace?.address?.capitalize ?? 'unknown',
+                            style: dmsregular.copyWith(
+                                fontSize: FontSize.paragraph4(context),
+                                color: Jobstopcolor.primarycolor,
+                                decoration: TextDecoration.underline,
+                                decorationColor: Jobstopcolor.primarycolor),
+                          ),
+                        ],
+                      );
+                    }),
               ),
             ],
           ),
@@ -197,7 +219,7 @@ class JobPostingCard extends StatelessWidget {
           ),
           const Spacer(),
           Text(
-            '${jobDetailsPost?.salaryFrom.toString().salaryValue} - ${jobDetailsPost?.salaryTo.toString().salaryValue}',
+            '${jobDetails?.salaryFrom.toString().salaryValue} - ${jobDetails?.salaryTo.toString().salaryValue}',
             style: dmsbold.copyWith(
               fontSize: FontSize.title5(context),
               color: Jobstopcolor.primarycolor, // Use appropriate color
@@ -254,8 +276,10 @@ class NetworkBorderedCircularImage extends StatelessWidget {
     this.outerBorderColor,
     this.innerBorderColor,
     this.errorWidget,
+    this.backgroundColor,
   });
 
+  final Color? backgroundColor;
   final double size;
   final Color? outerBorderColor;
   final Color? innerBorderColor;
@@ -275,6 +299,7 @@ class NetworkBorderedCircularImage extends StatelessWidget {
       ),
       child: Container(
         decoration: BoxDecoration(
+          color: backgroundColor,
           shape: BoxShape.circle,
           border: Border.all(
             color: innerBorderColor ?? Colors.white,

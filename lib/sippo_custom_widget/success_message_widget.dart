@@ -95,56 +95,56 @@ class CardNotifyMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return _buildState()
-        ? SafeArea(
-            child: Column(
-              children: [
-                SizedBox(
-                  width: context.width,
-                  child: Card(
-                    margin: EdgeInsets.zero,
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius:
-                          BorderRadius.circular(context.fromWidth(64)),
-                      side: BorderSide(
-                        width: context.width / 256,
-                        color: ColoredMessageCard
-                                .colors[messageType]?.borderColor ??
-                            Colors.transparent,
-                      ),
+        ? Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(
+                width: context.width,
+                child: Card(
+                  margin: EdgeInsets.zero,
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                    borderRadius:
+                        BorderRadius.circular(context.fromWidth(64)),
+                    side: BorderSide(
+                      width: context.width / 256,
+                      color: ColoredMessageCard
+                              .colors[messageType]?.borderColor ??
+                          Colors.transparent,
                     ),
-                    color: ColoredMessageCard.colors[messageType]?.filledColor,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: Text(
-                              state?.message ?? message,
-                              style: dmsregular.copyWith(
-                                color: Colors.black87,
-                                fontSize: FontSize.paragraph2(context),
-                                overflow: TextOverflow.fade,
-                              ),
+                  ),
+                  color:
+                      ColoredMessageCard.colors[messageType]?.filledColor,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            state?.message ?? message,
+                            style: dmsregular.copyWith(
+                              color: Colors.black87,
+                              fontSize: FontSize.paragraph2(context),
+                              overflow: TextOverflow.fade,
                             ),
                           ),
-                          if (onCancelTap != null)
-                            IconButton(
-                              onPressed: onCancelTap,
-                              icon: Icon(Icons.close),
-                            ),
-                        ],
-                      ),
+                        ),
+                        if (onCancelTap != null)
+                          IconButton(
+                            onPressed: onCancelTap,
+                            icon: Icon(Icons.close),
+                          ),
+                      ],
                     ),
                   ),
                 ),
-                SizedBox(
-                  height: bottomSpaceValue ??
-                      context.fromHeight(CustomStyle.spaceBetween),
-                ),
-              ],
-            ),
+              ),
+              SizedBox(
+                height: bottomSpaceValue ??
+                    context.fromHeight(CustomStyle.spaceBetween),
+              ),
+            ],
           )
         : empty;
   }

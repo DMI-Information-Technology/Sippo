@@ -62,7 +62,7 @@ class _JobstopForgetState extends State<JobstopForget> {
                 height: height / 16,
               ),
               CustomButton(
-                onTappeed: () {
+                onTapped: () {
                   Get.toNamed(SippoRoutes.otpresetpassmsgpage);
                 },
                 text: "RESENT_PASSWORD".tr,

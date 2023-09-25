@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
@@ -7,14 +6,13 @@ import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
-import 'package:jobspot/sippo_pages/sippo_user_pages/no_resource_screen.dart';
+import 'package:jobspot/sippo_pages/sippo_message_pages/no_resource_screen.dart';
 
 import '../../JopController/NotificationController/user_notification_controller.dart';
 import '../../sippo_custom_widget/container_bottom_sheet_widget.dart';
-import '../../sippo_custom_widget/rounded_border_radius_card_widget.dart';
+import '../../sippo_custom_widget/notification_widget.dart';
 import '../../sippo_custom_widget/setting_item_widget.dart';
 import '../../sippo_data/model/notification/job_application_model.dart';
-import '../../sippo_data/model/notification/job_application_status_model.dart';
 import 'job_application.dart';
 
 class SippoUserJobNotification extends StatefulWidget {
@@ -171,17 +169,22 @@ class NotificationListView extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     // double height = size.height;
     double width = size.width;
-    return ListView.builder(
+    return ListView.separated(
+      padding: EdgeInsets.only(
+        top: context.fromHeight(CustomStyle.m),
+        bottom: context.fromHeight(CustomStyle.xs),
+      ),
       itemCount: notifiList.length,
       itemBuilder: (context, index) {
         return SizedBox(
           width: width,
           child: Obx(
             () => NotificationApplicationWidget(
-              onDeletePressed: () => 0,
+              onDeletePressed: () => null,
               onTap: () {
-                if (controller.selectedNotification != index)
+                if (controller.selectedNotification != index) {
                   controller.selectedNotification = index;
+                }
                 if (isGeneral) {
                   _openBottomSheetOption(context, isGeneral, index);
                 }
@@ -189,13 +192,15 @@ class NotificationListView extends StatelessWidget {
               onPopupNotificationButtonTapped: !isGeneral
                   ? () => _openBottomSheetOption(context, isGeneral, index)
                   : null,
-              notification: notifiList[index],
-              isLastWidget: index == notifiList.length - 1,
+              // notification: notifiList[index],
               isSelected: controller.selectedNotification == index,
             ),
           ),
         );
       },
+      separatorBuilder: (context, _) => SizedBox(
+        height: context.fromWidth(CustomStyle.m),
+      ),
     );
   }
 
@@ -277,217 +282,3 @@ class NotificationListView extends StatelessWidget {
     ).then((value) => controller.selectedBottomOption = -1);
   }
 }
-
-class NotificationApplicationWidget extends StatelessWidget {
-  final VoidCallback onDeletePressed;
-  final VoidCallback onTap;
-  final NotificationModel notification;
-  final bool isLastWidget;
-  final bool isSelected;
-  final VoidCallback? onPopupNotificationButtonTapped;
-
-  NotificationApplicationWidget({
-    required this.onDeletePressed,
-    required this.onTap,
-    required this.notification,
-    required this.isLastWidget,
-    this.onPopupNotificationButtonTapped,
-    required this.isSelected,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return InkWell(
-      splashColor: Colors.transparent,
-      highlightColor: Colors.transparent,
-      onTap: onTap,
-      child: RoundedBorderRadiusCardWidget(
-        paddingType: PaddingType.all,
-        color: isSelected ? Jobstopcolor.primary : Colors.white,
-        margin: EdgeInsets.only(
-          right: context.fromWidth(CustomStyle.s),
-          left: context.fromWidth(CustomStyle.s),
-          top: context.fromWidth(CustomStyle.m),
-          bottom: isLastWidget ? context.fromWidth(CustomStyle.xs) : 0.0,
-        ),
-        child: Column(
-          children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Image.asset(
-                  notification.imagePath ?? JobstopPngImg.google,
-                  height: context.fromWidth(CustomStyle.xs),
-                ),
-                SizedBox(
-                  width: context.fromWidth(CustomStyle.spaceBetween),
-                ),
-                _buildMainDetailsApplication(context),
-                SizedBox(
-                  width: context.fromWidth(CustomStyle.spaceBetween),
-                ),
-                if (onPopupNotificationButtonTapped != null)
-                  InkWell(
-                    onTap: onPopupNotificationButtonTapped ??
-                        () => print("null bottom sheet function"),
-                    child: Icon(Icons.more_vert_rounded),
-                  ),
-              ],
-            ),
-            SizedBox(
-              height: context.fromHeight(CustomStyle.huge2),
-            ),
-            _buildDeleteButtonAndArrivalTimeRow(context),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildDeleteButtonAndArrivalTimeRow(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    double height = size.height;
-    return Row(
-      children: [
-        SizedBox(
-          height: height / 18,
-          width: height / 18,
-        ),
-        SizedBox(
-          width: context.fromWidth(CustomStyle.spaceBetween),
-        ),
-        Text(
-          notification.arriveTime ?? "",
-          style: TextStyle(
-            fontSize: FontSize.label(context),
-            color: Colors.grey,
-          ),
-        ),
-        Spacer(),
-        TextButton(
-          onPressed: onDeletePressed,
-          child: Text(
-            'delete'.tr,
-            style: TextStyle(
-              fontSize: FontSize.title6(context),
-              color: Colors.red,
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildMainDetailsApplication(BuildContext context) {
-    return Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          AutoSizeText(
-            notification.title ?? "",
-            style: dmsmedium.copyWith(
-              fontSize: FontSize.title6(context),
-              color: Jobstopcolor.black,
-            ),
-          ),
-          SizedBox(
-            height: context.fromHeight(CustomStyle.huge2),
-          ),
-          AutoSizeText(
-            notification.description ?? "",
-            style: TextStyle(
-              fontSize: FontSize.paragraph4(context),
-              color: Colors.grey,
-            ),
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-          ),
-          if (notification.applicationStatus != null) ...[
-            SizedBox(
-              height: context.fromHeight(CustomStyle.huge2),
-            ),
-            JobApplicationStatusChipWidget(
-              statusType: notification.applicationStatus!,
-            ),
-          ],
-        ],
-      ),
-    );
-  }
-}
-
-class JobApplicationStatusChipWidget extends StatelessWidget {
-  const JobApplicationStatusChipWidget({
-    super.key,
-    required this.statusType,
-  });
-
-  static final applicationStatus =
-      <JobApplicationStatusType, JobApplicationStatusModel>{
-    JobApplicationStatusType.accepted: JobApplicationStatusModel(
-      text: 'app_accepted'.tr,
-      textColor: Colors.red,
-      backgroundColor: Colors.redAccent[100],
-    ),
-    JobApplicationStatusType.rejected: JobApplicationStatusModel(
-      text: 'app_rejected'.tr,
-      textColor: Colors.green,
-      backgroundColor: Colors.green[100],
-    ),
-    JobApplicationStatusType.sent: JobApplicationStatusModel(
-      text: "app_sent".tr,
-      textColor: Colors.blue,
-      backgroundColor: Colors.blue[100],
-    ),
-  };
-
-  final JobApplicationStatusType statusType;
-
-  @override
-  Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    double width = size.width;
-    return Card(
-      margin: EdgeInsets.zero,
-      elevation: 0,
-      child: Padding(
-        padding: EdgeInsets.all(width / 64),
-        child: AutoSizeText(
-          applicationStatus[statusType]?.text ?? "",
-          style: dmsregular.copyWith(
-            color: applicationStatus[statusType]?.textColor,
-            fontSize: FontSize.label(context),
-          ),
-        ),
-      ),
-      color: applicationStatus[statusType]?.backgroundColor,
-    );
-  }
-}
-
-// SizedBox(
-//   height: height / 10,
-// ),
-// Text(
-//   "No notifications",
-//   style: dmsbold.copyWith(
-//       fontSize: 16, color: Jobstopcolor.primarycolor),
-// ),
-// SizedBox(
-//   height: height / 36,
-// ),
-// Text(
-//   "You have no notifications at this time\nthank you",
-//   style: dmsregular.copyWith(
-//       fontSize: 12, color: Jobstopcolor.darkgrey),
-//   textAlign: TextAlign.center,
-// ),
-// SizedBox(
-//   height: height / 10,
-// ),
-// Center(
-//     child: Image.asset(
-//   JobstopPngImg.notificationimg,
-//   height: height / 4,
-// )),

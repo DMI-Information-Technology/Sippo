@@ -11,7 +11,7 @@ import '../../core/status_response_code_checker.dart';
 
 class CompanyPostRepo {
   static Future<
-          Resource<CompanyResponsePostModel?, ValidatePropCompanyPostModel?>?>
+          Resource<CompanyDetailsPostModel?, ValidatePropCompanyPostModel?>?>
       addNewPost(CompanyPostModel post) async {
     final httpController = HttpClientController.instance;
     try {
@@ -28,7 +28,7 @@ class CompanyPostRepo {
       return StatusResponseCodeChecker.checkStatusResponseCode(
         responseData,
         response.statusCode,
-        (data) => CompanyResponsePostModel.fromJson(data),
+        (data) => CompanyDetailsPostModel.fromJson(data),
         (errors) => ValidatePropCompanyPostModel.fromJson(errors),
       );
     } catch (e) {
@@ -41,7 +41,7 @@ class CompanyPostRepo {
   }
 
   static Future<
-          Resource<CompanyResponsePostModel?, ValidatePropCompanyPostModel?>?>
+          Resource<CompanyDetailsPostModel?, ValidatePropCompanyPostModel?>?>
       updatePostCompanyById(
     CompanyPostModel post,
     int? postId,
@@ -62,7 +62,7 @@ class CompanyPostRepo {
       return StatusResponseCodeChecker.checkStatusResponseCode(
         responseData,
         response.statusCode,
-        (data) => CompanyResponsePostModel.fromJson(data),
+        (data) => CompanyDetailsPostModel.fromJson(data),
         (errors) => ValidatePropCompanyPostModel.fromJson(errors),
       );
     } catch (e) {
@@ -75,7 +75,7 @@ class CompanyPostRepo {
   }
 
   static Future<
-      Resource<PaginationModel<CompanyResponsePostModel>?,
+      Resource<PaginationModel<CompanyDetailsPostModel>?,
           ValidatePropCompanyPostModel?>?> fetchPosts(
       Map<String, String> query) async {
     final httpController = HttpClientController.instance;
@@ -98,7 +98,7 @@ class CompanyPostRepo {
         response.statusCode,
         (data) => PaginationModel.fromJson(
           data,
-          dataConverter: (item) => CompanyResponsePostModel.fromJson(item),
+          dataConverter: (item) => CompanyDetailsPostModel.fromJson(item),
         ),
         (errors) => null,
       );
@@ -113,7 +113,7 @@ class CompanyPostRepo {
   }
 
   static Future<
-          Resource<CompanyResponsePostModel?, ValidatePropCompanyPostModel?>?>
+          Resource<CompanyDetailsPostModel?, ValidatePropCompanyPostModel?>?>
       getPostById(int id) async {
     final httpController = HttpClientController.instance;
     try {
@@ -136,7 +136,7 @@ class CompanyPostRepo {
         responseData,
         response.statusCode,
         (data) {
-          return CompanyResponsePostModel.fromJson(data);
+          return CompanyDetailsPostModel.fromJson(data);
         },
         (errors) => null,
       );

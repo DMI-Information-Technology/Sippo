@@ -140,7 +140,7 @@ class SippoCompanySignup extends StatelessWidget {
                   text: "Sign_up".tr,
                   backgroundColor: Jobstopcolor.primarycolor,
                   textColor: Jobstopcolor.white,
-                  onTappeed: () async {
+                  onTapped: () async {
                     await controller.onSubmitSignup();
                   },
                 ),
@@ -182,7 +182,7 @@ class SippoCompanySignup extends StatelessWidget {
                   height: height / 52,
                 ),
                 CustomButton(
-                  onTappeed: () {
+                  onTapped: () {
                     Get.offAndToNamed(SippoRoutes.signuppage);
                   },
                   text: "user_signup".tr,
@@ -192,7 +192,7 @@ class SippoCompanySignup extends StatelessWidget {
                 ),
                 SizedBox(height: height / 52),
                 CustomButton(
-                  onTappeed: () {},
+                  onTapped: () {},
                   text: "Guest_login.".tr,
                   backgroundColor: Jobstopcolor.white,
                   textColor: Jobstopcolor.textColor,

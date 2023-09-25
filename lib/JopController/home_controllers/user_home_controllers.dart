@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:jobspot/JopController/dashboards_controller/user_dashboard_controller.dart';
+import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/profile_edit_model.dart';
 import 'package:jobspot/sippo_data/user_repos/user_jobs_repo.dart';
 
@@ -10,6 +11,34 @@ import '../ConnectivityController/internet_connection_controller.dart';
 class UserHomeController extends GetxController {
   static UserHomeController get instance => Get.find();
   final _dashboardController = UserDashBoardController.instance;
+
+  void set jobDetailsId(int? value) {
+    _dashboardController.jobDashboardState.id = value ?? -1;
+  }
+
+  void set requestedJobDetails(CompanyJobModel? value) {
+    if (value != null) _dashboardController.jobDashboardState.details = value;
+  }
+
+  void clearRequestedJobDetails() {
+    _dashboardController.jobDashboardState.clearDetails(
+      () => CompanyJobModel(),
+    );
+  }
+  void set companyDetailsId(int? value) {
+    _dashboardController.companyDashboardState.id = value ?? -1;
+  }
+
+  void set requestedCompanyDetails(CompanyDetailsResponseModel? value) {
+    if (value != null) _dashboardController.companyDashboardState.details = value;
+  }
+
+  void clearRequestedCompanyDetails() {
+    _dashboardController.companyDashboardState.clearDetails(
+      () => CompanyDetailsResponseModel(),
+    );
+  }
+
   final jobsHomeState = JobsHomeState();
 
   ProfileInfoModel get user => _dashboardController.user;
@@ -42,8 +71,8 @@ class UserHomeController extends GetxController {
 
   @override
   void onInit() {
-    jobsHomeState.pageJobsRequester(0);
     super.onInit();
+    jobsHomeState.pageJobsRequester(0);
   }
 }
 

@@ -165,7 +165,7 @@ class SippoCompanyLogin extends StatelessWidget {
                       text: "Login".tr,
                       backgroundColor: Jobstopcolor.primarycolor,
                       textColor: Jobstopcolor.white,
-                      onTappeed: () async {
+                      onTapped: () async {
                         await CompanyLoginController.instance
                             .onSubmittedLogin();
                       },
@@ -206,7 +206,7 @@ class SippoCompanyLogin extends StatelessWidget {
                       height: height / 35,
                     ),
                     CustomButton(
-                      onTappeed: () {
+                      onTapped: () {
                         Get.offAndToNamed(SippoRoutes.loginpage);
                       },
                       text: "User_Login".tr,
@@ -218,7 +218,7 @@ class SippoCompanyLogin extends StatelessWidget {
                       height: height / 52,
                     ),
                     CustomButton(
-                      onTappeed: () {},
+                      onTapped: () {},
                       text: "Guest_login.".tr,
                       backgroundColor: Jobstopcolor.white,
                       textColor: Jobstopcolor.textColor,

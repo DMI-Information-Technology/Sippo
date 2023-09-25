@@ -42,9 +42,9 @@ class AuthRepo {
     }
   }
 
-  static Future<AuthResponse<CompanyResponseDetailsModel, CompanyPropError>?>
+  static Future<AuthResponse<CompanyDetailsResponseModel, CompanyPropError>?>
       companyRegister(CompanyModel company) async {
-    AuthResponse<CompanyResponseDetailsModel, CompanyPropError>?
+    AuthResponse<CompanyDetailsResponseModel, CompanyPropError>?
         companyResponse;
     try {
       final url = Uri.parse(
@@ -58,7 +58,7 @@ class AuthRepo {
       companyResponse =
           await StatusResponseCodeChecker.checkStatusAuthResponseCode(
         response,
-        (entity) => CompanyResponseDetailsModel.fromJson(entity['company']),
+        (entity) => CompanyDetailsResponseModel.fromJson(entity['company']),
         (errors) => CompanyPropError.fromJson(errors),
       );
     } catch (error) {
@@ -114,9 +114,9 @@ class AuthRepo {
     }
   }
 
-  static Future<AuthResponse<CompanyResponseDetailsModel, CompanyPropError>?>
+  static Future<AuthResponse<CompanyDetailsResponseModel, CompanyPropError>?>
       companyLogin(CompanyModel company) async {
-    AuthResponse<CompanyResponseDetailsModel, CompanyPropError>?
+    AuthResponse<CompanyDetailsResponseModel, CompanyPropError>?
         companyResponse;
     try {
       final url =
@@ -130,7 +130,7 @@ class AuthRepo {
       companyResponse =
           await StatusResponseCodeChecker.checkStatusAuthResponseCode(
         response,
-        (entity) => CompanyResponseDetailsModel.fromJson(entity['company']),
+        (entity) => CompanyDetailsResponseModel.fromJson(entity['company']),
         (errors) => CompanyPropError.fromJson(errors),
       );
     } catch (error) {

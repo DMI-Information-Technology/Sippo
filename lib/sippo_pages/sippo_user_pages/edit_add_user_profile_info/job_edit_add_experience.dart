@@ -295,7 +295,7 @@ class JobExperiences extends StatelessWidget {
               ? SizedBox(
                   width: width / 2.3,
                   child: CustomButton(
-                    onTappeed: () {
+                    onTapped: () {
                       _showremove();
                     },
                     text: "REMOVE".tr,
@@ -308,7 +308,7 @@ class JobExperiences extends StatelessWidget {
           () => SizedBox(
             width: controller.isEditing ? width / 2.3 : null,
             child: CustomButton(
-              onTappeed: () {
+              onTapped: () {
                 _showSave();
               },
               text: "SAVE".tr,

@@ -102,7 +102,7 @@ class _CompanySignUpSpecializationsState
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: height / 50),
               child: CustomButton(
-                onTappeed: () {
+                onTapped: () {
                   if (!_controller.isConnectionLostWithDialog)
                     _onConfirmButtonClicked();
                 },

@@ -1,5 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
+import 'package:jobspot/sippo_data/model/custom_file_model/custom_file_model.dart';
 
 import '../JobGlobalclass/jobstopcolor.dart';
 import '../JobGlobalclass/jobstopfontstyle.dart';
@@ -8,8 +10,10 @@ import '../JobGlobalclass/text_font_size.dart';
 
 class ResumeCardWidget extends StatelessWidget {
   final void Function()? onDeleteTapped;
+  final CustomFileModel? resume;
 
   const ResumeCardWidget({
+    this.resume,
     this.onDeleteTapped,
     super.key,
   });
@@ -20,32 +24,35 @@ class ResumeCardWidget extends StatelessWidget {
     double height = size.height;
     double width = size.width;
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Image.asset(
-          JobstopPngImg.pdf,
+          resume?.type == 'image'
+              ? JobstopPngImg.galleryicon
+              : JobstopPngImg.pdf,
+          color: resume?.type == 'image' ? Jobstopcolor.primarycolor : null,
           height: height / 16,
         ),
-        SizedBox(
-          width: width / 36,
-        ),
+        SizedBox(width: width / 36),
         Expanded(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               AutoSizeText(
-                "Jamet kudasi - CV - UI/UX Designer",
+                resume?.name ?? "unknown",
                 style: dmsregular.copyWith(
-                    fontSize: FontSize.title6(context),
-                    color: Jobstopcolor.primarycolor),
+                  fontSize: FontSize.title6(context),
+                  color: Jobstopcolor.primarycolor,
+                ),
                 overflow: TextOverflow.ellipsis,
               ),
-              SizedBox(
-                height: height / 150,
-              ),
+              SizedBox(height: height / CustomStyle.varyHuge),
               Text(
-                "867 Kb . 14 Feb 2022 at 11:30 am",
-                style:
-                    dmsregular.copyWith(fontSize: 12, color: Jobstopcolor.grey),
+                "${resume?.sizeToString ?? 'unknown'} . ${resume?.uploadDateToString ?? 'unknown'}",
+                style: dmsregular.copyWith(
+                  fontSize: FontSize.label(context),
+                  color: Colors.black54,
+                ),
               ),
             ],
           ),

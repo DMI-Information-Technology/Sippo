@@ -39,7 +39,8 @@ class _ShowCompanyJobsListState extends State<ShowCompanyJobsList> {
               _buildErrorNewLoad(context),
           itemBuilder: (context, item, index) {
             return JobPostingCard(
-              jobDetailsPost: item,
+              jobDetails: item,
+              isActive: item.isActive,
               imagePath: [
                 'https://www.designbust.com/download/1060/png/microsoft_logo_transparent512.png',
                 'https://logodownload.org/wp-content/uploads/2014/09/facebook-logo-1-2.png',
@@ -120,7 +121,7 @@ class _ShowCompanyJobsListState extends State<ShowCompanyJobsList> {
           width: context.fromWidth(CustomStyle.overBy3),
           height: context.fromHeight(12),
           child: CustomButton(
-            onTappeed: () {
+            onTapped: () {
               _controller.refreshPage();
               showWrapperController.changeStates(isError: false, message: '');
             },

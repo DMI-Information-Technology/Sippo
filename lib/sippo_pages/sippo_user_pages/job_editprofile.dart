@@ -147,7 +147,7 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
           context.fromWidth(CustomStyle.paddingValue),
         ),
         bottomScreen: CustomButton(
-            onTappeed: () async {
+            onTapped: () async {
               if (_controller.formKey.currentState?.validate() == true) {
                 await _controller.onSaveSubmitted();
               }

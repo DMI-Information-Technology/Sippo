@@ -4,6 +4,7 @@ import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JopController/dashboards_controller/company_dashboard_controller.dart';
+import 'package:jobspot/sippo_pages/sippo_company_pages/company_notification_application/sippo_company_notifications_applications.dart';
 import 'package:jobspot/sippo_pages/sippo_company_pages/sippo_company_home.dart';
 import 'package:jobspot/sippo_pages/sippo_company_pages/sippo_jobs_posts_company_wrapper.dart';
 
@@ -19,7 +20,11 @@ class SippoCompanyDashboard extends StatefulWidget {
 
 class _SippoCompanyDashboardState extends State<SippoCompanyDashboard> {
   final _controller = CompanyDashBoardController.instance;
-  final _pages = const [SippoCompanyHomePage(), SippoJobsPostsCompanyWrapper()];
+  final _pages = const [
+    SippoCompanyHomePage(),
+    SippoJobsPostsCompanyWrapper(),
+    SippoCompanyNotificationApplication(),
+  ];
 
   Widget _bottomTabBar(BuildContext context) {
     return Obx(() => BottomNavigationBar(

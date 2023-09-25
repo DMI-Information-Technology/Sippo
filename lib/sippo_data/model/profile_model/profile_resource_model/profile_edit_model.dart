@@ -4,6 +4,7 @@ import '../../auth_model/entity_model.dart';
 
 class ProfileInfoModel extends EntityModel {
   ProfileInfoModel({
+    super.id,
     super.name,
     super.email,
     super.phone,
@@ -12,8 +13,8 @@ class ProfileInfoModel extends EntityModel {
     this.bio,
   });
 
-
   factory ProfileInfoModel.fromJson(dynamic json) => ProfileInfoModel(
+        id: json["id"],
         name: json["name"],
         phone: json["phone"],
         secondaryPhone: json["secondary_phone"],
@@ -27,6 +28,7 @@ class ProfileInfoModel extends EntityModel {
   String? bio;
 
   ProfileInfoModel copyWith({
+    int? id,
     String? name,
     String? email,
     String? secondaryPhone,
@@ -35,6 +37,7 @@ class ProfileInfoModel extends EntityModel {
     String? bio,
   }) =>
       ProfileInfoModel(
+        id: id ?? this.id,
         name: name ?? this.name,
         email: email ?? this.email,
         phone: phone ?? this.phone,
@@ -44,6 +47,7 @@ class ProfileInfoModel extends EntityModel {
       );
 
   Map<String, dynamic> toJson() => {
+        'id': id,
         'name': name,
         'gender': gender,
         'email': email,
@@ -60,7 +64,7 @@ class ProfileInfoModel extends EntityModel {
 
   @override
   String toString() {
-    return 'ProfileInfoModel{name: $name, phone: $phone, secondaryPhone: $secondaryPhone, email: $email, gender: $gender, bio: $bio}';
+    return 'ProfileInfoModel{id: $id, name: $name, phone: $phone, secondaryPhone: $secondaryPhone, email: $email, gender: $gender, bio: $bio}';
   }
 
   @override
@@ -68,6 +72,7 @@ class ProfileInfoModel extends EntityModel {
       identical(this, other) ||
       other is ProfileInfoModel &&
           runtimeType == other.runtimeType &&
+          super.id == other.id &&
           super.name == other.name &&
           super.email == other.email &&
           super.phone == other.phone &&
@@ -77,6 +82,7 @@ class ProfileInfoModel extends EntityModel {
 
   @override
   int get hashCode =>
+      super.id.hashCode ^
       super.name.hashCode ^
       super.email.hashCode ^
       super.phone.hashCode ^

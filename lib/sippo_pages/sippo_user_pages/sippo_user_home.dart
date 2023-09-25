@@ -143,12 +143,27 @@ class _SippoUserHomeState extends State<SippoUserHome> {
                 ),
                 width: context.width / 1.3,
                 jobDetailsPost: item,
-                imagePath: [
-                  'https://www.designbust.com/download/1060/png/microsoft_logo_transparent512.png',
-                  'https://logodownload.org/wp-content/uploads/2014/09/facebook-logo-1-2.png',
-                ][1],
-                onCardClicked: () {
-                  Get.toNamed(SippoRoutes.sippoJobDescription);
+                imagePath:
+                    'https://scontent.fmji4-1.fna.fbcdn.net/v/t39.30808-6/283989525_172048385265472_5677841309342210083_n'
+                    '.jpg?_nc_cat=107&ccb=1-7&_nc_sid=a2f6c7&_nc_ohc=NqB7-Psc_aIAX_7Ivx0&_nc_ht=scontent.fmji4-1.fna&oh'
+                    '=00_AfB7PaSwlVJwrtt003d9CMK5Bxy6ubHVMV9iWwxxol30Bg&oe=650B7982',
+                onImageProfileTap: () async {
+                  _controller.companyDetailsId = item.company?.id ?? -1;
+                  _controller.requestedCompanyDetails = item.company;
+                  await Get.toNamed(SippoRoutes.sippoAboutCompanies);
+                  _controller.clearRequestedCompanyDetails();
+                },
+                onCardClicked: () async {
+                  _controller.jobDetailsId = item.id;
+                  _controller.requestedJobDetails = item;
+                  await Get.toNamed(SippoRoutes.sippoJobDescription);
+                  _controller.clearRequestedJobDetails();
+                },
+                onApplyTap: () async {
+                  _controller.jobDetailsId = item.id;
+                  _controller.requestedJobDetails = item;
+                  await Get.toNamed(SippoRoutes.userApplyJobs);
+                  _controller.clearRequestedJobDetails();
                 },
                 isEditable: false,
                 onAddressTextTap: (location) async {
@@ -199,7 +214,7 @@ class _SippoUserHomeState extends State<SippoUserHome> {
               width: context.fromWidth(CustomStyle.overBy3),
               height: context.fromHeight(12),
               child: CustomButton(
-                onTappeed: () {
+                onTapped: () {
                   _controller.jobsHomeState.refreshJobs();
                 },
                 text: 'Try again',

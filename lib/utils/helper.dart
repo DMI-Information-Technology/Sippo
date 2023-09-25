@@ -33,12 +33,69 @@ String calculateElapsedTime(int startTimeMillis) {
   return 'just now';
 }
 
+String? calculateElapsedTimeFromStringDate(String? date) {
+  late final DateTime dateTime;
+  try {
+    if (date == null) {
+      throw new Exception('null date is not a valid date string.');
+    }
+    dateTime = DateTime.parse(date);
+    print(dateTime.toString());
+  } catch (e, s) {
+    print(e);
+    print(s);
+    return null;
+  }
+  final startTimeMillis = dateTime.millisecondsSinceEpoch;
+  int currentTimeMillis = DateTime.now().millisecondsSinceEpoch;
+  Duration duration = Duration(
+    milliseconds: currentTimeMillis - startTimeMillis,
+  );
+  if (duration.inDays > 0) {
+    return '${duration.inDays} days ago';
+  }
+  if (duration.inHours > 0) {
+    return '${duration.inHours} hours ago';
+  }
+  if (duration.inMinutes > 0) {
+    return '${duration.inMinutes} minutes ago';
+  }
+  if (duration.inSeconds > 0) {
+    return '${duration.inSeconds} seconds ago';
+  }
+  return 'just now';
+}
+
+double convertBytesToKB(int bytes) {
+  return bytes / 1024;
+}
+
+String? convertFileSize(int? bytes) {
+  if (bytes == null) return null;
+  if (bytes < 1024) {
+    return '$bytes B';
+  } else if (bytes < 1024 * 1024) {
+    double kb = convertBytesToKB(bytes);
+    return '${kb.toStringAsFixed(2)} KB';
+  } else {
+    double mb = bytes / (1024 * 1024);
+    return '${mb.toStringAsFixed(2)} MB';
+  }
+}
+
 String otpPhoneNumberFormat(String phoneNumber, {String countryCode = "218"}) {
   return "+$countryCode${phoneNumber.substring(1)}";
 }
 
-String dateTimeFormatter(DateTime dt) {
-  return DateFormat("d MMM y 'at' hh:mm a").format(dt);
+String? dateTimeFormatter(DateTime? dt) {
+  try {
+    if (dt == null) return null;
+    return DateFormat("d MMM y 'at' hh:mm a").format(dt);
+  } catch (e, s) {
+    print(s);
+    print(e);
+    return null;
+  }
 }
 
 String periodicDateFormatter(String? strDate) {
@@ -99,11 +156,13 @@ Future<Timer?> startTimer(
 }
 
 bool listEquality<T>(List<T>? list1, List<T>? list2) {
+  if (identical(list1, list2)) return true;
   if (list1 == null && list2 == null) return true;
   if (list1 == null || list2 == null) return false;
   if (list1.length != list2.length) return false;
   return list2.every((e) => list1.contains(e) == true) == true;
 }
+
 Future<void> lunchMapWithLocation(double? lat, double? long) async {
   print("is work place is null? ${long == null || lat == null}");
   if (long == null || lat == null) return;

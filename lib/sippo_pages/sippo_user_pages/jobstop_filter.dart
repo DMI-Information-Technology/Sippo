@@ -83,7 +83,7 @@ class _JobstopFilterState extends State<JobstopFilter> {
           context.fromWidth(CustomStyle.paddingValue),
         ),
         bottomScreen: CustomButton(
-          onTappeed: () {},
+          onTapped: () {},
           text: "Apply now",
         ),
       ),

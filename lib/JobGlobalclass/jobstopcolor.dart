@@ -21,7 +21,7 @@ class Jobstopcolor {
   static const secondary = Color(0xff3FBECA);
   static const lightprimary = Color(0xffe18dee);
   static const lightprimary2 = Color(0xffe3a1f0);
-  static const lightprimary3 = Color(0xffe4b7f1);
+  static const lightprimary3 = Color(0xffe5bdf1);
   static const lightsecondary = Color(0xffa9e7f2);
   static const primary = Color(0xffe7e6fb);
   static const purpal = Color(0xff7551FF);

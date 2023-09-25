@@ -252,23 +252,25 @@ class _PasswordInputFieldState extends State<PasswordInputField> {
   }
 }
 
-class CustomButton extends StatelessWidget {
-  const CustomButton({
+class CustomButton2 extends StatelessWidget {
+  const CustomButton2({
     super.key,
-    required this.onTappeed,
-    this.text = "",
-    this.textColor = Jobstopcolor.white,
-    this.backgroundColor = Jobstopcolor.primarycolor,
+    required this.onTapped,
+    required this.text,
+    this.textColor,
+    this.backgroundColor,
     this.borderColor,
-    this.leadingIcon = const SizedBox(),
+    this.leadingIcon,
+    this.fontSize,
   });
 
-  final Widget leadingIcon;
-  final VoidCallback onTappeed;
+  final Widget? leadingIcon;
+  final VoidCallback onTapped;
   final String text;
-  final Color textColor;
-  final Color backgroundColor;
+  final Color? textColor;
+  final Color? backgroundColor;
   final Color? borderColor;
+  final double? fontSize;
 
   @override
   Widget build(BuildContext context) {
@@ -278,33 +280,98 @@ class CustomButton extends StatelessWidget {
     return InkWell(
       highlightColor: Jobstopcolor.transparent,
       splashColor: Jobstopcolor.transparent,
-      onTap: () {
-        onTappeed();
-      },
+      onTap: onTapped,
       child: Center(
         child: Container(
           height: height / 15,
           width: width / 1.1,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(50),
-            color: backgroundColor,
+            color: backgroundColor ?? Jobstopcolor.primarycolor,
             border: borderColor != null
                 ? Border.all(width: 1, color: borderColor ?? Jobstopcolor.white)
                 : null,
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              leadingIcon,
-              SizedBox(
-                width: width / 46,
-              ),
+              if (leadingIcon != null) ...[
+                leadingIcon ?? const SizedBox.shrink(),
+                SizedBox(width: width / 46),
+              ],
               Text(
                 text,
-                style: dmsbold.copyWith(fontSize: 14, color: textColor),
+                style: dmsbold.copyWith(
+                  fontSize: fontSize ?? FontSize.title6(context),
+                  color: textColor ?? Jobstopcolor.white,
+                ),
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+}
+
+class CustomButton extends StatelessWidget {
+  const CustomButton({
+    super.key,
+    required this.onTapped,
+    required this.text,
+    this.textColor,
+    this.backgroundColor,
+    this.borderColor,
+    this.leadingIcon,
+    this.fontSize,
+    this.elevation = 0,
+    this.borderRadiusValue,
+  });
+
+  final double elevation;
+  final Widget? leadingIcon;
+  final VoidCallback onTapped;
+  final String text;
+  final Color? textColor;
+  final Color? backgroundColor;
+  final Color? borderColor;
+  final double? fontSize;
+  final double? borderRadiusValue;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: context.height / 16,
+      width: context.width / 1.1,
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          elevation: elevation,
+          backgroundColor: backgroundColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(borderRadiusValue ?? 50),
+            side: borderColor != null
+                ? BorderSide(color: borderColor ?? Colors.transparent, width: 1)
+                : BorderSide.none,
+          ),
+        ),
+        onPressed: onTapped,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            if (leadingIcon != null) ...[
+              leadingIcon ?? const SizedBox.shrink(),
+              SizedBox(width: context.width / 46),
+            ],
+            Text(
+              text,
+              style: dmsbold.copyWith(
+                fontSize: fontSize ?? FontSize.title6(context),
+                color: textColor ?? Jobstopcolor.white,
+              ),
+            ),
+          ],
         ),
       ),
     );

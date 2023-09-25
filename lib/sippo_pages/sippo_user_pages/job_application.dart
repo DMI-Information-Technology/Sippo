@@ -38,7 +38,7 @@ class JobApplication extends StatelessWidget {
               SizedBox(
                 width: width / 1.5,
                 child: CustomButton(
-                  onTappeed: () {},
+                  onTapped: () {},
                   text: "Apply for more jobs",
                 ),
               )
@@ -155,46 +155,46 @@ class JobApplication extends StatelessWidget {
     );
   }
 
-  Widget _buildPdfContainer(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    double height = size.height;
-    double width = size.width;
-
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: Colors.blue,
-      ),
-      child: Padding(
-        padding:
-            EdgeInsets.symmetric(horizontal: width / 26, vertical: height / 46),
-        child: Row(
-          children: [
-            Image.asset(
-              JobstopPngImg.dot,
-              height: height / 150,
-              color: Colors.grey,
-            ),
-            SizedBox(width: width / 36),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Jamet kudasi - CV - UI/UX Designer",
-                  style: TextStyle(fontSize: 12, color: Colors.blue),
-                ),
-                SizedBox(height: height / 150),
-                Text(
-                  "867 Kb . 14 Feb 2022 at 11:30 am",
-                  style: TextStyle(fontSize: 12, color: Colors.grey),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ),
-    );
-  }
+  // Widget _buildPdfContainer(BuildContext context) {
+  //   Size size = MediaQuery.of(context).size;
+  //   double height = size.height;
+  //   double width = size.width;
+  //
+  //   return Container(
+  //     decoration: BoxDecoration(
+  //       borderRadius: BorderRadius.circular(20),
+  //       color: Colors.blue,
+  //     ),
+  //     child: Padding(
+  //       padding:
+  //           EdgeInsets.symmetric(horizontal: width / 26, vertical: height / 46),
+  //       child: Row(
+  //         children: [
+  //           Image.asset(
+  //             JobstopPngImg.dot,
+  //             height: height / 150,
+  //             color: Colors.grey,
+  //           ),
+  //           SizedBox(width: width / 36),
+  //           Column(
+  //             crossAxisAlignment: CrossAxisAlignment.start,
+  //             children: [
+  //               Text(
+  //                 "Jamet kudasi - CV - UI/UX Designer",
+  //                 style: TextStyle(fontSize: 12, color: Colors.blue),
+  //               ),
+  //               SizedBox(height: height / 150),
+  //               Text(
+  //                 "867 Kb . 14 Feb 2022 at 11:30 am",
+  //                 style: TextStyle(fontSize: 12, color: Colors.grey),
+  //               ),
+  //             ],
+  //           ),
+  //         ],
+  //       ),
+  //     ),
+  //   );
+  // }
 }
 
 // class JobApplication extends StatelessWidget {

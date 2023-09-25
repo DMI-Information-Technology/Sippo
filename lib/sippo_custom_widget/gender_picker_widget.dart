@@ -70,7 +70,7 @@ class GenderPickerDialog extends StatelessWidget {
           width: context.width / 4,
           height: context.height / 21,
           child: CustomButton(
-            onTappeed: () => Get.back(),
+            onTapped: () => Get.back(),
             text: "Done",
           ),
         )

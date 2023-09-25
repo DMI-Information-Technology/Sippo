@@ -23,14 +23,14 @@ class CompanyEditAddJobController extends GetxController {
   bool get isNetworkConnection =>
       InternetConnectionController.instance.isConnected;
 
-  CompanyResponseDetailsModel get company => _dashboardController.company;
+  CompanyDetailsResponseModel get company => _dashboardController.company;
 
   bool get isEditing {
     print(_dashboardController.dashboardState.editId);
     return _dashboardController.dashboardState.editId != -1;
   }
 
-  void changeState({
+  void changeStates({
     bool? isLoading,
     bool? isSuccess,
     bool? isError,
@@ -53,19 +53,19 @@ class CompanyEditAddJobController extends GetxController {
     await response?.checkStatusResponse(
       onSuccess: (data, _) {
         if (data != null)
-          changeState(
+          changeStates(
             isSuccess: true,
             message: "the job is updated successfully.",
           );
       },
       onValidateError: (validateError, _) {
-        changeState(
+        changeStates(
           isError: true,
           message: "Please fill the required field before submitting.",
         );
       },
       onError: (message, _) {
-        changeState(
+        changeStates(
           isError: true,
           message: "some error occurred i can not tell you about it now.",
         );
@@ -76,12 +76,15 @@ class CompanyEditAddJobController extends GetxController {
   Future<void> updateJob(int? jobId) async {
     final newJob = newJobState.form..id = _job.value.id;
     if (newJob == _job.value) {
+      print(newJob);
+      print(_job.value);
+
       print(
         "CompanyEditAddJobController.updateJob: "
         "nothing change ? = "
         "${newJob == _job.value}",
       );
-      return changeState(
+      return changeStates(
           isWarning: true, message: "nothing is changed in the job.");
     }
     final response = await CompanyJobRepo.updateJob(newJobState.form, jobId);
@@ -90,20 +93,20 @@ class CompanyEditAddJobController extends GetxController {
         if (data != null) {
           _job.value = data;
           newJobState.setAll(_job.value);
-          changeState(
+          changeStates(
             isSuccess: true,
             message: "the job is updated successfully.",
           );
         }
       },
       onValidateError: (validateError, _) {
-        changeState(
+        changeStates(
           isError: true,
           message: "Please fill the required field before submitting.",
         );
       },
       onError: (message, _) {
-        changeState(
+        changeStates(
           isError: true,
           message: "some error occurred i can not tell you about it now.",
         );
@@ -115,10 +118,10 @@ class CompanyEditAddJobController extends GetxController {
     final response = await CompanyJobRepo.getJobById(id);
     final data = await response?.checkStatusResponseAndGetData(
       onValidateError: (validateError, _) {
-        changeState(isError: true, error: validateError?.message);
+        changeStates(isError: true, error: validateError?.message);
       },
       onError: (message, _) {
-        changeState(isError: true, error: message);
+        changeStates(isError: true, error: message);
       },
     );
     print(data);
@@ -147,19 +150,19 @@ class CompanyEditAddJobController extends GetxController {
 
   Future<void> onSavedSubmitted() async {
     if (!isNetworkConnection) {
-      return changeState(
+      return changeStates(
         isWarning: true,
         message: "sorry your connection is lost, "
             "please check your network settings before continuing.",
       );
     }
-    changeState(isLoading: true);
+    changeStates(isLoading: true);
     if (isEditing) {
       await updateJob(_dashboardController.dashboardState.editId);
     } else {
       await addNewJob();
     }
-    changeState(isLoading: false);
+    changeStates(isLoading: false);
   }
 
   Future<void> openEditing() async {
@@ -195,13 +198,13 @@ class CompanyEditAddJobController extends GetxController {
           description: "Employees working off site",
         ),
       ];
-      changeState(isLoading: true);
+      changeStates(isLoading: true);
       await Future.wait([
         fetchExperienceLevels(),
         fetchEmploymentTypes(),
         openEditing(),
       ]);
-      changeState(isLoading: false);
+      changeStates(isLoading: false);
     })();
   }
 

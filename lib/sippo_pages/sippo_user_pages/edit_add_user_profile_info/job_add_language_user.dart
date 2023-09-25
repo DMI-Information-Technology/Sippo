@@ -122,7 +122,7 @@ class _LanguageUserAddState extends State<LanguageUserAdd> {
           context.fromWidth(CustomStyle.paddingValue),
         ),
         bottomScreen: CustomButton(
-          onTappeed: () async => await _controller.onSavedSubmitted(),
+          onTapped: () async => await _controller.onSavedSubmitted(),
           text: "Save",
         ),
       ),
@@ -308,7 +308,7 @@ class _LanguageSkillLevelDialogState extends State<LanguageSkillLevelDialog> {
       actions: [
         CustomButton(
             text: "Done",
-            onTappeed: () {
+            onTapped: () {
               if (widget.onSkillLevelDone != null)
                 widget.onSkillLevelDone!(widget.levelSelect);
               Get.back();

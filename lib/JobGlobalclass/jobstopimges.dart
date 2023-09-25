@@ -5,6 +5,7 @@ class JobstopPngImg {
       "Assets/jobstop_assets/json_animation/onBoarding1.json";
   static const String google = "Assets/jobstop_assets/jobpngimg/google.png";
   static const String forget = "Assets/jobstop_assets/jobpngimg/forget.png";
+  static const String done = "Assets/jobstop_assets/jobpngimg/done.png";
   static const String checkmsg = "Assets/jobstop_assets/jobpngimg/checkmsg.png";
   static const String find_empLogo = "Assets/jobstop_assets/jobpngimg/find_emp.png";
   static const String find_jobLog =  "Assets/jobstop_assets/jobpngimg/find_job.png";

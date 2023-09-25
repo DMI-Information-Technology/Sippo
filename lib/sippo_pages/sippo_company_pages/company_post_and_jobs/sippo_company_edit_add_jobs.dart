@@ -66,7 +66,7 @@ class _SippoCompanyEditAddJobsState extends State<SippoCompanyEditAddJobs> {
                       CardNotifyMessage.success(
                     state: data,
                     onCancelTap: () =>
-                        _controller.changeState(isSuccess: false, message: ''),
+                        _controller.changeStates(isSuccess: false, message: ''),
                   ),
                 )),
             Obx(() => ConditionalWidget(
@@ -75,7 +75,7 @@ class _SippoCompanyEditAddJobsState extends State<SippoCompanyEditAddJobs> {
                   guaranteedBuilder: (_, data) => CardNotifyMessage.error(
                     state: data,
                     onCancelTap: () =>
-                        _controller.changeState(isError: false, message: ''),
+                        _controller.changeStates(isError: false, message: ''),
                   ),
                 )),
             Obx(() => ConditionalWidget(
@@ -85,7 +85,7 @@ class _SippoCompanyEditAddJobsState extends State<SippoCompanyEditAddJobs> {
                       CardNotifyMessage.warning(
                     state: data,
                     onCancelTap: () =>
-                        _controller.changeState(isWarning: false, message: ''),
+                        _controller.changeStates(isWarning: false, message: ''),
                   ),
                 )),
             _buildPositionOption(context),
@@ -286,6 +286,7 @@ class _SippoCompanyEditAddJobsState extends State<SippoCompanyEditAddJobs> {
             labelList: jobState.locationsLabel,
             values: jobState.locationsList,
             onItemSelected: (value) async {
+              print(value);
               if (value != null) jobState.jobLocation = value;
             },
             setInitialValue: jobState.jobLocation.address != null,

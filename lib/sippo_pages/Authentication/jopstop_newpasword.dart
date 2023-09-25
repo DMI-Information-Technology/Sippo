@@ -85,7 +85,7 @@ class _UpdatePasswordAfterVerificationState
                 height: height / 16,
               ),
               CustomButton(
-                onTappeed: () {
+                onTapped: () {
                   _showSuccessAlert();
                 },
                 text: "Confirm Password",

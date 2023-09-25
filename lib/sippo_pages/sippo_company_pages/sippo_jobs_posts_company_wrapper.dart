@@ -68,7 +68,7 @@ class _SippoJobsPostsCompanyWrapperState
               width: context.width / 2.4,
               height: context.height / 18,
               child: CustomButton(
-                onTappeed: () {
+                onTapped: () {
                   _controller.switchSelectedTap(0);
                 },
                 text: "Posts".tr,
@@ -84,7 +84,7 @@ class _SippoJobsPostsCompanyWrapperState
               width: context.width / 2.4,
               height: context.height / 18,
               child: CustomButton(
-                onTappeed: () {
+                onTapped: () {
                   _controller.resetStates();
                   _controller.switchSelectedTap(1);
                 },

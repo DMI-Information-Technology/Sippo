@@ -16,7 +16,7 @@ import '../../sippo_data/model/auth_model/company_response_details.dart';
 class CompanyEditAddPostController extends GetxController {
   final CompanyPostState newPostState = CompanyPostState();
   final _states = States().obs;
-  final _post = CompanyResponsePostModel().obs;
+  final _post = CompanyDetailsPostModel().obs;
   final GlobalKey<FormState> formKey = GlobalKey();
 
   final _dashboardController = CompanyDashBoardController.instance;
@@ -24,13 +24,13 @@ class CompanyEditAddPostController extends GetxController {
   bool get isNetworkConnection =>
       InternetConnectionController.instance.isConnected;
 
-  CompanyResponseDetailsModel get company => _dashboardController.company;
+  CompanyDetailsResponseModel get company => _dashboardController.company;
 
   static CompanyEditAddPostController get instance => Get.find();
 
   States get states => _states.value;
 
-  CompanyResponsePostModel get post => _post.value;
+  CompanyDetailsPostModel get post => _post.value;
 
   bool get isEditing => _dashboardController.dashboardState.editId != -1;
 
@@ -85,7 +85,7 @@ class CompanyEditAddPostController extends GetxController {
     );
   }
 
-  Future<CompanyResponsePostModel?> getCompanyPostById(int id) async {
+  Future<CompanyDetailsPostModel?> getCompanyPostById(int id) async {
     final response = await CompanyPostRepo.getPostById(id);
     final data = await response?.checkStatusResponseAndGetData(
       onValidateError: (validateError, _) {
@@ -217,7 +217,7 @@ class CompanyPostState {
         image: imageFile,
       );
 
-  void setAll(CompanyResponsePostModel value) {
+  void setAll(CompanyDetailsPostModel value) {
     title.text = value.title ?? "";
     description.text = value.body ?? "";
     imageUrl = value.image ?? imageUrl;

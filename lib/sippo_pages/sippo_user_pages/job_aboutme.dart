@@ -67,7 +67,7 @@ class _JobAboutmeState extends State<JobAboutme> {
             width / CustomStyle.paddingBottomButton,
           ),
           bottomScreen: CustomButton(
-            onTappeed: () {
+            onTapped: () {
               if (_formKey.currentState == null) return;
               if (_formKey.currentState!.validate()) {}
             },

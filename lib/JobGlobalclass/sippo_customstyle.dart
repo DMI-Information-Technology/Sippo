@@ -16,6 +16,12 @@ const errorUnderLineBorder = UnderlineInputBorder(
 
 OutlinedBorder circularBorderedShapeButton(double radius) =>
     ContinuousRectangleBorder(borderRadius: BorderRadius.circular(radius));
+final boxShadow = BoxShadow(
+  color: Colors.grey.shade600,
+  spreadRadius: 0.3,
+  blurRadius: 1,
+  offset: const Offset(0, 1),
+);
 
 // These values are used with media queries,
 // where each value from these measurements is divided by the dimensions of the screen's width and height.

@@ -30,12 +30,14 @@ class LoadingScaffold extends StatelessWidget {
     this.appBar,
     this.body,
     this.backgroundColor,
+    this.extendBodyBehindAppBar = false,
   });
 
   final PreferredSizeWidget? appBar;
   final Widget? body;
   final Color? backgroundColor;
   final LoadingOverlayController? controller;
+  final bool extendBodyBehindAppBar;
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +45,7 @@ class LoadingScaffold extends StatelessWidget {
       alignment: AlignmentDirectional.centerStart,
       children: [
         Scaffold(
+          extendBodyBehindAppBar: extendBodyBehindAppBar,
           appBar: appBar,
           body: body,
           backgroundColor: backgroundColor,

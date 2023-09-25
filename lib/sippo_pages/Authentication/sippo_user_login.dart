@@ -185,7 +185,7 @@ class _SippoUserLoginState extends State<SippoUserLogin> {
                       text: "Login".tr,
                       backgroundColor: Jobstopcolor.primarycolor,
                       textColor: Jobstopcolor.white,
-                      onTappeed: () async {
+                      onTapped: () async {
                         _controller.onSubmittedLogin();
                       },
                     ),
@@ -223,7 +223,7 @@ class _SippoUserLoginState extends State<SippoUserLogin> {
                       height: context.fromHeight(CustomStyle.spaceBetween),
                     ),
                     CustomButton(
-                      onTappeed: () {
+                      onTapped: () {
                         Get.offAndToNamed(SippoRoutes.sippoCompanyLogin);
                       },
                       text: "Company_Login".tr,
@@ -235,7 +235,7 @@ class _SippoUserLoginState extends State<SippoUserLogin> {
                       height: height / 52,
                     ),
                     CustomButton(
-                      onTappeed: () {
+                      onTapped: () {
                         Get.offAllNamed(SippoRoutes.userdashboard);
                       },
                       text: "Guest_login.".tr,

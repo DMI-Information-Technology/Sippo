@@ -189,7 +189,7 @@ class _JobAppreciationAddEditState extends State<JobAppreciationAddEdit> {
           SizedBox(
             width: width / 2.3,
             child: CustomButton(
-              onTappeed: () {
+              onTapped: () {
                 _showremove();
               },
               text: "REMOVE".tr,
@@ -199,7 +199,7 @@ class _JobAppreciationAddEditState extends State<JobAppreciationAddEdit> {
         SizedBox(
           width: appreci != null ? width / 2.3 : null,
           child: CustomButton(
-            onTappeed: () {
+            onTapped: () {
               _showundo();
             },
             text: "SAVE".tr,

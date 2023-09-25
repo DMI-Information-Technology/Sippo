@@ -104,7 +104,7 @@ class CompanyJobRepo {
   }
 
   static Future<Resource<CompanyJobModel?, ValidatePropCompanyJobModel?>?>
-      getJobById(int jobId) async {
+      getJobById(int? jobId) async {
     final httpController = HttpClientController.instance;
     try {
       final response = await httpController.client.get(
@@ -146,7 +146,8 @@ class CompanyJobRepo {
       );
 
       final responseString = response.body;
-      print("CompanyJobRepo.updateStatusJobById: response data = $responseString");
+      print(
+          "CompanyJobRepo.updateStatusJobById: response data = $responseString");
       print(
           "CompanyJobRepo.updateStatusJobById: response status code = ${response.statusCode}");
 

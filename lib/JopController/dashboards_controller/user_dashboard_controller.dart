@@ -3,11 +3,13 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JopController/ConnectivityController/internet_connection_controller.dart';
+import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
+import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/profile_edit_model.dart';
 
 import '../../sippo_data/user_repos/edit_profile_repo.dart';
 import '../../sippo_pages/Joborderpages/jobstop_oderpage.dart';
-import '../../sippo_pages/sippo_user_pages/sippo_user_community.dart';
+import '../../sippo_pages/sippo_user_pages/sippo_user_community/sippo_user_community.dart';
 import '../../sippo_pages/sippo_user_pages/sippo_user_home.dart';
 import '../../sippo_pages/sippo_user_pages/sippo_user_notification.dart';
 
@@ -18,6 +20,11 @@ class UserDashBoardController extends GetxController {
   StreamSubscription<bool>? _connectionSubscription;
 
   ProfileInfoModel get user => _user.value;
+  final jobDashboardState =
+      DashboardSharedState(details: CompanyJobModel().obs);
+  final companyDashboardState = DashboardSharedState(
+    details: CompanyDetailsResponseModel().obs,
+  );
 
   void set user(ProfileInfoModel profile) => _user.value = profile;
   final _selectedItemIndex = 0.obs;
@@ -91,5 +98,51 @@ class UserDashBoardController extends GetxController {
   void onClose() {
     if (_connectionSubscription != null) _connectionSubscription?.cancel();
     super.onClose();
+  }
+}
+
+class JobDashboardState {
+  var _jobId = -1;
+
+  int get jobId => _jobId;
+
+  void set jobId(int value) => _jobId = value;
+
+  void clearJobDetails() {
+    jobId = -1;
+    jobDetails = CompanyJobModel();
+  }
+
+  final _jobDetails = CompanyJobModel().obs;
+
+  CompanyJobModel get jobDetails => _jobDetails.value;
+
+  void set jobDetails(CompanyJobModel value) {
+    _jobDetails.value = value;
+  }
+}
+
+class DashboardSharedState<T> {
+  DashboardSharedState({required Rx<T> details}) : this._details = details;
+
+  var _id = -1;
+
+  int get id => _id;
+
+  void set id(int value) {
+    _id = value;
+  }
+
+  void clearDetails(T Function() cleaner) {
+    id = -1;
+    details = cleaner();
+  }
+
+  final Rx<T> _details;
+
+  T get details => _details.value;
+
+  void set details(T value) {
+    _details.value = value;
   }
 }

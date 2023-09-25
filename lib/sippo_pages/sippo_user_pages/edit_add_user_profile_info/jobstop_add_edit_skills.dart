@@ -154,7 +154,7 @@ class _JobJobSkillsAddEditState extends State<JobSkillsAddEdit> {
       children: [
         Obx(
           () => CustomButton(
-            onTappeed: () async {
+            onTapped: () async {
               if (skillsState.isChangeSkills) {
                 await _showSaveChanged();
               } else {

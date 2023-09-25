@@ -13,8 +13,8 @@ abstract class BaseCompanyPost {
   BaseCompanyPost({this.id, this.title, this.body});
 }
 
-class CompanyResponsePostModel extends BaseCompanyPost {
-  CompanyResponsePostModel({
+class CompanyDetailsPostModel extends BaseCompanyPost {
+  CompanyDetailsPostModel({
     super.id,
     super.title,
     super.body,
@@ -22,7 +22,7 @@ class CompanyResponsePostModel extends BaseCompanyPost {
     this.company,
   });
 
-  CompanyResponsePostModel.fromJson(Map<String, dynamic> json) {
+  CompanyDetailsPostModel.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];
     body = json['body'];
@@ -30,21 +30,21 @@ class CompanyResponsePostModel extends BaseCompanyPost {
         ? ImageResourceModel.fromJson(json['image'])
         : null;
     company = json['company'] != null
-        ? CompanyResponseDetailsModel.fromJson(json['company'])
+        ? CompanyDetailsResponseModel.fromJson(json['company'])
         : null;
   }
 
   ImageResourceModel? image;
-  CompanyResponseDetailsModel? company;
+  CompanyDetailsResponseModel? company;
 
-  CompanyResponsePostModel copyWith({
+  CompanyDetailsPostModel copyWith({
     int? id,
     String? title,
     String? body,
     ImageResourceModel? image,
-    CompanyResponseDetailsModel? company,
+    CompanyDetailsResponseModel? company,
   }) =>
-      CompanyResponsePostModel(
+      CompanyDetailsPostModel(
         id: id ?? super.id,
         title: title ?? super.title,
         body: body ?? super.body,

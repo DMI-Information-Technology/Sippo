@@ -99,7 +99,7 @@ class ProfileCompanyEditState {
     employeesCount.text = "";
   }
 
-  void setAll(CompanyResponseDetailsModel? data) {
+  void setAll(CompanyDetailsResponseModel? data) {
     name.text = data?.name ?? "";
     email.text = data?.email ?? "";
     phone.text = data?.phone ?? "";
@@ -109,7 +109,7 @@ class ProfileCompanyEditState {
     employeesCount.text = data?.employeesCount.toString() ?? "";
   }
 
-  CompanyResponseDetailsModel get form => _profileController.company.copyWith(
+  CompanyDetailsResponseModel get form => _profileController.company.copyWith(
         name: name.text,
         phone: phone.text,
         email: email.text,

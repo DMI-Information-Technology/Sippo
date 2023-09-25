@@ -1,10 +1,23 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
-import '../../sippo_themes/themecontroller.dart';
-import 'sippo_user_home.dart';
+import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
+import 'package:jobspot/JobGlobalclass/routes.dart';
+import 'package:jobspot/sippo_custom_widget/body_widget.dart';
+import 'package:jobspot/sippo_custom_widget/widgets.dart';
+import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_job_description/sippo_job_description.dart';
+
+import '../../JobGlobalclass/sippo_customstyle.dart';
+import '../../JobGlobalclass/text_font_size.dart';
+import '../../JopController/ConnectivityController/internet_connection_controller.dart';
+import '../../JopController/user_core_functions/apply_jobs_controllers.dart';
+import '../../sippo_custom_widget/ConditionalWidget.dart';
+import '../../sippo_custom_widget/error_messages_dialog_snackbar/network_connnection_lost_widget.dart';
+import '../../sippo_custom_widget/top_job_details_header.dart';
+import '../../utils/helper.dart';
 
 class JobSuccess extends StatefulWidget {
   const JobSuccess({Key? key}) : super(key: key);
@@ -14,16 +27,13 @@ class JobSuccess extends StatefulWidget {
 }
 
 class _JobSuccessState extends State<JobSuccess> {
-  dynamic size;
-  double height = 0.00;
-  double width = 0.00;
-  final themedata = Get.put(JobstopThemecontroler());
+  final _controller = Get.find<ApplyJobsController>();
 
   @override
   Widget build(BuildContext context) {
-    size = MediaQuery.of(context).size;
-    height = size.height;
-    width = size.width;
+    Size size = MediaQuery.of(context).size;
+    double height = size.height;
+    double width = size.width;
     return Scaffold(
       appBar: AppBar(
         actions: [
@@ -33,219 +43,202 @@ class _JobSuccessState extends State<JobSuccess> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
+      body: BodyWidget(
+        isScrollable: true,
+        paddingContent: EdgeInsets.symmetric(
+          horizontal: context.fromWidth(CustomStyle.paddingValue),
+          vertical: context.fromHeight(CustomStyle.paddingValue),
+        ),
+        topScreen: _buildTopJobDetailsHeader(context),
+        connectionStatusBar: Obx(() => ConditionalWidget(
+              !InternetConnectionController.instance.isConnected,
+              guaranteedBuilder: (_, __) =>
+                  NetworkStatusNonWidget(color: Colors.black54),
+            )),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Stack(
-              children: [
-                Container(
-                  height: height / 4.5,
-                  color: themedata.isdark
-                      ? Jobstopcolor.black
-                      : Jobstopcolor.backgroud,
-                ),
-                Positioned(
-                  bottom: 0,
-                  child: Container(
-                    height: height / 7,
-                    width: width / 1,
-                    color: Jobstopcolor.greyyy,
-                    child: Column(
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Jobstopcolor.primary,
+              ),
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                    horizontal: width / 26, vertical: height / 46),
+                child: Row(
+                  children: [
+                    Image.asset(
+                      JobstopPngImg.pdf,
+                      height: height / 16,
+                    ),
+                    SizedBox(
+                      width: width / 36,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        Text(
+                          _controller.applyJobsState.cvJobApply.filename ?? '',
+                          style: dmsregular.copyWith(
+                              fontSize: 12, color: Jobstopcolor.primarycolor),
+                        ),
                         SizedBox(
-                          height: height / 22,
+                          height: height / 150,
                         ),
                         Text(
-                          "UI/UX Designer",
-                          style: dmsbold.copyWith(
-                              fontSize: 16, color: Jobstopcolor.primarycolor),
+                          _controller.applyJobsState.cvJobApply.sizeToString,
+                          style: dmsregular.copyWith(
+                              fontSize: 12, color: Jobstopcolor.grey),
                         ),
-                        SizedBox(
-                          height: height / 66,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(horizontal: width / 20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "Google",
-                                style: dmsregular.copyWith(
-                                    fontSize: 16,
-                                    color: Jobstopcolor.primarycolor),
-                              ),
-                              Image.asset(
-                                JobstopPngImg.dot,
-                                height: height / 96,
-                              ),
-                              Text(
-                                "California",
-                                style: dmsregular.copyWith(
-                                    fontSize: 16,
-                                    color: Jobstopcolor.primarycolor),
-                              ),
-                              Image.asset(
-                                JobstopPngImg.dot,
-                                height: height / 96,
-                              ),
-                              Text(
-                                "1 day ago",
-                                style: dmsregular.copyWith(
-                                    fontSize: 16,
-                                    color: Jobstopcolor.primarycolor),
-                              ),
-                            ],
-                          ),
-                        )
                       ],
-                    ),
-                  ),
+                    )
+                  ],
                 ),
-                Positioned(
-                    top: 0,
-                    left: 30,
-                    right: 30,
-                    child: CircleAvatar(
-                      radius: 40,
-                      backgroundColor: Jobstopcolor.sky,
-                      child: Image.asset(
-                        JobstopPngImg.google,
-                        height: height / 14,
-                      ),
-                    )),
-              ],
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                  horizontal: width / 26, vertical: height / 46),
-              child: Column(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Jobstopcolor.primary,
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(
-                          horizontal: width / 26, vertical: height / 46),
-                      child: Row(
-                        children: [
-                          Image.asset(
-                            JobstopPngImg.pdf,
-                            height: height / 16,
-                          ),
-                          SizedBox(
-                            width: width / 36,
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Jamet kudasi - CV - UI/UX Designer",
-                                style: dmsregular.copyWith(
-                                    fontSize: 12,
-                                    color: Jobstopcolor.primarycolor),
-                              ),
-                              SizedBox(
-                                height: height / 150,
-                              ),
-                              Text(
-                                "867 Kb . 14 Feb 2022 at 11:30 am",
-                                style: dmsregular.copyWith(
-                                    fontSize: 12, color: Jobstopcolor.grey),
-                              ),
-                            ],
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: height / 36,
-                  ),
-                  Image.asset(
-                    JobstopPngImg.successful1,
-                    height: height / 4,
-                  ),
-                  SizedBox(
-                    height: height / 36,
-                  ),
-                  Text(
-                    "Successful".tr,
-                    style: dmsbold.copyWith(
-                        fontSize: 16, color: Jobstopcolor.darkgrey),
-                  ),
-                  SizedBox(
-                    height: height / 46,
-                  ),
-                  Text(
-                    "Congratulations, your application has been sent".tr,
-                    style: dmsregular.copyWith(
-                        fontSize: 12, color: Jobstopcolor.darkgrey),
-                  ),
-                  SizedBox(
-                    height: height / 16,
-                  ),
-                  InkWell(
-                    highlightColor: Jobstopcolor.transparent,
-                    splashColor: Jobstopcolor.transparent,
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(
-                        builder: (context) {
-                          return const JobSuccess();
-                        },
-                      ));
-                    },
-                    child: Center(
-                      child: Container(
-                        height: height / 15,
-                        width: width / 1.3,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: Jobstopcolor.lightprimary),
-                        child: Center(
-                            child: Text(
-                          "Find a similar job".tr,
-                          style: dmsbold.copyWith(
-                              fontSize: 14, color: Jobstopcolor.primarycolor),
-                        )),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: height / 36,
-                  ),
-                  InkWell(
-                    highlightColor: Jobstopcolor.transparent,
-                    splashColor: Jobstopcolor.transparent,
-                    onTap: () {
-                      Navigator.push(context, MaterialPageRoute(
-                        builder: (context) {
-                          return const SippoUserHome();
-                        },
-                      ));
-                    },
-                    child: Center(
-                      child: Container(
-                        height: height / 15,
-                        width: width / 1.3,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: Jobstopcolor.primarycolor),
-                        child: Center(
-                            child: Text(
-                          "Back to home".tr,
-                          style: dmsbold.copyWith(
-                              fontSize: 14, color: Jobstopcolor.white),
-                        )),
-                      ),
-                    ),
-                  ),
-                ],
               ),
-            )
+            ),
+            SizedBox(
+              height: height / 36,
+            ),
+            Image.asset(
+              JobstopPngImg.successful1,
+              height: height / 4,
+            ),
+            SizedBox(
+              height: height / 36,
+            ),
+            Text(
+              "Successful".tr,
+              style:
+                  dmsbold.copyWith(fontSize: 16, color: Jobstopcolor.darkgrey),
+            ),
+            SizedBox(
+              height: height / 46,
+            ),
+            Text(
+              "Congratulations, your application has been sent".tr,
+              style: dmsregular.copyWith(
+                  fontSize: 12, color: Jobstopcolor.darkgrey),
+            ),
+            SizedBox(
+              height: height / 16,
+            ),
           ],
         ),
+        paddingBottom: EdgeInsets.all(
+          context.fromWidth(CustomStyle.paddingValue),
+        ),
+        bottomScreen: Column(
+          children: [
+            CustomButton(
+              onTapped: () {},
+              text: "Find Another Job".tr,
+              backgroundColor: Jobstopcolor.lightprimary,
+              textColor: Jobstopcolor.primarycolor,
+            ),
+            SizedBox(height: height / 36),
+            CustomButton(
+              onTapped: () {
+                Get.until((route) {
+                  return Get.currentRoute == SippoRoutes.userdashboard;
+                });
+              },
+              text: "Back to home".tr,
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTopJobDetailsHeader(BuildContext context) {
+    return Obx(() => TopJobDetailsHeader(
+          isConnectionLost: !InternetConnectionController.instance.isConnected,
+          coverHeight: context.height / 3.5,
+          profileImageSize: context.height / 6,
+          backgroundImageColor: Colors.white,
+          imageUrl: SippoJobDescription.imgUrl,
+          // onLeadingTap: () => Get.back(),
+          actions: [
+            IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.more_vert,
+                color: Colors.white,
+              ),
+            ),
+          ],
+        ));
+  }
+
+  // Widget _buildTopJobInfo(BuildContext context) {
+  //   return Container(
+  //     child: Column(
+  //       children: [
+  //         Obx(() => Text(
+  //               _controller.applyJobsState.jopDetails.title ?? '',
+  //               style: dmsbold.copyWith(
+  //                 fontSize: FontSize.title2(context),
+  //                 color: Jobstopcolor.primarycolor,
+  //               ),
+  //               overflow: TextOverflow.clip,
+  //             )),
+  //         SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+  //         Obx(() => _buildTopInfoJobText(
+  //               context,
+  //               'Company name',
+  //               _controller.applyJobsState.jopDetails.company?.name ?? '',
+  //             )),
+  //         SizedBox(height: context.fromHeight(CustomStyle.huge2)),
+  //         Obx(() => _buildTopInfoJobText(
+  //               context,
+  //               'Work place',
+  //               _controller.applyJobsState.jopDetails.company?.city ?? '',
+  //             )),
+  //         SizedBox(height: context.fromHeight(CustomStyle.huge2)),
+  //         Obx(() => _buildTopInfoJobText(
+  //               context,
+  //               'Publish time',
+  //               calculateElapsedTimeFromStringDate(
+  //                     _controller.applyJobsState.jopDetails.createdAt,
+  //                   ) ??
+  //                   "",
+  //             )),
+  //       ],
+  //     ),
+  //   );
+  // }
+
+  Widget _buildTopInfoJobText(
+    BuildContext context,
+    String label,
+    String content,
+  ) {
+    return SizedBox(
+      width: context.width,
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          AutoSizeText(
+            label,
+            style: dmsregular.copyWith(
+              fontSize: FontSize.title4(context),
+              color: Jobstopcolor.primarycolor,
+            ),
+            overflow: TextOverflow.clip,
+          ),
+          SizedBox(width: context.fromWidth(CustomStyle.xxxl)),
+          Expanded(
+            child: AutoSizeText(
+              content,
+              style: dmsmedium.copyWith(
+                fontSize: FontSize.title4(context),
+                color: Jobstopcolor.primarycolor,
+              ),
+              overflow: TextOverflow.ellipsis,
+            ),
+          ),
+        ],
       ),
     );
   }

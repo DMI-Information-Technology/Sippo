@@ -113,7 +113,7 @@ class _CheckOTPResetPasswordMessageState
         ),
         paddingBottom: EdgeInsets.all(width / 32),
         bottomScreen: CustomButton(
-          onTappeed: () {
+          onTapped: () {
             Get.toNamed(SippoRoutes.updatenewpassword);
           },
           text: "Confirm",

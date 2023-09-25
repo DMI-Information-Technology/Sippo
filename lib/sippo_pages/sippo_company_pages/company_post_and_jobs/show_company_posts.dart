@@ -29,7 +29,7 @@ class _ShowCompanyPostsListState extends State<ShowCompanyPostsList> {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () async => _controller.refreshPage(),
-      child: PagedListView<int, CompanyResponsePostModel>.separated(
+      child: PagedListView<int, CompanyDetailsPostModel>.separated(
         pagingController: _controller.pagingController,
         builderDelegate: PagedChildBuilderDelegate(
           firstPageErrorIndicatorBuilder: (context) =>
@@ -114,7 +114,7 @@ class _ShowCompanyPostsListState extends State<ShowCompanyPostsList> {
           width: context.fromWidth(CustomStyle.overBy3),
           height: context.fromHeight(12),
           child: CustomButton(
-            onTappeed: () {
+            onTapped: () {
               _controller.refreshPage();
               showWrapperController.changeStates(isError: false, message: '');
             },

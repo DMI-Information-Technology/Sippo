@@ -48,14 +48,14 @@ class ConfirmationBottomSheet extends StatelessWidget {
           ),
           SizedBox(height: height / 26),
           CustomButton(
-            onTappeed: onConfirm,
+            onTapped: onConfirm,
             text: confirmTitle ?? "Continue Filling".tr,
           ),
           SizedBox(
             height: height / 56,
           ),
           CustomButton(
-            onTappeed: onUndo,
+            onTapped: onUndo,
             text: undoTitle ?? "Undo Changes",
             backgroundColor: Jobstopcolor.lightprimary,
           ),

@@ -1,3 +1,5 @@
+import 'package:jobspot/utils/string_formtter.dart';
+
 class RangeSalaryModel {
   final double? from;
   final double? to;
@@ -6,6 +8,10 @@ class RangeSalaryModel {
     this.from,
     this.to,
   });
+
+  String get salaryStringFormat => from != null && to != null
+      ? '${from.toString().salaryValue} - ${to.toString().salaryValue}'
+      : '';
 
   factory RangeSalaryModel.fromDynamic(from, to) {
     return RangeSalaryModel(

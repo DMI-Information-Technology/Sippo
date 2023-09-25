@@ -1,4 +1,4 @@
-enum JobApplicationStatusType { sent, accepted, rejected }
+enum JobApplicationStatusType { Pending, Accepted, Rejected }
 
 class NotificationModel {
   final String? imagePath;

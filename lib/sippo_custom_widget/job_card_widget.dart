@@ -16,7 +16,8 @@ import '../sippo_data/model/profile_model/company_profile_resource_model/company
 
 class JobHomeCard extends StatelessWidget {
   final VoidCallback? onActionTap; // Callback for the favorite button press
-  final VoidCallback? onApplyClicked; // Callback for the favorite button press
+  final VoidCallback? onApplyTap; // Callback for the favorite button press
+  final VoidCallback? onImageProfileTap;
   final bool canApply;
   final CompanyJobModel? jobDetailsPost;
 
@@ -24,7 +25,7 @@ class JobHomeCard extends StatelessWidget {
     super.key,
     required this.onCardClicked,
     this.onActionTap,
-    this.onApplyClicked,
+    this.onApplyTap,
     this.canApply = true,
     this.width,
     this.height,
@@ -32,7 +33,7 @@ class JobHomeCard extends StatelessWidget {
     this.isEditable = false,
     this.imagePath,
     this.onAddressTextTap,
-    this.padding,
+    this.padding, this.onImageProfileTap,
   });
 
   final bool isEditable;
@@ -45,41 +46,44 @@ class JobHomeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: padding ?? EdgeInsets.zero,
-      child: RoundedBorderRadiusCardWidget(
-        paddingType: PaddingType.all,
-        child: SizedBox(
-          width: width,
-          height: height,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _buildJobCardHeader(context),
-              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-              AutoSizeText(
-                '${jobDetailsPost?.salaryFrom?.toString().salaryValue} -'
-                ' ${jobDetailsPost?.salaryTo?.toString().salaryValue} LYD/Mo',
-                style: dmsmedium.copyWith(
-                  fontSize: FontSize.title6(context),
+    return InkWell(
+      onTap: onCardClicked,
+      child: Padding(
+        padding: padding ?? EdgeInsets.zero,
+        child: RoundedBorderRadiusCardWidget(
+          paddingType: PaddingType.all,
+          child: SizedBox(
+            width: width,
+            height: height,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildJobCardHeader(context),
+                SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+                AutoSizeText(
+                  '${jobDetailsPost?.salaryFrom?.toString().salaryValue} -'
+                  ' ${jobDetailsPost?.salaryTo?.toString().salaryValue} LYD/Mo',
+                  style: dmsmedium.copyWith(
+                    fontSize: FontSize.title6(context),
+                  ),
                 ),
-              ),
-              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-              _buildJobCardChipsAndApply(context),
-            ],
+                SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+                _buildJobCardChipsAndApply(context),
+              ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  InkWell _buildJobCardHeader(BuildContext context) {
-    return InkWell(
-      onTap: onCardClicked,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          NetworkBorderedCircularImage(
+  Widget _buildJobCardHeader(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        InkWell(
+          onTap: onImageProfileTap,
+          child: NetworkBorderedCircularImage(
             size: context.fromHeight(CustomStyle.imageSize3),
             imageUrl: imagePath ?? '',
             outerBorderColor: Colors.grey[300],
@@ -87,44 +91,44 @@ class JobHomeCard extends StatelessWidget {
               JobstopPngImg.google,
             ),
           ),
-          SizedBox(
-            width: context.fromWidth(CustomStyle.spaceBetween),
-          ),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                AutoSizeText(
-                  jobDetailsPost?.title ?? 'unknown',
-                  style: dmsbold.copyWith(
-                    fontSize: FontSize.title5(context),
-                    fontWeight: FontWeight.bold,
-                    overflow: TextOverflow.clip,
-                  ),
+        ),
+        SizedBox(
+          width: context.fromWidth(CustomStyle.spaceBetween),
+        ),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              AutoSizeText(
+                jobDetailsPost?.title ?? 'unknown',
+                style: dmsbold.copyWith(
+                  fontSize: FontSize.title5(context),
+                  fontWeight: FontWeight.bold,
+                  overflow: TextOverflow.clip,
                 ),
-                AutoSizeText(
-                  jobDetailsPost?.company?.name ?? "unknown",
-                  style: dmsregular.copyWith(
-                    fontSize: FontSize.paragraph3(context),
-                    color: Colors.grey,
-                  ),
-                  overflow: TextOverflow.ellipsis,
+              ),
+              AutoSizeText(
+                jobDetailsPost?.company?.name ?? "unknown",
+                style: dmsregular.copyWith(
+                  fontSize: FontSize.paragraph3(context),
+                  color: Colors.grey,
                 ),
-                _buildAddressTextTap(context),
-              ],
-            ),
+                overflow: TextOverflow.ellipsis,
+              ),
+              _buildAddressTextTap(context),
+            ],
           ),
-          IconButton(
-            onPressed: onActionTap,
-            icon: Icon(
-              isEditable
-                  ? Icons.more_vert_rounded
-                  : Icons.bookmark_border_rounded,
-            ),
+        ),
+        IconButton(
+          onPressed: onActionTap,
+          icon: Icon(
+            isEditable
+                ? Icons.more_vert_rounded
+                : Icons.bookmark_border_rounded,
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
@@ -171,7 +175,7 @@ class JobHomeCard extends StatelessWidget {
         _buildChipChildrenList(context),
         if (canApply)
           InkWell(
-            onTap: onApplyClicked,
+            onTap: onApplyTap,
             child: Padding(
               padding: EdgeInsets.symmetric(
                   horizontal: context.fromWidth(CustomStyle.xxxl)),

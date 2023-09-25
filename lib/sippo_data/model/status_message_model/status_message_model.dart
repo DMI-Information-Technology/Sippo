@@ -4,13 +4,9 @@ class StatusMessageModel {
     this.message,
   });
 
-  StatusMessageModel.fromJson(dynamic json) {
-    status = json['status'];
-    message = json['message'];
-  }
 
-  String? status;
-  String? message;
+ final String? status;
+final  String? message;
 
   StatusMessageModel copyWith({
     String? status,
@@ -27,4 +23,12 @@ class StatusMessageModel {
     map['message'] = message;
     return map;
   }
+
+  factory StatusMessageModel.fromJson(Map<String, dynamic> json) {
+    return StatusMessageModel(
+      status: json["status"],
+      message: json["message"],
+    );
+  }
+//
 }

@@ -9,7 +9,7 @@ import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import '../../sippo_custom_widget/container_bottom_sheet_widget.dart';
 import '../../sippo_custom_widget/save_job_card_widget.dart';
 import '../../sippo_custom_widget/setting_item_widget.dart';
-import '../sippo_user_pages/no_resource_screen.dart';
+import '../sippo_message_pages/no_resource_screen.dart';
 
 class JobstopOrder extends StatefulWidget {
   const JobstopOrder({Key? key}) : super(key: key);

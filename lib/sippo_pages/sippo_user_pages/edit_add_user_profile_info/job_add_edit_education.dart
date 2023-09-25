@@ -370,7 +370,7 @@ class _JobEducationAddEditState extends State<JobEducationAddEdit> {
           SizedBox(
             width: context.width / 2.3,
             child: CustomButton(
-              onTappeed: () {
+              onTapped: () {
                 _showRemove();
               },
               text: "REMOVE".tr,
@@ -380,7 +380,7 @@ class _JobEducationAddEditState extends State<JobEducationAddEdit> {
         SizedBox(
           width: _controller.isEditing ? context.width / 2.3 : null,
           child: CustomButton(
-            onTappeed: () {
+            onTapped: () {
               _showSaveBottomSheet();
             },
             text: "SAVE".tr,

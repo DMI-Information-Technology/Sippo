@@ -2,21 +2,38 @@ import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
+import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 
 import '../../sippo_custom_widget/error_messages_dialog_snackbar/error_messages.dart'
     as errorMessage;
 
 class InternetConnectionController extends GetxController {
   static InternetConnectionController get instance => Get.find();
- late StreamController<bool> _connectionStreamController ;
-      // StreamController<bool>.broadcast();
+  late StreamController<bool> _connectionStreamController;
+
+  // StreamController<bool>.broadcast();
 
   Stream<bool> get isConnectedStream => _connectionStreamController.stream;
 
   final _isConnected = true.obs;
+  var connectionCounter = 0;
 
-  bool get isConnected => _isConnected.isTrue;
+  bool get isConnected {
+    print(connectionCounter);
+    final connection = _isConnected.isTrue;
+    if (!connection && connectionCounter >= 3) {
+      Get.snackbar(
+        'Connection is Lost',
+        'Your connection is lost, please check your connection and try again',
+        backgroundColor: Jobstopcolor.backgroudHome,
+        boxShadows: [boxShadow],
+      );
+      connectionCounter = 0;
+    }
+    connectionCounter++;
+    return connection;
+  }
 
   void set isConnected(bool value) {
     // print("from is connected: $value");
