@@ -2,8 +2,8 @@ import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_
 
 import '../profile_resource_model/profile_edit_model.dart';
 
-class ApplicationJobCompanyModel {
-  ApplicationJobCompanyModel({
+class ApplicationCompanyModel {
+  ApplicationCompanyModel({
     this.id,
     this.description,
     this.status,
@@ -19,30 +19,30 @@ class ApplicationJobCompanyModel {
   final String? description;
   final String? status;
   final String? createdAt;
-  final Cv? cv;
+  final CvModel? cv;
 
-  factory ApplicationJobCompanyModel.fromJson(Map<String, dynamic> json) {
-    return ApplicationJobCompanyModel(
+  factory ApplicationCompanyModel.fromJson(Map<String, dynamic> json) {
+    return ApplicationCompanyModel(
       id: json["id"],
       customer: ProfileInfoModel.fromJson(json["customer"]),
-      job: CompanyJobModel.fromJson(json["job"]),
+      job: json["job"] != null ? CompanyJobModel.fromJson(json["job"]) : null,
       description: json["description"],
       status: json["status"],
       createdAt: json["created_at"],
-      cv: json["cv"] != null ? Cv.fromJson(json["cv"]) : null,
+      cv: json["cv"] != null ? CvModel.fromJson(json["cv"]) : null,
     );
   }
 
-  ApplicationJobCompanyModel copyWith({
+  ApplicationCompanyModel copyWith({
     int? id,
     ProfileInfoModel? customer,
     CompanyJobModel? job,
     String? description,
     String? status,
     String? createdAt,
-    Cv? cv,
+    CvModel? cv,
   }) =>
-      ApplicationJobCompanyModel(
+      ApplicationCompanyModel(
         id: id ?? this.id,
         customer: customer ?? this.customer,
         job: job ?? this.job,
@@ -55,7 +55,7 @@ class ApplicationJobCompanyModel {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is ApplicationJobCompanyModel &&
+      other is ApplicationCompanyModel &&
           runtimeType == other.runtimeType &&
           id == other.id &&
           customer == other.customer &&
@@ -81,8 +81,8 @@ class ApplicationJobCompanyModel {
   }
 }
 
-class Cv {
-  Cv({
+class CvModel {
+  CvModel({
     this.url,
     this.name,
     this.mimeType,
@@ -92,7 +92,7 @@ class Cv {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is Cv &&
+      other is CvModel &&
           runtimeType == other.runtimeType &&
           url == other.url &&
           name == other.name &&
@@ -107,8 +107,8 @@ class Cv {
   final String? mimeType;
   final String? size;
 
-  factory Cv.fromJson(Map<String, dynamic> json) {
-    return Cv(
+  factory CvModel.fromJson(Map<String, dynamic> json) {
+    return CvModel(
       url: json["url"],
       name: json["name"],
       mimeType: json["mimeType"],
@@ -116,13 +116,13 @@ class Cv {
     );
   }
 
-  Cv copyWith({
+  CvModel copyWith({
     String? url,
     String? name,
     String? mimeType,
     String? size,
   }) =>
-      Cv(
+      CvModel(
         url: url ?? this.url,
         name: name ?? this.name,
         mimeType: mimeType ?? this.mimeType,

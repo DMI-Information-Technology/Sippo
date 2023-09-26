@@ -12,6 +12,7 @@ import '../../sippo_pages/Joborderpages/jobstop_oderpage.dart';
 import '../../sippo_pages/sippo_user_pages/sippo_user_community/sippo_user_community.dart';
 import '../../sippo_pages/sippo_user_pages/sippo_user_home.dart';
 import '../../sippo_pages/sippo_user_pages/sippo_user_notification.dart';
+import '../../utils/dashboard_shared_state.dart';
 
 class UserDashBoardController extends GetxController {
   // final _httpClientController = Get.put(HttpClientController());
@@ -98,51 +99,5 @@ class UserDashBoardController extends GetxController {
   void onClose() {
     if (_connectionSubscription != null) _connectionSubscription?.cancel();
     super.onClose();
-  }
-}
-
-class JobDashboardState {
-  var _jobId = -1;
-
-  int get jobId => _jobId;
-
-  void set jobId(int value) => _jobId = value;
-
-  void clearJobDetails() {
-    jobId = -1;
-    jobDetails = CompanyJobModel();
-  }
-
-  final _jobDetails = CompanyJobModel().obs;
-
-  CompanyJobModel get jobDetails => _jobDetails.value;
-
-  void set jobDetails(CompanyJobModel value) {
-    _jobDetails.value = value;
-  }
-}
-
-class DashboardSharedState<T> {
-  DashboardSharedState({required Rx<T> details}) : this._details = details;
-
-  var _id = -1;
-
-  int get id => _id;
-
-  void set id(int value) {
-    _id = value;
-  }
-
-  void clearDetails(T Function() cleaner) {
-    id = -1;
-    details = cleaner();
-  }
-
-  final Rx<T> _details;
-
-  T get details => _details.value;
-
-  void set details(T value) {
-    _details.value = value;
   }
 }

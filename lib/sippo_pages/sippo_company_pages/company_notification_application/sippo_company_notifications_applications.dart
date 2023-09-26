@@ -7,6 +7,7 @@ import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/JopController/NotificationController/company_notification_application/company_notification_application_controller.dart';
+import 'package:jobspot/sippo_custom_widget/loading_view_widgets/loading_scaffold.dart';
 import 'package:jobspot/sippo_pages/sippo_company_pages/company_notification_application/sippo_company_application.dart';
 import 'package:jobspot/sippo_pages/sippo_message_pages/no_resource_screen.dart';
 
@@ -63,7 +64,8 @@ class _SippoCompanyNotificationApplicationState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return LoadingScaffold(
+      controller: _controller.loadingOverlayController,
       appBar: _buildAppBar(context),
       body: _buildBodyPage(),
     );

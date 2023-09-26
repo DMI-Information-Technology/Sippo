@@ -1,0 +1,150 @@
+import 'dart:async';
+
+import 'package:get/get.dart';
+import 'package:jobspot/JopController/ConnectivityController/internet_connection_controller.dart';
+import 'package:jobspot/JopController/dashboards_controller/company_dashboard_controller.dart';
+import 'package:jobspot/sippo_data/company_repos/compan_user_profile_view_repo.dart';
+import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
+import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/education_model.dart';
+import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/language_model.dart';
+import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/profile_edit_model.dart';
+
+import '../../sippo_data/model/profile_model/profile_resource_model/work_experiences_model.dart';
+import '../../sippo_data/model/profile_model/profile_widget_model/jobstop_appreciation_info_card_model.dart';
+import '../../sippo_data/model/profile_model/profile_widget_model/jobstop_resume_file_info.dart';
+
+class ProfileUserViewController extends GetxController {
+  final netController = InternetConnectionController.instance;
+  late final StreamSubscription<bool>? _connectionSubscription;
+  final dashboard = CompanyDashBoardController.instance;
+
+  CompanyDetailsResponseModel get company => dashboard.company;
+
+  static ProfileUserViewController get instance => Get.find();
+  final profileState = ProfileState();
+
+  int get profileId => dashboard.dashboardState.profileViewId;
+
+  Future<void> fetchUserProfileResources(int? profileId) async {
+    final response =
+        await CompanyUserProfileViewRepo.getUserProfileViewById(profileId);
+    await response?.checkStatusResponse(
+      onSuccess: (data, _) {
+        if (data != null) {
+          profileState.profileInfo = data.userInfo ?? profileState.profileInfo;
+          profileState.aboutMeText = data.userInfo?.bio ?? '';
+          profileState.skillsList =
+              data.skills?.skills ?? profileState.skillsList;
+          profileState.educationList =
+              data.educations ?? profileState.educationList;
+          profileState.languages = data.languages ?? profileState.languages;
+          profileState.workExList =
+              data.workExperiences ?? profileState.workExList;
+        }
+      },
+      onValidateError: (validateError, _) {},
+      onError: (message, _) {},
+    );
+  }
+
+  void _connected(bool isConn) async {
+    isConn && profileId != -1
+        ? await fetchUserProfileResources(profileId)
+        : null;
+  }
+
+  void _startListeningToConnection() {
+    _connectionSubscription = netController.isConnectedStream.listen(
+      _connected,
+    );
+    if (profileId != -1) fetchUserProfileResources(profileId);
+  }
+
+  @override
+  void onInit() {
+    _startListeningToConnection();
+    super.onInit();
+  }
+
+  @override
+  void onClose() {
+    _connectionSubscription?.cancel();
+    super.onClose();
+  }
+}
+
+class ProfileState {
+  final _profileInfo = ProfileInfoModel().obs;
+
+  ProfileInfoModel get profileInfo => _profileInfo.value;
+
+  void set profileInfo(ProfileInfoModel value) => _profileInfo.value = value;
+  final _aboutMeText =
+      "lorem ispum dolor sit amet, consectetur adipiscing elit in aenean non proident"
+          .obs;
+
+  void set aboutMeText(String value) {
+    _aboutMeText.value = value;
+  }
+
+  final _showAllWei = false.obs;
+  final _showAllEdui = false.obs;
+  final _showAllAppreciations = false.obs;
+  final _showAllSkills = false.obs;
+  final _showAllLangs = false.obs;
+  final _wei = <WorkExperiencesModel>[].obs;
+  final _educationList = <EducationModel>[].obs;
+  final _skills = <String>[].obs;
+  final _languages = <LanguageModel>[].obs;
+  final _appreciations = <AppreciationInfoCardModel>[].obs;
+  final Rx<ResumeFileInfo?> _resumeFiles = ResumeFileInfo.getNull().obs;
+
+  List<WorkExperiencesModel> get workExList => _wei.toList();
+
+  List<EducationModel> get educationList => _educationList.toList();
+
+  List<String> get skillsList => _skills.toList();
+
+  List<AppreciationInfoCardModel> get appreciations => _appreciations.toList();
+
+  List<LanguageModel> get languages => _languages.toList();
+
+  void set workExList(List<WorkExperiencesModel> value) => _wei.value = value;
+
+  void set educationList(List<EducationModel> value) =>
+      _educationList.value = value;
+
+  void set skillsList(List<String> value) =>
+      _skills.value = _skills.value = value;
+
+  void set languages(List<LanguageModel> value) => _languages.value = value;
+
+  String get aboutMeText => _aboutMeText.toString();
+
+  bool get showAllWei => _showAllWei.isTrue;
+
+  bool get showAllEdui => _showAllEdui.isTrue;
+
+  bool get showAllSkills => _showAllSkills.isTrue;
+
+  bool get showAllLangs => _showAllLangs.isTrue;
+
+  bool get showAllAppreciations => _showAllAppreciations.isTrue;
+
+  void set showAllWei(bool value) => _showAllWei.value = value;
+
+  void set showAllEdui(bool value) => _showAllEdui.value = value;
+
+  void set showAllSkills(bool value) => _showAllSkills.value = value;
+
+  void set showAllLangs(bool value) => _showAllLangs.value = value;
+
+  void set showAllAppreciations(bool value) =>
+      _showAllAppreciations.value = value;
+
+  ResumeFileInfo? get resumeFiles => _resumeFiles.value;
+
+  void set resumeFiles(ResumeFileInfo? value) {
+    _resumeFiles.value = value;
+  }
+}

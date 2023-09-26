@@ -1,14 +1,15 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:http/http.dart' as http;
 import 'package:jobspot/core/header_api.dart';
 
-class HttpClient {
+class MyHttpClient {
   final http.Client _client;
   final String _authToken;
   final String baseUrl;
 
-  HttpClient({
+  MyHttpClient({
     required this.baseUrl,
     String authToken = "",
   })  : this._authToken = authToken,
@@ -162,6 +163,8 @@ class HttpClient {
     print("HttpClient._buildHeaders: defaultHeader is built.");
     return !isMultipart ? Header.defaultHeader : Header.defaultMultipartHeader;
   }
+
+
 
   void close() {
     _client.close();

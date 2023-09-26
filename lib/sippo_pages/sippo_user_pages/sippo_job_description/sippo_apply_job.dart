@@ -6,7 +6,6 @@ import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_job_description/sippo_job_description.dart';
-
 import '../../../JobGlobalclass/jobstopimges.dart';
 import '../../../JobGlobalclass/routes.dart';
 import '../../../JobGlobalclass/sippo_customstyle.dart';

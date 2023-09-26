@@ -4,9 +4,11 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
+import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/JopController/NotificationController/company_notification_application/company_application_controller.dart';
-import 'package:jobspot/sippo_custom_widget/notification_widget.dart';
+import 'package:jobspot/JopController/dashboards_controller/company_dashboard_controller.dart';
+import 'package:jobspot/sippo_custom_widget/company_post_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_data/model/notification/job_application_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/application_job_company_model.dart';
@@ -30,9 +32,11 @@ class _SippoCompanyApplicationState extends State<SippoCompanyApplication> {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () async => _controller.refreshPage(),
-      child: PagedListView<int, ApplicationJobCompanyModel>.separated(
+      child: PagedListView<int, ApplicationCompanyModel>.separated(
         padding: EdgeInsets.symmetric(
-            vertical: context.fromHeight(CustomStyle.paddingValue)),
+          vertical: context.fromHeight(CustomStyle.paddingValue),
+          horizontal: context.fromWidth(CustomStyle.paddingValue),
+        ),
         pagingController: _controller.pagingController,
         builderDelegate: PagedChildBuilderDelegate(
           firstPageErrorIndicatorBuilder: (context) =>
@@ -40,18 +44,27 @@ class _SippoCompanyApplicationState extends State<SippoCompanyApplication> {
           newPageErrorIndicatorBuilder: (context) =>
               _buildErrorNewLoad(context),
           itemBuilder: (context, item, index) {
-            return NotificationApplicationWidget(
-              onTap: () {},
-              application: item,
+            return PostApplicationModel(
+              onProfileImageTap: () async {
+                CompanyDashBoardController.instance.dashboardState
+                    .profileViewId = item.customer?.id ?? -1;
+                await Get.toNamed(SippoRoutes.sippoCompanyUserProfileView);
+                CompanyDashBoardController
+                    .instance.dashboardState.profileViewId = -1;
+              },
               company: _controller.notificationApplicationController.company,
-              onPopupNotificationButtonTapped: () {
+              application: item,
+              timeAgo: item.createdAt,
+              onActionButtonPresses: () {
                 _openBottomJobSheetOption(
                   context,
                   item.id,
-                  item.status == 'Pending',
+                  item.status == "Pending",
                 );
               },
-              isSelected: false,
+              onShowCvTap: (cvUrl) {
+                _controller.openFile(cvUrl);
+              },
             );
           },
         ),
@@ -184,7 +197,7 @@ class _SippoCompanyApplicationState extends State<SippoCompanyApplication> {
         onConfirm: () async {
           Get.back();
           await _controller.onUpdateStatusApplicationSubmitted(
-            JobApplicationStatusType.Accepted,
+            ApplicationStatusType.Accepted,
             ApplicationId,
           );
         },
@@ -192,7 +205,7 @@ class _SippoCompanyApplicationState extends State<SippoCompanyApplication> {
         onCancel: () async {
           Get.back();
           await _controller.onUpdateStatusApplicationSubmitted(
-            JobApplicationStatusType.Rejected,
+            ApplicationStatusType.Rejected,
             ApplicationId,
           );
         },

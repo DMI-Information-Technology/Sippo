@@ -11,6 +11,14 @@ class LoadingOverlayController with ChangeNotifier {
     if (_loading) FocusScope.of(context).unfocus();
   }
 
+  void startLoading() {
+    loading = true;
+  }
+
+  void pauseLoading() {
+    loading = false;
+  }
+
   set loading(bool value) {
     _loading = value;
     notifyListeners();

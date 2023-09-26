@@ -2,6 +2,8 @@ import 'package:http/http.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
 import 'package:jobspot/sippo_data/model/custom_file_model/custom_file_model.dart';
 
+import '../../image_resource_model/image_resource_model.dart';
+
 abstract class BaseCompanyPost {
   int? id;
   String? title;
@@ -58,44 +60,6 @@ class CompanyDetailsPostModel extends BaseCompanyPost {
   }
 }
 
-class ImageResourceModel {
-  ImageResourceModel({
-    this.url,
-    this.name,
-    this.mimeType,
-    this.size,
-  });
-
-  ImageResourceModel.fromJson(dynamic json) {
-    url = json['url'];
-    name = json['name'];
-    mimeType = json['mime_type'];
-    size = json['size'];
-  }
-
-  String? url;
-  String? name;
-  String? mimeType;
-  String? size;
-
-  ImageResourceModel copyWith({
-    String? url,
-    String? name,
-    String? mimeType,
-    String? size,
-  }) =>
-      ImageResourceModel(
-        url: url ?? this.url,
-        name: name ?? this.name,
-        mimeType: mimeType ?? this.mimeType,
-        size: size ?? this.size,
-      );
-
-  @override
-  String toString() {
-    return 'ImageResourceModel{url: $url, name: $name, mimeType: $mimeType, size: $size}';
-  }
-}
 
 class CompanyPostModel extends BaseCompanyPost {
   CustomFileModel? image;

@@ -65,6 +65,9 @@ dependencies:
   infinite_scroll_pagination: ^4.0.0
   dropdown_button2: ^2.3.9
   url_launcher: ^6.1.14
+  open_file: ^3.3.2
+  permission_handler: ^11.0.0
+  device_info_plus: ^9.0.3
 
 dev_dependencies:
   flutter_test:

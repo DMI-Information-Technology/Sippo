@@ -5,7 +5,7 @@ import 'package:jobspot/core/http_client.dart';
 
 class HttpClientController extends GetxController {
   static HttpClientController get instance => Get.find();
-  final HttpClient client = HttpClient(
+  final MyHttpClient client = MyHttpClient(
     baseUrl: apiUrl.baseUrl,
     authToken: GlobalStorage.tokenLogged ?? "",
   );

@@ -3,31 +3,31 @@ import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
-import 'package:jobspot/JobGlobalclass/jobstopprefname.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
-import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
+import 'package:jobspot/JopController/company_profile_controller/profile_user_view_controller.dart';
 import 'package:jobspot/sippo_custom_widget/add_info_profile_card.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/resume_card_widget.dart';
-import 'package:jobspot/sippo_pages/sippo_user_pages/job_aboutme.dart';
 import 'package:readmore/readmore.dart';
-import '../../JobGlobalclass/sippo_customstyle.dart';
-import '../../JopController/user_profile_controller/profile_user_controller.dart';
-import '../../sippo_custom_widget/ConditionalWidget.dart';
-import '../../sippo_custom_widget/error_messages_dialog_snackbar/network_connnection_lost_widget.dart';
-import '../../sippo_custom_widget/expandable_item_list_widget.dart';
-import '../../sippo_custom_widget/user_profile_header.dart';
 
-class SippoUserProfile extends StatefulWidget {
-  const SippoUserProfile({Key? key}) : super(key: key);
+import '../../../JobGlobalclass/sippo_customstyle.dart';
+import '../../../sippo_custom_widget/ConditionalWidget.dart';
+import '../../../sippo_custom_widget/error_messages_dialog_snackbar/network_connnection_lost_widget.dart';
+import '../../../sippo_custom_widget/expandable_item_list_widget.dart';
+import '../../../sippo_custom_widget/user_profile_header.dart';
+
+class SippoCompanyUserProfileView extends StatefulWidget {
+  const SippoCompanyUserProfileView({Key? key}) : super(key: key);
 
   @override
-  State<SippoUserProfile> createState() => _SippoUserProfileState();
+  State<SippoCompanyUserProfileView> createState() =>
+      _SippoCompanyUserProfileViewState();
 }
 
-class _SippoUserProfileState extends State<SippoUserProfile> {
-  ProfileUserController _controller = ProfileUserController.instance;
+class _SippoCompanyUserProfileViewState
+    extends State<SippoCompanyUserProfileView> {
+  final _controller = ProfileUserViewController.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -43,9 +43,7 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
               !_controller.netController.isConnected,
               guaranteedBuilder: (_, __) => NetworkStatusNonWidget(),
             )),
-        topScreen: Obx(
-          () => _buildUserProfileHeader(!_controller.netController.isConnected),
-        ),
+        topScreen: _buildUserProfileHeader(context),
         paddingContent: EdgeInsets.symmetric(
           horizontal: context.fromWidth(CustomStyle.paddingValue),
         ),
@@ -72,18 +70,17 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
     );
   }
 
-  Widget _buildUserProfileHeader([bool isLostConnect = false]) {
-    return UserProfileHeaderWidget(
-      showConnectionLostBar: isLostConnect,
-      profileInfo: _controller.user,
-      onSettingsPressed: () => Get.toNamed(SippoRoutes.sippoprofilesetting),
-      onEditProfilePressed: () => Get.toNamed(SippoRoutes.edituserprofile),
-      profileImage: JobstopPngImg.photo,
-    );
+  Widget _buildUserProfileHeader(BuildContext context) {
+    return Obx(() => UserProfileHeaderWidget(
+          showConnectionLostBar: !_controller.netController.isConnected,
+          profileInfo: _controller.profileState.profileInfo,
+          profileImage: JobstopPngImg.photo,
+        ));
   }
 
   Widget _buildResumeInfo(BuildContext context) {
     return AddInfoProfileCard(
+      isCompanyView: true,
       title: 'resume'.tr,
       leading: Image.asset(
         JobstopPngImg.resume,
@@ -91,10 +88,6 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
         color: Jobstopcolor.primarycolor,
         colorBlendMode: BlendMode.srcIn,
       ),
-      onAddClicked: () async {
-        Get.toNamed(SippoRoutes.uploadresume);
-        print(_controller.profileState.resumeFiles);
-      },
       noInfoProfile: false,
       profileInfo: [ResumeCardWidget()],
     );
@@ -103,6 +96,7 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
   Widget _buildAppreciationInfo(BuildContext context) {
     return Obx(
       () => AddInfoProfileCard(
+        isCompanyView: true,
         title: 'appreciation'.tr,
         noInfoProfile: _controller.profileState.appreciations.isEmpty,
         leading: Image.asset(
@@ -124,12 +118,6 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
                 item.awardName,
                 item.categoryAchieve,
                 item.year,
-                onEdit: () {
-                  Get.toNamed(
-                    SippoRoutes.appreciationaddedit,
-                    arguments: {appreciationArg: item.toJson()},
-                  );
-                },
               );
             },
             onExpandClicked: () {
@@ -138,12 +126,6 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
             },
           ),
         ],
-        onAddClicked: () {
-          Get.toNamed(
-            SippoRoutes.appreciationaddedit,
-            arguments: {appreciationArg: null},
-          );
-        },
       ),
     );
   }
@@ -153,6 +135,7 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
     double height = size.height;
     return Obx(
       () => AddInfoProfileCard(
+        isCompanyView: true,
         title: 'language'.tr,
         noInfoProfile: _controller.profileState.languages.isEmpty,
         leading: Image.asset(
@@ -161,13 +144,6 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
           color: Jobstopcolor.primarycolor,
           colorBlendMode: BlendMode.srcIn,
         ),
-        iconAction: _controller.profileState.languages.isNotEmpty
-            ? Icon(
-                Icons.mode_edit_outline_outlined,
-                size: context.fromHeight(CustomStyle.l),
-                color: Jobstopcolor.primarycolor,
-              )
-            : null,
         profileInfo: [
           ExpandableItemList.wrapBuilder(
             isExpandable: _controller.profileState.languages.length > 1,
@@ -189,16 +165,6 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
             },
           ),
         ],
-        onAddClicked: () {
-          Get.toNamed(
-            SippoRoutes.languageeditadd,
-            arguments: {
-              langListArg: _controller.profileState.languages
-                  .map((e) => e.toJson())
-                  .toList()
-            },
-          );
-        },
       ),
     );
   }
@@ -206,6 +172,7 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
   Obx _buildSkillsInfo(BuildContext context) {
     return Obx(
       () => AddInfoProfileCard(
+        isCompanyView: true,
         title: 'skill'.tr,
         noInfoProfile: _controller.profileState.skillsList.isEmpty,
         leading: Image.asset(
@@ -214,13 +181,6 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
           color: Jobstopcolor.primarycolor,
           colorBlendMode: BlendMode.srcIn,
         ),
-        iconAction: _controller.profileState.skillsList.isNotEmpty
-            ? Icon(
-                Icons.mode_edit_outline_outlined,
-                size: context.fromHeight(CustomStyle.l),
-                color: Jobstopcolor.primarycolor,
-              )
-            : null,
         profileInfo: [
           ExpandableItemList.wrapBuilder(
             isExpandable: _controller.profileState.skillsList.length > 1,
@@ -237,18 +197,13 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
             },
           ),
         ],
-        onAddClicked: () {
-          Get.toNamed(
-            SippoRoutes.skillsaddedit,
-            arguments: {skillsListArg: _controller.profileState.skillsList},
-          );
-        },
       ),
     );
   }
 
   Obx _buildEducationInfo(BuildContext context) {
     return Obx(() => AddInfoProfileCard(
+          isCompanyView: true,
           title: 'education'.tr,
           noInfoProfile: _controller.profileState.educationList.isEmpty,
           leading: Image.asset(
@@ -257,12 +212,6 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
             color: Jobstopcolor.primarycolor,
             colorBlendMode: BlendMode.srcIn,
           ),
-          onAddClicked: () {
-            Get.toNamed(
-              SippoRoutes.educationaddedit,
-              arguments: {educationArg: null},
-            );
-          },
           profileInfo: [
             ExpandableItemList(
               isExpandable: _controller.profileState.educationList.length > 1,
@@ -276,10 +225,6 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
                   item.level,
                   item.institution,
                   item.periodic,
-                  onEdit: () {
-                    Get.toNamed(SippoRoutes.educationaddedit);
-                    _controller.editingId = item.id ?? -1;
-                  },
                 );
               },
               onExpandClicked: () {
@@ -294,6 +239,7 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
   Widget _buildWorkExperienceInfo(BuildContext context) {
     return Obx(
       () => AddInfoProfileCard(
+        isCompanyView: true,
         title: 'work_experience'.tr,
         noInfoProfile: _controller.profileState.workExList.isEmpty,
         leading: Image.asset(
@@ -302,12 +248,7 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
           color: Jobstopcolor.primarycolor,
           colorBlendMode: BlendMode.srcIn,
         ),
-        onAddClicked: () {
-          Get.toNamed(
-            SippoRoutes.workexperience,
-            arguments: {workExperienceArg: null},
-          );
-        },
+        alignmentFromStart: true,
         profileInfo: [
           ExpandableItemList(
             isExpandable: _controller.profileState.workExList.length > 1,
@@ -321,10 +262,6 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
                 item.jobTitle,
                 item.company,
                 item.periodic,
-                onEdit: () {
-                  _controller.editingId = item.id?.toInt() ?? -1;
-                  Get.toNamed(SippoRoutes.workexperience);
-                },
               );
             },
             onExpandClicked: () {
@@ -340,6 +277,7 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
   Widget _buildAboutMeInfo(BuildContext context) {
     return Obx(
       () => AddInfoProfileCard(
+        isCompanyView: true,
         title: 'about_me'.tr,
         noInfoProfile: _controller.profileState.aboutMeText.isEmpty,
         leading: Image.asset(
@@ -348,16 +286,6 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
           color: Jobstopcolor.primarycolor,
           colorBlendMode: BlendMode.srcIn,
         ),
-        iconAction: _controller.profileState.aboutMeText.isNotEmpty
-            ? Icon(
-                Icons.mode_edit_outline_outlined,
-                size: context.fromHeight(CustomStyle.l),
-                color: Jobstopcolor.primarycolor,
-              )
-            : null,
-        onAddClicked: () {
-          Get.to(JobAboutme());
-        },
         profileInfo: [
           _controller.profileState.aboutMeText.isNotEmpty
               ? ReadMoreText(
@@ -397,33 +325,19 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
     BuildContext context,
     String? title,
     String? from,
-    String? periodic, {
-    required VoidCallback onEdit,
-  }) {
+    String? periodic,
+  ) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Row(
-        children: [
-          SizedBox(
-            width: context.fromWidth(CustomStyle.halfFullSize),
-            child: Text(
-              title ?? "",
-              style: dmsbold.copyWith(
-                fontSize: FontSize.title6(context),
-                color: Jobstopcolor.primarycolor,
-              ),
-              overflow: TextOverflow.ellipsis,
-            ),
+      SizedBox(
+        width: context.width,
+        child: Text(
+          title ?? "",
+          style: dmsbold.copyWith(
+            fontSize: FontSize.title6(context),
+            color: Jobstopcolor.primarycolor,
           ),
-          const Spacer(),
-          InkWell(
-              onTap: onEdit,
-              child: Image.asset(
-                JobstopPngImg.edit,
-                height: context.fromHeight(CustomStyle.l),
-                color: Jobstopcolor.primarycolor,
-                colorBlendMode: BlendMode.srcIn,
-              )),
-        ],
+          overflow: TextOverflow.ellipsis,
+        ),
       ),
       SizedBox(
         height: context.fromHeight(CustomStyle.huge2),
@@ -443,34 +357,4 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
       ),
     ]);
   }
-
-// Row _buildPhoneNumberLabels(
-//   BuildContext context,
-//   String phone1, [
-//   String? phone2,
-// ]) {
-//   return Row(
-//     children: [
-//       Text(
-//         phone1,
-//         style: dmsregular.copyWith(
-//           fontSize: FontSize.label(context),
-//           color: Jobstopcolor.white,
-//         ),
-//       ),
-//       if (phone2 != null) ...[
-//         SizedBox(
-//           width: context.fromWidth(CustomStyle.spaceBetween),
-//         ),
-//         Text(
-//           phone2,
-//           style: dmsregular.copyWith(
-//             fontSize: FontSize.label(context),
-//             color: Jobstopcolor.white,
-//           ),
-//         ),
-//       ]
-//     ],
-//   );
-// }
 }

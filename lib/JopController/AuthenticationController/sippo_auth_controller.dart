@@ -56,6 +56,24 @@ class AuthController extends GetxController {
 
   States get states => _states.value;
 
+  void changeStates({
+    bool? isLoading,
+    bool? isSuccess,
+    bool? isError,
+    bool? isWarning,
+    String? message,
+    String? error,
+  }) {
+    _states.value = states.copyWith(
+      isLoading: isLoading,
+      isSuccess: isLoading == true ? false : isSuccess,
+      isError: isLoading == true ? false : isError,
+      message: message,
+      isWarning: isLoading == true ? false : isWarning,
+      error: error,
+    );
+  }
+
   /////////////////////////
   Future<void> userRegister(UserModel user) async {
     if (_netController.isConnectionLostWithDialog()) return;
@@ -72,6 +90,7 @@ class AuthController extends GetxController {
     final response = await AuthRepo.userLogin(user);
     loadingState = false;
     await checkAuthResponseState(response, AppUsingType.user);
+
     // await GlobalStorage.saveLoggedUser(response?.data?.model?.toJson());
   }
 
@@ -80,8 +99,8 @@ class AuthController extends GetxController {
     loadingState = true;
     final response = await AuthRepo.userLogout();
     loadingState = false;
-      print(response);
-    if (response?["error"]!=null) {
+    print(response);
+    if (response?["error"] != null) {
       print(response?["error"]);
       _states.value = states.copyWith(
         isSuccess: false,

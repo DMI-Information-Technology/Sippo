@@ -11,7 +11,9 @@ import '../../JobGlobalclass/jobstopprefname.dart';
 import '../../JobGlobalclass/routes.dart';
 import '../../JobGlobalclass/text_font_size.dart';
 import '../../JopController/AuthenticationController/sippo_user_login_controller.dart';
+import '../../sippo_custom_widget/ConditionalWidget.dart';
 import '../../sippo_custom_widget/loading_view_widgets/overly_loading.dart';
+import '../../sippo_custom_widget/success_message_widget.dart';
 import '../../sippo_custom_widget/widgets.dart';
 
 class SippoUserLogin extends StatefulWidget {
@@ -189,6 +191,19 @@ class _SippoUserLoginState extends State<SippoUserLogin> {
                         _controller.onSubmittedLogin();
                       },
                     ),
+                    SizedBox(
+                      height: context.fromHeight(CustomStyle.spaceBetween),
+                    ),
+                    Obx(() => ConditionalWidget(
+                          _controller.authState.isError,
+                          data: _controller.authState,
+                          guaranteedBuilder: (context, data) =>
+                              CardNotifyMessage.error(
+                            state: data,
+                            onCancelTap: () => _controller.authController
+                                .changeStates(isError: false, message: ''),
+                          ),
+                        )),
                     SizedBox(
                       height: context.fromHeight(CustomStyle.spaceBetween),
                     ),

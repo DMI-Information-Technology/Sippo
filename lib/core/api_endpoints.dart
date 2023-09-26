@@ -29,6 +29,8 @@ const String companyInfoProfileEndpoint = "company/profile";
 const String companyPostEndpoint = "company/profile/posts";
 const String companyJobsEndpoint = "company/profile/jobs";
 const String companyApplicationEndpoint = "company/applications";
+const String companyUserProfileViewEndpoint = "customers";
+
 /////////////////////////////////////////////////////////
 /////////////////// user core functions endpoints ///////////////////
 const String userJobsEndpoint = "jobs";

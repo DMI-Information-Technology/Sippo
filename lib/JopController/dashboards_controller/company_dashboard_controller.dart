@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
+import 'package:jobspot/utils/dashboard_shared_state.dart';
 
 import '../../sippo_data/company_repos/company_profile_info_repo.dart';
 import '../../sippo_data/model/auth_model/company_response_details.dart';
@@ -82,6 +83,7 @@ class CompanyDashBoardController extends GetxController {
 }
 
 class CompanyDashBoardState {
+  var profileViewId = -1;
   final _editId = (-1).obs;
 
   int get editId => _editId.toInt();

@@ -13,17 +13,19 @@ import 'circular_image.dart';
 class UserProfileHeaderWidget extends StatelessWidget {
   final String profileImage;
   final EntityModel profileInfo;
-  final VoidCallback onSettingsPressed;
-  final VoidCallback onEditProfilePressed;
+  final VoidCallback? onSettingsPressed;
+  final VoidCallback? onEditProfilePressed;
   final bool showConnectionLostBar;
+  final bool isCompanyView;
 
   UserProfileHeaderWidget({
     super.key,
     required this.profileInfo,
-    required this.onSettingsPressed,
-    required this.onEditProfilePressed,
+    this.onSettingsPressed,
+    this.onEditProfilePressed,
     required this.profileImage,
     this.showConnectionLostBar = false,
+    this.isCompanyView = false,
   });
 
   @override
@@ -64,9 +66,14 @@ class UserProfileHeaderWidget extends StatelessWidget {
                     _buildLocationText(context),
                     SizedBox(height: context.fromHeight(CustomStyle.huge2)),
                   ],
-                  _buildPhoneNumberLabels(context),
+                  _buildPhoneNumberLabels(
+                    context,
+                    profileInfo.phone,
+                    profileInfo.secondaryPhone,
+                  ),
                   SizedBox(height: context.fromHeight(CustomStyle.xl)),
-                  _buildEditProfileButton(context),
+                  if (!isCompanyView && onEditProfilePressed != null)
+                    _buildEditProfileButton(context),
                 ],
               ),
             ),
@@ -78,21 +85,24 @@ class UserProfileHeaderWidget extends StatelessWidget {
 
   Widget _buildProfileRow(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: !isCompanyView
+          ? MainAxisAlignment.spaceBetween
+          : MainAxisAlignment.start,
       children: [
         CircularImage(
           profileImage,
           size: context.fromHeight(CustomStyle.imageSize2),
         ),
-        InkWell(
-          onTap: onSettingsPressed,
-          child: Image.asset(
-            JobstopPngImg.setting,
-            // Change this to your setting image path
-            height: context.fromHeight(CustomStyle.l),
-            color: Colors.white, // Change this to your desired color
+        if (!isCompanyView && onSettingsPressed != null)
+          InkWell(
+            onTap: onSettingsPressed,
+            child: Image.asset(
+              JobstopPngImg.setting,
+              // Change this to your setting image path
+              height: context.fromHeight(CustomStyle.l),
+              color: Colors.white, // Change this to your desired color
+            ),
           ),
-        ),
       ],
     );
   }
@@ -117,28 +127,33 @@ class UserProfileHeaderWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildPhoneNumberLabels(BuildContext context) {
-    return Row(
-      children: [
-        Text(
-          profileInfo.phone ?? "unknown",
-          style: dmsregular.copyWith(
-            fontSize: FontSize.label(context),
-            color: Jobstopcolor.white,
-          ),
-        ),
-        if (profileInfo.secondaryPhone != null) ...[
-          SizedBox(width: context.fromWidth(CustomStyle.spaceBetween)),
-          Text(
-            profileInfo.secondaryPhone!,
-            style: dmsregular.copyWith(
-              fontSize: FontSize.label(context),
-              color: Jobstopcolor.white,
-            ),
-          ),
-        ]
-      ],
-    );
+  Widget _buildPhoneNumberLabels(
+      BuildContext context, String? primaryPhone, String? secondaryPhone) {
+    return primaryPhone != null || secondaryPhone != null
+        ? Row(
+            children: [
+              if (primaryPhone != null && primaryPhone.trim().isNotEmpty)
+                Text(
+                  primaryPhone,
+                  style: dmsregular.copyWith(
+                    fontSize: FontSize.label(context),
+                    color: Jobstopcolor.white,
+                  ),
+                ),
+              if (secondaryPhone != null &&
+                  secondaryPhone.trim().isNotEmpty) ...[
+                SizedBox(width: context.fromWidth(CustomStyle.spaceBetween)),
+                Text(
+                  secondaryPhone,
+                  style: dmsregular.copyWith(
+                    fontSize: FontSize.label(context),
+                    color: Jobstopcolor.white,
+                  ),
+                ),
+              ]
+            ],
+          )
+        : const SizedBox.shrink();
   }
 
   Widget _buildEditProfileButton(BuildContext context) {

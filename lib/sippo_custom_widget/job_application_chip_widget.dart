@@ -14,25 +14,43 @@ class JobApplicationStatusChipWidget extends StatelessWidget {
   });
 
   static final applicationStatus =
-      <JobApplicationStatusType, JobApplicationStatusModel>{
-    JobApplicationStatusType.Accepted: JobApplicationStatusModel(
+      <ApplicationStatusType, JobApplicationStatusModel>{
+    ApplicationStatusType.Accepted: JobApplicationStatusModel(
       text: 'app_accepted'.tr,
       textColor: Colors.green,
       backgroundColor: Colors.green[100],
     ),
-    JobApplicationStatusType.Rejected: JobApplicationStatusModel(
+    ApplicationStatusType.Rejected: JobApplicationStatusModel(
       text: 'app_rejected'.tr,
       textColor: Colors.red,
       backgroundColor: Colors.red[100],
     ),
-    JobApplicationStatusType.Pending: JobApplicationStatusModel(
+    ApplicationStatusType.Pending: JobApplicationStatusModel(
       text: "app_sent".tr,
       textColor: Colors.blue,
       backgroundColor: Colors.blue[100],
     ),
   };
 
-  final JobApplicationStatusType statusType;
+  static Widget getApplicationStatusWidget(
+    String? status,
+  ) {
+    if (status == null) return const SizedBox.shrink();
+    return switch (status.toLowerCase()) {
+      'accepted' => JobApplicationStatusChipWidget(
+          statusType: ApplicationStatusType.Accepted,
+        ),
+      'rejected' => JobApplicationStatusChipWidget(
+          statusType: ApplicationStatusType.Rejected,
+        ),
+      'pending' => JobApplicationStatusChipWidget(
+          statusType: ApplicationStatusType.Pending,
+        ),
+      _ => const SizedBox.shrink(),
+    };
+  }
+
+  final ApplicationStatusType statusType;
 
   @override
   Widget build(BuildContext context) {

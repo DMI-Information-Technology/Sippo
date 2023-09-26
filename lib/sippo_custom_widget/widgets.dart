@@ -331,7 +331,7 @@ class CustomButton extends StatelessWidget {
 
   final double elevation;
   final Widget? leadingIcon;
-  final VoidCallback onTapped;
+  final VoidCallback? onTapped;
   final String text;
   final Color? textColor;
   final Color? backgroundColor;

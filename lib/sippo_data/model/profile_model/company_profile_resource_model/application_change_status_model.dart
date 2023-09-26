@@ -1,14 +1,14 @@
 import 'package:jobspot/sippo_data/model/notification/job_application_model.dart';
 
 class ApplicationStatusModel {
-  final JobApplicationStatusType? status;
+  final ApplicationStatusType? status;
 
   ApplicationStatusModel({this.status});
 
   Map<String, String>? toJson() => switch (status) {
-        JobApplicationStatusType.Accepted => ACCEPTED,
-        JobApplicationStatusType.Rejected => REJECTED,
-        JobApplicationStatusType.Pending => null,
+        ApplicationStatusType.Accepted => ACCEPTED,
+        ApplicationStatusType.Rejected => REJECTED,
+        ApplicationStatusType.Pending => null,
         null => null,
       };
 

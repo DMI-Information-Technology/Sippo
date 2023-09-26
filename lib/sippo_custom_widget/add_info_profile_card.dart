@@ -12,13 +12,15 @@ class AddInfoProfileCard extends StatelessWidget {
     this.leading,
     this.profileInfo,
     this.iconAction,
-    required this.onAddClicked,
+    this.onAddClicked,
     this.alignmentFromStart,
+    this.isCompanyView = false,
   });
 
+  final bool isCompanyView;
   final bool? alignmentFromStart;
   final bool noInfoProfile;
-  final VoidCallback onAddClicked;
+  final VoidCallback? onAddClicked;
   final String title;
   final Widget? leading;
   final List<Widget>? profileInfo;
@@ -47,20 +49,22 @@ class AddInfoProfileCard extends StatelessWidget {
                 style: dmsbold.copyWith(
                     fontSize: 14, color: Jobstopcolor.primarycolor),
               ),
-              const Spacer(),
-              InkWell(
-                onTap: onAddClicked,
-                child: iconAction ??
-                    CircleAvatar(
-                      radius: 10,
-                      backgroundColor: Jobstopcolor.lightprimary2,
-                      child: Icon(
-                        Icons.add,
-                        size: 15,
-                        color: Jobstopcolor.primarycolor,
+              if (!isCompanyView) ...[
+                const Spacer(),
+                InkWell(
+                  onTap: onAddClicked,
+                  child: iconAction ??
+                      CircleAvatar(
+                        radius: 10,
+                        backgroundColor: Jobstopcolor.lightprimary2,
+                        child: Icon(
+                          Icons.add,
+                          size: 15,
+                          color: Jobstopcolor.primarycolor,
+                        ),
                       ),
-                    ),
-              )
+                )
+              ]
             ],
           ),
           if (!noInfoProfile &&

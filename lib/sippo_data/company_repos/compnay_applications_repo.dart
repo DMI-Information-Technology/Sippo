@@ -42,7 +42,7 @@ class CompanyReceivedApplicationRepo {
   }
 
   static Future<
-          Resource<PaginationModel<ApplicationJobCompanyModel>?, dynamic>?>
+          Resource<PaginationModel<ApplicationCompanyModel>?, dynamic>?>
       fetchApplications(Map<String, String> query) async {
     final httpController = HttpClientController.instance;
     try {
@@ -64,7 +64,7 @@ class CompanyReceivedApplicationRepo {
         response.statusCode,
         (data) => PaginationModel.fromJson(
           data,
-          dataConverter: (item) => ApplicationJobCompanyModel.fromJson(item),
+          dataConverter: (item) => ApplicationCompanyModel.fromJson(item),
         ),
         (errors) => null,
       );

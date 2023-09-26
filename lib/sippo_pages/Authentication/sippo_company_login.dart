@@ -3,10 +3,13 @@ import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
+
 import '../../JobGlobalclass/jobstopprefname.dart';
 import '../../JobGlobalclass/routes.dart';
 import '../../JopController/AuthenticationController/sippo_company_login_controller.dart';
+import '../../sippo_custom_widget/ConditionalWidget.dart';
 import '../../sippo_custom_widget/loading_view_widgets/overly_loading.dart';
+import '../../sippo_custom_widget/success_message_widget.dart';
 import '../../sippo_custom_widget/widgets.dart';
 
 class SippoCompanyLogin extends StatelessWidget {
@@ -170,9 +173,17 @@ class SippoCompanyLogin extends StatelessWidget {
                             .onSubmittedLogin();
                       },
                     ),
-                    SizedBox(
-                      height: height / 35,
-                    ),
+                    SizedBox(height: height / 35),
+                    Obx(() => ConditionalWidget(
+                          controller.authState.isError,
+                          data: controller.authState,
+                          guaranteedBuilder: (context, data) =>
+                              CardNotifyMessage.error(
+                            state: data,
+                            onCancelTap: () => controller.authController
+                                .changeStates(isError: false, message: ''),
+                          ),
+                        )),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [

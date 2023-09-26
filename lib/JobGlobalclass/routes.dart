@@ -7,6 +7,7 @@ import 'package:jobspot/SippoControllerBinding/auth_binding/signup_user_binding_
 import 'package:jobspot/SippoControllerBinding/company_binding/company_job_controller_binding.dart';
 import 'package:jobspot/SippoControllerBinding/company_binding/company_post_controller_binding.dart';
 import 'package:jobspot/SippoControllerBinding/company_binding/company_profile_controller_binding.dart';
+import 'package:jobspot/SippoControllerBinding/company_binding/copmany_user_profile_view_controller_binding.dart';
 import 'package:jobspot/SippoControllerBinding/dashboard_binding/company_dashbord_controller_binding.dart';
 import 'package:jobspot/SippoControllerBinding/dashboard_binding/user_dashboard_controller_binding.dart';
 import 'package:jobspot/SippoControllerBinding/profile_binding/edit_add_education_controller_binding.dart';
@@ -32,6 +33,7 @@ import 'package:jobspot/sippo_pages/jopintroductionpages/jobstop_onboarding.dart
 import 'package:jobspot/sippo_pages/setting_profile/sippo_profile_setting.dart';
 import 'package:jobspot/sippo_pages/sippo_company_pages/company_post_and_jobs/sippo_company_edit_add_jobs.dart';
 import 'package:jobspot/sippo_pages/sippo_company_pages/company_post_and_jobs/sippo_company_edit_add_post.dart';
+import 'package:jobspot/sippo_pages/sippo_company_pages/company_user_profile_view/sippo_show_user_profile_view.dart';
 import 'package:jobspot/sippo_pages/sippo_company_pages/sippo_company_dashboard.dart';
 import 'package:jobspot/sippo_pages/sippo_company_pages/sippo_company_profile.dart';
 import 'package:jobspot/sippo_pages/sippo_company_pages/sippo_edit_company_profile.dart';
@@ -87,6 +89,9 @@ class SippoRoutes {
   static const String _userApplyJobs = "/user-apply-jobs";
   static const String _sippoAboutCompanies = "/sippo-about-companies";
   static const String _sippoUserApplyCompany = "/sippo-user-apply-company";
+  static const String _sippoCompanyUserProfileView = "/sippo-company-user-profile-view";
+
+  static String get sippoCompanyUserProfileView => _sippoCompanyUserProfileView;
 
   static String get sippoUserApplyCompany => _sippoUserApplyCompany;
 
@@ -281,6 +286,10 @@ class SippoRoutes {
       name: _sippoUserApplyCompany,
       page: () => SippoApplyCompany(),
       binding: const UserApplyCompanyBindingController(),
+    ),  GetPage(
+      name: _sippoCompanyUserProfileView,
+      page: () => SippoCompanyUserProfileView(),
+      binding: const CompanyUserProfileViewBindingController(),
     ),
   ];
 

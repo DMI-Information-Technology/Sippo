@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 import 'package:jobspot/JopController/AuthenticationController/sippo_auth_controller.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_model.dart';
 
@@ -16,9 +15,9 @@ class CompanyLoginController extends GetxController {
   static CompanyLoginController get instance => Get.find();
   final GlobalKey<FormState> formKey = GlobalKey();
   final netController = InternetConnectionController.instance;
-  final _authController = AuthController.instance;
+  final authController = AuthController.instance;
 
-  States get authState => _authController.states;
+  States get authState => authController.states;
 
   final _phoneNumber = "".obs;
   final _password = "".obs;
@@ -41,12 +40,11 @@ class CompanyLoginController extends GetxController {
       _isRememberMeChecked.value = value;
 
   Future<void> onSubmittedLogin() async {
-    if (!formKey.currentState!.validate()) return;
-    if (!netController.isConnectionLostWithDialog()) {
-      await _authController.companyLogin(companyForm);
+    if (formKey.currentState!.validate()) {
+      await authController.companyLogin(companyForm);
     }
-    if (_authController.states.isSuccess) {
-      _authController.resetAllAuthStates();
+    if (authController.states.isSuccess) {
+      authController.resetAllAuthStates();
       if (kIsWeb) {
         Get.offAllNamed(SippoRoutes.sippoCompanyDashboard);
       } else {

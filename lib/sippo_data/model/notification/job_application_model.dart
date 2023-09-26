@@ -1,4 +1,4 @@
-enum JobApplicationStatusType { Pending, Accepted, Rejected }
+enum ApplicationStatusType { Pending, Accepted, Rejected }
 
 class NotificationModel {
   final String? imagePath;
@@ -6,7 +6,7 @@ class NotificationModel {
   final String? description;
   final String? arriveTime;
   // final bool? isSelected;
-  final JobApplicationStatusType? applicationStatus;
+  final ApplicationStatusType? applicationStatus;
 
   NotificationModel({
     this.imagePath,

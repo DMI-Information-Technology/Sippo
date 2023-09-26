@@ -37,7 +37,7 @@ class UserNotificationController extends GetxController {
               "Applications for Google companies have entered for company review",
           arriveTime: "25 minutes ago",
           applicationStatus:
-              JobApplicationStatusType.values[math.Random().nextInt(3)],
+              ApplicationStatusType.values[math.Random().nextInt(3)],
         ),
       )
       .toList()

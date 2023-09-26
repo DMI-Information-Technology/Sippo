@@ -1,4 +1,5 @@
 import "dart:convert";
+import "dart:io";
 
 import "package:http/http.dart" as http;
 import "package:jobspot/JobGlobalclass/global_storage.dart";
@@ -6,6 +7,7 @@ import "package:jobspot/JopController/HttpClientController/http_client_controlle
 import "package:jobspot/core/api_endpoints.dart" as endpoints;
 import "package:jobspot/core/header_api.dart";
 import "package:jobspot/sippo_data/model/auth_model/user_model.dart";
+import "package:jobspot/sippo_data/model/auth_model/user_register_type_response.dart";
 import "package:jobspot/utils/app_use.dart";
 
 import '../../core/status_response_code_checker.dart';
@@ -86,6 +88,13 @@ class AuthRepo {
         (entity) => UserResponseModel.fromJson(entity['user']),
         (errors) => UserPropError.fromJson(errors),
       );
+    } on SocketException catch (e) {
+      print(e.message);
+      print(e.osError);
+      userResponse = AuthResponse.registerAuthError(
+          authMessageError: "Unable to Establish Internet Connection "
+              "Please check your internet connection and try again.",
+          type: RegisterTypeResponse.auth_error);
     } catch (error) {
       print(error);
     } finally {
@@ -133,6 +142,13 @@ class AuthRepo {
         (entity) => CompanyDetailsResponseModel.fromJson(entity['company']),
         (errors) => CompanyPropError.fromJson(errors),
       );
+    } on SocketException catch (e) {
+      print(e.message);
+      print(e.osError);
+      companyResponse = AuthResponse.registerAuthError(
+          authMessageError: "Unable to Establish Internet Connection "
+              "Please check your internet connection and try again.",
+          type: RegisterTypeResponse.auth_error);
     } catch (error) {
       print(error);
     } finally {

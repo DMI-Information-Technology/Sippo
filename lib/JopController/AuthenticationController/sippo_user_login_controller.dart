@@ -10,12 +10,12 @@ import '../../utils/states.dart';
 class UserLoginController extends GetxController {
   static UserLoginController get instance => Get.find();
   final GlobalKey<FormState> formKey = GlobalKey();
-  final AuthController _authController = Get.find();
+  final AuthController authController = Get.find();
   final _phoneNumber = "".obs;
   final _password = "".obs;
   final _isRememberMeChecked = false.obs;
 
-  States get authState => _authController.states;
+  States get authState => authController.states;
 
   bool get isRememberMeChecked => _isRememberMeChecked.isTrue;
 
@@ -39,10 +39,11 @@ class UserLoginController extends GetxController {
 
   Future<void> onSubmittedLogin() async {
     if (formKey.currentState!.validate()) {
-      await _authController.userLogin(userForm);
+      await authController.userLogin(userForm);
+      print(authState);
     }
-    if (_authController.states.isSuccess) {
-      _authController.resetAllAuthStates();
+    if (authController.states.isSuccess) {
+      authController.resetAllAuthStates();
       Get.offAllNamed(SippoRoutes.userdashboard);
     }
   }
