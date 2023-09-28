@@ -10,38 +10,40 @@ import '../ConnectivityController/internet_connection_controller.dart';
 
 class UserHomeController extends GetxController {
   static UserHomeController get instance => Get.find();
-  final _dashboardController = UserDashBoardController.instance;
+  final dashboardController = UserDashBoardController.instance;
 
   void set jobDetailsId(int? value) {
-    _dashboardController.jobDashboardState.id = value ?? -1;
+    dashboardController.jobDashboardState.id = value ?? -1;
   }
 
   void set requestedJobDetails(CompanyJobModel? value) {
-    if (value != null) _dashboardController.jobDashboardState.details = value;
+    if (value != null) dashboardController.jobDashboardState.details = value;
   }
 
   void clearRequestedJobDetails() {
-    _dashboardController.jobDashboardState.clearDetails(
+    dashboardController.jobDashboardState.clearDetails(
       () => CompanyJobModel(),
     );
   }
+
   void set companyDetailsId(int? value) {
-    _dashboardController.companyDashboardState.id = value ?? -1;
+    dashboardController.companyDashboardState.id = value ?? -1;
   }
 
   void set requestedCompanyDetails(CompanyDetailsResponseModel? value) {
-    if (value != null) _dashboardController.companyDashboardState.details = value;
+    if (value != null)
+      dashboardController.companyDashboardState.details = value;
   }
 
   void clearRequestedCompanyDetails() {
-    _dashboardController.companyDashboardState.clearDetails(
+    dashboardController.companyDashboardState.clearDetails(
       () => CompanyDetailsResponseModel(),
     );
   }
 
   final jobsHomeState = JobsHomeState();
 
-  ProfileInfoModel get user => _dashboardController.user;
+  ProfileInfoModel get user => dashboardController.user;
 
   bool get isNetworkConnected =>
       InternetConnectionController.instance.isConnected;
@@ -67,6 +69,13 @@ class UserHomeController extends GetxController {
       isWarning: isLoading == true ? false : isWarning,
       error: error,
     );
+  }
+
+  void refreshPage() async {
+    await Future.wait([
+      jobsHomeState.refreshJobs(),
+      dashboardController.userInformationRefresh(),
+    ]);
   }
 
   @override
@@ -145,7 +154,7 @@ class JobsHomeState {
     _jobsList.value = value;
   }
 
-  void refreshJobs() {
+  Future<void> refreshJobs() async {
     if (!isNetworkConnected) {
       if (jobsList.isEmpty)
         changeJobsStates(

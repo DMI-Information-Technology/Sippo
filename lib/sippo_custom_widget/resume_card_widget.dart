@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/sippo_data/model/custom_file_model/custom_file_model.dart';
 
@@ -7,65 +8,98 @@ import '../JobGlobalclass/jobstopcolor.dart';
 import '../JobGlobalclass/jobstopfontstyle.dart';
 import '../JobGlobalclass/jobstopimges.dart';
 import '../JobGlobalclass/text_font_size.dart';
+import '../sippo_data/model/profile_model/profile_resource_model/cv_file_model.dart';
 
-class ResumeCardWidget extends StatelessWidget {
-  final void Function()? onDeleteTapped;
-  final CustomFileModel? resume;
+class CvCardWidget extends StatelessWidget {
+  final VoidCallback? onDeleteTapped;
+  final CustomFileModel? _fileCv;
+  final CvModel? _remoteCv;
+  final VoidCallback? onCvTapped;
 
-  const ResumeCardWidget({
-    this.resume,
+  const CvCardWidget({
+    CustomFileModel? fileCv,
     this.onDeleteTapped,
     super.key,
-  });
+    this.onCvTapped,
+  })  : _fileCv = fileCv,
+        _remoteCv = null;
+
+  CvCardWidget.fromRemote({
+    CvModel? remoteCv,
+    this.onDeleteTapped,
+    super.key,
+    this.onCvTapped,
+  })  : _fileCv = null,
+        _remoteCv = remoteCv;
 
   @override
   Widget build(BuildContext context) {
+    print(_fileCv);
     Size size = MediaQuery.of(context).size;
     double height = size.height;
     double width = size.width;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Image.asset(
-          resume?.type == 'image'
-              ? JobstopPngImg.galleryicon
-              : JobstopPngImg.pdf,
-          color: resume?.type == 'image' ? Jobstopcolor.primarycolor : null,
-          height: height / 16,
-        ),
-        SizedBox(width: width / 36),
-        Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              AutoSizeText(
-                resume?.name ?? "unknown",
-                style: dmsregular.copyWith(
-                  fontSize: FontSize.title6(context),
-                  color: Jobstopcolor.primarycolor,
+    return InkWell(
+      onTap: onCvTapped,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          _buildImage(context),
+          SizedBox(width: width / 36),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                AutoSizeText(
+                  (_fileCv != null ? _fileCv?.name : _remoteCv?.name) ??
+                      "unknown",
+                  style: dmsregular.copyWith(
+                    fontSize: FontSize.title6(context),
+                    color: Jobstopcolor.primarycolor,
+                  ),
+                  overflow: TextOverflow.ellipsis,
                 ),
-                overflow: TextOverflow.ellipsis,
-              ),
-              SizedBox(height: height / CustomStyle.varyHuge),
-              Text(
-                "${resume?.sizeToString ?? 'unknown'} . ${resume?.uploadDateToString ?? 'unknown'}",
-                style: dmsregular.copyWith(
-                  fontSize: FontSize.label(context),
-                  color: Colors.black54,
+                SizedBox(height: height / CustomStyle.varyHuge),
+                Text(
+                  "${(_fileCv != null ? _fileCv?.sizeToString : _remoteCv?.size) ?? 'unknown'} . ${_fileCv != null ? _fileCv?.uploadDateToString : ''}",
+                  style: dmsregular.copyWith(
+                    fontSize: FontSize.label(context),
+                    color: Colors.black54,
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
-        ),
-        if (onDeleteTapped != null) ...[
-          SizedBox(width: width / 32),
-          Image.asset(
-            JobstopPngImg.deleted,
-            height: height / 36,
-            color: Jobstopcolor.red,
-          ),
-        ]
-      ],
+          if (onDeleteTapped != null) ...[
+            SizedBox(width: width / 32),
+            Image.asset(
+              JobstopPngImg.deleted,
+              height: height / 36,
+              color: Jobstopcolor.red,
+            ),
+          ]
+        ],
+      ),
+    );
+  }
+
+  Image _buildImage(BuildContext context) {
+    if (_fileCv == null) {
+      return Image.asset(
+        _remoteCv?.mimeType?.contains('image') == true
+            ? JobstopPngImg.galleryicon
+            : JobstopPngImg.pdf,
+        color: _remoteCv?.mimeType?.contains('image') == true
+            ? Jobstopcolor.primarycolor
+            : null,
+        height: context.height / 21,
+        width: context.height / 21,
+      );
+    }
+    return Image.asset(
+      _fileCv?.type == 'image' ? JobstopPngImg.galleryicon : JobstopPngImg.pdf,
+      color: _fileCv?.type == 'image' ? Jobstopcolor.primarycolor : null,
+      height: context.height / 21,
+      width: context.height / 21,
     );
   }
 }

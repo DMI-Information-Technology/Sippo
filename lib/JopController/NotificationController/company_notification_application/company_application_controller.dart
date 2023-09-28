@@ -12,7 +12,7 @@ import 'package:jobspot/utils/storage_permission_service.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 
-import '../../../utils/file_downloader.dart';
+import '../../../utils/file_downloader_service.dart';
 import '../../../utils/states.dart';
 
 class CompanyApplicationController extends GetxController {
@@ -163,9 +163,8 @@ class CompanyApplicationController extends GetxController {
       notificationApplicationController.loadingOverlayController.pauseLoading();
       return;
     }
-    fileDownloader.downloadFile(
-      fileName,
-      urlFile: fileUrl,
+    fileDownloader.downloadFileListener(
+      url: fileUrl,
       onData: (d) {
         downloadData.addAll(d);
       },

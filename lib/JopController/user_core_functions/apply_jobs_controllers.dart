@@ -17,7 +17,7 @@ class ApplyJobsController extends GetxController {
   static ApplyJobsController get instance => Get.find();
 
   Future<void> uploadCvFile() async {
-    final result = await FilePickerService.uploadFileResume(
+    final result = await FilePickerService.uploadFileCv(
       onFileUploading: (status) =>
           applyJobsState.uploadFileStatus = status == FilePickerStatus.picking,
     );

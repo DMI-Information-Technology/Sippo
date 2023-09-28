@@ -127,7 +127,7 @@ class JobApplication extends StatelessWidget {
               color: Jobstopcolor.lightprimary2,
               child: Padding(
                 padding: EdgeInsets.all(context.fromWidth(CustomStyle.m)),
-                child: ResumeCardWidget(),
+                child: CvCardWidget(),
               ),
             ),
           ],

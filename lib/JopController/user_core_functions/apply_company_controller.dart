@@ -17,7 +17,7 @@ class ApplyCompanyController extends GetxController {
   static ApplyCompanyController get instance => Get.find();
 
   Future<void> uploadCvFile() async {
-    final result = await FilePickerService.uploadFileResume(
+    final result = await FilePickerService.uploadFileCv(
       onFileUploading: (status) => applyCompanyState.uploadFileStatus =
           status == FilePickerStatus.picking,
     );

@@ -8,6 +8,7 @@ import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
+import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/job_card_widget.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
@@ -36,7 +37,7 @@ class _SippoUserHomeState extends State<SippoUserHome> {
       appBar: _buildHomeAppBar(),
       body: RefreshIndicator(
         onRefresh: () async {
-          _controller.jobsHomeState.refreshJobs();
+          _controller.refreshPage();
         },
         child: BodyWidget(
           paddingContent: EdgeInsets.only(
@@ -144,9 +145,9 @@ class _SippoUserHomeState extends State<SippoUserHome> {
                 width: context.width / 1.3,
                 jobDetailsPost: item,
                 imagePath:
-                    'https://scontent.fmji4-1.fna.fbcdn.net/v/t39.30808-6/283989525_172048385265472_5677841309342210083_n'
-                    '.jpg?_nc_cat=107&ccb=1-7&_nc_sid=a2f6c7&_nc_ohc=NqB7-Psc_aIAX_7Ivx0&_nc_ht=scontent.fmji4-1.fna&oh'
-                    '=00_AfB7PaSwlVJwrtt003d9CMK5Bxy6ubHVMV9iWwxxol30Bg&oe=650B7982',
+                    'https://scontent.fmji4-1.fna.fbcdn.net/v/t39.30808-6/283989525_172048385265472_5677841309342210083_n.'
+                    'jpg?_nc_cat=107&ccb=1-7&_nc_sid=a2f6c7&_nc_ohc=pYc0C7o3ZzUAX9W5fsC&_nc_ht=scontent.fmji4-1'
+                    '.fna&oh=00_AfDIDX3fWjYJu1JQw7-IX77OkhtzzPwcmWdUSRhUNQ9GQQ&oe=65195142',
                 onImageProfileTap: () async {
                   _controller.companyDetailsId = item.company?.id ?? -1;
                   _controller.requestedCompanyDetails = item.company;
@@ -243,17 +244,19 @@ class _SippoUserHomeState extends State<SippoUserHome> {
               color: Jobstopcolor.primarycolor,
             ),
           ),
-          Obx(
-            () => dashboardController.user.name != null
-                ? Text(
-                    "${dashboardController.user.name}.",
+          Obx(() => ConditionalWidget(
+                dashboardController.user.name != null,
+                data: dashboardController.user.name,
+                guaranteedBuilder: (context, data) {
+                  return Text(
+                    "${data}.",
                     style: dmsbold.copyWith(
                       fontSize: FontSize.title3(context),
                       color: Jobstopcolor.primarycolor,
                     ),
-                  )
-                : const CircularProgressIndicator(strokeWidth: 1.8),
-          ),
+                  );
+                },
+              )),
         ],
       ),
     );

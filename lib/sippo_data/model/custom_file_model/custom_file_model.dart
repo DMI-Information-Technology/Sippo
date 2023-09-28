@@ -37,6 +37,28 @@ class CustomFileModel {
     this.uploadDate,
   }) : this.file = null;
 
+  File? get bytesToFile {
+    try {
+      return bytes != null ? File.fromRawPath(bytes!) : null;
+    } catch (e, s) {
+      print(e);
+      print(s);
+      return null;
+    }
+  }
+
+  List<int>? get bytesToList => bytes?.toList();
+
+  Uint8List? get FileToBytes {
+    try {
+      return file?.readAsBytesSync();
+    } catch (e, s) {
+      print(e);
+      print(s);
+      return null;
+    }
+  }
+
   String? get filename => name ?? (file != null ? basename(file!.path) : null);
 
   bool get isFileNull => file == null && bytes == null;
@@ -48,8 +70,7 @@ class CustomFileModel {
 
   MultipartFile? toMultipartFile() {
     final currentFile = file;
-    final currentBytes = bytes;
-    if (currentFile != null)
+    if (currentFile != null) {
       return MultipartFile(
         fileField ?? 'file',
         currentFile.readAsBytes().asStream(),
@@ -62,7 +83,8 @@ class CustomFileModel {
               )
             : null,
       );
-
+    }
+    final currentBytes = bytes;
     if (currentBytes != null) {
       return MultipartFile.fromBytes(
         fileField ?? 'file',

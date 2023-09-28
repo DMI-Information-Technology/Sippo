@@ -23,6 +23,8 @@ const String editProfileEndpoint = "user/profile";
 const String educationsEndpoint = "user/educations";
 const String userSkillsEndpoint = "user/skills";
 const String userLanguageEndpoint = "user/languages";
+const String userCvEndpoint = "user/cv";
+
 /////////////////////////////////////////////////////////
 // /////////// company profile resource endpoints ///////////////////
 const String companyInfoProfileEndpoint = "company/profile";

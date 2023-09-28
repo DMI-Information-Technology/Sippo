@@ -30,5 +30,10 @@ final  String? message;
       message: json["message"],
     );
   }
+
+  @override
+  String toString() {
+    return 'StatusMessageModel{status: $status, message: $message}';
+  }
 //
 }

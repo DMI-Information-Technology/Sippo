@@ -6,12 +6,13 @@ import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/JopController/user_profile_controller/profile_user_controller.dart';
+import 'package:jobspot/JopController/user_profile_controller/upload_cv_controller.dart';
+import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
 import 'package:jobspot/utils/file_picker_service.dart';
 
 import '../../JobGlobalclass/sippo_customstyle.dart';
 import '../../sippo_custom_widget/file_upload_widget.dart';
-import '../../sippo_data/model/profile_model/profile_widget_model/jobstop_resume_file_info.dart';
-import '../../sippo_themes/themecontroller.dart';
+import '../../sippo_custom_widget/resume_card_widget.dart';
 
 class SippoUploadCV extends StatefulWidget {
   const SippoUploadCV({Key? key}) : super(key: key);
@@ -21,8 +22,7 @@ class SippoUploadCV extends StatefulWidget {
 }
 
 class _SippoUploadCVState extends State<SippoUploadCV> {
-  final themedata = Get.put(JobstopThemecontroler());
-  final ProfileUserController profileController = Get.find();
+  final _controller = UploadCvController.instance;
 
   @override
   Widget build(BuildContext context) {
@@ -40,9 +40,7 @@ class _SippoUploadCVState extends State<SippoUploadCV> {
                 "Add Resume",
                 style: dmsbold.copyWith(
                   fontSize: FontSize.title3(context),
-                  color: themedata.isdark
-                      ? Jobstopcolor.white
-                      : Jobstopcolor.primarycolor,
+                  color: Jobstopcolor.primarycolor,
                 ),
               ),
               SizedBox(
@@ -50,15 +48,27 @@ class _SippoUploadCVState extends State<SippoUploadCV> {
               ),
               Obx(
                 () => FileUploadWidget(
+                  cvCardWidget: ConditionalWidget(
+                    _controller.user.cv != null,
+                    data: _controller.user.cv,
+                    guaranteedBuilder: (_, data) => CvCardWidget.fromRemote(
+                      remoteCv: data,
+                    ),
+                    avoidBuilder: (__, _) => CvCardWidget(
+                      fileCv: _controller.profileState.cvFile,
+                    ),
+                  ),
                   title: 'Upload your CV'.tr,
                   onUploadTapped: () async {
-                    profileController.profileState.resumeFiles =
-                        await FilePickerService.uploadResume();
+                    if (await FilePickerService.uploadFileCv()
+                        case final result?)
+                      _controller.profileState.cvFile = result;
                   },
                   onDeletedFile: () {
-                    profileController.profileState.resumeFiles = ResumeFileInfo.getNull();
+                    _controller.removeCvFile();
                   },
-                  isUploaded: profileController.profileState.resumeFiles != null,
+                  isUploaded: _controller.user.cv != null ||
+                      !_controller.profileState.cvFile.isFileNull,
                 ),
               ),
             ],
@@ -67,7 +77,9 @@ class _SippoUploadCVState extends State<SippoUploadCV> {
       ),
       backgroundColor: Jobstopcolor.backgroudHome,
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () async {
+          await _controller.uploadCvFile();
+        },
         child: Icon(Icons.save),
       ),
     );

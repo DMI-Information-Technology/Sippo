@@ -9,9 +9,11 @@ import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/sippo_custom_widget/add_info_profile_card.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
+import 'package:jobspot/sippo_custom_widget/loading_view_widgets/loading_scaffold.dart';
 import 'package:jobspot/sippo_custom_widget/resume_card_widget.dart';
 import 'package:jobspot/sippo_pages/sippo_user_pages/job_aboutme.dart';
 import 'package:readmore/readmore.dart';
+
 import '../../JobGlobalclass/sippo_customstyle.dart';
 import '../../JopController/user_profile_controller/profile_user_controller.dart';
 import '../../sippo_custom_widget/ConditionalWidget.dart';
@@ -27,11 +29,12 @@ class SippoUserProfile extends StatefulWidget {
 }
 
 class _SippoUserProfileState extends State<SippoUserProfile> {
-  ProfileUserController _controller = ProfileUserController.instance;
+  final _controller = ProfileUserController.instance;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return LoadingScaffold(
+      controller: _controller.loadingOverlayController,
       appBar: AppBar(
         toolbarHeight: 0,
         backgroundColor: Colors.black87,
@@ -39,12 +42,14 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
       body: BodyWidget(
         isTopScrollable: true,
         isScrollable: true,
-        connectionStatusBar: Obx(() => ConditionalWidget(
+        connectionStatusBar: Obx(() =>
+            ConditionalWidget(
               !_controller.netController.isConnected,
               guaranteedBuilder: (_, __) => NetworkStatusNonWidget(),
             )),
         topScreen: Obx(
-          () => _buildUserProfileHeader(!_controller.netController.isConnected),
+              () =>
+              _buildUserProfileHeader(!_controller.netController.isConnected),
         ),
         paddingContent: EdgeInsets.symmetric(
           horizontal: context.fromWidth(CustomStyle.paddingValue),
@@ -83,172 +88,212 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
   }
 
   Widget _buildResumeInfo(BuildContext context) {
-    return AddInfoProfileCard(
-      title: 'resume'.tr,
-      leading: Image.asset(
-        JobstopPngImg.resume,
-        height: context.fromHeight(CustomStyle.l),
-        color: Jobstopcolor.primarycolor,
-        colorBlendMode: BlendMode.srcIn,
-      ),
-      onAddClicked: () async {
-        Get.toNamed(SippoRoutes.uploadresume);
-        print(_controller.profileState.resumeFiles);
-      },
-      noInfoProfile: false,
-      profileInfo: [ResumeCardWidget()],
+    return Obx(() => AddInfoProfileCard(
+        title: 'resume'.tr,
+        leading: Image.asset(
+          JobstopPngImg.resume,
+          height: context.fromHeight(CustomStyle.l),
+          color: Jobstopcolor.primarycolor,
+          colorBlendMode: BlendMode.srcIn,
+        ),
+        iconAction: _controller.user.cv != null
+            ? Icon(
+          Icons.mode_edit_outline_outlined,
+          size: context.fromHeight(CustomStyle.l),
+          color: Jobstopcolor.primarycolor,
+        )
+            : null,
+        onAddClicked: () async {
+          Get.toNamed(SippoRoutes.uploadresume);
+          print(_controller.profileState.cvFile);
+        },
+        noInfoProfile: false,
+        profileInfo: [
+          _buildResumeCardWidget(context),
+        ],
+      ));
+  }
+
+  Widget _buildResumeCardWidget(BuildContext context) {
+    return Obx(
+          () =>
+          ConditionalWidget(
+            _controller.user.cv != null,
+            guaranteedBuilder: (context, data) {
+              return CvCardWidget.fromRemote(
+                remoteCv: _controller.user.cv,
+                onCvTapped: () async {
+                  _controller.loadingOverlayController.startLoading();
+                  await _controller.openFile(_controller.user.cv?.url);
+                  _controller.loadingOverlayController.pauseLoading();
+                },
+              );
+            },
+            avoidBuilder: (context, data) {
+              return CvCardWidget(
+                fileCv: _controller.profileState.cvFile,
+                onCvTapped: () {},
+              );
+            },
+          ),
     );
   }
 
   Widget _buildAppreciationInfo(BuildContext context) {
     return Obx(
-      () => AddInfoProfileCard(
-        title: 'appreciation'.tr,
-        noInfoProfile: _controller.profileState.appreciations.isEmpty,
-        leading: Image.asset(
-          JobstopPngImg.appreciation,
-          height: context.fromHeight(CustomStyle.l),
-          color: Jobstopcolor.primarycolor,
-          colorBlendMode: BlendMode.srcIn,
-        ),
-        profileInfo: [
-          ExpandableItemList(
-            isExpandable: _controller.profileState.appreciations.length > 1,
-            expandItems: _controller.profileState.showAllAppreciations,
-            spacing: context.fromHeight(CustomStyle.xxxl),
-            itemCount: _controller.profileState.appreciations.length,
-            itemBuilder: (BuildContext context, int index) {
-              final item = _controller.profileState.appreciations[index];
-              return _buildTextDescriptionInfo(
-                context,
-                item.awardName,
-                item.categoryAchieve,
-                item.year,
-                onEdit: () {
-                  Get.toNamed(
-                    SippoRoutes.appreciationaddedit,
-                    arguments: {appreciationArg: item.toJson()},
+          () =>
+          AddInfoProfileCard(
+            title: 'appreciation'.tr,
+            noInfoProfile: _controller.profileState.appreciations.isEmpty,
+            leading: Image.asset(
+              JobstopPngImg.appreciation,
+              height: context.fromHeight(CustomStyle.l),
+              color: Jobstopcolor.primarycolor,
+              colorBlendMode: BlendMode.srcIn,
+            ),
+            profileInfo: [
+              ExpandableItemList(
+                isExpandable: _controller.profileState.appreciations.length > 1,
+                expandItems: _controller.profileState.showAllAppreciations,
+                spacing: context.fromHeight(CustomStyle.xxxl),
+                itemCount: _controller.profileState.appreciations.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final item = _controller.profileState.appreciations[index];
+                  return _buildTextDescriptionInfo(
+                    context,
+                    item.awardName,
+                    item.categoryAchieve,
+                    item.year,
+                    onEdit: () {
+                      Get.toNamed(
+                        SippoRoutes.appreciationaddedit,
+                        arguments: {appreciationArg: item.toJson()},
+                      );
+                    },
                   );
                 },
+                onExpandClicked: () {
+                  _controller.profileState.showAllAppreciations =
+                  !_controller.profileState.showAllAppreciations;
+                },
+              ),
+            ],
+            onAddClicked: () {
+              Get.toNamed(
+                SippoRoutes.appreciationaddedit,
+                arguments: {appreciationArg: null},
               );
             },
-            onExpandClicked: () {
-              _controller.profileState.showAllAppreciations =
-                  !_controller.profileState.showAllAppreciations;
-            },
           ),
-        ],
-        onAddClicked: () {
-          Get.toNamed(
-            SippoRoutes.appreciationaddedit,
-            arguments: {appreciationArg: null},
-          );
-        },
-      ),
     );
   }
 
   Widget _buildLanguagesInfo(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery
+        .of(context)
+        .size;
     double height = size.height;
     return Obx(
-      () => AddInfoProfileCard(
-        title: 'language'.tr,
-        noInfoProfile: _controller.profileState.languages.isEmpty,
-        leading: Image.asset(
-          JobstopPngImg.language,
-          height: context.fromHeight(CustomStyle.l),
-          color: Jobstopcolor.primarycolor,
-          colorBlendMode: BlendMode.srcIn,
-        ),
-        iconAction: _controller.profileState.languages.isNotEmpty
-            ? Icon(
-                Icons.mode_edit_outline_outlined,
-                size: context.fromHeight(CustomStyle.l),
-                color: Jobstopcolor.primarycolor,
-              )
-            : null,
-        profileInfo: [
-          ExpandableItemList.wrapBuilder(
-            isExpandable: _controller.profileState.languages.length > 1,
-            expandItems: _controller.profileState.showAllLangs,
-            spacing: height / 220,
-            itemCount: _controller.profileState.showAllLangs
-                ? _controller.profileState.languages.length
-                : 1,
-            itemBuilder: (BuildContext context, int index) {
-              final item = _controller.profileState.languages[index];
-              return _buildChips(
-                context,
-                item.name ?? "",
+          () =>
+          AddInfoProfileCard(
+            title: 'language'.tr,
+            noInfoProfile: _controller.profileState.languages.isEmpty,
+            leading: Image.asset(
+              JobstopPngImg.language,
+              height: context.fromHeight(CustomStyle.l),
+              color: Jobstopcolor.primarycolor,
+              colorBlendMode: BlendMode.srcIn,
+            ),
+            iconAction: _controller.profileState.languages.isNotEmpty
+                ? Icon(
+              Icons.mode_edit_outline_outlined,
+              size: context.fromHeight(CustomStyle.l),
+              color: Jobstopcolor.primarycolor,
+            )
+                : null,
+            profileInfo: [
+              ExpandableItemList.wrapBuilder(
+                isExpandable: _controller.profileState.languages.length > 1,
+                expandItems: _controller.profileState.showAllLangs,
+                spacing: height / 220,
+                itemCount: _controller.profileState.showAllLangs
+                    ? _controller.profileState.languages.length
+                    : 1,
+                itemBuilder: (BuildContext context, int index) {
+                  final item = _controller.profileState.languages[index];
+                  return _buildChips(
+                    context,
+                    item.name ?? "",
+                  );
+                },
+                onExpandClicked: () {
+                  _controller.profileState.showAllLangs =
+                  !_controller.profileState.showAllLangs;
+                },
+              ),
+            ],
+            onAddClicked: () {
+              Get.toNamed(
+                SippoRoutes.languageeditadd,
+                arguments: {
+                  langListArg: _controller.profileState.languages
+                      .map((e) => e.toJson())
+                      .toList()
+                },
               );
             },
-            onExpandClicked: () {
-              _controller.profileState.showAllLangs =
-                  !_controller.profileState.showAllLangs;
-            },
           ),
-        ],
-        onAddClicked: () {
-          Get.toNamed(
-            SippoRoutes.languageeditadd,
-            arguments: {
-              langListArg: _controller.profileState.languages
-                  .map((e) => e.toJson())
-                  .toList()
-            },
-          );
-        },
-      ),
     );
   }
 
   Obx _buildSkillsInfo(BuildContext context) {
     return Obx(
-      () => AddInfoProfileCard(
-        title: 'skill'.tr,
-        noInfoProfile: _controller.profileState.skillsList.isEmpty,
-        leading: Image.asset(
-          JobstopPngImg.skil,
-          height: context.fromHeight(CustomStyle.l),
-          color: Jobstopcolor.primarycolor,
-          colorBlendMode: BlendMode.srcIn,
-        ),
-        iconAction: _controller.profileState.skillsList.isNotEmpty
-            ? Icon(
-                Icons.mode_edit_outline_outlined,
-                size: context.fromHeight(CustomStyle.l),
-                color: Jobstopcolor.primarycolor,
-              )
-            : null,
-        profileInfo: [
-          ExpandableItemList.wrapBuilder(
-            isExpandable: _controller.profileState.skillsList.length > 1,
-            expandItems: _controller.profileState.showAllSkills,
-            spacing: context.height / 220,
-            itemCount: _controller.profileState.skillsList.length,
-            itemBuilder: (BuildContext context, int index) {
-              final item = _controller.profileState.skillsList[index];
-              return _buildChips(context, item);
-            },
-            onExpandClicked: () {
-              _controller.profileState.showAllSkills =
+          () =>
+          AddInfoProfileCard(
+            title: 'skill'.tr,
+            noInfoProfile: _controller.profileState.skillsList.isEmpty,
+            leading: Image.asset(
+              JobstopPngImg.skil,
+              height: context.fromHeight(CustomStyle.l),
+              color: Jobstopcolor.primarycolor,
+              colorBlendMode: BlendMode.srcIn,
+            ),
+            iconAction: _controller.profileState.skillsList.isNotEmpty
+                ? Icon(
+              Icons.mode_edit_outline_outlined,
+              size: context.fromHeight(CustomStyle.l),
+              color: Jobstopcolor.primarycolor,
+            )
+                : null,
+            profileInfo: [
+              ExpandableItemList.wrapBuilder(
+                isExpandable: _controller.profileState.skillsList.length > 1,
+                expandItems: _controller.profileState.showAllSkills,
+                spacing: context.height / 220,
+                itemCount: _controller.profileState.skillsList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final item = _controller.profileState.skillsList[index];
+                  return _buildChips(context, item);
+                },
+                onExpandClicked: () {
+                  _controller.profileState.showAllSkills =
                   !_controller.profileState.showAllSkills;
+                },
+              ),
+            ],
+            onAddClicked: () {
+              Get.toNamed(
+                SippoRoutes.skillsaddedit,
+                arguments: {skillsListArg: _controller.profileState.skillsList},
+              );
             },
           ),
-        ],
-        onAddClicked: () {
-          Get.toNamed(
-            SippoRoutes.skillsaddedit,
-            arguments: {skillsListArg: _controller.profileState.skillsList},
-          );
-        },
-      ),
     );
   }
 
   Obx _buildEducationInfo(BuildContext context) {
-    return Obx(() => AddInfoProfileCard(
+    return Obx(() =>
+        AddInfoProfileCard(
           title: 'education'.tr,
           noInfoProfile: _controller.profileState.educationList.isEmpty,
           leading: Image.asset(
@@ -284,7 +329,7 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
               },
               onExpandClicked: () {
                 _controller.profileState.showAllEdui =
-                    !_controller.profileState.showAllEdui;
+                !_controller.profileState.showAllEdui;
               },
             ),
           ],
@@ -293,95 +338,95 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
 
   Widget _buildWorkExperienceInfo(BuildContext context) {
     return Obx(
-      () => AddInfoProfileCard(
-        title: 'work_experience'.tr,
-        noInfoProfile: _controller.profileState.workExList.isEmpty,
-        leading: Image.asset(
-          JobstopPngImg.bag,
-          height: context.fromHeight(CustomStyle.l),
-          color: Jobstopcolor.primarycolor,
-          colorBlendMode: BlendMode.srcIn,
-        ),
-        onAddClicked: () {
-          Get.toNamed(
-            SippoRoutes.workexperience,
-            arguments: {workExperienceArg: null},
-          );
-        },
-        profileInfo: [
-          ExpandableItemList(
-            isExpandable: _controller.profileState.workExList.length > 1,
-            expandItems: _controller.profileState.showAllWei,
-            spacing: context.fromHeight(CustomStyle.xxxl),
-            itemCount: _controller.profileState.workExList.length,
-            itemBuilder: (BuildContext context, int index) {
-              final item = _controller.profileState.workExList[index];
-              return _buildTextDescriptionInfo(
-                context,
-                item.jobTitle,
-                item.company,
-                item.periodic,
-                onEdit: () {
-                  _controller.editingId = item.id?.toInt() ?? -1;
-                  Get.toNamed(SippoRoutes.workexperience);
-                },
+          () =>
+          AddInfoProfileCard(
+            title: 'work_experience'.tr,
+            noInfoProfile: _controller.profileState.workExList.isEmpty,
+            leading: Image.asset(
+              JobstopPngImg.bag,
+              height: context.fromHeight(CustomStyle.l),
+              color: Jobstopcolor.primarycolor,
+              colorBlendMode: BlendMode.srcIn,
+            ),
+            onAddClicked: () {
+              Get.toNamed(
+                SippoRoutes.workexperience,
+                arguments: {workExperienceArg: null},
               );
             },
-            onExpandClicked: () {
-              _controller.profileState.showAllWei =
+            profileInfo: [
+              ExpandableItemList(
+                isExpandable: _controller.profileState.workExList.length > 1,
+                expandItems: _controller.profileState.showAllWei,
+                spacing: context.fromHeight(CustomStyle.xxxl),
+                itemCount: _controller.profileState.workExList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final item = _controller.profileState.workExList[index];
+                  return _buildTextDescriptionInfo(
+                    context,
+                    item.jobTitle,
+                    item.company,
+                    item.periodic,
+                    onEdit: () {
+                      _controller.editingId = item.id?.toInt() ?? -1;
+                      Get.toNamed(SippoRoutes.workexperience);
+                    },
+                  );
+                },
+                onExpandClicked: () {
+                  _controller.profileState.showAllWei =
                   !_controller.profileState.showAllWei;
-            },
+                },
+              ),
+            ],
           ),
-        ],
-      ),
     );
   }
 
   Widget _buildAboutMeInfo(BuildContext context) {
     return Obx(
-      () => AddInfoProfileCard(
-        title: 'about_me'.tr,
-        noInfoProfile: _controller.profileState.aboutMeText.isEmpty,
-        leading: Image.asset(
-          JobstopPngImg.aboutme,
-          height: context.fromHeight(CustomStyle.l),
-          color: Jobstopcolor.primarycolor,
-          colorBlendMode: BlendMode.srcIn,
-        ),
-        iconAction: _controller.profileState.aboutMeText.isNotEmpty
-            ? Icon(
-                Icons.mode_edit_outline_outlined,
-                size: context.fromHeight(CustomStyle.l),
-                color: Jobstopcolor.primarycolor,
+          () =>
+          AddInfoProfileCard(
+            title: 'about_me'.tr,
+            noInfoProfile: _controller.profileState.aboutMeText.isEmpty,
+            leading: Image.asset(
+              JobstopPngImg.aboutme,
+              height: context.fromHeight(CustomStyle.l),
+              color: Jobstopcolor.primarycolor,
+              colorBlendMode: BlendMode.srcIn,
+            ),
+            iconAction: _controller.profileState.aboutMeText.isNotEmpty
+                ? Icon(
+              Icons.mode_edit_outline_outlined,
+              size: context.fromHeight(CustomStyle.l),
+              color: Jobstopcolor.primarycolor,
+            )
+                : null,
+            onAddClicked: () {
+              Get.to(JobAboutme());
+            },
+            profileInfo: [
+              _controller.profileState.aboutMeText.isNotEmpty
+                  ? ReadMoreText(
+                _controller.profileState.aboutMeText,
+                style: dmsregular.copyWith(
+                  fontSize: context.fromHeight(CustomStyle.xxxl),
+                  color: Jobstopcolor.textColor,
+                ),
+                colorClickableText: Jobstopcolor.primarycolor,
+                trimLines: 2,
+                trimMode: TrimMode.Line,
+                trimCollapsedText: 'show_more'.tr,
+                trimExpandedText: 'show_less'.tr,
               )
-            : null,
-        onAddClicked: () {
-          Get.to(JobAboutme());
-        },
-        profileInfo: [
-          _controller.profileState.aboutMeText.isNotEmpty
-              ? ReadMoreText(
-                  _controller.profileState.aboutMeText,
-                  style: dmsregular.copyWith(
-                    fontSize: context.fromHeight(CustomStyle.xxxl),
-                    color: Jobstopcolor.textColor,
-                  ),
-                  colorClickableText: Jobstopcolor.primarycolor,
-                  trimLines: 2,
-                  trimMode: TrimMode.Line,
-                  trimCollapsedText: 'show_more'.tr,
-                  trimExpandedText: 'show_less'.tr,
-                )
-              : const SizedBox.shrink(),
-        ],
-      ),
+                  : const SizedBox.shrink(),
+            ],
+          ),
     );
   }
 
-  Widget _buildChips(
-    BuildContext context,
-    String value,
-  ) {
+  Widget _buildChips(BuildContext context,
+      String value,) {
     return Chip(
       backgroundColor: Jobstopcolor.grey2,
       label: Text(
@@ -393,13 +438,12 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
     );
   }
 
-  Widget _buildTextDescriptionInfo(
-    BuildContext context,
-    String? title,
-    String? from,
-    String? periodic, {
-    required VoidCallback onEdit,
-  }) {
+  Widget _buildTextDescriptionInfo(BuildContext context,
+      String? title,
+      String? from,
+      String? periodic, {
+        required VoidCallback onEdit,
+      }) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       Row(
         children: [

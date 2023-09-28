@@ -17,6 +17,7 @@ import 'package:jobspot/SippoControllerBinding/profile_binding/user_apply_compan
 import 'package:jobspot/SippoControllerBinding/profile_binding/user_apply_job_controller_binding.dart';
 import 'package:jobspot/SippoControllerBinding/profile_binding/user_job_description_controller_binding.dart';
 import 'package:jobspot/SippoControllerBinding/profile_binding/user_profile_controller_binding.dart';
+import 'package:jobspot/SippoControllerBinding/profile_binding/user_upload_cv_controller_binding.dart';
 import 'package:jobspot/sippo_pages/Authentication/jobstop_check_resetpass_otp_msg.dart';
 import 'package:jobspot/sippo_pages/Authentication/jobstop_companyspecializations_signup.dart';
 import 'package:jobspot/sippo_pages/Authentication/jobstop_forget.dart';
@@ -89,7 +90,8 @@ class SippoRoutes {
   static const String _userApplyJobs = "/user-apply-jobs";
   static const String _sippoAboutCompanies = "/sippo-about-companies";
   static const String _sippoUserApplyCompany = "/sippo-user-apply-company";
-  static const String _sippoCompanyUserProfileView = "/sippo-company-user-profile-view";
+  static const String _sippoCompanyUserProfileView =
+      "/sippo-company-user-profile-view";
 
   static String get sippoCompanyUserProfileView => _sippoCompanyUserProfileView;
 
@@ -211,7 +213,11 @@ class SippoRoutes {
       page: () => const JobSkillsAddEdit(),
       binding: const EditAddSkillsBindingController(),
     ),
-    GetPage(name: _uploadresume, page: () => const SippoUploadCV()),
+    GetPage(
+      name: _uploadresume,
+      page: () => const SippoUploadCV(),
+      binding: const UserUploadCvBindingController(),
+    ),
     GetPage(
         name: _sippocompanyprofile,
         page: () => const SippoCompanyProfile(),
@@ -286,7 +292,8 @@ class SippoRoutes {
       name: _sippoUserApplyCompany,
       page: () => SippoApplyCompany(),
       binding: const UserApplyCompanyBindingController(),
-    ),  GetPage(
+    ),
+    GetPage(
       name: _sippoCompanyUserProfileView,
       page: () => SippoCompanyUserProfileView(),
       binding: const CompanyUserProfileViewBindingController(),

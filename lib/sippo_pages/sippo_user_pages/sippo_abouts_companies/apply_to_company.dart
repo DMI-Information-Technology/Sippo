@@ -6,6 +6,7 @@ import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/JopController/user_core_functions/apply_company_controller.dart';
+import 'package:jobspot/sippo_custom_widget/resume_card_widget.dart';
 import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_job_description/sippo_job_description.dart';
 
 import '../../../JobGlobalclass/jobstopimges.dart';
@@ -174,7 +175,7 @@ class _SippoApplyCompanyState extends State<SippoApplyCompany> {
         Obx(
           () => FileUploadWidget(
             // isJobApplied: true,
-            resume: _controller.applyCompanyState.cvCompanyApply,
+            cvCardWidget: CvCardWidget(fileCv: _controller.applyCompanyState.cvCompanyApply),
             title: 'Upload your CV',
             onUploadTapped: () async {
               loadingController.loading = true;

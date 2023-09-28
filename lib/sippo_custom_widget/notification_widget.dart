@@ -15,6 +15,7 @@ import '../JobGlobalclass/jobstopimges.dart';
 import '../JobGlobalclass/sippo_customstyle.dart';
 import '../JobGlobalclass/text_font_size.dart';
 import '../sippo_data/model/profile_model/company_profile_resource_model/application_job_company_model.dart';
+import '../sippo_data/model/profile_model/profile_resource_model/cv_file_model.dart';
 import 'job_application_chip_widget.dart';
 
 class NotificationApplicationWidget extends StatelessWidget {

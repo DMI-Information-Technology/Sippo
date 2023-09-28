@@ -8,13 +8,13 @@ import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/JopController/company_profile_controller/profile_user_view_controller.dart';
 import 'package:jobspot/sippo_custom_widget/add_info_profile_card.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
-import 'package:jobspot/sippo_custom_widget/resume_card_widget.dart';
 import 'package:readmore/readmore.dart';
 
 import '../../../JobGlobalclass/sippo_customstyle.dart';
 import '../../../sippo_custom_widget/ConditionalWidget.dart';
 import '../../../sippo_custom_widget/error_messages_dialog_snackbar/network_connnection_lost_widget.dart';
 import '../../../sippo_custom_widget/expandable_item_list_widget.dart';
+import '../../../sippo_custom_widget/resume_card_widget.dart';
 import '../../../sippo_custom_widget/user_profile_header.dart';
 
 class SippoCompanyUserProfileView extends StatefulWidget {
@@ -89,7 +89,12 @@ class _SippoCompanyUserProfileViewState
         colorBlendMode: BlendMode.srcIn,
       ),
       noInfoProfile: false,
-      profileInfo: [ResumeCardWidget()],
+      profileInfo: [
+        CvCardWidget.fromRemote(
+          remoteCv: _controller.profileState.profileInfo.cv,
+          onCvTapped: () {},
+        )
+      ],
     );
   }
 

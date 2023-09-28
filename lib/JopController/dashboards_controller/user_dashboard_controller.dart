@@ -87,6 +87,10 @@ class UserDashBoardController extends GetxController {
     await getUserProfile();
   }
 
+  Future<void> userInformationRefresh() async {
+    await getUserProfile();
+  }
+
   @override
   void onInit() {
     _startListeningToConnection();

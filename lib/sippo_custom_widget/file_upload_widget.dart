@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:jobspot/sippo_custom_widget/resume_card_widget.dart';
-import 'package:jobspot/sippo_data/model/custom_file_model/custom_file_model.dart';
+
 import '../JobGlobalclass/jobstopcolor.dart';
 import '../JobGlobalclass/jobstopfontstyle.dart';
 import '../JobGlobalclass/text_font_size.dart';
@@ -51,7 +51,8 @@ class DottedBorderPainter extends CustomPainter {
 
 class FileUploadWidget extends StatelessWidget {
   final void Function() onUploadTapped;
-  final CustomFileModel? resume;
+  final Widget cvCardWidget;
+
   final void Function() onDeletedFile;
   final bool isUploaded;
   final String title;
@@ -59,11 +60,11 @@ class FileUploadWidget extends StatelessWidget {
 
   FileUploadWidget({
     required this.onUploadTapped,
-    this.resume,
     required this.title,
     required this.onDeletedFile,
     required this.isUploaded,
     this.isJobApplied = false,
+    required this.cvCardWidget,
   });
 
   @override
@@ -91,14 +92,16 @@ class FileUploadWidget extends StatelessWidget {
     );
   }
 
-  Column _buildResumeCardWidget(BuildContext context,) {
+  Column _buildResumeCardWidget(
+    BuildContext context,
+  ) {
     Size size = MediaQuery.of(context).size;
     double height = size.height;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        ResumeCardWidget(resume: resume),
+        cvCardWidget,
         SizedBox(height: height / 95),
         if (!this.isJobApplied)
           Align(
@@ -119,7 +122,7 @@ class FileUploadWidget extends StatelessWidget {
     );
   }
 
-  Column _buildTapToBrowseFile(BuildContext context) {
+  Widget _buildTapToBrowseFile(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     double height = size.height;
     double width = size.width;
