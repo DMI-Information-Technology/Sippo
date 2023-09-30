@@ -6,6 +6,9 @@ class JobstopPngImg {
   static const String google = "Assets/jobstop_assets/jobpngimg/google.png";
   static const String forget = "Assets/jobstop_assets/jobpngimg/forget.png";
   static const String done = "Assets/jobstop_assets/jobpngimg/done.png";
+  static const String morning = "Assets/jobstop_assets/jobpngimg/morning.png";
+  static const String afternoon = "Assets/jobstop_assets/jobpngimg/afternoon.png";
+  static const String night = "Assets/jobstop_assets/jobpngimg/night.png";
   static const String checkmsg = "Assets/jobstop_assets/jobpngimg/checkmsg.png";
   static const String find_empLogo = "Assets/jobstop_assets/jobpngimg/find_emp.png";
   static const String find_jobLog =  "Assets/jobstop_assets/jobpngimg/find_job.png";

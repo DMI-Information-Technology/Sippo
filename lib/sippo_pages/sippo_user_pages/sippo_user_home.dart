@@ -1,3 +1,4 @@
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,7 +9,6 @@ import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
-import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/job_card_widget.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
@@ -37,7 +37,7 @@ class _SippoUserHomeState extends State<SippoUserHome> {
       appBar: _buildHomeAppBar(),
       body: RefreshIndicator(
         onRefresh: () async {
-          _controller.refreshPage();
+          _controller.jobsHomeState.refreshJobs();
         },
         child: BodyWidget(
           paddingContent: EdgeInsets.only(
@@ -104,27 +104,27 @@ class _SippoUserHomeState extends State<SippoUserHome> {
 
   Widget _buildShowHomeJobsList(BuildContext context) {
     return Obx(() => FutureBuilder(
-          future: Future.value(_controller.jobsHomeState.jobStates),
-          builder: (context, snapshot) {
-            final states = snapshot.data;
-            final data = _controller.jobsHomeState.jobsList;
-            print(states);
-            if (states == null) return const SizedBox.shrink();
-            if (states.isError && data.isEmpty)
-              return _buildFieldJobsMessage(context, states);
-            if (states.isSuccess || data.isNotEmpty)
-              return _buildJobCardList(context, data);
-            if (states.isLoading)
-              return const Center(child: CircularProgressIndicator());
-            return const SizedBox.shrink();
-          },
-        ));
+      future: Future.value(_controller.jobsHomeState.jobStates),
+      builder: (context, snapshot) {
+        final states = snapshot.data;
+        final data = _controller.jobsHomeState.jobsList;
+        print(states);
+        if (states == null) return const SizedBox.shrink();
+        if (states.isError && data.isEmpty)
+          return _buildFieldJobsMessage(context, states);
+        if (states.isSuccess || data.isNotEmpty)
+          return _buildJobCardList(context, data);
+        if (states.isLoading)
+          return const Center(child: CircularProgressIndicator());
+        return const SizedBox.shrink();
+      },
+    ));
   }
 
   SingleChildScrollView _buildJobCardList(
-    BuildContext context,
-    List<CompanyJobModel> data,
-  ) {
+      BuildContext context,
+      List<CompanyJobModel> data,
+      ) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Padding(
@@ -145,9 +145,9 @@ class _SippoUserHomeState extends State<SippoUserHome> {
                 width: context.width / 1.3,
                 jobDetailsPost: item,
                 imagePath:
-                    'https://scontent.fmji4-1.fna.fbcdn.net/v/t39.30808-6/283989525_172048385265472_5677841309342210083_n.'
-                    'jpg?_nc_cat=107&ccb=1-7&_nc_sid=a2f6c7&_nc_ohc=pYc0C7o3ZzUAX9W5fsC&_nc_ht=scontent.fmji4-1'
-                    '.fna&oh=00_AfDIDX3fWjYJu1JQw7-IX77OkhtzzPwcmWdUSRhUNQ9GQQ&oe=65195142',
+                'https://scontent.fmji4-1.fna.fbcdn.net/v/t39.30808-6/283989525_172048385265472_5677841309342210083_n'
+                    '.jpg?_nc_cat=107&ccb=1-7&_nc_sid=a2f6c7&_nc_ohc=NqB7-Psc_aIAX_7Ivx0&_nc_ht=scontent.fmji4-1.fna&oh'
+                    '=00_AfB7PaSwlVJwrtt003d9CMK5Bxy6ubHVMV9iWwxxol30Bg&oe=650B7982',
                 onImageProfileTap: () async {
                   _controller.companyDetailsId = item.company?.id ?? -1;
                   _controller.requestedCompanyDetails = item.company;
@@ -198,7 +198,7 @@ class _SippoUserHomeState extends State<SippoUserHome> {
     return Center(
       child: Padding(
         padding:
-            EdgeInsets.symmetric(horizontal: context.fromWidth(CustomStyle.s)),
+        EdgeInsets.symmetric(horizontal: context.fromWidth(CustomStyle.s)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -229,6 +229,14 @@ class _SippoUserHomeState extends State<SippoUserHome> {
 
   Widget _buildWelcomeUser(BuildContext context) {
     final dashboardController = UserDashBoardController.instance;
+    Image image;
+    if (getTimeOfDay() == 'Good Morning') {
+      image = Image.asset(JobstopPngImg.morning , height: 30, );
+    } else if (getTimeOfDay() == 'Good Afternoon') {
+      image = Image.asset(JobstopPngImg.afternoon, height: 30,);
+    } else {
+      image = Image.asset(JobstopPngImg.night, height: 30,);
+    }
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: context.fromWidth(CustomStyle.s),
@@ -237,26 +245,33 @@ class _SippoUserHomeState extends State<SippoUserHome> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            "Hello",
-            style: dmsbold.copyWith(
-              fontSize: FontSize.title3(context),
-              color: Jobstopcolor.primarycolor,
-            ),
+          Row(
+            children: [
+              Text(
+                getTimeOfDay(),
+                style: dmsbold.copyWith(
+                  fontSize: FontSize.title3(context),
+                  color: Jobstopcolor.primarycolor,
+                ),
+              ),
+              SizedBox(width: 10,),
+              image,
+
+
+
+            ],
           ),
-          Obx(() => ConditionalWidget(
-                dashboardController.user.name != null,
-                data: dashboardController.user.name,
-                guaranteedBuilder: (context, data) {
-                  return Text(
-                    "${data}.",
-                    style: dmsbold.copyWith(
-                      fontSize: FontSize.title3(context),
-                      color: Jobstopcolor.primarycolor,
-                    ),
-                  );
-                },
-              )),
+          Obx(
+                () => dashboardController.user.name != null
+                ? Text(
+              "${dashboardController.user.name}.",
+              style: dmsbold.copyWith(
+                fontSize: FontSize.title3(context),
+                color: Jobstopcolor.primarycolor,
+              ),
+            )
+                : const CircularProgressIndicator(strokeWidth: 1.8),
+          ),
         ],
       ),
     );
@@ -299,7 +314,23 @@ class _SippoUserHomeState extends State<SippoUserHome> {
       ),
     );
   }
+  String getTimeOfDay() {
+    final time = DateTime.now();
+    // Get the hour of the day.
+    final hour = time.hour;
 
+    // Determine if it is morning, noon, or evening.
+    String timeOfDay;
+    if (hour < 12) {
+      timeOfDay = 'Good Morning';
+    } else if (hour < 18) {
+      timeOfDay = 'Good Afternoon';
+    } else {
+      timeOfDay = 'Good Evening';
+    }
+
+    return timeOfDay;
+  }
   AppBar _buildHomeAppBar() {
     Size size = MediaQuery.of(context).size;
     double height = size.height;
@@ -313,8 +344,8 @@ class _SippoUserHomeState extends State<SippoUserHome> {
               IconButton(
                 onPressed: () {},
                 icon: Icon(
-                  Icons.search_sharp,
-                  size: height / 25,
+                  Icons.search,
+                  size: height / 30,
                 ),
               ),
               SizedBox(width: width / 52),
