@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
-import 'package:jobspot/utils/dashboard_shared_state.dart';
 
 import '../../sippo_data/company_repos/company_profile_info_repo.dart';
 import '../../sippo_data/model/auth_model/company_response_details.dart';

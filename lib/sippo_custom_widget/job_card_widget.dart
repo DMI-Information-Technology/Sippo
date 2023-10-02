@@ -23,7 +23,7 @@ class JobHomeCard extends StatelessWidget {
 
   const JobHomeCard({
     super.key,
-    required this.onCardClicked,
+    required this.onCardTap,
     this.onActionTap,
     this.onApplyTap,
     this.canApply = true,
@@ -33,13 +33,14 @@ class JobHomeCard extends StatelessWidget {
     this.isEditable = false,
     this.imagePath,
     this.onAddressTextTap,
-    this.padding, this.onImageProfileTap,
+    this.padding,
+    this.onImageProfileTap,
   });
 
   final bool isEditable;
   final double? width;
   final double? height;
-  final VoidCallback onCardClicked;
+  final VoidCallback onCardTap;
   final String? imagePath;
   final void Function(CordLocation location)? onAddressTextTap;
   final EdgeInsets? padding;
@@ -47,7 +48,7 @@ class JobHomeCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onCardClicked,
+      onTap: onCardTap,
       child: Padding(
         padding: padding ?? EdgeInsets.zero,
         child: RoundedBorderRadiusCardWidget(
@@ -120,15 +121,24 @@ class JobHomeCard extends StatelessWidget {
             ],
           ),
         ),
-        IconButton(
-          onPressed: onActionTap,
-          icon: Icon(
-            isEditable
-                ? Icons.more_vert_rounded
-                : Icons.bookmark_border_rounded,
-          ),
-        ),
+        _buildActionButton(context),
       ],
+    );
+  }
+
+  Widget _buildActionButton(BuildContext context) {
+    return InkWell(
+      onTap: onActionTap,
+      child: isEditable
+          ? Icon(Icons.more_vert_rounded)
+          : _buildIsSubscribed(jobDetailsPost?.isSaved),
+    );
+  }
+
+  Widget _buildIsSubscribed(bool? isSaved) {
+    return Icon(
+      isSaved == true ? Icons.bookmark : Icons.bookmark_border_rounded,
+      color: isSaved == true ? Colors.yellow : null,
     );
   }
 

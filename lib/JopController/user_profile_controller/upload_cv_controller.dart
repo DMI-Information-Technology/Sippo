@@ -4,6 +4,7 @@ import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/pr
 
 import '../../sippo_data/model/custom_file_model/custom_file_model.dart';
 import '../../sippo_data/user_repos/add_delete_cv_repo.dart';
+import '../../utils/file_picker_service.dart';
 import '../../utils/states.dart';
 import '../dashboards_controller/user_dashboard_controller.dart';
 
@@ -42,6 +43,7 @@ class UploadCvController extends GetxController {
       onSuccess: (data, _) {
         if (data != null) {
           dashboard.user = dashboard.user.copyWith(cv: data);
+          profileState.cvFile = CustomFileModel();
         }
       },
       onValidateError: (validateError, _) {},
@@ -69,5 +71,10 @@ class UploadCvController extends GetxController {
     } else {
       profileState.cvFile = CustomFileModel();
     }
+  }
+
+  Future<void> uploadFileCvFromStorage() async {
+    if (await FilePickerService.uploadFileCv() case final result?)
+      profileState.cvFile = result;
   }
 }

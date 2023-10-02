@@ -21,6 +21,7 @@ class CompanyJobModel {
   final bool? isExpired; // New field
   final bool? isActive; // New field
   final bool? hasApplied;
+  final bool? isSaved;
 
   CompanyJobModel({
     this.id,
@@ -41,6 +42,7 @@ class CompanyJobModel {
     this.isActive,
     this.currencyType,
     this.hasApplied,
+    this.isSaved,
   });
 
   RangeSalaryModel get salaryRange =>
@@ -85,6 +87,7 @@ class CompanyJobModel {
           json['specialization'] != null && json['specialization'] is Map
               ? SpecializationModel.fromJson(json['specialization'])
               : null,
+      isSaved: json['is_saved'],
     );
   }
 
@@ -106,7 +109,7 @@ class CompanyJobModel {
 
   @override
   String toString() {
-    return 'JobPostingModel{id: $id, title: $title, description: $description, requirements: $requirements, workplaceType: $workplaceType, longitude: $longitude, latitude: $latitude, employmentType: $employmentType, salaryFrom: $salaryFrom, salaryTo: $salaryTo, experienceLevel: $experienceLevel, specialization: $specialization, createdAt: $createdAt, isExpired: $isExpired, hasApplied: $hasApplied, isActive: $isActive}';
+    return 'CompanyJobModel{id: $id, title: $title, description: $description, requirements: $requirements, workplaceType: $workplaceType, longitude: $longitude, latitude: $latitude, employmentType: $employmentType, isSaved: $isSaved, salaryFrom: $salaryFrom, salaryTo: $salaryTo, experienceLevel: $experienceLevel, specialization: $specialization, createdAt: $createdAt, isExpired: $isExpired, hasApplied: $hasApplied, isActive: $isActive}';
   }
 
   @override
@@ -124,6 +127,9 @@ class CompanyJobModel {
           employmentType == other.employmentType &&
           salaryFrom == other.salaryFrom &&
           salaryTo == other.salaryTo &&
+          isSaved == other.isSaved &&
+          isActive == other.isActive &&
+          isExpired == other.isExpired &&
           currencyType == other.currencyType &&
           experienceLevel == other.experienceLevel &&
           hasApplied == other.hasApplied &&
@@ -148,7 +154,52 @@ class CompanyJobModel {
       createdAt.hashCode ^
       isExpired.hashCode ^
       hasApplied.hashCode ^
+      isSaved.hashCode ^
       isActive.hashCode;
+
+  CompanyJobModel copyWith({
+    int? id,
+    CompanyDetailsResponseModel? company,
+    String? title,
+    String? description,
+    String? requirements,
+    String? workplaceType,
+    double? longitude,
+    double? latitude,
+    String? employmentType,
+    double? salaryFrom,
+    double? salaryTo,
+    String? currencyType,
+    ExperienceLevel? experienceLevel,
+    SpecializationModel? specialization,
+    String? createdAt,
+    bool? isExpired,
+    bool? isActive,
+    bool? isSaved,
+    bool? hasApplied,
+  }) {
+    return CompanyJobModel(
+      id: id ?? this.id,
+      company: company ?? this.company,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      requirements: requirements ?? this.requirements,
+      workplaceType: workplaceType ?? this.workplaceType,
+      longitude: longitude ?? this.longitude,
+      latitude: latitude ?? this.latitude,
+      employmentType: employmentType ?? this.employmentType,
+      salaryFrom: salaryFrom ?? this.salaryFrom,
+      salaryTo: salaryTo ?? this.salaryTo,
+      currencyType: currencyType ?? this.currencyType,
+      experienceLevel: experienceLevel ?? this.experienceLevel,
+      specialization: specialization ?? this.specialization,
+      createdAt: createdAt ?? this.createdAt,
+      isExpired: isExpired ?? this.isExpired,
+      isActive: isActive ?? this.isActive,
+      hasApplied: hasApplied ?? this.hasApplied,
+      isSaved: isSaved ?? this.isSaved,
+    );
+  }
 }
 
 class ExperienceLevel {

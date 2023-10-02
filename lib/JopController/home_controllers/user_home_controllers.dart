@@ -1,8 +1,11 @@
+import 'dart:async';
+
 import 'package:get/get.dart';
 import 'package:jobspot/JopController/dashboards_controller/user_dashboard_controller.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/profile_edit_model.dart';
 import 'package:jobspot/sippo_data/user_repos/user_jobs_repo.dart';
+import 'package:jobspot/sippo_data/user_repos/user_saved_job_repo.dart';
 
 import '../../sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
 import '../../utils/states.dart';
@@ -113,13 +116,13 @@ class JobsHomeState {
   }
 
   Future<void> fetchJobPages(int pageKey) async {
-    final query = {'page': "1", "per_page": "3"};
+    final query = {'page': "1", "per_page": "5"};
     final response = await UserJobRepo.fetchJobs(query);
     response?.checkStatusResponse(
       onSuccess: (page, _) {
         final data = page?.data;
         if (data != null) {
-          jobsList = data.take(3).toList();
+          jobsList = data.take(5).toList();
           changeJobsStates(
             isError: false,
             isSuccess: true,
@@ -168,5 +171,33 @@ class JobsHomeState {
     if (jobStates.isLoading) return;
     // resetJobStates();
     pageJobsRequester(1);
+  }
+
+  void changeIsSaved(int index, bool isSaved) {
+    print('change is  saved $isSaved');
+    if (index != -1) {
+      jobsList = jobsList..[index] = jobsList[index].copyWith(isSaved: isSaved);
+      print(_jobsList[index]);
+    }
+  }
+
+  Future<void> toggleSavedJobs(int? id) async {
+    final index = jobsList.indexWhere((e) => e.id == id);
+    changeIsSaved(index, !(jobsList[index].isSaved == true));
+    final response = await SavedJobsRepo.toggleSavedJob(id);
+    await response?.checkStatusResponse(
+      onSuccess: (data, _) {},
+      onValidateError: (validateError, _) {
+        changeIsSaved(index, jobsList[index].isSaved == true);
+      },
+      onError: (message, _) {
+        changeIsSaved(index, jobsList[index].isSaved == true);
+      },
+    );
+  }
+
+  void onToggleSavedJobsSubmitted(int? id) async {
+    if (!isNetworkConnected) return;
+    await toggleSavedJobs(id);
   }
 }

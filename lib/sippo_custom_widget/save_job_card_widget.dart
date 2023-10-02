@@ -22,7 +22,7 @@ class JobPostingCard extends StatelessWidget {
   final List<WorkLocationModel>? companyLocations;
   final String? companyName;
   final bool? isActive;
-  final String timeAgo;
+  final String? timeAgo;
   final bool isEditable;
   final void Function(CordLocation? location)? onAddressTextTap;
 
@@ -33,7 +33,7 @@ class JobPostingCard extends StatelessWidget {
 
   const JobPostingCard({
     this.imagePath,
-    required this.timeAgo,
+    this.timeAgo,
     required this.onActionTap,
     this.isSaved = false,
     this.jobDetails,
@@ -210,13 +210,14 @@ class JobPostingCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Text(
-            timeAgo,
-            style: dmsregular.copyWith(
-              fontSize: FontSize.label(context),
-              color: Colors.grey,
+          if (timeAgo != null)
+            Text(
+              timeAgo ?? "",
+              style: dmsregular.copyWith(
+                fontSize: FontSize.label(context),
+                color: Colors.grey,
+              ),
             ),
-          ),
           const Spacer(),
           Text(
             '${jobDetails?.salaryFrom.toString().salaryValue} - ${jobDetails?.salaryTo.toString().salaryValue}',
@@ -243,7 +244,7 @@ class JobPostingCard extends StatelessWidget {
     bool isFirst = false,
   ]) {
     return CustomChip(
-      onTap: () {},
+      // onTap: () {},
       backgroundColor: Colors.grey[200],
       child: AutoSizeText(
         text ?? 'unknown',

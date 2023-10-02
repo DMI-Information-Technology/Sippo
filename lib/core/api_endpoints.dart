@@ -16,6 +16,8 @@ const String toggleFollowCompaniesParam = "toggle-follow";
 const String userJobsAboutsCompanies = "jobs";
 const String userPostsAboutsCompanies = "posts";
 const String applyCompanyParam = "apply";
+const String userJobsSavedParam = "toggle-save";
+
 /////////////////////////////////////////////////////////////
 ///////////// profile resource endpoints ///////////////////
 const String workExperiencesEndpoint = "user/work-experiences";
@@ -36,6 +38,8 @@ const String companyUserProfileViewEndpoint = "customers";
 /////////////////////////////////////////////////////////
 /////////////////// user core functions endpoints ///////////////////
 const String userJobsEndpoint = "jobs";
+const String userSavedJobsEndpoint = "saved-jobs";
+
 const String userCompaniesAboutsEndpoint = "companies";
 const String userCommunityCompaniesEndpoint = "social";
 const String userCommunityPostsEndpoint = "social/posts";

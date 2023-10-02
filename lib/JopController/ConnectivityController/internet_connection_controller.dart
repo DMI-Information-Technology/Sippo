@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
@@ -24,7 +25,8 @@ class InternetConnectionController extends GetxController {
     final connection = _isConnected.isTrue;
     if (!connection && connectionCounter >= 3) {
       Get.snackbar(
-        'Connection is Lost',
+        icon: Icon(Icons.signal_wifi_statusbar_connected_no_internet_4_rounded),
+        'No Connection',
         'Your connection is lost, please check your connection and try again',
         backgroundColor: Jobstopcolor.backgroudHome,
         boxShadows: [boxShadow],

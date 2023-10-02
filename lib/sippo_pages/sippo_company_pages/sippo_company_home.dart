@@ -173,7 +173,7 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
                           onActionTap: () {
                             print('${data[index].jobName} added to favorites');
                           },
-                          onCardClicked: () {},
+                          onCardTap: () {},
                           canApply: false,
                         );
                       },

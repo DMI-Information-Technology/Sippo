@@ -482,7 +482,7 @@ class CustomChip extends StatelessWidget {
     this.height,
     this.width,
     this.borderRadius = 0,
-    required this.onTap,
+    this.onTap,
     this.backgroundColor = Jobstopcolor.greyyy,
     this.paddingValue,
     this.margin,
@@ -490,7 +490,7 @@ class CustomChip extends StatelessWidget {
   });
 
   final EdgeInsets? margin;
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
   final double? height;
   final double? width;
   final double borderRadius;

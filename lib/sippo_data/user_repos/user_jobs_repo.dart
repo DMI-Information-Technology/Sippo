@@ -30,6 +30,7 @@ class UserJobRepo {
       );
 
       final responseData = jsonDecode(response.body);
+
       return StatusResponseCodeChecker.checkStatusResponseCode(
         responseData,
         response.statusCode,
@@ -39,7 +40,8 @@ class UserJobRepo {
         ),
         (errors) => ValidatePropCompanyJobModel.fromJson(errors),
       );
-    } catch (e) {
+    } catch (e,s) {
+      print(s);
       print("UserJobRepo.fetchJobs error: $e");
       return Resource.error(
         errorMessage: e.toString(),

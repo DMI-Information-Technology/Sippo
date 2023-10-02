@@ -98,7 +98,8 @@ class ApplyJobsController extends GetxController {
     changeStates(isLoading: true);
     if (requestedJobDetails.id != null && requestedJobDetails.title != null) {
       applyJobsState.jopDetails = requestedJobDetails;
-    } else if (jobId != -1) {
+    }
+    if (jobId != -1) {
       applyJobsState.jopDetails =
           await getJobById(requestedJobDetails.id) ?? applyJobsState.jopDetails;
     }

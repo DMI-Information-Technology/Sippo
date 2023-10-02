@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
@@ -11,13 +10,11 @@ import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_job_description/sippo_job_description.dart';
 
 import '../../JobGlobalclass/sippo_customstyle.dart';
-import '../../JobGlobalclass/text_font_size.dart';
 import '../../JopController/ConnectivityController/internet_connection_controller.dart';
 import '../../JopController/user_core_functions/apply_jobs_controllers.dart';
 import '../../sippo_custom_widget/ConditionalWidget.dart';
 import '../../sippo_custom_widget/error_messages_dialog_snackbar/network_connnection_lost_widget.dart';
 import '../../sippo_custom_widget/top_job_details_header.dart';
-import '../../utils/helper.dart';
 
 class JobSuccess extends StatefulWidget {
   const JobSuccess({Key? key}) : super(key: key);
@@ -208,38 +205,38 @@ class _JobSuccessState extends State<JobSuccess> {
   //     ),
   //   );
   // }
-
-  Widget _buildTopInfoJobText(
-    BuildContext context,
-    String label,
-    String content,
-  ) {
-    return SizedBox(
-      width: context.width,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          AutoSizeText(
-            label,
-            style: dmsregular.copyWith(
-              fontSize: FontSize.title4(context),
-              color: Jobstopcolor.primarycolor,
-            ),
-            overflow: TextOverflow.clip,
-          ),
-          SizedBox(width: context.fromWidth(CustomStyle.xxxl)),
-          Expanded(
-            child: AutoSizeText(
-              content,
-              style: dmsmedium.copyWith(
-                fontSize: FontSize.title4(context),
-                color: Jobstopcolor.primarycolor,
-              ),
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+  //
+// Widget _buildTopInfoJobText(
+//   BuildContext context,
+//   String label,
+//   String content,
+// ) {
+//   return SizedBox(
+//     width: context.width,
+//     child: Row(
+//       crossAxisAlignment: CrossAxisAlignment.start,
+//       children: [
+//         AutoSizeText(
+//           label,
+//           style: dmsregular.copyWith(
+//             fontSize: FontSize.title4(context),
+//             color: Jobstopcolor.primarycolor,
+//           ),
+//           overflow: TextOverflow.clip,
+//         ),
+//         SizedBox(width: context.fromWidth(CustomStyle.xxxl)),
+//         Expanded(
+//           child: AutoSizeText(
+//             content,
+//             style: dmsmedium.copyWith(
+//               fontSize: FontSize.title4(context),
+//               color: Jobstopcolor.primarycolor,
+//             ),
+//             overflow: TextOverflow.ellipsis,
+//           ),
+//         ),
+//       ],
+//     ),
+//   );
+// }
 }
