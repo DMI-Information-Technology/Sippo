@@ -9,14 +9,14 @@ class CompanyJobModel {
   final String? description;
   final String? requirements;
   final String? workplaceType;
-  final double? longitude;
-  final double? latitude;
-  final String? employmentType;
   final double? salaryFrom;
   final double? salaryTo;
-  final String? currencyType;
+  final String? employmentType;
   final ExperienceLevel? experienceLevel;
   final SpecializationModel? specialization;
+  final double? longitude;
+  final double? latitude;
+  final String? currencyType;
   final String? createdAt; // New field
   final bool? isExpired; // New field
   final bool? isActive; // New field

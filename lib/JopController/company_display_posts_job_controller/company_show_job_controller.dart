@@ -104,12 +104,12 @@ class CompanyShowJobController extends GetxController {
   void retryLastFieldRequest() {
     pagingController.retryLastFailedRequest();
   }
+
   void _pageRequester(int pageKey) async {
     showWrapperController.changeStates(isLoading: true);
     await fetchJobPages(pageKey);
     showWrapperController.changeStates(isLoading: false);
   }
-
 
   Future<void> lunchMapWithLocation(double? lat, double? long) async {
     print("is work place is null? ${long == null || lat == null}");

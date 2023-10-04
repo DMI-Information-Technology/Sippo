@@ -13,7 +13,8 @@ class JobCompanyDetailsController extends GetxController {
 
   CompanyJobModel get requestedJobDetails =>
       UserDashBoardController.instance.jobDashboardState.details;
-  final jobId = UserDashBoardController.instance.jobDashboardState.id;
+
+  int get jobId => UserDashBoardController.instance.jobDashboardState.id;
 
   final jobDetailsState = JobCompanyDetailsState();
   final _states = States().obs;
@@ -38,6 +39,7 @@ class JobCompanyDetailsController extends GetxController {
     if (requestedJobDetails.id != null && requestedJobDetails.title != null) {
       jobDetailsState.jopDetails = requestedJobDetails;
     }
+
     if (jobId != -1) {
       jobDetailsState.jopDetails =
           await getJobById(jobId) ?? jobDetailsState.jopDetails;

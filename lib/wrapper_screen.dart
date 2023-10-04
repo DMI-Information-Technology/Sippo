@@ -43,7 +43,7 @@ class _WrapperScreenState extends State<WrapperScreen>
       Duration(seconds: 5),
       () {
         if (kIsWeb) {
-          Get.offAllNamed(SippoRoutes.appusingpage);
+          Get.offAllNamed(SippoRoutes.appUsingPage);
           return;
         }
         if (GlobalStorage.isLogged) {
@@ -65,7 +65,7 @@ class _WrapperScreenState extends State<WrapperScreen>
   void dashboardScreens() {
     switch (GlobalStorage.appUse) {
       case AppUsingType.user:
-        Get.offAllNamed(SippoRoutes.userdashboard);
+        Get.offAllNamed(SippoRoutes.userDashboard);
         break;
       case AppUsingType.company:
         Get.offAllNamed(SippoRoutes.sippoCompanyDashboard);
@@ -79,7 +79,7 @@ class _WrapperScreenState extends State<WrapperScreen>
         Get.offAllNamed(SippoRoutes.onboarding);
         break;
       case false:
-        Get.offAllNamed(SippoRoutes.appusingpage);
+        Get.offAllNamed(SippoRoutes.appUsingPage);
         break;
     }
   }

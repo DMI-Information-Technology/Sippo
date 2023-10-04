@@ -10,9 +10,9 @@ import 'package:jobspot/utils/states.dart';
 import '../../JobGlobalclass/jobstopcolor.dart';
 import '../../JobGlobalclass/jobstopimges.dart';
 import '../../JobGlobalclass/routes.dart';
+import '../../custom_app_controller/switch_status_controller.dart';
 import '../../sippo_custom_widget/error_messages_dialog_snackbar/error_messages.dart'
     as messages;
-import '../../sippo_custom_widget/loading_view_widgets/loading_scaffold.dart';
 import '../../sippo_custom_widget/widgets.dart';
 import 'firebase_auth_service_controller.dart';
 
@@ -21,7 +21,7 @@ class IdentityVerificationController extends GetxController {
 
   LightSubscription<States>? _authSubs;
   LightSubscription<States>? _firebaseSubs;
-  final _loController = LoadingOverlayController();
+  final _loController = SwitchStatusController();
   final _firebaseOTP = Get.put(FirebaseAuthServiceController());
   final _authController = AuthController.instance;
   final _netController = InternetConnectionController.instance;
@@ -34,7 +34,7 @@ class IdentityVerificationController extends GetxController {
   final _initCounter = 5.obs;
   final _resendCounter = 30.obs;
 
-  LoadingOverlayController get loadingController => _loController;
+  SwitchStatusController get loadingController => _loController;
 
   String get phoneNumber =>
       helper.otpPhoneNumberFormat(_signUpCompanyController.phoneNumber);
@@ -127,7 +127,7 @@ class IdentityVerificationController extends GetxController {
   }
 
   void _loadingControllerListener(States states) {
-    _loController.loading = states.isLoading;
+    _loController.status = states.isLoading;
   }
 
   void _removeAllListener() {

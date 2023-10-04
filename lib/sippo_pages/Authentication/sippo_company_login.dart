@@ -218,7 +218,7 @@ class SippoCompanyLogin extends StatelessWidget {
                     ),
                     CustomButton(
                       onTapped: () {
-                        Get.offAndToNamed(SippoRoutes.loginpage);
+                        Get.offAndToNamed(SippoRoutes.userLoginPage);
                       },
                       text: "User_Login".tr,
                       backgroundColor: Jobstopcolor.white,
@@ -256,7 +256,7 @@ class SippoCompanyLogin extends StatelessWidget {
 
     if (controller.phoneNumber.isNotEmpty) {
       Get.toNamed(
-        SippoRoutes.forgetpasswordpage,
+        SippoRoutes.forgetPassword,
         arguments: {phoneNumberArg: controller.phoneNumber},
       );
     } else {

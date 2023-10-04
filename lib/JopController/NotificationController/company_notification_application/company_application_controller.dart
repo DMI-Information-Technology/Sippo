@@ -1,19 +1,21 @@
 import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
+import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JopController/NotificationController/company_notification_application/company_notification_application_controller.dart';
 import 'package:jobspot/sippo_data/company_repos/compnay_applications_repo.dart';
 import 'package:jobspot/sippo_data/model/notification/job_application_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/application_change_status_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/application_job_company_model.dart';
+import 'package:jobspot/utils/file_downloader_service.dart';
+import 'package:jobspot/utils/states.dart';
 import 'package:jobspot/utils/storage_permission_service.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
-
-import '../../../utils/file_downloader_service.dart';
-import '../../../utils/states.dart';
 
 class CompanyApplicationController extends GetxController {
   final pagingController =
@@ -44,6 +46,7 @@ class CompanyApplicationController extends GetxController {
       onValidateError: (validateError, _) {},
       onError: (message, _) {
         pagingController.error = true;
+
         notificationApplicationController.changeStates(
           isError: true,
           message: message,
@@ -79,7 +82,18 @@ class CompanyApplicationController extends GetxController {
         }
       },
       onValidateError: (validateError, _) {},
-      onError: (message, _) {},
+      onError: (message, _) {
+        Get.snackbar(
+          'Warning',
+          message.toString(),
+          backgroundColor: Jobstopcolor.backgroudHome,
+          mainButton: TextButton(
+            onPressed: () {},
+            child: Text('OK'),
+          ),
+          boxShadows: [boxShadow],
+        );
+      },
     );
   }
 
@@ -138,12 +152,12 @@ class CompanyApplicationController extends GetxController {
 
   void openFile(String fileUrl) async {
     if (!notificationApplicationController.isNetworkConnected) return;
-    notificationApplicationController.loadingOverlayController.startLoading();
+    notificationApplicationController.loadingOverlayController.start();
     final hasPermission = await StoragePermissionsService.storageRequested(
       DeviceInfoPlugin(),
     );
     if (!hasPermission) {
-      notificationApplicationController.loadingOverlayController.pauseLoading();
+      notificationApplicationController.loadingOverlayController.pause();
       return;
     }
     final fileDownloader = FileDownloader();
@@ -160,7 +174,7 @@ class CompanyApplicationController extends GetxController {
     final filePathName = "${downloadDirectory.path}/$fileName";
     final savedFile = File(filePathName);
     if (!savedFile.existsSync()) {
-      notificationApplicationController.loadingOverlayController.pauseLoading();
+      notificationApplicationController.loadingOverlayController.pause();
       return;
     }
     fileDownloader.downloadFileListener(
@@ -174,14 +188,14 @@ class CompanyApplicationController extends GetxController {
         raf.closeSync();
         fileDownloader.close();
         notificationApplicationController.loadingOverlayController
-            .pauseLoading();
+            .pause();
         OpenFile.open(savedFile.path);
       },
       onError: (e, s) {
         print(e);
         print(s);
         notificationApplicationController.loadingOverlayController
-            .pauseLoading();
+            .pause();
         fileDownloader.close();
       },
     );

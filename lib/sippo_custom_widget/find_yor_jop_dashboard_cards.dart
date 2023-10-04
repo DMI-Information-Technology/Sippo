@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:jobspot/JobGlobalclass/routes.dart';
 
 import '../JobGlobalclass/jobstopcolor.dart';
 import '../JobGlobalclass/jobstopfontstyle.dart';
 import '../JobGlobalclass/jobstopimges.dart';
-import '../sippo_pages/sippo_user_pages/jobstop_search.dart';
 
 class FindYorJopDashBoardCards extends StatelessWidget {
   final String firstCardTitle;
@@ -34,11 +35,7 @@ class FindYorJopDashBoardCards extends StatelessWidget {
       children: [
         InkWell(
           onTap: () {
-            Navigator.push(context, MaterialPageRoute(
-              builder: (context) {
-                return const JobSearch();
-              },
-            ));
+           Get.toNamed(SippoRoutes.sippoUserJobSearch);
           },
           child: Container(
             height: height / 4,

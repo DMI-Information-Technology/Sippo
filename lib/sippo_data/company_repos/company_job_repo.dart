@@ -225,4 +225,36 @@ class CompanyJobRepo {
       );
     }
   }
+
+  // static Future<Resource<Map<int, String>?, ValidatePropCompanyJobModel?>?>
+  //     fetchEmploymentTypesMap() async {
+  //   final httpController = HttpClientController.instance;
+  //   try {
+  //     final response = await httpController.client.get(
+  //       endpoints.employmentTypesEndpoint,
+  //     );
+  //     print(
+  //         "CompanyJobRepo.fetchEmploymentTypes: response data = ${response.body}");
+  //     print(
+  //       "CompanyJobRepo.fetchEmploymentTypes: response status code = ${response.statusCode}",
+  //     );
+  //
+  //     final responseData = jsonDecode(response.body);
+  //     return StatusResponseCodeChecker.checkStatusResponseCode(
+  //       responseData,
+  //       response.statusCode,
+  //       (data) => data.map((key, value) {
+  //         if (key.isNumericOnly) return MapEntry(int.parse(key), value);
+  //         return MapEntry();
+  //       }),
+  //       (errors) => null,
+  //     );
+  //   } catch (e) {
+  //     print("CompanyJobRepo.fetchEmploymentTypes error: $e");
+  //     return Resource.error(
+  //       errorMessage: e.toString(),
+  //       type: StatusType.INVALID_RESPONSE,
+  //     );
+  //   }
+  // }
 }

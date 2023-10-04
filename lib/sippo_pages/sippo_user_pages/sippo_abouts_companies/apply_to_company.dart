@@ -13,6 +13,7 @@ import '../../../JobGlobalclass/jobstopimges.dart';
 import '../../../JobGlobalclass/routes.dart';
 import '../../../JobGlobalclass/sippo_customstyle.dart';
 import '../../../JopController/ConnectivityController/internet_connection_controller.dart';
+import '../../../custom_app_controller/switch_status_controller.dart';
 import '../../../sippo_custom_widget/ConditionalWidget.dart';
 import '../../../sippo_custom_widget/body_widget.dart';
 import '../../../sippo_custom_widget/error_messages_dialog_snackbar/network_connnection_lost_widget.dart';
@@ -31,7 +32,7 @@ class SippoApplyCompany extends StatefulWidget {
 
 class _SippoApplyCompanyState extends State<SippoApplyCompany> {
   // final _controller = ApplyJobsController.instance;
-  final LoadingOverlayController loadingController = LoadingOverlayController();
+  final  loadingController = SwitchStatusController();
   final _controller = ApplyCompanyController.instance;
 
   @override
@@ -133,7 +134,7 @@ class _SippoApplyCompanyState extends State<SippoApplyCompany> {
               CustomButton(
                 onTapped: () {
                   Get.until((route) {
-                    return Get.currentRoute == SippoRoutes.userdashboard;
+                    return Get.currentRoute == SippoRoutes.userDashboard;
                   });
                 },
                 text: "Back to home".tr,
@@ -178,9 +179,9 @@ class _SippoApplyCompanyState extends State<SippoApplyCompany> {
             cvCardWidget: CvCardWidget(fileCv: _controller.applyCompanyState.cvCompanyApply),
             title: 'Upload your CV',
             onUploadTapped: () async {
-              loadingController.loading = true;
+              loadingController.status = true;
               await _controller.uploadCvFile();
-              loadingController.loading = false;
+              loadingController.status = false;
             },
             onDeletedFile: () async {
               await _controller.removeCvFile();

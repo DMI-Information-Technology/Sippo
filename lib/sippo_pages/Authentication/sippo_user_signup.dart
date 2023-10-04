@@ -164,7 +164,7 @@ class SippoUserSignup extends StatelessWidget {
                           highlightColor: Jobstopcolor.transparent,
                           splashColor: Jobstopcolor.transparent,
                           onTap: () {
-                            Get.offAndToNamed(SippoRoutes.loginpage);
+                            Get.offAndToNamed(SippoRoutes.userLoginPage);
                           },
                           child: Text(
                             "Sign_in".tr,

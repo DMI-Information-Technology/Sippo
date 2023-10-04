@@ -136,7 +136,7 @@ class SippoAppUsing extends StatelessWidget {
       return;
     }
     if (controller.findJop)
-      Get.toNamed(SippoRoutes.signuppage);
+      Get.toNamed(SippoRoutes.userSignupPage);
     else
       Get.toNamed(SippoRoutes.companysignup);
   }

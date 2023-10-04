@@ -25,10 +25,11 @@ class SippoUserJobNotification extends StatefulWidget {
 
 class _SippoUserJobNotificationState extends State<SippoUserJobNotification>
     with SingleTickerProviderStateMixin, RestorationMixin {
-  TabController? _tabController;
   final UserNotificationController _notifiController =
       Get.put(UserNotificationController());
+  TabController? _tabController;
   final RestorableInt tabIndex = RestorableInt(0);
+
   final nonResource = const NoResourceScreen(
     title: 'No notifications',
     description: 'You have no notifications at this time\nthank you',

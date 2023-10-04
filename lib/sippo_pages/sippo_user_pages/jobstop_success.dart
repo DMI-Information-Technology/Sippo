@@ -8,7 +8,6 @@ import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_job_description/sippo_job_description.dart';
-
 import '../../JobGlobalclass/sippo_customstyle.dart';
 import '../../JopController/ConnectivityController/internet_connection_controller.dart';
 import '../../JopController/user_core_functions/apply_jobs_controllers.dart';
@@ -137,7 +136,7 @@ class _JobSuccessState extends State<JobSuccess> {
             CustomButton(
               onTapped: () {
                 Get.until((route) {
-                  return Get.currentRoute == SippoRoutes.userdashboard;
+                  return Get.currentRoute == SippoRoutes.userDashboard;
                 });
               },
               text: "Back to home".tr,

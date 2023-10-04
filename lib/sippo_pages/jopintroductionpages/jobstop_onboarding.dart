@@ -102,7 +102,7 @@ class _SippoOnboardingState extends State<SippoOnboarding>
           ? FloatingActionButton(
               heroTag: "go",
               onPressed: () {
-                Get.toNamed(SippoRoutes.appusingpage);
+                Get.toNamed(SippoRoutes.appUsingPage);
                 return;
               },
               backgroundColor: Jobstopcolor.primarycolor,

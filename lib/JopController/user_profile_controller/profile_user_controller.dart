@@ -16,7 +16,7 @@ import 'package:jobspot/sippo_data/user_repos/skills_repo.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 
-import '../../sippo_custom_widget/loading_view_widgets/loading_scaffold.dart';
+import '../../custom_app_controller/switch_status_controller.dart';
 import '../../sippo_data/model/profile_model/profile_resource_model/profile_edit_model.dart';
 import '../../sippo_data/model/profile_model/profile_resource_model/work_experiences_model.dart';
 import '../../sippo_data/model/profile_model/profile_widget_model/jobstop_appreciation_info_card_model.dart';
@@ -26,7 +26,7 @@ import '../../utils/storage_permission_service.dart';
 
 class ProfileUserController extends GetxController {
   final netController = InternetConnectionController.instance;
-  final loadingOverlayController = LoadingOverlayController();
+  final loadingOverlayController = SwitchStatusController();
 
   late final StreamSubscription<bool>? _connectionSubscription;
   final dashboard = UserDashBoardController.instance;
@@ -196,8 +196,6 @@ class ProfileUserController extends GetxController {
       },
     );
   }
-
-
 
   @override
   void onInit() {

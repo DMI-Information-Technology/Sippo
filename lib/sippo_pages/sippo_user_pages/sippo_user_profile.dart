@@ -82,7 +82,7 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
       showConnectionLostBar: isLostConnect,
       profileInfo: _controller.user,
       onSettingsPressed: () => Get.toNamed(SippoRoutes.sippoprofilesetting),
-      onEditProfilePressed: () => Get.toNamed(SippoRoutes.edituserprofile),
+      onEditProfilePressed: () => Get.toNamed(SippoRoutes.editUserProfile),
       profileImage: JobstopPngImg.photo,
     );
   }
@@ -123,9 +123,9 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
               return CvCardWidget.fromRemote(
                 remoteCv: _controller.user.cv,
                 onCvTapped: () async {
-                  _controller.loadingOverlayController.startLoading();
+                  _controller.loadingOverlayController.start();
                   await _controller.openFile(_controller.user.cv?.url);
-                  _controller.loadingOverlayController.pauseLoading();
+                  _controller.loadingOverlayController.pause();
                 },
               );
             },
@@ -350,7 +350,7 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
             ),
             onAddClicked: () {
               Get.toNamed(
-                SippoRoutes.workexperience,
+                SippoRoutes.userWorkExperience,
                 arguments: {workExperienceArg: null},
               );
             },
@@ -369,7 +369,7 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
                     item.periodic,
                     onEdit: () {
                       _controller.editingId = item.id?.toInt() ?? -1;
-                      Get.toNamed(SippoRoutes.workexperience);
+                      Get.toNamed(SippoRoutes.userWorkExperience);
                     },
                   );
                 },

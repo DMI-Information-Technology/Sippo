@@ -154,7 +154,7 @@ class _SippoUserLoginState extends State<SippoUserLogin> {
                           onPressed: () {
                             if (_controller.phoneNumber.trim().isNotEmpty) {
                               Get.toNamed(
-                                SippoRoutes.forgetpasswordpage,
+                                SippoRoutes.forgetPassword,
                                 arguments: {
                                   phoneNumberArg: _controller.phoneNumber
                                 },
@@ -218,7 +218,7 @@ class _SippoUserLoginState extends State<SippoUserLogin> {
                         ),
                         TextButton(
                           onPressed: () {
-                            Get.offAndToNamed(SippoRoutes.signuppage);
+                            Get.offAndToNamed(SippoRoutes.userSignupPage);
                           },
                           child: Text(
                             "Sign_up".tr,
@@ -251,7 +251,7 @@ class _SippoUserLoginState extends State<SippoUserLogin> {
                     ),
                     CustomButton(
                       onTapped: () {
-                        Get.offAllNamed(SippoRoutes.userdashboard);
+                        Get.offAllNamed(SippoRoutes.userDashboard);
                       },
                       text: "Guest_login.".tr,
                       backgroundColor: Jobstopcolor.white,

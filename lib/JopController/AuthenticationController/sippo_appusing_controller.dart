@@ -41,7 +41,7 @@ class AppUsingController extends GetxController {
       return;
     }
     if (findJop)
-      Get.toNamed(SippoRoutes.signuppage);
+      Get.toNamed(SippoRoutes.userSignupPage);
     else
       Get.toNamed(SippoRoutes.companysignup);
   }

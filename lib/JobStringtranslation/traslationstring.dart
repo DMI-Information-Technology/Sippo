@@ -172,6 +172,10 @@ class Apptranslation extends Translations {
           'follow': "Follow",
           'followed': "Followed",
           'visit_website': "Visit Website",
+          'experienceLevels': "Experience Levels",
+          'employmentType': "Employment Type",
+          'Specializations': "Specializations",
+
         },
         'ar_ab': {
           'Email': "Email",
@@ -197,6 +201,7 @@ class Apptranslation extends Translations {
           'Experience': "Experience",
           'Job_Type': "Job Type",
           'Specialization': "Specialization",
+          'Specializations': "Specializations",
           'Facilities_and_Others': "Facilities and Others",
           'About_Company': "About Company",
           'Website': "Website",

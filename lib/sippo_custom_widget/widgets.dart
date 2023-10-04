@@ -7,6 +7,7 @@ import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/utils/getx_text_editing_controller.dart';
 
 import '../JobGlobalclass/jobstopfontstyle.dart';
+import '../JobGlobalclass/jobstopimges.dart';
 import '../JobGlobalclass/sippo_customstyle.dart';
 import '../JobGlobalclass/sippo_customstyle.dart' as customStyles;
 
@@ -544,7 +545,9 @@ class InputBorderedField extends StatelessWidget {
     this.gController,
     this.fillColor,
     this.maxLength,
+    this.focusNode,
     this.fontColor,
+    this.prefixIconColor,
     // this.isLoading = false,
   });
 
@@ -571,6 +574,8 @@ class InputBorderedField extends StatelessWidget {
   final double? borderRadiusValue;
   final Color? fillColor;
   final int? maxLength;
+  final FocusNode? focusNode;
+  final Color? prefixIconColor;
 
   // final bool isLoading;
 
@@ -584,6 +589,7 @@ class InputBorderedField extends StatelessWidget {
         // color: Jobstopcolor.white,
       ),
       child: TextFormField(
+        focusNode: focusNode,
         maxLength: maxLength,
         textInputAction: textInputAction,
         initialValue: initialValue,
@@ -614,6 +620,7 @@ class InputBorderedField extends StatelessWidget {
           fillColor: fillColor ?? Jobstopcolor.white,
           suffixIcon: suffixIcon,
           prefixIcon: prefixIcon,
+          prefixIconColor: prefixIconColor,
         ),
         keyboardType: keyboardType,
         maxLines: maxLine,
@@ -666,6 +673,36 @@ class InputCloser extends StatelessWidget {
           ),
         )
       ],
+    );
+  }
+}
+
+class FilterButtonWidget extends StatelessWidget {
+  const FilterButtonWidget({
+    super.key,
+    this.color,
+    this.onTap,
+  });
+
+  final Color? color;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        height: context.height / 18,
+        width: context.height / 18,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: color ?? Jobstopcolor.primarycolor,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Image.asset(JobstopPngImg.filter),
+        ),
+      ),
     );
   }
 }

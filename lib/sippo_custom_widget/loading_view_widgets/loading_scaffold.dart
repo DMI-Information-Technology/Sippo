@@ -1,35 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../custom_app_controller/switch_status_controller.dart';
 import 'overly_loading.dart';
 
-class LoadingOverlayController with ChangeNotifier {
-  bool _loading = false;
-
-  bool get loading => _loading;
-
-  void unFocusTextField(BuildContext context) {
-    if (_loading) FocusScope.of(context).unfocus();
-  }
-
-  void startLoading() {
-    loading = true;
-  }
-
-  void pauseLoading() {
-    loading = false;
-  }
-
-  set loading(bool value) {
-    _loading = value;
-    notifyListeners();
-  }
-
-  @override
-  void dispose() {
-    print("LoadingOverlayController is disposed.");
-    super.dispose();
-  }
-}
 
 class LoadingScaffold extends StatelessWidget {
   const LoadingScaffold({
@@ -44,7 +17,7 @@ class LoadingScaffold extends StatelessWidget {
   final PreferredSizeWidget? appBar;
   final Widget? body;
   final Color? backgroundColor;
-  final LoadingOverlayController? controller;
+  final SwitchStatusController? controller;
   final bool extendBodyBehindAppBar;
 
   @override
@@ -63,7 +36,7 @@ class LoadingScaffold extends StatelessWidget {
             listenable: controller!,
             builder: (context, child) {
               controller?.unFocusTextField(context);
-              return _buildLoadingWidget(controller?.loading ?? false);
+              return _buildLoadingWidget(controller?.status ?? false);
             },
           ),
       ],
@@ -72,7 +45,7 @@ class LoadingScaffold extends StatelessWidget {
 
   Widget _buildLoadingWidget(bool show) => show
       ? GestureDetector(
-          onTap: () => controller?.loading = false,
+          onTap: () => controller?.status = false,
           child: const LoadingOverlay(),
         )
       : const SizedBox.shrink();

@@ -183,7 +183,7 @@ class SippoCompanySignup extends StatelessWidget {
                 ),
                 CustomButton(
                   onTapped: () {
-                    Get.offAndToNamed(SippoRoutes.signuppage);
+                    Get.offAndToNamed(SippoRoutes.userSignupPage);
                   },
                   text: "user_signup".tr,
                   backgroundColor: Jobstopcolor.white,

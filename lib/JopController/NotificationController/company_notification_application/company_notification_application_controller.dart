@@ -1,14 +1,14 @@
 import 'package:get/get.dart';
 import 'package:jobspot/JopController/ConnectivityController/internet_connection_controller.dart';
 import 'package:jobspot/JopController/dashboards_controller/company_dashboard_controller.dart';
-import 'package:jobspot/sippo_custom_widget/loading_view_widgets/loading_scaffold.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
 
+import '../../../custom_app_controller/switch_status_controller.dart';
 import '../../../utils/states.dart';
 
 class CompanyNotificationApplicationController extends GetxController {
   static CompanyNotificationApplicationController get instance => Get.find();
-  final loadingOverlayController = LoadingOverlayController();
+  final loadingOverlayController = SwitchStatusController();
 
   CompanyDetailsResponseModel get company =>
       CompanyDashBoardController.instance.company;

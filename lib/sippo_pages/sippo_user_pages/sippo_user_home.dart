@@ -102,8 +102,7 @@ class _SippoUserHomeState extends State<SippoUserHome> {
   }
 
   Widget _buildShowHomeJobsList(BuildContext context) {
-    return Obx(() =>
-        FutureBuilder(
+    return Obx(() => FutureBuilder(
           future: Future.value(_controller.jobsHomeState.jobStates),
           builder: (context, snapshot) {
             final states = snapshot.data;
@@ -121,8 +120,10 @@ class _SippoUserHomeState extends State<SippoUserHome> {
         ));
   }
 
-  SingleChildScrollView _buildJobCardList(BuildContext context,
-      List<CompanyJobModel> data,) {
+  SingleChildScrollView _buildJobCardList(
+    BuildContext context,
+    List<CompanyJobModel> data,
+  ) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Padding(
@@ -132,51 +133,52 @@ class _SippoUserHomeState extends State<SippoUserHome> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            ...List.generate(
-                _controller.jobsHomeState.jobsList.length, (index) {
+            ...List.generate(_controller.jobsHomeState.jobsList.length,
+                (index) {
               final item = _controller.jobsHomeState.jobsList[index];
               return Obx(() => JobHomeCard(
-                  padding: EdgeInsets.only(
-                    right: index == _controller.jobsHomeState.jobsList.length - 1
-                        ? 0.0
-                        : context.fromWidth(CustomStyle.paddingValue),
-                  ),
-                  width: context.width / 1.3,
-                  jobDetailsPost: _controller.jobsHomeState.jobsList[index],
-                  onActionTap: () {
-                    _controller.jobsHomeState.onToggleSavedJobsSubmitted(item
-                        .id);
-                  },
-                  imagePath:
-                  'https://scontent.fmji4-1.fna.fbcdn.net/v/t39.30808-6/283989525_172048385265472_5677841309342210083_n'
-                      '.jpg?_nc_cat=107&ccb=1-7&_nc_sid=a2f6c7&_nc_ohc=NqB7-Psc_aIAX_7Ivx0&_nc_ht=scontent.fmji4-1.fna&oh'
-                      '=00_AfB7PaSwlVJwrtt003d9CMK5Bxy6ubHVMV9iWwxxol30Bg&oe=650B7982',
-                  onImageProfileTap: () async {
-                    _controller.companyDetailsId = item.company?.id ?? -1;
-                    _controller.requestedCompanyDetails = item.company;
-                    await Get.toNamed(SippoRoutes.sippoAboutCompanies);
-                    _controller.clearRequestedCompanyDetails();
-                  },
-                  onCardTap: () async {
-                    _controller.jobDetailsId = item.id;
-                    _controller.requestedJobDetails = item;
-                    await Get.toNamed(SippoRoutes.sippoJobDescription);
-                    _controller.clearRequestedJobDetails();
-                  },
-                  onApplyTap: () async {
-                    _controller.jobDetailsId = item.id;
-                    _controller.requestedJobDetails = item;
-                    await Get.toNamed(SippoRoutes.userApplyJobs);
-                    _controller.clearRequestedJobDetails();
-                  },
-                  isEditable: false,
-                  onAddressTextTap: (location) async {
-                    helper.lunchMapWithLocation(
-                      location.dLatitude,
-                      location.dLongitude,
-                    );
-                  },
-                ));
+                    padding: EdgeInsets.only(
+                      right:
+                          index == _controller.jobsHomeState.jobsList.length - 1
+                              ? 0.0
+                              : context.fromWidth(CustomStyle.paddingValue),
+                    ),
+                    width: context.width / 1.3,
+                    jobDetailsPost: _controller.jobsHomeState.jobsList[index],
+                    onActionTap: () {
+                      _controller.jobsHomeState
+                          .onToggleSavedJobsSubmitted(item.id);
+                    },
+                    imagePath:
+                        'https://scontent.fmji4-1.fna.fbcdn.net/v/t39.30808-6/283989525_172048385265472_5677841309342210083_n'
+                        '.jpg?_nc_cat=107&ccb=1-7&_nc_sid=a2f6c7&_nc_ohc=NqB7-Psc_aIAX_7Ivx0&_nc_ht=scontent.fmji4-1.fna&oh'
+                        '=00_AfB7PaSwlVJwrtt003d9CMK5Bxy6ubHVMV9iWwxxol30Bg&oe=650B7982',
+                    onImageProfileTap: () async {
+                      _controller.companyDetailsId = item.company?.id ?? -1;
+                      _controller.requestedCompanyDetails = item.company;
+                      await Get.toNamed(SippoRoutes.sippoAboutCompanies);
+                      _controller.clearRequestedCompanyDetails();
+                    },
+                    onCardTap: () async {
+                      _controller.jobDetailsId = item.id;
+                      _controller.requestedJobDetails = item;
+                      await Get.toNamed(SippoRoutes.sippoJobDescription);
+                      _controller.clearRequestedJobDetails();
+                    },
+                    onApplyTap: () async {
+                      _controller.jobDetailsId = item.id;
+                      _controller.requestedJobDetails = item;
+                      await Get.toNamed(SippoRoutes.userApplyJobs);
+                      _controller.clearRequestedJobDetails();
+                    },
+                    isEditable: false,
+                    onAddressTextTap: (location) async {
+                      helper.lunchMapWithLocation(
+                        location.dLatitude,
+                        location.dLongitude,
+                      );
+                    },
+                  ));
             }),
             InkWell(
               onTap: () {},
@@ -201,7 +203,7 @@ class _SippoUserHomeState extends State<SippoUserHome> {
     return Center(
       child: Padding(
         padding:
-        EdgeInsets.symmetric(horizontal: context.fromWidth(CustomStyle.s)),
+            EdgeInsets.symmetric(horizontal: context.fromWidth(CustomStyle.s)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -272,16 +274,15 @@ class _SippoUserHomeState extends State<SippoUserHome> {
           // ],
           // ),
           Obx(
-                () =>
-            dashboardController.user.name != null
+            () => dashboardController.user.name != null
                 ? Text(
-              "${dashboardController.user.name}.",
-              style: dmsbold.copyWith(
-                fontSize: FontSize.title3(context),
-                color: Jobstopcolor.primarycolor,
-              ),
-            )
-                : const CircularProgressIndicator(strokeWidth: 1.8),
+                    "${dashboardController.user.name}.",
+                    style: dmsbold.copyWith(
+                      fontSize: FontSize.title3(context),
+                      color: Jobstopcolor.primarycolor,
+                    ),
+                  )
+                : const SizedBox.shrink(),
           ),
         ],
       ),
@@ -289,9 +290,7 @@ class _SippoUserHomeState extends State<SippoUserHome> {
   }
 
   SizedBox _buildWorkExListView(BuildContext context) {
-    Size size = MediaQuery
-        .of(context)
-        .size;
+    Size size = MediaQuery.of(context).size;
     double height = size.height;
     double width = size.width;
     return SizedBox(
@@ -321,10 +320,9 @@ class _SippoUserHomeState extends State<SippoUserHome> {
             ],
           );
         },
-        separatorBuilder: (context, index) =>
-            SizedBox(
-              width: context.fromWidth(CustomStyle.s),
-            ),
+        separatorBuilder: (context, index) => SizedBox(
+          width: context.fromWidth(CustomStyle.s),
+        ),
       ),
     );
   }
@@ -348,9 +346,7 @@ class _SippoUserHomeState extends State<SippoUserHome> {
   }
 
   AppBar _buildHomeAppBar() {
-    Size size = MediaQuery
-        .of(context)
-        .size;
+    Size size = MediaQuery.of(context).size;
     double height = size.height;
     double width = size.width;
     return AppBar(
@@ -360,7 +356,9 @@ class _SippoUserHomeState extends State<SippoUserHome> {
           child: Row(
             children: [
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  Get.toNamed(SippoRoutes.sippoGeneralSearchPage);
+                },
                 icon: Icon(
                   Icons.search,
                   size: height / 30,
@@ -368,7 +366,7 @@ class _SippoUserHomeState extends State<SippoUserHome> {
               ),
               SizedBox(width: width / 52),
               InkWell(
-                onTap: () => Get.toNamed(SippoRoutes.sippoprofile),
+                onTap: () => Get.toNamed(SippoRoutes.sippoUserProfile),
                 child: CircleAvatar(
                   radius: 20,
                   child: Image.asset(JobstopPngImg.photo),
@@ -382,9 +380,7 @@ class _SippoUserHomeState extends State<SippoUserHome> {
   }
 
   Widget _buildAdsBoard() {
-    Size size = MediaQuery
-        .of(context)
-        .size;
+    Size size = MediaQuery.of(context).size;
     double height = size.height;
     double width = size.width;
     return Container(

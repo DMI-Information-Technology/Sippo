@@ -259,7 +259,7 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
                       color: Jobstopcolor.primarycolor,
                     ),
                   )
-                : const CircularProgressIndicator(strokeWidth: 1.8),
+                : const SizedBox.shrink(),
           ),
         ],
       ),

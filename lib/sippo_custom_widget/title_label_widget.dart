@@ -17,6 +17,7 @@ class TitleLabelWidget extends StatelessWidget {
   final int? maxLines;
   final String? semanticsLabel;
   final TextWidthBasis? textWidthBasis;
+  final double? fontSize;
 
   // Default values for properties if not provided
   const TitleLabelWidget(
@@ -33,6 +34,7 @@ class TitleLabelWidget extends StatelessWidget {
     this.maxLines,
     this.semanticsLabel,
     this.textWidthBasis,
+    this.fontSize,
   });
 
   @override
@@ -40,7 +42,8 @@ class TitleLabelWidget extends StatelessWidget {
     return Text(
       data,
       key: key,
-      style: style ?? dmsbold.copyWith(fontSize: FontSize.title5(context)),
+      style: style ??
+          dmsbold.copyWith(fontSize: fontSize ?? FontSize.title5(context)),
       strutStyle: strutStyle,
       textAlign: textAlign,
       textDirection: textDirection,

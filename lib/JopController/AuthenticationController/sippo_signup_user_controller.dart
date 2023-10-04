@@ -70,9 +70,9 @@ class SignUpUserController extends GetxController {
         confirmBtnColor: Jobstopcolor.primarycolor,
         confirmBtnTitle: "ok".tr,
         onConfirm: () {
-          Get.offAllNamed(SippoRoutes.userdashboard);
+          Get.offAllNamed(SippoRoutes.userDashboard);
         },
       ),
-    ).then((value) => Get.offAllNamed(SippoRoutes.userdashboard));
+    ).then((value) => Get.offAllNamed(SippoRoutes.userDashboard));
   }
 }

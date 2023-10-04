@@ -92,7 +92,7 @@ class SignUpCompanyController extends GetxController {
 
   Future<void> onSubmitSignup() async {
     if (formKey.currentState!.validate()) {
-      Get.toNamed(SippoRoutes.companysignupspecializations);
+      Get.toNamed(SippoRoutes.companySignupSpecializations);
     }
   }
 }

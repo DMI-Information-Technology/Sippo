@@ -10,13 +10,16 @@ import 'package:jobspot/SippoControllerBinding/company_binding/company_profile_c
 import 'package:jobspot/SippoControllerBinding/company_binding/copmany_user_profile_view_controller_binding.dart';
 import 'package:jobspot/SippoControllerBinding/dashboard_binding/company_dashbord_controller_binding.dart';
 import 'package:jobspot/SippoControllerBinding/dashboard_binding/user_dashboard_controller_binding.dart';
+import 'package:jobspot/SippoControllerBinding/profile_binding/UserSearchJobsControllerBinding.dart';
 import 'package:jobspot/SippoControllerBinding/profile_binding/edit_add_education_controller_binding.dart';
 import 'package:jobspot/SippoControllerBinding/profile_binding/edit_add_skills_controller_binding.dart';
 import 'package:jobspot/SippoControllerBinding/profile_binding/edit_add_work_experience_controller_binding.dart';
 import 'package:jobspot/SippoControllerBinding/profile_binding/user_apply_company_controller_binding.dart';
 import 'package:jobspot/SippoControllerBinding/profile_binding/user_apply_job_controller_binding.dart';
+import 'package:jobspot/SippoControllerBinding/profile_binding/user_general_search_controller_binding.dart';
 import 'package:jobspot/SippoControllerBinding/profile_binding/user_job_description_controller_binding.dart';
 import 'package:jobspot/SippoControllerBinding/profile_binding/user_profile_controller_binding.dart';
+import 'package:jobspot/SippoControllerBinding/profile_binding/user_search_jobs_filter_controller_binding.dart';
 import 'package:jobspot/SippoControllerBinding/profile_binding/user_upload_cv_controller_binding.dart';
 import 'package:jobspot/sippo_pages/Authentication/jobstop_check_resetpass_otp_msg.dart';
 import 'package:jobspot/sippo_pages/Authentication/jobstop_companyspecializations_signup.dart';
@@ -45,8 +48,6 @@ import 'package:jobspot/sippo_pages/sippo_user_pages/edit_add_user_profile_info/
 import 'package:jobspot/sippo_pages/sippo_user_pages/edit_add_user_profile_info/job_edit_add_experience.dart';
 import 'package:jobspot/sippo_pages/sippo_user_pages/edit_add_user_profile_info/jobstop_add_edit_skills.dart';
 import 'package:jobspot/sippo_pages/sippo_user_pages/job_editprofile.dart';
-import 'package:jobspot/sippo_pages/sippo_user_pages/jobstop_filter.dart';
-import 'package:jobspot/sippo_pages/sippo_user_pages/jobstop_search.dart';
 import 'package:jobspot/sippo_pages/sippo_user_pages/jobstop_upload_cv.dart';
 import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_abouts_companies/apply_to_company.dart';
 import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_job_description/sippo_apply_job.dart';
@@ -54,280 +55,229 @@ import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_job_description/sippo
 import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_user_dashboard.dart';
 import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_user_notification.dart';
 import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_user_profile.dart';
+import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_user_search/sippo_search_jobs.dart';
+import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_user_search/sippo_search_jobs_filter.dart';
+import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_user_search/sippo_search_jobs_specializations_filter.dart';
 
 import '../SippoControllerBinding/profile_binding/user_about_companies_controller_binding.dart';
 import '../SippoControllerBinding/profile_binding/user_home_controller_binding.dart';
 import '../sippo_pages/sippo_user_pages/sippo_abouts_companies/sippo_about_companies.dart';
+import '../sippo_pages/sippo_user_pages/sippo_user_search/sippo_general_search.dart';
 
 class SippoRoutes {
   const SippoRoutes._();
 
-  static const String _homepage = "/";
-  static const String _onboarding = "/onboardingscreen";
+  static const String homepage = "/";
+  static const String onboarding = "/onboardingscreen";
 
-  static const String _userLoginPage = "/log-in";
-  static const String _userSignupPage = "/sign-up";
-  static const String _userDashboard = "/user-dashboard";
-  static const String _appUsingPage = "/app-using";
-  static const String _forgetPassword = "/forget-password";
-  static const String _updateNewPassword = "/update-new-password";
-  static const String _editUserProfile = "/edit-user-profile";
-  static const String _editCompanyProfile = "/edit-company-profile";
+  static const String userLoginPage = "/log-in";
+  static const String userSignupPage = "/sign-up";
+  static const String userDashboard = "/user-dashboard";
+  static const String appUsingPage = "/app-using";
+  static const String forgetPassword = "/forget-password";
+  static const String updateNewPassword = "/update-new-password";
+  static const String editUserProfile = "/edit-user-profile";
+  static const String editCompanyProfile = "/edit-company-profile";
 
-  static const String _jobSearch = "/jobSearch";
-  static const String _userProfile = "/sippo-profile";
-  static const String _userWorkExperience = "/work-experience";
-  static const String _educationaddedit = "/education-add-edit";
-  static const String _appreciationaddedit = "/appreciation-add-edit";
-  static const String _languageeditadd = "/language-add-edit";
-  static const String _uploadresume = "/upload-resume";
-  static const String _sippoprofilesetting = "/sippo-profile-setting";
-  static const String _sippojobnotification = "/sippo-job-notification";
-  static const String _sippoJobDescription = "/sippo-job-description";
-  static const String _filterjobsearch = "/sippo-filter-job-search";
-  static const String _languageUserAdd = "/sippo-lang-user-add";
-  static const String _skillsaddedit = "/skills-add-edit";
-  static const String _userApplyJobs = "/user-apply-jobs";
-  static const String _sippoAboutCompanies = "/sippo-about-companies";
-  static const String _sippoUserApplyCompany = "/sippo-user-apply-company";
-  static const String _sippoCompanyUserProfileView =
+  static const String sippoUserJobSearch = "/jobSearch";
+
+  static const String sippoUserProfile = "/sippo-profile";
+  static const String userWorkExperience = "/work-experience";
+  static const String educationaddedit = "/education-add-edit";
+  static const String appreciationaddedit = "/appreciation-add-edit";
+  static const String languageeditadd = "/language-add-edit";
+  static const String uploadresume = "/upload-resume";
+  static const String sippoprofilesetting = "/sippo-profile-setting";
+  static const String sippojobnotification = "/sippo-job-notification";
+  static const String sippoJobDescription = "/sippo-job-description";
+  static const String filterjobsearch = "/sippo-filter-job-search";
+  static const String filterSpecializationsJobsSearch =
+      "/sippo-filter-specializations-job-search";
+
+  static const String languageUserAdd = "/sippo-lang-user-add";
+  static const String skillsaddedit = "/skills-add-edit";
+  static const String userApplyJobs = "/user-apply-jobs";
+  static const String sippoAboutCompanies = "/sippo-about-companies";
+  static const String sippoUserApplyCompany = "/sippo-user-apply-company";
+  static const String sippoCompanyUserProfileView =
       "/sippo-company-user-profile-view";
 
-  static String get sippoCompanyUserProfileView => _sippoCompanyUserProfileView;
-
-  static String get sippoUserApplyCompany => _sippoUserApplyCompany;
-
-  static String get userApplyJobs => _userApplyJobs;
-
-  static String get sippoAboutCompanies => _sippoAboutCompanies;
-
-  static String get languageUserAdd => _languageUserAdd;
-
-  static String get filterjobsearch => _filterjobsearch;
-
-  static String get sippoJobDescription => _sippoJobDescription;
-
-  static String get sippojobnotification => _sippojobnotification;
-
-  static String get sippoprofilesetting => _sippoprofilesetting;
-
-  static String get edituserprofile => _editUserProfile;
-
-  static String get uploadresume => _uploadresume;
-
-  static String get skillsaddedit => _skillsaddedit;
-
-  static String get languageeditadd => _languageeditadd;
-
-  static String get appreciationaddedit => _appreciationaddedit;
-
-  static String get educationaddedit => _educationaddedit;
-
-  static String get workexperience => _userWorkExperience;
-
-  static String get locationselector => _locationselector;
-  static const String _companysignupspecializations =
+  static const String companySignupSpecializations =
       "/company-signup-specializations";
+  static const String sippoGeneralSearchPage = "/sippo-user-general-search";
 
-  static const String _otpresetpassmsgpage = "/reset-pass-otp";
-
-  static String get onboarding => _onboarding;
-
-  static String get userdashboard => _userDashboard;
-
-  static String get signuppage => _userSignupPage;
-
-  static String get loginpage => _userLoginPage;
-
-  static String get appusingpage => _appUsingPage;
-
-  static String get identityverification => _identityverification;
-
-  static String get forgetpasswordpage => _forgetPassword;
-
-  static String get otpresetpassmsgpage => _otpresetpassmsgpage;
-
-  static String get homepage => _homepage;
-
-  static String get companysignup => _companysignup;
-
-  static String get updatenewpassword => _updateNewPassword;
-
-  static String get sippoprofile => _userProfile;
+  static const String otpresetpassmsgpage = "/reset-pass-otp";
 
   static List<GetPage> routes = [
-    GetPage(name: _homepage, page: () => const JobstopSplash()),
-    GetPage(name: _onboarding, page: () => const SippoOnboarding()),
+    GetPage(name: homepage, page: () => const JobstopSplash()),
+    GetPage(name: onboarding, page: () => const SippoOnboarding()),
     GetPage(
-      name: _userLoginPage,
+      name: userLoginPage,
       page: () => const SippoUserLogin(),
       binding: const LoginUserBindingController(),
     ),
     GetPage(
-      name: _companylogin,
+      name: sippoCompanyLogin,
       page: () => const SippoCompanyLogin(),
       binding: const LoginCompanyBindingController(),
     ),
     GetPage(
-      name: _userSignupPage,
+      name: userSignupPage,
       page: () => const SippoUserSignup(),
       binding: const SignupUserBindingController(),
     ),
     GetPage(
-      name: _companysignup,
+      name: companysignup,
       page: () => const SippoCompanySignup(),
       binding: const SignupCompanyBindingController(),
     ),
     GetPage(
-      name: _userDashboard,
+      name: userDashboard,
       page: () => const SippoUserDashboard(),
       bindings: const [
         UserDashBoardControllerBinding(),
         UserHomeBindingController(),
       ],
     ),
-    GetPage(name: _appUsingPage, page: () => const SippoAppUsing()),
-    GetPage(name: _forgetPassword, page: () => const JobstopForget()),
+    GetPage(name: appUsingPage, page: () => const SippoAppUsing()),
+    GetPage(name: forgetPassword, page: () => const JobstopForget()),
     GetPage(
-      name: _userProfile,
+      name: sippoUserProfile,
       page: () => const SippoUserProfile(),
       binding: const UserProfileBindingController(),
     ),
     GetPage(
-        name: _locationselector,
-        page: () => const SippoLocationCompanySelector()),
-    GetPage(name: _editUserProfile, page: () => const EditUserProfilePage()),
+      name: locationselector,
+      page: () => const SippoLocationCompanySelector(),
+    ),
+    GetPage(name: editUserProfile, page: () => const EditUserProfilePage()),
     GetPage(
-      name: _userWorkExperience,
+      name: userWorkExperience,
       page: () => const JobExperiences(),
       binding: const EditAddWorkExperienceBindingController(),
     ),
     GetPage(
-      name: _educationaddedit,
+      name: educationaddedit,
       page: () => const JobEducationAddEdit(),
       binding: const EditAddEducationBindingController(),
     ),
-    GetPage(name: _languageeditadd, page: () => const LanguageEditAdd()),
+    GetPage(name: languageeditadd, page: () => const LanguageEditAdd()),
     GetPage(
-      name: _skillsaddedit,
+      name: skillsaddedit,
       page: () => const JobSkillsAddEdit(),
       binding: const EditAddSkillsBindingController(),
     ),
     GetPage(
-      name: _uploadresume,
+      name: uploadresume,
       page: () => const SippoUploadCV(),
       binding: const UserUploadCvBindingController(),
     ),
     GetPage(
-        name: _sippocompanyprofile,
+        name: sippocompanyprofile,
         page: () => const SippoCompanyProfile(),
         binding: const ProfileCompanyBindingController()),
     GetPage(
-        name: _appreciationaddedit, page: () => const JobAppreciationAddEdit()),
+        name: appreciationaddedit, page: () => const JobAppreciationAddEdit()),
     GetPage(
-        name: _companysignupspecializations,
+        name: companySignupSpecializations,
         page: () => const CompanySignUpSpecializations()),
     GetPage(
-      name: _updateNewPassword,
+      name: updateNewPassword,
       page: () => const UpdatePasswordAfterVerification(),
     ),
     GetPage(
-      name: _filterjobsearch,
-      page: () => const JobstopFilter(),
+      name: filterjobsearch,
+      page: () => const SippoSearchJobsFilter(),
     ),
     GetPage(
-      name: _languageUserAdd,
+      name: languageUserAdd,
       page: () => const LanguageUserAdd(),
     ),
     GetPage(
-      name: _otpresetpassmsgpage,
+      name: otpresetpassmsgpage,
       page: () => const CheckOTPResetPasswordMessage(),
     ),
     GetPage(
-        name: _userApplyJobs,
+        name: userApplyJobs,
         page: () => const SippoApplyJob(),
         binding: const UserApplyJobBindingController()),
     GetPage(
-        name: _identityverification,
+        name: identityverification,
         page: () => SippoCompanyIdentityVerification(),
         binding: const IdentityVerificationBindingController()),
-    GetPage(name: _jobSearch, page: () => const JobSearch()),
     GetPage(
-        name: _sippocompanydashboard,
+      name: sippoUserJobSearch,
+      page: () => const SippoJobSearch(),
+      binding: const UserSearchJobsBindingController(),
+    ),
+    GetPage(
+        name: sippoCompanyDashboard,
         page: () => const SippoCompanyDashboard(),
         binding: const CompanyDashBoardControllerBinding()),
     GetPage(
-      name: _sippoprofilesetting,
+      name: sippoprofilesetting,
       page: () => const SippoProfileSetting(),
     ),
     GetPage(
-      name: _sippojobnotification,
+      name: sippojobnotification,
       page: () => const SippoUserJobNotification(),
     ),
     GetPage(
-      name: _sippoJobDescription,
+      name: sippoJobDescription,
       page: () => const SippoJobDescription(),
       binding: const UserJobDescriptionBindingController(),
     ),
     GetPage(
-      name: _editCompanyProfile,
+      name: editCompanyProfile,
       page: () => const EditCompanyProfilePage(),
     ),
     GetPage(
-      name: _companyAddPost,
+      name: companyAddPost,
       page: () => SippoCompanyEditAddPost(),
       binding: const CompanyPostBindingController(),
     ),
     GetPage(
-      name: _companyAddJobs,
+      name: companyAddJobs,
       page: () => SippoCompanyEditAddJobs(),
       binding: const CompanyJobBindingController(),
     ),
     GetPage(
-      name: _sippoAboutCompanies,
+      name: sippoAboutCompanies,
       page: () => SippoAboutCompanies(),
       binding: const UserAboutCompaniesBindingController(),
     ),
     GetPage(
-      name: _sippoUserApplyCompany,
+      name: sippoUserApplyCompany,
       page: () => SippoApplyCompany(),
       binding: const UserApplyCompanyBindingController(),
     ),
     GetPage(
-      name: _sippoCompanyUserProfileView,
+      name: sippoCompanyUserProfileView,
       page: () => SippoCompanyUserProfileView(),
       binding: const CompanyUserProfileViewBindingController(),
+    ),
+    GetPage(
+      name: filterSpecializationsJobsSearch,
+      page: () => SippoSearchJobsSpecializationsFilter(),
+      binding: const UserSearchJobsFilterBindingController(),
+    ),
+    GetPage(
+      name: sippoGeneralSearchPage,
+      page: () => SippoGeneralSearch(),
+      binding: const UserGeneralSearchBindingController(),
     ),
   ];
 
   // company
-  static const String _sippocompanydashboard = "/sippo-company-dashboard";
-  static const String _sippocompanyprofile = "/sippo-company-profile";
-  static const String _identityverification = "/identity-verification";
-  static const String _companysignup = "/company-signup";
-  static const String _companylogin = "/company-login";
-  static const String _locationselector = "/location-selector";
-  static const String _companyAddPost = "/company-add-post";
-  static const String _companyAddJobs = "/company-add-jobs";
+  static const String sippoCompanyDashboard = "/sippo-company-dashboard";
+  static const String sippocompanyprofile = "/sippo-company-profile";
+  static const String identityverification = "/identity-verification";
+  static const String companysignup = "/company-signup";
+  static const String sippoCompanyLogin = "/company-login";
+  static const String locationselector = "/location-selector";
+  static const String companyAddPost = "/company-add-post";
+  static const String companyAddJobs = "/company-add-jobs";
 
-  static const String _companyCompanyDisplayJobPost =
+  static const String companyCompanyDisplayJobPost =
       "/company-company-display-job-post";
-
-  static String get companyAddJobs => _companyAddJobs;
-
-  static String get companyCompanyDisplayJobPost =>
-      _companyCompanyDisplayJobPost;
-
-  static String get companyAddPost => _companyAddPost;
-
-  static String get editCompanyProfile => _editCompanyProfile;
-
-  static String get sippocompanyprofile => _sippocompanyprofile;
-
-  static String get sippoCompanyDashboard => _sippocompanydashboard;
-
-  static String get sippoCompanyLogin => _companylogin;
-
-  static String get companysignupspecializations =>
-      _companysignupspecializations;
 }
