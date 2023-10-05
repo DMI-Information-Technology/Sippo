@@ -1,7 +1,7 @@
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 
-class DashboardSharedState<T> {
-  DashboardSharedState({required Rx<T> details}) : this._details = details;
+class GlobalSharedState<T> {
+  GlobalSharedState({required Rx<T> details}) : this._details = details;
 
   var _id = -1;
 

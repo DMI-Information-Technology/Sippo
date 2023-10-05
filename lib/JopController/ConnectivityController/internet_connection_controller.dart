@@ -37,6 +37,8 @@ class InternetConnectionController extends GetxController {
     return connection;
   }
 
+  bool get isNotConnected => !isConnected;
+
   void set isConnected(bool value) {
     // print("from is connected: $value");
     _isConnected.value = value;

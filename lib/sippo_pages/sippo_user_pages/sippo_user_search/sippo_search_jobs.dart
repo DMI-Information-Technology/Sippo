@@ -8,12 +8,13 @@ import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
-import 'package:jobspot/JopController/user_core_functions/user_search_jobs.dart';
 import 'package:jobspot/sippo_custom_widget/custom_body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/save_job_card_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
 import 'package:jobspot/utils/helper.dart';
+
+import 'package:jobspot/JopController/sippo_search_controller/user_search_jobs.dart';
 
 class SippoJobSearch extends StatefulWidget {
   const SippoJobSearch({Key? key}) : super(key: key);

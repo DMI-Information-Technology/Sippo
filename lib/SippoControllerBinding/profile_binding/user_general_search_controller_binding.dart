@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import '../../JopController/user_core_functions/general_search_controller.dart';
+import 'package:jobspot/JopController/sippo_search_controller/general_search_controller.dart';
 
 
 class UserGeneralSearchBindingController implements Bindings{

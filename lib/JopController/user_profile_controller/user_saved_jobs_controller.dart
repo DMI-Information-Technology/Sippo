@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:jobspot/JobServices/shared_global_data_service.dart';
 import 'package:jobspot/JopController/ConnectivityController/internet_connection_controller.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
 import 'package:jobspot/sippo_data/user_repos/user_saved_job_repo.dart';
@@ -39,17 +40,18 @@ class UserSavedJobsController extends GetxController {
   }
 
   final dashboardController = UserDashBoardController.instance;
+  final sharedDataService = SharedGlobalDataService.instance;
 
   void set jobDetailsId(int? value) {
-    dashboardController.jobDashboardState.id = value ?? -1;
+    sharedDataService.jobDashboardState.id = value ?? -1;
   }
 
   void set requestedJobDetails(CompanyJobModel? value) {
-    if (value != null) dashboardController.jobDashboardState.details = value;
+    if (value != null) sharedDataService.jobDashboardState.details = value;
   }
 
   void clearRequestedJobDetails() {
-    dashboardController.jobDashboardState.clearDetails(
+    sharedDataService.jobDashboardState.clearDetails(
       () => CompanyJobModel(),
     );
   }

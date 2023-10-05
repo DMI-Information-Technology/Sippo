@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
+import 'package:jobspot/JobServices/shared_global_data_service.dart';
 import 'package:jobspot/JopController/dashboards_controller/user_dashboard_controller.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/profile_edit_model.dart';
@@ -14,32 +15,32 @@ import '../ConnectivityController/internet_connection_controller.dart';
 class UserHomeController extends GetxController {
   static UserHomeController get instance => Get.find();
   final dashboardController = UserDashBoardController.instance;
-
+  final sharedDataService = SharedGlobalDataService.instance;
   void set jobDetailsId(int? value) {
-    dashboardController.jobDashboardState.id = value ?? -1;
+    sharedDataService.jobDashboardState.id = value ?? -1;
   }
 
   void set requestedJobDetails(CompanyJobModel? value) {
-    if (value != null) dashboardController.jobDashboardState.details = value;
+    if (value != null) sharedDataService.jobDashboardState.details = value;
   }
 
   void clearRequestedJobDetails() {
-    dashboardController.jobDashboardState.clearDetails(
+    sharedDataService.jobDashboardState.clearDetails(
       () => CompanyJobModel(),
     );
   }
 
   void set companyDetailsId(int? value) {
-    dashboardController.companyDashboardState.id = value ?? -1;
+    sharedDataService.companyDashboardState.id = value ?? -1;
   }
 
   void set requestedCompanyDetails(CompanyDetailsResponseModel? value) {
     if (value != null)
-      dashboardController.companyDashboardState.details = value;
+      sharedDataService.companyDashboardState.details = value;
   }
 
   void clearRequestedCompanyDetails() {
-    dashboardController.companyDashboardState.clearDetails(
+    sharedDataService.companyDashboardState.clearDetails(
       () => CompanyDetailsResponseModel(),
     );
   }
@@ -117,7 +118,7 @@ class JobsHomeState {
 
   Future<void> fetchJobPages(int pageKey) async {
     final query = {'page': "1", "per_page": "5"};
-    final response = await UserJobRepo.fetchJobs(query);
+    final response = await SippoJobsRepo.fetchJobs(query);
     response?.checkStatusResponse(
       onSuccess: (page, _) {
         final data = page?.data;

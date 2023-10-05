@@ -3,8 +3,6 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JopController/ConnectivityController/internet_connection_controller.dart';
-import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
-import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/profile_edit_model.dart';
 
 import '../../sippo_data/user_repos/edit_profile_repo.dart';
@@ -12,21 +10,20 @@ import '../../sippo_pages/sippo_user_pages/sippo_user_community/sippo_user_commu
 import '../../sippo_pages/sippo_user_pages/sippo_user_home.dart';
 import '../../sippo_pages/sippo_user_pages/sippo_user_notification.dart';
 import '../../sippo_pages/sippo_user_pages/sippo_user_saved_jobs.dart';
-import '../../utils/dashboard_shared_state.dart';
 
 class UserDashBoardController extends GetxController {
   // final _httpClientController = Get.put(HttpClientController());
   static UserDashBoardController get instance => Get.find();
-  var searchTextKey = "";
+
   final _user = ProfileInfoModel().obs;
   StreamSubscription<bool>? _connectionSubscription;
 
   ProfileInfoModel get user => _user.value;
-  final  jobDashboardState =
-      DashboardSharedState(details: CompanyJobModel().obs);
-  final companyDashboardState = DashboardSharedState(
-    details: CompanyDetailsResponseModel().obs,
-  );
+  // final  jobDashboardState =
+  //     GlobalSharedState(details: CompanyJobModel().obs);
+  // final companyDashboardState = GlobalSharedState(
+  //   details: CompanyDetailsResponseModel().obs,
+  // );
 
   void set user(ProfileInfoModel profile) => _user.value = profile;
   final _selectedItemIndex = 0.obs;

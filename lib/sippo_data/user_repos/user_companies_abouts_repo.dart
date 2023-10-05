@@ -13,6 +13,37 @@ import '../model/profile_model/company_profile_resource_model/company_post_model
 import '../model/profile_model/profile_resource_model/validate_property_user_company_application_model.dart';
 
 class UserCompaniesAboutsRepo {
+  static Future<
+          Resource<PaginationModel<CompanyDetailsResponseModel>?, dynamic>?>
+      fetchCompanies(Map<String, String> query) async {
+    final httpController = HttpClientController.instance;
+    try {
+      final response = await httpController.client.get(
+        endpoints.userCompaniesAboutsEndpoint,
+        queryParameter: query,
+      );
+      final responseData = jsonDecode(response.body);
+
+      return StatusResponseCodeChecker.checkStatusResponseCode(
+        responseData,
+        response.statusCode,
+        (resource) => PaginationModel.fromJson(
+          resource,
+          dataConverter: (data) => CompanyDetailsResponseModel.fromJson(data),
+        ),
+        (errors) => null,
+      );
+    } catch (e) {
+      print(e.runtimeType);
+      print(
+          "UserCompaniesAboutsRepo.CompanyDetailsResponseModel Exception: $e");
+      return Resource.error(
+        errorMessage: e.toString(),
+        type: StatusType.INVALID_RESPONSE,
+      );
+    }
+  }
+
   static Future<Resource<CompanyDetailsResponseModel?, dynamic>?>
       fetchAboutsCompany(int? resourceId) async {
     final httpController = HttpClientController.instance;

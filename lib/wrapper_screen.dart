@@ -9,6 +9,7 @@ import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/utils/app_use.dart';
 
 import 'JobGlobalclass/jobstopimges.dart';
+import 'JobServices/shared_global_data_service.dart';
 
 class WrapperScreen extends StatefulWidget {
   const WrapperScreen({super.key});
@@ -63,6 +64,7 @@ class _WrapperScreenState extends State<WrapperScreen>
   }
 
   void dashboardScreens() {
+    Get.put(SharedGlobalDataService());
     switch (GlobalStorage.appUse) {
       case AppUsingType.user:
         Get.offAllNamed(SippoRoutes.userDashboard);

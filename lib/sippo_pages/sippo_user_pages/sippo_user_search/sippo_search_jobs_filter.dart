@@ -7,7 +7,7 @@ import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/JopController/company_profile_controller/company_edit_add_job_controller.dart';
-import 'package:jobspot/JopController/user_core_functions/user_filter_search.dart';
+import 'package:jobspot/JopController/sippo_search_controller/user_filter_search.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/title_label_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';

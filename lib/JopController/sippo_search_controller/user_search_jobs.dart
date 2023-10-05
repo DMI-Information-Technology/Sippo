@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:jobspot/JobServices/shared_global_data_service.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
 import 'package:jobspot/sippo_data/user_repos/user_jobs_repo.dart';
 import 'package:jobspot/utils/getx_text_editing_controller.dart';
@@ -46,7 +47,7 @@ class UserSearchJobsController extends GetxController {
     int pageKey,
   ) async {
     final response =
-        await UserJobRepo.fetchJobs(searchJobsState.buildQuerySearch);
+        await SippoJobsRepo.fetchJobs(searchJobsState.buildQuerySearch);
     response?.checkStatusResponse(
       onSuccess: (data, _) {
         final lastPage = data?.meta?.lastPage ?? searchJobsState.pageNumber;
@@ -108,6 +109,8 @@ class UserSearchJobsController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    searchJobsState.textSearch.text =
+        SharedGlobalDataService.instance.searchTextKey;
     fetchEmploymentTypes();
     pagingController.addPageRequestListener(_pageRequester);
   }
@@ -156,8 +159,9 @@ class UserSearchJobsState {
 
   Map<String, String> get buildQuerySearch => {
         ...querySearch,
+        'page': pageNumber.toString(),
         'text': textSearch.text.trim().split(' ').join('+'),
-        'employment_type': employmentTyp.value ?? '',
+        'employment_type': employmentTyp.title?.split(' ').join('+') ?? '',
         'per_page': '6',
       }..removeWhere((key, value) => value.trim().isEmpty);
 

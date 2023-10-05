@@ -5,7 +5,6 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:jobspot/JopController/company_display_posts_job_controller/company_show_job_post_wrapper_controller.dart';
 import 'package:jobspot/sippo_data/company_repos/company_job_repo.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 import '../../sippo_data/model/auth_model/company_response_details.dart';
 import '../../utils/states.dart';
@@ -111,16 +110,6 @@ class CompanyShowJobController extends GetxController {
     showWrapperController.changeStates(isLoading: false);
   }
 
-  Future<void> lunchMapWithLocation(double? lat, double? long) async {
-    print("is work place is null? ${long == null || lat == null}");
-    if (long == null || lat == null) return;
-    try {
-      !await launchUrl(Uri.parse("http://maps.google.com/?ll=$lat,$long"));
-    } catch (e, s) {
-      print(e);
-      print(s);
-    }
-  }
 
   @override
   void onInit() {

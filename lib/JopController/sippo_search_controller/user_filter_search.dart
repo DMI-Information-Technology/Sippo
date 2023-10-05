@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JopController/user_core_functions/user_search_jobs.dart';
+import 'package:jobspot/JopController/sippo_search_controller/user_search_jobs.dart';
 import 'package:jobspot/sippo_data/company_repos/company_job_repo.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
 import 'package:jobspot/sippo_data/model/salary_model/range_salary_model.dart';
@@ -153,7 +153,7 @@ class FilterSearchState {
   Map<String, String> get buildQueryFilterSearch => {
         'salary_from': rangeSalary.start.round().toString(),
         'salary_to': rangeSalary.end.round().toString(),
-        'workplace_type': workPlaceType.value ?? '',
+        'workplace_type': workPlaceType.value?.split(' ').join('+') ?? '',
         'experience_level': experienceLevel.value ?? '',
         'specialization_id': specialization.id?.toString() ?? '',
       };

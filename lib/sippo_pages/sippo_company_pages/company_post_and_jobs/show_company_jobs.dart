@@ -14,6 +14,7 @@ import '../../../sippo_custom_widget/container_bottom_sheet_widget.dart';
 import '../../../sippo_custom_widget/save_job_card_widget.dart';
 import '../../../sippo_custom_widget/setting_item_widget.dart';
 import '../../../sippo_custom_widget/widgets.dart';
+import '../../../utils/helper.dart';
 
 class ShowCompanyJobsList extends StatefulWidget {
   const ShowCompanyJobsList({super.key});
@@ -51,7 +52,7 @@ class _ShowCompanyJobsListState extends State<ShowCompanyJobsList> {
                 _openBottomJobSheetOption(context, item.id, item.isActive);
               },
               onAddressTextTap: (location) async {
-                await _controller.lunchMapWithLocation(
+                await lunchMapWithLocation(
                   location?.dLatitude,
                   location?.dLongitude,
                 );

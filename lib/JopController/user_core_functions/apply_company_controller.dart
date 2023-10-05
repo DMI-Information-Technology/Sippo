@@ -1,6 +1,7 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jobspot/JobServices/shared_global_data_service.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/user_job_application_model.dart';
 import 'package:jobspot/sippo_data/user_repos/user_companies_abouts_repo.dart';
@@ -9,7 +10,6 @@ import '../../sippo_data/model/custom_file_model/custom_file_model.dart';
 import '../../utils/file_picker_service.dart';
 import '../../utils/states.dart';
 import '../ConnectivityController/internet_connection_controller.dart';
-import '../dashboards_controller/user_dashboard_controller.dart';
 
 class ApplyCompanyController extends GetxController {
   final applyCompanyState = ApplyCompanyState();
@@ -32,8 +32,8 @@ class ApplyCompanyController extends GetxController {
   }
 
   CompanyDetailsResponseModel get requestedCompanyDetails =>
-      UserDashBoardController.instance.companyDashboardState.details;
-  final companyId = UserDashBoardController.instance.companyDashboardState.id;
+      SharedGlobalDataService.instance.companyDashboardState.details;
+  final companyId = SharedGlobalDataService.instance.companyDashboardState.id;
   final _states = States().obs;
 
   States get states => _states.value;
@@ -76,7 +76,7 @@ class ApplyCompanyController extends GetxController {
       onSuccess: (data, _) {
         if (data != null) {
           applyCompanyState.company = data;
-          UserDashBoardController.instance.companyDashboardState.details =
+          SharedGlobalDataService.instance.companyDashboardState.details =
               applyCompanyState.company;
         }
         changeStates(

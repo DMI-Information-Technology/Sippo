@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:jobspot/JopController/user_community_controller/user_about_companies_controllers.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
-
 import '../../sippo_data/model/profile_model/company_profile_resource_model/company_post_model.dart';
 import '../../sippo_data/user_repos/user_companies_abouts_repo.dart';
 

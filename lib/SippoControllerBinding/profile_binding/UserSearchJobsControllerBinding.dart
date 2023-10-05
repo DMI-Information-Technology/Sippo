@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
-import 'package:jobspot/JopController/user_core_functions/user_search_jobs.dart';
-
+import 'package:jobspot/JopController/sippo_search_controller/user_search_jobs.dart';
 
 class UserSearchJobsBindingController implements Bindings {
   @override
@@ -10,4 +9,3 @@ class UserSearchJobsBindingController implements Bindings {
 
   const UserSearchJobsBindingController();
 }
-

@@ -1,20 +1,21 @@
 import 'dart:ui';
 
 import 'package:get/get.dart';
-import 'package:jobspot/JopController/dashboards_controller/user_dashboard_controller.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
 import 'package:jobspot/utils/states.dart';
 
 import '../../JobGlobalclass/jobstopcolor.dart';
+import '../../JobServices/shared_global_data_service.dart';
 import '../../sippo_data/user_repos/user_jobs_repo.dart';
 
 class JobCompanyDetailsController extends GetxController {
   static JobCompanyDetailsController get instance => Get.find();
+  final sharedDataService = SharedGlobalDataService.instance;
 
   CompanyJobModel get requestedJobDetails =>
-      UserDashBoardController.instance.jobDashboardState.details;
+      sharedDataService.jobDashboardState.details;
 
-  int get jobId => UserDashBoardController.instance.jobDashboardState.id;
+  int get jobId => sharedDataService.jobDashboardState.id;
 
   final jobDetailsState = JobCompanyDetailsState();
   final _states = States().obs;
@@ -22,7 +23,7 @@ class JobCompanyDetailsController extends GetxController {
   States get states => _states.value;
 
   Future<CompanyJobModel?> getJobById(int id) async {
-    final response = await UserJobRepo.getJobById(id);
+    final response = await SippoJobsRepo.getJobById(id);
     final data = await response?.checkStatusResponseAndGetData(
       onValidateError: (validateError, _) {
         changeStates(isError: true, error: validateError?.message);

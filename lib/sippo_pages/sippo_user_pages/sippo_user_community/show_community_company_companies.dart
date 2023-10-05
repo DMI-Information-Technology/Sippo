@@ -6,7 +6,7 @@ import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
-import 'package:jobspot/JopController/dashboards_controller/user_dashboard_controller.dart';
+import 'package:jobspot/JobServices/shared_global_data_service.dart';
 import 'package:jobspot/sippo_custom_widget/save_job_card_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
@@ -130,7 +130,7 @@ class _ShowCommunityCompanyCompaniesListState
 
   void _onCompanyCardTapped(CompanyDetailsResponseModel company) async {
     final companyDashBoardState =
-        UserDashBoardController.instance.companyDashboardState;
+        SharedGlobalDataService.instance.companyDashboardState;
     companyDashBoardState.id = company.id ?? -1;
     companyDashBoardState.details = company;
     await Get.toNamed(SippoRoutes.sippoAboutCompanies);

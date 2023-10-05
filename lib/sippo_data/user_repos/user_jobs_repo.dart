@@ -11,7 +11,7 @@ import '../model/profile_model/company_profile_resource_model/company_job_model.
 import '../model/profile_model/company_profile_resource_model/vlidate_property_company_job_model.dart';
 import '../model/profile_model/profile_resource_model/user_job_application_model.dart';
 
-class UserJobRepo {
+class SippoJobsRepo {
   static Future<
       Resource<PaginationModel<CompanyJobModel>?,
           ValidatePropCompanyJobModel?>?> fetchJobs(

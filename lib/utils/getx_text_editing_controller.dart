@@ -5,7 +5,7 @@ class GetXTextEditingController {
   final controller = TextEditingController(text: "");
   final _text = "".obs;
 
-  String get text => controller.text;
+  String get text => controller.text.trim();
 
   void set text(String value) => controller.text = value;
 
@@ -17,7 +17,9 @@ class GetXTextEditingController {
 
   void clearText() => controller.clear();
 
-  void _textListener() => _text.value = controller.text;
+  void _textListener() {
+    _text.value = controller.text;
+  }
 
   void dispose() {
     controller.removeListener(_textListener);

@@ -1,18 +1,18 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
+import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
-import 'package:jobspot/JopController/dashboards_controller/user_dashboard_controller.dart';
+import 'package:jobspot/JobGlobalclass/text_font_size.dart';
+import 'package:jobspot/JobServices/shared_global_data_service.dart';
+import 'package:jobspot/JopController/sippo_search_controller/general_search_controller.dart';
 import 'package:jobspot/sippo_custom_widget/rounded_border_radius_card_widget.dart';
-import 'package:jobspot/sippo_custom_widget/save_job_card_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
-
-import '../../../JobGlobalclass/jobstopcolor.dart';
-import '../../../JobGlobalclass/jobstopfontstyle.dart';
-import '../../../JobGlobalclass/text_font_size.dart';
-import '../../../JopController/user_core_functions/general_search_controller.dart';
+import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_user_search/show_general_search_companies.dart';
+import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_user_search/show_general_search_jobs.dart';
 
 class SippoGeneralSearch extends StatefulWidget {
   const SippoGeneralSearch({super.key});
@@ -32,8 +32,9 @@ class _SippoGeneralSearchState extends State<SippoGeneralSearch> {
         appBar: _buildAppBar(context),
         body: TabBarView(
           children: [
-            _buildCompaniesList(context),
-            _buildJobsList(context),
+            // _buildCompaniesList(context),
+            const ShowGeneralSearchCompaniesList(),
+            const ShowGeneralSearchJobsList(),
           ],
         ),
       ),
@@ -47,7 +48,7 @@ class _SippoGeneralSearchState extends State<SippoGeneralSearch> {
       leading: Obx(
         () => _buildLeadingAppBarButton(
           context,
-          _controller.generalSearchState.isArrowBack,
+          _controller.generalSearchState.hasFocus,
         ),
       ),
       titleSpacing: 0.0,
@@ -61,7 +62,7 @@ class _SippoGeneralSearchState extends State<SippoGeneralSearch> {
         suffixIcon: InkWell(
           onTap: () {
             print(_controller.generalSearchState.searchController.text);
-            _controller.generalSearchState.searchController.clearText();
+            _controller.onClearSearchFiledSubmitted();
           },
           child: Icon(Icons.close),
         ),
@@ -81,6 +82,7 @@ class _SippoGeneralSearchState extends State<SippoGeneralSearch> {
   TabBar _buildTabBar(BuildContext context) {
     return TabBar(
       onTap: (value) {
+        _controller.generalSearchState.tabsIndex = value;
         _controller.generalSearchState.isJobTab = value == 1;
       },
       unselectedLabelColor: Jobstopcolor.grey,
@@ -94,76 +96,15 @@ class _SippoGeneralSearchState extends State<SippoGeneralSearch> {
       ],
     );
   }
-
-  Widget _buildCompaniesList(BuildContext context) {
-    return ListView.separated(
-      padding: EdgeInsets.symmetric(
-        vertical: context.fromHeight(CustomStyle.paddingValue),
-        horizontal: context.fromWidth(CustomStyle.paddingValue),
-      ),
-      itemCount: 15,
-      itemBuilder: (context, index) {
-        return RoundedBorderRadiusCardWidget(
-          padding: EdgeInsets.zero,
-          child: ListTile(
-            onTap: () {
-              print('hello from company ListTile.');
-            },
-            titleAlignment: ListTileTitleAlignment.center,
-            leading: CircleAvatar(
-              radius: context.fromWidth(21),
-            ),
-            title: AutoSizeText(
-              'Company Name Placeholder',
-              style: dmsmedium,
-              overflow: TextOverflow.ellipsis,
-            ),
-            subtitle: AutoSizeText(
-              'Company Description Text Placeholder xxxxxx',
-              style: dmsregular,
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-        );
-      },
-      separatorBuilder: (context, index) => SizedBox(
-        height: context.fromHeight(CustomStyle.spaceBetween),
-      ),
-    );
-  }
-
-  ListView _buildJobsList(BuildContext context) {
-    return ListView.separated(
-      padding: EdgeInsets.symmetric(
-        vertical: context.fromHeight(CustomStyle.paddingValue),
-        horizontal: context.fromWidth(CustomStyle.paddingValue),
-      ),
-      itemCount: 15,
-      itemBuilder: (context, index) {
-        return JobPostingCard(
-          onActionTap: () {},
-          jobDetails: null,
-          companyName: null,
-          imagePath: null,
-          onAddressTextTap: (location) {},
-          timeAgo: '',
-          isSaved: false,
-        );
-      },
-      separatorBuilder: (context, index) => SizedBox(
-        height: context.fromHeight(CustomStyle.spaceBetween),
-      ),
-    );
-  }
-
   Widget _buildFilterJobActionButton(BuildContext context, bool isJobTab) {
     return isJobTab
         ? IconButton(
+            alignment: Alignment.center,
             onPressed: () async {
-              UserDashBoardController.instance.searchTextKey =
+              SharedGlobalDataService.instance.searchTextKey =
                   _controller.generalSearchState.searchController.text;
               await Get.toNamed(SippoRoutes.sippoUserJobSearch);
-              UserDashBoardController.instance.searchTextKey = '';
+              SharedGlobalDataService.instance.searchTextKey = '';
             },
             icon: Icon(
               Icons.filter_alt_outlined,
@@ -184,7 +125,9 @@ class _SippoGeneralSearchState extends State<SippoGeneralSearch> {
             child: Icon(Icons.arrow_back_rounded),
           )
         : InkWell(
-            onTap: () {},
+            onTap: () {
+              _controller.onSearchSubmitted();
+            },
             child: Icon(
               Icons.search_rounded,
               color: Jobstopcolor.primarycolor,
