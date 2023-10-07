@@ -225,23 +225,23 @@ class _SippoUserHomeState extends State<SippoUserHome> {
 
   Widget _buildWelcomeUser(BuildContext context) {
     final dashboardController = UserDashBoardController.instance;
-    // Image image;
-    // if (getTimeOfDay() == 'Good Morning') {
-    //   image = Image.asset(
-    //     JobstopPngImg.morning,
-    //     height: 30,
-    //   );
-    // } else if (getTimeOfDay() == 'Good Afternoon') {
-    //   image = Image.asset(
-    //     JobstopPngImg.afternoon,
-    //     height: 30,
-    //   );
-    // } else {
-    //   image = Image.asset(
-    //     JobstopPngImg.night,
-    //     height: 30,
-    //   );
-    // }
+    Image image;
+    if (getTimeOfDay() == 'Good Morning') {
+      image = Image.asset(
+        JobstopPngImg.morning,
+        height: 30,
+      );
+    } else if (getTimeOfDay() == 'Good Afternoon') {
+      image = Image.asset(
+        JobstopPngImg.afternoon,
+        height: 30,
+      );
+    } else {
+      image = Image.asset(
+        JobstopPngImg.night,
+        height: 30,
+      );
+    }
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: context.fromWidth(CustomStyle.s),
@@ -250,20 +250,21 @@ class _SippoUserHomeState extends State<SippoUserHome> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Row(
-          //   children: [
-          Text(
-            getTimeOfDay(),
-            style: dmsbold.copyWith(
-              fontSize: FontSize.title3(context),
-              color: Jobstopcolor.primarycolor,
-            ),
+          Row(
+            children: [
+              Text(
+                getTimeOfDay(),
+                style: dmsbold.copyWith(
+                  fontSize: FontSize.title3(context),
+                  color: Jobstopcolor.primarycolor,
+                ),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              image,
+            ],
           ),
-          // SizedBox(width: 10,),
-          // image,
-
-          // ],
-          // ),
           Obx(
             () => dashboardController.user.name != null
                 ? Text(

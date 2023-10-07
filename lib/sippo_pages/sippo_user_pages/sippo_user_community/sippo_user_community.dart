@@ -31,7 +31,6 @@ class _SippoUserCommunityState extends State<SippoUserCommunity> {
         isTopScrollable: true,
         topScreen: Column(
           children: [
-
             Obx(() => ConditionalWidget(
                   !_controller.isNetworkConnected,
                   guaranteedBuilder: (_, __) => NetworkStatusNonWidget(
@@ -66,12 +65,13 @@ class _SippoUserCommunityState extends State<SippoUserCommunity> {
                   _controller.switchSelectedTap(0);
                 },
                 text: "Posts".tr,
+                borderRadiusValue: 12,
                 backgroundColor: _controller.selected == 0
                     ? Jobstopcolor.primarycolor
                     : Jobstopcolor.lightprimary,
                 textColor: _controller.selected == 0
                     ? Jobstopcolor.white
-                    : Jobstopcolor.primarycolor,
+                    : Jobstopcolor.white,
               ),
             )),
         Obx(() => SizedBox(
@@ -83,12 +83,13 @@ class _SippoUserCommunityState extends State<SippoUserCommunity> {
                   _controller.switchSelectedTap(1);
                 },
                 text: "My Connections".tr,
+                borderRadiusValue: 12,
                 backgroundColor: _controller.selected == 1
                     ? Jobstopcolor.primarycolor
                     : Jobstopcolor.lightprimary,
                 textColor: _controller.selected == 1
                     ? Jobstopcolor.white
-                    : Jobstopcolor.primarycolor,
+                    : Jobstopcolor.white,
               ),
             )),
       ],
