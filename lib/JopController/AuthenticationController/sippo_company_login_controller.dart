@@ -9,12 +9,13 @@ import '../../JobGlobalclass/jobstopimges.dart';
 import '../../JobGlobalclass/routes.dart';
 import '../../sippo_custom_widget/widgets.dart';
 import '../../utils/states.dart';
-import '../ConnectivityController/internet_connection_controller.dart';
+import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
+
 
 class CompanyLoginController extends GetxController {
   static CompanyLoginController get instance => Get.find();
   final GlobalKey<FormState> formKey = GlobalKey();
-  final netController = InternetConnectionController.instance;
+  final netController = InternetConnectionService.instance;
   final authController = AuthController.instance;
 
   States get authState => authController.states;

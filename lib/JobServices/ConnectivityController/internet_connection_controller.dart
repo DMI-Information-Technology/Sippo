@@ -9,8 +9,8 @@ import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import '../../sippo_custom_widget/error_messages_dialog_snackbar/error_messages.dart'
     as errorMessage;
 
-class InternetConnectionController extends GetxController {
-  static InternetConnectionController get instance => Get.find();
+class InternetConnectionService extends GetxService {
+  static InternetConnectionService get instance => Get.find();
   late StreamController<bool> _connectionStreamController;
 
   // StreamController<bool>.broadcast();

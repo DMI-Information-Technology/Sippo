@@ -1,6 +1,7 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
 import 'package:jobspot/JobServices/shared_global_data_service.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/user_job_application_model.dart';
@@ -9,7 +10,6 @@ import 'package:jobspot/sippo_data/user_repos/user_companies_abouts_repo.dart';
 import '../../sippo_data/model/custom_file_model/custom_file_model.dart';
 import '../../utils/file_picker_service.dart';
 import '../../utils/states.dart';
-import '../ConnectivityController/internet_connection_controller.dart';
 
 class ApplyCompanyController extends GetxController {
   final applyCompanyState = ApplyCompanyState();
@@ -31,9 +31,9 @@ class ApplyCompanyController extends GetxController {
     applyCompanyState.cvCompanyApply = const CustomFileModel();
   }
 
-  CompanyDetailsResponseModel get requestedCompanyDetails =>
-      SharedGlobalDataService.instance.companyDashboardState.details;
-  final companyId = SharedGlobalDataService.instance.companyDashboardState.id;
+  CompanyDetailsResponseModel? get requestedCompanyDetails =>
+      SharedGlobalDataService.instance.companyGlobalState.details;
+  final companyId = SharedGlobalDataService.instance.companyGlobalState.id;
   final _states = States().obs;
 
   States get states => _states.value;
@@ -76,7 +76,7 @@ class ApplyCompanyController extends GetxController {
       onSuccess: (data, _) {
         if (data != null) {
           applyCompanyState.company = data;
-          SharedGlobalDataService.instance.companyDashboardState.details =
+          SharedGlobalDataService.instance.companyGlobalState.details =
               applyCompanyState.company;
         }
         changeStates(
@@ -98,13 +98,14 @@ class ApplyCompanyController extends GetxController {
 
   void requestCompanyDetails() async {
     changeStates(isLoading: true);
-    if (requestedCompanyDetails.id != null &&
-        requestedCompanyDetails.name != null) {
-      applyCompanyState.company = requestedCompanyDetails;
-    } else if (companyId != -1) {
+    if (requestedCompanyDetails?.id != null &&
+        requestedCompanyDetails?.name != null) {
       applyCompanyState.company =
-          await getCompanyById(requestedCompanyDetails.id) ??
-              applyCompanyState.company;
+          requestedCompanyDetails ?? applyCompanyState.company;
+    }
+    if (companyId != -1) {
+      applyCompanyState.company =
+          await getCompanyById(companyId) ?? applyCompanyState.company;
     }
     changeStates(isLoading: false);
   }
@@ -129,7 +130,7 @@ class ApplyCompanyController extends GetxController {
 
   Future<void> onApplySubmitted() async {
     if (states.isLoading) return;
-    if (!InternetConnectionController.instance.isConnected) {
+    if (!InternetConnectionService.instance.isConnected) {
       return changeStates(
         isWarning: true,
         isError: false,
@@ -159,7 +160,6 @@ class ApplyCompanyState {
   CompanyDetailsResponseModel get company => _company.value;
 
   void set company(CompanyDetailsResponseModel value) {
-    _company(value);
     _company.value = value;
   }
 

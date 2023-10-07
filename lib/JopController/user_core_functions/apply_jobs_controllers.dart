@@ -1,8 +1,8 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
 import 'package:jobspot/JobServices/shared_global_data_service.dart';
-import 'package:jobspot/JopController/ConnectivityController/internet_connection_controller.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/user_job_application_model.dart';
 import 'package:jobspot/sippo_data/user_repos/user_jobs_repo.dart';
 
@@ -31,9 +31,9 @@ class ApplyJobsController extends GetxController {
     applyJobsState.cvJobApply = const CustomFileModel();
   }
 
-  CompanyJobModel get requestedJobDetails =>
-      SharedGlobalDataService.instance.jobDashboardState.details;
-  final jobId = SharedGlobalDataService.instance.jobDashboardState.id;
+  final requestedJobDetails =
+      SharedGlobalDataService.instance.jobGlobalState.details;
+  final jobId = SharedGlobalDataService.instance.jobGlobalState.id;
   final _states = States().obs;
 
   States get states => _states.value;
@@ -96,12 +96,13 @@ class ApplyJobsController extends GetxController {
 
   void requestJobDetails() async {
     changeStates(isLoading: true);
-    if (requestedJobDetails.id != null && requestedJobDetails.title != null) {
-      applyJobsState.jopDetails = requestedJobDetails;
+    if (requestedJobDetails?.id != null && requestedJobDetails?.title != null) {
+      applyJobsState.jopDetails =
+          requestedJobDetails ?? applyJobsState.jopDetails;
     }
     if (jobId != -1) {
       applyJobsState.jopDetails =
-          await getJobById(requestedJobDetails.id) ?? applyJobsState.jopDetails;
+          await getJobById(jobId) ?? applyJobsState.jopDetails;
     }
     changeStates(isLoading: false);
   }
@@ -126,7 +127,7 @@ class ApplyJobsController extends GetxController {
 
   Future<void> onApplySubmitted() async {
     if (states.isLoading) return;
-    if (!InternetConnectionController.instance.isConnected) {
+    if (!InternetConnectionService.instance.isConnected) {
       return changeStates(
         isWarning: true,
         isError: false,
@@ -135,9 +136,9 @@ class ApplyJobsController extends GetxController {
             " reconnect to network and try again.",
       );
     }
-    if (jobId == -1) return;
+    if (requestedJobDetails?.id == -1) return;
     changeStates(isLoading: true);
-    await sendApplicationJob(jobId);
+    await sendApplicationJob(requestedJobDetails?.id);
     changeStates(isLoading: false);
   }
 

@@ -130,11 +130,11 @@ class _ShowCommunityCompanyCompaniesListState
 
   void _onCompanyCardTapped(CompanyDetailsResponseModel company) async {
     final companyDashBoardState =
-        SharedGlobalDataService.instance.companyDashboardState;
+        SharedGlobalDataService.instance.companyGlobalState;
     companyDashBoardState.id = company.id ?? -1;
     companyDashBoardState.details = company;
     await Get.toNamed(SippoRoutes.sippoAboutCompanies);
-    if (companyDashBoardState.details.isFollowed != company.isFollowed) {
+    if (companyDashBoardState.details?.isFollowed != company.isFollowed) {
       _controller.changeFollowingState(
         companyDashBoardState.details,
         (isFollowing) => isFollowing == true,

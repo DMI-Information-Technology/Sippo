@@ -1,4 +1,3 @@
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,12 +7,14 @@ import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
-import 'package:jobspot/JopController/ConnectivityController/internet_connection_controller.dart';
+import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/top_job_details_header.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_abouts_companies/show_about_companies_details.dart';
+import 'package:jobspot/utils/app_use.dart';
 
+import '../../../JobGlobalclass/global_storage.dart';
 import '../../../JobGlobalclass/routes.dart';
 import '../../../JopController/JobDescriptionController/job_description_controller.dart';
 import '../../../sippo_custom_widget/ConditionalWidget.dart';
@@ -52,19 +53,17 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: AppBar(
-        iconTheme: IconThemeData(
-            color: Colors.white
-        ),
+        iconTheme: IconThemeData(color: Colors.white),
       ),
       body: BodyWidget(
         isScrollable: true,
         isTopScrollable: true,
         connectionStatusBar: Obx(() => ConditionalWidget(
-          !InternetConnectionController.instance.isConnected,
-          guaranteedBuilder: (_, __) => NetworkStatusNonWidget(
-            color: Colors.black54,
-          ),
-        )),
+              !InternetConnectionService.instance.isConnected,
+              guaranteedBuilder: (_, __) => NetworkStatusNonWidget(
+                color: Colors.black54,
+              ),
+            )),
         paddingContent: EdgeInsets.only(
           top: context.fromHeight(CustomStyle.paddingValue),
           right: context.fromWidth(CustomStyle.paddingValue),
@@ -76,49 +75,50 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
             _buildButtonTaps(context),
             SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
             Obx(
-                  () => _controller.jobDetailsState.selectedPageView == 0
+              () => _controller.jobDetailsState.selectedPageView == 0
                   ? _buildJobDetails(context)
                   : ShowAboutCompaniesDetails(
-                company: _controller.jobDetailsState.jopDetails.company,
-              ),
+                      company: _controller.jobDetailsState.jopDetails.company,
+                    ),
             ),
           ],
         ),
         paddingBottom:
-        EdgeInsets.all(context.fromWidth(CustomStyle.paddingValue)),
-        bottomScreen: Obx(
-              () =>
-          bottomButtonScreen[_controller.jobDetailsState.selectedPageView],
-        ),
+            EdgeInsets.all(context.fromWidth(CustomStyle.paddingValue)),
+        bottomScreen: GlobalStorageService.appUse == AppUsingType.user
+            ? Obx(
+                () => bottomButtonScreen[
+                    _controller.jobDetailsState.selectedPageView],
+              )
+            : null,
       ),
     );
   }
 
   Widget _buildTopJobDetailsHeader(BuildContext context) {
     return Obx(() => Column(
-      children: [
-        TopJobDetailsHeader(
-          isConnectionLost:
-          !InternetConnectionController.instance.isConnected,
-          coverHeight: context.height / 4.5,
-          profileImageSize: context.height / 8,
-          backgroundImageColor: Colors.white,
-          imageUrl: SippoJobDescription.imgUrl,
-          // onLeadingTap: () => Get.back(),
-          actions: [
-            IconButton(
-              onPressed: () {},
-              icon: Icon(
-                Icons.more_vert,
-                color: Colors.white,
-              ),
+          children: [
+            TopJobDetailsHeader(
+              isConnectionLost: !InternetConnectionService.instance.isConnected,
+              coverHeight: context.height / 4.5,
+              profileImageSize: context.height / 8,
+              backgroundImageColor: Colors.white,
+              imageUrl: SippoJobDescription.imgUrl,
+              // onLeadingTap: () => Get.back(),
+              actions: [
+                IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.more_vert,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
             ),
+            SizedBox(height: context.height / CustomStyle.spaceBetween),
+            _buildTopJobInfo(context),
           ],
-        ),
-        SizedBox(height: context.height / CustomStyle.spaceBetween),
-        _buildTopJobInfo(context),
-      ],
-    ));
+        ));
   }
 
   Widget _buildTopJobInfo(BuildContext context) {
@@ -130,14 +130,16 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Obx(() => Text(
-            _controller.jobDetailsState.jopDetails.title ?? '',
-            style: dmsbold.copyWith(
-              fontSize: FontSize.title2(context),
-              color: Jobstopcolor.secondary,
-            ),
-            overflow: TextOverflow.clip,
-          )),
-          SizedBox(height: context.fromHeight(CustomStyle.xxxl),),
+                _controller.jobDetailsState.jopDetails.title ?? '',
+                style: dmsbold.copyWith(
+                  fontSize: FontSize.title2(context),
+                  color: Jobstopcolor.secondary,
+                ),
+                overflow: TextOverflow.clip,
+              )),
+          SizedBox(
+            height: context.fromHeight(CustomStyle.xxxl),
+          ),
           FittedBox(
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -145,10 +147,11 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
               children: [
                 //   SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
                 Obx(() => _buildTopInfoJobText(
-                  context,
-                  //'Company name',
-                  _controller.jobDetailsState.jopDetails.company?.name ?? '',
-                )),
+                      context,
+                      //'Company name',
+                      _controller.jobDetailsState.jopDetails.company?.name ??
+                          '',
+                    )),
                 Container(
                   width: 10,
                   height: 10,
@@ -159,10 +162,11 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
                 ),
                 SizedBox(width: context.fromWidth(CustomStyle.xxxl)),
                 Obx(() => _buildTopInfoJobText(
-                  context,
-                  //'Work place',
-                  _controller.jobDetailsState.jopDetails.company?.city ?? '',
-                )),
+                      context,
+                      //'Work place',
+                      _controller.jobDetailsState.jopDetails.company?.city ??
+                          '',
+                    )),
                 //  SizedBox(height: context.fromHeight(CustomStyle.huge2)),
                 Container(
                   width: 10,
@@ -174,13 +178,13 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
                 ),
                 SizedBox(width: context.fromWidth(CustomStyle.xxxl)),
                 Obx(() => _buildTopInfoJobText(
-                  context,
-                  // 'Publish time',
-                  calculateElapsedTimeFromStringDate(
-                    _controller.jobDetailsState.jopDetails.createdAt,
-                  ) ??
-                      "",
-                )),
+                      context,
+                      // 'Publish time',
+                      calculateElapsedTimeFromStringDate(
+                            _controller.jobDetailsState.jopDetails.createdAt,
+                          ) ??
+                          "",
+                    )),
               ],
             ),
           )
@@ -190,12 +194,12 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
   }
 
   Widget _buildTopInfoJobText(
-      BuildContext context,
-      // String label,
-      String content,
-      ) {
+    BuildContext context,
+    // String label,
+    String content,
+  ) {
     return SizedBox(
-      width: context.width /3,
+      width: context.width / 3,
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -230,7 +234,7 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Obx(
-              () => SizedBox(
+          () => SizedBox(
             width: width / 2.3,
             child: CustomButton(
               borderRadiusValue: 12,
@@ -239,22 +243,21 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
               },
               text: "description".tr,
               backgroundColor:
-              _controller.jobDetailsState.changeDescriptionButtonColor(),
+                  _controller.jobDetailsState.changeDescriptionButtonColor(),
             ),
           ),
         ),
         Obx(
-              () => SizedBox(
+          () => SizedBox(
             width: width / 2.3,
             child: CustomButton(
               borderRadiusValue: 12,
               onTapped: () {
-
                 _controller.jobDetailsState.switchPageView();
               },
               text: "company".tr,
               backgroundColor:
-              _controller.jobDetailsState.changeCompanyButtonColor(),
+                  _controller.jobDetailsState.changeCompanyButtonColor(),
             ),
           ),
         ),
@@ -307,7 +310,7 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
         Text(
           _controller.jobDetailsState.jopDetails.company?.city ?? "",
           style:
-          dmsregular.copyWith(fontSize: 12, color: Jobstopcolor.darkgrey),
+              dmsregular.copyWith(fontSize: 12, color: Jobstopcolor.darkgrey),
         ),
         SizedBox(
           height: height / 66,

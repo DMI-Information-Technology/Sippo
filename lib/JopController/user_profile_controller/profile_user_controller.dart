@@ -3,7 +3,8 @@ import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JopController/ConnectivityController/internet_connection_controller.dart';
+import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
+
 import 'package:jobspot/JopController/dashboards_controller/user_dashboard_controller.dart';
 import 'package:jobspot/core/Refresh.dart';
 import 'package:jobspot/sippo_data/model/custom_file_model/custom_file_model.dart';
@@ -25,7 +26,7 @@ import '../../utils/file_downloader_service.dart';
 import '../../utils/storage_permission_service.dart';
 
 class ProfileUserController extends GetxController {
-  final netController = InternetConnectionController.instance;
+  final netController = InternetConnectionService.instance;
   final loadingOverlayController = SwitchStatusController();
 
   late final StreamSubscription<bool>? _connectionSubscription;

@@ -25,23 +25,23 @@ class JobPostingCard extends StatelessWidget {
   final String? timeAgo;
   final bool isEditable;
   final void Function(CordLocation? location)? onAddressTextTap;
+  final bool isSaved;
 
   // final String salary;
-  final VoidCallback onActionTap;
-  final bool isSaved;
+  final VoidCallback? onActionTap;
   final CompanyJobModel? jobDetails;
 
   const JobPostingCard({
     this.imagePath,
     this.timeAgo,
-    required this.onActionTap,
-    this.isSaved = false,
+    this.onActionTap,
     this.jobDetails,
     this.isEditable = false,
     this.onAddressTextTap,
     this.companyLocations,
     this.companyName,
     this.isActive,
+    this.isSaved = false,
   });
 
   @override
@@ -105,7 +105,7 @@ class JobPostingCard extends StatelessWidget {
                 Image.asset(JobstopPngImg.companysignup),
           ),
           const Spacer(),
-          _buildActionButton(context),
+          if (onActionTap != null) _buildActionButton(context),
         ],
       ),
     );
@@ -120,12 +120,12 @@ class JobPostingCard extends StatelessWidget {
       child: isEditable
           ? Icon(
               Icons.more_vert_rounded,
-              size: (kIsWeb ? height : width) / 16,
+              size: (kIsWeb ? height : width) / 14,
             )
-          : Image.asset(
-              this.isSaved ? JobstopPngImg.dots : JobstopPngImg.order,
-              height: (kIsWeb ? height : width) / 16,
-              color: Colors.black,
+          : Icon(
+              isSaved ? Icons.bookmark_rounded : Icons.bookmark_border_outlined,
+              size: (kIsWeb ? height : width) / 14,
+              color: isSaved ? Colors.yellow : Colors.black,
             ),
     );
   }

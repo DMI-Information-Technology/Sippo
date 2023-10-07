@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:jobspot/JobServices/shared_global_data_service.dart';
-import 'package:jobspot/JopController/ConnectivityController/internet_connection_controller.dart';
+import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
+
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
 import 'package:jobspot/sippo_data/user_repos/user_companies_abouts_repo.dart';
 
@@ -9,10 +10,10 @@ import '../../utils/states.dart';
 class UserAboutCompaniesController extends GetxController {
   static UserAboutCompaniesController get instance => Get.find();
 
-  final companyId = SharedGlobalDataService.instance.companyDashboardState.id;
+  final companyId = SharedGlobalDataService.instance.companyGlobalState.id;
 
   bool get isNetworkConnected =>
-      InternetConnectionController.instance.isConnected;
+      InternetConnectionService.instance.isConnected;
   final aboutState = UserAboutCompaniesState();
   final _states = States().obs;
 
@@ -47,7 +48,7 @@ class UserAboutCompaniesController extends GetxController {
       onSuccess: (data, _) {
         if (data != null) {
           aboutState.company = data;
-          SharedGlobalDataService.instance.companyDashboardState.details =
+          SharedGlobalDataService.instance.companyGlobalState.details =
               aboutState.company;
         }
       },
@@ -96,7 +97,8 @@ class UserAboutCompaniesController extends GetxController {
 
   void startController() async {
     aboutState.company =
-        SharedGlobalDataService.instance.companyDashboardState.details;
+        SharedGlobalDataService.instance.companyGlobalState.details ??
+            aboutState.company;
     if (companyId != -1) {
       changeStates(isLoading: true);
       await getCompanyById(companyId);

@@ -1,7 +1,8 @@
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:jobspot/JobServices/shared_global_data_service.dart';
-import 'package:jobspot/JopController/ConnectivityController/internet_connection_controller.dart';
+import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
+
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
 import 'package:jobspot/sippo_data/user_repos/user_saved_job_repo.dart';
 import 'package:jobspot/utils/states.dart';
@@ -14,7 +15,7 @@ class UserSavedJobsController extends GetxController {
       PagingController<int, CompanyJobModel>(firstPageKey: 0);
 
   bool get isNetworkConnected =>
-      InternetConnectionController.instance.isConnected;
+      InternetConnectionService.instance.isConnected;
   final savedJobState = SavedJobsJobState();
 
   final _states = States().obs;
@@ -43,15 +44,15 @@ class UserSavedJobsController extends GetxController {
   final sharedDataService = SharedGlobalDataService.instance;
 
   void set jobDetailsId(int? value) {
-    sharedDataService.jobDashboardState.id = value ?? -1;
+    sharedDataService.jobGlobalState.id = value ?? -1;
   }
 
   void set requestedJobDetails(CompanyJobModel? value) {
-    if (value != null) sharedDataService.jobDashboardState.details = value;
+    if (value != null) sharedDataService.jobGlobalState.details = value;
   }
 
   void clearRequestedJobDetails() {
-    sharedDataService.jobDashboardState.clearDetails(
+    sharedDataService.jobGlobalState.clearDetails(
       () => CompanyJobModel(),
     );
   }

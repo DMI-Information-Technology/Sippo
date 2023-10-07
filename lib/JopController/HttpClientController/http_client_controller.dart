@@ -7,7 +7,7 @@ class HttpClientController extends GetxController {
   static HttpClientController get instance => Get.find();
   final MyHttpClient client = MyHttpClient(
     baseUrl: apiUrl.baseUrl,
-    authToken: GlobalStorage.tokenLogged ?? "",
+    authToken: GlobalStorageService.tokenLogged ?? "",
   );
 
   @override

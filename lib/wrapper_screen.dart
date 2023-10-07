@@ -9,7 +9,6 @@ import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/utils/app_use.dart';
 
 import 'JobGlobalclass/jobstopimges.dart';
-import 'JobServices/shared_global_data_service.dart';
 
 class WrapperScreen extends StatefulWidget {
   const WrapperScreen({super.key});
@@ -47,7 +46,7 @@ class _WrapperScreenState extends State<WrapperScreen>
           Get.offAllNamed(SippoRoutes.appUsingPage);
           return;
         }
-        if (GlobalStorage.isLogged) {
+        if (GlobalStorageService.isLogged) {
           dashboardScreens();
         } else {
           entryScreen();
@@ -64,8 +63,7 @@ class _WrapperScreenState extends State<WrapperScreen>
   }
 
   void dashboardScreens() {
-    Get.put(SharedGlobalDataService());
-    switch (GlobalStorage.appUse) {
+    switch (GlobalStorageService.appUse) {
       case AppUsingType.user:
         Get.offAllNamed(SippoRoutes.userDashboard);
         break;
@@ -76,7 +74,7 @@ class _WrapperScreenState extends State<WrapperScreen>
   }
 
   void entryScreen() {
-    switch (GlobalStorage.isAppLunchFirstTime) {
+    switch (GlobalStorageService.isAppLunchFirstTime) {
       case true:
         Get.offAllNamed(SippoRoutes.onboarding);
         break;

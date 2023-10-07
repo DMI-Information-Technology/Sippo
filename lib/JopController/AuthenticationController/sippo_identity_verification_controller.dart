@@ -3,7 +3,8 @@ import 'dart:async';
 import 'package:get/get.dart';
 import 'package:jobspot/JopController/AuthenticationController/sippo_auth_controller.dart';
 import 'package:jobspot/JopController/AuthenticationController/sippo_signup_company_controller.dart';
-import 'package:jobspot/JopController/ConnectivityController/internet_connection_controller.dart';
+import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
+
 import 'package:jobspot/utils/helper.dart' as helper;
 import 'package:jobspot/utils/states.dart';
 
@@ -24,7 +25,7 @@ class IdentityVerificationController extends GetxController {
   final _loController = SwitchStatusController();
   final _firebaseOTP = Get.put(FirebaseAuthServiceController());
   final _authController = AuthController.instance;
-  final _netController = InternetConnectionController.instance;
+  final _netController = InternetConnectionService.instance;
   final _signUpCompanyController = SignUpCompanyController.instance;
 
   bool get isNetworkConnect => _netController.isConnected;

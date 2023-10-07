@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
 import '../../utils/states.dart';
-import '../ConnectivityController/internet_connection_controller.dart';
+import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
 
 class UserCommunityController extends GetxController {
   static UserCommunityController get instance => Get.find();
@@ -9,7 +9,7 @@ class UserCommunityController extends GetxController {
   //
 
   bool get isNetworkConnected =>
-      InternetConnectionController.instance.isConnected;
+      InternetConnectionService.instance.isConnected;
   final _selected = 0.obs;
   final _states = States().obs;
 

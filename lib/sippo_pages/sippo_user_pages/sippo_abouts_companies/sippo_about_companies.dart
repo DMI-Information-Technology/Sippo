@@ -11,11 +11,13 @@ import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_abouts_companies/show
 import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_abouts_companies/show_about_companies_jobs.dart';
 import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_abouts_companies/show_about_companies_posts.dart';
 
+import '../../../JobGlobalclass/global_storage.dart';
 import '../../../JobGlobalclass/jobstopcolor.dart';
 import '../../../JobGlobalclass/jobstopfontstyle.dart';
 import '../../../JobGlobalclass/text_font_size.dart';
 import '../../../JopController/user_community_controller/user_about_companies_controllers.dart';
 import '../../../sippo_custom_widget/top_job_details_header.dart';
+import '../../../utils/app_use.dart';
 import '../sippo_job_description/sippo_job_description.dart';
 
 class SippoAboutCompanies extends StatefulWidget {
@@ -78,7 +80,9 @@ class _SippoAboutCompaniesState extends State<SippoAboutCompanies> {
           ),
         ],
       ),
-      bottomNavigationBar: _buildApplyBottomButton(context),
+      bottomNavigationBar: GlobalStorageService.appUse == AppUsingType.user
+          ? _buildApplyBottomButton(context)
+          : null,
     );
   }
 
@@ -162,32 +166,35 @@ class _SippoAboutCompaniesState extends State<SippoAboutCompanies> {
             textColor: Colors.red[300],
           ),
         ),
-        SizedBox(width: context.width / 32),
-        Expanded(
-          child: Obx(() => CustomButton(
-                leadingIcon: _controller.aboutState.company.isFollowed == false
-                    ? Icon(
-                        Icons.add_rounded,
-                        color: Colors.red[300],
-                        size: context.height / CustomStyle.m,
-                      )
-                    : null,
-                backgroundColor:
-                    _controller.aboutState.company.isFollowed == true
-                        ? Jobstopcolor.secondary.withOpacity(0.8)
-                        : Colors.red[100],
-                onTapped: () async {
-                  print("hello world");
-                  _controller.onToggleSubmitted();
-                },
-                text: _controller.aboutState.company.isFollowed == true
-                    ? "followed".tr
-                    : "follow".tr,
-                textColor: _controller.aboutState.company.isFollowed == true
-                    ? Colors.white
-                    : Colors.red[300],
-              )),
-        )
+        if (GlobalStorageService.appUse == AppUsingType.user) ...[
+          SizedBox(width: context.width / 32),
+          Expanded(
+            child: Obx(() => CustomButton(
+                  leadingIcon:
+                      _controller.aboutState.company.isFollowed == false
+                          ? Icon(
+                              Icons.add_rounded,
+                              color: Colors.red[300],
+                              size: context.height / CustomStyle.m,
+                            )
+                          : null,
+                  backgroundColor:
+                      _controller.aboutState.company.isFollowed == true
+                          ? Jobstopcolor.secondary.withOpacity(0.8)
+                          : Colors.red[100],
+                  onTapped: () async {
+                    print("hello world");
+                    _controller.onToggleSubmitted();
+                  },
+                  text: _controller.aboutState.company.isFollowed == true
+                      ? "followed".tr
+                      : "follow".tr,
+                  textColor: _controller.aboutState.company.isFollowed == true
+                      ? Colors.white
+                      : Colors.red[300],
+                )),
+          )
+        ]
       ]),
     );
   }

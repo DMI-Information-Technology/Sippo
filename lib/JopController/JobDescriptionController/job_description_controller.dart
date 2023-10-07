@@ -12,10 +12,10 @@ class JobCompanyDetailsController extends GetxController {
   static JobCompanyDetailsController get instance => Get.find();
   final sharedDataService = SharedGlobalDataService.instance;
 
-  CompanyJobModel get requestedJobDetails =>
-      sharedDataService.jobDashboardState.details;
+  CompanyJobModel? get requestedJobDetails =>
+      sharedDataService.jobGlobalState.details;
 
-  int get jobId => sharedDataService.jobDashboardState.id;
+  int get jobId => sharedDataService.jobGlobalState.id;
 
   final jobDetailsState = JobCompanyDetailsState();
   final _states = States().obs;
@@ -37,8 +37,8 @@ class JobCompanyDetailsController extends GetxController {
 
   void requestJobDetails() async {
     changeStates(isLoading: true);
-    if (requestedJobDetails.id != null && requestedJobDetails.title != null) {
-      jobDetailsState.jopDetails = requestedJobDetails;
+    if (requestedJobDetails?.id != null && requestedJobDetails?.title != null) {
+      jobDetailsState.jopDetails = requestedJobDetails??jobDetailsState.jopDetails;
     }
 
     if (jobId != -1) {

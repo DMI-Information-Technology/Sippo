@@ -12,7 +12,7 @@ import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_job_description/sippo
 import '../../../JobGlobalclass/jobstopimges.dart';
 import '../../../JobGlobalclass/routes.dart';
 import '../../../JobGlobalclass/sippo_customstyle.dart';
-import '../../../JopController/ConnectivityController/internet_connection_controller.dart';
+import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
 import '../../../custom_app_controller/switch_status_controller.dart';
 import '../../../sippo_custom_widget/ConditionalWidget.dart';
 import '../../../sippo_custom_widget/body_widget.dart';
@@ -58,7 +58,7 @@ class _SippoApplyCompanyState extends State<SippoApplyCompany> {
           left: context.fromWidth(CustomStyle.xs),
         ),
         connectionStatusBar: Obx(() => ConditionalWidget(
-              !InternetConnectionController.instance.isConnected,
+              !InternetConnectionService.instance.isConnected,
               guaranteedBuilder: (_, __) =>
                   NetworkStatusNonWidget(color: Colors.black54),
             )),
@@ -231,7 +231,7 @@ class _SippoApplyCompanyState extends State<SippoApplyCompany> {
           children: [
             TopJobDetailsHeader(
               isConnectionLost:
-                  !InternetConnectionController.instance.isConnected,
+                  !InternetConnectionService.instance.isConnected,
               coverHeight: context.height / 3.5,
               profileImageSize: context.height / 6,
               backgroundImageColor: Colors.white,

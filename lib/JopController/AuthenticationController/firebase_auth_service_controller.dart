@@ -7,10 +7,10 @@ import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/utils/states.dart';
 
-import '../ConnectivityController/internet_connection_controller.dart';
+import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
 
 class FirebaseAuthServiceController extends GetxController {
-  final _netController = InternetConnectionController.instance;
+  final _netController = InternetConnectionService.instance;
   final _firebaseAuth = FirebaseAuth.instance;
   var verificationId = "";
   final _states = States().obs;

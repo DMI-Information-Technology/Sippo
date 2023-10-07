@@ -2,7 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JopController/ConnectivityController/internet_connection_controller.dart';
+import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
+
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/profile_edit_model.dart';
 
 import '../../sippo_data/user_repos/edit_profile_repo.dart';
@@ -78,7 +79,7 @@ class UserDashBoardController extends GetxController {
     //     timer.cancel();
     //   }
     // });
-    _connectionSubscription = InternetConnectionController
+    _connectionSubscription = InternetConnectionService
         .instance.isConnectedStream
         .listen(_connected);
     print(_connectionSubscription != null);

@@ -8,6 +8,7 @@ import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
+import 'package:jobspot/JobServices/shared_global_data_service.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/job_card_widget.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
@@ -107,7 +108,6 @@ class _SippoUserHomeState extends State<SippoUserHome> {
           builder: (context, snapshot) {
             final states = snapshot.data;
             final data = _controller.jobsHomeState.jobsList;
-            print(states);
             if (states == null) return const SizedBox.shrink();
             if (states.isError && data.isEmpty)
               return _buildFieldJobsMessage(context, states);
@@ -154,22 +154,13 @@ class _SippoUserHomeState extends State<SippoUserHome> {
                         '.jpg?_nc_cat=107&ccb=1-7&_nc_sid=a2f6c7&_nc_ohc=NqB7-Psc_aIAX_7Ivx0&_nc_ht=scontent.fmji4-1.fna&oh'
                         '=00_AfB7PaSwlVJwrtt003d9CMK5Bxy6ubHVMV9iWwxxol30Bg&oe=650B7982',
                     onImageProfileTap: () async {
-                      _controller.companyDetailsId = item.company?.id ?? -1;
-                      _controller.requestedCompanyDetails = item.company;
-                      await Get.toNamed(SippoRoutes.sippoAboutCompanies);
-                      _controller.clearRequestedCompanyDetails();
+                      SharedGlobalDataService.onCompanyTap(item.company);
                     },
                     onCardTap: () async {
-                      _controller.jobDetailsId = item.id;
-                      _controller.requestedJobDetails = item;
-                      await Get.toNamed(SippoRoutes.sippoJobDescription);
-                      _controller.clearRequestedJobDetails();
+                      SharedGlobalDataService.onJobTap(item);
                     },
                     onApplyTap: () async {
-                      _controller.jobDetailsId = item.id;
-                      _controller.requestedJobDetails = item;
-                      await Get.toNamed(SippoRoutes.userApplyJobs);
-                      _controller.clearRequestedJobDetails();
+                      SharedGlobalDataService.onJobTap(item);
                     },
                     isEditable: false,
                     onAddressTextTap: (location) async {

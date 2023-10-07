@@ -1,7 +1,8 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
-import 'package:jobspot/JopController/ConnectivityController/internet_connection_controller.dart';
+import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
+
 import 'package:jobspot/utils/states.dart';
 
 import '../../sippo_data/model/specializations_model/specializations_model.dart';
@@ -9,7 +10,7 @@ import '../../sippo_data/specializations/specializations_repo.dart';
 import '../../sippo_excepstions/specialization_exception/specialization_exception.dart';
 
 class SpecializationCompanyController extends GetxController {
-  final _netController = InternetConnectionController.instance;
+  final _netController = InternetConnectionService.instance;
 
   bool get isNetworkConnected => _netController.isConnected;
 

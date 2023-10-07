@@ -1,7 +1,8 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
-import 'package:jobspot/JopController/ConnectivityController/internet_connection_controller.dart';
+import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
+
 import 'package:jobspot/JopController/dashboards_controller/company_dashboard_controller.dart';
 import 'package:jobspot/sippo_data/company_repos/compan_user_profile_view_repo.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
@@ -14,7 +15,7 @@ import '../../sippo_data/model/profile_model/profile_widget_model/jobstop_apprec
 import '../../sippo_data/model/profile_model/profile_widget_model/jobstop_resume_file_info.dart';
 
 class ProfileUserViewController extends GetxController {
-  final netController = InternetConnectionController.instance;
+  final netController = InternetConnectionService.instance;
   late final StreamSubscription<bool>? _connectionSubscription;
   final dashboard = CompanyDashBoardController.instance;
 

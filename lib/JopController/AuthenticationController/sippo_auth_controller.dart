@@ -10,11 +10,11 @@ import '../../sippo_data/model/auth_model/auth_response.dart';
 import '../../sippo_data/model/auth_model/company_model.dart';
 import '../../sippo_data/model/auth_model/user_register_type_response.dart';
 import '../../utils/states.dart';
-import '../ConnectivityController/internet_connection_controller.dart';
+import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
 
 class AuthController extends GetxController {
   static AuthController get instance => Get.find();
-  final _netController = InternetConnectionController.instance;
+  final _netController = InternetConnectionService.instance;
   final _states = States().obs;
 
   final _isLogged = false.obs;
@@ -41,7 +41,7 @@ class AuthController extends GetxController {
   }
 
   Future<void> logout() async {
-    if (await userLogout()) await GlobalStorage.removeSavedToken();
+    if (await userLogout()) await GlobalStorageService.removeSavedToken();
   }
 
   void set loadingState(bool value) {
@@ -139,7 +139,7 @@ class AuthController extends GetxController {
   ) async {
     switch (response?.type) {
       case RegisterTypeResponse.success:
-        await GlobalStorage.saveToken(
+        await GlobalStorageService.saveToken(
           response?.data?.token,
           appUse.index,
         );

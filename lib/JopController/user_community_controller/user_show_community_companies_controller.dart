@@ -42,15 +42,13 @@ class UserShowCommunityCompaniesController extends GetxController {
   }
 
   void changeFollowingState(
-    CompanyDetailsResponseModel company,
+    CompanyDetailsResponseModel? company,
     bool Function(bool? isFollowing) predicate,
   ) {
-    final followingState = company.isFollowed;
+    final followingState = company?.isFollowed;
     pagingController.itemList = pagingController.itemList?.map((e) {
-      if (e.id == company.id) {
-        e = company.copyWith(
-          isFollowed: predicate(followingState),
-        );
+      if (e.id == company?.id) {
+        e = company?.copyWith(isFollowed: predicate(followingState)) ?? e;
       }
       return e;
     }).toList();

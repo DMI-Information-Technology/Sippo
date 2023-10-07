@@ -12,7 +12,7 @@ import '../../JobGlobalclass/jobstopimges.dart';
 import '../../JobGlobalclass/routes.dart';
 import '../../JobServices/locator_service.dart';
 import '../../JopController/AuthenticationController/sippo_signup_company_controller.dart';
-import '../../JopController/ConnectivityController/internet_connection_controller.dart';
+import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
 import '../../utils/helper.dart';
 
 class SippoLocationCompanySelector extends StatefulWidget {
@@ -26,7 +26,7 @@ class SippoLocationCompanySelector extends StatefulWidget {
 class _SippoLocationCompanySelectorState
     extends State<SippoLocationCompanySelector> {
   final _myLocationController = TextEditingController();
-  final netConnController = InternetConnectionController.instance;
+  final netConnController = InternetConnectionService.instance;
   final _signUpCompanyController = SignUpCompanyController.instance;
 
   @override

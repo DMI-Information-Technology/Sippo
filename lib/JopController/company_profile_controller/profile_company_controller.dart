@@ -3,13 +3,14 @@ import 'dart:async';
 import 'package:get/get.dart';
 
 import '../../sippo_data/model/auth_model/company_response_details.dart';
-import '../ConnectivityController/internet_connection_controller.dart';
+import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
+
 import '../dashboards_controller/company_dashboard_controller.dart';
 
 class ProfileCompanyController extends GetxController {
   static ProfileCompanyController get instance => Get.find();
 
-  final netController = InternetConnectionController.instance;
+  final netController = InternetConnectionService.instance;
 
   final dashboard = CompanyDashBoardController.instance;
 

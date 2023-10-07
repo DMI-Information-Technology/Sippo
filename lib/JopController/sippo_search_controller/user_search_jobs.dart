@@ -7,7 +7,8 @@ import 'package:jobspot/utils/getx_text_editing_controller.dart';
 
 import '../../sippo_data/company_repos/company_job_repo.dart';
 import '../../utils/states.dart';
-import '../ConnectivityController/internet_connection_controller.dart';
+import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
+
 
 class UserSearchJobsController extends GetxController {
   final pagingController =
@@ -16,7 +17,7 @@ class UserSearchJobsController extends GetxController {
   static UserSearchJobsController get instances => Get.find();
 
   bool get isNetworkConnected =>
-      InternetConnectionController.instance.isConnected;
+      InternetConnectionService.instance.isConnected;
   final searchJobsState = UserSearchJobsState();
   final _states = States().obs;
 

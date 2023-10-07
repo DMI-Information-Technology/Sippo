@@ -2,7 +2,8 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JopController/ConnectivityController/internet_connection_controller.dart';
+import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
+
 import 'package:jobspot/JopController/dashboards_controller/company_dashboard_controller.dart';
 import 'package:jobspot/sippo_data/company_repos/company_posts_repo.dart';
 import 'package:jobspot/sippo_data/model/custom_file_model/custom_file_model.dart';
@@ -23,7 +24,7 @@ class CompanyEditAddPostController extends GetxController {
   final _dashboardController = CompanyDashBoardController.instance;
 
   bool get isNetworkConnection =>
-      InternetConnectionController.instance.isConnected;
+      InternetConnectionService.instance.isConnected;
 
   CompanyDetailsResponseModel get company => _dashboardController.company;
 

@@ -105,7 +105,7 @@ class AuthRepo {
   static Future<Map<String, String>?> userLogout() async {
     try {
       final response = await HttpClientController.instance.client.post(
-        GlobalStorage.appUse == AppUsingType.user
+        GlobalStorageService.appUse == AppUsingType.user
             ? endpoints.userLogoutEndpoint
             : endpoints.companyLogoutEndpoint,
         data: {},

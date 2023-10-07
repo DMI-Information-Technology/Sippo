@@ -11,7 +11,7 @@ import 'package:jobspot/sippo_themes/theme.dart';
 
 import 'JobGlobalclass/routes.dart';
 import 'JopController/AuthenticationController/sippo_auth_controller.dart';
-import 'JopController/ConnectivityController/internet_connection_controller.dart';
+import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
 import 'JopController/HttpClientController/http_client_controller.dart';
 import 'firebase_options.dart';
 
@@ -23,7 +23,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   await lunchApp();
-  await GlobalStorage.checkSavedToken();
+  await GlobalStorageService.checkSavedToken();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -33,11 +33,12 @@ void main() async {
 }
 
 Future<void> lunchApp() async {
-  final check = await GlobalStorage.isAppOpenBefore();
+  Get.put<GlobalStorageService>(GlobalStorageService());
+  final check = await GlobalStorageService.isAppOpenBefore();
   if (!check) {
-    await GlobalStorage.appIsLunched();
+    await GlobalStorageService.appIsLunched();
   } else {
-    GlobalStorage.isAppLunchFirstTime = false;
+    GlobalStorageService.isAppLunchFirstTime = false;
   }
 }
 
@@ -62,13 +63,10 @@ class _MyAppState extends State<MyApp> {
       theme: JobstopMyThemes.lightTheme,
       fallbackLocale: const Locale('en', 'US'),
       initialBinding: BindingsBuilder(() {
-        Get.put<InternetConnectionController>(
-          InternetConnectionController(),
-          permanent: true,
-        );
+        Get.put<InternetConnectionService>(InternetConnectionService());
         Get.lazyPut<AuthController>(() => AuthController(), fenix: true);
         Get.lazyPut<HttpClientController>(
-          () => HttpClientController(),
+              () => HttpClientController(),
           fenix: true,
         );
       }),

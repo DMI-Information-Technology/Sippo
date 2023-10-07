@@ -2,7 +2,8 @@ import 'package:get/get.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
 
 import '../../utils/states.dart';
-import '../ConnectivityController/internet_connection_controller.dart';
+import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
+
 import '../dashboards_controller/company_dashboard_controller.dart';
 
 class CompanyShowJobPostWrapperController extends GetxController {
@@ -18,7 +19,7 @@ class CompanyShowJobPostWrapperController extends GetxController {
   }
 
   bool get isNetworkConnected =>
-      InternetConnectionController.instance.isConnected;
+      InternetConnectionService.instance.isConnected;
   final _selected = 0.obs;
   final _states = States().obs;
 

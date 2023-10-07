@@ -7,40 +7,25 @@ import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dar
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/profile_edit_model.dart';
 import 'package:jobspot/sippo_data/user_repos/user_jobs_repo.dart';
 import 'package:jobspot/sippo_data/user_repos/user_saved_job_repo.dart';
-
 import '../../sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
 import '../../utils/states.dart';
-import '../ConnectivityController/internet_connection_controller.dart';
+import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
 
 class UserHomeController extends GetxController {
   static UserHomeController get instance => Get.find();
   final dashboardController = UserDashBoardController.instance;
   final sharedDataService = SharedGlobalDataService.instance;
-  void set jobDetailsId(int? value) {
-    sharedDataService.jobDashboardState.id = value ?? -1;
-  }
-
-  void set requestedJobDetails(CompanyJobModel? value) {
-    if (value != null) sharedDataService.jobDashboardState.details = value;
-  }
-
-  void clearRequestedJobDetails() {
-    sharedDataService.jobDashboardState.clearDetails(
-      () => CompanyJobModel(),
-    );
-  }
 
   void set companyDetailsId(int? value) {
-    sharedDataService.companyDashboardState.id = value ?? -1;
+    sharedDataService.companyGlobalState.id = value ?? -1;
   }
 
   void set requestedCompanyDetails(CompanyDetailsResponseModel? value) {
-    if (value != null)
-      sharedDataService.companyDashboardState.details = value;
+    if (value != null) sharedDataService.companyGlobalState.details = value;
   }
 
   void clearRequestedCompanyDetails() {
-    sharedDataService.companyDashboardState.clearDetails(
+    sharedDataService.companyGlobalState.clearDetails(
       () => CompanyDetailsResponseModel(),
     );
   }
@@ -50,7 +35,7 @@ class UserHomeController extends GetxController {
   ProfileInfoModel get user => dashboardController.user;
 
   bool get isNetworkConnected =>
-      InternetConnectionController.instance.isConnected;
+      InternetConnectionService.instance.isConnected;
   final _states = States().obs;
 
   States get states => _states.value;
@@ -91,7 +76,7 @@ class UserHomeController extends GetxController {
 
 class JobsHomeState {
   bool get isNetworkConnected =>
-      InternetConnectionController.instance.isConnected;
+      InternetConnectionService.instance.isConnected;
   final _jobStates = States().obs;
 
   States get jobStates => _jobStates.value;
@@ -178,7 +163,6 @@ class JobsHomeState {
     print('change is  saved $isSaved');
     if (index != -1) {
       jobsList = jobsList..[index] = jobsList[index].copyWith(isSaved: isSaved);
-      print(_jobsList[index]);
     }
   }
 

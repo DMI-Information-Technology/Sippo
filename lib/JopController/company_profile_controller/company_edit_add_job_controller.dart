@@ -10,7 +10,8 @@ import '../../sippo_data/company_repos/company_job_repo.dart';
 import '../../sippo_data/model/auth_model/company_response_details.dart';
 import '../../sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
 import '../../sippo_data/model/profile_model/company_profile_resource_model/work_location_model.dart';
-import '../ConnectivityController/internet_connection_controller.dart';
+import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
+
 import '../dashboards_controller/company_dashboard_controller.dart';
 
 class CompanyEditAddJobController extends GetxController {
@@ -21,7 +22,7 @@ class CompanyEditAddJobController extends GetxController {
   final _job = CompanyJobModel().obs;
 
   bool get isNetworkConnection =>
-      InternetConnectionController.instance.isConnected;
+      InternetConnectionService.instance.isConnected;
 
   CompanyDetailsResponseModel get company => _dashboardController.company;
 

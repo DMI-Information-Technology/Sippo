@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:jobspot/JopController/ConnectivityController/internet_connection_controller.dart';
-import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
+import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
 
 import '../../utils/getx_text_editing_controller.dart';
 import '../../utils/states.dart';
@@ -10,15 +8,12 @@ import 'general_search_companies_controller.dart';
 import 'genral_search_jobs_controller.dart';
 
 class UserGeneralSearchController extends GetxController {
-  // final pagingJobsController =
-  //     PagingController<int, CompanyJobModel>(firstPageKey: 0);
-  final pagingCompaniesController =
-      PagingController<int, CompanyDetailsResponseModel>(firstPageKey: 0);
 
   static UserGeneralSearchController get instance => Get.find();
   final _states = States().obs;
 
   States get states => _states.value;
+  void resetStates() => _states.value = States();
   final generalSearchState = GeneralSearchState();
 
   void changeStates({
@@ -40,7 +35,7 @@ class UserGeneralSearchController extends GetxController {
 
   void onSearchSubmitted() async {
     if (states.isLoading) return;
-    if (!InternetConnectionController.instance.isConnected) return;
+    if (!InternetConnectionService.instance.isConnected) return;
     refreshSearchPage();
   }
 
@@ -50,10 +45,8 @@ class UserGeneralSearchController extends GetxController {
   }
 
   void refreshSearchPage() {
-
     if (generalSearchState.tabsIndex == 0) {
       if (Get.isRegistered<GeneralSearchCompaniesController>()) {
-
         GeneralSearchCompaniesController.instance.refreshPage();
       }
       return;

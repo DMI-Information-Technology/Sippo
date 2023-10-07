@@ -55,14 +55,14 @@ import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_job_description/sippo
 import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_user_dashboard.dart';
 import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_user_notification.dart';
 import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_user_profile.dart';
-import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_user_search/sippo_search_jobs.dart';
-import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_user_search/sippo_search_jobs_filter.dart';
-import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_user_search/sippo_search_jobs_specializations_filter.dart';
 
 import '../SippoControllerBinding/profile_binding/user_about_companies_controller_binding.dart';
 import '../SippoControllerBinding/profile_binding/user_home_controller_binding.dart';
+import '../sippo_pages/sippo_search_functions/sippo_general_search.dart';
+import '../sippo_pages/sippo_search_functions/sippo_search_jobs.dart';
+import '../sippo_pages/sippo_search_functions/sippo_search_jobs_filter.dart';
+import '../sippo_pages/sippo_search_functions/sippo_search_jobs_specializations_filter.dart';
 import '../sippo_pages/sippo_user_pages/sippo_abouts_companies/sippo_about_companies.dart';
-import '../sippo_pages/sippo_user_pages/sippo_user_search/sippo_general_search.dart';
 
 class SippoRoutes {
   const SippoRoutes._();
@@ -135,7 +135,7 @@ class SippoRoutes {
       name: userDashboard,
       page: () => const SippoUserDashboard(),
       bindings: const [
-        UserDashBoardControllerBinding(),
+        UserDashboardControllerBinding(),
         UserHomeBindingController(),
       ],
     ),

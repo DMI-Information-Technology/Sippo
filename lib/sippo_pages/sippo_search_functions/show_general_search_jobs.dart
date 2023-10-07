@@ -1,36 +1,35 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:jobspot/JobGlobalclass/global_storage.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
-import 'package:jobspot/JopController/sippo_search_controller/general_search_companies_controller.dart';
-import 'package:jobspot/sippo_custom_widget/save_job_card_widget.dart';
-import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
+import 'package:jobspot/JobServices/shared_global_data_service.dart';
+import 'package:jobspot/utils/app_use.dart';
 
 import '../../../JobGlobalclass/jobstopcolor.dart';
 import '../../../JobGlobalclass/jobstopfontstyle.dart';
-import '../../../JobGlobalclass/routes.dart';
 import '../../../JobGlobalclass/sippo_customstyle.dart';
 import '../../../JobGlobalclass/text_font_size.dart';
-import '../../../JobServices/shared_global_data_service.dart';
-import '../../../sippo_custom_widget/rounded_border_radius_card_widget.dart';
+import '../../../JopController/sippo_search_controller/genral_search_jobs_controller.dart';
+import '../../../sippo_custom_widget/save_job_card_widget.dart';
 import '../../../sippo_custom_widget/widgets.dart';
+import '../../../sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
+import '../../../utils/helper.dart';
 
-class ShowGeneralSearchCompaniesList extends StatefulWidget {
-  const ShowGeneralSearchCompaniesList({super.key});
+class ShowGeneralSearchJobsList extends StatefulWidget {
+  const ShowGeneralSearchJobsList({super.key});
 
   @override
-  State<ShowGeneralSearchCompaniesList> createState() =>
-      _ShowGeneralSearchCompaniesListState();
+  State<ShowGeneralSearchJobsList> createState() =>
+      _ShowGeneralSearchJobsListState();
 }
 
-class _ShowGeneralSearchCompaniesListState
-    extends State<ShowGeneralSearchCompaniesList> {
-  final _controller = Get.put(GeneralSearchCompaniesController());
+class _ShowGeneralSearchJobsListState extends State<ShowGeneralSearchJobsList> {
+  final _controller = Get.put(GeneralSearchJobsController());
 
   @override
   Widget build(BuildContext context) {
-    return PagedListView<int, CompanyDetailsResponseModel>.separated(
+    return PagedListView<int, CompanyJobModel>.separated(
       padding: EdgeInsets.symmetric(
         vertical: context.fromHeight(CustomStyle.paddingValue),
         horizontal: context.fromWidth(CustomStyle.paddingValue),
@@ -40,30 +39,35 @@ class _ShowGeneralSearchCompaniesListState
         firstPageErrorIndicatorBuilder: (context) =>
             _buildErrorFirstLoad(context),
         newPageErrorIndicatorBuilder: (context) => _buildErrorNewLoad(context),
+        newPageProgressIndicatorBuilder: (context) =>
+            _buildNewPageProgress(context),
         itemBuilder: (context, item, index) {
-          return RoundedBorderRadiusCardWidget(
-            padding: EdgeInsets.zero,
-            child: ListTile(
-              onTap: () {
-                _onCompanyCardTapped(item);
+          return InkWell(
+            onTap: () {
+              SharedGlobalDataService.onJobTap(item);
+            },
+            child: JobPostingCard(
+              jobDetails: item,
+              companyLocations: item.company?.locations,
+              companyName: item.company?.name,
+              imagePath: [
+                'https://www.designbust.com/download/1060/png/microsoft_logo_transparent512.png',
+                'https://logodownload.org/wp-content/uploads/2014/09/facebook-logo-1-2.png',
+              ][index % 2 == 0 ? 0 : 1],
+              timeAgo: '21 min ago',
+              isEditable: GlobalStorageService.appUse != AppUsingType.user,
+              isSaved: item.isSaved == true,
+              onActionTap: GlobalStorageService.appUse == AppUsingType.user
+                  ? () {
+                      _controller.onToggleSavedJobsSubmitted(item.id);
+                    }
+                  : null,
+              onAddressTextTap: (location) async {
+                await lunchMapWithLocation(
+                  location?.dLatitude,
+                  location?.dLongitude,
+                );
               },
-              titleAlignment: ListTileTitleAlignment.center,
-              leading: NetworkBorderedCircularImage(
-                imageUrl: '',
-                size: context.fromHeight(21),
-                outerBorderColor: Colors.grey[300],
-                errorWidget: (_, __, ___) => CircleAvatar(),
-              ),
-              title: AutoSizeText(
-                item.name ?? '',
-                style: dmsmedium,
-                overflow: TextOverflow.ellipsis,
-              ),
-              subtitle: AutoSizeText(
-                "${item.city ?? ''}, ${item.establishmentDate ?? ''}",
-                style: dmsregular,
-                overflow: TextOverflow.ellipsis,
-              ),
             ),
           );
         },
@@ -74,9 +78,27 @@ class _ShowGeneralSearchCompaniesListState
     );
   }
 
+  Widget _buildNewPageProgress(BuildContext context) {
+    return Obx(() => Align(
+          alignment: Alignment.center,
+          child: _controller.states.isLoading
+              ? const CircularProgressIndicator()
+              : SizedBox(
+                  width: context.width / 2,
+                  child: CustomButton(
+                    onTapped: () => _controller.onLoadMoreJobsSubmitted(),
+                    text: 'Load More...',
+                    backgroundColor: Colors.transparent,
+                    textColor: Jobstopcolor.primarycolor,
+                    borderColor: Jobstopcolor.primarycolor,
+                  ),
+                ),
+        ));
+  }
+
   Widget _buildErrorNewLoad(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () => _controller.retryLastFailedRequest(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -89,14 +111,9 @@ class _ShowGeneralSearchCompaniesListState
               color: Jobstopcolor.primarycolor,
             ),
           ),
-          InkWell(
-            onTap: () {
-              _controller.retryLastFailedRequest();
-            },
-            child: Icon(
-              Icons.refresh,
-              color: Jobstopcolor.primarycolor,
-            ),
+          Icon(
+            Icons.refresh,
+            color: Jobstopcolor.primarycolor,
           ),
         ],
       ),
@@ -137,14 +154,5 @@ class _ShowGeneralSearchCompaniesListState
         )
       ],
     );
-  }
-
-  void _onCompanyCardTapped(CompanyDetailsResponseModel company) async {
-    final companyDashBoardState =
-        SharedGlobalDataService.instance.companyDashboardState;
-    companyDashBoardState.id = company.id ?? -1;
-    companyDashBoardState.details = company;
-    await Get.toNamed(SippoRoutes.sippoAboutCompanies);
-    companyDashBoardState.clearDetails(() => CompanyDetailsResponseModel());
   }
 }

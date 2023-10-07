@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:jobspot/JopController/ConnectivityController/internet_connection_controller.dart';
+import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
+
 import 'package:jobspot/JopController/sippo_search_controller/general_search_controller.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
 import 'package:jobspot/sippo_data/user_repos/user_companies_abouts_repo.dart';
@@ -45,7 +46,7 @@ class GeneralSearchCompaniesController extends GetxController {
 
   void retryLastFailedRequest() {
     print("dd");
-    if (InternetConnectionController.instance.isNotConnected) return;
+    if (InternetConnectionService.instance.isNotConnected) return;
     if (generalSearchController.states.isLoading) return;
     generalSearchController.changeStates(isError: false, message: '');
     pagingController.retryLastFailedRequest();
@@ -59,7 +60,7 @@ class GeneralSearchCompaniesController extends GetxController {
   }
 
   void refreshPage() {
-    if (InternetConnectionController.instance.isNotConnected) return;
+    if (InternetConnectionService.instance.isNotConnected) return;
     if (generalSearchController.states.isLoading) return;
     searchCompaniesState.pageNumber = 1;
     pagingController.refresh();
@@ -67,7 +68,7 @@ class GeneralSearchCompaniesController extends GetxController {
   }
 
   void onLoadMoreCompaniesSubmitted() {
-    if (InternetConnectionController.instance.isNotConnected) return;
+    if (InternetConnectionService.instance.isNotConnected) return;
     if (generalSearchController.states.isLoading) return;
     _pageCompaniesRequester(searchCompaniesState.pageNumber);
   }

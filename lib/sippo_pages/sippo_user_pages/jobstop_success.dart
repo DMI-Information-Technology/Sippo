@@ -9,7 +9,8 @@ import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_job_description/sippo_job_description.dart';
 import '../../JobGlobalclass/sippo_customstyle.dart';
-import '../../JopController/ConnectivityController/internet_connection_controller.dart';
+import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
+
 import '../../JopController/user_core_functions/apply_jobs_controllers.dart';
 import '../../sippo_custom_widget/ConditionalWidget.dart';
 import '../../sippo_custom_widget/error_messages_dialog_snackbar/network_connnection_lost_widget.dart';
@@ -47,7 +48,7 @@ class _JobSuccessState extends State<JobSuccess> {
         ),
         topScreen: _buildTopJobDetailsHeader(context),
         connectionStatusBar: Obx(() => ConditionalWidget(
-              !InternetConnectionController.instance.isConnected,
+              !InternetConnectionService.instance.isConnected,
               guaranteedBuilder: (_, __) =>
                   NetworkStatusNonWidget(color: Colors.black54),
             )),
@@ -149,7 +150,7 @@ class _JobSuccessState extends State<JobSuccess> {
 
   Widget _buildTopJobDetailsHeader(BuildContext context) {
     return Obx(() => TopJobDetailsHeader(
-          isConnectionLost: !InternetConnectionController.instance.isConnected,
+          isConnectionLost: !InternetConnectionService.instance.isConnected,
           coverHeight: context.height / 3.5,
           profileImageSize: context.height / 6,
           backgroundImageColor: Colors.white,

@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
@@ -9,10 +8,9 @@ import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/JobServices/shared_global_data_service.dart';
 import 'package:jobspot/JopController/sippo_search_controller/general_search_controller.dart';
-import 'package:jobspot/sippo_custom_widget/rounded_border_radius_card_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
-import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_user_search/show_general_search_companies.dart';
-import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_user_search/show_general_search_jobs.dart';
+import 'package:jobspot/sippo_pages/sippo_search_functions/show_general_search_companies.dart';
+import 'package:jobspot/sippo_pages/sippo_search_functions/show_general_search_jobs.dart';
 
 class SippoGeneralSearch extends StatefulWidget {
   const SippoGeneralSearch({super.key});
@@ -32,7 +30,6 @@ class _SippoGeneralSearchState extends State<SippoGeneralSearch> {
         appBar: _buildAppBar(context),
         body: TabBarView(
           children: [
-            // _buildCompaniesList(context),
             const ShowGeneralSearchCompaniesList(),
             const ShowGeneralSearchJobsList(),
           ],
@@ -61,7 +58,6 @@ class _SippoGeneralSearchState extends State<SippoGeneralSearch> {
         ),
         suffixIcon: InkWell(
           onTap: () {
-            print(_controller.generalSearchState.searchController.text);
             _controller.onClearSearchFiledSubmitted();
           },
           child: Icon(Icons.close),
@@ -82,6 +78,7 @@ class _SippoGeneralSearchState extends State<SippoGeneralSearch> {
   TabBar _buildTabBar(BuildContext context) {
     return TabBar(
       onTap: (value) {
+        _controller.resetStates();
         _controller.generalSearchState.tabsIndex = value;
         _controller.generalSearchState.isJobTab = value == 1;
       },
@@ -96,6 +93,7 @@ class _SippoGeneralSearchState extends State<SippoGeneralSearch> {
       ],
     );
   }
+
   Widget _buildFilterJobActionButton(BuildContext context, bool isJobTab) {
     return isJobTab
         ? IconButton(

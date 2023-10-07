@@ -4,7 +4,8 @@ import 'package:get/get.dart';
 
 import '../../sippo_data/company_repos/company_profile_info_repo.dart';
 import '../../sippo_data/model/auth_model/company_response_details.dart';
-import '../ConnectivityController/internet_connection_controller.dart';
+import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
+
 
 class CompanyDashBoardController extends GetxController {
   // final _httpClientController = Get.put(HttpClientController());
@@ -55,7 +56,7 @@ class CompanyDashBoardController extends GetxController {
   }
 
   void _startListeningToConnection() async {
-    _connectionSubscription = InternetConnectionController
+    _connectionSubscription = InternetConnectionService
         .instance.isConnectedStream
         .listen(_connected);
     print(_connectionSubscription != null);
