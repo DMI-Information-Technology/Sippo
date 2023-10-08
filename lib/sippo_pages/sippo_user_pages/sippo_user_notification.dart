@@ -27,7 +27,7 @@ class _SippoUserJobNotificationState extends State<SippoUserJobNotification>
     with SingleTickerProviderStateMixin, RestorationMixin {
   final UserNotificationController _notifiController =
       Get.put(UserNotificationController());
-  TabController? _tabController;
+  late final TabController _tabController;
   final RestorableInt tabIndex = RestorableInt(0);
 
   final nonResource = const NoResourceScreen(
@@ -37,29 +37,30 @@ class _SippoUserJobNotificationState extends State<SippoUserJobNotification>
   );
 
   @override
-  String? get restorationId => "tab_non_scrollable_demo";
+  String? get restorationId => "tab_non_scrollable_view";
 
   @override
   void restoreState(RestorationBucket? oldBucket, bool initialRestore) {
     registerForRestoration(tabIndex, 'tab_index');
-    _tabController?.index = tabIndex.value;
+    _tabController.index = tabIndex.value;
   }
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(initialIndex: 0, length: 2, vsync: this);
-    _tabController?.addListener(() {
+    _tabController.addListener(() {
       // When the tab controller's value is updated, make sure to update the
       // tab index value, which is state restorable.
+      print("fdffdfdfdfffdfd");
       _notifiController.selectedNotification = -1;
-      setState(() => tabIndex.value = _tabController?.index ?? 0);
+      tabIndex.value = _tabController.index;
     });
   }
 
   @override
   void dispose() {
-    _tabController?.dispose();
+    _tabController.dispose();
     super.dispose();
   }
 
@@ -67,11 +68,11 @@ class _SippoUserJobNotificationState extends State<SippoUserJobNotification>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _buildAppBar(context),
-      body: _buildBodyPage(),
+      body: _buildBodyPage(context),
     );
   }
 
-  Widget _buildBodyPage() {
+  Widget _buildBodyPage(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [

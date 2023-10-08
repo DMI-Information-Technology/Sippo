@@ -82,7 +82,7 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
     double width = size.width;
 
     return Scaffold(
-      appBar: _buildHomeAppBar(),
+      appBar: _buildHomeAppBar(context),
       body: BodyWidget(
         paddingContent: EdgeInsets.only(
             bottom: context.fromHeight(CustomStyle.paddingValue)),
@@ -190,7 +190,7 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
     );
   }
 
-  AppBar _buildHomeAppBar() {
+  AppBar _buildHomeAppBar(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     double height = size.height;
     double width = size.width;
@@ -201,7 +201,10 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
           child: Row(
             children: [
               IconButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Get.toNamed(SippoRoutes.sippoGeneralSearchPage);
+
+                  },
                   icon: Icon(
                     Icons.search_sharp,
                     size: height / 25,

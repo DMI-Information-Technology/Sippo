@@ -7,7 +7,6 @@ import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
-import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/top_job_details_header.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
@@ -17,8 +16,6 @@ import 'package:jobspot/utils/app_use.dart';
 import '../../../JobGlobalclass/global_storage.dart';
 import '../../../JobGlobalclass/routes.dart';
 import '../../../JopController/JobDescriptionController/job_description_controller.dart';
-import '../../../sippo_custom_widget/ConditionalWidget.dart';
-import '../../../sippo_custom_widget/error_messages_dialog_snackbar/network_connnection_lost_widget.dart';
 import '../../../sippo_custom_widget/list_item_text.dart';
 import '../../../utils/helper.dart';
 
@@ -58,12 +55,12 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
       body: BodyWidget(
         isScrollable: true,
         isTopScrollable: true,
-        connectionStatusBar: Obx(() => ConditionalWidget(
-              !InternetConnectionService.instance.isConnected,
-              guaranteedBuilder: (_, __) => NetworkStatusNonWidget(
-                color: Colors.black54,
-              ),
-            )),
+        // connectionStatusBar: Obx(() => ConditionalWidget(
+        //       !InternetConnectionService.instance.isConnected,
+        //       guaranteedBuilder: (_, __) => NetworkStatusNonWidget(
+        //         color: Colors.black54,
+        //       ),
+        //     )),
         paddingContent: EdgeInsets.only(
           top: context.fromHeight(CustomStyle.paddingValue),
           right: context.fromWidth(CustomStyle.paddingValue),
@@ -99,10 +96,10 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
     return Obx(() => Column(
           children: [
             TopJobDetailsHeader(
-              isConnectionLost: !InternetConnectionService.instance.isConnected,
+              // isConnectionLost: !InternetConnectionService.instance.isConnected,
               coverHeight: context.height / 4.5,
               profileImageSize: context.height / 8,
-              backgroundImageColor: Colors.white,
+              backgroundImageColor: Jobstopcolor.white,
               imageUrl: SippoJobDescription.imgUrl,
               // onLeadingTap: () => Get.back(),
               actions: [

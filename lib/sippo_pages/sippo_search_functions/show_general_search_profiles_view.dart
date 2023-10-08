@@ -3,30 +3,29 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
-import 'package:jobspot/JopController/sippo_search_controller/general_search_companies_controller.dart';
+import 'package:jobspot/JopController/sippo_search_controller/general_search_users_view_controller.dart';
 import 'package:jobspot/sippo_custom_widget/save_job_card_widget.dart';
-import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
+import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_user_profile_view_model.dart';
 
 import '../../../JobGlobalclass/jobstopcolor.dart';
 import '../../../JobGlobalclass/jobstopfontstyle.dart';
-import '../../../JobGlobalclass/routes.dart';
 import '../../../JobGlobalclass/sippo_customstyle.dart';
 import '../../../JobGlobalclass/text_font_size.dart';
 import '../../../JobServices/shared_global_data_service.dart';
 import '../../../sippo_custom_widget/rounded_border_radius_card_widget.dart';
 import '../../../sippo_custom_widget/widgets.dart';
 
-class ShowGeneralSearchCompaniesList extends StatefulWidget {
-  const ShowGeneralSearchCompaniesList({super.key});
+class ShowGeneralSearchProfilesViewList extends StatefulWidget {
+  const ShowGeneralSearchProfilesViewList({super.key});
 
   @override
-  State<ShowGeneralSearchCompaniesList> createState() =>
-      _ShowGeneralSearchCompaniesListState();
+  State<ShowGeneralSearchProfilesViewList> createState() =>
+      _ShowGeneralSearchProfilesViewListState();
 }
 
-class _ShowGeneralSearchCompaniesListState
-    extends State<ShowGeneralSearchCompaniesList> {
-  final _controller = Get.put(GeneralSearchCompaniesController());
+class _ShowGeneralSearchProfilesViewListState
+    extends State<ShowGeneralSearchProfilesViewList> {
+  final _controller = Get.put(GeneralSearchProfilesViewController());
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +33,7 @@ class _ShowGeneralSearchCompaniesListState
       onRefresh: () async {
         _controller.refreshPage();
       },
-      child: PagedListView<int, CompanyDetailsResponseModel>.separated(
+      child: PagedListView<int, ProfileViewResourceModel>.separated(
         padding: EdgeInsets.symmetric(
           vertical: context.fromHeight(CustomStyle.paddingValue),
           horizontal: context.fromWidth(CustomStyle.paddingValue),
@@ -45,29 +44,30 @@ class _ShowGeneralSearchCompaniesListState
               _buildErrorFirstLoad(context),
           newPageErrorIndicatorBuilder: (context) =>
               _buildErrorNewLoad(context),
-          newPageProgressIndicatorBuilder: (context) =>
-              _buildNewPageProgress(context),
-          itemBuilder: (context, item, index) {
+          newPageProgressIndicatorBuilder: (context) {
+            return _buildNewPageProgress(context);
+          },
+          itemBuilder: (context, item, i) {
             return RoundedBorderRadiusCardWidget(
               padding: EdgeInsets.zero,
               child: ListTile(
                 onTap: () {
-                  _onCompanyCardTapped(item);
+                  SharedGlobalDataService.onProfileViewTap(item: item);
                 },
                 titleAlignment: ListTileTitleAlignment.center,
                 leading: NetworkBorderedCircularImage(
                   imageUrl: '',
                   size: context.fromHeight(21),
                   outerBorderColor: Colors.grey[300],
-                  errorWidget: (_, __, ___) => CircleAvatar(),
+                  errorWidget: (_, __, ___) => const CircleAvatar(),
                 ),
                 title: AutoSizeText(
-                  item.name ?? '',
+                  item.userInfo?.name ?? '',
                   style: dmsmedium,
                   overflow: TextOverflow.ellipsis,
                 ),
                 subtitle: AutoSizeText(
-                  "${item.city ?? ''}, ${item.establishmentDate ?? ''}",
+                  item.userInfo?.bio?.substring(0, 50) ?? '',
                   style: dmsregular,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -80,6 +80,25 @@ class _ShowGeneralSearchCompaniesListState
         ),
       ),
     );
+  }
+
+  Widget _buildNewPageProgress(BuildContext context) {
+    return Obx(() => Align(
+          alignment: Alignment.center,
+          child: _controller.states.isLoading
+              ? const CircularProgressIndicator()
+              : SizedBox(
+                  width: context.width / 2,
+                  child: CustomButton(
+                    onTapped: () =>
+                        _controller.onLoadMoreProfilesViewSubmitted(),
+                    text: 'Load More...',
+                    backgroundColor: Colors.transparent,
+                    textColor: Jobstopcolor.primarycolor,
+                    borderColor: Jobstopcolor.primarycolor,
+                  ),
+                ),
+        ));
   }
 
   Widget _buildErrorNewLoad(BuildContext context) {
@@ -109,24 +128,6 @@ class _ShowGeneralSearchCompaniesListState
         ],
       ),
     );
-  }
-
-  Widget _buildNewPageProgress(BuildContext context) {
-    return Obx(() => Align(
-          alignment: Alignment.center,
-          child: _controller.states.isLoading
-              ? const CircularProgressIndicator()
-              : SizedBox(
-                  width: context.width / 2,
-                  child: CustomButton(
-                    onTapped: () => _controller.onLoadMoreCompaniesSubmitted(),
-                    text: 'Load More...',
-                    backgroundColor: Colors.transparent,
-                    textColor: Jobstopcolor.primarycolor,
-                    borderColor: Jobstopcolor.primarycolor,
-                  ),
-                ),
-        ));
   }
 
   Widget _buildErrorFirstLoad(BuildContext context) {
@@ -163,14 +164,5 @@ class _ShowGeneralSearchCompaniesListState
         )
       ],
     );
-  }
-
-  void _onCompanyCardTapped(CompanyDetailsResponseModel company) async {
-    final companyDashBoardState =
-        SharedGlobalDataService.instance.companyGlobalState;
-    companyDashBoardState.id = company.id ?? -1;
-    companyDashBoardState.details = company;
-    await Get.toNamed(SippoRoutes.sippoAboutCompanies);
-    companyDashBoardState.clearDetails(() => CompanyDetailsResponseModel());
   }
 }

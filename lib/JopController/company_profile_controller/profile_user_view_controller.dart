@@ -2,13 +2,13 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
-
-import 'package:jobspot/JopController/dashboards_controller/company_dashboard_controller.dart';
+import 'package:jobspot/JobServices/shared_global_data_service.dart';
 import 'package:jobspot/sippo_data/company_repos/compan_user_profile_view_repo.dart';
-import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
+import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_user_profile_view_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/education_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/language_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/profile_edit_model.dart';
+import 'package:jobspot/utils/states.dart';
 
 import '../../sippo_data/model/profile_model/profile_resource_model/work_experiences_model.dart';
 import '../../sippo_data/model/profile_model/profile_widget_model/jobstop_appreciation_info_card_model.dart';
@@ -16,15 +16,40 @@ import '../../sippo_data/model/profile_model/profile_widget_model/jobstop_resume
 
 class ProfileUserViewController extends GetxController {
   final netController = InternetConnectionService.instance;
-  late final StreamSubscription<bool>? _connectionSubscription;
-  final dashboard = CompanyDashBoardController.instance;
 
-  CompanyDetailsResponseModel get company => dashboard.company;
+  // late final StreamSubscription<bool>? _connectionSubscription;
+  // final dashboard = CompanyDashBoardController.instance;
+
+  // CompanyDetailsResponseModel get company => dashboard.company;
 
   static ProfileUserViewController get instance => Get.find();
   final profileState = ProfileState();
 
-  int get profileId => dashboard.dashboardState.profileViewId;
+  ProfileViewResourceModel? get profileViewState =>
+      SharedGlobalDataService.instance.profileViewGlobalState.details;
+
+  int get profileViewId =>
+      SharedGlobalDataService.instance.profileViewGlobalState.id;
+  final _states = States().obs;
+
+  States get states => _states.value;
+
+  void changeStates({
+    bool? isLoading,
+    bool? isSuccess,
+    bool? isError,
+    bool? isWarning,
+    String? message,
+    String? error,
+  }) =>
+      _states.value = states.copyWith(
+        isLoading: isLoading,
+        isSuccess: isLoading == true ? false : isSuccess,
+        isError: isLoading == true ? false : isError,
+        message: message,
+        isWarning: isLoading == true ? false : isWarning,
+        error: error,
+      );
 
   Future<void> fetchUserProfileResources(int? profileId) async {
     final response =
@@ -32,15 +57,7 @@ class ProfileUserViewController extends GetxController {
     await response?.checkStatusResponse(
       onSuccess: (data, _) {
         if (data != null) {
-          profileState.profileInfo = data.userInfo ?? profileState.profileInfo;
-          profileState.aboutMeText = data.userInfo?.bio ?? '';
-          profileState.skillsList =
-              data.skills?.skills ?? profileState.skillsList;
-          profileState.educationList =
-              data.educations ?? profileState.educationList;
-          profileState.languages = data.languages ?? profileState.languages;
-          profileState.workExList =
-              data.workExperiences ?? profileState.workExList;
+          profileState.setAll(data);
         }
       },
       onValidateError: (validateError, _) {},
@@ -48,34 +65,58 @@ class ProfileUserViewController extends GetxController {
     );
   }
 
-  void _connected(bool isConn) async {
-    isConn && profileId != -1
-        ? await fetchUserProfileResources(profileId)
-        : null;
-  }
-
-  void _startListeningToConnection() {
-    _connectionSubscription = netController.isConnectedStream.listen(
-      _connected,
-    );
-    if (profileId != -1) fetchUserProfileResources(profileId);
+  // void _connected(bool isConn) async {
+  //   isConn && profileViewId != -1
+  //       ? await fetchUserProfileResources(profileViewId)
+  //       : null;
+  // }
+  //
+  // void _startListeningToConnection() {
+  //   final profile = profileViewState;
+  //   if (profile != null && profile.userInfo != null) {
+  //     profileState.setAll(profile);
+  //   }
+  //   _connectionSubscription = netController.isConnectedStream.listen(
+  //     _connected,
+  //   );
+  //   if (profileViewId != -1) fetchUserProfileResources(profileViewId);
+  // }
+  void requestProfileInfo() async {
+    if (netController.isNotConnected || states.isLoading) return;
+    changeStates(isLoading: true);
+    if (profileViewId != -1) await fetchUserProfileResources(profileViewId);
+    changeStates(isLoading: false);
   }
 
   @override
   void onInit() {
-    _startListeningToConnection();
+    final profile = profileViewState;
+    if (profile != null && profile.userInfo != null) {
+      profileState.setAll(profile);
+    }
+    requestProfileInfo();
+    // _startListeningToConnection();
     super.onInit();
   }
 
   @override
   void onClose() {
-    _connectionSubscription?.cancel();
+    // _connectionSubscription?.cancel();
     super.onClose();
   }
 }
 
 class ProfileState {
   final _profileInfo = ProfileInfoModel().obs;
+
+  void setAll(ProfileViewResourceModel data) {
+    profileInfo = data.userInfo ?? profileInfo;
+    aboutMeText = data.userInfo?.bio ?? '';
+    skillsList = data.skills?.skills ?? skillsList;
+    educationList = data.educations ?? educationList;
+    languages = data.languages ?? languages;
+    workExList = data.workExperiences ?? workExList;
+  }
 
   ProfileInfoModel get profileInfo => _profileInfo.value;
 

@@ -1,10 +1,8 @@
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:jobspot/JobGlobalclass/global_storage.dart';
 import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
 import 'package:jobspot/JopController/sippo_search_controller/general_search_controller.dart';
 import 'package:jobspot/core/Refresh.dart';
-import 'package:jobspot/utils/app_use.dart';
 
 import '../../sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
 import '../../sippo_data/user_repos/user_jobs_repo.dart';
@@ -54,32 +52,34 @@ class GeneralSearchJobsController extends GetxController {
   }
 
   void retryLastFailedRequest() {
-    if (hasFetchPermission) return;
+    if (isRefreshPrevented) return;
     generalSearchController.changeStates(isError: false, message: '');
     pagingController.retryLastFailedRequest();
     _pageJobRequester(searchJobsState.pageNumber);
   }
 
   void refreshPage() {
-    if (hasFetchPermission) return;
-
+    if (isRefreshPrevented) return;
     searchJobsState.pageNumber = 1;
     pagingController.refresh();
     _pageJobRequester(searchJobsState.pageNumber);
   }
 
   void onLoadMoreJobsSubmitted() {
-    if (hasFetchPermission) return;
+    Get.focusScope?.unfocus();
+    if (isRefreshPrevented) return;
     _pageJobRequester(searchJobsState.pageNumber);
   }
 
-  bool get hasFetchPermission =>
+  bool get isRefreshPrevented =>
       networkController.isNotConnected ||
       generalSearchController.states.isLoading;
 
   void changeSaveJobState(
-      int? index, bool Function(CompanyJobModel value) isSaved) {
-    pagingController.itemList = Refresher.changePropertyItemOfListState(
+    int index,
+    bool Function(CompanyJobModel value) isSaved,
+  ) {
+    pagingController.itemList = Refresher.changePropertyItemState(
       pagingController.itemList,
       index,
       newItemChanger: (indexItem) => indexItem.copyWith(
@@ -89,7 +89,7 @@ class GeneralSearchJobsController extends GetxController {
   }
 
   Future<void> toggleSavedJobs(int? id) async {
-    final index = pagingController.itemList?.indexWhere((e) => e.id == id);
+    final index = pagingController.itemList?.indexWhere((e) => e.id == id)??-1;
     changeSaveJobState(index, (e) => !(e.isSaved == true));
     final response = await SavedJobsRepo.toggleSavedJob(id);
     await response?.checkStatusResponse(

@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/global_storage.dart';
+import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_user_profile_view_model.dart';
 import 'package:jobspot/utils/app_use.dart';
 
 import '../JobGlobalclass/routes.dart';
@@ -9,7 +10,10 @@ import '../utils/global_shared_state.dart';
 
 class SharedGlobalDataService extends GetxService {
   static SharedGlobalDataService get instance => Get.find();
+  var profileIdState = -1;
   final jobGlobalState = GlobalSharedState(details: CompanyJobModel().obs);
+  final profileViewGlobalState =
+      GlobalSharedState(details: ProfileViewResourceModel().obs);
   final companyGlobalState = GlobalSharedState(
     details: CompanyDetailsResponseModel().obs,
   );
@@ -33,6 +37,21 @@ class SharedGlobalDataService extends GetxService {
     await Get.toNamed(SippoRoutes.sippoAboutCompanies);
     localInstance.companyGlobalState
         .clearDetails(() => CompanyDetailsResponseModel());
+  }
+
+  static void onProfileViewTap({
+    ProfileViewResourceModel? item,
+    int? profId,
+  }) async {
+    final localInstance = instance;
+    final id = item?.userInfo?.id ?? profId;
+    if (id == null) return;
+    localInstance.profileViewGlobalState.id = id;
+    localInstance.profileViewGlobalState.details = item;
+    await Get.toNamed(SippoRoutes.sippoCompanyUserProfileView);
+    localInstance.profileViewGlobalState.clearDetails(
+      () => ProfileViewResourceModel(),
+    );
   }
 
   static void onActionJobTapped(List args) async {

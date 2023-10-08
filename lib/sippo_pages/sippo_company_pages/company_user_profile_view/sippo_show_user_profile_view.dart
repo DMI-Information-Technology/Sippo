@@ -11,8 +11,6 @@ import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:readmore/readmore.dart';
 
 import '../../../JobGlobalclass/sippo_customstyle.dart';
-import '../../../sippo_custom_widget/ConditionalWidget.dart';
-import '../../../sippo_custom_widget/error_messages_dialog_snackbar/network_connnection_lost_widget.dart';
 import '../../../sippo_custom_widget/expandable_item_list_widget.dart';
 import '../../../sippo_custom_widget/resume_card_widget.dart';
 import '../../../sippo_custom_widget/user_profile_header.dart';
@@ -36,35 +34,36 @@ class _SippoCompanyUserProfileViewState
         toolbarHeight: 0,
         backgroundColor: Colors.black87,
       ),
-      body: BodyWidget(
-        isTopScrollable: true,
-        isScrollable: true,
-        connectionStatusBar: Obx(() => ConditionalWidget(
-              !_controller.netController.isConnected,
-              guaranteedBuilder: (_, __) => NetworkStatusNonWidget(),
-            )),
-        topScreen: _buildUserProfileHeader(context),
-        paddingContent: EdgeInsets.symmetric(
-          horizontal: context.fromWidth(CustomStyle.paddingValue),
-        ),
-        child: Column(
-          children: [
-            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-            _buildAboutMeInfo(context),
-            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-            _buildWorkExperienceInfo(context),
-            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-            _buildEducationInfo(context),
-            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-            _buildSkillsInfo(context),
-            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-            _buildLanguagesInfo(context),
-            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-            _buildAppreciationInfo(context),
-            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-            _buildResumeInfo(context),
-            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-          ],
+      body: RefreshIndicator(
+        onRefresh: () async {
+          _controller.requestProfileInfo();
+        },
+        child: BodyWidget(
+          isTopScrollable: true,
+          isScrollable: true,
+          topScreen: _buildUserProfileHeader(context),
+          paddingContent: EdgeInsets.symmetric(
+            horizontal: context.fromWidth(CustomStyle.paddingValue),
+          ),
+          child: Column(
+            children: [
+              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+              _buildAboutMeInfo(context),
+              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+              _buildWorkExperienceInfo(context),
+              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+              _buildEducationInfo(context),
+              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+              _buildSkillsInfo(context),
+              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+              _buildLanguagesInfo(context),
+              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+              _buildAppreciationInfo(context),
+              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+              _buildResumeInfo(context),
+              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+            ],
+          ),
         ),
       ),
     );
@@ -72,7 +71,6 @@ class _SippoCompanyUserProfileViewState
 
   Widget _buildUserProfileHeader(BuildContext context) {
     return Obx(() => UserProfileHeaderWidget(
-          showConnectionLostBar: !_controller.netController.isConnected,
           profileInfo: _controller.profileState.profileInfo,
           profileImage: JobstopPngImg.photo,
         ));

@@ -4,10 +4,9 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
-import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
+import 'package:jobspot/JobServices/shared_global_data_service.dart';
 import 'package:jobspot/JopController/NotificationController/company_notification_application/company_application_controller.dart';
-import 'package:jobspot/JopController/dashboards_controller/company_dashboard_controller.dart';
 import 'package:jobspot/sippo_custom_widget/company_post_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_data/model/notification/job_application_model.dart';
@@ -46,11 +45,9 @@ class _SippoCompanyApplicationState extends State<SippoCompanyApplication> {
           itemBuilder: (context, item, index) {
             return PostApplicationModel(
               onProfileImageTap: () async {
-                CompanyDashBoardController.instance.dashboardState
-                    .profileViewId = item.customer?.id ?? -1;
-                await Get.toNamed(SippoRoutes.sippoCompanyUserProfileView);
-                CompanyDashBoardController
-                    .instance.dashboardState.profileViewId = -1;
+                SharedGlobalDataService.onProfileViewTap(
+                  profId: item.customer?.id,
+                );
               },
               company: _controller.notificationApplicationController.company,
               application: item,

@@ -1,11 +1,10 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
+import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
 
 import '../../sippo_data/company_repos/company_profile_info_repo.dart';
 import '../../sippo_data/model/auth_model/company_response_details.dart';
-import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
-
 
 class CompanyDashBoardController extends GetxController {
   // final _httpClientController = Get.put(HttpClientController());
@@ -34,8 +33,6 @@ class CompanyDashBoardController extends GetxController {
     response?.checkStatusResponse(
       onSuccess: (data, _) {
         if (data == null) return;
-        print(
-            "getCompanyProfile: is equal to user ? = ${data == _company.value}");
         if (data == _company.value) return;
         _company.value = data;
       },
@@ -56,9 +53,8 @@ class CompanyDashBoardController extends GetxController {
   }
 
   void _startListeningToConnection() async {
-    _connectionSubscription = InternetConnectionService
-        .instance.isConnectedStream
-        .listen(_connected);
+    _connectionSubscription =
+        InternetConnectionService.instance.isConnectedStream.listen(_connected);
     print(_connectionSubscription != null);
     await getCompanyProfile();
   }

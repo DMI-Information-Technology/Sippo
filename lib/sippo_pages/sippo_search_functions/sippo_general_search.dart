@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jobspot/JobGlobalclass/global_storage.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
@@ -12,6 +13,8 @@ import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_pages/sippo_search_functions/show_general_search_companies.dart';
 import 'package:jobspot/sippo_pages/sippo_search_functions/show_general_search_jobs.dart';
 
+import 'show_general_search_profiles_view.dart';
+
 class SippoGeneralSearch extends StatefulWidget {
   const SippoGeneralSearch({super.key});
 
@@ -19,22 +22,59 @@ class SippoGeneralSearch extends StatefulWidget {
   State<SippoGeneralSearch> createState() => _SippoGeneralSearchState();
 }
 
-class _SippoGeneralSearchState extends State<SippoGeneralSearch> {
-  final _controller = UserGeneralSearchController.instance;
+class _SippoGeneralSearchState extends State<SippoGeneralSearch>
+    with SingleTickerProviderStateMixin, RestorationMixin {
+  late final TabController _tabController;
+  final RestorableInt tabIndex = RestorableInt(0);
 
   @override
-  Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 2,
-      child: Scaffold(
-        appBar: _buildAppBar(context),
-        body: TabBarView(
-          children: [
-            const ShowGeneralSearchCompaniesList(),
-            const ShowGeneralSearchJobsList(),
-          ],
-        ),
-      ),
+  get restorationId => "tab_non_scrollable_view";
+
+  @override
+  void restoreState(oldBucket, initialRestore) {
+    registerForRestoration(tabIndex, 'tab_index');
+    _tabController.index = tabIndex.value;
+  }
+
+  final _controller = UserGeneralSearchController.instance;
+  final _tabs = [
+    const ShowGeneralSearchCompaniesList(),
+    const ShowGeneralSearchJobsList(),
+    if (GlobalStorageService.isCompany)
+      const ShowGeneralSearchProfilesViewList(),
+  ];
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(initialIndex: 0, length: 3, vsync: this);
+    _tabController.addListener(() {
+      // When the tab controller's value is updated, make sure to update the
+      // tab index value, which is state restorable.
+      print("${_tabController.index}");
+      _controller.generalSearchState.tabsIndex = _tabController.index;
+      tabIndex.value = _tabController.index;
+    });
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(context) {
+    return Scaffold(
+      appBar: _buildAppBar(context),
+      body: _buildTabBarView(context),
+    );
+  }
+
+  Widget _buildTabBarView(BuildContext context) {
+    return TabBarView(
+      controller: _tabController,
+      children: _tabs,
     );
   }
 
@@ -77,10 +117,10 @@ class _SippoGeneralSearchState extends State<SippoGeneralSearch> {
 
   TabBar _buildTabBar(BuildContext context) {
     return TabBar(
+      controller: _tabController,
       onTap: (value) {
         _controller.resetStates();
         _controller.generalSearchState.tabsIndex = value;
-        _controller.generalSearchState.isJobTab = value == 1;
       },
       unselectedLabelColor: Jobstopcolor.grey,
       labelColor: Jobstopcolor.primarycolor,
@@ -88,8 +128,9 @@ class _SippoGeneralSearchState extends State<SippoGeneralSearch> {
         fontSize: FontSize.title5(context),
       ),
       tabs: [
-        Tab(text: "Companies"),
-        Tab(text: 'Jobs'),
+        const Tab(text: "Companies"),
+        const Tab(text: 'Jobs'),
+        if (GlobalStorageService.isCompany) const Tab(text: 'Customers'),
       ],
     );
   }

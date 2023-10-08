@@ -1,39 +1,39 @@
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
-
 import 'package:jobspot/JopController/sippo_search_controller/general_search_controller.dart';
-import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
-import 'package:jobspot/sippo_data/user_repos/user_companies_abouts_repo.dart';
+import 'package:jobspot/sippo_data/company_repos/compan_user_profile_view_repo.dart';
+import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_user_profile_view_model.dart';
+
 import 'package:jobspot/utils/states.dart';
 
-class GeneralSearchCompaniesController extends GetxController {
+class GeneralSearchProfilesViewController extends GetxController {
   final generalSearchController = UserGeneralSearchController.instance;
 
-  static GeneralSearchCompaniesController get instance => Get.find();
+  static GeneralSearchProfilesViewController get instance => Get.find();
   final pagingController =
-      PagingController<int, CompanyDetailsResponseModel>(firstPageKey: 0);
-  final searchCompaniesState = GeneralSearchCompaniesState();
+  PagingController<int, ProfileViewResourceModel>(firstPageKey: 0);
+  final searchProfilesViewState = GeneralSearchProfilesViewState();
 
   States get states => generalSearchController.states;
 
-  Future<void> fetchSearchCompaniesPages(
-    int pageKey,
-  ) async {
-    final response = await UserCompaniesAboutsRepo.fetchCompanies(
-      searchCompaniesState.buildQuerySearch,
+  Future<void> fetchSearchProfilesUsersPages(
+      int pageKey,
+      ) async {
+    final response = await CompanyUserProfileViewRepo.fetchUserProfilesView(
+      searchProfilesViewState.buildQuerySearch,
     );
     response?.checkStatusResponse(
       onSuccess: (data, _) {
         final lastPage =
-            data?.meta?.lastPage ?? searchCompaniesState.pageNumber;
-        if (searchCompaniesState.pageNumber >= lastPage) {
+            data?.meta?.lastPage ?? searchProfilesViewState.pageNumber;
+        if (searchProfilesViewState.pageNumber >= lastPage) {
           pagingController.appendLastPage(data?.data ?? []);
         } else {
           final newDataLength = data?.data?.length ?? 0;
           final int nextKey = pageKey + newDataLength;
           pagingController.appendPage(data?.data ?? [], nextKey);
-          searchCompaniesState.incrementPageNumber();
+          searchProfilesViewState.incrementPageNumber();
         }
       },
       onValidateError: (validateError, _) {},
@@ -50,48 +50,47 @@ class GeneralSearchCompaniesController extends GetxController {
     if (generalSearchController.states.isLoading) return;
     generalSearchController.changeStates(isError: false, message: '');
     pagingController.retryLastFailedRequest();
-    _pageCompaniesRequester(searchCompaniesState.pageNumber);
+    _pageProfilesViewRequester(searchProfilesViewState.pageNumber);
   }
 
-  void _pageCompaniesRequester(int pageKey) async {
+  void _pageProfilesViewRequester(int pageKey) async {
     generalSearchController.changeStates(isLoading: true);
-    await fetchSearchCompaniesPages(pageKey);
+    await fetchSearchProfilesUsersPages(pageKey);
     generalSearchController.changeStates(isLoading: false);
   }
 
   void refreshPage() {
     if (InternetConnectionService.instance.isNotConnected) return;
     if (generalSearchController.states.isLoading) return;
-    searchCompaniesState.pageNumber = 1;
+    searchProfilesViewState.pageNumber = 1;
     pagingController.refresh();
-    _pageCompaniesRequester(searchCompaniesState.pageNumber);
+    _pageProfilesViewRequester(searchProfilesViewState.pageNumber);
   }
 
-  void onLoadMoreCompaniesSubmitted() {
-    Get.focusScope?.unfocus();
+  void onLoadMoreProfilesViewSubmitted() {
     if (InternetConnectionService.instance.isNotConnected) return;
     if (generalSearchController.states.isLoading) return;
-    _pageCompaniesRequester(searchCompaniesState.pageNumber);
+    _pageProfilesViewRequester(searchProfilesViewState.pageNumber);
   }
 
   @override
   void onInit() {
     super.onInit();
-    _pageCompaniesRequester(searchCompaniesState.pageNumber);
+    _pageProfilesViewRequester(searchProfilesViewState.pageNumber);
   }
 }
 
-class GeneralSearchCompaniesState {
+class GeneralSearchProfilesViewState {
   var pageNumber = 1;
 
   void incrementPageNumber() => pageNumber++;
 
   Map<String, String> get buildQuerySearch => {
-        'page': '${pageNumber}',
-        'per_page': "6",
-        'name': UserGeneralSearchController
-            .instance.generalSearchState.searchController.text
-            .split(" ")
-            .join("+"),
-      };
+    'page': '${pageNumber}',
+    'per_page': "6",
+    'name': UserGeneralSearchController
+        .instance.generalSearchState.searchController.text
+        .split(" ")
+        .join("+"),
+  };
 }

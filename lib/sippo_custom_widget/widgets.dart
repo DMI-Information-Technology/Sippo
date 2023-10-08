@@ -540,6 +540,7 @@ class InputBorderedField extends StatelessWidget {
     this.validator,
     this.textInputAction = TextInputAction.done,
     this.onFieldSubmitted,
+    this.onTapOutside,
     this.borderRadiusValue,
     this.verticalPaddingValue,
     this.gController,
@@ -568,6 +569,7 @@ class InputBorderedField extends StatelessWidget {
   final VoidCallback? onTap;
   final void Function(String value)? onTextChanged;
   final void Function(String value)? onFieldSubmitted;
+  final void Function(PointerDownEvent event)? onTapOutside;
   final Widget? suffixIcon;
   final Widget? prefixIcon;
   final TextInputAction? textInputAction;
@@ -628,6 +630,7 @@ class InputBorderedField extends StatelessWidget {
         onChanged: onTextChanged,
         validator: validator,
         onFieldSubmitted: onFieldSubmitted,
+        onTapOutside: onTapOutside,
       ),
     );
   }

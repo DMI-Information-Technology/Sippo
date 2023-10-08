@@ -68,35 +68,30 @@ class SippoRoutes {
   const SippoRoutes._();
 
   static const String homepage = "/";
-  static const String onboarding = "/onboardingscreen";
+  static const String onboarding = "/on-boarding-screen";
 
   static const String userLoginPage = "/log-in";
   static const String userSignupPage = "/sign-up";
   static const String userDashboard = "/user-dashboard";
   static const String appUsingPage = "/app-using";
   static const String forgetPassword = "/forget-password";
-  static const String updateNewPassword = "/update-new-password";
+  static const String updateNewPassword = "/change-password";
   static const String editUserProfile = "/edit-user-profile";
   static const String editCompanyProfile = "/edit-company-profile";
 
-  static const String sippoUserJobSearch = "/jobSearch";
-
-  static const String sippoUserProfile = "/sippo-profile";
-  static const String userWorkExperience = "/work-experience";
-  static const String educationaddedit = "/education-add-edit";
-  static const String appreciationaddedit = "/appreciation-add-edit";
-  static const String languageeditadd = "/language-add-edit";
-  static const String uploadresume = "/upload-resume";
-  static const String sippoprofilesetting = "/sippo-profile-setting";
-  static const String sippojobnotification = "/sippo-job-notification";
-  static const String sippoJobDescription = "/sippo-job-description";
-  static const String filterjobsearch = "/sippo-filter-job-search";
-  static const String filterSpecializationsJobsSearch =
-      "/sippo-filter-specializations-job-search";
-
-  static const String languageUserAdd = "/sippo-lang-user-add";
+  static const String sippoUserProfile = "/sippo-user-profile";
+  static const String userWorkExperience = "/user-work-experience";
+  static const String educationaddedit = "/user-education-add-edit";
+  static const String appreciationaddedit = "/user-appreciation-add-edit";
   static const String skillsaddedit = "/skills-add-edit";
-  static const String userApplyJobs = "/user-apply-jobs";
+  static const String languageeditadd = "/user-language-add-edit";
+  static const String languageUserAdd = "/sippo-user-language-add";
+  static const String uploadresume = "/user-upload-cv";
+  static const String sippoprofilesetting = "/sippo-profile-settings";
+  static const String sippojobnotification = "/sippo-user-notifications";
+  static const String sippoJobDescription = "/sippo-user-job-description";
+
+  static const String userApplyJobs = "/sippo-user-apply-job";
   static const String sippoAboutCompanies = "/sippo-about-companies";
   static const String sippoUserApplyCompany = "/sippo-user-apply-company";
   static const String sippoCompanyUserProfileView =
@@ -104,9 +99,12 @@ class SippoRoutes {
 
   static const String companySignupSpecializations =
       "/company-signup-specializations";
-  static const String sippoGeneralSearchPage = "/sippo-user-general-search";
-
   static const String otpresetpassmsgpage = "/reset-pass-otp";
+  static const String sippoUserJobSearch = "/sippo-job-search";
+  static const String filterjobsearch = "/sippo-filter-job-search";
+  static const String filterSpecializationsJobsSearch =
+      "/sippo-filter-specializations-job-search";
+  static const String sippoGeneralSearchPage = "/sippo-general-search";
 
   static List<GetPage> routes = [
     GetPage(name: homepage, page: () => const JobstopSplash()),
@@ -271,13 +269,13 @@ class SippoRoutes {
   // company
   static const String sippoCompanyDashboard = "/sippo-company-dashboard";
   static const String sippocompanyprofile = "/sippo-company-profile";
-  static const String identityverification = "/identity-verification";
+  static const String identityverification = "/company-identity-verification";
   static const String companysignup = "/company-signup";
   static const String sippoCompanyLogin = "/company-login";
-  static const String locationselector = "/location-selector";
-  static const String companyAddPost = "/company-add-post";
-  static const String companyAddJobs = "/company-add-jobs";
+  static const String locationselector = "/sippo-location-selector";
+  static const String companyAddPost = "/sippo-company-add-post";
+  static const String companyAddJobs = "/sippo-company-add-jobs";
 
-  static const String companyCompanyDisplayJobPost =
+  static const String companyDisplayJobPost =
       "/company-company-display-job-post";
 }

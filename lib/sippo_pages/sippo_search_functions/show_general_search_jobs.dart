@@ -29,51 +29,60 @@ class _ShowGeneralSearchJobsListState extends State<ShowGeneralSearchJobsList> {
 
   @override
   Widget build(BuildContext context) {
-    return PagedListView<int, CompanyJobModel>.separated(
-      padding: EdgeInsets.symmetric(
-        vertical: context.fromHeight(CustomStyle.paddingValue),
-        horizontal: context.fromWidth(CustomStyle.paddingValue),
-      ),
-      pagingController: _controller.pagingController,
-      builderDelegate: PagedChildBuilderDelegate(
-        firstPageErrorIndicatorBuilder: (context) =>
-            _buildErrorFirstLoad(context),
-        newPageErrorIndicatorBuilder: (context) => _buildErrorNewLoad(context),
-        newPageProgressIndicatorBuilder: (context) =>
-            _buildNewPageProgress(context),
-        itemBuilder: (context, item, index) {
-          return InkWell(
-            onTap: () {
-              SharedGlobalDataService.onJobTap(item);
-            },
-            child: JobPostingCard(
-              jobDetails: item,
-              companyLocations: item.company?.locations,
-              companyName: item.company?.name,
-              imagePath: [
-                'https://www.designbust.com/download/1060/png/microsoft_logo_transparent512.png',
-                'https://logodownload.org/wp-content/uploads/2014/09/facebook-logo-1-2.png',
-              ][index % 2 == 0 ? 0 : 1],
-              timeAgo: '21 min ago',
-              isEditable: GlobalStorageService.appUse != AppUsingType.user,
-              isSaved: item.isSaved == true,
-              onActionTap: GlobalStorageService.appUse == AppUsingType.user
-                  ? () {
-                      _controller.onToggleSavedJobsSubmitted(item.id);
-                    }
-                  : null,
-              onAddressTextTap: (location) async {
-                await lunchMapWithLocation(
-                  location?.dLatitude,
-                  location?.dLongitude,
-                );
+    return RefreshIndicator(
+      onRefresh: () async {
+        _controller.refreshPage();
+      },
+      child: PagedListView<int, CompanyJobModel>.separated(
+        padding: EdgeInsets.symmetric(
+          vertical: context.fromHeight(CustomStyle.paddingValue),
+          horizontal: context.fromWidth(CustomStyle.paddingValue),
+        ),
+        pagingController: _controller.pagingController,
+        builderDelegate: PagedChildBuilderDelegate(
+          firstPageErrorIndicatorBuilder: (context) =>
+              _buildErrorFirstLoad(context),
+          newPageErrorIndicatorBuilder: (context) =>
+              _buildErrorNewLoad(context),
+          newPageProgressIndicatorBuilder: (context) =>
+              _buildNewPageProgress(context),
+          itemBuilder: (context, item, index) {
+            return InkWell(
+              onTap: () {
+                SharedGlobalDataService.onJobTap(item);
               },
-            ),
-          );
-        },
-      ),
-      separatorBuilder: (_, __) => SizedBox(
-        height: context.fromHeight(CustomStyle.spaceBetween),
+              child: JobPostingCard(
+                jobDetails: item,
+                companyLocations: item.company?.locations,
+                companyName: item.company?.name,
+                onImageCompanyTap: () {
+                  SharedGlobalDataService.onCompanyTap(item.company);
+                },
+                imagePath: [
+                  'https://www.designbust.com/download/1060/png/microsoft_logo_transparent512.png',
+                  'https://logodownload.org/wp-content/uploads/2014/09/facebook-logo-1-2.png',
+                ][index % 2 == 0 ? 0 : 1],
+                timeAgo: '21 min ago',
+                isEditable: GlobalStorageService.appUse != AppUsingType.user,
+                isSaved: item.isSaved == true,
+                onActionTap: GlobalStorageService.appUse == AppUsingType.user
+                    ? () {
+                        _controller.onToggleSavedJobsSubmitted(item.id);
+                      }
+                    : null,
+                onAddressTextTap: (location) async {
+                  await lunchMapWithLocation(
+                    location?.dLatitude,
+                    location?.dLongitude,
+                  );
+                },
+              ),
+            );
+          },
+        ),
+        separatorBuilder: (_, __) => SizedBox(
+          height: context.fromHeight(CustomStyle.spaceBetween),
+        ),
       ),
     );
   }

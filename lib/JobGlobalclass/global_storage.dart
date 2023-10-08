@@ -5,8 +5,6 @@ import 'package:jobspot/utils/app_use.dart';
 import 'jobstopprefname.dart' as global;
 
 class GlobalStorageService extends GetxService {
-
-
   static GlobalStorageService get instance => Get.find();
   static const first_app_lunch_time = "firstapplunchtime";
   bool _isLogged = false;
@@ -20,6 +18,9 @@ class GlobalStorageService extends GetxService {
   static String? get tokenLogged => instance._tokenLogged;
 
   static AppUsingType get appUse => AppUsingType.values[instance._appUse];
+
+  static bool get isCompany =>
+      AppUsingType.values[instance._appUse] == AppUsingType.company;
 
   static Future<void> removeSavedToken() async {
     await instance.box.remove(global.tokenKey);

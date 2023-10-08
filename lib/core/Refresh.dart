@@ -21,12 +21,12 @@ class Refresher {
     return false;
   }
 
-  static List<T>? changePropertyItemOfListState<T>(
+  static List<T>? changePropertyItemState<T>(
     List<T>? itemList,
-    int? index, {
+    int index, {
     required T Function(T indexItem) newItemChanger,
   }) {
-    if (itemList == null || index == null) return null;
+    if (itemList == null) return null;
     if (index > -1 && index < itemList.length) {
       return itemList.toList()..[index] = newItemChanger(itemList[index]);
     }

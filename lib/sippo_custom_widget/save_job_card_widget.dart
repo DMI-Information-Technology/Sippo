@@ -29,6 +29,7 @@ class JobPostingCard extends StatelessWidget {
 
   // final String salary;
   final VoidCallback? onActionTap;
+  final VoidCallback? onImageCompanyTap;
   final CompanyJobModel? jobDetails;
 
   const JobPostingCard({
@@ -42,6 +43,7 @@ class JobPostingCard extends StatelessWidget {
     this.companyName,
     this.isActive,
     this.isSaved = false,
+    this.onImageCompanyTap,
   });
 
   @override
@@ -97,12 +99,15 @@ class JobPostingCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          NetworkBorderedCircularImage(
-            imageUrl: imagePath ?? '',
-            size: context.fromHeight(CustomStyle.imageSize3),
-            outerBorderColor: checkActivityColor(context),
-            errorWidget: (context, url, error) =>
-                Image.asset(JobstopPngImg.companysignup),
+          InkWell(
+            onTap: onImageCompanyTap,
+            child: NetworkBorderedCircularImage(
+              imageUrl: imagePath ?? '',
+              size: context.fromHeight(CustomStyle.imageSize3),
+              outerBorderColor: checkActivityColor(context),
+              errorWidget: (context, url, error) =>
+                  Image.asset(JobstopPngImg.companysignup),
+            ),
           ),
           const Spacer(),
           if (onActionTap != null) _buildActionButton(context),

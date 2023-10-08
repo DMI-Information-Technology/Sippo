@@ -15,7 +15,7 @@ class GetXTextEditingController {
     controller.addListener(_textListener);
   }
 
-  void clearText() => controller.clear();
+  void clear() => controller.clear();
 
   void _textListener() {
     _text.value = controller.text;

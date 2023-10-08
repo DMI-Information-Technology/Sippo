@@ -94,8 +94,11 @@ class NotificationApplicationWidget extends StatelessWidget {
       children: [
         SizedBox(width: context.fromHeight(14)),
         Text(
-          calculateElapsedTimeFromStringDate(application?.createdAt ?? '') ??
-              "",
+          application?.createdAt != null
+              ? calculateElapsedTimeFromStringDate(
+                      application?.createdAt ?? '') ??
+                  ''
+              : "",
           style: TextStyle(
             fontSize: FontSize.label(context),
             color: Colors.grey,

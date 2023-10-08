@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
+import 'package:jobspot/JopController/sippo_search_controller/general_search_users_view_controller.dart';
 
 import '../../utils/getx_text_editing_controller.dart';
 import '../../utils/states.dart';
@@ -8,11 +9,11 @@ import 'general_search_companies_controller.dart';
 import 'genral_search_jobs_controller.dart';
 
 class UserGeneralSearchController extends GetxController {
-
   static UserGeneralSearchController get instance => Get.find();
   final _states = States().obs;
 
   States get states => _states.value;
+
   void resetStates() => _states.value = States();
   final generalSearchState = GeneralSearchState();
 
@@ -33,26 +34,51 @@ class UserGeneralSearchController extends GetxController {
         error: error,
       );
 
+  bool get isRefreshPrevented =>
+      states.isLoading || InternetConnectionService.instance.isNotConnected;
+
   void onSearchSubmitted() async {
-    if (states.isLoading) return;
-    if (!InternetConnectionService.instance.isConnected) return;
+    if (isRefreshPrevented) return;
+    if (generalSearchState.isTextSearchEmpty) {
+      generalSearchState.searchController.clear();
+      Get.focusScope?.unfocus();
+      return;
+    }
+    generalSearchState.isSearchFiledCleared = false;
     refreshSearchPage();
   }
 
   void onClearSearchFiledSubmitted() {
-    generalSearchState.searchController.clearText();
+    if (generalSearchState.isTextSearchNotEmpty) {
+      generalSearchState.searchController.clear();
+      return;
+    }
+    if (generalSearchState.isSearchFiledCleared) {
+      Get.focusScope?.unfocus();
+      return;
+    }
+    generalSearchState.isSearchFiledCleared = true;
+    generalSearchState.searchController.clear();
     refreshSearchPage();
   }
 
   void refreshSearchPage() {
-    if (generalSearchState.tabsIndex == 0) {
-      if (Get.isRegistered<GeneralSearchCompaniesController>()) {
-        GeneralSearchCompaniesController.instance.refreshPage();
-      }
-      return;
-    }
-    if (Get.isRegistered<GeneralSearchJobsController>()) {
-      GeneralSearchJobsController.instance.refreshPage();
+    switch (generalSearchState.tabsIndex) {
+      case 0:
+        if (Get.isRegistered<GeneralSearchCompaniesController>()) {
+          GeneralSearchCompaniesController.instance.refreshPage();
+        }
+        break;
+      case 1:
+        if (Get.isRegistered<GeneralSearchJobsController>()) {
+          GeneralSearchJobsController.instance.refreshPage();
+        }
+        break;
+      case 2:
+        if (Get.isRegistered<GeneralSearchProfilesViewController>()) {
+          GeneralSearchProfilesViewController.instance.refreshPage();
+        }
+        break;
     }
   }
 
@@ -72,15 +98,20 @@ class UserGeneralSearchController extends GetxController {
 class GeneralSearchState {
   var _tabsIndex = 0;
   final searchController = GetXTextEditingController();
+  bool isSearchFiledCleared = true;
 
   int get tabsIndex => _tabsIndex;
 
   void set tabsIndex(int value) {
-    if (value > 1 || value < 0 || value == tabsIndex) return;
+    Get.focusScope?.unfocus();
+    if (value > 3 || value < 0 || value == tabsIndex) return;
+    isJobTab = value == 1;
     _tabsIndex = value;
   }
 
-  bool get isTextSearchNotEmpty => searchController.text.isEmpty;
+  bool get isTextSearchNotEmpty => !searchController.isTextEmpty;
+
+  bool get isTextSearchEmpty => searchController.isTextEmpty;
   final _hasFocus = true.obs;
 
   bool get hasFocus => _hasFocus.isTrue;
@@ -103,13 +134,11 @@ class GeneralSearchState {
   }
 
   void _onHasFocus() {
-    // print(isArrowBack);
     hasFocus = !focusNode.hasFocus;
   }
 
   void close() {
     searchController.dispose();
-    focusNode.removeListener(_onHasFocus);
     focusNode.dispose();
   }
 }

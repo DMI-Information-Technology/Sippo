@@ -34,45 +34,39 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
         toolbarHeight: 0,
         backgroundColor: Colors.black87,
       ),
-      body: RefreshIndicator(
-        onRefresh: () async {
-          await _controller.dashboard.refreshUserProfileInfo();
-        },
-        child: BodyWidget(
-          isTopScrollable: true,
-          isScrollable: true,
-          connectionStatusBar: Obx(() => ConditionalWidget(
-                !_controller.netController.isConnected,
-                guaranteedBuilder: (_, __) => NetworkStatusNonWidget(),
-              )),
-          topScreen: _buildUserProfileHeader(),
-          paddingContent: EdgeInsets.symmetric(
-            horizontal: context.fromWidth(CustomStyle.paddingValue),
-          ),
-          child: Column(
-            children: [
-              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-              _buildBioCompanyProfile(context),
-              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-              _buildWorkPlacesCompany(context),
-              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-              _buildWebsiteCompanyLink(context),
-              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-              _buildCompanySpecializations(context),
-              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-              _buildEmployeeCompanyCount(context),
-              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-              _buildEstablishmentCompanyDate(context),
-              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-            ],
-          ),
+      body: BodyWidget(
+        isTopScrollable: true,
+        isScrollable: true,
+        connectionStatusBar: Obx(() => ConditionalWidget(
+              !_controller.netController.isConnected,
+              guaranteedBuilder: (_, __) => NetworkStatusNonWidget(),
+            )),
+        topScreen: _buildUserProfileHeader(),
+        paddingContent: EdgeInsets.symmetric(
+          horizontal: context.fromWidth(CustomStyle.paddingValue),
+        ),
+        child: Column(
+          children: [
+            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+            _buildBioCompanyProfile(context),
+            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+            _buildWorkPlacesCompany(context),
+            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+            _buildWebsiteCompanyLink(context),
+            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+            _buildCompanySpecializations(context),
+            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+            _buildEmployeeCompanyCount(context),
+            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+            _buildEstablishmentCompanyDate(context),
+            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+          ],
         ),
       ),
     );
   }
 
   Widget _buildEstablishmentCompanyDate(BuildContext context) {
-
     return Obx(() => AddInfoProfileCard(
           title: 'Establishment Date'.tr,
           noInfoProfile:
