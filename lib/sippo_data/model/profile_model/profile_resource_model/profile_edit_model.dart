@@ -1,3 +1,4 @@
+import 'package:jobspot/sippo_data/model/image_resource_model/image_resource_model.dart';
 import 'package:jobspot/utils/app_use.dart';
 
 import '../../auth_model/entity_model.dart';
@@ -13,6 +14,7 @@ class ProfileInfoModel extends EntityModel {
     this.gender,
     this.bio,
     this.cv,
+    this.profileImage,
   });
 
   factory ProfileInfoModel.fromJson(Map<String, dynamic> json) =>
@@ -25,11 +27,15 @@ class ProfileInfoModel extends EntityModel {
         gender: json['gender'],
         bio: json['bio'],
         cv: json['cv'] != null ? CvModel.fromJson(json['cv']) : null,
+        profileImage: json['profile_image'] != null
+            ? ImageResourceModel.fromJson(json['profile_image'])
+            : null,
       );
 
   final String? gender;
   final CvModel? cv;
   final String? bio;
+  final ImageResourceModel? profileImage;
 
   ProfileInfoModel copyWith({
     int? id,
@@ -40,6 +46,7 @@ class ProfileInfoModel extends EntityModel {
     String? gender,
     String? bio,
     CvModel? cv,
+    ImageResourceModel? profileImage,
   }) =>
       ProfileInfoModel(
         id: id ?? this.id,
@@ -50,6 +57,7 @@ class ProfileInfoModel extends EntityModel {
         gender: gender ?? this.gender,
         bio: bio ?? this.bio,
         cv: cv ?? this.cv,
+        profileImage: profileImage ?? this.profileImage,
       );
 
   ProfileInfoModel copyWithRemoveCv({
@@ -60,6 +68,8 @@ class ProfileInfoModel extends EntityModel {
     String? phone,
     String? gender,
     String? bio,
+    CvModel? cv,
+    ImageResourceModel? profileImage,
   }) =>
       ProfileInfoModel(
         id: id ?? this.id,
@@ -69,6 +79,8 @@ class ProfileInfoModel extends EntityModel {
         secondaryPhone: secondaryPhone ?? this.secondaryPhone,
         gender: gender ?? this.gender,
         bio: bio ?? this.bio,
+        cv: cv ?? this.cv,
+        profileImage: profileImage ?? this.profileImage,
       );
 
   Map<String, dynamic> toJson() => {
@@ -89,7 +101,7 @@ class ProfileInfoModel extends EntityModel {
 
   @override
   String toString() {
-    return 'ProfileInfoModel{id: $id, name: $name, phone: $phone, secondaryPhone: $secondaryPhone, email: $email, gender: $gender, cv: $cv, bio: $bio}';
+    return 'ProfileInfoModel{id: $id, name: $name, phone: $phone, secondaryPhone: $secondaryPhone, email: $email, gender: $gender, cv: $cv, profileImage: $profileImage, bio: $bio}';
   }
 
   @override
@@ -102,6 +114,7 @@ class ProfileInfoModel extends EntityModel {
           super.email == other.email &&
           super.phone == other.phone &&
           super.secondaryPhone == other.secondaryPhone &&
+          profileImage == other.profileImage &&
           cv == other.cv &&
           gender == other.gender &&
           bio == other.bio;
@@ -114,6 +127,7 @@ class ProfileInfoModel extends EntityModel {
       super.phone.hashCode ^
       super.secondaryPhone.hashCode ^
       cv.hashCode ^
+      profileImage.hashCode ^
       gender.hashCode ^
       bio.hashCode;
 }

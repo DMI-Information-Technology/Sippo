@@ -42,3 +42,7 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+/lib/api_keys/api-keys.json
+/lib/sippo_data/model/google_map_models/
+
+/ios/Runner/Secret.plist

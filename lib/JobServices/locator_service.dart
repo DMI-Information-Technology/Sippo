@@ -56,7 +56,7 @@ class LocatorService {
         longitude,
         localeIdentifier: "en_US",
       );
-    } on Exception catch (e, s) {
+    } catch (e, s) {
       print(s);
       print(e);
       return null;

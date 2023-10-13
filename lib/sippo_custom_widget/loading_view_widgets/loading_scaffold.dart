@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import '../../custom_app_controller/switch_status_controller.dart';
 import 'overly_loading.dart';
 
-
 class LoadingScaffold extends StatelessWidget {
   const LoadingScaffold({
     super.key,
@@ -22,31 +21,37 @@ class LoadingScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: AlignmentDirectional.centerStart,
-      children: [
-        Scaffold(
-          extendBodyBehindAppBar: extendBodyBehindAppBar,
-          appBar: appBar,
-          body: body,
-          backgroundColor: backgroundColor,
-        ),
-        if (controller != null)
-          ListenableBuilder(
-            listenable: controller!,
-            builder: (context, child) {
-              controller?.unFocusTextField(context);
-              return _buildLoadingWidget(controller?.status ?? false);
-            },
+    return WillPopScope(
+      onWillPop: () async {
+        if (controller?.status == true) {
+          controller?.pause();
+          return false;
+        }
+        return true;
+      },
+      child: Stack(
+        alignment: AlignmentDirectional.centerStart,
+        children: [
+          Scaffold(
+            extendBodyBehindAppBar: extendBodyBehindAppBar,
+            appBar: appBar,
+            body: body,
+            backgroundColor: backgroundColor,
           ),
-      ],
+          if (controller != null)
+            ListenableBuilder(
+              listenable: controller!,
+              builder: (context, child) {
+                controller?.unFocusTextField(context);
+                return _buildLoadingWidget(controller?.status ?? false);
+              },
+            ),
+        ],
+      ),
     );
   }
 
   Widget _buildLoadingWidget(bool show) => show
-      ? GestureDetector(
-          onTap: () => controller?.status = false,
-          child: const LoadingOverlay(),
-        )
+      ? const LoadingOverlay()
       : const SizedBox.shrink();
 }

@@ -32,19 +32,19 @@ class CompanyDetailsPostModel extends BaseCompanyPost {
         ? ImageResourceModel.fromJson(json['image'])
         : null;
     company = json['company'] != null
-        ? CompanyDetailsResponseModel.fromJson(json['company'])
+        ? CompanyDetailsModel.fromJson(json['company'])
         : null;
   }
 
   ImageResourceModel? image;
-  CompanyDetailsResponseModel? company;
+  CompanyDetailsModel? company;
 
   CompanyDetailsPostModel copyWith({
     int? id,
     String? title,
     String? body,
     ImageResourceModel? image,
-    CompanyDetailsResponseModel? company,
+    CompanyDetailsModel? company,
   }) =>
       CompanyDetailsPostModel(
         id: id ?? super.id,

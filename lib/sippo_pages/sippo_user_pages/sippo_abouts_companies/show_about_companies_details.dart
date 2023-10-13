@@ -13,7 +13,7 @@ import '../../../JobGlobalclass/text_font_size.dart';
 class ShowAboutCompaniesDetails extends StatelessWidget {
   const ShowAboutCompaniesDetails({super.key, this.company})
       : this.gallery = const [JobstopPngImg.gallery1, JobstopPngImg.gallery2];
-  final CompanyDetailsResponseModel? company;
+  final CompanyDetailsModel? company;
   final List<String> gallery;
 
   @override

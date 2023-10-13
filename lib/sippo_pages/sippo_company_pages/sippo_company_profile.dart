@@ -14,7 +14,7 @@ import '../../JopController/company_profile_controller/profile_company_controlle
 import '../../sippo_custom_widget/ConditionalWidget.dart';
 import '../../sippo_custom_widget/add_info_profile_card.dart';
 import '../../sippo_custom_widget/body_widget.dart';
-import '../../sippo_custom_widget/error_messages_dialog_snackbar/network_connnection_lost_widget.dart';
+import '../../sippo_custom_widget/profile_completion_widget.dart';
 import '../../sippo_custom_widget/user_profile_header.dart';
 
 class SippoCompanyProfile extends StatefulWidget {
@@ -37,16 +37,14 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
       body: BodyWidget(
         isTopScrollable: true,
         isScrollable: true,
-        connectionStatusBar: Obx(() => ConditionalWidget(
-              !_controller.netController.isConnected,
-              guaranteedBuilder: (_, __) => NetworkStatusNonWidget(),
-            )),
         topScreen: _buildUserProfileHeader(),
         paddingContent: EdgeInsets.symmetric(
           horizontal: context.fromWidth(CustomStyle.paddingValue),
         ),
         child: Column(
           children: [
+            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+            _buildProfileCompletion(context),
             SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
             _buildBioCompanyProfile(context),
             SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
@@ -63,6 +61,26 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
           ],
         ),
       ),
+    );
+  }
+
+  Widget _buildProfileCompletion(BuildContext context) {
+    return Obx(
+      () {
+        final profileMessages = _controller.company.blankProfileMessages();
+        return ConditionalWidget(
+          isLoading: _controller.states.isLoading,
+          profileMessages.isNotEmpty == true &&
+              _controller.netController.isConnected,
+          data: profileMessages,
+          guaranteedBuilder: (context, data) {
+            return ProfileCompletionWidget(
+              controller: _controller.profileCompletionController,
+              profile: data,
+            );
+          },
+        );
+      },
     );
   }
 
@@ -85,7 +103,9 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
                   color: Jobstopcolor.primarycolor,
                 )
               : null,
-          onAddClicked: () {},
+          onAddClicked: () {
+            if (_controller.netController.isNotConnected) return;
+          },
           profileInfo: [],
         ));
   }
@@ -109,6 +129,7 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
               : null,
           alignmentFromStart: true,
           onAddClicked: () {
+            if (_controller.netController.isNotConnected) return;
             Get.toNamed(SippoRoutes.editCompanyProfile);
           },
           profileInfo: [
@@ -152,7 +173,9 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
                 )
               : null,
           alignmentFromStart: true,
-          onAddClicked: () {},
+          onAddClicked: () {
+            if (_controller.netController.isNotConnected) return;
+          },
           profileInfo: [
             ExpandableItemList.wrapBuilder(
               isExpandable:
@@ -188,6 +211,7 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
             colorBlendMode: BlendMode.srcIn,
           ),
           onAddClicked: () {
+            if (_controller.netController.isNotConnected) return;
             Get.toNamed(SippoRoutes.editCompanyProfile);
           },
           iconAction: _controller.company.website != null
@@ -227,7 +251,10 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
           color: Jobstopcolor.primarycolor,
           colorBlendMode: BlendMode.srcIn,
         ),
-        onAddClicked: () {},
+        onAddClicked: () {
+          if (_controller.netController.isNotConnected) return;
+          Get.toNamed(SippoRoutes.sippoOpenGoogleMapView);
+        },
         profileInfo: [
           ExpandableItemList(
             isExpandable: (_controller.company.locations?.length ?? 0) > 1,
@@ -271,7 +298,9 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
                   color: Jobstopcolor.primarycolor,
                 )
               : null,
-          onAddClicked: () {},
+          onAddClicked: () {
+            if (_controller.netController.isNotConnected) return;
+          },
           profileInfo: [
             ReadMoreText(
               textAlign: TextAlign.start,
@@ -284,12 +313,16 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
 
   Widget _buildUserProfileHeader() {
     return Obx(() => UserProfileHeaderWidget(
-          showConnectionLostBar: !_controller.netController.isConnected,
           profileInfo: _controller.company,
-          onSettingsPressed: () => Get.toNamed(SippoRoutes.sippoprofilesetting),
-          onEditProfilePressed: () =>
-              Get.toNamed(SippoRoutes.editCompanyProfile),
-          profileImage: JobstopPngImg.photo,
+          onSettingsPressed: () {
+            if (_controller.netController.isNotConnected) return;
+            Get.toNamed(SippoRoutes.sippoprofilesetting);
+          },
+          onEditProfilePressed: () {
+            if (_controller.netController.isNotConnected) return;
+            Get.toNamed(SippoRoutes.editCompanyProfile);
+          },
+          profileImage: _controller.company.profileImage?.url ?? "",
         ));
   }
 

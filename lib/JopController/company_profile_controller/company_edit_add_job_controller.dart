@@ -24,7 +24,7 @@ class CompanyEditAddJobController extends GetxController {
   bool get isNetworkConnection =>
       InternetConnectionService.instance.isConnected;
 
-  CompanyDetailsResponseModel get company => _dashboardController.company;
+  CompanyDetailsModel get company => _dashboardController.company;
 
   bool get isEditing {
     print(_dashboardController.dashboardState.editId);
@@ -274,7 +274,7 @@ class CompanyEditAddJobState {
     if (value?.specialization != null) specialization = value!.specialization!;
     jobLocation = WorkLocationModel(
       address: value?.company?.locations?.first.address,
-      location: CordLocation(
+      location: CoordLocation(
         longitude: value?.longitude.toString(),
         latitude: value?.latitude.toString(),
       ),

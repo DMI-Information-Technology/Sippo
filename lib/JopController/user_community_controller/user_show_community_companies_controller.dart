@@ -11,7 +11,7 @@ import '../../utils/states.dart';
 
 class UserShowCommunityCompaniesController extends GetxController {
   final pagingController =
-      PagingController<int, CompanyDetailsResponseModel>(firstPageKey: 0);
+      PagingController<int, CompanyDetailsModel>(firstPageKey: 0);
   final communityController = UserCommunityController.instance;
 
   States get states => communityController.states;
@@ -42,7 +42,7 @@ class UserShowCommunityCompaniesController extends GetxController {
   }
 
   void changeFollowingState(
-    CompanyDetailsResponseModel? company,
+    CompanyDetailsModel? company,
     bool Function(bool? isFollowing) predicate,
   ) {
     final followingState = company?.isFollowed;
@@ -54,7 +54,7 @@ class UserShowCommunityCompaniesController extends GetxController {
     }).toList();
   }
 
-  Future<void> toggleFollow(CompanyDetailsResponseModel company) async {
+  Future<void> toggleFollow(CompanyDetailsModel company) async {
     changeFollowingState(company, (isFollowing) => !(isFollowing == true));
     final response = await UserCompaniesAboutsRepo.toggleFollow(company.id);
     await response?.checkStatusResponse(
@@ -75,7 +75,7 @@ class UserShowCommunityCompaniesController extends GetxController {
     );
   }
 
-  void onToggleSubmitted(CompanyDetailsResponseModel company) async {
+  void onToggleSubmitted(CompanyDetailsModel company) async {
     print("is Loading: ${states.isLoading}");
     if (states.isLoading) return;
     if (!communityController.isNetworkConnected) {

@@ -12,7 +12,7 @@ import '../model/profile_model/company_profile_resource_model/company_job_model.
 
 class UserCommunityRepo {
   static Future<
-          Resource<PaginationModel<CompanyDetailsResponseModel>?, dynamic>?>
+          Resource<PaginationModel<CompanyDetailsModel>?, dynamic>?>
       fetchCommunityCompanies(Map<String, String> query) async {
     final httpController = HttpClientController.instance;
     try {
@@ -27,7 +27,7 @@ class UserCommunityRepo {
         response.statusCode,
         (data) => PaginationModel.fromJson(
           data,
-          dataConverter: (item) => CompanyDetailsResponseModel.fromJson(item),
+          dataConverter: (item) => CompanyDetailsModel.fromJson(item),
         ),
         (errors) => null,
       );

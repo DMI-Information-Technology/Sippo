@@ -42,7 +42,7 @@ class JobHomeCard extends StatelessWidget {
   final double? height;
   final VoidCallback onCardTap;
   final String? imagePath;
-  final void Function(CordLocation location)? onAddressTextTap;
+  final void Function(CoordLocation location)? onAddressTextTap;
   final EdgeInsets? padding;
 
   @override
@@ -147,7 +147,7 @@ class JobHomeCard extends StatelessWidget {
       onTap: () {
         if (onAddressTextTap != null) {
           onAddressTextTap!(
-            CordLocation(
+            CoordLocation(
               latitude: jobDetailsPost?.latitude.toString(),
               longitude: jobDetailsPost?.longitude.toString(),
             ),

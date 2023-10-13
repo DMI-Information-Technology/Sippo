@@ -11,7 +11,7 @@ class CompanyNotificationApplicationController extends GetxController {
   static CompanyNotificationApplicationController get instance => Get.find();
   final loadingOverlayController = SwitchStatusController();
 
-  CompanyDetailsResponseModel get company =>
+  CompanyDetailsModel get company =>
       CompanyDashBoardController.instance.company;
   final _states = States().obs;
 

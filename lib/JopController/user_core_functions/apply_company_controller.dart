@@ -31,14 +31,14 @@ class ApplyCompanyController extends GetxController {
     applyCompanyState.cvCompanyApply = const CustomFileModel();
   }
 
-  CompanyDetailsResponseModel? get requestedCompanyDetails =>
+  CompanyDetailsModel? get requestedCompanyDetails =>
       SharedGlobalDataService.instance.companyGlobalState.details;
   final companyId = SharedGlobalDataService.instance.companyGlobalState.id;
   final _states = States().obs;
 
   States get states => _states.value;
 
-  Future<CompanyDetailsResponseModel?> getCompanyById(int? id) async {
+  Future<CompanyDetailsModel?> getCompanyById(int? id) async {
     final response = await UserCompaniesAboutsRepo.getCompanyById(id);
     final data = await response?.checkStatusResponseAndGetData(
       onValidateError: (validateError, _) {
@@ -153,13 +153,13 @@ class ApplyCompanyController extends GetxController {
 }
 
 class ApplyCompanyState {
-  final _company = CompanyDetailsResponseModel().obs;
+  final _company = CompanyDetailsModel().obs;
 
   bool get hasApplied => company.hasApplied ?? false;
 
-  CompanyDetailsResponseModel get company => _company.value;
+  CompanyDetailsModel get company => _company.value;
 
-  void set company(CompanyDetailsResponseModel value) {
+  void set company(CompanyDetailsModel value) {
     _company.value = value;
   }
 

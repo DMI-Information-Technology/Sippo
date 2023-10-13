@@ -101,22 +101,48 @@ class CustomFileModel {
     return null;
   }
 
-  CustomFileModel copyWith({
+  @override
+  String toString() {
+    return 'CustomFileModel{fileField: $fileField, name: $name type: $type, subtype: $subtype, size: $size file: $file, bytes: $bytes,}';
+  }
+
+  CustomFileModel copyWithFile({
     String? fileField,
     String? type,
     String? subtype,
     File? file,
+    String? name,
+    int? size,
+    DateTime? uploadDate,
   }) {
     return CustomFileModel(
       fileField: fileField ?? this.fileField,
       type: type ?? this.type,
       subtype: subtype ?? this.subtype,
       file: file ?? this.file,
+      name: name ?? this.name,
+      size: size ?? this.size,
+      uploadDate: uploadDate ?? this.uploadDate,
     );
   }
 
-  @override
-  String toString() {
-    return 'CustomFileModel{fileField: $fileField, name: $name type: $type, subtype: $subtype, size: $size file: $file, bytes: $bytes,}';
+  CustomFileModel copyWithBytes({
+    String? fileField,
+    String? type,
+    String? subtype,
+    String? name,
+    Uint8List? bytes,
+    int? size,
+    DateTime? uploadDate,
+  }) {
+    return CustomFileModel.fromBytes(
+      fileField: fileField ?? this.fileField,
+      type: type ?? this.type,
+      subtype: subtype ?? this.subtype,
+      bytes: bytes ?? this.bytes,
+      name: name ?? this.name,
+      size: size ?? this.size,
+      uploadDate: uploadDate ?? this.uploadDate,
+    );
   }
 }

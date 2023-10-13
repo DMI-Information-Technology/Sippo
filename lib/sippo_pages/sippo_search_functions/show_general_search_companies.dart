@@ -34,7 +34,7 @@ class _ShowGeneralSearchCompaniesListState
       onRefresh: () async {
         _controller.refreshPage();
       },
-      child: PagedListView<int, CompanyDetailsResponseModel>.separated(
+      child: PagedListView<int, CompanyDetailsModel>.separated(
         padding: EdgeInsets.symmetric(
           vertical: context.fromHeight(CustomStyle.paddingValue),
           horizontal: context.fromWidth(CustomStyle.paddingValue),
@@ -165,12 +165,12 @@ class _ShowGeneralSearchCompaniesListState
     );
   }
 
-  void _onCompanyCardTapped(CompanyDetailsResponseModel company) async {
+  void _onCompanyCardTapped(CompanyDetailsModel company) async {
     final companyDashBoardState =
         SharedGlobalDataService.instance.companyGlobalState;
     companyDashBoardState.id = company.id ?? -1;
     companyDashBoardState.details = company;
     await Get.toNamed(SippoRoutes.sippoAboutCompanies);
-    companyDashBoardState.clearDetails(() => CompanyDetailsResponseModel());
+    companyDashBoardState.clearDetails(() => CompanyDetailsModel());
   }
 }

@@ -8,11 +8,15 @@ import '../JobGlobalclass/text_font_size.dart';
 
 class ListTextItem extends StatelessWidget {
   const ListTextItem({
+    super.key,
     this.text,
     this.startCrossAlignment = false,
-    super.key,
+    this.fontSize,
+    this.onTap,
   });
 
+  final VoidCallback? onTap;
+  final double? fontSize;
   final bool startCrossAlignment;
   final String? text;
 
@@ -35,17 +39,21 @@ class ListTextItem extends StatelessWidget {
 
   Widget _buildListItemText(BuildContext context) {
     return Expanded(
-      child: AutoSizeText(
-        text ?? "",
-        style: dmsregular.copyWith(
-          fontSize: FontSize.paragraph3(
-            context,
+      child: InkWell(
+        onTap: onTap,
+        child: AutoSizeText(
+          text ?? "",
+          style: dmsregular.copyWith(
+            fontSize: fontSize ??
+                FontSize.paragraph3(
+                  context,
+                ),
+            color: Jobstopcolor.darkgrey,
           ),
-          color: Jobstopcolor.darkgrey,
+          maxLines: 5,
+          overflow: TextOverflow.ellipsis,
+          textAlign: TextAlign.start,
         ),
-        maxLines: 5,
-        overflow: TextOverflow.ellipsis,
-        textAlign: TextAlign.start,
       ),
     );
   }

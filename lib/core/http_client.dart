@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
 import 'package:jobspot/core/header_api.dart';
 
@@ -20,12 +21,22 @@ class MyHttpClient {
     String? resourceId,
     Map<String, String>? headers,
   }) async {
-    final response = await _client.get(
-      _buildUri(endpoint, resourceId: resourceId, parameters: queryParameter),
-      headers: headers ?? _buildHeaders(),
-    );
+    try {
+      final response = await _client.get(
+        _buildUri(endpoint, resourceId: resourceId, parameters: queryParameter),
+        headers: headers ?? _buildHeaders(),
+      );
 
-    return response;
+      return response;
+    } catch (e, s) {
+      FlutterError.reportError(FlutterErrorDetails(
+        exception: e,
+        stack: s,
+        library: 'Flutter Custom Error',
+        context: ErrorSummary('while running async test code'),
+      ));
+      throw e;
+    }
   }
 
   Future<http.Response> post(
@@ -162,8 +173,6 @@ class MyHttpClient {
     print("HttpClient._buildHeaders: defaultHeader is built.");
     return !isMultipart ? Header.defaultHeader : Header.defaultMultipartHeader;
   }
-
-
 
   void close() {
     _client.close();

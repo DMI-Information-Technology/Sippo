@@ -114,11 +114,11 @@ class UserAboutCompaniesController extends GetxController {
 }
 
 class UserAboutCompaniesState {
-  final _company = CompanyDetailsResponseModel().obs;
+  final _company = CompanyDetailsModel().obs;
 
-  CompanyDetailsResponseModel get company => _company.value;
+  CompanyDetailsModel get company => _company.value;
 
-  void set company(CompanyDetailsResponseModel value) => _company.value = value;
+  void set company(CompanyDetailsModel value) => _company.value = value;
 
   final _selectedTaps = 0.obs;
 

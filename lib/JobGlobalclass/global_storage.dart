@@ -5,8 +5,13 @@ import 'package:jobspot/utils/app_use.dart';
 import 'jobstopprefname.dart' as global;
 
 class GlobalStorageService extends GetxService {
+  static const MAP_API_KEY = 'MAP_API_KEY';
+  static const mapApiKey =
+      const String.fromEnvironment(GlobalStorageService.MAP_API_KEY);
+
   static GlobalStorageService get instance => Get.find();
   static const first_app_lunch_time = "firstapplunchtime";
+
   bool _isLogged = false;
   final box = GetStorage();
   String? _tokenLogged = "";

@@ -12,7 +12,7 @@ class GeneralSearchCompaniesController extends GetxController {
 
   static GeneralSearchCompaniesController get instance => Get.find();
   final pagingController =
-      PagingController<int, CompanyDetailsResponseModel>(firstPageKey: 0);
+      PagingController<int, CompanyDetailsModel>(firstPageKey: 0);
   final searchCompaniesState = GeneralSearchCompaniesState();
 
   States get states => generalSearchController.states;

@@ -14,6 +14,7 @@ class ContainerBottomSheetWidget extends StatelessWidget {
     super.key,
     required this.children,
     this.notchColor,
+    this.fullHeight = false,
   })  : this.builder = null,
         conType = ContainerType.v_list;
 
@@ -27,12 +28,16 @@ class ContainerBottomSheetWidget extends StatelessWidget {
     super.key,
     required this.builder,
     this.notchColor,
+    this.fullHeight = false,
   })  : this.children = null,
         conType = ContainerType.statefulBuilder;
   final Color? notchColor;
   final ContainerType conType;
   final List<Widget>? children;
   final Widget Function(BuildContext, void Function(void Function()))? builder;
+
+  // final double? height;
+  final bool fullHeight;
 
   Widget _buildWidget() {
     return switch (conType) {
@@ -62,27 +67,30 @@ class ContainerBottomSheetWidget extends StatelessWidget {
         bottom: MediaQuery.of(context).viewInsets.bottom,
         top: MediaQuery.of(context).viewInsets.top,
       ),
+      // height: fullHeight ? context.height : null,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
+        mainAxisAlignment:
+            fullHeight ? MainAxisAlignment.start : MainAxisAlignment.center,
+        mainAxisSize: fullHeight ? MainAxisSize.max : MainAxisSize.min,
         children: [
-          SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
-          Container(
-            height: 5.0,
-            width: 50.0,
-            decoration: BoxDecoration(
-              color: notchColor ?? Colors.grey[400],
-              borderRadius: BorderRadius.circular(10.0),
+          if (!fullHeight) ...[
+            SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
+            Container(
+              height: 5.0,
+              width: 50.0,
+              decoration: BoxDecoration(
+                color: notchColor ?? Colors.grey[400],
+                borderRadius: BorderRadius.circular(10.0),
+              ),
             ),
-          ),
-          SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: width / 32),
-            child: Divider(thickness: height / 256, color: Colors.grey[300]),
-          ),
+            SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: width / 32),
+              child: Divider(thickness: height / 256, color: Colors.grey[300]),
+            ),
+          ],
           _buildWidget(),
-          SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
         ],
       ),
     );

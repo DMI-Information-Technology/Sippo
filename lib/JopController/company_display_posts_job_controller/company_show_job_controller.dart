@@ -24,7 +24,7 @@ class CompanyShowJobController extends GetxController {
 
   final jobState = CompanyShowJobState();
 
-  CompanyDetailsResponseModel get company => showWrapperController.company;
+  CompanyDetailsModel get company => showWrapperController.company;
 
   Future<void> fetchJobPages(int pageKey) async {
     final query = {'page': "${jobState.pageNumber}"};

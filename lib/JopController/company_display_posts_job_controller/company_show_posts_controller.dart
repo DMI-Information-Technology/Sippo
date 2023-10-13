@@ -24,7 +24,7 @@ class CompanyShowPostsController extends GetxController {
 
   final postsState = CompanyShowPostsState();
 
-  CompanyDetailsResponseModel get company => showWrapperController.company;
+  CompanyDetailsModel get company => showWrapperController.company;
 
   Future<void> fetchPostPages(int pageKey) async {
     final query = {'page': "${postsState.pageNumber}"};

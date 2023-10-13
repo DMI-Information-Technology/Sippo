@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JopController/user_profile_controller/profile_user_controller.dart';
@@ -6,11 +8,13 @@ import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/pr
 import 'package:jobspot/sippo_data/user_repos/edit_profile_repo.dart';
 import 'package:jobspot/utils/states.dart';
 
+import '../../custom_app_controller/switch_status_controller.dart';
 import '../../utils/getx_text_editing_controller.dart';
 
 class EditProfileInfoController extends GetxController {
   final _profileImagePath = "".obs;
   final _profileController = ProfileUserController.instance;
+  final loadingOverlayController = SwitchStatusController();
 
   final profileEditState = ProfileEditState();
   final _states = States().obs;
@@ -52,8 +56,20 @@ class EditProfileInfoController extends GetxController {
     _states.value = states.copyWith(isLoading: false);
   }
 
+  void _onStatesListener(States value) {
+    try {
+      loadingOverlayController.status = value.isLoading;
+    } catch (e, s) {
+      print(s);
+      print(e);
+    }
+  }
+
+  StreamSubscription<States>? _statesSub;
+
   @override
   void onInit() {
+    _statesSub = _states.listen(_onStatesListener, cancelOnError: true);
     profileEditState.setAll(_profileController.user);
     super.onInit();
   }
@@ -61,6 +77,8 @@ class EditProfileInfoController extends GetxController {
   @override
   void onClose() {
     profileEditState.disposeTextControllers();
+    _statesSub?.cancel();
+    loadingOverlayController.dispose();
     super.onClose();
   }
 

@@ -32,7 +32,10 @@ const String userCvEndpoint = "user/cv";
 const String companyInfoProfileEndpoint = "company/profile";
 const String companyPostEndpoint = "company/profile/posts";
 const String companyJobsEndpoint = "company/profile/jobs";
+const String companyLocations= "company/profile/locations";
+const String companyChangeCompanyProfile= "company/profile/change-profile-image";
 const String companyApplicationEndpoint = "company/applications";
+
 const String companyUserProfileViewEndpoint = "customers";
 
 /////////////////////////////////////////////////////////

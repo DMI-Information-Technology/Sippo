@@ -24,7 +24,7 @@ class JobPostingCard extends StatelessWidget {
   final bool? isActive;
   final String? timeAgo;
   final bool isEditable;
-  final void Function(CordLocation? location)? onAddressTextTap;
+  final void Function(CoordLocation? location)? onAddressTextTap;
   final bool isSaved;
 
   // final String salary;
@@ -164,7 +164,7 @@ class JobPostingCard extends StatelessWidget {
                 onTap: () {
                   if (onAddressTextTap != null)
                     onAddressTextTap!(
-                      CordLocation(
+                      CoordLocation(
                         latitude: jobDetails?.latitude.toString(),
                         longitude: jobDetails?.longitude.toString(),
                       ),

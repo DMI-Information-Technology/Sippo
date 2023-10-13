@@ -6,6 +6,10 @@ if (localPropertiesFile.exists()) {
     }
 }
 
+def mapsApiKey = localProperties.getProperty('MAPS_API_KEY')
+if (mapsApiKey == null) {
+    throw new Error('Google Maps Api Key not configured. Set it in `local_maps.properties` or in the environment variable `MAPS_API_KEY`')
+}
 def flutterRoot = localProperties.getProperty('flutter.sdk')
 if (flutterRoot == null) {
     throw new FileNotFoundException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
@@ -31,7 +35,6 @@ android {
     compileSdkVersion flutter.compileSdkVersion
 //    compileSdkVersion 33
     ndkVersion flutter.ndkVersion
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -43,10 +46,12 @@ android {
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
         //minSdkVersion flutter.minSdkVersion
-        minSdkVersion 19
+        minSdkVersion 20
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+//        "applicationName": 'FlutterMultiDexApplication'
+        manifestPlaceholders += ["mapsApiKey": mapsApiKey]
     }
 
     buildTypes {

@@ -7,6 +7,7 @@ import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JopController/dashboards_controller/company_dashboard_controller.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
+import 'package:jobspot/sippo_custom_widget/save_job_card_widget.dart';
 
 import '../../JobGlobalclass/sippo_customstyle.dart';
 import '../../JobGlobalclass/text_font_size.dart';
@@ -191,6 +192,7 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
   }
 
   AppBar _buildHomeAppBar(BuildContext context) {
+    final dashboardController = CompanyDashBoardController.instance;
     Size size = MediaQuery.of(context).size;
     double height = size.height;
     double width = size.width;
@@ -203,7 +205,6 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
               IconButton(
                   onPressed: () {
                     Get.toNamed(SippoRoutes.sippoGeneralSearchPage);
-
                   },
                   icon: Icon(
                     Icons.search_sharp,
@@ -224,9 +225,11 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
               ),
               InkWell(
                 onTap: () => Get.toNamed(SippoRoutes.sippocompanyprofile),
-                child: CircleAvatar(
-                  radius: 20,
-                  child: Image.asset(JobstopPngImg.photo),
+                child: NetworkBorderedCircularImage(
+                  imageUrl: dashboardController.company.profileImage?.url ?? '',
+                  errorWidget: (___, __, _) => const CircleAvatar(),
+                  size: context.fromHeight(24),
+                  outerBorderColor: Jobstopcolor.backgroudHome,
                 ),
               ),
             ],

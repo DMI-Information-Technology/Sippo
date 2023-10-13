@@ -62,6 +62,7 @@ class CircularImage extends StatelessWidget {
         image: DecorationImage(
           alignment: AlignmentDirectional.center,
           image: _buildImage() ?? AssetImage(JobstopPngImg.signup),
+          fit: BoxFit.cover,
         ),
       ),
       height: size,

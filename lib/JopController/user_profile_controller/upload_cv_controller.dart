@@ -11,7 +11,8 @@ import '../dashboards_controller/user_dashboard_controller.dart';
 class UploadCvController extends GetxController {
   static UploadCvController get instance => Get.find();
   final dashboard = UserDashBoardController.instance;
-  final profileState = ProfileUserController.instance.profileState;
+
+  ProfileState get profileState => ProfileUserController.instance.profileState;
 
   ProfileInfoModel get user => dashboard.user;
   final _states = States().obs;
@@ -43,6 +44,8 @@ class UploadCvController extends GetxController {
       onSuccess: (data, _) {
         if (data != null) {
           dashboard.user = dashboard.user.copyWith(cv: data);
+          profileState.profileView =
+              profileState.profileView.copyWith(cv: data);
           profileState.cvFile = CustomFileModel();
         }
       },

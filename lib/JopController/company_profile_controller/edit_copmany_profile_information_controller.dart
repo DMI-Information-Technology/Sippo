@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JopController/company_profile_controller/profile_company_controller.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
+import 'package:jobspot/sippo_data/model/custom_file_model/custom_file_model.dart';
 
 import '../../sippo_data/company_repos/company_profile_info_repo.dart';
 import '../../utils/getx_text_editing_controller.dart';
 import '../../utils/states.dart';
 
 class EditCompanyProfileInfoController extends GetxController {
-  final _profileImagePath = "".obs;
-  final _profileController = ProfileCompanyController.instance;
+  final profileController = ProfileCompanyController.instance;
 
+  CompanyDetailsModel get companyDetails => profileController.company;
   final profileEditState = ProfileCompanyEditState();
   final _states = States().obs;
 
@@ -26,10 +27,32 @@ class EditCompanyProfileInfoController extends GetxController {
     _states.value = states.copyWith(isWarning: value, message: message);
   }
 
+  Future<void> updateProfileImage() async {
+    final response = await EditCompanyProfileInfoRepo.updateProfileImage(
+      profileEditState.pickedImageProfile,
+    );
+    response?.checkStatusResponse(
+      onSuccess: (data, _) {
+        if (data != null) {
+          final company = profileController.dashboard.company;
+          profileController.dashboard.company = company.copyWith(
+            profileImage: data,
+          );
+          profileEditState.pickedImageProfile = CustomFileModel();
+        }
+      },
+      onValidateError: (validateError, _) {},
+      onError: (message, _) {},
+    );
+  }
+
   Future<void> updateProfileInfo() async {
     final newProfileInfo = profileEditState.form
-      ..id = _profileController.company.id;
-    if (newProfileInfo == _profileController.company) {
+      ..id = profileController.company.id;
+    print(newProfileInfo);
+    print(profileController.company);
+    print("is equals ${newProfileInfo == profileController.company}");
+    if (newProfileInfo == profileController.company) {
       return warningState(true, "Nothing is Changed in Profile Information.");
     }
     final response = await EditCompanyProfileInfoRepo.updateCompanyProfile(
@@ -38,8 +61,8 @@ class EditCompanyProfileInfoController extends GetxController {
     await response.checkStatusResponse(
       onSuccess: (data, _) {
         if (data != null) {
-          _profileController.dashboard.company = data;
-          profileEditState.setAll(_profileController.dashboard.company);
+          profileController.dashboard.company = data;
+          profileEditState.setAll(profileController.dashboard.company);
         }
         successState(true, 'company Profile is updated successfully.');
       },
@@ -48,10 +71,8 @@ class EditCompanyProfileInfoController extends GetxController {
     );
   }
 
-  String get profileImagePath => _profileImagePath.toString().trim();
-
   Future<void> onSaveSubmitted() async {
-    if (!_profileController.netController.isConnected) {
+    if (profileController.netController.isNotConnected) {
       return warningState(
         true,
         "sorry your connection is lost, please check your settings before continuing.",
@@ -62,9 +83,21 @@ class EditCompanyProfileInfoController extends GetxController {
     _states.value = states.copyWith(isLoading: false);
   }
 
+  Future<void> onImageUpdatedSubmitted() async {
+    if (profileController.netController.isNotConnected) {
+      return warningState(
+        true,
+        "sorry your connection is lost, please check your settings before continuing.",
+      );
+    }
+    _states.value = States(isLoading: true);
+    await updateProfileImage();
+    _states.value = states.copyWith(isLoading: false);
+  }
+
   @override
   void onInit() {
-    profileEditState.setAll(_profileController.company);
+    profileEditState.setAll(profileController.company);
     super.onInit();
   }
 
@@ -72,10 +105,6 @@ class EditCompanyProfileInfoController extends GetxController {
   void onClose() {
     profileEditState.disposeTextControllers();
     super.onClose();
-  }
-
-  void set profileImagePath(String? value) {
-    _profileImagePath.value = value ?? "";
   }
 }
 
@@ -88,6 +117,21 @@ class ProfileCompanyEditState {
   final city = GetXTextEditingController();
   final employeesCount = GetXTextEditingController();
   final _profileController = ProfileCompanyController.instance;
+  final _pickedImageProfile = CustomFileModel().obs;
+
+  // final _imageProfileResource = ImageResourceModel().obs;
+  //
+  // ImageResourceModel get imageProfileResource => _imageProfileResource.value;
+  //
+  // set imageProfileResource(ImageResourceModel value) {
+  //   _imageProfileResource.value = value;
+  // }
+
+  CustomFileModel get pickedImageProfile => _pickedImageProfile.value;
+
+  set pickedImageProfile(CustomFileModel value) {
+    _pickedImageProfile.value = value;
+  }
 
   void clearFields() {
     name.text = "";
@@ -97,9 +141,11 @@ class ProfileCompanyEditState {
     website.text = "";
     city.text = "";
     employeesCount.text = "";
+    pickedImageProfile = CustomFileModel();
+    // imageProfileResource = ImageResourceModel();
   }
 
-  void setAll(CompanyDetailsResponseModel? data) {
+  void setAll(CompanyDetailsModel? data) {
     name.text = data?.name ?? "";
     email.text = data?.email ?? "";
     phone.text = data?.phone ?? "";
@@ -109,14 +155,17 @@ class ProfileCompanyEditState {
     employeesCount.text = data?.employeesCount.toString() ?? "";
   }
 
-  CompanyDetailsResponseModel get form => _profileController.company.copyWith(
-        name: name.text,
-        phone: phone.text,
-        email: email.text,
-        secondaryPhone: secondaryPhone.text,
-        website: website.text,
-        city: city.text,
-        employeesCount: int.parse(employeesCount.text),
+  CompanyDetailsModel get form => _profileController.company.copyWith(
+        name: name.text.isBlank == true ? null : name.text,
+        phone: phone.text.isBlank == true ? null : phone.text,
+        email: email.text.isBlank == true ? null : email.text,
+        secondaryPhone:
+            secondaryPhone.text.isBlank == true ? null : secondaryPhone.text,
+        website: website.text.isBlank == true ? null : website.text,
+        city: city.text.isBlank == true ? null : city.text,
+        employeesCount: employeesCount.text.isBlank == true
+            ? null
+            : int.parse(employeesCount.text),
       );
 
   void disposeTextControllers() {

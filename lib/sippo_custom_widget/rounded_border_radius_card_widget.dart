@@ -53,30 +53,39 @@ class RoundedBorderRadiusCardWidget extends StatelessWidget {
     switch (paddingType) {
       case PaddingType.vertical:
         return EdgeInsets.symmetric(
-          vertical:
-              paddingValue ?? context.fromWidth(CustomStyle.roundedCardPadding),
+          vertical: paddingValue ??
+              context.fromWidth(
+                CustomStyle.roundedCardPadding,
+              ),
         );
 
       case PaddingType.horizontal:
         return EdgeInsets.symmetric(
-          horizontal:
-              paddingValue ?? context.fromWidth(CustomStyle.roundedCardPadding),
+          horizontal: paddingValue ??
+              context.fromWidth(
+                CustomStyle.roundedCardPadding,
+              ),
         );
 
       case PaddingType.all:
         return EdgeInsets.all(
-          paddingValue ?? context.fromWidth(CustomStyle.roundedCardPadding),
+          paddingValue ??
+              context.fromWidth(
+                CustomStyle.roundedCardPadding,
+              ),
         );
     }
   }
 
   BorderRadius _borderRadius(BuildContext context) {
     return switch (radiusType) {
-      RadiusType.top =>
-        BorderRadius.vertical(top: Radius.circular(radiusValue ?? 25)),
-      RadiusType.bottom =>
-        BorderRadius.vertical(bottom: Radius.circular(radiusValue ?? 25)),
-      RadiusType.all => BorderRadius.all(Radius.circular(radiusValue ?? 25)),
+      RadiusType.top => BorderRadius.vertical(
+          top: Radius.circular(radiusValue ?? 25),
+        ),
+      RadiusType.bottom => BorderRadius.vertical(
+          bottom: Radius.circular(radiusValue ?? 25),
+        ),
+      RadiusType.all => BorderRadius.circular(radiusValue ?? 25),
     };
   }
 

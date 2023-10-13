@@ -32,7 +32,7 @@ class _ShowCommunityCompanyCompaniesListState
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () async => _controller.refreshPage(),
-      child: PagedGridView<int, CompanyDetailsResponseModel>(
+      child: PagedGridView<int, CompanyDetailsModel>(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           mainAxisSpacing: 15,
@@ -128,7 +128,7 @@ class _ShowCommunityCompanyCompaniesListState
     );
   }
 
-  void _onCompanyCardTapped(CompanyDetailsResponseModel company) async {
+  void _onCompanyCardTapped(CompanyDetailsModel company) async {
     final companyDashBoardState =
         SharedGlobalDataService.instance.companyGlobalState;
     companyDashBoardState.id = company.id ?? -1;
@@ -140,7 +140,7 @@ class _ShowCommunityCompanyCompaniesListState
         (isFollowing) => isFollowing == true,
       );
     }
-    companyDashBoardState.clearDetails(() => CompanyDetailsResponseModel());
+    companyDashBoardState.clearDetails(() => CompanyDetailsModel());
   }
 }
 

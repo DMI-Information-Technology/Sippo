@@ -4,20 +4,23 @@ import 'dart:io';
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
-
 import 'package:jobspot/JopController/dashboards_controller/user_dashboard_controller.dart';
 import 'package:jobspot/core/Refresh.dart';
 import 'package:jobspot/sippo_data/model/custom_file_model/custom_file_model.dart';
+import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_user_profile_view_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/education_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/language_model.dart';
+import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/skills_model.dart';
 import 'package:jobspot/sippo_data/user_repos/add_delete_cv_repo.dart';
 import 'package:jobspot/sippo_data/user_repos/education_repo.dart';
 import 'package:jobspot/sippo_data/user_repos/language_repo.dart';
 import 'package:jobspot/sippo_data/user_repos/skills_repo.dart';
+import 'package:jobspot/utils/states.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 
 import '../../custom_app_controller/switch_status_controller.dart';
+import '../../sippo_custom_widget/profile_completion_widget.dart';
 import '../../sippo_data/model/profile_model/profile_resource_model/profile_edit_model.dart';
 import '../../sippo_data/model/profile_model/profile_resource_model/work_experiences_model.dart';
 import '../../sippo_data/model/profile_model/profile_widget_model/jobstop_appreciation_info_card_model.dart';
@@ -28,6 +31,13 @@ import '../../utils/storage_permission_service.dart';
 class ProfileUserController extends GetxController {
   final netController = InternetConnectionService.instance;
   final loadingOverlayController = SwitchStatusController();
+  final profileCompletionController = ProfileCompletionController(0.0);
+
+  final _states = States().obs;
+
+  States get states => _states.value;
+
+  void set states(States value) => _states.value = value;
 
   late final StreamSubscription<bool>? _connectionSubscription;
   final dashboard = UserDashBoardController.instance;
@@ -134,6 +144,7 @@ class ProfileUserController extends GetxController {
   Future<void> fetchResources() async {
     // final List<Future> futures =
     // await Future.wait(futures);
+    states = states.copyWith(isLoading: true);
     await Future.wait([
       fetchAllWorkExperience(),
       fetchAllEducation(),
@@ -141,6 +152,9 @@ class ProfileUserController extends GetxController {
       fetchUserLanguage(),
       // Add more API calls here
     ]);
+    states = states.copyWith(isLoading: false);
+    profileState.refreshProfileView(userInfo: user);
+    print(profileState.profileView.blankProfileMessages());
   }
 
   void _connected(bool isConn) async => isConn ? await fetchResources() : null;
@@ -200,6 +214,13 @@ class ProfileUserController extends GetxController {
 
   @override
   void onInit() {
+    profileState.startProfileViewListener(
+      (value) {
+        profileCompletionController.updateCompletionLength(
+          value.blankProfileMessages().length,
+        );
+      },
+    );
     _startListeningToConnection();
     super.onInit();
   }
@@ -208,11 +229,44 @@ class ProfileUserController extends GetxController {
   void onClose() {
     _connectionSubscription?.cancel();
     loadingOverlayController.dispose();
+    profileState.close();
     super.onClose();
   }
 }
 
 class ProfileState {
+  final _profileView = ProfileViewResourceModel().obs;
+  StreamSubscription? profileViewSubscription;
+
+  void startProfileViewListener(
+    void Function(ProfileViewResourceModel) onData,
+  ) {
+    profileViewSubscription = _profileView.listen(onData);
+  }
+
+  void close() {
+    profileViewSubscription?.cancel();
+  }
+
+  ProfileViewResourceModel get profileView => _profileView.value;
+
+  void set profileView(ProfileViewResourceModel value) =>
+      _profileView.value = value;
+
+  void refreshProfileView({
+    ProfileInfoModel? userInfo,
+  }) {
+    profileView = ProfileViewResourceModel(
+      userInfo: userInfo,
+      cv: userInfo?.cv,
+      image: userInfo?.profileImage,
+      workExperiences: workExList,
+      educations: educationList,
+      skills: SkillsModel(skills: skillsList),
+      languages: languages,
+    );
+  }
+
   final _aboutMeText =
       "lorem ispum dolor sit amet, consectetur adipiscing elit in aenean non proident"
           .obs;
@@ -251,6 +305,8 @@ class ProfileState {
   void set languages(List<LanguageModel> value) => _languages.value = value;
 
   String get aboutMeText => _aboutMeText.toString();
+
+  void set aboutMeText(String value) => _aboutMeText.value = value;
 
   bool get showAllWei => _showAllWei.isTrue;
 

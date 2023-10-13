@@ -15,8 +15,15 @@ import '../../../sippo_custom_widget/ConditionalWidget.dart';
 import '../../../sippo_custom_widget/success_message_widget.dart';
 import '../../../utils/validating_input.dart';
 
-class SippoCompanyEditAddPost extends StatelessWidget {
-  SippoCompanyEditAddPost({Key? key}) : super(key: key);
+class SippoCompanyEditAddPost extends StatefulWidget {
+  const SippoCompanyEditAddPost({Key? key}) : super(key: key);
+
+  @override
+  State<SippoCompanyEditAddPost> createState() =>
+      _SippoCompanyEditAddPostState();
+}
+
+class _SippoCompanyEditAddPostState extends State<SippoCompanyEditAddPost> {
   final _controller = CompanyEditAddPostController.instance;
 
   @override
@@ -42,7 +49,7 @@ class SippoCompanyEditAddPost extends StatelessWidget {
               ),
               child: InkWell(
                 onTap: () {
-                  if(_controller.formKey.currentState?.validate()==true) {
+                  if (_controller.formKey.currentState?.validate() == true) {
                     _controller.onSaveSubmitted();
                   }
                 },

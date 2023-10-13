@@ -10,6 +10,7 @@ class JobstopPngImg {
   static const String afternoon = "Assets/jobstop_assets/jobpngimg/afternoon.png";
   static const String night = "Assets/jobstop_assets/jobpngimg/night.png";
   static const String checkmsg = "Assets/jobstop_assets/jobpngimg/checkmsg.png";
+  static const String profileComp = "Assets/jobstop_assets/jobpngimg/profileComp.png";
   static const String find_empLogo = "Assets/jobstop_assets/jobpngimg/find_emp.png";
   static const String find_jobLog =  "Assets/jobstop_assets/jobpngimg/find_job.png";
   static const String phonenymberempty =

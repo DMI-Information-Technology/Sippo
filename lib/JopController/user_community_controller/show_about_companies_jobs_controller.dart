@@ -11,7 +11,7 @@ class ShowAboutsCompaniesJobsController extends GetxController {
   final pagingJobController =
       PagingController<int, CompanyJobModel>(firstPageKey: 0);
 
-  CompanyDetailsResponseModel get company =>
+  CompanyDetailsModel get company =>
       aboutCompaniesController.aboutState.company;
 
   final showJobsState = AboutsCompaniesPostsController();

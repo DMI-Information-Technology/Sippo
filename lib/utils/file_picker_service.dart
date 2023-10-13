@@ -45,8 +45,9 @@ class FilePickerService {
     return null;
   }
 
-  static Future<CustomFileModel?> uploadFileCv(
-      {void Function(FilePickerStatus status)? onFileUploading}) async {
+  static Future<CustomFileModel?> uploadFileCv({
+    void Function(FilePickerStatus status)? onFileUploading,
+  }) async {
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       withData: true,
       type: FileType.custom,

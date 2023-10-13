@@ -2,6 +2,8 @@ import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_
 
 class WorkLocationModel {
   const WorkLocationModel({
+    this.id,
+    this.companyId,
     this.address,
     this.location,
     this.isHQ,
@@ -9,8 +11,10 @@ class WorkLocationModel {
 
   factory WorkLocationModel.fromJson(Map<String, dynamic> json) {
     return WorkLocationModel(
+      id: json["id"],
+      companyId: json['company_id'],
       address: json["address"],
-      location: CordLocation.fromJson({
+      location: CoordLocation.fromJson({
         'longitude': json['longitude'],
         'latitude': json['latitude'],
       }),
@@ -18,8 +22,10 @@ class WorkLocationModel {
     );
   }
 
+  final int? id;
+  final int? companyId;
   final String? address;
-  final CordLocation? location;
+  final CoordLocation? location;
   final bool? isHQ;
 
   Map<String, dynamic> toJson() => {
@@ -31,7 +37,7 @@ class WorkLocationModel {
 
   @override
   String toString() {
-    return 'WorkLocationModel{address: $address, location: $location, isHQ: $isHQ}';
+    return 'WorkLocationModel{id: $id, companyId: $companyId, address: $address, location: $location, isHQ: $isHQ}';
   }
 
   @override
@@ -39,10 +45,17 @@ class WorkLocationModel {
       identical(this, other) ||
       other is WorkLocationModel &&
           runtimeType == other.runtimeType &&
+          id == other.id &&
+          companyId == other.companyId &&
           address == other.address &&
           location == other.location &&
           isHQ == other.isHQ;
 
   @override
-  int get hashCode => address.hashCode ^ location.hashCode ^ isHQ.hashCode;
+  int get hashCode =>
+      id.hashCode ^
+      companyId.hashCode ^
+      address.hashCode ^
+      location.hashCode ^
+      isHQ.hashCode;
 }

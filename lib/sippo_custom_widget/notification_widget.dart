@@ -21,7 +21,7 @@ import 'job_application_chip_widget.dart';
 class NotificationApplicationWidget extends StatelessWidget {
   final VoidCallback? onDeletePressed;
   final VoidCallback onTap;
-  final CompanyDetailsResponseModel? company;
+  final CompanyDetailsModel? company;
   final ApplicationCompanyModel? application;
   final bool isSelected;
   final VoidCallback? onPopupNotificationButtonTapped;
@@ -178,7 +178,7 @@ class NotificationApplicationWidget extends StatelessWidget {
 
 class NotificationJobApplicationWidget extends StatelessWidget {
   final void Function(String cvUrl)? onShowCvTap;
-  final CompanyDetailsResponseModel? company;
+  final CompanyDetailsModel? company;
   final ApplicationCompanyModel? application;
 
   NotificationJobApplicationWidget({
@@ -320,7 +320,7 @@ class CompanyNotificationApplicationWidget extends StatelessWidget {
   });
 
   final void Function(String cvUrl)? onShowCvTap;
-  final CompanyDetailsResponseModel? company;
+  final CompanyDetailsModel? company;
   final String? applicationStatus;
   final CvModel? cv;
 

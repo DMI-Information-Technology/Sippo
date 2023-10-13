@@ -11,6 +11,7 @@ import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/circular_image.dart';
+import 'package:jobspot/sippo_custom_widget/loading_view_widgets/loading_scaffold.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/utils/getx_text_editing_controller.dart';
 import 'package:jobspot/utils/image_picker_service.dart';
@@ -34,7 +35,8 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
   @override
   Widget build(BuildContext context) {
     final profileEditState = _controller.profileEditState;
-    return Scaffold(
+    return LoadingScaffold(
+      controller: _controller.loadingOverlayController,
       appBar: AppBar(
         title: Text(
           "Edit_profile".tr,

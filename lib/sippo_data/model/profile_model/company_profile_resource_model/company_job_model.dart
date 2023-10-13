@@ -4,7 +4,7 @@ import 'package:jobspot/sippo_data/model/specializations_model/specializations_m
 
 class CompanyJobModel {
   int? id; // New field
-  final CompanyDetailsResponseModel? company; // New field
+  final CompanyDetailsModel? company; // New field
   final String? title;
   final String? description;
   final String? requirements;
@@ -52,7 +52,7 @@ class CompanyJobModel {
     return CompanyJobModel(
       id: json['id'],
       company: json['company'] != null
-          ? CompanyDetailsResponseModel.fromJson(json['company'])
+          ? CompanyDetailsModel.fromJson(json['company'])
           : null,
       title: json['title'],
       description: json['description'],
@@ -159,7 +159,7 @@ class CompanyJobModel {
 
   CompanyJobModel copyWith({
     int? id,
-    CompanyDetailsResponseModel? company,
+    CompanyDetailsModel? company,
     String? title,
     String? description,
     String? requirements,

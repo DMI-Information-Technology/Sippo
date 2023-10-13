@@ -15,7 +15,7 @@ class SignUpCompanyController extends GetxController {
   final _confirmPassword = "".obs;
   final _companyAddress = "".obs;
   final _confirmOnPolicy = false.obs;
-  final _cordLocation = CordLocation().obs;
+  final _cordLocation = CoordLocation().obs;
 
   CompanyModel get companyForm => CompanyModel(
         name: fullname,
@@ -32,10 +32,10 @@ class SignUpCompanyController extends GetxController {
         city: companyAddress,
       );
 
-  CordLocation get cordLocation => _cordLocation.value;
+  CoordLocation get cordLocation => _cordLocation.value;
 
   void setCordLocation({double? long, double? lat}) {
-    _cordLocation.value = CordLocation(
+    _cordLocation.value = CoordLocation(
       longitude: long.toString(),
       latitude: lat.toString(),
     );

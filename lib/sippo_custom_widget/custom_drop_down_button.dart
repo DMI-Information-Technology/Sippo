@@ -19,10 +19,12 @@ class CustomDropdownButton<T> extends StatelessWidget {
     this.height,
     this.setInitialValue = false,
     this.initialValue,
+    this.fillColor,
   });
 
   final String? initialValue;
   final bool setInitialValue;
+  final Color? fillColor;
   final double? width;
   final double? height;
   final String? textHint;
@@ -41,7 +43,7 @@ class CustomDropdownButton<T> extends StatelessWidget {
         decoration: InputDecoration(
           contentPadding: const EdgeInsets.symmetric(vertical: 16),
           filled: true,
-          fillColor: Jobstopcolor.backgroudHome,
+          fillColor: fillColor ?? Jobstopcolor.backgroudHome,
           border: OutlineInputBorder(
             borderRadius:
                 BorderRadius.circular(context.fromWidth(CustomStyle.s)),

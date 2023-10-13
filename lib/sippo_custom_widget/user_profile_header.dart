@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
+import 'package:jobspot/sippo_custom_widget/save_job_card_widget.dart';
 import 'package:jobspot/sippo_data/model/auth_model/entity_model.dart';
 
 import '../JobGlobalclass/jobstopcolor.dart';
 import '../JobGlobalclass/jobstopfontstyle.dart';
 import '../JobGlobalclass/sippo_customstyle.dart';
 import '../JobGlobalclass/text_font_size.dart';
-import 'circular_image.dart';
 
 class UserProfileHeaderWidget extends StatelessWidget {
   final String profileImage;
@@ -89,9 +89,11 @@ class UserProfileHeaderWidget extends StatelessWidget {
           ? MainAxisAlignment.spaceBetween
           : MainAxisAlignment.start,
       children: [
-        CircularImage(
-          profileImage,
+        NetworkBorderedCircularImage(
+          imageUrl: profileImage,
           size: context.fromHeight(CustomStyle.imageSize2),
+          errorWidget: (context, url, error) => const CircleAvatar(),
+          outerBorderColor: Colors.transparent,
         ),
         if (!isCompanyView && onSettingsPressed != null)
           InkWell(
@@ -109,7 +111,7 @@ class UserProfileHeaderWidget extends StatelessWidget {
 
   Widget _buildNameText(BuildContext context) {
     return Text(
-      profileInfo.name ?? "unknown",
+      profileInfo.name ?? "",
       style: dmsmedium.copyWith(
         fontSize: FontSize.title5(context),
         color: Jobstopcolor.white,
@@ -119,7 +121,7 @@ class UserProfileHeaderWidget extends StatelessWidget {
 
   Widget _buildLocationText(BuildContext context) {
     return Text(
-      profileInfo.locationCity ?? "unknown",
+      profileInfo.locationCity ?? "",
       style: dmsregular.copyWith(
         fontSize: FontSize.label(context),
         color: Jobstopcolor.white,

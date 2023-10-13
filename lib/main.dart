@@ -1,17 +1,16 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
-// import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:jobspot/JobGlobalclass/global_storage.dart';
+import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
 import 'package:jobspot/JobStringtranslation/traslationstring.dart';
 import 'package:jobspot/sippo_themes/theme.dart';
+import 'package:jobspot/utils/exception_handler_utils.dart';
 
 import 'JobGlobalclass/routes.dart';
 import 'JopController/AuthenticationController/sippo_auth_controller.dart';
-import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
 import 'JopController/HttpClientController/http_client_controller.dart';
 import 'firebase_options.dart';
 
@@ -29,6 +28,8 @@ void main() async {
     DeviceOrientation.portraitDown,
   ]);
 
+  FlutterError.onError = ExceptionHandlerUtils.onError;
+  print(GlobalStorageService.mapApiKey);
   runApp(const MyApp());
 }
 
@@ -66,7 +67,7 @@ class _MyAppState extends State<MyApp> {
         Get.put<InternetConnectionService>(InternetConnectionService());
         Get.lazyPut<AuthController>(() => AuthController(), fenix: true);
         Get.lazyPut<HttpClientController>(
-              () => HttpClientController(),
+          () => HttpClientController(),
           fenix: true,
         );
       }),

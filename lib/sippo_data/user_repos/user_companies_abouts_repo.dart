@@ -14,7 +14,7 @@ import '../model/profile_model/profile_resource_model/validate_property_user_com
 
 class UserCompaniesAboutsRepo {
   static Future<
-          Resource<PaginationModel<CompanyDetailsResponseModel>?, dynamic>?>
+          Resource<PaginationModel<CompanyDetailsModel>?, dynamic>?>
       fetchCompanies(Map<String, String> query) async {
     final httpController = HttpClientController.instance;
     try {
@@ -29,7 +29,7 @@ class UserCompaniesAboutsRepo {
         response.statusCode,
         (resource) => PaginationModel.fromJson(
           resource,
-          dataConverter: (data) => CompanyDetailsResponseModel.fromJson(data),
+          dataConverter: (data) => CompanyDetailsModel.fromJson(data),
         ),
         (errors) => null,
       );
@@ -44,7 +44,7 @@ class UserCompaniesAboutsRepo {
     }
   }
 
-  static Future<Resource<CompanyDetailsResponseModel?, dynamic>?>
+  static Future<Resource<CompanyDetailsModel?, dynamic>?>
       fetchAboutsCompany(int? resourceId) async {
     final httpController = HttpClientController.instance;
     try {
@@ -57,7 +57,7 @@ class UserCompaniesAboutsRepo {
       return StatusResponseCodeChecker.checkStatusResponseCode(
         responseData,
         response.statusCode,
-        (data) => CompanyDetailsResponseModel.fromJson(data),
+        (data) => CompanyDetailsModel.fromJson(data),
         (errors) => null,
       );
     } catch (e) {
@@ -132,7 +132,7 @@ class UserCompaniesAboutsRepo {
     }
   }
 
-  static Future<Resource<CompanyDetailsResponseModel?, dynamic>?> toggleFollow(
+  static Future<Resource<CompanyDetailsModel?, dynamic>?> toggleFollow(
     int? companyId,
   ) async {
     final httpController = HttpClientController.instance;
@@ -151,7 +151,7 @@ class UserCompaniesAboutsRepo {
       return StatusResponseCodeChecker.checkStatusResponseCode(
         responseData,
         response.statusCode,
-        (data) => CompanyDetailsResponseModel.fromJson(data),
+        (data) => CompanyDetailsModel.fromJson(data),
         (errors) => null,
       );
     } catch (e) {
@@ -164,7 +164,7 @@ class UserCompaniesAboutsRepo {
   }
 
   static Future<
-      Resource<CompanyDetailsResponseModel?,
+      Resource<CompanyDetailsModel?,
           ValidatePropUserCompanyApplication?>?> applyCompany(
     UserSendApplicationModel application,
     int? companyId,
@@ -185,7 +185,7 @@ class UserCompaniesAboutsRepo {
       return StatusResponseCodeChecker.checkStatusResponseCode(
         responseData,
         response.statusCode,
-        (data) => CompanyDetailsResponseModel.fromJson(data),
+        (data) => CompanyDetailsModel.fromJson(data),
         (errors) => ValidatePropUserCompanyApplication.fromJson(errors),
       );
     } catch (e) {
@@ -197,7 +197,7 @@ class UserCompaniesAboutsRepo {
     }
   }
 
-  static Future<Resource<CompanyDetailsResponseModel?, dynamic>?>
+  static Future<Resource<CompanyDetailsModel?, dynamic>?>
       getCompanyById(
     int? companyId,
   ) async {
@@ -216,7 +216,7 @@ class UserCompaniesAboutsRepo {
       return StatusResponseCodeChecker.checkStatusResponseCode(
         responseData,
         response.statusCode,
-        (data) => CompanyDetailsResponseModel.fromJson(data),
+        (data) => CompanyDetailsModel.fromJson(data),
         (errors) => null,
       );
     } catch (e) {

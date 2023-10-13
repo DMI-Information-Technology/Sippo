@@ -8,7 +8,7 @@ import '../../sippo_data/user_repos/user_companies_abouts_repo.dart';
 class ShowAboutsCompaniesPostsController extends GetxController {
   final aboutCompaniesController = UserAboutCompaniesController.instance;
 
-  CompanyDetailsResponseModel get company =>
+  CompanyDetailsModel get company =>
       aboutCompaniesController.aboutState.company;
   final pagingPostsController =
       PagingController<int, CompanyDetailsPostModel>(firstPageKey: 0);

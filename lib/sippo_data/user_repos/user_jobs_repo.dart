@@ -40,9 +40,10 @@ class SippoJobsRepo {
         ),
         (errors) => ValidatePropCompanyJobModel.fromJson(errors),
       );
-    } catch (e,s) {
+    } catch (e, s) {
       print(s);
       print("UserJobRepo.fetchJobs error: $e");
+
       return Resource.error(
         errorMessage: e.toString(),
         type: StatusType.INVALID_RESPONSE,

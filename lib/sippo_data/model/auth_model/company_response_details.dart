@@ -1,28 +1,35 @@
-import 'package:jobspot/sippo_data/model/auth_model/entity_model.dart';
-import 'package:jobspot/utils/app_use.dart';
 import 'package:collection/collection.dart';
+import 'package:get/get.dart';
+import 'package:jobspot/sippo_data/model/auth_model/entity_model.dart';
+import 'package:jobspot/sippo_data/model/image_resource_model/image_resource_model.dart';
+import 'package:jobspot/utils/app_use.dart';
+
 import '../../../utils/helper.dart';
 import '../profile_model/company_profile_resource_model/work_location_model.dart';
 import '../specializations_model/specializations_model.dart';
 
-class CompanyDetailsResponseModel extends EntityModel {
-  CompanyDetailsResponseModel(
-      {super.id,
-      super.name,
-      super.phone,
-      super.secondaryPhone,
-      super.email,
-      this.city,
-      this.locations,
-      this.website,
-      this.bio,
-      this.employeesCount,
-      this.establishmentDate,
-      this.specializations,
-      this.isFollowed,this.hasApplied});
+class CompanyDetailsModel extends EntityModel {
+  CompanyDetailsModel({
+    super.id,
+    super.name,
+    super.phone,
+    super.secondaryPhone,
+    super.email,
+    this.city,
+    this.locations,
+    this.website,
+    this.bio,
+    this.employeesCount,
+    this.profileImage,
+    this.establishmentDate,
+    this.specializations,
+    this.isFollowed,
+    this.hasApplied,
+    this.is_subscribed,
+  });
 
-  factory CompanyDetailsResponseModel.fromJson(Map<String, dynamic> json) {
-    return CompanyDetailsResponseModel(
+  factory CompanyDetailsModel.fromJson(Map<String, dynamic> json) {
+    return CompanyDetailsModel(
       id: json['id'],
       name: json['name'],
       phone: json['phone'],
@@ -38,11 +45,15 @@ class CompanyDetailsResponseModel extends EntityModel {
           ? int.parse(json['employees_count'])
           : json['employees_count'],
       establishmentDate: json['establishment_date'],
+      profileImage: json['profile_image'] != null
+          ? ImageResourceModel.fromJson(json['profile_image'])
+          : null,
       specializations: List.of(json["specializations"] ?? [])
           .map((cord) => SpecializationModel.fromJson(cord))
           .toList(),
       isFollowed: json['is_followed'],
       hasApplied: json['has_applied'],
+      is_subscribed: json['has_applied'],
     );
   }
 
@@ -52,11 +63,13 @@ class CompanyDetailsResponseModel extends EntityModel {
   final String? bio;
   final int? employeesCount;
   final String? establishmentDate;
+  final ImageResourceModel? profileImage;
   final bool? isFollowed;
   final bool? hasApplied;
+  final bool? is_subscribed;
   final List<SpecializationModel>? specializations;
 
-  CompanyDetailsResponseModel copyWith({
+  CompanyDetailsModel copyWith({
     int? id,
     String? name,
     String? phone,
@@ -68,10 +81,11 @@ class CompanyDetailsResponseModel extends EntityModel {
     String? bio,
     int? employeesCount,
     String? establishmentDate,
+    ImageResourceModel? profileImage,
     bool? isFollowed,
     List<SpecializationModel>? specializations,
   }) =>
-      CompanyDetailsResponseModel(
+      CompanyDetailsModel(
         id: id ?? this.id,
         name: name ?? this.name,
         phone: phone ?? this.phone,
@@ -85,6 +99,7 @@ class CompanyDetailsResponseModel extends EntityModel {
         establishmentDate: establishmentDate ?? this.establishmentDate,
         isFollowed: isFollowed ?? this.isFollowed,
         hasApplied: hasApplied ?? this.hasApplied,
+        profileImage: profileImage ?? this.profileImage,
         specializations: specializations ?? this.specializations,
       );
 
@@ -111,8 +126,35 @@ class CompanyDetailsResponseModel extends EntityModel {
       if ((map[key] is String && map[key].runtimeType == String) &&
           map[key].trim().isEmpty) map[key] = null;
     }
+    print(map);
     return map;
   }
+
+  Map<String, String> blankProfileMessages() {
+    return {
+      if (bio == null || bio?.isBlank == true)
+        'bio': "You have not entered a bio for your profile account.",
+      if (secondaryPhone == null || secondaryPhone?.isBlank == true)
+        'secondary_phone':
+            "The profile account does not have an secondary phone number.",
+      if (email == null || email?.isBlank == true)
+        'email': "The profile account does not have an email address.",
+      if (profileImage == null ||
+          profileImage?.url == null ||
+          profileImage?.url?.isBlank == true)
+        'image': "The profile account does not have an image profile.",
+      if (website == null || website?.isBlank == true)
+        'website': "The profile account does not have website.",
+      if (employeesCount == null || employeesCount == 0)
+        'employees_count':
+            "The profile account does not have an employees count.",
+      if (establishmentDate == null || establishmentDate?.isBlank == true)
+        'establishment_date':
+            "The profile account does not have an establishment date.",
+    };
+  }
+
+  int get blankProfileMessagesLength => blankProfileMessages().length;
 
   @override
   String? get locationCity => city;
@@ -121,25 +163,26 @@ class CompanyDetailsResponseModel extends EntityModel {
   AppUsingType get userType => AppUsingType.company;
 
   @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        other is CompanyDetailsResponseModel &&
-            runtimeType == other.runtimeType &&
-            id == other.id &&
-            name == other.name &&
-            phone == other.phone &&
-            secondaryPhone == other.secondaryPhone &&
-            email == other.email &&
-            city == other.city &&
-            website == other.website &&
-            bio == other.bio &&
-            employeesCount == other.employeesCount &&
-            establishmentDate == other.establishmentDate &&
-            isFollowed == other.isFollowed &&
-            hasApplied == other.hasApplied &&
-            listEquality(locations, other.locations) &&
-            listEquality(specializations, other.specializations);
-  }
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is CompanyDetailsModel &&
+          runtimeType == other.runtimeType &&
+          id == other.id &&
+          name == other.name &&
+          phone == other.phone &&
+          secondaryPhone == other.secondaryPhone &&
+          email == other.email &&
+          city == other.city &&
+          locations == other.locations &&
+          website == other.website &&
+          bio == other.bio &&
+          employeesCount == other.employeesCount &&
+          establishmentDate == other.establishmentDate &&
+          profileImage == other.profileImage &&
+          isFollowed == other.isFollowed &&
+          hasApplied == other.hasApplied &&
+          is_subscribed == other.is_subscribed &&
+          listEquality(specializations, other.specializations);
 
   @override
   int get hashCode =>
@@ -147,19 +190,21 @@ class CompanyDetailsResponseModel extends EntityModel {
       name.hashCode ^
       phone.hashCode ^
       secondaryPhone.hashCode ^
-      email.hashCode ^
+      email.hashCode^
       city.hashCode ^
       locations.hashCode ^
       website.hashCode ^
       bio.hashCode ^
       employeesCount.hashCode ^
       establishmentDate.hashCode ^
+      profileImage.hashCode ^
       isFollowed.hashCode ^
       hasApplied.hashCode ^
+      is_subscribed.hashCode ^
       specializations.hashCode;
 
   @override
   String toString() {
-    return 'CompanyResponseDetailsModel{id: $id,name: $name, phone: $phone, secondaryPhone: $secondaryPhone, email: $email, city: $city, locations: $locations, website: $website, bio: $bio, employeesCount: $employeesCount, establishmentDate: $establishmentDate, hasApplied: $hasApplied ,isFollowed: $isFollowed, specializations: $specializations}';
+    return 'CompanyResponseDetailsModel{id: $id,name: $name, phone: $phone, secondaryPhone: $secondaryPhone, email: $email, city: $city, locations: $locations, website: $website, employeesCount: $employeesCount, establishmentDate: $establishmentDate, hasApplied: $hasApplied ,isFollowed: $isFollowed, specializations: $specializations, profileImage: $profileImage, bio: $bio}';
   }
 }

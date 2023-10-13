@@ -15,7 +15,7 @@ class SharedGlobalDataService extends GetxService {
   final profileViewGlobalState =
       GlobalSharedState(details: ProfileViewResourceModel().obs);
   final companyGlobalState = GlobalSharedState(
-    details: CompanyDetailsResponseModel().obs,
+    details: CompanyDetailsModel().obs,
   );
 
   static void onJobTap(CompanyJobModel? item) async {
@@ -28,7 +28,7 @@ class SharedGlobalDataService extends GetxService {
     localInstance.jobGlobalState.clearDetails(() => CompanyJobModel());
   }
 
-  static void onCompanyTap(CompanyDetailsResponseModel? item) async {
+  static void onCompanyTap(CompanyDetailsModel? item) async {
     final localInstance = instance;
     final id = item?.id;
     if (id == null) return;
@@ -36,7 +36,7 @@ class SharedGlobalDataService extends GetxService {
     localInstance.companyGlobalState.details = item;
     await Get.toNamed(SippoRoutes.sippoAboutCompanies);
     localInstance.companyGlobalState
-        .clearDetails(() => CompanyDetailsResponseModel());
+        .clearDetails(() => CompanyDetailsModel());
   }
 
   static void onProfileViewTap({

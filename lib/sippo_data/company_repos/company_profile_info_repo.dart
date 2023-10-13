@@ -1,6 +1,9 @@
 import 'dart:convert';
 
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
+import 'package:jobspot/sippo_data/model/custom_file_model/custom_file_model.dart';
+import 'package:jobspot/sippo_data/model/image_resource_model/image_resource_model.dart';
+import 'package:jobspot/sippo_data/model/image_resource_model/validate_property_image_resource_model.dart';
 
 import '../../JopController/HttpClientController/http_client_controller.dart';
 import '../../core/api_endpoints.dart' as endpoints;
@@ -10,9 +13,9 @@ import '../model/profile_model/company_profile_resource_model/validate_property_
 
 class EditCompanyProfileInfoRepo {
   static Future<
-      Resource<CompanyDetailsResponseModel,
+      Resource<CompanyDetailsModel,
           ValidatePropCompanyProfileDetailsModel?>> updateCompanyProfile(
-    CompanyDetailsResponseModel profile,
+    CompanyDetailsModel profile,
   ) async {
     final httpController = HttpClientController.instance;
     try {
@@ -28,7 +31,7 @@ class EditCompanyProfileInfoRepo {
       return StatusResponseCodeChecker.checkStatusResponseCode(
         responseData,
         response.statusCode,
-        (data) => CompanyDetailsResponseModel.fromJson(data),
+        (data) => CompanyDetailsModel.fromJson(data),
         (errors) => ValidatePropCompanyProfileDetailsModel.fromJson(errors),
       );
     } catch (e) {
@@ -41,7 +44,7 @@ class EditCompanyProfileInfoRepo {
   }
 
   static Future<
-      Resource<CompanyDetailsResponseModel,
+      Resource<CompanyDetailsModel,
           ValidatePropCompanyProfileDetailsModel?>?> getCompanyProfile() async {
     final httpController = HttpClientController.instance;
     try {
@@ -55,12 +58,43 @@ class EditCompanyProfileInfoRepo {
       return StatusResponseCodeChecker.checkStatusResponseCode(
         responseData,
         response.statusCode,
-        (data) => CompanyDetailsResponseModel.fromJson(data),
+        (data) => CompanyDetailsModel.fromJson(data),
         (errors) => ValidatePropCompanyProfileDetailsModel.fromJson(errors),
       );
     } catch (e) {
       print(e.runtimeType);
       print("CompanyProfileInfoRepo.getCompanyProfile: Exception: $e");
+      return Resource.error(
+        errorMessage: e.toString(),
+        type: StatusType.INVALID_RESPONSE,
+      );
+    }
+  }
+
+  static Future<
+          Resource<ImageResourceModel?, ValidatePropertyImageResourceModel?>?>
+      updateProfileImage(CustomFileModel profileImage) async {
+    final httpController = HttpClientController.instance;
+    try {
+      final response = await httpController.client.postMultipartRequest(
+        endpoints.companyChangeCompanyProfile,
+        fields: {'_method': "PUT"},
+        multipartFile: profileImage.toMultipartFile(),
+      );
+      final responseBody = await response.stream.bytesToString();
+      print(
+        "CompanyProfileInfoRepo.updateProfileImage: response data before decode = ${responseBody}",
+      );
+      final responseData = jsonDecode(responseBody);
+      return StatusResponseCodeChecker.checkStatusResponseCode(
+        responseData,
+        response.statusCode,
+        (data) => ImageResourceModel.fromJson(data),
+        (errors) => ValidatePropertyImageResourceModel.fromJson(errors),
+      );
+    } catch (e) {
+      print(e.runtimeType);
+      print("CompanyProfileInfoRepo.updateProfileImage: Exception: $e");
       return Resource.error(
         errorMessage: e.toString(),
         type: StatusType.INVALID_RESPONSE,

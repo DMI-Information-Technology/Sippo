@@ -13,13 +13,18 @@ class CompanyDashBoardController extends GetxController {
 
   static CompanyDashBoardController get instance => Get.find();
 
-  final _company = CompanyDetailsResponseModel().obs;
+  final _company = CompanyDetailsModel().obs;
   StreamSubscription<bool>? _connectionSubscription;
 
-  CompanyDetailsResponseModel get company => _company.value;
+  CompanyDetailsModel get company => _company.value;
 
-  void set company(CompanyDetailsResponseModel profile) =>
-      _company.value = profile;
+  StreamSubscription<CompanyDetailsModel> startCompanyProfileListener(
+    void Function(CompanyDetailsModel) onData,
+  ) {
+    return _company.listen(onData);
+  }
+
+  void set company(CompanyDetailsModel profile) => _company.value = profile;
   final _selectedItemIndex = 0.obs;
 
   int get selectedItemIndex => _selectedItemIndex.toInt();

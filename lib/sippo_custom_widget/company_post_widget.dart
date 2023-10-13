@@ -191,7 +191,7 @@ class PostWidget extends StatelessWidget {
 class PostApplicationModel extends StatelessWidget {
   final String? timeAgo;
   final ApplicationCompanyModel? application;
-  final CompanyDetailsResponseModel? company;
+  final CompanyDetailsModel? company;
   final VoidCallback? onActionButtonPresses;
   final VoidCallback? onProfileImageTap;
   final void Function(String cvUrl)? onShowCvTap;

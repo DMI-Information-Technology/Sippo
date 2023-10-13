@@ -26,7 +26,7 @@ class CompanyEditAddPostController extends GetxController {
   bool get isNetworkConnection =>
       InternetConnectionService.instance.isConnected;
 
-  CompanyDetailsResponseModel get company => _dashboardController.company;
+  CompanyDetailsModel get company => _dashboardController.company;
 
   static CompanyEditAddPostController get instance => Get.find();
 
@@ -195,7 +195,7 @@ class CompanyPostState {
     String? subtype,
     File? file,
   }) {
-    _imageFile.value = imageFile.copyWith(
+    _imageFile.value = imageFile.copyWithFile(
       type: type,
       subtype: subtype,
       file: file,
