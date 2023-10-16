@@ -5,33 +5,31 @@ import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
-import 'package:jobspot/JobServices/shared_global_data_service.dart';
-import 'package:jobspot/JopController/NotificationController/company_notification_application/company_application_controller.dart';
-import 'package:jobspot/sippo_custom_widget/company_post_widget.dart';
+import 'package:jobspot/JopController/NotificationController/user_notification_application/user_application_controller.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
-import 'package:jobspot/sippo_data/model/notification/job_application_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/application_job_company_model.dart';
 
 import '../../../JobGlobalclass/sippo_customstyle.dart';
 import '../../../sippo_custom_widget/container_bottom_sheet_widget.dart';
+import '../../../sippo_custom_widget/notification_widget.dart';
 import '../../../sippo_custom_widget/setting_item_widget.dart';
+import '../job_application.dart';
 
-class SippoCompanyApplication extends StatefulWidget {
-  const SippoCompanyApplication({super.key});
+class SippoUserApplication extends StatefulWidget {
+  const SippoUserApplication({super.key});
 
   @override
-  State<SippoCompanyApplication> createState() =>
-      _SippoCompanyApplicationState();
+  State<SippoUserApplication> createState() => _SippoUserApplicationState();
 }
 
-class _SippoCompanyApplicationState extends State<SippoCompanyApplication> {
-  final _controller = Get.put(CompanyApplicationController());
+class _SippoUserApplicationState extends State<SippoUserApplication> {
+  final _controller = Get.put(UserApplicationController());
 
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () async => _controller.refreshPage(),
-      child: PagedListView<int, ApplicationCompanyModel>.separated(
+      child: PagedListView<int, ApplicationUserModel>.separated(
         padding: EdgeInsets.symmetric(
           vertical: context.fromHeight(CustomStyle.paddingValue),
           horizontal: context.fromWidth(CustomStyle.paddingValue),
@@ -43,24 +41,17 @@ class _SippoCompanyApplicationState extends State<SippoCompanyApplication> {
           newPageErrorIndicatorBuilder: (context) =>
               _buildErrorNewLoad(context),
           itemBuilder: (context, item, index) {
-            return PostApplicationWidget(
-              onProfileImageTap: () async {
-                SharedGlobalDataService.onProfileViewTap(
-                  profId: item.customer?.id,
-                );
-              },
-              company: _controller.notificationApplicationController.company,
+            return UserApplicationWidget(
+              company: item.company,
               application: item,
-              timeAgo: item.createdAt,
-              onActionButtonPresses: () {
-                _openBottomJobSheetOption(
+              onTap: () {},
+              onDeletePressed: () {},
+              onPopupNotificationButtonTapped: () {
+                _openBottomApplicationSheetOption(
                   context,
                   item.id,
                   item.status == "Pending",
                 );
-              },
-              onShowCvTap: (cvUrl) {
-                _controller.openFile(cvUrl);
               },
             );
           },
@@ -142,7 +133,7 @@ class _SippoCompanyApplicationState extends State<SippoCompanyApplication> {
     );
   }
 
-  void _openBottomJobSheetOption(
+  void _openBottomApplicationSheetOption(
     BuildContext context,
     int? applicationId, [
     bool? isPending,
@@ -159,53 +150,56 @@ class _SippoCompanyApplicationState extends State<SippoCompanyApplication> {
         builder: (context, setState) => Column(
           children: [
             SettingItemWidget(
-              title: 'Application Status',
-              icon: Icon(Icons.confirmation_number_outlined),
-              onTap: () async {
-                Get.back();
-                if (isPending == true) {
-                  _showConfirmDeleteDialog(context, applicationId);
-                } else if (isPending == false) {
-                  Get.snackbar(
-                    'Application Status',
-                    "The application status is checked out.",
-                    backgroundColor: Jobstopcolor.backgroudHome,
-                    boxShadows: [boxShadow],
-                  );
-                }
+              title: "Delete",
+              icon: Icon(
+                Icons.delete_forever_outlined,
+                // color:
+                // _controller.isMatchOptionOfIndex(0) ? Colors.white : null,
+              ),
+              onTap: () {
+                // _controller.selectedBottomOption = 0;
+                print("delete notification with id: $applicationId");
               },
               isHavingTrailingIcon: false,
               isBordered: false,
               contentPadding: context.fromWidth(CustomStyle.xs),
-              isSelected: false,
+              // isSelected: _controller.isMatchOptionOfIndex(0),
             ),
+            SettingItemWidget(
+              title: "check_details".tr,
+              icon: Icon(
+                Icons.business_center_rounded,
+                // color: _controller.isMatchOptionOfIndex(1) ? Colors.white : null,
+              ),
+              onTap: () {
+                // _controller.selectedBottomOption = 1;
+
+                Get.back();
+                Get.to(() => const JobApplication());
+              },
+              isHavingTrailingIcon: false,
+              isBordered: false,
+              contentPadding: context.fromWidth(CustomStyle.xs),
+              // isSelected: _controller.isMatchOptionOfIndex(1),
+            ),
+            SettingItemWidget(
+              title: 'setting'.tr,
+              icon: Icon(
+                Icons.settings_rounded,
+                // color: _controller.isMatchOptionOfIndex(2) ? Colors.white : null,
+              ),
+              onTap: () {
+                // _controller.selectedBottomOption = 2;
+                print("open setting notification");
+              },
+              isHavingTrailingIcon: false,
+              isBordered: false,
+              contentPadding: context.fromWidth(CustomStyle.xs),
+              // isSelected: _controller.isMatchOptionOfIndex(2),
+            ),
+            SizedBox(height: context.fromHeight(CustomStyle.spaceBetween))
           ],
         ),
-      ),
-    );
-  }
-
-  void _showConfirmDeleteDialog(BuildContext context, int? ApplicationId) {
-    Get.dialog(
-      CustomAlertDialog(
-        title: 'Application Status',
-        description: 'Rejected Application or Accepted Application',
-        confirmBtnTitle: 'Accepted',
-        onConfirm: () async {
-          Get.back();
-          await _controller.onUpdateStatusApplicationSubmitted(
-            ApplicationStatusType.Accepted,
-            ApplicationId,
-          );
-        },
-        cancelBtnTitle: 'Rejected',
-        onCancel: () async {
-          Get.back();
-          await _controller.onUpdateStatusApplicationSubmitted(
-            ApplicationStatusType.Rejected,
-            ApplicationId,
-          );
-        },
       ),
     );
   }

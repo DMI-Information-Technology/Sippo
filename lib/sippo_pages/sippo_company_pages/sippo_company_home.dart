@@ -225,12 +225,13 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
               ),
               InkWell(
                 onTap: () => Get.toNamed(SippoRoutes.sippocompanyprofile),
-                child: NetworkBorderedCircularImage(
-                  imageUrl: dashboardController.company.profileImage?.url ?? '',
-                  errorWidget: (___, __, _) => const CircleAvatar(),
-                  size: context.fromHeight(24),
-                  outerBorderColor: Jobstopcolor.backgroudHome,
-                ),
+                child: Obx(() => NetworkBorderedCircularImage(
+                      imageUrl:
+                          dashboardController.company.profileImage?.url ?? '',
+                      errorWidget: (___, __, _) => const CircleAvatar(),
+                      size: context.fromHeight(24),
+                      outerBorderColor: Jobstopcolor.backgroudHome,
+                    )),
               ),
             ],
           ),

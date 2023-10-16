@@ -106,7 +106,7 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
       profileInfo: _controller.user,
       onSettingsPressed: () => Get.toNamed(SippoRoutes.sippoprofilesetting),
       onEditProfilePressed: () => Get.toNamed(SippoRoutes.editUserProfile),
-      profileImage: JobstopPngImg.photo,
+      profileImage: _controller.user.profileImage?.url ?? "",
     );
   }
 

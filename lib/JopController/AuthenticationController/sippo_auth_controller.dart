@@ -41,7 +41,7 @@ class AuthController extends GetxController {
   }
 
   Future<void> logout() async {
-    if (await userLogout()) await GlobalStorageService.removeSavedToken();
+    if (await userLogout()) await GlobalStorageService.removeSavedToken(GetStorage());
   }
 
   void set loadingState(bool value) {
@@ -140,6 +140,7 @@ class AuthController extends GetxController {
     switch (response?.type) {
       case RegisterTypeResponse.success:
         await GlobalStorageService.saveToken(
+          GetStorage(),
           response?.data?.token,
           appUse.index,
         );

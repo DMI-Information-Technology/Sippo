@@ -6,27 +6,29 @@ import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
+import 'package:jobspot/JopController/NotificationController/user_notification_application/user_notification_application_controller.dart';
 import 'package:jobspot/sippo_pages/sippo_message_pages/no_resource_screen.dart';
 
-import '../../JopController/NotificationController/user_notification_controller.dart';
-import '../../sippo_custom_widget/container_bottom_sheet_widget.dart';
-import '../../sippo_custom_widget/notification_widget.dart';
-import '../../sippo_custom_widget/setting_item_widget.dart';
-import '../../sippo_data/model/notification/job_application_model.dart';
-import 'job_application.dart';
+import '../../../sippo_custom_widget/container_bottom_sheet_widget.dart';
+import '../../../sippo_custom_widget/notification_widget.dart';
+import '../../../sippo_custom_widget/setting_item_widget.dart';
+import '../../../sippo_data/model/notification/job_application_model.dart';
+import '../job_application.dart';
+import 'sippo_user_application.dart';
+import 'sippo_user_notification.dart';
 
-class SippoUserJobNotification extends StatefulWidget {
-  const SippoUserJobNotification({Key? key}) : super(key: key);
+class SippoUserNotificationApplication extends StatefulWidget {
+  const SippoUserNotificationApplication({Key? key}) : super(key: key);
 
   @override
-  State<SippoUserJobNotification> createState() =>
-      _SippoUserJobNotificationState();
+  State<SippoUserNotificationApplication> createState() =>
+      _SippoUserNotificationApplicationState();
 }
 
-class _SippoUserJobNotificationState extends State<SippoUserJobNotification>
+class _SippoUserNotificationApplicationState
+    extends State<SippoUserNotificationApplication>
     with SingleTickerProviderStateMixin, RestorationMixin {
-  final UserNotificationController _notifiController =
-      Get.put(UserNotificationController());
+  final _notifiController = Get.put(UserNotificationApplicationController());
   late final TabController _tabController;
   final RestorableInt tabIndex = RestorableInt(0);
 
@@ -44,6 +46,8 @@ class _SippoUserJobNotificationState extends State<SippoUserJobNotification>
     registerForRestoration(tabIndex, 'tab_index');
     _tabController.index = tabIndex.value;
   }
+
+  final _tabs = const [SippoUserNotification(), SippoUserApplication()];
 
   @override
   void initState() {
@@ -79,24 +83,7 @@ class _SippoUserJobNotificationState extends State<SippoUserJobNotification>
         Expanded(
           child: TabBarView(
             controller: _tabController,
-            children: [
-              Obx(
-                () => _notifiController.generalNotifications.isNotEmpty
-                    ? NotificationListView(
-                        notifiList: _notifiController.generalNotifications,
-                        isGeneral: true,
-                      )
-                    : nonResource,
-              ),
-              Obx(
-                () => _notifiController.applicationNotifications.isNotEmpty
-                    ? NotificationListView(
-                        notifiList: _notifiController.applicationNotifications,
-                        isGeneral: false,
-                      )
-                    : nonResource,
-              ),
-            ],
+            children: _tabs,
           ),
         ),
       ],
@@ -167,7 +154,7 @@ class NotificationListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = UserNotificationController.instance;
+    final controller = UserNotificationApplicationController.instance;
     Size size = MediaQuery.of(context).size;
     // double height = size.height;
     double width = size.width;
@@ -181,7 +168,7 @@ class NotificationListView extends StatelessWidget {
         return SizedBox(
           width: width,
           child: Obx(
-            () => NotificationApplicationWidget(
+            () => UserApplicationWidget(
               onDeletePressed: () => null,
               onTap: () {
                 if (controller.selectedNotification != index) {
@@ -211,7 +198,7 @@ class NotificationListView extends StatelessWidget {
     bool isGeneral,
     int notificationID,
   ) {
-    final controller = UserNotificationController.instance;
+    final controller = UserNotificationApplicationController.instance;
     Get.bottomSheet(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(

@@ -17,6 +17,7 @@ import 'package:jobspot/utils/states.dart';
 import '../../JopController/dashboards_controller/user_dashboard_controller.dart';
 import '../../JopController/home_controllers/user_home_controllers.dart';
 import '../../sippo_custom_widget/find_yor_jop_dashboard_cards.dart';
+import '../../sippo_custom_widget/save_job_card_widget.dart';
 import '../../sippo_custom_widget/widgets.dart';
 import '../../utils/helper.dart' as helper;
 
@@ -359,10 +360,12 @@ class _SippoUserHomeState extends State<SippoUserHome> {
               SizedBox(width: width / 52),
               InkWell(
                 onTap: () => Get.toNamed(SippoRoutes.sippoUserProfile),
-                child: CircleAvatar(
-                  radius: 20,
-                  child: Image.asset(JobstopPngImg.photo),
-                ),
+                child: Obx(() => NetworkBorderedCircularImage(
+                      imageUrl: _controller.user.profileImage?.url ?? '',
+                      errorWidget: (___, __, _) => const CircleAvatar(),
+                      size: context.fromHeight(24),
+                      outerBorderColor: Jobstopcolor.backgroudHome,
+                    )),
               ),
             ],
           ),

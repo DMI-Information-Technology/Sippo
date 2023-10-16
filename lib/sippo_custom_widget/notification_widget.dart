@@ -18,23 +18,21 @@ import '../sippo_data/model/profile_model/company_profile_resource_model/applica
 import '../sippo_data/model/profile_model/profile_resource_model/cv_file_model.dart';
 import 'job_application_chip_widget.dart';
 
-class NotificationApplicationWidget extends StatelessWidget {
+class UserApplicationWidget extends StatelessWidget {
   final VoidCallback? onDeletePressed;
   final VoidCallback onTap;
   final CompanyDetailsModel? company;
-  final ApplicationCompanyModel? application;
+  final ApplicationUserModel? application;
   final bool isSelected;
   final VoidCallback? onPopupNotificationButtonTapped;
-  final bool isCompany;
 
-  NotificationApplicationWidget({
+  UserApplicationWidget({
     this.onDeletePressed,
     required this.onTap,
     this.application,
     this.onPopupNotificationButtonTapped,
-    required this.isSelected,
+    this.isSelected = false,
     this.company,
-    this.isCompany = false,
   });
 
   @override
@@ -56,14 +54,12 @@ class NotificationApplicationWidget extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 NetworkBorderedCircularImage(
-                  imageUrl: '',
-                  size: context.fromHeight(CustomStyle.s),
-                  outerBorderColor: Colors.grey[300],
+                  imageUrl: company?.profileImage?.url ?? '',
+                  size: context.fromHeight(CustomStyle.xs),
+                  outerBorderColor: Colors.grey[200],
+                  outerBorderWidth: context.fromWidth(CustomStyle.huge2),
                   errorWidget: (context, url, error) {
-                    return Image.asset(
-                      JobstopPngImg.google,
-                      height: context.fromWidth(CustomStyle.xs),
-                    );
+                    return const CircleAvatar();
                   },
                 ),
                 SizedBox(
@@ -75,9 +71,10 @@ class NotificationApplicationWidget extends StatelessWidget {
                 ),
                 if (onPopupNotificationButtonTapped != null)
                   InkWell(
-                    onTap: onPopupNotificationButtonTapped ??
-                        () => print("null bottom sheet function"),
-                    child: Icon(Icons.more_vert_rounded),
+                    onTap: onPopupNotificationButtonTapped,
+                    child: Icon(
+                      Icons.more_vert_rounded,
+                    ),
                   ),
               ],
             ),
@@ -92,12 +89,13 @@ class NotificationApplicationWidget extends StatelessWidget {
   Widget _buildDeleteButtonAndArrivalTimeRow(BuildContext context) {
     return Row(
       children: [
-        SizedBox(width: context.fromHeight(14)),
+        SizedBox(width: context.fromHeight(CustomStyle.s)),
         Text(
           application?.createdAt != null
               ? calculateElapsedTimeFromStringDate(
-                      application?.createdAt ?? '') ??
-                  ''
+            application?.createdAt ?? '',
+          ) ??
+              ''
               : "",
           style: TextStyle(
             fontSize: FontSize.label(context),
@@ -156,21 +154,22 @@ class NotificationApplicationWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildJobApplicationStatusChipWidget(
-    BuildContext context,
-    String? status,
-  ) {
+  Widget _buildJobApplicationStatusChipWidget(BuildContext context,
+      String? status,) {
     if (status == null) return const SizedBox.shrink();
     return switch (status) {
-      'Accepted' => JobApplicationStatusChipWidget(
-          statusType: ApplicationStatusType.Accepted,
-        ),
-      'Rejected' => JobApplicationStatusChipWidget(
-          statusType: ApplicationStatusType.Rejected,
-        ),
-      'Pending' => JobApplicationStatusChipWidget(
-          statusType: ApplicationStatusType.Pending,
-        ),
+      'Accepted' =>
+          JobApplicationStatusChipWidget(
+            statusType: ApplicationStatusType.Accepted,
+          ),
+      'Rejected' =>
+          JobApplicationStatusChipWidget(
+            statusType: ApplicationStatusType.Rejected,
+          ),
+      'Pending' =>
+          JobApplicationStatusChipWidget(
+            statusType: ApplicationStatusType.Pending,
+          ),
       _ => const SizedBox.shrink(),
     };
   }
@@ -203,7 +202,7 @@ class NotificationJobApplicationWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               NetworkBorderedCircularImage(
-                imageUrl: '',
+                imageUrl: company?.profileImage?.url ?? '',
                 size: context.fromHeight(CustomStyle.s),
                 outerBorderColor: Colors.grey[300],
                 errorWidget: (context, url, error) {
@@ -239,15 +238,15 @@ class NotificationJobApplicationWidget extends StatelessWidget {
           child: CustomButton(
             onTapped: onShowCvTap != null && cv != null
                 ? () {
-                    final cvUrl = cv.url;
-                    if (cvUrl != null) {
-                      onShowCvTap!(cvUrl);
-                    }
-                  }
+              final cvUrl = cv.url;
+              if (cvUrl != null) {
+                onShowCvTap!(cvUrl);
+              }
+            }
                 : null,
             text: "Show CV",
             backgroundColor:
-                cv == null ? Colors.grey : Jobstopcolor.lightprimary,
+            cv == null ? Colors.grey : Jobstopcolor.lightprimary,
             textColor: Colors.white,
           ),
         ),
@@ -290,21 +289,22 @@ class NotificationJobApplicationWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildJobApplicationStatusChipWidget(
-    BuildContext context,
-    String? status,
-  ) {
+  Widget _buildJobApplicationStatusChipWidget(BuildContext context,
+      String? status,) {
     if (status == null) return const SizedBox.shrink();
     return switch (status) {
-      'Accepted' => JobApplicationStatusChipWidget(
-          statusType: ApplicationStatusType.Accepted,
-        ),
-      'Rejected' => JobApplicationStatusChipWidget(
-          statusType: ApplicationStatusType.Rejected,
-        ),
-      'Pending' => JobApplicationStatusChipWidget(
-          statusType: ApplicationStatusType.Pending,
-        ),
+      'Accepted' =>
+          JobApplicationStatusChipWidget(
+            statusType: ApplicationStatusType.Accepted,
+          ),
+      'Rejected' =>
+          JobApplicationStatusChipWidget(
+            statusType: ApplicationStatusType.Rejected,
+          ),
+      'Pending' =>
+          JobApplicationStatusChipWidget(
+            statusType: ApplicationStatusType.Pending,
+          ),
       _ => const SizedBox.shrink(),
     };
   }
@@ -349,15 +349,15 @@ class CompanyNotificationApplicationWidget extends StatelessWidget {
               child: CustomButton(
                 onTapped: onShowCvTap != null && myCv != null
                     ? () {
-                        final cvUrl = myCv.url;
-                        if (cvUrl != null) {
-                          onShowCvTap!(cvUrl);
-                        }
-                      }
+                  final cvUrl = myCv.url;
+                  if (cvUrl != null) {
+                    onShowCvTap!(cvUrl);
+                  }
+                }
                     : null,
                 text: "Show CV",
                 backgroundColor:
-                    cv == null ? Colors.grey : Jobstopcolor.lightprimary,
+                cv == null ? Colors.grey : Jobstopcolor.lightprimary,
                 textColor: Colors.white,
               ),
             ),

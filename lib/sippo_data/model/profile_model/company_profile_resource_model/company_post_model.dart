@@ -5,9 +5,9 @@ import 'package:jobspot/sippo_data/model/custom_file_model/custom_file_model.dar
 import '../../image_resource_model/image_resource_model.dart';
 
 abstract class BaseCompanyPost {
-  int? id;
-  String? title;
-  String? body;
+  final int? id;
+  final String? title;
+  final String? body;
 
   bool isContentEqualTo(BaseCompanyPost value) =>
       id == value.id && title == value.title && body == value.body;
@@ -24,16 +24,17 @@ class CompanyDetailsPostModel extends BaseCompanyPost {
     this.company,
   });
 
-  CompanyDetailsPostModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    title = json['title'];
-    body = json['body'];
-    image = json['image'] != null
-        ? ImageResourceModel.fromJson(json['image'])
-        : null;
-    company = json['company'] != null
-        ? CompanyDetailsModel.fromJson(json['company'])
-        : null;
+  factory CompanyDetailsPostModel.fromJson(Map<String, dynamic> json) {
+    return CompanyDetailsPostModel(
+        id: json["id"],
+        title: json["title"],
+        body: json["body"],
+        image: json['image'] != null
+            ? ImageResourceModel.fromJson(json['image'])
+            : null,
+        company: json['company'] != null
+            ? CompanyDetailsModel.fromJson(json['company'])
+            : null);
   }
 
   ImageResourceModel? image;
@@ -60,7 +61,6 @@ class CompanyDetailsPostModel extends BaseCompanyPost {
   }
 }
 
-
 class CompanyPostModel extends BaseCompanyPost {
   CustomFileModel? image;
 
@@ -80,5 +80,19 @@ class CompanyPostModel extends BaseCompanyPost {
       "title": this.title,
       "body": this.body,
     };
+  }
+
+  CompanyPostModel copyWith({
+    int? id,
+    String? title,
+    String? body,
+    CustomFileModel? image,
+  }) {
+    return CompanyPostModel(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      body: body ?? this.body,
+      image: image ?? this.image,
+    );
   }
 }

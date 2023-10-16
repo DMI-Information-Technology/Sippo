@@ -68,7 +68,6 @@ class ProfileInfoModel extends EntityModel {
     String? phone,
     String? gender,
     String? bio,
-    CvModel? cv,
     ImageResourceModel? profileImage,
   }) =>
       ProfileInfoModel(
@@ -79,7 +78,6 @@ class ProfileInfoModel extends EntityModel {
         secondaryPhone: secondaryPhone ?? this.secondaryPhone,
         gender: gender ?? this.gender,
         bio: bio ?? this.bio,
-        cv: cv ?? this.cv,
         profileImage: profileImage ?? this.profileImage,
       );
 

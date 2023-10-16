@@ -21,40 +21,19 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  await lunchApp();
-  await GlobalStorageService.checkSavedToken();
+  Get.put<GlobalStorageService>(GlobalStorageService());
+  await GlobalStorageService.lunchApp();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
 
   FlutterError.onError = ExceptionHandlerUtils.onError;
-  print(GlobalStorageService.mapApiKey);
   runApp(const MyApp());
 }
 
-Future<void> lunchApp() async {
-  Get.put<GlobalStorageService>(GlobalStorageService());
-  final check = await GlobalStorageService.isAppOpenBefore();
-  if (!check) {
-    await GlobalStorageService.appIsLunched();
-  } else {
-    GlobalStorageService.isAppLunchFirstTime = false;
-  }
-}
-
-class MyApp extends StatefulWidget {
+class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
-  @override
-  State<MyApp> createState() => _MyAppState();
-}
-
-class _MyAppState extends State<MyApp> {
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +52,7 @@ class _MyAppState extends State<MyApp> {
       }),
       translations: Apptranslation(),
       locale: const Locale('en', 'US'),
-      initialRoute: SippoRoutes.homepage,
+      initialRoute: SippoRoutes.splashScreen,
       // initialRoute: SippoRoutes.identityverification,
       // home: const JobNotification(),
       getPages: SippoRoutes.routes,

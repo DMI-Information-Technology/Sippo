@@ -1,12 +1,10 @@
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JopController/company_profile_controller/edit_copmany_profile_information_controller.dart';
-import 'package:jobspot/custom_app_controller/switch_status_controller.dart';
-import 'package:jobspot/sippo_custom_widget/loading_view_widgets/loading_scaffold.dart';
+
 import 'package:jobspot/sippo_custom_widget/save_job_card_widget.dart';
 
 import '../../JobGlobalclass/jobstopcolor.dart';
@@ -15,7 +13,7 @@ import '../../JobGlobalclass/sippo_customstyle.dart';
 import '../../JobGlobalclass/text_font_size.dart';
 import '../../sippo_custom_widget/ConditionalWidget.dart';
 import '../../sippo_custom_widget/body_widget.dart';
-import '../../sippo_custom_widget/circular_image.dart';
+import '../../sippo_custom_widget/save_image_profle_page_widget.dart';
 import '../../sippo_custom_widget/success_message_widget.dart';
 import '../../sippo_custom_widget/widgets.dart';
 import '../../utils/getx_text_editing_controller.dart';
@@ -184,18 +182,6 @@ class _EditCompanyProfilePageState extends State<EditCompanyProfilePage> {
               size: context.height / 6,
               errorWidget: (_, __, ___) => const CircleAvatar(),
             )),
-        // Obx(() => ConditionalWidget(
-        //       !_controller.profileEditState.pickedImageProfile.isFileNull,
-        //       data: _controller.profileEditState.pickedImageProfile,
-        //       guaranteedBuilder: (_, data) => CircularImage.file(
-        //         data?.file != null ? data?.file : data?.bytesToFile,
-        //         size: context.height / 6,
-        //       ),
-        //       avoidBuilder: (_, __) => CircularImage(
-        //         JobstopPngImg.signup,
-        //         size: context.height / 6,
-        //       ),
-        //     )),
         ElevatedButton(
             style: ElevatedButton.styleFrom(
               shape: CircleBorder(),
@@ -309,64 +295,3 @@ class _EditCompanyProfilePageState extends State<EditCompanyProfilePage> {
   }
 }
 
-class SaveImagePageView extends StatelessWidget {
-  SaveImagePageView({
-    super.key,
-    required this.imageFile,
-    required this.onUpdateTapped,
-  });
-
-  final File imageFile;
-  final Future<void> Function(
-    SwitchStatusController loadingUpdateImageController,
-  ) onUpdateTapped;
-  final loadingUpdateImageController = SwitchStatusController();
-
-  @override
-  Widget build(BuildContext context) {
-    return LoadingScaffold(
-      controller: loadingUpdateImageController,
-      appBar: AppBar(
-        titleSpacing: 0.0,
-        title: Text(
-          "Update Profile Image",
-          style: dmsmedium.copyWith(fontSize: FontSize.title5(context)),
-        ),
-      ),
-      body: BodyWidget(
-        paddingContent: EdgeInsets.symmetric(
-          horizontal: context.fromWidth(CustomStyle.paddingValue),
-          vertical: context.fromHeight(CustomStyle.paddingValue),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            CircularImage.file(
-              imageFile,
-              size: context.height / 5,
-            ),
-            SizedBox(
-              height: context.fromHeight(CustomStyle.spaceBetween),
-            ),
-            Text(
-              "The New Profile Image",
-              style: dmsbold.copyWith(
-                fontSize: FontSize.title3(context),
-              ),
-            ),
-          ],
-        ),
-        paddingBottom: EdgeInsets.all(
-          context.fromWidth(CustomStyle.paddingValue),
-        ),
-        bottomScreen: CustomButton(
-          onTapped: () async {
-            await onUpdateTapped(loadingUpdateImageController);
-            Navigator.of(context).pop();
-          },
-          text: "Update",
-        ),
-      ),
-    );
-  }
-}

@@ -283,12 +283,16 @@ class NetworkBorderedCircularImage extends StatelessWidget {
     this.innerBorderColor,
     this.errorWidget,
     this.backgroundColor,
+    this.outerBorderWidth,
+    this.innerBorderWidth,
   });
 
   final Color? backgroundColor;
   final double size;
   final Color? outerBorderColor;
+  final double? outerBorderWidth;
   final Color? innerBorderColor;
+  final double? innerBorderWidth;
   final String imageUrl;
   final Widget Function(BuildContext context, String url, dynamic error)?
       errorWidget;
@@ -300,7 +304,7 @@ class NetworkBorderedCircularImage extends StatelessWidget {
         shape: BoxShape.circle,
         border: Border.all(
           color: outerBorderColor ?? Colors.grey,
-          width: context.fromWidth(CustomStyle.xxxl),
+          width: outerBorderWidth ?? context.fromWidth(CustomStyle.xxxl),
         ),
       ),
       child: Container(
@@ -309,7 +313,7 @@ class NetworkBorderedCircularImage extends StatelessWidget {
           shape: BoxShape.circle,
           border: Border.all(
             color: innerBorderColor ?? Colors.white,
-            width: context.fromWidth(CustomStyle.varyHuge),
+            width: innerBorderWidth ?? context.fromWidth(CustomStyle.varyHuge),
           ),
         ),
         child: ClipOval(

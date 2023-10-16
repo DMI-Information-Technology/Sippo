@@ -119,14 +119,6 @@ class ProfileCompanyEditState {
   final _profileController = ProfileCompanyController.instance;
   final _pickedImageProfile = CustomFileModel().obs;
 
-  // final _imageProfileResource = ImageResourceModel().obs;
-  //
-  // ImageResourceModel get imageProfileResource => _imageProfileResource.value;
-  //
-  // set imageProfileResource(ImageResourceModel value) {
-  //   _imageProfileResource.value = value;
-  // }
-
   CustomFileModel get pickedImageProfile => _pickedImageProfile.value;
 
   set pickedImageProfile(CustomFileModel value) {

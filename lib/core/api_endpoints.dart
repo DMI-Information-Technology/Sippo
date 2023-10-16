@@ -23,7 +23,9 @@ const String userJobsSavedParam = "toggle-save";
 const String workExperiencesEndpoint = "user/work-experiences";
 const String editProfileEndpoint = "user/profile";
 const String educationsEndpoint = "user/educations";
+const String userChangeCompanyProfile= "user/profile/change-profile-image";
 const String userSkillsEndpoint = "user/skills";
+
 const String userLanguageEndpoint = "user/languages";
 const String userCvEndpoint = "user/cv";
 
@@ -47,4 +49,8 @@ const String userCompaniesAboutsEndpoint = "companies";
 const String userCommunityCompaniesEndpoint = "social";
 const String userCommunityPostsEndpoint = "social/posts";
 const String userCommunityJobsEndpoint = "social/jobs";
+const String userApplicationEndpoint = "user/applications";
+
 /////////////////////////////////////////////////////////////////////
+/////////////////// Notifications ///////////////////
+const String notificationsEndpoint = "notifications";

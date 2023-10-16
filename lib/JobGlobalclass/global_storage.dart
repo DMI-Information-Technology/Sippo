@@ -5,15 +5,14 @@ import 'package:jobspot/utils/app_use.dart';
 import 'jobstopprefname.dart' as global;
 
 class GlobalStorageService extends GetxService {
-  static const MAP_API_KEY = 'MAP_API_KEY';
-  static const mapApiKey =
-      const String.fromEnvironment(GlobalStorageService.MAP_API_KEY);
+  // static const MAP_API_KEY = 'MAP_API_KEY';
+  // static const mapApiKey =
+  //     const String.fromEnvironment(GlobalStorageService.MAP_API_KEY);
 
   static GlobalStorageService get instance => Get.find();
   static const first_app_lunch_time = "firstapplunchtime";
 
   bool _isLogged = false;
-  final box = GetStorage();
   String? _tokenLogged = "";
   var _isAppLunchFirstTime = true;
   int _appUse = 0;
@@ -27,9 +26,9 @@ class GlobalStorageService extends GetxService {
   static bool get isCompany =>
       AppUsingType.values[instance._appUse] == AppUsingType.company;
 
-  static Future<void> removeSavedToken() async {
-    await instance.box.remove(global.tokenKey);
-    await instance.box.remove(global.loggedUserKey);
+  static Future<void> removeSavedToken(GetStorage box) async {
+    await box.remove(global.tokenKey);
+    await box.remove(global.loggedUserKey);
     // _userJson = {};
     instance._tokenLogged = "";
     instance._isLogged = false;
@@ -55,16 +54,16 @@ class GlobalStorageService extends GetxService {
   //   // _userJson = jsonDecode(encodedUser) as Map<String, dynamic>;
   // }
 
-  static Future<void> saveToken(String? token, int? use) async {
-    await instance.box.write(global.tokenKey, token);
-    await instance.box.write(global.app_logged_use, use);
+  static Future<void> saveToken(GetStorage box,String? token, int? use) async {
+    await box.write(global.tokenKey, token);
+    await box.write(global.app_logged_use, use);
     _setGlobalVariable(token, use);
   }
 
   // static Future<void> savedTokenPhoneNumber
-  static Future<void> checkSavedToken() async {
-    final String? token = await instance.box.read(global.tokenKey);
-    final int? use = await instance.box.read(global.app_logged_use);
+  static Future<void> checkSavedToken(GetStorage box) async {
+    final String? token = await box.read(global.tokenKey);
+    final int? use = await box.read(global.app_logged_use);
     _setGlobalVariable(token, use);
     // await checkLoggedUser();
   }
@@ -79,17 +78,28 @@ class GlobalStorageService extends GetxService {
     return true;
   }
 
-  static Future<bool> isAppOpenBefore() async {
-    final isOpen = await instance.box.read(first_app_lunch_time) as bool?;
+  static Future<bool> isAppOpenBefore(GetStorage box) async {
+    final isOpen = await box.read(first_app_lunch_time) as bool?;
     return isOpen != null && isOpen;
   }
 
-  static Future<void> appIsLunched() async {
-    await instance.box.write(first_app_lunch_time, true);
+  static Future<void> appIsLunched(GetStorage box) async {
+    await box.write(first_app_lunch_time, true);
   }
 
   static bool get isAppLunchFirstTime => instance._isAppLunchFirstTime;
 
   static set isAppLunchFirstTime(bool value) =>
       instance._isAppLunchFirstTime = value;
+
+  static Future<void> lunchApp()async {
+    final box = GetStorage();
+    final check = await isAppOpenBefore(box);
+    if (!check) {
+      await appIsLunched(box);
+    } else {
+      isAppLunchFirstTime = false;
+    }
+    await checkSavedToken(box);
+  }
 }

@@ -6,6 +6,7 @@ import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/sippo_custom_widget/notification_widget.dart';
 import 'package:jobspot/sippo_custom_widget/rounded_border_radius_card_widget.dart';
+import 'package:jobspot/sippo_custom_widget/save_job_card_widget.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/application_job_company_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
@@ -188,7 +189,7 @@ class PostWidget extends StatelessWidget {
   }
 }
 
-class PostApplicationModel extends StatelessWidget {
+class PostApplicationWidget extends StatelessWidget {
   final String? timeAgo;
   final ApplicationCompanyModel? application;
   final CompanyDetailsModel? company;
@@ -196,7 +197,7 @@ class PostApplicationModel extends StatelessWidget {
   final VoidCallback? onProfileImageTap;
   final void Function(String cvUrl)? onShowCvTap;
 
-  const PostApplicationModel({
+  const PostApplicationWidget({
     Key? key,
     this.timeAgo,
     this.company,
@@ -274,9 +275,11 @@ class PostApplicationModel extends StatelessWidget {
       children: [
         InkWell(
           onTap: onProfileImageTap,
-          child: CircleAvatar(
-            radius: 28,
-            backgroundImage: AssetImage(JobstopPngImg.photo),
+          child: NetworkBorderedCircularImage(
+            imageUrl: application?.customer?.profileImage?.url ?? '',
+            errorWidget: (___, __, _) => const CircleAvatar(),
+            size: context.fromHeight(24),
+            outerBorderColor: Jobstopcolor.backgroudHome,
           ),
         ),
         SizedBox(

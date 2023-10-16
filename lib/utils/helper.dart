@@ -13,39 +13,7 @@ void showAlert(BuildContext context, Widget widget) {
   );
 }
 
-String calculateElapsedTime(int startTimeMillis) {
-  int currentTimeMillis = DateTime.now().millisecondsSinceEpoch;
-  Duration duration = Duration(
-    milliseconds: startTimeMillis - currentTimeMillis,
-  );
-  if (duration.inDays > 0) {
-    return '${duration.inDays} days ago';
-  }
-  if (duration.inHours > 0) {
-    return '${duration.inHours} hours ago';
-  }
-  if (duration.inMinutes > 0) {
-    return '${duration.inMinutes} minutes ago';
-  }
-  if (duration.inSeconds > 0) {
-    return '${duration.inSeconds} seconds ago';
-  }
-  return 'just now';
-}
-
-String? calculateElapsedTimeFromStringDate(String? date) {
-  late final DateTime dateTime;
-  try {
-    if (date == null) {
-      throw new Exception('null date is not a valid date string.');
-    }
-    dateTime = DateTime.parse(date);
-    print(dateTime.toString());
-  } catch (e, s) {
-    print(e);
-    print(s);
-    return null;
-  }
+String calculateElapsedTime(DateTime dateTime) {
   final startTimeMillis = dateTime.millisecondsSinceEpoch;
   int currentTimeMillis = DateTime.now().millisecondsSinceEpoch;
   Duration duration = Duration(
@@ -64,6 +32,42 @@ String? calculateElapsedTimeFromStringDate(String? date) {
     return '${duration.inSeconds} seconds ago';
   }
   return 'just now';
+}
+String calculateElapsedTimeAR(DateTime dateTime) {
+  final startTimeMillis = dateTime.millisecondsSinceEpoch;
+  int currentTimeMillis = DateTime.now().millisecondsSinceEpoch;
+  Duration duration = Duration(
+    milliseconds: currentTimeMillis - startTimeMillis,
+  );
+  if (duration.inDays > 0) {
+    return '${duration.inDays} أيامًا مضت';
+  }
+  if (duration.inHours > 0) {
+    return '${duration.inHours} ساعة مضت';
+  }
+  if (duration.inMinutes > 0) {
+    return '${duration.inMinutes} دقيقة مضت';
+  }
+  if (duration.inSeconds > 0) {
+    return '${duration.inSeconds} ثانية مضت';
+  }
+  return 'الآن';
+}
+
+String? calculateElapsedTimeFromStringDate(String? date) {
+  late final DateTime dateTime;
+  try {
+    if (date == null) {
+      throw new Exception('null date is not a valid date string.');
+    }
+    dateTime = DateTime.parse(date);
+    print(dateTime.toString());
+  } catch (e, s) {
+    print(e);
+    print(s);
+    return null;
+  }
+  return calculateElapsedTime(dateTime);
 }
 
 double convertBytesToKB(int bytes) {

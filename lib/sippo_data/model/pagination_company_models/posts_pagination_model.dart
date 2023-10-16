@@ -10,6 +10,7 @@ class PaginationModel<T> {
     required T Function(Map<String, dynamic> item) dataConverter,
   }) {
     final jsonData = json['data'];
+    print("data data :$jsonData");
     return PaginationModel(
       data: jsonData != null && jsonData is List && jsonData.runtimeType == List
           ? jsonData.map((v) => dataConverter(v)).toList()
@@ -18,6 +19,21 @@ class PaginationModel<T> {
       meta: json['meta'] != null ? Meta.fromJson(json['meta']) : null,
     );
   }
+  //
+  // List<T>? _fromDataJson<T>(data) {
+  //   final jsonData = data['data'];
+  //
+  //   if (jsonData != null && jsonData is List && jsonData.runtimeType == List) {
+  //     final dataList = <T>[];
+  //     for (final item in jsonData) {
+  //       if (item != null) {
+  //         dataList.add(item);
+  //       }
+  //     }
+  //     return dataList;
+  //   }
+  //   return null;
+  // }
 
   final List<T>? data;
   final Links? links;

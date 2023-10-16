@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
-
 import 'package:jobspot/JopController/dashboards_controller/company_dashboard_controller.dart';
 import 'package:jobspot/sippo_data/company_repos/company_posts_repo.dart';
 import 'package:jobspot/sippo_data/model/custom_file_model/custom_file_model.dart';
@@ -54,7 +53,7 @@ class CompanyEditAddPostController extends GetxController {
   }
 
   Future<void> updateCompanyPost() async {
-    final newPost = newPostState.form..id = _post.value.id;
+    final newPost = newPostState.formWithId(_post.value.id);
     print('image url is ${newPostState.imageUrl.url}');
     if (newPost.isContentEqualTo(post) && newPost.image?.file == null) {
       print(
@@ -214,6 +213,13 @@ class CompanyPostState {
   }
 
   CompanyPostModel get form => CompanyPostModel(
+        title: title.text,
+        body: description.text,
+        image: imageFile,
+      );
+
+  CompanyPostModel formWithId(int? id) => CompanyPostModel(
+        id: id,
         title: title.text,
         body: description.text,
         image: imageFile,
