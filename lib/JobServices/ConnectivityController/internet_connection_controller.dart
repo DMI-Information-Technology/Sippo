@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 
-import '../../sippo_custom_widget/error_messages_dialog_snackbar/error_messages.dart'
+import 'package:jobspot/sippo_custom_widget/error_messages_dialog_snackbar/error_messages.dart'
     as errorMessage;
 
 class InternetConnectionService extends GetxService {

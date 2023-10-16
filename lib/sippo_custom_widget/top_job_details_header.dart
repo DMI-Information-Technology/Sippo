@@ -110,9 +110,7 @@ class TopJobDetailsHeader extends StatelessWidget {
       backgroundColor: Jobstopcolor.white,
       size: profileImageSize,
       imageUrl: imageUrl ?? "",
-      errorWidget: (context, url, error) => Image.asset(
-        JobstopPngImg.companysignup,
-      ),
+      errorWidget: (context, url, error) => CircleAvatar(),
     );
   }
 }

@@ -12,9 +12,9 @@ import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_data/model/notification/job_application_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/application_job_company_model.dart';
 
-import '../../../JobGlobalclass/sippo_customstyle.dart';
-import '../../../sippo_custom_widget/container_bottom_sheet_widget.dart';
-import '../../../sippo_custom_widget/setting_item_widget.dart';
+import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
+import 'package:jobspot/sippo_custom_widget/container_bottom_sheet_widget.dart';
+import 'package:jobspot/sippo_custom_widget/setting_item_widget.dart';
 
 class SippoCompanyApplication extends StatefulWidget {
   const SippoCompanyApplication({super.key});

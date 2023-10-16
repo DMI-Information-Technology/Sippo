@@ -2,10 +2,10 @@ import 'dart:convert';
 
 import 'package:jobspot/core/header_api.dart';
 
-import '../../JopController/HttpClientController/http_client_controller.dart';
-import '../../core/api_endpoints.dart' as endpoints;
-import '../../core/resource.dart';
-import '../../core/status_response_code_checker.dart';
+import 'package:jobspot/JopController/HttpClientController/http_client_controller.dart';
+import 'package:jobspot/core/api_endpoints.dart' as endpoints;
+import 'package:jobspot/core/resource.dart';
+import 'package:jobspot/core/status_response_code_checker.dart';
 import '../model/profile_model/profile_resource_model/skills_model.dart';
 import '../model/profile_model/profile_resource_model/validate_property_skills.dart';
 import '../model/status_message_model/status_message_model.dart';

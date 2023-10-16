@@ -1,12 +1,12 @@
+
 import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/global_storage.dart';
+import 'package:jobspot/JobGlobalclass/routes.dart';
+import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
+import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_user_profile_view_model.dart';
 import 'package:jobspot/utils/app_use.dart';
-
-import '../JobGlobalclass/routes.dart';
-import '../sippo_data/model/auth_model/company_response_details.dart';
-import '../sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
-import '../utils/global_shared_state.dart';
+import 'package:jobspot/utils/global_shared_state.dart';
 
 class SharedGlobalDataService extends GetxService {
   static SharedGlobalDataService get instance => Get.find();

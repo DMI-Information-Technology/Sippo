@@ -5,9 +5,9 @@ import 'package:jobspot/JobServices/ConnectivityController/internet_connection_c
 
 import 'package:jobspot/utils/states.dart';
 
-import '../../sippo_data/model/specializations_model/specializations_model.dart';
-import '../../sippo_data/specializations/specializations_repo.dart';
-import '../../sippo_excepstions/specialization_exception/specialization_exception.dart';
+import 'package:jobspot/sippo_data/model/specializations_model/specializations_model.dart';
+import 'package:jobspot/sippo_data/specializations/specializations_repo.dart';
+import 'package:jobspot/sippo_excepstions/specialization_exception/specialization_exception.dart';
 
 class SpecializationCompanyController extends GetxController {
   final _netController = InternetConnectionService.instance;

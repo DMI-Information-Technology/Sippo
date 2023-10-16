@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JopController/AuthenticationController/sippo_auth_controller.dart';
 
-import '../../JobGlobalclass/jobstopcolor.dart';
-import '../../JobGlobalclass/jobstopimges.dart';
-import '../../JobGlobalclass/routes.dart';
-import '../../sippo_custom_widget/widgets.dart';
-import '../../sippo_data/model/auth_model/user_model.dart';
-import '../../utils/states.dart';
+import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
+import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
+import 'package:jobspot/JobGlobalclass/routes.dart';
+import 'package:jobspot/sippo_custom_widget/widgets.dart';
+import 'package:jobspot/sippo_data/model/auth_model/user_model.dart';
+import 'package:jobspot/utils/states.dart';
 
 class SignUpUserController extends GetxController {
   static SignUpUserController get instance => Get.find();

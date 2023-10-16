@@ -14,12 +14,12 @@ import 'package:jobspot/utils/getx_text_editing_controller.dart';
 import 'package:jobspot/utils/image_picker_service.dart';
 import 'package:jobspot/utils/validating_input.dart';
 
-import '../../JobGlobalclass/sippo_customstyle.dart';
-import '../../JopController/user_profile_controller/edit_profile_information_controller.dart';
-import '../../sippo_custom_widget/gender_picker_widget.dart';
-import '../../sippo_custom_widget/save_image_profle_page_widget.dart';
-import '../../sippo_custom_widget/save_job_card_widget.dart';
-import '../../sippo_custom_widget/success_message_widget.dart';
+import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
+import 'package:jobspot/JopController/user_profile_controller/edit_profile_information_controller.dart';
+import 'package:jobspot/sippo_custom_widget/gender_picker_widget.dart';
+import 'package:jobspot/sippo_custom_widget/save_image_profle_page_widget.dart';
+import 'package:jobspot/sippo_custom_widget/save_job_card_widget.dart';
+import 'package:jobspot/sippo_custom_widget/success_message_widget.dart';
 
 class EditUserProfilePage extends StatefulWidget {
   const EditUserProfilePage({Key? key}) : super(key: key);

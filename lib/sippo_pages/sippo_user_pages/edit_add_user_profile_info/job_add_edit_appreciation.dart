@@ -8,12 +8,12 @@ import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 
-import '../../../JobGlobalclass/sippo_customstyle.dart';
-import '../../../sippo_custom_widget/body_widget.dart';
-import '../../../sippo_custom_widget/confirmation_bottom_sheet.dart';
-import '../../../sippo_custom_widget/container_bottom_sheet_widget.dart';
-import '../../../sippo_data/model/profile_model/profile_widget_model/jobstop_appreciation_info_card_model.dart';
-import '../../../sippo_themes/themecontroller.dart';
+import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
+import 'package:jobspot/sippo_custom_widget/body_widget.dart';
+import 'package:jobspot/sippo_custom_widget/confirmation_bottom_sheet.dart';
+import 'package:jobspot/sippo_custom_widget/container_bottom_sheet_widget.dart';
+import 'package:jobspot/sippo_data/model/profile_model/profile_widget_model/jobstop_appreciation_info_card_model.dart';
+import 'package:jobspot/sippo_themes/themecontroller.dart';
 
 class JobAppreciationAddEdit extends StatefulWidget {
   const JobAppreciationAddEdit({Key? key}) : super(key: key);

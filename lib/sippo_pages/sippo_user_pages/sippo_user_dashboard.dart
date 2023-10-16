@@ -5,7 +5,7 @@ import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 
-import '../../JopController/dashboards_controller/user_dashboard_controller.dart';
+import 'package:jobspot/JopController/dashboards_controller/user_dashboard_controller.dart';
 
 class SippoUserDashboard extends StatefulWidget {
   const SippoUserDashboard({Key? key}) : super(key: key);

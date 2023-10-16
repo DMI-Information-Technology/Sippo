@@ -4,7 +4,7 @@ import 'package:jobspot/custom_app_controller/google_map_view_controller.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/work_location_model.dart';
 import 'package:jobspot/utils/states.dart';
 
-import '../../sippo_data/company_repos/company_locations_repo.dart';
+import 'package:jobspot/sippo_data/company_repos/company_locations_repo.dart';
 import '../dashboards_controller/company_dashboard_controller.dart';
 
 class SelectedCompanyWorkPlaceController extends GetxController {

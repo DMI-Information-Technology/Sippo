@@ -5,7 +5,7 @@ import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
-import '../../sippo_themes/themecontroller.dart';
+import 'package:jobspot/sippo_themes/themecontroller.dart';
 
 class JobMessageing extends StatefulWidget {
   const JobMessageing({Key? key}) : super(key: key);

@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import '../../JopController/company_profile_controller/profile_company_controller.dart';
+import 'package:jobspot/JopController/company_profile_controller/profile_company_controller.dart';
 
 class ProfileCompanyBindingController implements Bindings {
   @override

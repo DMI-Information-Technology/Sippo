@@ -8,7 +8,7 @@ import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
-import '../../sippo_custom_widget/resume_card_widget.dart';
+import 'package:jobspot/sippo_custom_widget/resume_card_widget.dart';
 
 class JobApplication extends StatelessWidget {
   const JobApplication({Key? key}) : super(key: key);

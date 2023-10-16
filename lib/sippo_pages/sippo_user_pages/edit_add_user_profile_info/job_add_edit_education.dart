@@ -8,14 +8,14 @@ import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/utils/helper.dart' as helper;
-import '../../../JobGlobalclass/sippo_customstyle.dart';
-import '../../../JopController/user_profile_controller/edit_add_education_controller.dart';
-import '../../../sippo_custom_widget/SearchDelegteImpl.dart';
-import '../../../sippo_custom_widget/confirmation_bottom_sheet.dart';
-import '../../../sippo_custom_widget/container_bottom_sheet_widget.dart';
-import '../../../sippo_custom_widget/loading_empty_feild_widget.dart';
-import '../../../sippo_custom_widget/success_message_widget.dart';
-import '../../../utils/validating_input.dart';
+import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
+import 'package:jobspot/JopController/user_profile_controller/edit_add_education_controller.dart';
+import 'package:jobspot/sippo_custom_widget/SearchDelegteImpl.dart';
+import 'package:jobspot/sippo_custom_widget/confirmation_bottom_sheet.dart';
+import 'package:jobspot/sippo_custom_widget/container_bottom_sheet_widget.dart';
+import 'package:jobspot/sippo_custom_widget/loading_empty_feild_widget.dart';
+import 'package:jobspot/sippo_custom_widget/success_message_widget.dart';
+import 'package:jobspot/utils/validating_input.dart';
 
 class JobEducationAddEdit extends StatefulWidget {
   const JobEducationAddEdit({Key? key}) : super(key: key);

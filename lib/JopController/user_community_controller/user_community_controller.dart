@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import '../../utils/states.dart';
+import 'package:jobspot/utils/states.dart';
 import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
 
 class UserCommunityController extends GetxController {

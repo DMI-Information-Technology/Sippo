@@ -6,7 +6,7 @@ import 'package:jobspot/JopController/user_community_controller/user_community_c
 import 'package:jobspot/sippo_data/user_repos/user_community_repo.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_post_model.dart';
 
-import '../../utils/states.dart';
+import 'package:jobspot/utils/states.dart';
 
 class UserShowCommunityPostsController extends GetxController {
   final pagingController =

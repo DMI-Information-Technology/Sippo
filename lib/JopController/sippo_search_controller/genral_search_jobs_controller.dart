@@ -4,10 +4,10 @@ import 'package:jobspot/JobServices/ConnectivityController/internet_connection_c
 import 'package:jobspot/JopController/sippo_search_controller/general_search_controller.dart';
 import 'package:jobspot/core/Refresh.dart';
 
-import '../../sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
-import '../../sippo_data/user_repos/user_jobs_repo.dart';
-import '../../sippo_data/user_repos/user_saved_job_repo.dart';
-import '../../utils/states.dart';
+import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
+import 'package:jobspot/sippo_data/user_repos/user_jobs_repo.dart';
+import 'package:jobspot/sippo_data/user_repos/user_saved_job_repo.dart';
+import 'package:jobspot/utils/states.dart';
 
 class GeneralSearchJobsController extends GetxController {
   final generalSearchController = UserGeneralSearchController.instance;

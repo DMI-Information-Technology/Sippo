@@ -8,22 +8,22 @@ import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/sippo_custom_widget/resume_card_widget.dart';
 import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_job_description/sippo_job_description.dart';
 
-import '../../../JobGlobalclass/jobstopimges.dart';
-import '../../../JobGlobalclass/routes.dart';
-import '../../../JobGlobalclass/sippo_customstyle.dart';
+import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
+import 'package:jobspot/JobGlobalclass/routes.dart';
+import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
 
-import '../../../JopController/user_core_functions/apply_jobs_controllers.dart';
-import '../../../custom_app_controller/switch_status_controller.dart';
-import '../../../sippo_custom_widget/ConditionalWidget.dart';
-import '../../../sippo_custom_widget/body_widget.dart';
-import '../../../sippo_custom_widget/error_messages_dialog_snackbar/network_connnection_lost_widget.dart';
-import '../../../sippo_custom_widget/file_upload_widget.dart';
-import '../../../sippo_custom_widget/loading_view_widgets/loading_scaffold.dart';
-import '../../../sippo_custom_widget/success_message_widget.dart';
-import '../../../sippo_custom_widget/top_job_details_header.dart';
-import '../../../sippo_custom_widget/widgets.dart';
-import '../../../utils/helper.dart';
+import 'package:jobspot/JopController/user_core_functions/apply_jobs_controllers.dart';
+import 'package:jobspot/custom_app_controller/switch_status_controller.dart';
+import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
+import 'package:jobspot/sippo_custom_widget/body_widget.dart';
+import 'package:jobspot/sippo_custom_widget/error_messages_dialog_snackbar/network_connnection_lost_widget.dart';
+import 'package:jobspot/sippo_custom_widget/file_upload_widget.dart';
+import 'package:jobspot/sippo_custom_widget/loading_view_widgets/loading_scaffold.dart';
+import 'package:jobspot/sippo_custom_widget/success_message_widget.dart';
+import 'package:jobspot/sippo_custom_widget/top_job_details_header.dart';
+import 'package:jobspot/sippo_custom_widget/widgets.dart';
+import 'package:jobspot/utils/helper.dart';
 import '../jobstop_success.dart';
 
 class SippoApplyJob extends StatefulWidget {

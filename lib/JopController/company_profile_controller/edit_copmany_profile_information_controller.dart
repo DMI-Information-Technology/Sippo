@@ -4,9 +4,9 @@ import 'package:jobspot/JopController/company_profile_controller/profile_company
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
 import 'package:jobspot/sippo_data/model/custom_file_model/custom_file_model.dart';
 
-import '../../sippo_data/company_repos/company_profile_info_repo.dart';
-import '../../utils/getx_text_editing_controller.dart';
-import '../../utils/states.dart';
+import 'package:jobspot/sippo_data/company_repos/company_profile_info_repo.dart';
+import 'package:jobspot/utils/getx_text_editing_controller.dart';
+import 'package:jobspot/utils/states.dart';
 
 class EditCompanyProfileInfoController extends GetxController {
   final profileController = ProfileCompanyController.instance;

@@ -5,13 +5,13 @@ import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 
-import '../../../JopController/user_profile_controller/edit_add_skills_controller.dart';
-import '../../../sippo_custom_widget/ConditionalWidget.dart';
-import '../../../sippo_custom_widget/SearchDelegteImpl.dart';
-import '../../../sippo_custom_widget/confirmation_bottom_sheet.dart';
-import '../../../sippo_custom_widget/container_bottom_sheet_widget.dart';
-import '../../../sippo_custom_widget/success_message_widget.dart';
-import '../../../sippo_themes/themecontroller.dart';
+import 'package:jobspot/JopController/user_profile_controller/edit_add_skills_controller.dart';
+import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
+import 'package:jobspot/sippo_custom_widget/SearchDelegteImpl.dart';
+import 'package:jobspot/sippo_custom_widget/confirmation_bottom_sheet.dart';
+import 'package:jobspot/sippo_custom_widget/container_bottom_sheet_widget.dart';
+import 'package:jobspot/sippo_custom_widget/success_message_widget.dart';
+import 'package:jobspot/sippo_themes/themecontroller.dart';
 
 class JobSkillsAddEdit extends StatefulWidget {
   const JobSkillsAddEdit({Key? key}) : super(key: key);

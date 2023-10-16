@@ -7,13 +7,13 @@ import 'package:jobspot/JopController/sippo_search_controller/general_search_use
 import 'package:jobspot/sippo_custom_widget/save_job_card_widget.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_user_profile_view_model.dart';
 
-import '../../../JobGlobalclass/jobstopcolor.dart';
-import '../../../JobGlobalclass/jobstopfontstyle.dart';
-import '../../../JobGlobalclass/sippo_customstyle.dart';
-import '../../../JobGlobalclass/text_font_size.dart';
-import '../../../JobServices/shared_global_data_service.dart';
-import '../../../sippo_custom_widget/rounded_border_radius_card_widget.dart';
-import '../../../sippo_custom_widget/widgets.dart';
+import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
+import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
+import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
+import 'package:jobspot/JobGlobalclass/text_font_size.dart';
+import 'package:jobspot/JobServices/shared_global_data_service.dart';
+import 'package:jobspot/sippo_custom_widget/rounded_border_radius_card_widget.dart';
+import 'package:jobspot/sippo_custom_widget/widgets.dart';
 
 class ShowGeneralSearchProfilesViewList extends StatefulWidget {
   const ShowGeneralSearchProfilesViewList({super.key});

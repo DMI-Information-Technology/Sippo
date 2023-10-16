@@ -7,10 +7,10 @@ import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 
-import '../../JobGlobalclass/routes.dart';
-import '../../sippo_custom_widget/body_widget.dart';
-import '../../sippo_themes/themecontroller.dart';
-import '../../utils/helper.dart';
+import 'package:jobspot/JobGlobalclass/routes.dart';
+import 'package:jobspot/sippo_custom_widget/body_widget.dart';
+import 'package:jobspot/sippo_themes/themecontroller.dart';
+import 'package:jobspot/utils/helper.dart';
 
 class CheckOTPResetPasswordMessage extends StatefulWidget {
   const CheckOTPResetPasswordMessage({Key? key}) : super(key: key);

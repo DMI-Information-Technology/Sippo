@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 
-import '../../JobGlobalclass/jobstopcolor.dart';
-import '../../JobGlobalclass/sippo_customstyle.dart';
-import '../../JopController/company_display_posts_job_controller/company_show_job_post_wrapper_controller.dart';
-import '../../sippo_custom_widget/ConditionalWidget.dart';
-import '../../sippo_custom_widget/body_widget.dart';
-import '../../sippo_custom_widget/error_messages_dialog_snackbar/network_connnection_lost_widget.dart';
-import '../../sippo_custom_widget/widgets.dart';
+import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
+import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
+import 'package:jobspot/JopController/company_display_posts_job_controller/company_show_job_post_wrapper_controller.dart';
+import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
+import 'package:jobspot/sippo_custom_widget/body_widget.dart';
+import 'package:jobspot/sippo_custom_widget/error_messages_dialog_snackbar/network_connnection_lost_widget.dart';
+import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'company_post_and_jobs/show_company_jobs.dart';
 import 'company_post_and_jobs/show_company_posts.dart';
 

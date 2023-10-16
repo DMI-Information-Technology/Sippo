@@ -5,7 +5,7 @@ import 'package:http/http.dart';
 import 'package:http_parser/http_parser.dart';
 import 'package:path/path.dart';
 
-import '../../../utils/helper.dart';
+import 'package:jobspot/utils/helper.dart';
 
 class CustomFileModel {
   final String? fileField;

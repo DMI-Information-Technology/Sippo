@@ -2,7 +2,7 @@ import 'package:http/http.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
 import 'package:jobspot/sippo_data/model/custom_file_model/custom_file_model.dart';
 
-import '../../image_resource_model/image_resource_model.dart';
+import 'package:jobspot/sippo_data/model/image_resource_model/image_resource_model.dart';
 
 abstract class BaseCompanyPost {
   final int? id;

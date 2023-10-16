@@ -9,10 +9,10 @@ import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/JopController/NotificationController/user_notification_application/user_notification_application_controller.dart';
 import 'package:jobspot/sippo_pages/sippo_message_pages/no_resource_screen.dart';
 
-import '../../../sippo_custom_widget/container_bottom_sheet_widget.dart';
-import '../../../sippo_custom_widget/notification_widget.dart';
-import '../../../sippo_custom_widget/setting_item_widget.dart';
-import '../../../sippo_data/model/notification/job_application_model.dart';
+import 'package:jobspot/sippo_custom_widget/container_bottom_sheet_widget.dart';
+import 'package:jobspot/sippo_custom_widget/notification_widget.dart';
+import 'package:jobspot/sippo_custom_widget/setting_item_widget.dart';
+import 'package:jobspot/sippo_data/model/notification/job_application_model.dart';
 import '../job_application.dart';
 import 'sippo_user_application.dart';
 import 'sippo_user_notification.dart';

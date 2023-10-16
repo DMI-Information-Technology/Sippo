@@ -9,10 +9,10 @@ import 'package:jobspot/JopController/NotificationController/user_notification_a
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/application_job_company_model.dart';
 
-import '../../../JobGlobalclass/sippo_customstyle.dart';
-import '../../../sippo_custom_widget/container_bottom_sheet_widget.dart';
-import '../../../sippo_custom_widget/notification_widget.dart';
-import '../../../sippo_custom_widget/setting_item_widget.dart';
+import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
+import 'package:jobspot/sippo_custom_widget/container_bottom_sheet_widget.dart';
+import 'package:jobspot/sippo_custom_widget/notification_widget.dart';
+import 'package:jobspot/sippo_custom_widget/setting_item_widget.dart';
 import '../job_application.dart';
 
 class SippoUserApplication extends StatefulWidget {

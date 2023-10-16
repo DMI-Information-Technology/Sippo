@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../custom_app_controller/switch_status_controller.dart';
+import 'package:jobspot/custom_app_controller/switch_status_controller.dart';
 import 'overly_loading.dart';
 
 class LoadingScaffold extends StatelessWidget {

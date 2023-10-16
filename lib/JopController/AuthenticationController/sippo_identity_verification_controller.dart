@@ -8,13 +8,13 @@ import 'package:jobspot/JobServices/ConnectivityController/internet_connection_c
 import 'package:jobspot/utils/helper.dart' as helper;
 import 'package:jobspot/utils/states.dart';
 
-import '../../JobGlobalclass/jobstopcolor.dart';
-import '../../JobGlobalclass/jobstopimges.dart';
-import '../../JobGlobalclass/routes.dart';
-import '../../custom_app_controller/switch_status_controller.dart';
-import '../../sippo_custom_widget/error_messages_dialog_snackbar/error_messages.dart'
+import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
+import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
+import 'package:jobspot/JobGlobalclass/routes.dart';
+import 'package:jobspot/custom_app_controller/switch_status_controller.dart';
+import 'package:jobspot/sippo_custom_widget/error_messages_dialog_snackbar/error_messages.dart'
     as messages;
-import '../../sippo_custom_widget/widgets.dart';
+import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'firebase_auth_service_controller.dart';
 
 class IdentityVerificationController extends GetxController {

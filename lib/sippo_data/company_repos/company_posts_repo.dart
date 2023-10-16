@@ -6,8 +6,8 @@ import 'package:jobspot/sippo_data/model/pagination_company_models/posts_paginat
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_post_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/validate_property_company_post_model.dart';
 
-import '../../core/resource.dart';
-import '../../core/status_response_code_checker.dart';
+import 'package:jobspot/core/resource.dart';
+import 'package:jobspot/core/status_response_code_checker.dart';
 
 class CompanyPostRepo {
   static Future<

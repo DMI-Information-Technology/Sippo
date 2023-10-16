@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
 import 'package:jobspot/JopController/user_profile_controller/profile_user_controller.dart';
 
-import '../../core/Refresh.dart';
-import '../../sippo_data/model/profile_model/profile_resource_model/language_model.dart';
-import '../../sippo_data/user_repos/language_repo.dart';
-import '../../utils/states.dart';
+import 'package:jobspot/core/Refresh.dart';
+import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/language_model.dart';
+import 'package:jobspot/sippo_data/user_repos/language_repo.dart';
+import 'package:jobspot/utils/states.dart';
 
 class LanguageEditAddController extends GetxController {
   final _profileController = ProfileUserController.instance;

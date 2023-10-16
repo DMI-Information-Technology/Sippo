@@ -11,10 +11,10 @@ import 'package:jobspot/sippo_custom_widget/save_job_card_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
 
-import '../../../JobGlobalclass/jobstopimges.dart';
-import '../../../JobGlobalclass/sippo_customstyle.dart';
-import '../../../JopController/user_community_controller/user_show_community_companies_controller.dart';
-import '../../../sippo_custom_widget/rounded_border_radius_card_widget.dart';
+import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
+import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
+import 'package:jobspot/JopController/user_community_controller/user_show_community_companies_controller.dart';
+import 'package:jobspot/sippo_custom_widget/rounded_border_radius_card_widget.dart';
 
 class ShowCommunityCompanyCompaniesList extends StatefulWidget {
   const ShowCommunityCompanyCompaniesList({super.key});

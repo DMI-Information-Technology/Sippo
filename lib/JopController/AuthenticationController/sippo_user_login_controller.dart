@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JopController/AuthenticationController/sippo_auth_controller.dart';
 
-import '../../JobGlobalclass/routes.dart';
-import '../../sippo_data/model/auth_model/user_model.dart';
-import '../../utils/states.dart';
+import 'package:jobspot/JobGlobalclass/routes.dart';
+import 'package:jobspot/sippo_data/model/auth_model/user_model.dart';
+import 'package:jobspot/utils/states.dart';
 
 class UserLoginController extends GetxController {
   static UserLoginController get instance => Get.find();

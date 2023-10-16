@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 
-import '../../JobGlobalclass/jobstopcolor.dart';
-import '../../JobGlobalclass/jobstopfontstyle.dart';
+import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
+import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 
 class NoResourceScreen extends StatelessWidget {
   const NoResourceScreen({

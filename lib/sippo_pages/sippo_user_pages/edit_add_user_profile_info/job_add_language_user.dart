@@ -8,11 +8,11 @@ import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
-import '../../../JobGlobalclass/jobstopcolor.dart';
-import '../../../JopController/user_profile_controller/language_edit_add_controller.dart';
-import '../../../sippo_custom_widget/SearchDelegteImpl.dart';
-import '../../../sippo_custom_widget/success_message_widget.dart';
-import '../../../sippo_themes/themecontroller.dart';
+import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
+import 'package:jobspot/JopController/user_profile_controller/language_edit_add_controller.dart';
+import 'package:jobspot/sippo_custom_widget/SearchDelegteImpl.dart';
+import 'package:jobspot/sippo_custom_widget/success_message_widget.dart';
+import 'package:jobspot/sippo_themes/themecontroller.dart';
 
 class LanguageUserAdd extends StatefulWidget {
   @override

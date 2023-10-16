@@ -6,10 +6,10 @@ import 'package:jobspot/JobServices/shared_global_data_service.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/user_job_application_model.dart';
 import 'package:jobspot/sippo_data/user_repos/user_jobs_repo.dart';
 
-import '../../sippo_data/model/custom_file_model/custom_file_model.dart';
-import '../../sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
-import '../../utils/file_picker_service.dart';
-import '../../utils/states.dart';
+import 'package:jobspot/sippo_data/model/custom_file_model/custom_file_model.dart';
+import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
+import 'package:jobspot/utils/file_picker_service.dart';
+import 'package:jobspot/utils/states.dart';
 
 class ApplyJobsController extends GetxController {
   final applyJobsState = ApplyJobsState();

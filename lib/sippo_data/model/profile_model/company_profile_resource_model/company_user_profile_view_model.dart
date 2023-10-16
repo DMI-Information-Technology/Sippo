@@ -1,11 +1,11 @@
 import 'package:get/get.dart';
+import 'package:jobspot/sippo_data/model/image_resource_model/image_resource_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/education_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/language_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/profile_edit_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/skills_model.dart';
 
-import '../../image_resource_model/image_resource_model.dart';
-import '../profile_resource_model/cv_file_model.dart';
+import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/cv_file_model.dart';
 import '../profile_resource_model/work_experiences_model.dart';
 
 class ProfileViewResourceModel {

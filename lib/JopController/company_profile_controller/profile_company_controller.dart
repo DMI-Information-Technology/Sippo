@@ -3,9 +3,9 @@ import 'dart:async';
 import 'package:get/get.dart';
 import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
 
-import '../../sippo_custom_widget/profile_completion_widget.dart';
-import '../../sippo_data/model/auth_model/company_response_details.dart';
-import '../../utils/states.dart';
+import 'package:jobspot/sippo_custom_widget/profile_completion_widget.dart';
+import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
+import 'package:jobspot/utils/states.dart';
 import '../dashboards_controller/company_dashboard_controller.dart';
 
 class ProfileCompanyController extends GetxController {

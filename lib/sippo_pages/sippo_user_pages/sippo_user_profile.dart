@@ -15,12 +15,12 @@ import 'package:jobspot/sippo_custom_widget/resume_card_widget.dart';
 import 'package:jobspot/sippo_pages/sippo_user_pages/job_aboutme.dart';
 import 'package:readmore/readmore.dart';
 
-import '../../JobGlobalclass/sippo_customstyle.dart';
-import '../../JopController/user_profile_controller/profile_user_controller.dart';
-import '../../sippo_custom_widget/ConditionalWidget.dart';
-import '../../sippo_custom_widget/error_messages_dialog_snackbar/network_connnection_lost_widget.dart';
-import '../../sippo_custom_widget/expandable_item_list_widget.dart';
-import '../../sippo_custom_widget/user_profile_header.dart';
+import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
+import 'package:jobspot/JopController/user_profile_controller/profile_user_controller.dart';
+import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
+import 'package:jobspot/sippo_custom_widget/error_messages_dialog_snackbar/network_connnection_lost_widget.dart';
+import 'package:jobspot/sippo_custom_widget/expandable_item_list_widget.dart';
+import 'package:jobspot/sippo_custom_widget/user_profile_header.dart';
 
 class SippoUserProfile extends StatefulWidget {
   const SippoUserProfile({Key? key}) : super(key: key);

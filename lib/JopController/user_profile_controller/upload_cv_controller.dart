@@ -2,10 +2,10 @@ import 'package:get/get.dart';
 import 'package:jobspot/JopController/user_profile_controller/profile_user_controller.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/profile_edit_model.dart';
 
-import '../../sippo_data/model/custom_file_model/custom_file_model.dart';
-import '../../sippo_data/user_repos/add_delete_cv_repo.dart';
-import '../../utils/file_picker_service.dart';
-import '../../utils/states.dart';
+import 'package:jobspot/sippo_data/model/custom_file_model/custom_file_model.dart';
+import 'package:jobspot/sippo_data/user_repos/add_delete_cv_repo.dart';
+import 'package:jobspot/utils/file_picker_service.dart';
+import 'package:jobspot/utils/states.dart';
 import '../dashboards_controller/user_dashboard_controller.dart';
 
 class UploadCvController extends GetxController {

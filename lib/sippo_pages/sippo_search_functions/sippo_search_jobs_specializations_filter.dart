@@ -8,9 +8,9 @@ import 'package:jobspot/JopController/sippo_search_controller/user_filter_search
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/rounded_border_radius_card_widget.dart';
 
-import '../../../JobGlobalclass/routes.dart';
-import '../../../JobGlobalclass/sippo_customstyle.dart';
-import '../../../sippo_custom_widget/widgets.dart';
+import 'package:jobspot/JobGlobalclass/routes.dart';
+import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
+import 'package:jobspot/sippo_custom_widget/widgets.dart';
 
 class SippoSearchJobsSpecializationsFilter extends StatefulWidget {
   const SippoSearchJobsSpecializationsFilter({super.key});

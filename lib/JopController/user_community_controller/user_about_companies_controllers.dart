@@ -5,7 +5,7 @@ import 'package:jobspot/JobServices/ConnectivityController/internet_connection_c
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
 import 'package:jobspot/sippo_data/user_repos/user_companies_abouts_repo.dart';
 
-import '../../utils/states.dart';
+import 'package:jobspot/utils/states.dart';
 
 class UserAboutCompaniesController extends GetxController {
   static UserAboutCompaniesController get instance => Get.find();

@@ -4,9 +4,9 @@ import 'package:get/get.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
 import 'package:jobspot/utils/states.dart';
 
-import '../../JobGlobalclass/jobstopcolor.dart';
-import '../../JobServices/shared_global_data_service.dart';
-import '../../sippo_data/user_repos/user_jobs_repo.dart';
+import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
+import 'package:jobspot/JobServices/shared_global_data_service.dart';
+import 'package:jobspot/sippo_data/user_repos/user_jobs_repo.dart';
 
 class JobCompanyDetailsController extends GetxController {
   static JobCompanyDetailsController get instance => Get.find();

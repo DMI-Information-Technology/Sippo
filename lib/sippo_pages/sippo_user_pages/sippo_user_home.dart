@@ -14,12 +14,12 @@ import 'package:jobspot/sippo_custom_widget/job_card_widget.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
 import 'package:jobspot/utils/states.dart';
 
-import '../../JopController/dashboards_controller/user_dashboard_controller.dart';
-import '../../JopController/home_controllers/user_home_controllers.dart';
-import '../../sippo_custom_widget/find_yor_jop_dashboard_cards.dart';
-import '../../sippo_custom_widget/save_job_card_widget.dart';
-import '../../sippo_custom_widget/widgets.dart';
-import '../../utils/helper.dart' as helper;
+import 'package:jobspot/JopController/dashboards_controller/user_dashboard_controller.dart';
+import 'package:jobspot/JopController/home_controllers/user_home_controllers.dart';
+import 'package:jobspot/sippo_custom_widget/find_yor_jop_dashboard_cards.dart';
+import 'package:jobspot/sippo_custom_widget/save_job_card_widget.dart';
+import 'package:jobspot/sippo_custom_widget/widgets.dart';
+import 'package:jobspot/utils/helper.dart' as helper;
 
 class SippoUserHome extends StatefulWidget {
   const SippoUserHome({Key? key}) : super(key: key);

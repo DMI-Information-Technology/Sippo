@@ -5,9 +5,9 @@ import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:lottie/lottie.dart';
-import '../../JobGlobalclass/routes.dart';
-import '../../JobGlobalclass/text_font_size.dart';
-import '../../JopController/onBoardingController/jobstop_onboarding_controller.dart';
+import 'package:jobspot/JobGlobalclass/routes.dart';
+import 'package:jobspot/JobGlobalclass/text_font_size.dart';
+import 'package:jobspot/JopController/onBoardingController/jobstop_onboarding_controller.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class SippoOnboarding extends StatefulWidget {

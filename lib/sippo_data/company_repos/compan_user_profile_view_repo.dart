@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:jobspot/core/api_endpoints.dart' as endpoints;
 
-import '../../JopController/HttpClientController/http_client_controller.dart';
-import '../../core/resource.dart';
-import '../../core/status_response_code_checker.dart';
+import 'package:jobspot/JopController/HttpClientController/http_client_controller.dart';
+import 'package:jobspot/core/resource.dart';
+import 'package:jobspot/core/status_response_code_checker.dart';
 import '../model/pagination_company_models/posts_pagination_model.dart';
 import '../model/profile_model/company_profile_resource_model/company_user_profile_view_model.dart';
 

@@ -4,7 +4,7 @@ import 'package:jobspot/sippo_data/model/auth_model/entity_model.dart';
 import 'package:jobspot/sippo_data/model/image_resource_model/image_resource_model.dart';
 import 'package:jobspot/utils/app_use.dart';
 
-import '../../../utils/helper.dart';
+import 'package:jobspot/utils/helper.dart';
 import '../profile_model/company_profile_resource_model/work_location_model.dart';
 import '../specializations_model/specializations_model.dart';
 

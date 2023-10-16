@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
 import 'package:jobspot/JopController/sippo_search_controller/general_search_users_view_controller.dart';
 
-import '../../utils/getx_text_editing_controller.dart';
-import '../../utils/states.dart';
+import 'package:jobspot/utils/getx_text_editing_controller.dart';
+import 'package:jobspot/utils/states.dart';
 import 'general_search_companies_controller.dart';
 import 'genral_search_jobs_controller.dart';
 

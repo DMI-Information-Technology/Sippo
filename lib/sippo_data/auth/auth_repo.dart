@@ -10,7 +10,7 @@ import "package:jobspot/sippo_data/model/auth_model/user_model.dart";
 import "package:jobspot/sippo_data/model/auth_model/user_register_type_response.dart";
 import "package:jobspot/utils/app_use.dart";
 
-import '../../core/status_response_code_checker.dart';
+import 'package:jobspot/core/status_response_code_checker.dart';
 import "../model/auth_model/auth_response.dart";
 import "../model/auth_model/company_model.dart";
 import "../model/auth_model/company_property_error_model.dart";

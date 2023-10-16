@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/cord_location.dart';
 
-import '../../JobGlobalclass/routes.dart';
+import 'package:jobspot/JobGlobalclass/routes.dart';
 
 class SignUpCompanyController extends GetxController {
   static SignUpCompanyController get instance => Get.find();

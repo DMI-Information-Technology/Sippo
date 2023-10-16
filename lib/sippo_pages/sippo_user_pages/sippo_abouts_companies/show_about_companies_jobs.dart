@@ -8,10 +8,10 @@ import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
 
-import '../../../JobGlobalclass/sippo_customstyle.dart';
-import '../../../JopController/user_community_controller/show_about_companies_jobs_controller.dart';
-import '../../../sippo_custom_widget/save_job_card_widget.dart';
-import '../../../utils/helper.dart';
+import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
+import 'package:jobspot/JopController/user_community_controller/show_about_companies_jobs_controller.dart';
+import 'package:jobspot/sippo_custom_widget/save_job_card_widget.dart';
+import 'package:jobspot/utils/helper.dart';
 
 class ShowAboutCompaniesJobsList extends StatefulWidget {
   const ShowAboutCompaniesJobsList({super.key});

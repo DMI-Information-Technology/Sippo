@@ -4,9 +4,9 @@ import 'package:get/get.dart';
 import 'package:jobspot/JopController/user_profile_controller/profile_user_controller.dart';
 import 'package:jobspot/utils/states.dart';
 
-import '../../core/Refresh.dart';
-import '../../sippo_data/model/profile_model/profile_resource_model/skills_model.dart';
-import '../../sippo_data/user_repos/skills_repo.dart';
+import 'package:jobspot/core/Refresh.dart';
+import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/skills_model.dart';
+import 'package:jobspot/sippo_data/user_repos/skills_repo.dart';
 
 class EditAddSkillsController extends GetxController {
   static EditAddSkillsController get instance => Get.find();

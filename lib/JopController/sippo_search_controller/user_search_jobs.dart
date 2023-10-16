@@ -5,8 +5,8 @@ import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_
 import 'package:jobspot/sippo_data/user_repos/user_jobs_repo.dart';
 import 'package:jobspot/utils/getx_text_editing_controller.dart';
 
-import '../../sippo_data/company_repos/company_job_repo.dart';
-import '../../utils/states.dart';
+import 'package:jobspot/sippo_data/company_repos/company_job_repo.dart';
+import 'package:jobspot/utils/states.dart';
 import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
 
 

@@ -9,9 +9,9 @@ import 'package:jobspot/sippo_data/update_image_profile_repo/update_image_profil
 import 'package:jobspot/sippo_data/user_repos/edit_profile_repo.dart';
 import 'package:jobspot/utils/states.dart';
 
-import '../../custom_app_controller/switch_status_controller.dart';
-import '../../sippo_data/model/custom_file_model/custom_file_model.dart';
-import '../../utils/getx_text_editing_controller.dart';
+import 'package:jobspot/custom_app_controller/switch_status_controller.dart';
+import 'package:jobspot/sippo_data/model/custom_file_model/custom_file_model.dart';
+import 'package:jobspot/utils/getx_text_editing_controller.dart';
 
 class EditProfileInfoController extends GetxController {
   final _profileImagePath = "".obs;

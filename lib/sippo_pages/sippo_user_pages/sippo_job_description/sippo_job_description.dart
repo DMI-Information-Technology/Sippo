@@ -13,11 +13,11 @@ import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_abouts_companies/show_about_companies_details.dart';
 import 'package:jobspot/utils/app_use.dart';
 
-import '../../../JobGlobalclass/global_storage.dart';
-import '../../../JobGlobalclass/routes.dart';
-import '../../../JopController/JobDescriptionController/job_description_controller.dart';
-import '../../../sippo_custom_widget/list_item_text.dart';
-import '../../../utils/helper.dart';
+import 'package:jobspot/JobGlobalclass/global_storage.dart';
+import 'package:jobspot/JobGlobalclass/routes.dart';
+import 'package:jobspot/JopController/JobDescriptionController/job_description_controller.dart';
+import 'package:jobspot/sippo_custom_widget/list_item_text.dart';
+import 'package:jobspot/utils/helper.dart';
 
 class SippoJobDescription extends StatefulWidget {
   const SippoJobDescription({Key? key}) : super(key: key);
@@ -100,7 +100,8 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
               coverHeight: context.height / 4.5,
               profileImageSize: context.height / 8,
               backgroundImageColor: Jobstopcolor.white,
-              imageUrl: SippoJobDescription.imgUrl,
+              imageUrl: _controller
+                  .jobDetailsState.jopDetails.company?.profileImage?.url,
               // onLeadingTap: () => Get.back(),
               actions: [
                 IconButton(

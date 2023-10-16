@@ -8,8 +8,8 @@ import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/JopController/AuthenticationController/specialization_list_controller.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 
-import '../../JobGlobalclass/routes.dart';
-import '../../JopController/AuthenticationController/sippo_signup_company_controller.dart';
+import 'package:jobspot/JobGlobalclass/routes.dart';
+import 'package:jobspot/JopController/AuthenticationController/sippo_signup_company_controller.dart';
 
 class CompanySignUpSpecializations extends StatefulWidget {
   const CompanySignUpSpecializations({super.key});

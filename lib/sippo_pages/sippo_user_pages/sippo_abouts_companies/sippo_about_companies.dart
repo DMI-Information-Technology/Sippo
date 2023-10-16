@@ -11,13 +11,13 @@ import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_abouts_companies/show
 import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_abouts_companies/show_about_companies_jobs.dart';
 import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_abouts_companies/show_about_companies_posts.dart';
 
-import '../../../JobGlobalclass/global_storage.dart';
-import '../../../JobGlobalclass/jobstopcolor.dart';
-import '../../../JobGlobalclass/jobstopfontstyle.dart';
-import '../../../JobGlobalclass/text_font_size.dart';
-import '../../../JopController/user_community_controller/user_about_companies_controllers.dart';
-import '../../../sippo_custom_widget/top_job_details_header.dart';
-import '../../../utils/app_use.dart';
+import 'package:jobspot/JobGlobalclass/global_storage.dart';
+import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
+import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
+import 'package:jobspot/JobGlobalclass/text_font_size.dart';
+import 'package:jobspot/JopController/user_community_controller/user_about_companies_controllers.dart';
+import 'package:jobspot/sippo_custom_widget/top_job_details_header.dart';
+import 'package:jobspot/utils/app_use.dart';
 import '../sippo_job_description/sippo_job_description.dart';
 
 class SippoAboutCompanies extends StatefulWidget {

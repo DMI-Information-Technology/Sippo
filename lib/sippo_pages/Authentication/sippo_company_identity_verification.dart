@@ -6,12 +6,12 @@ import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
 import 'package:jobspot/sippo_custom_widget/error_messages_dialog_snackbar/network_connnection_lost_widget.dart';
 import 'package:jobspot/sippo_custom_widget/loading_view_widgets/loading_scaffold.dart';
 
-import '../../JobGlobalclass/jobstopcolor.dart';
-import '../../JobGlobalclass/jobstopfontstyle.dart';
-import '../../JobGlobalclass/jobstopimges.dart';
-import '../../JopController/AuthenticationController/sippo_identity_verification_controller.dart';
-import '../../sippo_custom_widget/body_widget.dart';
-import '../../sippo_custom_widget/widgets.dart';
+import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
+import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
+import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
+import 'package:jobspot/JopController/AuthenticationController/sippo_identity_verification_controller.dart';
+import 'package:jobspot/sippo_custom_widget/body_widget.dart';
+import 'package:jobspot/sippo_custom_widget/widgets.dart';
 
 class SippoCompanyIdentityVerification extends StatelessWidget {
   SippoCompanyIdentityVerification({super.key});

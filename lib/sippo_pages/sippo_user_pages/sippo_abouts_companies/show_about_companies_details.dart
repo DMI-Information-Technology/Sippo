@@ -4,11 +4,11 @@ import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
 
-import '../../../JobGlobalclass/jobstopcolor.dart';
-import '../../../JobGlobalclass/jobstopfontstyle.dart';
-import '../../../JobGlobalclass/jobstopimges.dart';
-import '../../../JobGlobalclass/sippo_customstyle.dart';
-import '../../../JobGlobalclass/text_font_size.dart';
+import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
+import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
+import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
+import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
+import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 
 class ShowAboutCompaniesDetails extends StatelessWidget {
   const ShowAboutCompaniesDetails({super.key, this.company})

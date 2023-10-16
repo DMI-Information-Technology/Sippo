@@ -4,11 +4,11 @@ import 'package:get/get.dart';
 import 'package:jobspot/JopController/AuthenticationController/sippo_auth_controller.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_model.dart';
 
-import '../../JobGlobalclass/jobstopcolor.dart';
-import '../../JobGlobalclass/jobstopimges.dart';
-import '../../JobGlobalclass/routes.dart';
-import '../../sippo_custom_widget/widgets.dart';
-import '../../utils/states.dart';
+import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
+import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
+import 'package:jobspot/JobGlobalclass/routes.dart';
+import 'package:jobspot/sippo_custom_widget/widgets.dart';
+import 'package:jobspot/utils/states.dart';
 import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
 
 

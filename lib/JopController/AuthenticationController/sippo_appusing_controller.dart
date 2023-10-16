@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 
-import '../../JobGlobalclass/jobstopimges.dart';
-import '../../JobGlobalclass/routes.dart';
-import '../../sippo_custom_widget/widgets.dart';
+import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
+import 'package:jobspot/JobGlobalclass/routes.dart';
+import 'package:jobspot/sippo_custom_widget/widgets.dart';
 
 class AppUsingController extends GetxController {
   final _findEmployee = false.obs;

@@ -4,9 +4,9 @@ import 'package:jobspot/JobGlobalclass/global_storage.dart';
 import 'package:jobspot/core/api_endpoints.dart' as endpoints;
 import 'package:jobspot/utils/app_use.dart';
 
-import '../../JopController/HttpClientController/http_client_controller.dart';
-import '../../core/resource.dart';
-import '../../core/status_response_code_checker.dart';
+import 'package:jobspot/JopController/HttpClientController/http_client_controller.dart';
+import 'package:jobspot/core/resource.dart';
+import 'package:jobspot/core/status_response_code_checker.dart';
 import '../model/custom_file_model/custom_file_model.dart';
 import '../model/image_resource_model/image_resource_model.dart';
 import '../model/image_resource_model/validate_property_image_resource_model.dart';

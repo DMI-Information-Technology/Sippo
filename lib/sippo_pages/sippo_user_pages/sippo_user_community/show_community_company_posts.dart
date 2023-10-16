@@ -7,10 +7,10 @@ import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 
-import '../../../JobGlobalclass/sippo_customstyle.dart';
-import '../../../JopController/user_community_controller/user_show_community_posts_controller.dart';
-import '../../../sippo_custom_widget/company_post_widget.dart';
-import '../../../sippo_data/model/profile_model/company_profile_resource_model/company_post_model.dart';
+import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
+import 'package:jobspot/JopController/user_community_controller/user_show_community_posts_controller.dart';
+import 'package:jobspot/sippo_custom_widget/company_post_widget.dart';
+import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_post_model.dart';
 
 class ShowCommunityCompanyPostsList extends StatefulWidget {
   const ShowCommunityCompanyPostsList({super.key});

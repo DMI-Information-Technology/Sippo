@@ -8,13 +8,13 @@ import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_job_description/sippo_job_description.dart';
-import '../../JobGlobalclass/sippo_customstyle.dart';
+import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
 
-import '../../JopController/user_core_functions/apply_jobs_controllers.dart';
-import '../../sippo_custom_widget/ConditionalWidget.dart';
-import '../../sippo_custom_widget/error_messages_dialog_snackbar/network_connnection_lost_widget.dart';
-import '../../sippo_custom_widget/top_job_details_header.dart';
+import 'package:jobspot/JopController/user_core_functions/apply_jobs_controllers.dart';
+import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
+import 'package:jobspot/sippo_custom_widget/error_messages_dialog_snackbar/network_connnection_lost_widget.dart';
+import 'package:jobspot/sippo_custom_widget/top_job_details_header.dart';
 
 class JobSuccess extends StatefulWidget {
   const JobSuccess({Key? key}) : super(key: key);

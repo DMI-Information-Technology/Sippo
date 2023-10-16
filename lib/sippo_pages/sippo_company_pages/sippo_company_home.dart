@@ -9,11 +9,11 @@ import 'package:jobspot/JopController/dashboards_controller/company_dashboard_co
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/save_job_card_widget.dart';
 
-import '../../JobGlobalclass/sippo_customstyle.dart';
-import '../../JobGlobalclass/text_font_size.dart';
-import '../../sippo_custom_widget/job_card_widget.dart';
-import '../../sippo_custom_widget/widgets.dart';
-import '../../sippo_data/model/profile_model/profile_widget_model/jobstop_jobdetailspost.dart';
+import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
+import 'package:jobspot/JobGlobalclass/text_font_size.dart';
+import 'package:jobspot/sippo_custom_widget/job_card_widget.dart';
+import 'package:jobspot/sippo_custom_widget/widgets.dart';
+import 'package:jobspot/sippo_data/model/profile_model/profile_widget_model/jobstop_jobdetailspost.dart';
 
 class SippoCompanyHomePage extends StatefulWidget {
   const SippoCompanyHomePage({Key? key}) : super(key: key);

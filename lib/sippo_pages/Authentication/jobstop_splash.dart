@@ -3,10 +3,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 
-import '../../JobGlobalclass/global_storage.dart';
-import '../../JobGlobalclass/jobstopcolor.dart';
-import '../../JobGlobalclass/routes.dart';
-import '../../utils/app_use.dart';
+import 'package:jobspot/JobGlobalclass/global_storage.dart';
+import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
+import 'package:jobspot/JobGlobalclass/routes.dart';
+import 'package:jobspot/utils/app_use.dart';
 
 class JobstopSplash extends StatefulWidget {
   const JobstopSplash({Key? key}) : super(key: key);

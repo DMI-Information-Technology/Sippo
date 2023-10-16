@@ -8,14 +8,14 @@ import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/sippo_custom_widget/expandable_item_list_widget.dart';
 import 'package:readmore/readmore.dart';
 
-import '../../JobGlobalclass/jobstopcolor.dart';
-import '../../JobGlobalclass/sippo_customstyle.dart';
-import '../../JopController/company_profile_controller/profile_company_controller.dart';
-import '../../sippo_custom_widget/ConditionalWidget.dart';
-import '../../sippo_custom_widget/add_info_profile_card.dart';
-import '../../sippo_custom_widget/body_widget.dart';
-import '../../sippo_custom_widget/profile_completion_widget.dart';
-import '../../sippo_custom_widget/user_profile_header.dart';
+import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
+import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
+import 'package:jobspot/JopController/company_profile_controller/profile_company_controller.dart';
+import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
+import 'package:jobspot/sippo_custom_widget/add_info_profile_card.dart';
+import 'package:jobspot/sippo_custom_widget/body_widget.dart';
+import 'package:jobspot/sippo_custom_widget/profile_completion_widget.dart';
+import 'package:jobspot/sippo_custom_widget/user_profile_header.dart';
 
 class SippoCompanyProfile extends StatefulWidget {
   const SippoCompanyProfile({Key? key}) : super(key: key);

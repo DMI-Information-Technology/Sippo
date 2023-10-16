@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 
-import '../../JobGlobalclass/jobstopfontstyle.dart';
-import '../../JobGlobalclass/text_font_size.dart';
+import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
+import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 
 class NetworkStatusNonWidget extends StatelessWidget {
   const NetworkStatusNonWidget(

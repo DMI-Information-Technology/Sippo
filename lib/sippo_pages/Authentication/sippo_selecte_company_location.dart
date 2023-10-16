@@ -10,12 +10,12 @@ import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 
-import '../../JobGlobalclass/jobstopimges.dart';
-import '../../JobGlobalclass/routes.dart';
-import '../../JopController/AuthenticationController/sippo_signup_company_controller.dart';
-import '../../custom_app_controller/google_map_view_controller.dart';
-import '../../sippo_custom_widget/custom_drop_down_button.dart';
-import '../../sippo_custom_widget/google_map_view_widget.dart';
+import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
+import 'package:jobspot/JobGlobalclass/routes.dart';
+import 'package:jobspot/JopController/AuthenticationController/sippo_signup_company_controller.dart';
+import 'package:jobspot/custom_app_controller/google_map_view_controller.dart';
+import 'package:jobspot/sippo_custom_widget/custom_drop_down_button.dart';
+import 'package:jobspot/sippo_custom_widget/google_map_view_widget.dart';
 
 class SippoLocationCompanySelector extends StatefulWidget {
   const SippoLocationCompanySelector({super.key});

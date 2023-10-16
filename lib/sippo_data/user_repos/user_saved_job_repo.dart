@@ -3,9 +3,9 @@ import 'dart:convert';
 import 'package:jobspot/core/api_endpoints.dart' as endpoints;
 import 'package:jobspot/sippo_data/model/status_message_model/status_message_model.dart';
 
-import '../../JopController/HttpClientController/http_client_controller.dart';
-import '../../core/resource.dart';
-import '../../core/status_response_code_checker.dart';
+import 'package:jobspot/JopController/HttpClientController/http_client_controller.dart';
+import 'package:jobspot/core/resource.dart';
+import 'package:jobspot/core/status_response_code_checker.dart';
 import '../model/profile_model/company_profile_resource_model/company_job_model.dart';
 
 class SavedJobsRepo {

@@ -5,7 +5,7 @@ import 'package:jobspot/core/header_api.dart';
 import 'package:jobspot/core/resource.dart';
 import 'package:jobspot/core/status_response_code_checker.dart';
 
-import '../../JopController/HttpClientController/http_client_controller.dart';
+import 'package:jobspot/JopController/HttpClientController/http_client_controller.dart';
 import '../model/profile_model/profile_resource_model/language_model.dart';
 import '../model/profile_model/profile_resource_model/validate_property_language.dart';
 

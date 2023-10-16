@@ -4,13 +4,13 @@ import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 
-import '../../JobGlobalclass/jobstopprefname.dart';
-import '../../JobGlobalclass/routes.dart';
-import '../../JopController/AuthenticationController/sippo_company_login_controller.dart';
-import '../../sippo_custom_widget/ConditionalWidget.dart';
-import '../../sippo_custom_widget/loading_view_widgets/overly_loading.dart';
-import '../../sippo_custom_widget/success_message_widget.dart';
-import '../../sippo_custom_widget/widgets.dart';
+import 'package:jobspot/JobGlobalclass/jobstopprefname.dart';
+import 'package:jobspot/JobGlobalclass/routes.dart';
+import 'package:jobspot/JopController/AuthenticationController/sippo_company_login_controller.dart';
+import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
+import 'package:jobspot/sippo_custom_widget/loading_view_widgets/overly_loading.dart';
+import 'package:jobspot/sippo_custom_widget/success_message_widget.dart';
+import 'package:jobspot/sippo_custom_widget/widgets.dart';
 
 class SippoCompanyLogin extends StatelessWidget {
   const SippoCompanyLogin({Key? key}) : super(key: key);

@@ -1,4 +1,4 @@
-import '../../../../utils/helper.dart';
+import 'package:jobspot/utils/helper.dart';
 
 class EducationModel {
   EducationModel({

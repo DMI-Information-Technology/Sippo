@@ -6,10 +6,10 @@ import 'package:jobspot/sippo_data/model/specializations_model/specializations_m
 import 'package:jobspot/utils/states.dart';
 import 'package:jobspot/utils/string_formtter.dart';
 
-import '../../sippo_data/company_repos/company_job_repo.dart';
-import '../../sippo_data/model/auth_model/company_response_details.dart';
-import '../../sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
-import '../../sippo_data/model/profile_model/company_profile_resource_model/work_location_model.dart';
+import 'package:jobspot/sippo_data/company_repos/company_job_repo.dart';
+import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
+import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
+import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/work_location_model.dart';
 import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
 
 import '../dashboards_controller/company_dashboard_controller.dart';

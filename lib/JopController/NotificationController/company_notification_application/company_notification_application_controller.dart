@@ -4,8 +4,8 @@ import 'package:jobspot/JobServices/ConnectivityController/internet_connection_c
 import 'package:jobspot/JopController/dashboards_controller/company_dashboard_controller.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
 
-import '../../../custom_app_controller/switch_status_controller.dart';
-import '../../../utils/states.dart';
+import 'package:jobspot/custom_app_controller/switch_status_controller.dart';
+import 'package:jobspot/utils/states.dart';
 
 class CompanyNotificationApplicationController extends GetxController {
   static CompanyNotificationApplicationController get instance => Get.find();

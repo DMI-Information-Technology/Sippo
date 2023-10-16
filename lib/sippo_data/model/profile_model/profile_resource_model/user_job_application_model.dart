@@ -1,6 +1,6 @@
 import 'package:http/src/multipart_file.dart';
+import 'package:jobspot/sippo_data/model/custom_file_model/custom_file_model.dart';
 
-import '../../custom_file_model/custom_file_model.dart';
 
 class UserSendApplicationModel {
   final CustomFileModel? cv;

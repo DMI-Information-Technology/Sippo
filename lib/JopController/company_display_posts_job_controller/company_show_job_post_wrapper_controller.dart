@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
 
-import '../../utils/states.dart';
+import 'package:jobspot/utils/states.dart';
 import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
 
 import '../dashboards_controller/company_dashboard_controller.dart';

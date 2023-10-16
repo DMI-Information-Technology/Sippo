@@ -11,8 +11,8 @@ import 'package:jobspot/utils/getx_text_editing_controller.dart';
 import 'package:jobspot/utils/image_picker_service.dart';
 import 'package:jobspot/utils/states.dart';
 
-import '../../sippo_data/model/auth_model/company_response_details.dart';
-import '../../sippo_data/model/image_resource_model/image_resource_model.dart';
+import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
+import 'package:jobspot/sippo_data/model/image_resource_model/image_resource_model.dart';
 
 class CompanyEditAddPostController extends GetxController {
   final CompanyPostState newPostState = CompanyPostState();

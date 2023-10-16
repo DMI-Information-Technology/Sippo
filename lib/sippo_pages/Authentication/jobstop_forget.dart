@@ -4,9 +4,9 @@ import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
-import '../../JobGlobalclass/jobstopprefname.dart';
-import '../../sippo_custom_widget/widgets.dart';
-import '../../sippo_themes/themecontroller.dart';
+import 'package:jobspot/JobGlobalclass/jobstopprefname.dart';
+import 'package:jobspot/sippo_custom_widget/widgets.dart';
+import 'package:jobspot/sippo_themes/themecontroller.dart';
 
 class JobstopForget extends StatefulWidget {
   const JobstopForget({Key? key}) : super(key: key);

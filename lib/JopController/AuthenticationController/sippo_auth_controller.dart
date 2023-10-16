@@ -5,11 +5,11 @@ import 'package:jobspot/sippo_data/model/auth_model/entity_model.dart';
 import 'package:jobspot/sippo_data/model/auth_model/user_model.dart';
 import 'package:jobspot/utils/app_use.dart';
 
-import '../../sippo_data/auth/auth_repo.dart';
-import '../../sippo_data/model/auth_model/auth_response.dart';
-import '../../sippo_data/model/auth_model/company_model.dart';
-import '../../sippo_data/model/auth_model/user_register_type_response.dart';
-import '../../utils/states.dart';
+import 'package:jobspot/sippo_data/auth/auth_repo.dart';
+import 'package:jobspot/sippo_data/model/auth_model/auth_response.dart';
+import 'package:jobspot/sippo_data/model/auth_model/company_model.dart';
+import 'package:jobspot/sippo_data/model/auth_model/user_register_type_response.dart';
+import 'package:jobspot/utils/states.dart';
 import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
 
 class AuthController extends GetxController {

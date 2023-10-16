@@ -5,10 +5,10 @@ import 'package:jobspot/sippo_data/model/custom_file_model/custom_file_model.dar
 import 'package:jobspot/sippo_data/model/image_resource_model/image_resource_model.dart';
 import 'package:jobspot/sippo_data/model/image_resource_model/validate_property_image_resource_model.dart';
 
-import '../../JopController/HttpClientController/http_client_controller.dart';
-import '../../core/api_endpoints.dart' as endpoints;
-import '../../core/resource.dart';
-import '../../core/status_response_code_checker.dart';
+import 'package:jobspot/JopController/HttpClientController/http_client_controller.dart';
+import 'package:jobspot/core/api_endpoints.dart' as endpoints;
+import 'package:jobspot/core/resource.dart';
+import 'package:jobspot/core/status_response_code_checker.dart';
 import '../model/profile_model/company_profile_resource_model/validate_property_company_profile_details_model.dart';
 
 class EditCompanyProfileInfoRepo {
