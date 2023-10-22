@@ -7,8 +7,8 @@ class SkillsModel {
     skills = json['skills'] != null ? json['skills'].cast<String>() : [];
   }
 
-  SkillsModel.fromViewJson(Map<String, dynamic> json) {
-    final allSkills = json['skills'];
+  SkillsModel.fromViewJson(Map<String, dynamic>? json) {
+    final allSkills = json?['skills'];
     if (allSkills != null && allSkills is List) {
       skills = allSkills.map((e) => e['skill'].toString()).toList();
     }

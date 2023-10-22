@@ -9,17 +9,15 @@ import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/JobServices/shared_global_data_service.dart';
-import 'package:jobspot/sippo_custom_widget/body_widget.dart';
-import 'package:jobspot/sippo_custom_widget/job_card_widget.dart';
-import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
-import 'package:jobspot/utils/states.dart';
-
 import 'package:jobspot/JopController/dashboards_controller/user_dashboard_controller.dart';
 import 'package:jobspot/JopController/home_controllers/user_home_controllers.dart';
+import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/find_yor_jop_dashboard_cards.dart';
-import 'package:jobspot/sippo_custom_widget/save_job_card_widget.dart';
+import 'package:jobspot/sippo_custom_widget/job_home_card_widget.dart';
+import 'package:jobspot/sippo_custom_widget/network_bordered_circular_image_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/utils/helper.dart' as helper;
+import 'package:jobspot/utils/states.dart';
 
 class SippoUserHome extends StatefulWidget {
   const SippoUserHome({Key? key}) : super(key: key);
@@ -71,15 +69,38 @@ class _SippoUserHomeState extends State<SippoUserHome> {
               SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
               Padding(
                 padding: EdgeInsets.symmetric(
-                    horizontal: context.fromWidth(CustomStyle.s)),
-                child: FindYorJopDashBoardCards(
-                  firstCardTitle: "44.5k",
-                  firstCardSubtitle: "Remote Job",
-                  secondCardTitle: "66.8k",
-                  secondCardSubtitle: "Full Time",
-                  thirdCardTitle: "38.9k",
-                  thirdCardSubtitle: "Part Time",
+                  horizontal: context.fromWidth(CustomStyle.s),
                 ),
+                child: Obx(() {
+                  final jobStatistic = _controller.jobsHomeState.jobStatistic;
+                  return FindYorJopDashBoardCards(
+                    jobStatistics: jobStatistic,
+                    firstCardSubtitle: "Remote".tr,
+                    secondCardSubtitle: "Full Time".tr,
+                    thirdCardSubtitle: "Part Time".tr,
+                    onFirstTap: () {
+                      SharedGlobalDataService.instance.jobStatistics =
+                          jobStatistic.remoteJobs;
+                      Get.toNamed(SippoRoutes.sippoJobFilterSearch)?.then((_) {
+                        SharedGlobalDataService.instance.jobStatistics = null;
+                      });
+                    },
+                    onSecondTap: () {
+                      SharedGlobalDataService.instance.jobStatistics =
+                          jobStatistic.fullTimeJobs;
+                      Get.toNamed(SippoRoutes.sippoJobFilterSearch)?.then((_) {
+                        SharedGlobalDataService.instance.jobStatistics = null;
+                      });
+                    },
+                    onThirdTap: () {
+                      SharedGlobalDataService.instance.jobStatistics =
+                          jobStatistic.partTimeJobs;
+                      Get.toNamed(SippoRoutes.sippoJobFilterSearch)?.then((_) {
+                        SharedGlobalDataService.instance.jobStatistics = null;
+                      });
+                    },
+                  );
+                }),
               ),
               SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
               Padding(
@@ -108,12 +129,9 @@ class _SippoUserHomeState extends State<SippoUserHome> {
           future: Future.value(_controller.jobsHomeState.jobStates),
           builder: (context, snapshot) {
             final states = snapshot.data;
-            final data = _controller.jobsHomeState.jobsList;
             if (states == null) return const SizedBox.shrink();
-            if (states.isError && data.isEmpty)
-              return _buildFieldJobsMessage(context, states);
-            if (states.isSuccess || data.isNotEmpty)
-              return _buildJobCardList(context, data);
+            if (states.isError) return _buildFieldJobsMessage(context, states);
+            if (states.isSuccess) return _buildJobCardList(context);
             if (states.isLoading)
               return const Center(child: CircularProgressIndicator());
             return const SizedBox.shrink();
@@ -123,7 +141,6 @@ class _SippoUserHomeState extends State<SippoUserHome> {
 
   SingleChildScrollView _buildJobCardList(
     BuildContext context,
-    List<CompanyJobModel> data,
   ) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -136,44 +153,43 @@ class _SippoUserHomeState extends State<SippoUserHome> {
           children: [
             ...List.generate(_controller.jobsHomeState.jobsList.length,
                 (index) {
-              final item = _controller.jobsHomeState.jobsList[index];
-              return Obx(() => JobHomeCard(
-                    padding: EdgeInsets.only(
-                      right:
-                          index == _controller.jobsHomeState.jobsList.length - 1
-                              ? 0.0
-                              : context.fromWidth(CustomStyle.paddingValue),
-                    ),
-                    width: context.width / 1.3,
-                    jobDetailsPost: _controller.jobsHomeState.jobsList[index],
-                    onActionTap: () {
-                      _controller.jobsHomeState
-                          .onToggleSavedJobsSubmitted(item.id);
-                    },
-                    imagePath:
-                        'https://scontent.fmji4-1.fna.fbcdn.net/v/t39.30808-6/283989525_172048385265472_5677841309342210083_n'
-                        '.jpg?_nc_cat=107&ccb=1-7&_nc_sid=a2f6c7&_nc_ohc=NqB7-Psc_aIAX_7Ivx0&_nc_ht=scontent.fmji4-1.fna&oh'
-                        '=00_AfB7PaSwlVJwrtt003d9CMK5Bxy6ubHVMV9iWwxxol30Bg&oe=650B7982',
-                    onImageProfileTap: () async {
-                      SharedGlobalDataService.onCompanyTap(item.company);
-                    },
-                    onCardTap: () async {
-                      SharedGlobalDataService.onJobTap(item);
-                    },
-                    onApplyTap: () async {
-                      SharedGlobalDataService.onJobTap(item);
-                    },
-                    isEditable: false,
-                    onAddressTextTap: (location) async {
-                      helper.lunchMapWithLocation(
-                        location.dLatitude,
-                        location.dLongitude,
-                      );
-                    },
-                  ));
+              return Obx(() {
+                final jobList = _controller.jobsHomeState.jobsList;
+                final item = jobList[index];
+                return JobHomeCard(
+                  padding: EdgeInsets.only(
+                    right: index == jobList.length - 1
+                        ? 0.0
+                        : context.fromWidth(CustomStyle.paddingValue),
+                  ),
+                  width: context.width / 1.3,
+                  jobDetailsPost: item,
+                  onActionTap: () {
+                    _controller.jobsHomeState
+                        .onToggleSavedJobsSubmitted(item.id);
+                  },
+                  imagePath: item.company?.profileImage?.url ?? "",
+                  onImageProfileTap: () {
+                    SharedGlobalDataService.onCompanyTap(item.company);
+                  },
+                  onCardTap: () {
+                    SharedGlobalDataService.onJobTap(item);
+                  },
+                  onApplyTap: () {
+                    SharedGlobalDataService.onJobTap(item);
+                  },
+                  isEditable: false,
+                  onAddressTextTap: (location) async {
+                    helper.lunchMapWithLocation(
+                      location.dLatitude,
+                      location.dLongitude,
+                    );
+                  },
+                );
+              });
             }),
             InkWell(
-              onTap: () {},
+              onTap: () => Get.toNamed(SippoRoutes.sippoJobFilterSearch),
               child: Padding(
                 padding: EdgeInsets.all(
                   context.fromWidth(CustomStyle.xxl),

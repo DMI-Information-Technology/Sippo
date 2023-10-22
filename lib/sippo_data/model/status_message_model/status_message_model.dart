@@ -4,9 +4,8 @@ class StatusMessageModel {
     this.message,
   });
 
-
- final String? status;
-final  String? message;
+  final String? status;
+  final String? message;
 
   StatusMessageModel copyWith({
     String? status,
@@ -24,10 +23,10 @@ final  String? message;
     return map;
   }
 
-  factory StatusMessageModel.fromJson(Map<String, dynamic> json) {
+  factory StatusMessageModel.fromJson(Map<String, dynamic>? json) {
     return StatusMessageModel(
-      status: json["status"],
-      message: json["message"],
+      status: json?["status"],
+      message: json?["message"],
     );
   }
 

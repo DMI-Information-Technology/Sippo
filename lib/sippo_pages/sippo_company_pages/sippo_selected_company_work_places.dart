@@ -22,10 +22,6 @@ class SippoSelectCompanyWorkPlaces extends StatefulWidget {
 class _SippoSelectCompanyWorkPlacesState
     extends State<SippoSelectCompanyWorkPlaces> {
   final _controller = SelectedCompanyWorkPlaceController.instance;
-  final tempData = List.generate(
-    12,
-    (index) => 'Location Address ${index + 1}',
-  );
 
   @override
   Widget build(BuildContext context) {
@@ -84,19 +80,21 @@ class _SippoSelectCompanyWorkPlacesState
                 ),
                 textAlign: TextAlign.start,
               ),
-              CustomDropdownButton(
-                textHint: 'Select Company Work Place',
-                labelList: tempData,
-                values: tempData,
-                fillColor: Colors.white,
-                onItemSelected: (value) async {
-                  _controller.selectedWorkPlaceState
-                      .selectedLocationAddressName = value ?? "";
-                  print(value);
-                },
-                setInitialValue: false,
-                initialValue: 'Tripoli, Ain-zara',
-              ),
+              Obx(() => CustomDropdownButton(
+                    textHint: 'Select Company Work Place',
+                    labelList: _controller
+                        .selectedWorkPlaceState.locationsAddressNameList,
+                    values:
+                        _controller.selectedWorkPlaceState.locationsAddressList,
+                    fillColor: Colors.white,
+                    onItemSelected: (value) async {
+                      if (value == null) return;
+                      _controller.selectedWorkPlaceState
+                          .selectedLocationAddress = value;
+                      print(value);
+                    },
+                    setInitialValue: false,
+                  )),
               SizedBox(
                 height: context.fromHeight(CustomStyle.spaceBetween),
               ),
@@ -152,7 +150,7 @@ class _SippoSelectCompanyWorkPlacesState
   Widget _locationAddressNameTextBuilder(context) {
     return Obx(() {
       final addressName =
-          _controller.selectedWorkPlaceState.selectedLocationAddressName;
+          _controller.selectedWorkPlaceState.selectedLocationAddress.name ?? '';
       return addressName.isNotEmpty
           ? Text(
               addressName,
@@ -165,7 +163,7 @@ class _SippoSelectCompanyWorkPlacesState
   Widget _coordinatesTextBuilder(context, widget) {
     return Obx(() {
       final addressName =
-          _controller.selectedWorkPlaceState.selectedLocationAddressName;
+          _controller.selectedWorkPlaceState.selectedLocationAddress.name ?? '';
       final markerPlace = _controller.googleMapViewController.markerPlace;
       return addressName.isNotEmpty
           ? Text(

@@ -1,13 +1,5 @@
 import 'package:jobspot/utils/helper.dart';
 
-/// id : 0
-/// job_title : "string"
-/// company : "string"
-/// start_date : "string"
-/// end_date : "string"
-/// is_current_job : true
-/// description : "string"
-
 class WorkExperiencesModel {
   WorkExperiencesModel({
     this.id,
@@ -19,15 +11,15 @@ class WorkExperiencesModel {
     this.description,
   });
 
-  WorkExperiencesModel.fromJson(Map<String, dynamic> json) {
+  WorkExperiencesModel.fromJson(Map<String, dynamic>? json) {
     print("WorkExperiencesModel.fromJson: $json");
-    id = json['id'];
-    jobTitle = json['job_title'];
-    company = json['company'];
-    startDate = json['start_date'];
-    endDate = json['end_date'];
-    isCurrentJob = json['is_current_job'];
-    description = json['description'];
+    id = json?['id'];
+    jobTitle = json?['job_title'];
+    company = json?['company'];
+    startDate = json?['start_date'];
+    endDate = json?['end_date'];
+    isCurrentJob = json?['is_current_job'];
+    description = json?['description'];
   }
 
   int? id;

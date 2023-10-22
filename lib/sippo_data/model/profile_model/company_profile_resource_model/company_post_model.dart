@@ -24,16 +24,16 @@ class CompanyDetailsPostModel extends BaseCompanyPost {
     this.company,
   });
 
-  factory CompanyDetailsPostModel.fromJson(Map<String, dynamic> json) {
+  factory CompanyDetailsPostModel.fromJson(Map<String, dynamic>? json) {
     return CompanyDetailsPostModel(
-        id: json["id"],
-        title: json["title"],
-        body: json["body"],
-        image: json['image'] != null
-            ? ImageResourceModel.fromJson(json['image'])
+        id: json?["id"],
+        title: json?["title"],
+        body: json?["body"],
+        image: json?['image'] != null
+            ? ImageResourceModel.fromJson(json?['image'])
             : null,
-        company: json['company'] != null
-            ? CompanyDetailsModel.fromJson(json['company'])
+        company: json?['company'] != null
+            ? CompanyDetailsModel.fromJson(json?['company'])
             : null);
   }
 

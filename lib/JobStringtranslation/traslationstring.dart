@@ -175,7 +175,7 @@ class Apptranslation extends Translations {
           'experienceLevels': "Experience Levels",
           'employmentType': "Employment Type",
           'Specializations': "Specializations",
-
+          'k': "k",
         },
         'ar_ab': {
           'Email': "Email",
@@ -237,6 +237,7 @@ class Apptranslation extends Translations {
           'follow': "Follow",
           'followed': "Followed",
           'visit_website': "Visit Website",
+          'k': "ألف",
         }
       };
 }

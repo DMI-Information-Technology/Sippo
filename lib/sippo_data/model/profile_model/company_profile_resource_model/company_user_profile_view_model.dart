@@ -54,34 +54,34 @@ class ProfileViewResourceModel {
     };
   }
 
-  factory ProfileViewResourceModel.fromJson(Map<String, dynamic> json) {
+  factory ProfileViewResourceModel.fromJson(Map<String, dynamic>? json) {
     return ProfileViewResourceModel(
       userInfo: ProfileInfoModel(
-        id: json["id"],
-        name: json["name"],
-        phone: json["phone"],
-        secondaryPhone: json["secondary_phone"],
-        email: json["email"],
-        gender: json["gender"],
-        bio: json["bio"],
+        id: json?["id"],
+        name: json?["name"],
+        phone: json?["phone"],
+        secondaryPhone: json?["secondary_phone"],
+        email: json?["email"],
+        gender: json?["gender"],
+        bio: json?["bio"],
       ),
-      image: json["profile_image"] != null
-          ? ImageResourceModel.fromJson(json["profile_image"])
+      image: json?["profile_image"] != null
+          ? ImageResourceModel.fromJson(json?["profile_image"])
           : null,
-      cv: json["cv"] != null ? CvModel.fromJson(json["cv"]) : null,
-      workExperiences: json["work_experiences"] is List
-          ? List.of(json["work_experiences"])
+      cv: json?["cv"] != null ? CvModel.fromJson(json?["cv"]) : null,
+      workExperiences: json?["work_experiences"] is List
+          ? List.of(json?["work_experiences"])
               .map((e) => WorkExperiencesModel.fromJson(e))
               .toList()
           : null,
-      educations: json["educations"] is List
-          ? List.of(json["educations"])
+      educations: json?["educations"] is List
+          ? List.of(json?["educations"])
               .map((e) => EducationModel.fromJson(e))
               .toList()
           : null,
       skills: SkillsModel.fromViewJson(json),
-      languages: json["languages"] is List
-          ? List.of(json["languages"])
+      languages: json?["languages"] is List
+          ? List.of(json?["languages"])
               .map((e) => LanguageModel.fromJson(e))
               .toList()
           : null,

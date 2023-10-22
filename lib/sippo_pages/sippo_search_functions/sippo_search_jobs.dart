@@ -8,13 +8,13 @@ import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
+import 'package:jobspot/JobServices/shared_global_data_service.dart';
+import 'package:jobspot/JopController/sippo_search_controller/user_search_jobs.dart';
 import 'package:jobspot/sippo_custom_widget/custom_body_widget.dart';
-import 'package:jobspot/sippo_custom_widget/save_job_card_widget.dart';
+import 'package:jobspot/sippo_custom_widget/job_card_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
 import 'package:jobspot/utils/helper.dart';
-
-import 'package:jobspot/JopController/sippo_search_controller/user_search_jobs.dart';
 
 class SippoJobSearch extends StatefulWidget {
   const SippoJobSearch({Key? key}) : super(key: key);
@@ -24,55 +24,66 @@ class SippoJobSearch extends StatefulWidget {
 }
 
 class _SippoJobSearchState extends State<SippoJobSearch> {
-  final _controller = UserSearchJobsController.instances;
+  final _controller = SearchJobsController.instances;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomBodyWidget.children(
-        automaticallyImplyLeading: true,
-        expandedAppBarHeight: context.fromHeight(
-          4.5,
+      body: RefreshIndicator(
+        onRefresh: () async {
+          _controller.searchJobsState.clearQuerySearch();
+          _controller.refreshPage();
+        },
+        child: CustomBodyWidget.children(
+          automaticallyImplyLeading: true,
+          expandedAppBarHeight: context.fromHeight(4.5),
+          expandedAppBar: _buildScrollableTopAppBar(context, haveToolBar: true),
+          children: [
+            SliverPadding(
+              padding: EdgeInsets.symmetric(
+                horizontal: context.fromWidth(CustomStyle.paddingValue),
+              ),
+              sliver: PagedSliverList<int, CompanyJobModel>.separated(
+                pagingController: _controller.pagingController,
+                builderDelegate: PagedChildBuilderDelegate(
+                  firstPageErrorIndicatorBuilder: (context) =>
+                      _buildErrorFirstLoad(context),
+                  newPageErrorIndicatorBuilder: (context) =>
+                      _buildErrorNewLoad(context),
+                  itemBuilder: (context, item, index) {
+                    return InkWell(
+                      onTap: () => SharedGlobalDataService.onJobTap(item),
+                      child: JobPostingCard(
+                        jobDetails: item,
+                        isActive: item.isActive,
+                        timeAgo:
+                            calculateElapsedTimeFromStringDate(item.createdAt),
+                        isEditable: false,
+                        onActionTap: () {
+                          _controller.onToggleSavedJobsSubmitted(
+                              index, item.id);
+                        },
+                        isSaved: item.isSaved == true,
+                        onImageCompanyTap: () {
+                          SharedGlobalDataService.onCompanyTap(item.company);
+                        },
+                        onAddressTextTap: (location) async {
+                          await lunchMapWithLocation(
+                            location?.dLatitude,
+                            location?.dLongitude,
+                          );
+                        },
+                      ),
+                    );
+                  },
+                ),
+                separatorBuilder: (context, _) => SizedBox(
+                  height: context.fromHeight(CustomStyle.huge),
+                ),
+              ),
+            )
+          ],
         ),
-        expandedAppBar: _buildScrollableTopAppBar(context, haveToolBar: true),
-        children: [
-          SliverPadding(
-            padding: EdgeInsets.symmetric(
-              horizontal: context.fromWidth(CustomStyle.paddingValue),
-            ),
-            sliver: PagedSliverList<int, CompanyJobModel>.separated(
-              pagingController: _controller.pagingController,
-              builderDelegate: PagedChildBuilderDelegate(
-                firstPageErrorIndicatorBuilder: (context) =>
-                    _buildErrorFirstLoad(context),
-                newPageErrorIndicatorBuilder: (context) =>
-                    _buildErrorNewLoad(context),
-                itemBuilder: (context, item, index) {
-                  return JobPostingCard(
-                    jobDetails: item,
-                    isActive: item.isActive,
-                    imagePath: [
-                      'https://www.designbust.com/download/1060/png/microsoft_logo_transparent512.png',
-                      'https://logodownload.org/wp-content/uploads/2014/09/facebook-logo-1-2.png',
-                    ][index % 2 == 0 ? 0 : 1],
-                    timeAgo: '21 min ago',
-                    isEditable: true,
-                    onActionTap: () {},
-                    onAddressTextTap: (location) async {
-                      await lunchMapWithLocation(
-                        location?.dLatitude,
-                        location?.dLongitude,
-                      );
-                    },
-                  );
-                },
-              ),
-              separatorBuilder: (context, _) => SizedBox(
-                height: context.fromHeight(CustomStyle.spaceBetween),
-              ),
-            ),
-          )
-        ],
       ),
     );
   }
@@ -199,7 +210,7 @@ class _SippoJobSearchState extends State<SippoJobSearch> {
                           ),
                         ),
                         backgroundColor:
-                            _controller.searchJobsState.employmentTyp == item
+                            _controller.searchJobsState.employmentType == item
                                 ? Jobstopcolor.primarycolor
                                 : Colors.grey[300],
                         paddingValue:
@@ -211,7 +222,7 @@ class _SippoJobSearchState extends State<SippoJobSearch> {
                           item.title,
                           style: dmsregular.copyWith(
                             fontSize: 12,
-                            color: _controller.searchJobsState.employmentTyp ==
+                            color: _controller.searchJobsState.employmentType ==
                                     item
                                 ? Jobstopcolor.white
                                 : Jobstopcolor.primarycolor,

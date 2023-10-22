@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JopController/AuthenticationController/sippo_auth_controller.dart';
-
+import 'package:jobspot/JobGlobalclass/global_storage.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
+import 'package:jobspot/JopController/AuthenticationController/sippo_auth_controller.dart';
 import 'package:jobspot/sippo_data/model/auth_model/user_model.dart';
 import 'package:jobspot/utils/states.dart';
 
@@ -22,7 +22,11 @@ class UserLoginController extends GetxController {
 
   String get phoneNumber => _phoneNumber.toString();
 
-  UserModel get userForm => UserModel(phone: phoneNumber, password: password);
+  UserModel get userForm => UserModel(
+        phone: phoneNumber,
+        password: password,
+        fcmToken: GlobalStorageService.notificationToken,
+      );
 
   set phoneNumber(String value) {
     _phoneNumber.value = value;

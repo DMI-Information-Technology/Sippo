@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:jobspot/sippo_data/model/auth_model/entity_model.dart';
 import 'package:jobspot/sippo_data/model/image_resource_model/image_resource_model.dart';
 import 'package:jobspot/utils/app_use.dart';
-
 import 'package:jobspot/utils/helper.dart';
+
 import '../profile_model/company_profile_resource_model/work_location_model.dart';
 import '../specializations_model/specializations_model.dart';
 
@@ -25,35 +25,39 @@ class CompanyDetailsModel extends EntityModel {
     this.specializations,
     this.isFollowed,
     this.hasApplied,
-    this.is_subscribed,
+    this.isSubscribed,
   });
 
-  factory CompanyDetailsModel.fromJson(Map<String, dynamic> json) {
+  factory CompanyDetailsModel.fromJson(Map<String, dynamic>? json) {
     return CompanyDetailsModel(
-      id: json['id'],
-      name: json['name'],
-      phone: json['phone'],
-      secondaryPhone: json['secondary_phone'],
-      email: json['email'],
-      city: json['city'],
-      locations: List.of(json["locations"] ?? [])
-          .map((loc) => WorkLocationModel.fromJson(loc))
-          .toList(),
-      website: json['website'],
-      bio: json['bio'],
-      employeesCount: json['employees_count'] is String
-          ? int.parse(json['employees_count'])
-          : json['employees_count'],
-      establishmentDate: json['establishment_date'],
-      profileImage: json['profile_image'] != null
-          ? ImageResourceModel.fromJson(json['profile_image'])
+      id: json?['id'],
+      name: json?['name'],
+      phone: json?['phone'],
+      secondaryPhone: json?['secondary_phone'],
+      email: json?['email'],
+      city: json?['city'],
+      locations: json?["locations"] != null
+          ? List.of(json?["locations"] ?? [])
+              .map((loc) => WorkLocationModel.fromJson(loc))
+              .toList()
           : null,
-      specializations: List.of(json["specializations"] ?? [])
-          .map((cord) => SpecializationModel.fromJson(cord))
-          .toList(),
-      isFollowed: json['is_followed'],
-      hasApplied: json['has_applied'],
-      is_subscribed: json['has_applied'],
+      website: json?['website'],
+      bio: json?['bio'],
+      employeesCount: json?['employees_count'] is String
+          ? int.parse(json?['employees_count'])
+          : json?['employees_count'],
+      establishmentDate: json?['establishment_date'],
+      profileImage: json?['profile_image'] != null
+          ? ImageResourceModel.fromJson(json?['profile_image'])
+          : null,
+      specializations: json?["specializations"] != null
+          ? List.of(json?["specializations"] ?? [])
+              .map((cord) => SpecializationModel.fromJson(cord))
+              .toList()
+          : null,
+      isFollowed: json?['is_followed'],
+      hasApplied: json?['has_applied'],
+      isSubscribed: json?['has_applied'],
     );
   }
 
@@ -66,7 +70,7 @@ class CompanyDetailsModel extends EntityModel {
   final ImageResourceModel? profileImage;
   final bool? isFollowed;
   final bool? hasApplied;
-  final bool? is_subscribed;
+  final bool? isSubscribed;
   final List<SpecializationModel>? specializations;
 
   CompanyDetailsModel copyWith({
@@ -112,8 +116,8 @@ class CompanyDetailsModel extends EntityModel {
       'secondary_phone': secondaryPhone,
       'email': email,
       'city': city,
-      "latitude": locations?.firstOrNull?.location?.latitude,
-      "longitude": locations?.firstOrNull?.location?.longitude,
+      "latitude": locations?.firstOrNull?.cordLocation?.latitude,
+      "longitude": locations?.firstOrNull?.cordLocation?.longitude,
       'website': website,
       'employees_count': employeesCount,
       'establishment_date': establishmentDate,
@@ -173,7 +177,7 @@ class CompanyDetailsModel extends EntityModel {
           secondaryPhone == other.secondaryPhone &&
           email == other.email &&
           city == other.city &&
-          locations == other.locations &&
+          listEquality(locations, other.locations) &&
           website == other.website &&
           bio == other.bio &&
           employeesCount == other.employeesCount &&
@@ -181,7 +185,7 @@ class CompanyDetailsModel extends EntityModel {
           profileImage == other.profileImage &&
           isFollowed == other.isFollowed &&
           hasApplied == other.hasApplied &&
-          is_subscribed == other.is_subscribed &&
+          isSubscribed == other.isSubscribed &&
           listEquality(specializations, other.specializations);
 
   @override
@@ -190,7 +194,7 @@ class CompanyDetailsModel extends EntityModel {
       name.hashCode ^
       phone.hashCode ^
       secondaryPhone.hashCode ^
-      email.hashCode^
+      email.hashCode ^
       city.hashCode ^
       locations.hashCode ^
       website.hashCode ^
@@ -200,7 +204,7 @@ class CompanyDetailsModel extends EntityModel {
       profileImage.hashCode ^
       isFollowed.hashCode ^
       hasApplied.hashCode ^
-      is_subscribed.hashCode ^
+      isSubscribed.hashCode ^
       specializations.hashCode;
 
   @override

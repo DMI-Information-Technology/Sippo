@@ -1,12 +1,14 @@
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
-import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/application_job_company_model.dart';
+import 'package:jobspot/sippo_data/model/application_model/application_job_company_model.dart';
+
 import 'package:jobspot/sippo_data/user_repos/user_applications_repo.dart';
 import 'package:jobspot/utils/states.dart';
 import 'user_notification_application_controller.dart';
 
 class UserApplicationController extends GetxController {
+  static UserApplicationController get instance => Get.find();
   final pagingController =
       PagingController<int, ApplicationUserModel>(firstPageKey: 0);
   final notificationApplicationController =
@@ -89,4 +91,11 @@ class UserApplicationState {
   void set pageNumber(int value) => _pageNumber = value;
 
   void incrementPageNumber() => _pageNumber++;
+ final _application = ApplicationUserModel().obs;
+
+  ApplicationUserModel get application => _application.value;
+
+  set application(ApplicationUserModel value) {
+    _application.value = value;
+  }
 }

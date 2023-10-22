@@ -1,22 +1,24 @@
 class LanguageModel {
-  LanguageModel({
+  const LanguageModel({
     this.id,
     this.name,
     this.isNative = false,
     this.level,
   });
 
-  LanguageModel.fromJson(dynamic json) {
-    id = json['id'];
-    name = json['name'];
-    this.isNative = json['is_native'] ?? false;
-    level = json['level'];
+  factory LanguageModel.fromJson(Map<String, dynamic>? json) {
+    return LanguageModel(
+      id: json?["id"],
+      name: json?["name"],
+      isNative: json?["isNative"],
+      level: json?["level"],
+    );
   }
 
-  int? id;
-  String? name;
-  bool isNative = false;
-  String? level;
+  final int? id;
+  final String? name;
+  final bool isNative;
+  final String? level;
 
   String? get countryFlag => null;
 

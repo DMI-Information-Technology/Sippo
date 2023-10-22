@@ -3,7 +3,7 @@ import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 
-import 'job_application.dart';
+import 'sippo_user_notification_application/job_application.dart';
 
 class AllNotification extends StatefulWidget {
   const AllNotification({Key? key}) : super(key: key);

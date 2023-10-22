@@ -4,13 +4,12 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
+import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
+import 'package:jobspot/JopController/user_community_controller/show_about_companies_jobs_controller.dart';
+import 'package:jobspot/sippo_custom_widget/job_card_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
-
-import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
-import 'package:jobspot/JopController/user_community_controller/show_about_companies_jobs_controller.dart';
-import 'package:jobspot/sippo_custom_widget/save_job_card_widget.dart';
 import 'package:jobspot/utils/helper.dart';
 
 class ShowAboutCompaniesJobsList extends StatefulWidget {
@@ -28,7 +27,7 @@ class _ShowAboutCompaniesJobsListState
   @override
   Widget build(BuildContext context) {
     return PagedSliverList<int, CompanyJobModel>.separated(
-      pagingController: _controller.pagingJobController,
+      pagingController: _controller.pagingController,
       builderDelegate: PagedChildBuilderDelegate(
         firstPageErrorIndicatorBuilder: (context) =>
             _buildErrorFirstLoad(context),
@@ -36,15 +35,14 @@ class _ShowAboutCompaniesJobsListState
         itemBuilder: (context, item, index) {
           return JobPostingCard(
             jobDetails: item,
-            companyLocations: _controller.company.locations,
             companyName: _controller.company.name,
-            imagePath: [
-              'https://www.designbust.com/download/1060/png/microsoft_logo_transparent512.png',
-              'https://logodownload.org/wp-content/uploads/2014/09/facebook-logo-1-2.png',
-            ][index % 2 == 0 ? 0 : 1],
-            timeAgo: '21 min ago',
+            imagePath: _controller.company.profileImage?.url,
+            timeAgo: calculateElapsedTimeFromStringDate(item.createdAt),
             isEditable: false,
-            onActionTap: () {},
+            isSaved: item.isSaved == true,
+            onActionTap: () {
+              _controller.onToggleSavedJobsSubmitted(index, item.id);
+            },
             onAddressTextTap: (location) async {
               await lunchMapWithLocation(
                 location?.dLatitude,
@@ -68,7 +66,7 @@ class _ShowAboutCompaniesJobsListState
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            '${_controller.aboutCompaniesController.states.message}',
+            '${_controller.states.message}',
             textAlign: TextAlign.center,
             style: dmsregular.copyWith(
               fontSize: FontSize.paragraph3(context),
@@ -98,8 +96,7 @@ class _ShowAboutCompaniesJobsListState
         ),
         SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
         Text(
-          _controller.aboutCompaniesController.states.message ??
-              'Something wrong is happened.',
+          _controller.states.message ?? 'Something wrong is happened.',
           style: dmsregular.copyWith(
             fontSize: FontSize.paragraph3(context),
           ),
@@ -112,8 +109,8 @@ class _ShowAboutCompaniesJobsListState
           child: CustomButton(
             onTapped: () {
               _controller.retryLastFailedRequest();
-              _controller.aboutCompaniesController
-                  .changeStates(isError: false, message: '');
+              _controller.states =
+                  _controller.states.copyWith(isError: false, message: '');
             },
             text: 'Try again',
           ),

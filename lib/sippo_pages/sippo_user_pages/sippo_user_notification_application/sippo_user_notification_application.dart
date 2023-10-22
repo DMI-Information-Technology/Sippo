@@ -9,11 +9,7 @@ import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/JopController/NotificationController/user_notification_application/user_notification_application_controller.dart';
 import 'package:jobspot/sippo_pages/sippo_message_pages/no_resource_screen.dart';
 
-import 'package:jobspot/sippo_custom_widget/container_bottom_sheet_widget.dart';
-import 'package:jobspot/sippo_custom_widget/notification_widget.dart';
-import 'package:jobspot/sippo_custom_widget/setting_item_widget.dart';
-import 'package:jobspot/sippo_data/model/notification/job_application_model.dart';
-import '../job_application.dart';
+import '../../../sippo_custom_widget/widgets.dart';
 import 'sippo_user_application.dart';
 import 'sippo_user_notification.dart';
 
@@ -57,6 +53,7 @@ class _SippoUserNotificationApplicationState
       // When the tab controller's value is updated, make sure to update the
       // tab index value, which is state restorable.
       print("fdffdfdfdfffdfd");
+      _notifiController.resetStates();
       _notifiController.selectedNotification = -1;
       tabIndex.value = _tabController.index;
     });
@@ -115,159 +112,48 @@ class _SippoUserNotificationApplicationState
         style: dmsbold.copyWith(fontSize: FontSize.title3(context)),
       ),
       actions: [
-        Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: context.fromWidth(CustomStyle.xs),
-            vertical: kToolbarHeight / CustomStyle.overBy3,
-          ),
-          child: InkWell(
-              splashColor: Jobstopcolor.transparent,
-              highlightColor: Jobstopcolor.transparent,
-              // onTap: () => Get.to(() => const AllNotification()),
-              child: Text(
-                'read_all'.tr,
-                style: dmsregular.copyWith(
-                  fontSize: FontSize.label(context),
-                  color: Jobstopcolor.secondary,
-                ),
-              )),
+        ListenableBuilder(
+          listenable: _tabController,
+          builder: (context, _) => _tabController.index == 0
+              ? Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: context.fromWidth(CustomStyle.xs),
+                    vertical: kToolbarHeight / CustomStyle.overBy3,
+                  ),
+                  child: InkWell(
+                      splashColor: Jobstopcolor.transparent,
+                      highlightColor: Jobstopcolor.transparent,
+                      // onTap: () => Get.to(() => const AllNotification()),
+                      onTap: () {
+                        _onReadAllNotificationsConfirmation(context);
+                      },
+                      child: Text(
+                        'read_all'.tr,
+                        style: dmsregular.copyWith(
+                          fontSize: FontSize.label(context),
+                          color: Jobstopcolor.secondary,
+                        ),
+                      )),
+                )
+              : const SizedBox.shrink(),
         )
       ],
     );
   }
 
-// this method will be sent into
-// NotificationListView -> NotificationApplicationWidget
-// and called by each call back function in NotificationApplicationWidget item
-// to showing an bottom sheet options for notification option
-}
-
-class NotificationListView extends StatelessWidget {
-  const NotificationListView({
-    super.key,
-    required this.notifiList,
-    this.isGeneral = false,
-  });
-
-  final List<NotificationModel> notifiList;
-  final bool isGeneral;
-
-  @override
-  Widget build(BuildContext context) {
-    final controller = UserNotificationApplicationController.instance;
-    Size size = MediaQuery.of(context).size;
-    // double height = size.height;
-    double width = size.width;
-    return ListView.separated(
-      padding: EdgeInsets.only(
-        top: context.fromHeight(CustomStyle.m),
-        bottom: context.fromHeight(CustomStyle.xs),
-      ),
-      itemCount: notifiList.length,
-      itemBuilder: (context, index) {
-        return SizedBox(
-          width: width,
-          child: Obx(
-            () => UserApplicationWidget(
-              onDeletePressed: () => null,
-              onTap: () {
-                if (controller.selectedNotification != index) {
-                  controller.selectedNotification = index;
-                }
-                if (isGeneral) {
-                  _openBottomSheetOption(context, isGeneral, index);
-                }
-              },
-              onPopupNotificationButtonTapped: !isGeneral
-                  ? () => _openBottomSheetOption(context, isGeneral, index)
-                  : null,
-              // notification: notifiList[index],
-              isSelected: controller.selectedNotification == index,
-            ),
-          ),
-        );
+  void _onReadAllNotificationsConfirmation(BuildContext context) {
+    Get.dialog(CustomAlertDialog(
+      title: 'Delete Notification',
+      description: 'Are you sure you want to delete this notification?',
+      onConfirm: () {
+        Get.back();
+        _notifiController.markAllNotificationsAsRead();
       },
-      separatorBuilder: (context, _) => SizedBox(
-        height: context.fromWidth(CustomStyle.m),
-      ),
-    );
-  }
-
-  void _openBottomSheetOption(
-    BuildContext context,
-    bool isGeneral,
-    int notificationID,
-  ) {
-    final controller = UserNotificationApplicationController.instance;
-    Get.bottomSheet(
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(
-          top: Radius.circular(25),
-        ),
-      ),
-      backgroundColor: Colors.white,
-      isScrollControlled: true,
-      ContainerBottomSheetWidget(
-        children: [
-          Obx(
-            () => SettingItemWidget(
-              title: "Delete",
-              icon: Icon(
-                Icons.delete_forever_outlined,
-                color: controller.isMatchOptionOfIndex(0) ? Colors.white : null,
-              ),
-              onTap: () {
-                controller.selectedBottomOption = 0;
-                print("delete notification with id: $notificationID");
-              },
-              isHavingTrailingIcon: false,
-              isBordered: false,
-              contentPadding: context.fromWidth(CustomStyle.xs),
-              isSelected: controller.isMatchOptionOfIndex(0),
-            ),
-          ),
-          Obx(
-            () => SettingItemWidget(
-              title: isGeneral ? 'turn_off_notifi'.tr : "check_details".tr,
-              icon: Icon(
-                isGeneral
-                    ? Icons.notifications_off_outlined
-                    : Icons.business_center_rounded,
-                color: controller.isMatchOptionOfIndex(1) ? Colors.white : null,
-              ),
-              onTap: () {
-                controller.selectedBottomOption = 1;
-                if (!isGeneral) {
-                  Get.back();
-                  Get.to(() => const JobApplication());
-                } else
-                  print("turn on/off the notification");
-              },
-              isHavingTrailingIcon: false,
-              isBordered: false,
-              contentPadding: context.fromWidth(CustomStyle.xs),
-              isSelected: controller.isMatchOptionOfIndex(1),
-            ),
-          ),
-          Obx(
-            () => SettingItemWidget(
-              title: 'setting'.tr,
-              icon: Icon(
-                Icons.settings_rounded,
-                color: controller.isMatchOptionOfIndex(2) ? Colors.white : null,
-              ),
-              onTap: () {
-                controller.selectedBottomOption = 2;
-                print("open setting notification");
-              },
-              isHavingTrailingIcon: false,
-              isBordered: false,
-              contentPadding: context.fromWidth(CustomStyle.xs),
-              isSelected: controller.isMatchOptionOfIndex(2),
-            ),
-          ),
-        ],
-      ),
-    ).then((value) => controller.selectedBottomOption = -1);
+      confirmBtnTitle: 'Yes',
+      onCancel: () {
+        Get.back();
+      },
+      cancelBtnTitle: 'Cancel',
+    ));
   }
 }

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:jobspot/JobGlobalclass/global_storage.dart';
 import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
+import 'package:jobspot/JobServices/fire_base_push_notifications.dart';
 import 'package:jobspot/JobStringtranslation/traslationstring.dart';
 import 'package:jobspot/sippo_themes/theme.dart';
 import 'package:jobspot/utils/exception_handler_utils.dart';
@@ -21,8 +22,11 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   Get.put<GlobalStorageService>(GlobalStorageService());
   await GlobalStorageService.lunchApp();
+
+  await FirebasePushNotificationService().init();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,

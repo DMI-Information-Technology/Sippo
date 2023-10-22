@@ -4,6 +4,7 @@ const String userRegisterEndpoint = "auth/user/register";
 const String userLoginEndpoint = "auth/user/login";
 const String userLogoutEndpoint = "user/logout";
 const String specializationEndpoint = "specializations";
+const String locationsEndpoint = "locations";
 const String companyRegisterEndpoint = "auth/company/register";
 const String companyLoginEndpoint = "auth/company/login";
 const String companyLogoutEndpoint = "company/logout";
@@ -17,6 +18,7 @@ const String userJobsAboutsCompanies = "jobs";
 const String userPostsAboutsCompanies = "posts";
 const String applyCompanyParam = "apply";
 const String userJobsSavedParam = "toggle-save";
+const String userJobsStatisticsEndpoint = "jobs-statistics";
 
 /////////////////////////////////////////////////////////////
 ///////////// profile resource endpoints ///////////////////
@@ -54,3 +56,4 @@ const String userApplicationEndpoint = "user/applications";
 /////////////////////////////////////////////////////////////////////
 /////////////////// Notifications ///////////////////
 const String notificationsEndpoint = "notifications";
+const String readAllNotificationsEndpoint = "notifications/mark-all-as-read";

@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
+import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
+import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
-import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
-import 'package:jobspot/sippo_custom_widget/body_widget.dart';
-import 'package:jobspot/sippo_custom_widget/widgets.dart';
-
-import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
-import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JopController/AuthenticationController/sippo_signup_company_controller.dart';
 import 'package:jobspot/custom_app_controller/google_map_view_controller.dart';
+import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
+import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/custom_drop_down_button.dart';
 import 'package:jobspot/sippo_custom_widget/google_map_view_widget.dart';
+import 'package:jobspot/sippo_custom_widget/widgets.dart';
+import 'package:jobspot/sippo_data/model/locations_model/location_address_model.dart';
 
 class SippoLocationCompanySelector extends StatefulWidget {
   const SippoLocationCompanySelector({super.key});
@@ -27,24 +27,21 @@ class SippoLocationCompanySelector extends StatefulWidget {
 
 class _SippoLocationCompanySelectorState
     extends State<SippoLocationCompanySelector> {
-  final _myLocationController = TextEditingController();
+  final _textLocationController = TextEditingController();
   final netConnController = InternetConnectionService.instance;
   final _signUpCompanyController = SignUpCompanyController.instance;
   final googleMapViewController = GoogleMapViewController();
-  final tempData = List.generate(
-    12,
-    (index) => 'Location Address ${index + 1}',
-  );
 
   @override
   void initState() {
     super.initState();
+    _signUpCompanyController.fetchLocationsAddress();
     googleMapViewController.getCurrentLocation();
   }
 
   @override
   void dispose() {
-    _myLocationController.dispose();
+    _textLocationController.dispose();
     googleMapViewController.dispose();
     super.dispose();
   }
@@ -56,7 +53,7 @@ class _SippoLocationCompanySelectorState
     double width = size.width;
     return WillPopScope(
       onWillPop: () async {
-        _signUpCompanyController.companyAddress = "";
+        _signUpCompanyController.companyAddress = LocationAddress();
         return true;
       },
       child: Scaffold(
@@ -64,7 +61,7 @@ class _SippoLocationCompanySelectorState
           automaticallyImplyLeading: true,
           leading: IconButton(
             onPressed: () {
-              _signUpCompanyController.companyAddress = "";
+              _signUpCompanyController.companyAddress = LocationAddress();
               Get.back();
             },
             icon: Icon(Icons.arrow_back_rounded),
@@ -86,17 +83,16 @@ class _SippoLocationCompanySelectorState
               ),
               CustomDropdownButton(
                 textHint: 'Select Company Work Place',
-                labelList: tempData,
-                values: tempData,
+                labelList: _signUpCompanyController.locationsAddressNameList,
+                values: _signUpCompanyController.locationsAddressList,
                 fillColor: Colors.white,
                 onItemSelected: (value) async {
-                  _myLocationController.text = value ?? "";
-                  _signUpCompanyController.companyAddress =
-                      _myLocationController.text;
+                  if (value == null || value.id == null) return;
+                  _textLocationController.text = value.name ?? "";
+                  _signUpCompanyController.companyAddress = value;
                   print(value);
                 },
                 setInitialValue: false,
-                initialValue: 'Tripoli, Ain-zara',
               ),
               SizedBox(
                 height: height / 42,
@@ -116,7 +112,8 @@ class _SippoLocationCompanySelectorState
                 },
               ),
               Obx(() => ConditionalWidget(
-                    _signUpCompanyController.companyAddress.isNotEmpty,
+                    _signUpCompanyController.companyAddress.name?.isNotEmpty ==
+                        true,
                     guaranteedBuilder: (context, _) => ListTile(
                       title: _locationAddressNameTextBuilder(context),
                       subtitle: ListenableBuilder(
@@ -159,7 +156,7 @@ class _SippoLocationCompanySelectorState
   }
 
   Widget _locationAddressNameTextBuilder(context) {
-    final addressName = _signUpCompanyController.companyAddress;
+    final addressName = _signUpCompanyController.companyAddress.name ?? '';
     return Text(
       addressName,
       style: dmsmedium,
@@ -177,7 +174,7 @@ class _SippoLocationCompanySelectorState
 
   void _onSubmitConfirm() async {
     if (_signUpCompanyController.confirmOnPolicy &&
-        _signUpCompanyController.companyAddress.isNotEmpty &&
+        _signUpCompanyController.companyAddress.id != null &&
         _signUpCompanyController.cordLocation.validateCords()) {
       Get.toNamed(SippoRoutes.identityverification);
     } else {

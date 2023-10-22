@@ -12,6 +12,8 @@ import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/title_label_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 
+import '../../sippo_custom_widget/custom_drop_down_button.dart';
+
 class SippoSearchJobsFilter extends StatefulWidget {
   const SippoSearchJobsFilter({Key? key}) : super(key: key);
 
@@ -56,6 +58,28 @@ class _SippoSearchJobsFilterState extends State<SippoSearchJobsFilter> {
               onTap: () => Get.back(),
               initialValue: _controller.filterSearchState.specialization.name,
             ),
+            SizedBox(height: height / 36),
+            TitleLabelWidget(
+              "Location".tr,
+              fontSize: FontSize.title4(context),
+            ),
+            Obx(() {
+              final locationAddressList =
+                  _controller.filterSearchState.locationAddressList;
+              final locationAddressNames =
+                  _controller.filterSearchState.locationsAddressNameList;
+              return CustomDropdownButton(
+                textHint: 'Select Company Work Place',
+                labelList: locationAddressNames,
+                values: locationAddressList,
+                fillColor: Colors.white,
+                onItemSelected: (value) async {
+                  if (value == null) return;
+                  _controller.filterSearchState.locationAddress = value;
+                },
+                setInitialValue: false,
+              );
+            }),
             SizedBox(height: height / 36),
             TitleLabelWidget(
               "experienceLevels".tr,
@@ -110,7 +134,7 @@ class _SippoSearchJobsFilterState extends State<SippoSearchJobsFilter> {
           onTapped: () async {
             await _controller.onApplyFilterSubmitted();
             Get.until(
-                (_) => Get.currentRoute == SippoRoutes.sippoUserJobSearch);
+                (_) => Get.currentRoute == SippoRoutes.sippoJobFilterSearch);
           },
           text: "Apply now",
         ),
@@ -214,7 +238,7 @@ class _SippoSearchJobsFilterState extends State<SippoSearchJobsFilter> {
                   .toString(),
               _controller.filterSearchState.rangeSalary.end.round().toString(),
             ),
-            onChanged: (RangeValues values) {
+            onChanged: (values) {
               _controller.filterSearchState.rangeSalary = values;
             },
           );

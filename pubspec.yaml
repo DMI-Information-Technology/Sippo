@@ -62,10 +62,12 @@ dependencies:
   dropdown_button2: ^2.3.9
   url_launcher: ^6.1.14
   open_file: ^3.3.2
-  permission_handler: ^11.0.0
+  permission_handler: ^11.0.1
   device_info_plus: ^9.0.3
   google_maps_flutter: ^2.5.0
   location: ^5.0.3
+  firebase_messaging: ^14.7.1
+  flutter_local_notifications: ^16.1.0
 dev_dependencies:
   flutter_test:
     sdk: flutter

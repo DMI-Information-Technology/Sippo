@@ -4,11 +4,11 @@ class PlaceDetailsModel {
 
   PlaceDetailsModel({this.result, this.status});
 
-  PlaceDetailsModel.fromJson(Map<String, dynamic> json) {
-    result = json['result'] != null
-        ? new ResultModel.fromJson(json['result'])
+  PlaceDetailsModel.fromJson(Map<String, dynamic>? json) {
+    result = json?['result'] != null
+        ? new ResultModel.fromJson(json?['result'])
         : null;
-    status = json['status'];
+    status = json?['status'];
   }
 
   Map<String, dynamic> toJson() {

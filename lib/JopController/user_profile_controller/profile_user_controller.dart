@@ -153,8 +153,8 @@ class ProfileUserController extends GetxController {
       // Add more API calls here
     ]);
     states = states.copyWith(isLoading: false);
-    profileState.refreshProfileView(userInfo: user);
-    print(profileState.profileView.blankProfileMessages());
+    profileState.refreshProfileView();
+    // print(profileState.profileView.blankProfileMessages());
   }
 
   void _connected(bool isConn) async => isConn ? await fetchResources() : null;
@@ -253,13 +253,12 @@ class ProfileState {
   void set profileView(ProfileViewResourceModel value) =>
       _profileView.value = value;
 
-  void refreshProfileView({
-    ProfileInfoModel? userInfo,
-  }) {
+  void refreshProfileView() {
+    final userInfo = ProfileUserController.instance.user;
     profileView = ProfileViewResourceModel(
       userInfo: userInfo,
-      cv: userInfo?.cv,
-      image: userInfo?.profileImage,
+      cv: userInfo.cv,
+      image: userInfo.profileImage,
       workExperiences: workExList,
       educations: educationList,
       skills: SkillsModel(skills: skillsList),

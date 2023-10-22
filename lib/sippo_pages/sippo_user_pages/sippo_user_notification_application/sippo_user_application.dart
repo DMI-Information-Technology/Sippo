@@ -4,16 +4,16 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
+import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/JopController/NotificationController/user_notification_application/user_application_controller.dart';
-import 'package:jobspot/sippo_custom_widget/widgets.dart';
-import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/application_job_company_model.dart';
-
-import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/sippo_custom_widget/container_bottom_sheet_widget.dart';
 import 'package:jobspot/sippo_custom_widget/notification_widget.dart';
 import 'package:jobspot/sippo_custom_widget/setting_item_widget.dart';
-import '../job_application.dart';
+import 'package:jobspot/sippo_custom_widget/widgets.dart';
+import 'package:jobspot/sippo_data/model/application_model/application_job_company_model.dart';
+
+import 'job_application.dart';
 
 class SippoUserApplication extends StatefulWidget {
   const SippoUserApplication({super.key});
@@ -49,6 +49,7 @@ class _SippoUserApplicationState extends State<SippoUserApplication> {
               onPopupNotificationButtonTapped: () {
                 _openBottomApplicationSheetOption(
                   context,
+                  item,
                   item.id,
                   item.status == "Pending",
                 );
@@ -135,6 +136,7 @@ class _SippoUserApplicationState extends State<SippoUserApplication> {
 
   void _openBottomApplicationSheetOption(
     BuildContext context,
+    ApplicationUserModel application,
     int? applicationId, [
     bool? isPending,
   ]) {
@@ -175,7 +177,11 @@ class _SippoUserApplicationState extends State<SippoUserApplication> {
                 // _controller.selectedBottomOption = 1;
 
                 Get.back();
-                Get.to(() => const JobApplication());
+                _controller.userApplicationState.application = application;
+                Get.to(() => const JobApplication())?.then((_) {
+                  _controller.userApplicationState.application =
+                      ApplicationUserModel();
+                });
               },
               isHavingTrailingIcon: false,
               isBordered: false,

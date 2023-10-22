@@ -10,7 +10,7 @@ class RangeSalaryModel {
   });
 
   String get salaryStringFormat => from != null && to != null
-      ? '${from.toString().salaryValue} - ${to.toString().salaryValue}'
+      ? '${from.toString().shortStringNumberFormat} - ${to.toString().shortStringNumberFormat}'
       : '';
 
   factory RangeSalaryModel.fromDynamic(from, to) {

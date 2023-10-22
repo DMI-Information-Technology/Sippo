@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JopController/company_profile_controller/profile_company_controller.dart';
+import 'package:jobspot/sippo_data/company_repos/company_profile_info_repo.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
 import 'package:jobspot/sippo_data/model/custom_file_model/custom_file_model.dart';
-
-import 'package:jobspot/sippo_data/company_repos/company_profile_info_repo.dart';
 import 'package:jobspot/utils/getx_text_editing_controller.dart';
 import 'package:jobspot/utils/states.dart';
 
@@ -144,7 +143,9 @@ class ProfileCompanyEditState {
     secondaryPhone.text = data?.secondaryPhone ?? "";
     website.text = data?.website ?? "";
     city.text = data?.city ?? "";
-    employeesCount.text = data?.employeesCount.toString() ?? "";
+    employeesCount.text = data?.employeesCount != null
+        ? data?.employeesCount?.toString() ?? ""
+        : "";
   }
 
   CompanyDetailsModel get form => _profileController.company.copyWith(
@@ -157,7 +158,9 @@ class ProfileCompanyEditState {
         city: city.text.isBlank == true ? null : city.text,
         employeesCount: employeesCount.text.isBlank == true
             ? null
-            : int.parse(employeesCount.text),
+            : employeesCount.text.isNumericOnly
+                ? int.parse(employeesCount.text)
+                : null,
       );
 
   void disposeTextControllers() {

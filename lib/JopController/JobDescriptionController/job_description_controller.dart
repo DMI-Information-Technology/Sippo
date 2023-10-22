@@ -45,6 +45,7 @@ class JobCompanyDetailsController extends GetxController {
       jobDetailsState.jopDetails =
           await getJobById(jobId) ?? jobDetailsState.jopDetails;
     }
+
     changeStates(isLoading: false);
   }
 

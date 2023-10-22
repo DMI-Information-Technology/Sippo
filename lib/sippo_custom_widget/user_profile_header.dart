@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
-import 'package:jobspot/sippo_custom_widget/save_job_card_widget.dart';
 import 'package:jobspot/sippo_data/model/auth_model/entity_model.dart';
 
 import '../JobGlobalclass/jobstopcolor.dart';
 import '../JobGlobalclass/jobstopfontstyle.dart';
 import '../JobGlobalclass/sippo_customstyle.dart';
 import '../JobGlobalclass/text_font_size.dart';
+import 'network_bordered_circular_image_widget.dart';
 
 class UserProfileHeaderWidget extends StatelessWidget {
   final String profileImage;

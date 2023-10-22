@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 import 'package:jobspot/JopController/user_profile_controller/profile_user_controller.dart';
-
 import 'package:jobspot/core/Refresh.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/language_model.dart';
 import 'package:jobspot/sippo_data/user_repos/language_repo.dart';
@@ -82,6 +81,7 @@ class LanguageEditAddController extends GetxController {
         } else {
           await _profileController.fetchUserLanguage();
         }
+        _profileController.profileState.refreshProfileView();
         successState(true, 'New language added successfully.');
       },
       onValidateError: (validateError, _) {
@@ -107,14 +107,20 @@ class LanguageEditAddController extends GetxController {
         } else {
           await _profileController.fetchUserLanguage();
         }
+        _profileController.profileState.refreshProfileView();
         successState(true, 'Language deleted successfully.');
       },
       onValidateError: (validateError, _) {
-        _states.value =
-            states.copyWith(isError: true, error: validateError?.message);
+        _states.value = states.copyWith(
+          isError: true,
+          error: validateError?.message,
+        );
       },
       onError: (message, _) {
-        _states.value = states.copyWith(isError: true, message: message);
+        _states.value = states.copyWith(
+          isError: true,
+          message: message,
+        );
       },
     );
   }
@@ -123,7 +129,8 @@ class LanguageEditAddController extends GetxController {
     if (!_profileController.netController.isConnected) {
       warningState(
         true,
-        "sorry your connection is lost, please check your settings before continuing.",
+        "sorry your connection is lost, "
+        "please check your settings before continuing.",
       );
       return;
     }

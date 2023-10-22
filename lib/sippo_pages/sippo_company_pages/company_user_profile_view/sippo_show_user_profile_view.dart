@@ -4,16 +4,15 @@ import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
+import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/JopController/company_profile_controller/profile_user_view_controller.dart';
 import 'package:jobspot/sippo_custom_widget/add_info_profile_card.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
-import 'package:readmore/readmore.dart';
-
-import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/sippo_custom_widget/expandable_item_list_widget.dart';
 import 'package:jobspot/sippo_custom_widget/resume_card_widget.dart';
 import 'package:jobspot/sippo_custom_widget/user_profile_header.dart';
+import 'package:readmore/readmore.dart';
 
 class SippoCompanyUserProfileView extends StatefulWidget {
   const SippoCompanyUserProfileView({Key? key}) : super(key: key);
@@ -72,7 +71,8 @@ class _SippoCompanyUserProfileViewState
   Widget _buildUserProfileHeader(BuildContext context) {
     return Obx(() => UserProfileHeaderWidget(
           profileInfo: _controller.profileState.profileInfo,
-          profileImage: JobstopPngImg.photo,
+          profileImage:
+              _controller.profileState.profileInfo.profileImage?.url ?? '',
         ));
   }
 

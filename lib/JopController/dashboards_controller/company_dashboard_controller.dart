@@ -2,7 +2,6 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
-
 import 'package:jobspot/sippo_data/company_repos/company_profile_info_repo.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
 
@@ -30,6 +29,7 @@ class CompanyDashBoardController extends GetxController {
   int get selectedItemIndex => _selectedItemIndex.toInt();
 
   void set selectedItemIndex(int value) {
+    if (selectedItemIndex == value) return;
     _selectedItemIndex.value = value;
   }
 

@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:jobspot/JobGlobalclass/global_storage.dart';
-import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
-import 'package:jobspot/JobServices/shared_global_data_service.dart';
-import 'package:jobspot/utils/app_use.dart';
-
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
+import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
+import 'package:jobspot/JobServices/shared_global_data_service.dart';
 import 'package:jobspot/JopController/sippo_search_controller/genral_search_jobs_controller.dart';
-import 'package:jobspot/sippo_custom_widget/save_job_card_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
+import 'package:jobspot/utils/app_use.dart';
 import 'package:jobspot/utils/helper.dart';
+
+import 'package:jobspot/sippo_custom_widget/job_card_widget.dart';
 
 class ShowGeneralSearchJobsList extends StatefulWidget {
   const ShowGeneralSearchJobsList({super.key});
@@ -53,15 +53,11 @@ class _ShowGeneralSearchJobsListState extends State<ShowGeneralSearchJobsList> {
               },
               child: JobPostingCard(
                 jobDetails: item,
-                companyLocations: item.company?.locations,
                 companyName: item.company?.name,
                 onImageCompanyTap: () {
                   SharedGlobalDataService.onCompanyTap(item.company);
                 },
-                imagePath: [
-                  'https://www.designbust.com/download/1060/png/microsoft_logo_transparent512.png',
-                  'https://logodownload.org/wp-content/uploads/2014/09/facebook-logo-1-2.png',
-                ][index % 2 == 0 ? 0 : 1],
+                imagePath: item.company?.profileImage?.url,
                 timeAgo: '21 min ago',
                 isEditable: GlobalStorageService.appUse != AppUsingType.user,
                 isSaved: item.isSaved == true,
@@ -81,7 +77,7 @@ class _ShowGeneralSearchJobsListState extends State<ShowGeneralSearchJobsList> {
           },
         ),
         separatorBuilder: (_, __) => SizedBox(
-          height: context.fromHeight(CustomStyle.spaceBetween),
+          height: context.fromHeight(CustomStyle.huge2),
         ),
       ),
     );

@@ -77,6 +77,7 @@ class AuthRepo {
       final url =
           Uri.parse("${endpoints.baseUrl}/${endpoints.userLoginEndpoint}");
       final body = jsonEncode(user.toLoginJson());
+      print("login form after decode: $body");
       final response = await http.post(
         url,
         headers: Header.defaultHeader,
@@ -131,6 +132,7 @@ class AuthRepo {
       final url =
           Uri.parse("${endpoints.baseUrl}/${endpoints.companyLoginEndpoint}");
       final body = jsonEncode(company.toLoginJson());
+      print("login form after decode: $body");
       final response = await http.post(
         url,
         headers: Header.defaultHeader,

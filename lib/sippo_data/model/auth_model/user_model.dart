@@ -3,12 +3,14 @@ class UserModel {
   String? password;
   String? phone;
   String? passwordConfirmation;
+  String? fcmToken;
 
   UserModel({
     this.name,
     this.password,
     this.phone,
     this.passwordConfirmation,
+    this.fcmToken,
   });
 
   @override
@@ -18,6 +20,7 @@ class UserModel {
         ' password: $password,' +
         ' phone: $phone,' +
         ' password_confirmation: $passwordConfirmation,' +
+        ' fcm_token: $fcmToken,' +
         '}';
   }
 
@@ -34,6 +37,9 @@ class UserModel {
     return {
       'password': this.password,
       'phone': this.phone,
-    };
+      'fcm_token': this.fcmToken,
+    }..removeWhere(
+        (key, value) => value == null || (value as String).trim().isEmpty,
+      );
   }
 }

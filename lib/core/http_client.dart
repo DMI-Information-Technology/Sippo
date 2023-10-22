@@ -123,7 +123,7 @@ class MyHttpClient {
   }) async {
     print("HttpClient.put: the body request before encode is = $data");
     final body = jsonEncode(data);
-    print("HttpClient.put: the endpoint is = $baseUrl/$endpoint");
+    // print("HttpClient.put: the endpoint is = $baseUrl/$endpoint");
     print("HttpClient.put: the body request after encode is = $body");
     final response = await _client.put(
       _buildUri(endpoint, resourceId: resourceId, parameters: queryParameter),

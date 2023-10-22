@@ -1,43 +1,47 @@
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/cord_location.dart';
 
+import '../../locations_model/location_address_model.dart';
+
 class WorkLocationModel {
   const WorkLocationModel({
     this.id,
-    this.companyId,
-    this.address,
-    this.location,
+    this.userId,
+    this.locationAddress,
+    this.cordLocation,
     this.isHQ,
   });
 
-  factory WorkLocationModel.fromJson(Map<String, dynamic> json) {
+  factory WorkLocationModel.fromJson(Map<String, dynamic>? json) {
     return WorkLocationModel(
-      id: json["id"],
-      companyId: json['company_id'],
-      address: json["address"],
-      location: CoordLocation.fromJson({
-        'longitude': json['longitude'],
-        'latitude': json['latitude'],
+      id: json?["id"],
+      userId: json?['user_id'],
+      locationAddress: json?['location'] != null
+          ? LocationAddress.fromJson(json?['location'])
+          : null,
+      cordLocation: CoordLocation.fromJson({
+        'longitude': json?['longitude'],
+        'latitude': json?['latitude'],
       }),
-      isHQ: json["is_hq"],
+      isHQ: json?["is_hq"],
     );
   }
 
   final int? id;
-  final int? companyId;
-  final String? address;
-  final CoordLocation? location;
+  final int? userId;
+  final CoordLocation? cordLocation;
+  final LocationAddress? locationAddress;
   final bool? isHQ;
 
   Map<String, dynamic> toJson() => {
-        "address": address,
         "is_hq": isHQ,
-        'latitude': location?.latitude,
-        'longitude': location?.longitude,
+        'latitude': cordLocation?.latitude,
+        'longitude': cordLocation?.longitude,
+        'location_id': locationAddress?.id
       };
 
   @override
   String toString() {
-    return 'WorkLocationModel{id: $id, companyId: $companyId, address: $address, location: $location, isHQ: $isHQ}';
+    return 'WorkLocationModel{id: $id, companyId: $userId, locationAddress: $locationAddress, location: $cordLocation, isHQ: $isHQ}';
   }
 
   @override
@@ -46,16 +50,17 @@ class WorkLocationModel {
       other is WorkLocationModel &&
           runtimeType == other.runtimeType &&
           id == other.id &&
-          companyId == other.companyId &&
-          address == other.address &&
-          location == other.location &&
+          userId == other.userId &&
+          locationAddress == other.locationAddress &&
+          cordLocation == other.cordLocation &&
           isHQ == other.isHQ;
 
   @override
   int get hashCode =>
       id.hashCode ^
-      companyId.hashCode ^
-      address.hashCode ^
-      location.hashCode ^
+      userId.hashCode ^
+      locationAddress.hashCode ^
+      cordLocation.hashCode ^
       isHQ.hashCode;
 }
+

@@ -6,11 +6,11 @@ class ImageResourceModel {
     this.size,
   });
 
-  ImageResourceModel.fromJson(dynamic json) {
-    url = json['url'];
-    name = json['name'];
-    mimeType = json['mime_type'];
-    size = json['size'];
+  ImageResourceModel.fromJson(Map<String,dynamic>? json) {
+    url = json?['url'];
+    name = json?['name'];
+    mimeType = json?['mime_type'];
+    size = json?['size'];
   }
 
   String? url;

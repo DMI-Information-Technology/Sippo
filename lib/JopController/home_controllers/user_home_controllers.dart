@@ -5,7 +5,9 @@ import 'package:jobspot/JobServices/ConnectivityController/internet_connection_c
 import 'package:jobspot/JobServices/shared_global_data_service.dart';
 import 'package:jobspot/JopController/dashboards_controller/user_dashboard_controller.dart';
 import 'package:jobspot/core/Refresh.dart';
+import 'package:jobspot/sippo_data/job_statistics_repo/job_statistics_repo.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
+import 'package:jobspot/sippo_data/model/job_statistics_model/job_statistics_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/profile_edit_model.dart';
 import 'package:jobspot/sippo_data/user_repos/user_jobs_repo.dart';
@@ -60,8 +62,20 @@ class UserHomeController extends GetxController {
     );
   }
 
+  Future<void> fetchJobStatistics() async {
+    final response = await JobStatisticsRepo.fetchLocations();
+    await response?.checkStatusResponse(
+      onSuccess: (data, _) {
+        if (data != null) jobsHomeState.jobStatistic = data;
+      },
+      onValidateError: (validateError, _) {},
+      onError: (message, _) {},
+    );
+  }
+
   void refreshPage() async {
     await Future.wait([
+      fetchJobStatistics(),
       jobsHomeState.refreshJobs(),
       dashboardController.userInformationRefresh(),
     ]);
@@ -70,11 +84,19 @@ class UserHomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    fetchJobStatistics();
     jobsHomeState.pageJobsRequester(0);
   }
 }
 
 class JobsHomeState {
+  final _jobStatistic = JobStatisticsModel().obs;
+
+  JobStatisticsModel get jobStatistic => _jobStatistic.value;
+
+  void set jobStatistic(JobStatisticsModel value) =>
+      _jobStatistic.value = value;
+
   bool get isNetworkConnected => InternetConnectionService.instance.isConnected;
   final _jobStates = States().obs;
 

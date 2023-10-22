@@ -96,6 +96,9 @@ class _SippoGeneralSearchState extends State<SippoGeneralSearch>
         hintStyle: TextStyle(
           fontSize: FontSize.title6(context),
         ),
+        onTextChanged: (_) {
+          _controller.onSearchSubmitted();
+        },
         suffixIcon: InkWell(
           onTap: () {
             _controller.onClearSearchFiledSubmitted();
@@ -142,7 +145,7 @@ class _SippoGeneralSearchState extends State<SippoGeneralSearch>
             onPressed: () async {
               SharedGlobalDataService.instance.searchTextKey =
                   _controller.generalSearchState.searchController.text;
-              await Get.toNamed(SippoRoutes.sippoUserJobSearch);
+              await Get.toNamed(SippoRoutes.sippoJobFilterSearch);
               SharedGlobalDataService.instance.searchTextKey = '';
             },
             icon: Icon(

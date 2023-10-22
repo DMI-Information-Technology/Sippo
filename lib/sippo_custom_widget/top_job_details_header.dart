@@ -4,7 +4,8 @@ import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
-import 'package:jobspot/sippo_custom_widget/save_job_card_widget.dart';
+
+import 'network_bordered_circular_image_widget.dart';
 
 class TopJobDetailsHeader extends StatelessWidget {
   const TopJobDetailsHeader({
@@ -74,32 +75,6 @@ class TopJobDetailsHeader extends StatelessWidget {
           fit: BoxFit.cover,
         ),
       ),
-      // child: SafeArea(
-      //   child: Container(
-      //     width: context.width,
-      //     alignment: Alignment.topCenter,
-      //     margin: EdgeInsets.only(
-      //       top: this.isConnectionLost
-      //           ? context.fromHeight(CustomStyle.connectionLostHeight)
-      //           : 0.0,
-      //     ),
-      //     height: kToolbarHeight,
-      //     child: Row(
-      //       children: [
-      //         IconButton(
-      //           icon: Icon(Icons.arrow_back, color: Colors.white),
-      //           onPressed: onLeadingTap,
-      //         ),
-      //         Spacer(),
-      //         if (actions.isNotEmpty)
-      //           Row(
-      //             mainAxisAlignment: MainAxisAlignment.end,
-      //             children: actions,
-      //           ),
-      //       ],
-      //     ),
-      //   ),
-      // ),
     );
   }
 

@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
+import 'package:jobspot/sippo_data/company_repos/company_job_repo.dart';
+import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
+import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/cord_location.dart';
+import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/work_location_model.dart';
 import 'package:jobspot/sippo_data/model/salary_model/range_salary_model.dart';
 import 'package:jobspot/sippo_data/model/specializations_model/specializations_model.dart';
 import 'package:jobspot/utils/states.dart';
 import 'package:jobspot/utils/string_formtter.dart';
-
-import 'package:jobspot/sippo_data/company_repos/company_job_repo.dart';
-import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
-import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
-import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/work_location_model.dart';
-import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
 
 import '../dashboards_controller/company_dashboard_controller.dart';
 
@@ -187,7 +186,8 @@ class CompanyEditAddJobController extends GetxController {
       newJobState.specializationList =
           company.specializations?.where((e) => e.name != null).toList() ?? [];
       newJobState.locationsList =
-          company.locations?.where((e) => e.address != null).toList() ?? [];
+          company.locations?.where((e) => e.locationAddress != null).toList() ??
+              [];
       newJobState.workPLaceTypeList = [
         (title: "Onsite", description: "Employees come to work"),
         (
@@ -250,8 +250,9 @@ class CompanyEditAddJobState {
         description: description,
         workplaceType: workPLaceType,
         employmentType: employmentType,
-        longitude: jobLocation.location?.dLongitude,
-        latitude: jobLocation.location?.dLatitude,
+        locationAddress: jobLocation.locationAddress,
+        longitude: jobLocation.cordLocation?.dLongitude,
+        latitude: jobLocation.cordLocation?.dLatitude,
         salaryFrom: salary.from,
         salaryTo: salary.to,
         experienceLevel: experienceLevel,
@@ -273,8 +274,8 @@ class CompanyEditAddJobState {
       experienceLevel = value!.experienceLevel!;
     if (value?.specialization != null) specialization = value!.specialization!;
     jobLocation = WorkLocationModel(
-      address: value?.company?.locations?.first.address,
-      location: CoordLocation(
+      locationAddress: value?.company?.locations?.first.locationAddress,
+      cordLocation: CoordLocation(
         longitude: value?.longitude.toString(),
         latitude: value?.latitude.toString(),
       ),
@@ -370,7 +371,7 @@ class CompanyEditAddJobState {
   String? get salaryForamat {
     if (salary.from == null || salary.to == null) return null;
     if (salary.from! < 0 || salary.to! < salary.from!) return null;
-    return "${rangeSalary.start.round().toString().salaryValue} - ${rangeSalary.end.round().toString().salaryValue}";
+    return "${rangeSalary.start.round().toString().shortStringNumberFormat} - ${rangeSalary.end.round().toString().shortStringNumberFormat}";
   }
 
   ExperienceLevel get experienceLevel => _experienceLevel.value;
@@ -429,8 +430,13 @@ class CompanyEditAddJobState {
     _showActionSpecialization.value = true;
   }
 
-  List<String> get locationsLabel =>
-      locationsList.map((e) => e.address!).toList();
+  List<String> get locationsLabel {
+    return List.generate(locationsList.length, (index) {
+      final name = locationsList[index].locationAddress?.name ?? '';
+      return "${index + 1}. $name";
+    });
+  }
+
   List<String> get specializationLabel =>
       specializationList.map((e) => e.name!).toList();
   void dispose() {

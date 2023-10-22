@@ -18,3 +18,4 @@ enum NotificationTypes {
         .firstWhereOrNull((e) => value == e.typeName);
   }
 }
+

@@ -1,22 +1,21 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jobspot/JobGlobalclass/global_storage.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
+import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
+import 'package:jobspot/JopController/JobDescriptionController/job_description_controller.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
+import 'package:jobspot/sippo_custom_widget/list_item_text.dart';
 import 'package:jobspot/sippo_custom_widget/top_job_details_header.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
-import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_abouts_companies/show_about_companies_details.dart';
+import 'package:jobspot/sippo_pages/sippo_abouts_companies/show_about_companies_details.dart';
 import 'package:jobspot/utils/app_use.dart';
-
-import 'package:jobspot/JobGlobalclass/global_storage.dart';
-import 'package:jobspot/JobGlobalclass/routes.dart';
-import 'package:jobspot/JopController/JobDescriptionController/job_description_controller.dart';
-import 'package:jobspot/sippo_custom_widget/list_item_text.dart';
 import 'package:jobspot/utils/helper.dart';
 
 class SippoJobDescription extends StatefulWidget {
@@ -175,14 +174,22 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
                   ),
                 ),
                 SizedBox(width: context.fromWidth(CustomStyle.xxxl)),
-                Obx(() => _buildTopInfoJobText(
-                      context,
-                      // 'Publish time',
-                      calculateElapsedTimeFromStringDate(
-                            _controller.jobDetailsState.jopDetails.createdAt,
-                          ) ??
-                          "",
-                    )),
+                Obx(() {
+                  final createAt =
+                      _controller.jobDetailsState.jopDetails.createdAt;
+                  return createAt != null && createAt.isNotEmpty
+                      ? _buildTopInfoJobText(
+                          context,
+                          // 'Publish time',
+                          calculateElapsedTimeFromStringDate(
+                                _controller
+                                        .jobDetailsState.jopDetails.createdAt ??
+                                    '',
+                              ) ??
+                              "",
+                        )
+                      : const SizedBox.shrink();
+                }),
               ],
             ),
           )

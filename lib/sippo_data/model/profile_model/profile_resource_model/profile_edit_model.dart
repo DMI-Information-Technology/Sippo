@@ -17,18 +17,18 @@ class ProfileInfoModel extends EntityModel {
     this.profileImage,
   });
 
-  factory ProfileInfoModel.fromJson(Map<String, dynamic> json) =>
+  factory ProfileInfoModel.fromJson(Map<String, dynamic>? json) =>
       ProfileInfoModel(
-        id: json["id"],
-        name: json["name"],
-        phone: json["phone"],
-        secondaryPhone: json["secondary_phone"],
-        email: json["email"],
-        gender: json['gender'],
-        bio: json['bio'],
-        cv: json['cv'] != null ? CvModel.fromJson(json['cv']) : null,
-        profileImage: json['profile_image'] != null
-            ? ImageResourceModel.fromJson(json['profile_image'])
+        id: json?["id"],
+        name: json?["name"],
+        phone: json?["phone"],
+        secondaryPhone: json?["secondary_phone"],
+        email: json?["email"],
+        gender: json?['gender'],
+        bio: json?['bio'],
+        cv: json?['cv'] != null ? CvModel.fromJson(json?['cv']) : null,
+        profileImage: json?['profile_image'] != null
+            ? ImageResourceModel.fromJson(json?['profile_image'])
             : null,
       );
 

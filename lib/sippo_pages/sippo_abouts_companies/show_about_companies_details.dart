@@ -1,14 +1,13 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
-import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
-
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
+import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
+import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
 
 class ShowAboutCompaniesDetails extends StatelessWidget {
   const ShowAboutCompaniesDetails({super.key, this.company})
@@ -39,7 +38,11 @@ class ShowAboutCompaniesDetails extends StatelessWidget {
         _buildTextDetailsWidgets(
           context,
           "Head_office".tr,
-          company?.locations?.map((e) => e.address).join(", ") ?? "",
+          company?.locations
+                  ?.where((e) => e.locationAddress != null)
+                  .map((e) => e.locationAddress?.name ?? '')
+                  .join(", ") ??
+              "",
         ),
         _buildTextDetailsWidgets(
           context,

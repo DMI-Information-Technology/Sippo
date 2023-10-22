@@ -1,24 +1,27 @@
+import 'dart:async';
+
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
 import 'package:jobspot/JobServices/shared_global_data_service.dart';
+import 'package:jobspot/sippo_data/company_repos/company_job_repo.dart';
+import 'package:jobspot/sippo_data/model/job_statistics_model/job_statistics_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
 import 'package:jobspot/sippo_data/user_repos/user_jobs_repo.dart';
 import 'package:jobspot/utils/getx_text_editing_controller.dart';
-
-import 'package:jobspot/sippo_data/company_repos/company_job_repo.dart';
 import 'package:jobspot/utils/states.dart';
-import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
 
+import '../../core/Refresh.dart';
+import '../../sippo_data/user_repos/user_saved_job_repo.dart';
 
-class UserSearchJobsController extends GetxController {
+class SearchJobsController extends GetxController {
   final pagingController =
       PagingController<int, CompanyJobModel>(firstPageKey: 0);
 
-  static UserSearchJobsController get instances => Get.find();
+  static SearchJobsController get instances => Get.find();
 
-  bool get isNetworkConnected =>
-      InternetConnectionService.instance.isConnected;
-  final searchJobsState = UserSearchJobsState();
+  bool get isNetworkConnected => InternetConnectionService.instance.isConnected;
+  final searchJobsState = SearchJobsState();
   final _states = States().obs;
 
   States get states => _states.value;
@@ -31,7 +34,10 @@ class UserSearchJobsController extends GetxController {
     String? message,
     String? error,
   }) {
-    print("is loading:  $isLoading");
+    if (isLoading == true) {
+      _states.value = States();
+      return;
+    }
     _states.value = states.copyWith(
       isLoading: isLoading,
       isSuccess: isLoading == true ? false : isSuccess,
@@ -43,6 +49,38 @@ class UserSearchJobsController extends GetxController {
   }
 
   void resetStates() => _states.value = States();
+
+  void changeSaveJobState(
+    int index,
+    bool Function(CompanyJobModel value) isSaved,
+  ) {
+    pagingController.itemList = Refresher.changePropertyItemState(
+      pagingController.itemList,
+      index,
+      newItemChanger: (indexItem) => indexItem.copyWith(
+        isSaved: isSaved(indexItem),
+      ),
+    );
+  }
+
+  Future<void> toggleSavedJobs(int index, int? id) async {
+    changeSaveJobState(index, (e) => !(e.isSaved == true));
+    final response = await SavedJobsRepo.toggleSavedJob(id);
+    await response?.checkStatusResponse(
+      onSuccess: (data, _) {},
+      onValidateError: (validateError, _) {
+        changeSaveJobState(index, (e) => e.isSaved == true);
+      },
+      onError: (message, _) {
+        changeSaveJobState(index, (e) => e.isSaved == true);
+      },
+    );
+  }
+
+  void onToggleSavedJobsSubmitted(int index, int? id) async {
+    if (InternetConnectionService.instance.isNotConnected) return;
+    await toggleSavedJobs(index, id);
+  }
 
   Future<void> fetchSearchJobsPages(
     int pageKey,
@@ -77,8 +115,8 @@ class UserSearchJobsController extends GetxController {
   }
 
   void onSelectedEmploymentTypeSubmitted(({String value, String title}) v) {
-    if (states.isLoading || searchJobsState.employmentTyp == v) return;
-    searchJobsState.employmentTyp = v;
+    if (states.isLoading || searchJobsState.employmentType == v) return;
+    searchJobsState.employmentType = v;
     refreshPage();
   }
 
@@ -107,15 +145,33 @@ class UserSearchJobsController extends GetxController {
     );
   }
 
+  void startSearchJob(JobStatisticsData? jobStatistics) async {
+    await fetchEmploymentTypes();
+    if (jobStatistics?.type == 'employment_type')
+      searchJobsState.employmentType =
+          searchJobsState.employmentTypeList.firstWhereOrNull(
+                (e) => e.title == jobStatistics?.label,
+              ) ??
+              searchJobsState.employmentType;
+  }
+
   @override
   void onInit() {
     super.onInit();
     searchJobsState.textSearch.text =
         SharedGlobalDataService.instance.searchTextKey;
-    fetchEmploymentTypes();
+    final jobStatistics = SharedGlobalDataService.instance.jobStatistics;
+    switch (jobStatistics?.type) {
+      case "employment_type":
+        searchJobsState.employmentType =
+            (value: '', title: jobStatistics?.label ?? '');
+      case "workplace_type":
+        searchJobsState.querySearch[jobStatistics?.type ?? ""] =
+            jobStatistics?.label ?? "";
+    }
+    startSearchJob(jobStatistics);
     pagingController.addPageRequestListener(_pageRequester);
   }
-
   @override
   void onClose() {
     pagingController.dispose();
@@ -124,7 +180,7 @@ class UserSearchJobsController extends GetxController {
   }
 }
 
-class UserSearchJobsState {
+class SearchJobsState {
   var _pageNumber = 1;
 
   int get pageNumber => _pageNumber.toInt();
@@ -139,11 +195,11 @@ class UserSearchJobsState {
   final Rx<({String? value, String? title})> _employmentTyp =
       (value: '', title: '').obs;
 
-  ({String? value, String? title}) get employmentTyp => _employmentTyp.value;
+  ({String? value, String? title}) get employmentType => _employmentTyp.value;
 
-  set employmentTyp(({String? value, String? title}) value) {
-    if (value == employmentTyp) {
-      employmentTyp = (value: '', title: '');
+  set employmentType(({String? value, String? title}) value) {
+    if (value == employmentType) {
+      _employmentTyp.value = (value: '', title: '');
       return;
     }
     _employmentTyp.value = value;
@@ -158,11 +214,17 @@ class UserSearchJobsState {
     _employmentTypeList.value = value;
   }
 
+  void clearQuerySearch() {
+    employmentType = (title: '', value: '');
+    textSearch.text = '';
+    querySearch.clear();
+  }
+
   Map<String, String> get buildQuerySearch => {
         ...querySearch,
         'page': pageNumber.toString(),
-        'text': textSearch.text.trim().split(' ').join('+'),
-        'employment_type': employmentTyp.title?.split(' ').join('+') ?? '',
+        'text': textSearch.text.split(' ').join('+'),
+        'employment_type': employmentType.title?.split(' ').join('+') ?? '',
         'per_page': '6',
       }..removeWhere((key, value) => value.trim().isEmpty);
 

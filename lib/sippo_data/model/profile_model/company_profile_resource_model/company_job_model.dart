@@ -2,6 +2,8 @@ import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dar
 import 'package:jobspot/sippo_data/model/salary_model/range_salary_model.dart';
 import 'package:jobspot/sippo_data/model/specializations_model/specializations_model.dart';
 
+import '../../locations_model/location_address_model.dart';
+
 class CompanyJobModel {
   int? id; // New field
   final CompanyDetailsModel? company; // New field
@@ -22,6 +24,7 @@ class CompanyJobModel {
   final bool? isActive; // New field
   final bool? hasApplied;
   final bool? isSaved;
+  final LocationAddress? locationAddress;
 
   CompanyJobModel({
     this.id,
@@ -32,6 +35,7 @@ class CompanyJobModel {
     this.workplaceType,
     this.longitude,
     this.latitude,
+    this.locationAddress,
     this.employmentType,
     this.salaryFrom,
     this.salaryTo,
@@ -48,46 +52,52 @@ class CompanyJobModel {
   RangeSalaryModel get salaryRange =>
       RangeSalaryModel(from: salaryFrom, to: salaryTo);
 
-  factory CompanyJobModel.fromJson(Map<String, dynamic> json) {
+  factory CompanyJobModel.fromJson(Map<String, dynamic>? json) {
     return CompanyJobModel(
-      id: json['id'],
-      company: json['company'] != null
-          ? CompanyDetailsModel.fromJson(json['company'])
+      id: json?['id'],
+      company: json?['company'] != null
+          ? CompanyDetailsModel.fromJson(json?['company'])
           : null,
-      title: json['title'],
-      description: json['description'],
-      requirements: json['requirements'],
-      workplaceType: json['workplace_type'],
-      longitude: json['longitude'],
-      latitude: json['latitude'],
-      employmentType: json['employment_type'],
+      title: json?['title'],
+      description: json?['description'],
+      requirements: json?['requirements'],
+      workplaceType: json?['workplace_type'],
+      longitude: json?['longitude'] != null ? (json?['longitude']??0) * 1.0 : null,
+      latitude: json?['longitude'] != null ? (json?['latitude']??0) * 1.0 : null,
+      locationAddress: json?['location'] != null
+          ? LocationAddress.fromJson(json?['location'])
+          : null,
+      employmentType: json?['employment_type'],
       salaryFrom: (() {
-        final result = json['salary_from'];
-        if (result is String && result.runtimeType == String)
-          return double.parse(result);
-        if (result is num) return result.toDouble();
-        return null;
+        final result = json?['salary_from'];
+
+        return switch (result) {
+          String() => double.parse(result),
+          int() || num() => result.toDouble(),
+          _ => null
+        };
       })(),
       salaryTo: (() {
-        final result = json['salary_to'];
-        if (result is String && result.runtimeType == String)
-          return double.parse(result);
-        if (result is num) return result.toDouble();
-        return null;
+        final result = json?['salary_to'];
+        return switch (result) {
+          String() => double.parse(result),
+          int() || num() => result.toDouble(),
+          _ => null
+        };
       })(),
       experienceLevel:
-          json['experience_level'] != null && json['experience_level'] is Map
-              ? ExperienceLevel.fromJson(json['experience_level'])
+          json?['experience_level'] != null && json?['experience_level'] is Map
+              ? ExperienceLevel.fromJson(json?['experience_level'])
               : null,
-      createdAt: json['created_at'],
-      isExpired: json['is_expired'],
-      hasApplied: json['has_applied'],
-      isActive: json['is_active'],
+      createdAt: json?['created_at'],
+      isExpired: json?['is_expired'],
+      hasApplied: json?['has_applied'],
+      isActive: json?['is_active'],
       specialization:
-          json['specialization'] != null && json['specialization'] is Map
-              ? SpecializationModel.fromJson(json['specialization'])
+          json?['specialization'] != null && json?['specialization'] is Map
+              ? SpecializationModel.fromJson(json?['specialization'])
               : null,
-      isSaved: json['is_saved'],
+      isSaved: json?['is_saved'],
     );
   }
 
@@ -97,6 +107,7 @@ class CompanyJobModel {
       'description': description,
       'longitude': longitude,
       'latitude': latitude,
+      'location_id': locationAddress?.id,
       'requirements': requirements,
       'workplace_type': workplaceType,
       'employment_type': employmentType,
@@ -109,7 +120,7 @@ class CompanyJobModel {
 
   @override
   String toString() {
-    return 'CompanyJobModel{id: $id, title: $title, description: $description, requirements: $requirements, workplaceType: $workplaceType, longitude: $longitude, latitude: $latitude, employmentType: $employmentType, isSaved: $isSaved, salaryFrom: $salaryFrom, salaryTo: $salaryTo, experienceLevel: $experienceLevel, specialization: $specialization, createdAt: $createdAt, isExpired: $isExpired, hasApplied: $hasApplied, isActive: $isActive}';
+    return 'CompanyJobModel{id: $id, title: $title, description: $description, requirements: $requirements, workplaceType: $workplaceType, longitude: $longitude, latitude: $latitude, location: $locationAddress, employmentType: $employmentType, isSaved: $isSaved, salaryFrom: $salaryFrom, salaryTo: $salaryTo, experienceLevel: $experienceLevel, specialization: $specialization, createdAt: $createdAt, isExpired: $isExpired, hasApplied: $hasApplied, isActive: $isActive}';
   }
 
   @override
@@ -124,6 +135,7 @@ class CompanyJobModel {
           workplaceType == other.workplaceType &&
           longitude == other.longitude &&
           latitude == other.latitude &&
+          locationAddress == other.locationAddress &&
           employmentType == other.employmentType &&
           salaryFrom == other.salaryFrom &&
           salaryTo == other.salaryTo &&
@@ -145,6 +157,7 @@ class CompanyJobModel {
       workplaceType.hashCode ^
       longitude.hashCode ^
       latitude.hashCode ^
+      locationAddress.hashCode ^
       employmentType.hashCode ^
       salaryFrom.hashCode ^
       salaryTo.hashCode ^
@@ -166,6 +179,7 @@ class CompanyJobModel {
     String? workplaceType,
     double? longitude,
     double? latitude,
+    LocationAddress? locationAddress,
     String? employmentType,
     double? salaryFrom,
     double? salaryTo,
@@ -187,6 +201,7 @@ class CompanyJobModel {
       workplaceType: workplaceType ?? this.workplaceType,
       longitude: longitude ?? this.longitude,
       latitude: latitude ?? this.latitude,
+      locationAddress: locationAddress ?? this.locationAddress,
       employmentType: employmentType ?? this.employmentType,
       salaryFrom: salaryFrom ?? this.salaryFrom,
       salaryTo: salaryTo ?? this.salaryTo,

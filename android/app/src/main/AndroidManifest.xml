@@ -23,8 +23,8 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION"/>
-<!--        android:name="${applicationName}"-->
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <!--        android:name="${applicationName}"-->
     <application
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher"
@@ -46,13 +46,21 @@
             <meta-data
                 android:name="io.flutter.embedding.android.NormalTheme"
                 android:resource="@style/NormalTheme" />
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="FLUTTER_NOTIFICATION_CLICK" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.
-             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
+             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->z
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="high_importance_channel" />
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
@@ -60,7 +68,7 @@
             android:name="org.apache.http.legacy"
             android:required="false" />
         <meta-data
-                    android:name="com.google.android.geo.API_KEY"
-                    android:value="${mapsApiKey}" />
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${mapsApiKey}" />
     </application>
 </manifest>

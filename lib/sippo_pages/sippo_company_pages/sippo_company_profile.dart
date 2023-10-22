@@ -265,7 +265,7 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
             itemBuilder: (context, index) {
               final item = _controller.company.locations?[index];
               return AutoSizeText(
-                item?.address ?? 'unknown',
+                item?.locationAddress?.name ?? '',
                 style: dmsregular.copyWith(
                   color: Jobstopcolor.primarycolor,
                 ),

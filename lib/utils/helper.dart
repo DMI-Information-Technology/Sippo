@@ -33,6 +33,7 @@ String calculateElapsedTime(DateTime dateTime) {
   }
   return 'just now';
 }
+
 String calculateElapsedTimeAR(DateTime dateTime) {
   final startTimeMillis = dateTime.millisecondsSinceEpoch;
   int currentTimeMillis = DateTime.now().millisecondsSinceEpoch;
@@ -168,10 +169,9 @@ bool listEquality<T>(List<T>? list1, List<T>? list2) {
 }
 
 Future<void> lunchMapWithLocation(double? lat, double? long) async {
-  print("is work place is null? ${long == null || lat == null}");
   if (long == null || lat == null) return;
   try {
-    !await launchUrl(Uri.parse("http://maps.google.com/?ll=$lat,$long"));
+    await launchUrl(Uri.parse("http://maps.google.com/?ll=$lat,$long"));
   } catch (e, s) {
     print(e);
     print(s);

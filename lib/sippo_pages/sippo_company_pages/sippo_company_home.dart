@@ -5,15 +5,16 @@ import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
-import 'package:jobspot/JopController/dashboards_controller/company_dashboard_controller.dart';
-import 'package:jobspot/sippo_custom_widget/body_widget.dart';
-import 'package:jobspot/sippo_custom_widget/save_job_card_widget.dart';
-
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
-import 'package:jobspot/sippo_custom_widget/job_card_widget.dart';
+import 'package:jobspot/JopController/dashboards_controller/company_dashboard_controller.dart';
+import 'package:jobspot/sippo_custom_widget/body_widget.dart';
+import 'package:jobspot/sippo_custom_widget/job_home_card_widget.dart';
+
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
-import 'package:jobspot/sippo_data/model/profile_model/profile_widget_model/jobstop_jobdetailspost.dart';
+import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
+
+import '../../sippo_custom_widget/network_bordered_circular_image_widget.dart';
 
 class SippoCompanyHomePage extends StatefulWidget {
   const SippoCompanyHomePage({Key? key}) : super(key: key);
@@ -23,62 +24,11 @@ class SippoCompanyHomePage extends StatefulWidget {
 }
 
 class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
-  final List<JobDetailsModel> jobData = [
-    JobDetailsModel(
-      companyLogo: 'https://picsum.photos/200',
-      jobName: 'Flutter Developerrrrrrrrrrrrrrrrr',
-      companyName: 'Example Company',
-      location: 'New York, USA',
-      description: 'We are looking for a skilled Flutter developer...',
-      salary: '\$70,000 - \$90,000',
-      chips: ['Full-time', 'Remote', 'Experienced'],
-    ),
-    JobDetailsModel(
-      companyLogo: 'https://picsum.photos/200',
-      jobName: 'Flutter Developer',
-      companyName: 'Example Company',
-      location: 'New York, USA',
-      description: 'We are looking for a skilled Flutter developer...',
-      salary: '\$70,000 - \$90,000',
-      chips: ['Full-time', 'Remote', 'Experienced'],
-    ),
-    JobDetailsModel(
-      companyLogo: 'https://picsum.photos/200',
-      jobName: 'Flutter Developer',
-      companyName: 'Example Company',
-      location: 'New York, USA',
-      description: 'We are looking for a skilled Flutter developer...',
-      salary: '\$70,000 - \$90,000',
-      chips: ['Full-time', 'Remote', 'Experienced'],
-    ),
-    JobDetailsModel(
-      companyLogo: 'https://picsum.photos/200',
-      jobName: 'Flutter Developer',
-      companyName: 'Example Company',
-      location: 'New York, USA',
-      description: 'We are looking for a skilled Flutter developer...',
-      salary: '\$70,000 - \$90,000',
-      chips: ['Full-time', 'Remote', 'Experienced'],
-    ),
-    JobDetailsModel(
-      companyLogo: 'https://picsum.photos/200',
-      jobName: 'Flutter Developer',
-      companyName: 'Example Company',
-      location: 'New York, USA',
-      description: 'We are looking for a skilled Flutter developer...',
-      salary: '\$70,000 - \$90,000',
-      chips: [
-        'Full-time',
-        'Remote',
-        'Experienced',
-      ],
-    )
-    // Add more job data as needed...
-  ];
-
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery
+        .of(context)
+        .size;
     double height = size.height;
     double width = size.width;
 
@@ -127,9 +77,10 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
                     ],
                   );
                 },
-                separatorBuilder: (context, index) => SizedBox(
-                  width: width / 32,
-                ),
+                separatorBuilder: (context, index) =>
+                    SizedBox(
+                      width: width / 32,
+                    ),
               ),
             ),
             SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
@@ -157,7 +108,7 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
             ),
             SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
             FutureBuilder(
-                future: Future.value(jobData),
+                future: Future.value([CompanyJobModel()]),
                 builder: (context, snapshot) {
                   final data = snapshot.data;
                   if (data == null) return const SizedBox.shrink();
@@ -172,7 +123,7 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
                         return JobHomeCard(
                           width: context.width / 1.3,
                           onActionTap: () {
-                            print('${data[index].jobName} added to favorites');
+                            print('${data[index].title} added to favorites');
                           },
                           onCardTap: () {},
                           canApply: false,
@@ -193,7 +144,9 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
 
   AppBar _buildHomeAppBar(BuildContext context) {
     final dashboardController = CompanyDashBoardController.instance;
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery
+        .of(context)
+        .size;
     double height = size.height;
     double width = size.width;
     return AppBar(
@@ -225,9 +178,10 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
               ),
               InkWell(
                 onTap: () => Get.toNamed(SippoRoutes.sippocompanyprofile),
-                child: Obx(() => NetworkBorderedCircularImage(
+                child: Obx(() =>
+                    NetworkBorderedCircularImage(
                       imageUrl:
-                          dashboardController.company.profileImage?.url ?? '',
+                      dashboardController.company.profileImage?.url ?? '',
                       errorWidget: (___, __, _) => const CircleAvatar(),
                       size: context.fromHeight(24),
                       outerBorderColor: Jobstopcolor.backgroudHome,
@@ -258,14 +212,15 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
             ),
           ),
           Obx(
-            () => dashboardController.company.name != null
+                () =>
+            dashboardController.company.name != null
                 ? Text(
-                    "${dashboardController.company.name}",
-                    style: dmsbold.copyWith(
-                      fontSize: FontSize.title3(context),
-                      color: Jobstopcolor.primarycolor,
-                    ),
-                  )
+              "${dashboardController.company.name}",
+              style: dmsbold.copyWith(
+                fontSize: FontSize.title3(context),
+                color: Jobstopcolor.primarycolor,
+              ),
+            )
                 : const SizedBox.shrink(),
           ),
         ],
@@ -274,7 +229,9 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
   }
 
   Widget _buildAdsBoard() {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery
+        .of(context)
+        .size;
     double height = size.height;
     double width = size.width;
 
@@ -320,7 +277,9 @@ class FindYorJopDashBoardCards extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery
+        .of(context)
+        .size;
     double height = size.height;
     double width = size.width;
     return Row(
@@ -348,7 +307,7 @@ class FindYorJopDashBoardCards extends StatelessWidget {
                 Text(
                   "44.5k",
                   style:
-                      dmsbold.copyWith(fontSize: 16, color: Jobstopcolor.black),
+                  dmsbold.copyWith(fontSize: 16, color: Jobstopcolor.black),
                 ),
                 Text(
                   "Remote Job",

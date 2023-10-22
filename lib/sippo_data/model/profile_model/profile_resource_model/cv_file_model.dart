@@ -1,5 +1,5 @@
 class CvModel {
-  CvModel({
+ const CvModel({
     this.url,
     this.name,
     this.mimeType,
@@ -24,12 +24,12 @@ class CvModel {
   final String? mimeType;
   final String? size;
 
-  factory CvModel.fromJson(Map<String, dynamic> json) {
+  factory CvModel.fromJson(Map<String, dynamic>? json) {
     return CvModel(
-      url: json["url"],
-      name: json["name"],
-      mimeType: json["mimeType"],
-      size: json["size"],
+      url: json?["url"],
+      name: json?["name"],
+      mimeType: json?["mimeType"],
+      size: json?["size"],
     );
   }
 

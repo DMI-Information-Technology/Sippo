@@ -14,6 +14,7 @@ class CustomBodyWidget extends StatefulWidget {
     this.extraAppBarHeight = 0.0,
     this.automaticallyImplyLeading = false,
     this.leading,
+    this.actions,
   })  : this.children = const [],
         this.itemCount = 0,
         this.itemBuilder = null,
@@ -28,25 +29,27 @@ class CustomBodyWidget extends StatefulWidget {
     this.extraAppBarHeight = 0.0,
     this.automaticallyImplyLeading = false,
     this.leading,
+    this.actions,
   })  : this.contentPadding = null,
         this.itemCount = 0,
         this.itemBuilder = null,
         this.separatedBuilder = null,
         this.child = null;
 
-  CustomBodyWidget.itemBuilder(
-      {super.key,
-      required this.expandedAppBarHeight,
-      this.toolBarHeight,
-      this.expandedAppBar,
-      this.contentPadding,
-      this.extraAppBarHeight = 0.0,
-      this.itemCount = 0,
-      this.itemBuilder,
-      this.automaticallyImplyLeading = false,
-      this.leading,
-      this.separatedBuilder})
-      : this.child = null,
+  CustomBodyWidget.itemBuilder({
+    super.key,
+    required this.expandedAppBarHeight,
+    this.toolBarHeight,
+    this.expandedAppBar,
+    this.contentPadding,
+    this.extraAppBarHeight = 0.0,
+    this.itemCount = 0,
+    this.itemBuilder,
+    this.automaticallyImplyLeading = false,
+    this.leading,
+    this.separatedBuilder,
+    this.actions,
+  })  : this.child = null,
         this.children = const [];
 
   final bool automaticallyImplyLeading;
@@ -61,6 +64,7 @@ class CustomBodyWidget extends StatefulWidget {
   final Widget? Function(BuildContext context, int index)? itemBuilder;
   final Widget? Function(BuildContext context, int index)? separatedBuilder;
   final Widget? leading;
+  final List<Widget>? actions;
 
   @override
   State<CustomBodyWidget> createState() => _CustomBodyWidgetState();
@@ -129,6 +133,7 @@ class _CustomBodyWidgetState extends State<CustomBodyWidget> {
           SliverAppBar(
             automaticallyImplyLeading: widget.automaticallyImplyLeading,
             leading: _inLeading(),
+            actions: widget.actions,
             expandedHeight: _expandedAppBarHeight(),
             // toolbarHeight: widget.toolBarHeight ?? kToolbarHeight,
             floating: true,

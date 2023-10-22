@@ -6,16 +6,16 @@ import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/sippo_custom_widget/notification_widget.dart';
 import 'package:jobspot/sippo_custom_widget/rounded_border_radius_card_widget.dart';
-import 'package:jobspot/sippo_custom_widget/save_job_card_widget.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
-import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/application_job_company_model.dart';
-import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
+import 'package:jobspot/sippo_data/model/application_model/application_job_company_model.dart';
+
 import 'package:jobspot/utils/helper.dart';
 import 'package:readmore/readmore.dart';
 
 import '../JobGlobalclass/jobstopcolor.dart';
 import '../JobGlobalclass/jobstopimges.dart';
 import '../JobGlobalclass/sippo_customstyle.dart';
+import 'network_bordered_circular_image_widget.dart';
 
 class PostWidget extends StatelessWidget {
   final String authorName;
@@ -196,6 +196,7 @@ class PostApplicationWidget extends StatelessWidget {
   final VoidCallback? onActionButtonPresses;
   final VoidCallback? onProfileImageTap;
   final void Function(String cvUrl)? onShowCvTap;
+  final bool isSubscribed;
 
   const PostApplicationWidget({
     Key? key,
@@ -205,6 +206,7 @@ class PostApplicationWidget extends StatelessWidget {
     this.application,
     this.onShowCvTap,
     this.onProfileImageTap,
+    this.isSubscribed = false,
   }) : super(key: key);
 
   @override
@@ -330,21 +332,19 @@ class PostApplicationWidget extends StatelessWidget {
 
   Widget _buildApplicationDetailsPost(context) {
     if (application?.job != null) {
-      return _buildJobPartPost(context, application!.job!);
+      return UserJobApplicationWidget(
+        isSubscribed: isSubscribed,
+        onShowCvTap: onShowCvTap,
+        application: application,
+        company: company,
+      );
     }
-    return CompanyNotificationApplicationWidget(
+    return UserCompanyApplicationWidget(
+      isSubscribed: isSubscribed,
       onShowCvTap: onShowCvTap,
       cv: application?.cv,
       company: company,
       applicationStatus: application?.status,
-    );
-  }
-
-  Widget _buildJobPartPost(BuildContext context, CompanyJobModel job) {
-    return NotificationJobApplicationWidget(
-      onShowCvTap: onShowCvTap,
-      application: application,
-      company: company,
     );
   }
 

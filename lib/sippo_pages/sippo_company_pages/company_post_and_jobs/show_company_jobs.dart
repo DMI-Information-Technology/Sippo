@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
-import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
-
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
+import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/JopController/company_display_posts_job_controller/company_show_job_controller.dart';
 import 'package:jobspot/sippo_custom_widget/container_bottom_sheet_widget.dart';
-import 'package:jobspot/sippo_custom_widget/save_job_card_widget.dart';
+import 'package:jobspot/sippo_custom_widget/job_card_widget.dart';
 import 'package:jobspot/sippo_custom_widget/setting_item_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
-import 'package:jobspot/utils/helper.dart';
+import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
+import 'package:jobspot/utils/helper.dart' as helper;
 
 class ShowCompanyJobsList extends StatefulWidget {
   const ShowCompanyJobsList({super.key});
@@ -42,17 +41,14 @@ class _ShowCompanyJobsListState extends State<ShowCompanyJobsList> {
             return JobPostingCard(
               jobDetails: item,
               isActive: item.isActive,
-              imagePath: [
-                'https://www.designbust.com/download/1060/png/microsoft_logo_transparent512.png',
-                'https://logodownload.org/wp-content/uploads/2014/09/facebook-logo-1-2.png',
-              ][index % 2 == 0 ? 0 : 1],
+              imagePath: item.company?.profileImage?.url ?? '',
               timeAgo: '21 min ago',
               isEditable: true,
               onActionTap: () {
                 _openBottomJobSheetOption(context, item.id, item.isActive);
               },
-              onAddressTextTap: (location) async {
-                await lunchMapWithLocation(
+              onAddressTextTap: (location) {
+                helper.lunchMapWithLocation(
                   location?.dLatitude,
                   location?.dLongitude,
                 );

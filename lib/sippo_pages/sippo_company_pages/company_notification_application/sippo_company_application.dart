@@ -4,17 +4,16 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
+import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/JobServices/shared_global_data_service.dart';
 import 'package:jobspot/JopController/NotificationController/company_notification_application/company_application_controller.dart';
 import 'package:jobspot/sippo_custom_widget/company_post_widget.dart';
-import 'package:jobspot/sippo_custom_widget/widgets.dart';
-import 'package:jobspot/sippo_data/model/notification/job_application_model.dart';
-import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/application_job_company_model.dart';
-
-import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/sippo_custom_widget/container_bottom_sheet_widget.dart';
 import 'package:jobspot/sippo_custom_widget/setting_item_widget.dart';
+import 'package:jobspot/sippo_custom_widget/widgets.dart';
+import 'package:jobspot/sippo_data/model/application_model/application_job_company_model.dart';
+import 'package:jobspot/sippo_data/model/notification/job_application_model.dart';
 
 class SippoCompanyApplication extends StatefulWidget {
   const SippoCompanyApplication({super.key});
@@ -43,26 +42,28 @@ class _SippoCompanyApplicationState extends State<SippoCompanyApplication> {
           newPageErrorIndicatorBuilder: (context) =>
               _buildErrorNewLoad(context),
           itemBuilder: (context, item, index) {
+            final company =
+                _controller.notificationApplicationController.company;
             return PostApplicationWidget(
-              onProfileImageTap: () async {
-                SharedGlobalDataService.onProfileViewTap(
-                  profId: item.customer?.id,
-                );
-              },
-              company: _controller.notificationApplicationController.company,
-              application: item,
-              timeAgo: item.createdAt,
-              onActionButtonPresses: () {
-                _openBottomJobSheetOption(
-                  context,
-                  item.id,
-                  item.status == "Pending",
-                );
-              },
-              onShowCvTap: (cvUrl) {
-                _controller.openFile(cvUrl);
-              },
-            );
+                isSubscribed: company.isSubscribed == true,
+                onProfileImageTap: () {
+                  SharedGlobalDataService.onProfileViewTap(
+                    profId: item.customer?.id,
+                  );
+                },
+                company: company,
+                application: item,
+                timeAgo: item.createdAt,
+                onActionButtonPresses: () {
+                  _openBottomJobSheetOption(
+                    context,
+                    item.id,
+                    item.status == "Pending",
+                  );
+                },
+                onShowCvTap: (cvUrl) {
+                  _controller.openFile(cvUrl);
+                });
           },
         ),
         separatorBuilder: (_, __) => SizedBox(

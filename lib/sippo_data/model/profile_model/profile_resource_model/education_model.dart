@@ -12,15 +12,15 @@ class EducationModel {
     this.description,
   });
 
-  EducationModel.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    level = json['level'];
-    institution = json['institution'];
-    field = json['field'];
-    startDate = json['start_date'];
-    endDate = json['end_date'];
-    isCurrent = json['is_current'];
-    description = json['description'];
+  EducationModel.fromJson(Map<String, dynamic>? json) {
+    id = json?['id'];
+    level = json?['level'];
+    institution = json?['institution'];
+    field = json?['field'];
+    startDate = json?['start_date'];
+    endDate = json?['end_date'];
+    isCurrent = json?['is_current'];
+    description = json?['description'];
   }
   String? get periodic {
     return "${periodicDateFormatter(startDate)} -"

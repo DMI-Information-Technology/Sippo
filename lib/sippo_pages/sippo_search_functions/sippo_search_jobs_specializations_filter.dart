@@ -62,7 +62,7 @@ class _SippoSearchJobsSpecializationsFilterState
           width: context.fromWidth(CustomStyle.spaceBetween),
         ),
         FilterButtonWidget(
-          onTap: () => Get.toNamed(SippoRoutes.filterjobsearch),
+          onTap: () => Get.toNamed(SippoRoutes.sippoFilterOptionJobSearch),
         )
       ],
     );

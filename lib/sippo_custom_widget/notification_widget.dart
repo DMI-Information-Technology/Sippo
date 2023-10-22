@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/sippo_custom_widget/rounded_border_radius_card_widget.dart';
-import 'package:jobspot/sippo_custom_widget/save_job_card_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
 import 'package:jobspot/sippo_data/model/notification/job_application_model.dart';
@@ -11,12 +10,12 @@ import 'package:jobspot/utils/helper.dart';
 
 import '../JobGlobalclass/jobstopcolor.dart';
 import '../JobGlobalclass/jobstopfontstyle.dart';
-import '../JobGlobalclass/jobstopimges.dart';
 import '../JobGlobalclass/sippo_customstyle.dart';
 import '../JobGlobalclass/text_font_size.dart';
-import '../sippo_data/model/profile_model/company_profile_resource_model/application_job_company_model.dart';
+import 'package:jobspot/sippo_data/model/application_model/application_job_company_model.dart';
 import '../sippo_data/model/profile_model/profile_resource_model/cv_file_model.dart';
 import 'job_application_chip_widget.dart';
+import 'network_bordered_circular_image_widget.dart';
 
 class UserApplicationWidget extends StatelessWidget {
   final VoidCallback? onDeletePressed;
@@ -93,9 +92,9 @@ class UserApplicationWidget extends StatelessWidget {
         Text(
           application?.createdAt != null
               ? calculateElapsedTimeFromStringDate(
-            application?.createdAt ?? '',
-          ) ??
-              ''
+                    application?.createdAt ?? '',
+                  ) ??
+                  ''
               : "",
           style: TextStyle(
             fontSize: FontSize.label(context),
@@ -154,36 +153,37 @@ class UserApplicationWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildJobApplicationStatusChipWidget(BuildContext context,
-      String? status,) {
+  Widget _buildJobApplicationStatusChipWidget(
+    BuildContext context,
+    String? status,
+  ) {
     if (status == null) return const SizedBox.shrink();
     return switch (status) {
-      'Accepted' =>
-          JobApplicationStatusChipWidget(
-            statusType: ApplicationStatusType.Accepted,
-          ),
-      'Rejected' =>
-          JobApplicationStatusChipWidget(
-            statusType: ApplicationStatusType.Rejected,
-          ),
-      'Pending' =>
-          JobApplicationStatusChipWidget(
-            statusType: ApplicationStatusType.Pending,
-          ),
+      'Accepted' => JobApplicationStatusChipWidget(
+          statusType: ApplicationStatusType.Accepted,
+        ),
+      'Rejected' => JobApplicationStatusChipWidget(
+          statusType: ApplicationStatusType.Rejected,
+        ),
+      'Pending' => JobApplicationStatusChipWidget(
+          statusType: ApplicationStatusType.Pending,
+        ),
       _ => const SizedBox.shrink(),
     };
   }
 }
 
-class NotificationJobApplicationWidget extends StatelessWidget {
+class UserJobApplicationWidget extends StatelessWidget {
   final void Function(String cvUrl)? onShowCvTap;
   final CompanyDetailsModel? company;
   final ApplicationCompanyModel? application;
+  final bool isSubscribed;
 
-  NotificationJobApplicationWidget({
+  UserJobApplicationWidget({
     required this.onShowCvTap,
     this.application,
     this.company,
+    this.isSubscribed = false,
   });
 
   @override
@@ -205,12 +205,7 @@ class NotificationJobApplicationWidget extends StatelessWidget {
                 imageUrl: company?.profileImage?.url ?? '',
                 size: context.fromHeight(CustomStyle.s),
                 outerBorderColor: Colors.grey[300],
-                errorWidget: (context, url, error) {
-                  return Image.asset(
-                    JobstopPngImg.google,
-                    height: context.fromWidth(CustomStyle.xs),
-                  );
-                },
+                errorWidget: (context, _, __) => const CircleAvatar(),
               ),
               SizedBox(
                 width: context.fromWidth(CustomStyle.spaceBetween),
@@ -238,15 +233,15 @@ class NotificationJobApplicationWidget extends StatelessWidget {
           child: CustomButton(
             onTapped: onShowCvTap != null && cv != null
                 ? () {
-              final cvUrl = cv.url;
-              if (cvUrl != null) {
-                onShowCvTap!(cvUrl);
-              }
-            }
+                    final cvUrl = cv.url;
+                    if (cvUrl != null) {
+                      onShowCvTap!(cvUrl);
+                    }
+                  }
                 : null,
             text: "Show CV",
             backgroundColor:
-            cv == null ? Colors.grey : Jobstopcolor.lightprimary,
+                cv == null ? Colors.grey : Jobstopcolor.lightprimary,
             textColor: Colors.white,
           ),
         ),
@@ -289,40 +284,41 @@ class NotificationJobApplicationWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildJobApplicationStatusChipWidget(BuildContext context,
-      String? status,) {
+  Widget _buildJobApplicationStatusChipWidget(
+    BuildContext context,
+    String? status,
+  ) {
     if (status == null) return const SizedBox.shrink();
     return switch (status) {
-      'Accepted' =>
-          JobApplicationStatusChipWidget(
-            statusType: ApplicationStatusType.Accepted,
-          ),
-      'Rejected' =>
-          JobApplicationStatusChipWidget(
-            statusType: ApplicationStatusType.Rejected,
-          ),
-      'Pending' =>
-          JobApplicationStatusChipWidget(
-            statusType: ApplicationStatusType.Pending,
-          ),
+      'Accepted' => JobApplicationStatusChipWidget(
+          statusType: ApplicationStatusType.Accepted,
+        ),
+      'Rejected' => JobApplicationStatusChipWidget(
+          statusType: ApplicationStatusType.Rejected,
+        ),
+      'Pending' => JobApplicationStatusChipWidget(
+          statusType: ApplicationStatusType.Pending,
+        ),
       _ => const SizedBox.shrink(),
     };
   }
 }
 
-class CompanyNotificationApplicationWidget extends StatelessWidget {
-  const CompanyNotificationApplicationWidget({
+class UserCompanyApplicationWidget extends StatelessWidget {
+  const UserCompanyApplicationWidget({
     super.key,
     this.onShowCvTap,
     this.company,
     this.cv,
     this.applicationStatus,
+    this.isSubscribed = false,
   });
 
   final void Function(String cvUrl)? onShowCvTap;
   final CompanyDetailsModel? company;
   final String? applicationStatus;
   final CvModel? cv;
+  final bool isSubscribed;
 
   @override
   Widget build(BuildContext context) {
@@ -349,15 +345,15 @@ class CompanyNotificationApplicationWidget extends StatelessWidget {
               child: CustomButton(
                 onTapped: onShowCvTap != null && myCv != null
                     ? () {
-                  final cvUrl = myCv.url;
-                  if (cvUrl != null) {
-                    onShowCvTap!(cvUrl);
-                  }
-                }
+                        final cvUrl = myCv.url;
+                        if (cvUrl != null) {
+                          onShowCvTap!(cvUrl);
+                        }
+                      }
                     : null,
                 text: "Show CV",
                 backgroundColor:
-                cv == null ? Colors.grey : Jobstopcolor.lightprimary,
+                    cv == null ? Colors.grey : Jobstopcolor.lightprimary,
                 textColor: Colors.white,
               ),
             ),

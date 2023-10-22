@@ -1,12 +1,15 @@
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
+import 'package:jobspot/core/Refresh.dart';
 import 'package:jobspot/sippo_data/model/notification/notification_model.dart';
 import 'package:jobspot/sippo_data/notification_repo/notifications_repo.dart';
 import 'package:jobspot/utils/states.dart';
+
 import 'user_notification_application_controller.dart';
 
 class UserNotificationController extends GetxController {
+  static UserNotificationController get instance => Get.find();
   final pagingController =
       PagingController<int, BaseNotificationModel?>(firstPageKey: 0);
   final notificationApplicationController =
@@ -14,6 +17,62 @@ class UserNotificationController extends GetxController {
   final userNotificationState = UserNotificationState();
 
   States get states => notificationApplicationController.states;
+
+  void notificationReadMarker(int notificationIndex) {
+    pagingController.itemList = Refresher.changePropertyItemState(
+      pagingController.itemList,
+      notificationIndex,
+      newItemChanger: (item) => item?.copyWithSetIsRead(true),
+    );
+  }
+
+  Future<void> markedNotificationAsRead(
+    int notificationIndex,
+    String? notificationId,
+  ) async {
+    if (notificationId == null) return;
+    final response = await NotificationRepo.markedNotificationAsRead(
+      notificationId,
+    );
+    await response?.checkStatusResponse(
+      onSuccess: (data, _) {
+        if (data != null) {
+          notificationReadMarker(notificationIndex);
+        }
+      },
+      onValidateError: (validateError, _) {},
+      onError: (message, _) {},
+    );
+  }
+
+  void _resetNotificationAfterFailedRemover(
+    int index,
+    List<BaseNotificationModel?> temp,
+    BaseNotificationModel? item,
+  ) {
+    if (index < temp.length) {
+      pagingController.itemList = temp.toList()..add(item);
+      return;
+    }
+    pagingController.itemList = temp.toList()..insert(index, item);
+  }
+
+  Future<void> removedNotification(int index, String? notificationId) async {
+    final temp = pagingController.itemList?.toList();
+    if (temp == null) return;
+    final item = temp[index];
+    pagingController.itemList = temp..removeAt(index);
+    final response = await NotificationRepo.removeNotification(notificationId);
+    await response?.checkStatusResponse(
+      onSuccess: (data, _) => _,
+      onValidateError: (validateError, _) {
+        _resetNotificationAfterFailedRemover(index, temp, item);
+      },
+      onError: (message, _) {
+        _resetNotificationAfterFailedRemover(index, temp, item);
+      },
+    );
+  }
 
   Future<void> fetchNotification(int pageKey) async {
     final query = {'page': "${userNotificationState.pageNumber}"};
@@ -64,9 +123,7 @@ class UserNotificationController extends GetxController {
     pagingController.refresh();
   }
 
-  void retryLastFieldRequest() {
-    pagingController.retryLastFailedRequest();
-  }
+  void retryLastFieldRequest() => pagingController.retryLastFailedRequest();
 
   @override
   void onInit() {

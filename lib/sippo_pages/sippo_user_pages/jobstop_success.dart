@@ -5,16 +5,15 @@ import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
-import 'package:jobspot/sippo_custom_widget/body_widget.dart';
-import 'package:jobspot/sippo_custom_widget/widgets.dart';
-import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_job_description/sippo_job_description.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
-
 import 'package:jobspot/JopController/user_core_functions/apply_jobs_controllers.dart';
 import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
+import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/error_messages_dialog_snackbar/network_connnection_lost_widget.dart';
 import 'package:jobspot/sippo_custom_widget/top_job_details_header.dart';
+import 'package:jobspot/sippo_custom_widget/widgets.dart';
+import 'package:jobspot/sippo_pages/sippo_job_description/sippo_job_description.dart';
 
 class JobSuccess extends StatefulWidget {
   const JobSuccess({Key? key}) : super(key: key);
@@ -168,44 +167,44 @@ class _JobSuccessState extends State<JobSuccess> {
         ));
   }
 
-  // Widget _buildTopJobInfo(BuildContext context) {
-  //   return Container(
-  //     child: Column(
-  //       children: [
-  //         Obx(() => Text(
-  //               _controller.applyJobsState.jopDetails.title ?? '',
-  //               style: dmsbold.copyWith(
-  //                 fontSize: FontSize.title2(context),
-  //                 color: Jobstopcolor.primarycolor,
-  //               ),
-  //               overflow: TextOverflow.clip,
-  //             )),
-  //         SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-  //         Obx(() => _buildTopInfoJobText(
-  //               context,
-  //               'Company name',
-  //               _controller.applyJobsState.jopDetails.company?.name ?? '',
-  //             )),
-  //         SizedBox(height: context.fromHeight(CustomStyle.huge2)),
-  //         Obx(() => _buildTopInfoJobText(
-  //               context,
-  //               'Work place',
-  //               _controller.applyJobsState.jopDetails.company?.city ?? '',
-  //             )),
-  //         SizedBox(height: context.fromHeight(CustomStyle.huge2)),
-  //         Obx(() => _buildTopInfoJobText(
-  //               context,
-  //               'Publish time',
-  //               calculateElapsedTimeFromStringDate(
-  //                     _controller.applyJobsState.jopDetails.createdAt,
-  //                   ) ??
-  //                   "",
-  //             )),
-  //       ],
-  //     ),
-  //   );
-  // }
-  //
+// Widget _buildTopJobInfo(BuildContext context) {
+//   return Container(
+//     child: Column(
+//       children: [
+//         Obx(() => Text(
+//               _controller.applyJobsState.jopDetails.title ?? '',
+//               style: dmsbold.copyWith(
+//                 fontSize: FontSize.title2(context),
+//                 color: Jobstopcolor.primarycolor,
+//               ),
+//               overflow: TextOverflow.clip,
+//             )),
+//         SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+//         Obx(() => _buildTopInfoJobText(
+//               context,
+//               'Company name',
+//               _controller.applyJobsState.jopDetails.company?.name ?? '',
+//             )),
+//         SizedBox(height: context.fromHeight(CustomStyle.huge2)),
+//         Obx(() => _buildTopInfoJobText(
+//               context,
+//               'Work place',
+//               _controller.applyJobsState.jopDetails.company?.city ?? '',
+//             )),
+//         SizedBox(height: context.fromHeight(CustomStyle.huge2)),
+//         Obx(() => _buildTopInfoJobText(
+//               context,
+//               'Publish time',
+//               calculateElapsedTimeFromStringDate(
+//                     _controller.applyJobsState.jopDetails.createdAt,
+//                   ) ??
+//                   "",
+//             )),
+//       ],
+//     ),
+//   );
+// }
+//
 // Widget _buildTopInfoJobText(
 //   BuildContext context,
 //   String label,

@@ -1,27 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:jobspot/JobGlobalclass/routes.dart';
 
 import '../JobGlobalclass/jobstopcolor.dart';
 import '../JobGlobalclass/jobstopfontstyle.dart';
 import '../JobGlobalclass/jobstopimges.dart';
+import '../sippo_data/model/job_statistics_model/job_statistics_model.dart';
 
 class FindYorJopDashBoardCards extends StatelessWidget {
-  final String firstCardTitle;
-  final String firstCardSubtitle;
-  final String secondCardTitle;
-  final String secondCardSubtitle;
-  final String thirdCardTitle;
-  final String thirdCardSubtitle;
+  final String? firstCardSubtitle;
+  final String? secondCardSubtitle;
+  final String? thirdCardSubtitle;
+  final VoidCallback? onFirstTap;
+  final VoidCallback? onSecondTap;
+  final VoidCallback? onThirdTap;
+  final JobStatisticsModel? jobStatistics;
 
   const FindYorJopDashBoardCards({
-    required this.firstCardTitle,
-    required this.firstCardSubtitle,
-    required this.secondCardTitle,
-    required this.secondCardSubtitle,
-    required this.thirdCardTitle,
-    required this.thirdCardSubtitle,
+    this.firstCardSubtitle,
+    this.secondCardSubtitle,
+    this.thirdCardSubtitle,
     Key? key,
+    this.onFirstTap,
+    this.onSecondTap,
+    this.onThirdTap,
+    this.jobStatistics,
   }) : super(key: key);
 
   @override
@@ -34,9 +35,7 @@ class FindYorJopDashBoardCards extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         InkWell(
-          onTap: () {
-           Get.toNamed(SippoRoutes.sippoUserJobSearch);
-          },
+          onTap: onFirstTap,
           child: Container(
             height: height / 4,
             width: width / 2.3,
@@ -56,12 +55,12 @@ class FindYorJopDashBoardCards extends StatelessWidget {
                   height: height / 96,
                 ),
                 Text(
-                  firstCardTitle,
+                  jobStatistics?.remoteJobs?.countString ?? "",
                   style:
                       dmsbold.copyWith(fontSize: 16, color: Jobstopcolor.black),
                 ),
                 Text(
-                  firstCardSubtitle,
+                  firstCardSubtitle ?? '',
                   style: dmsregular.copyWith(
                       fontSize: 14, color: Jobstopcolor.black),
                 ),
@@ -72,21 +71,23 @@ class FindYorJopDashBoardCards extends StatelessWidget {
         Column(
           children: [
             CustomCard(
+              onTap: onSecondTap,
               height: height / 9.5,
               width: width / 2.3,
               color: Jobstopcolor.lightprimary,
-              title: secondCardTitle,
-              subtitle: secondCardSubtitle,
+              title: jobStatistics?.fullTimeJobs?.countString ?? "",
+              subtitle: secondCardSubtitle ?? '',
             ),
             SizedBox(
               height: height / 36,
             ),
             CustomCard(
+              onTap: onThirdTap,
               height: height / 9.5,
               width: width / 2.3,
               color: Jobstopcolor.lightorenge,
-              title: thirdCardTitle,
-              subtitle: thirdCardSubtitle,
+              title: jobStatistics?.partTimeJobs?.countString ?? "",
+              subtitle: thirdCardSubtitle ?? '',
             ),
           ],
         ),
@@ -101,6 +102,7 @@ class CustomCard extends StatelessWidget {
   final Color color;
   final String title;
   final String subtitle;
+  final VoidCallback? onTap;
 
   const CustomCard({
     required this.height,
@@ -108,30 +110,35 @@ class CustomCard extends StatelessWidget {
     required this.color,
     required this.title,
     required this.subtitle,
+    this.onTap,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: height,
-      width: width,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
-        color: color,
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            title,
-            style: dmsbold.copyWith(fontSize: 16, color: Jobstopcolor.black),
-          ),
-          Text(
-            subtitle,
-            style: dmsregular.copyWith(fontSize: 14, color: Jobstopcolor.black),
-          ),
-        ],
+    return InkWell(
+      onTap: onTap,
+      child: Container(
+        height: height,
+        width: width,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(5),
+          color: color,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(
+              title,
+              style: dmsbold.copyWith(fontSize: 16, color: Jobstopcolor.black),
+            ),
+            Text(
+              subtitle,
+              style:
+                  dmsregular.copyWith(fontSize: 14, color: Jobstopcolor.black),
+            ),
+          ],
+        ),
       ),
     );
   }

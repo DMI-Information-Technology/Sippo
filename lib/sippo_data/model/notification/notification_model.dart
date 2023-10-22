@@ -1,6 +1,8 @@
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
+import 'package:jobspot/sippo_data/model/image_resource_model/image_resource_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_post_model.dart';
+import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/profile_edit_model.dart';
 
 import 'notifications_types.dart';
 
@@ -10,6 +12,12 @@ interface class NotificationsTypesConverter {
   NewJobNotificationModel asNotificationJob() => throw UnimplementedError();
 
   NotificationApplicationStatusModel asNotificationApplication() =>
+      throw UnimplementedError();
+
+  NotificationFollowerModel asNotificationFollower() =>
+      throw UnimplementedError();
+
+  NotificationApplicationReceivedModel asNotificationApplicationReceived() =>
       throw UnimplementedError();
 }
 
@@ -23,6 +31,17 @@ abstract class BaseNotificationModel implements NotificationsTypesConverter {
     this.date,
   });
 
+  Map<String, dynamic> toJson() {
+    return {
+      "id": this.id,
+      "type": this.type,
+      "body": this.body,
+      "title": this.title,
+      "isRead": this.isRead,
+      "date": this.date,
+    };
+  }
+
   NotificationTypes? get notificationType {
     return NotificationTypes.typeOf(this.type);
   }
@@ -33,6 +52,24 @@ abstract class BaseNotificationModel implements NotificationsTypesConverter {
   final String? title;
   final bool? isRead;
   final String? date;
+
+  ImageResourceModel? get image {
+    return switch (notificationType) {
+      NotificationTypes.newPost =>
+        asNotificationPost().data?.company?.profileImage,
+      NotificationTypes.newJob =>
+        asNotificationJob().data?.company?.profileImage,
+      NotificationTypes.applicationStatus =>
+        asNotificationApplication().data?.company?.profileImage,
+      NotificationTypes.newApplicationReceived =>
+        asNotificationApplicationReceived().data?.customer?.profileImage,
+      NotificationTypes.newFollower =>
+        asNotificationFollower().data?.customer?.profileImage,
+      NotificationTypes.subscriptionWillEnd => null,
+      NotificationTypes.subscriptionEnded => null,
+      _ => null,
+    };
+  }
 
   @override
   NewJobNotificationModel asNotificationJob() {
@@ -48,18 +85,48 @@ abstract class BaseNotificationModel implements NotificationsTypesConverter {
   NotificationApplicationStatusModel asNotificationApplication() {
     return this as NotificationApplicationStatusModel;
   }
+
+  @override
+  NotificationFollowerModel asNotificationFollower() {
+    return this as NotificationFollowerModel;
+  }
+
+  @override
+  NotificationApplicationReceivedModel asNotificationApplicationReceived() {
+    return this as NotificationApplicationReceivedModel;
+  }
+
   static BaseNotificationModel? fromNotificationsJson(
-      Map<String, dynamic> json,
-      ) {
-    final type = NotificationTypes.typeOf(json['type']);
-    print("type type: $type");
+    Map<String, dynamic>? json,
+  ) {
+    final type = NotificationTypes.typeOf(json?['type']);
+    print(
+        "from asNotificationApplicationReceived for type notification: $type");
     return switch (type) {
       NotificationTypes.newPost => NewPostNotificationModel.fromJson(json),
       NotificationTypes.newJob => NewJobNotificationModel.fromJson(json),
       NotificationTypes.applicationStatus =>
-          NotificationApplicationStatusModel.fromJson(json),
-      NotificationTypes.newApplicationReceived => null,
-      NotificationTypes.newFollower => null,
+        NotificationApplicationStatusModel.fromJson(json),
+      NotificationTypes.newApplicationReceived =>
+        NotificationApplicationReceivedModel.fromJson(json),
+      NotificationTypes.newFollower => NotificationFollowerModel.fromJson(json),
+      NotificationTypes.subscriptionWillEnd => null,
+      NotificationTypes.subscriptionEnded => null,
+      _ => null,
+    };
+  }
+
+  BaseNotificationModel? copyWithSetIsRead(bool isRead) {
+    return switch (notificationType) {
+      NotificationTypes.newPost =>
+        asNotificationPost().copyWithSetIsRead(isRead),
+      NotificationTypes.newJob => asNotificationJob().copyWithSetIsRead(isRead),
+      NotificationTypes.applicationStatus =>
+        asNotificationApplication().copyWithSetIsRead(isRead),
+      NotificationTypes.newApplicationReceived =>
+        asNotificationApplicationReceived().copyWithSetIsRead(isRead),
+      NotificationTypes.newFollower =>
+        asNotificationFollower().copyWithSetIsRead(isRead),
       NotificationTypes.subscriptionWillEnd => null,
       NotificationTypes.subscriptionEnded => null,
       _ => null,
@@ -80,21 +147,22 @@ class NewPostNotificationModel extends BaseNotificationModel {
     this.data,
   });
 
-  factory NewPostNotificationModel.fromJson(Map<String, dynamic> json) {
+  factory NewPostNotificationModel.fromJson(Map<String, dynamic>? json) {
     return NewPostNotificationModel(
-      id: json["id"],
-      type: json["type"],
-      title: json["title"],
-      body: json["body"],
-      isRead: json["is_read"],
-      date: json["date"],
-      data: NotificationDataModel.fromJson(
-        json["data"],
-        (dataJson) {
-          print("post notification :${dataJson['post']}");
-          return CompanyDetailsPostModel.fromJson(dataJson['post']);
-        },
-      ),
+      id: json?["id"],
+      type: json?["type"],
+      title: json?["title"],
+      body: json?["body"],
+      isRead: json?["is_read"],
+      date: json?["date"],
+      data: json?["data"] != null
+          ? NotificationDataModel.fromJson(
+              json?["data"],
+              (dataJson) => dataJson?['post'] != null
+                  ? CompanyDetailsPostModel.fromJson(dataJson?['post'])
+                  : null,
+            )
+          : null,
     );
   }
 
@@ -141,18 +209,22 @@ class NewJobNotificationModel extends BaseNotificationModel {
     this.data,
   });
 
-  factory NewJobNotificationModel.fromJson(Map<String, dynamic> json) {
+  factory NewJobNotificationModel.fromJson(Map<String, dynamic>? json) {
     return NewJobNotificationModel(
-      id: json["id"],
-      type: json["type"],
-      title: json["title"],
-      body: json["body"],
-      isRead: json["is_read"],
-      date: json["date"],
-      data: NotificationDataModel.fromJson(
-        json["data"],
-        (dataJson) => CompanyJobModel.fromJson(dataJson['job']),
-      ),
+      id: json?["id"],
+      type: json?["type"],
+      title: json?["title"],
+      body: json?["body"],
+      isRead: json?["is_read"],
+      date: json?["date"],
+      data: json?["data"] != null
+          ? NotificationDataModel.fromJson(
+              json?["data"],
+              (dataJson) => dataJson?['job'] != null
+                  ? CompanyJobModel.fromJson(dataJson?['job'])
+                  : null,
+            )
+          : null,
     );
   }
 
@@ -186,30 +258,28 @@ class NewJobNotificationModel extends BaseNotificationModel {
   }
 }
 
-class NotificationDataModel<T> {
-  final T? item;
-  final CompanyDetailsModel? company;
-
-  const NotificationDataModel({this.item, this.company});
-
-  factory NotificationDataModel.fromJson(
-    Map<String, dynamic> json,
-    T? Function(Map<String, dynamic> dataJson) fromItemJson,
-  ) {
-    return NotificationDataModel(
-      item: fromItemJson(json),
-      company: CompanyDetailsModel.fromJson(json["company"]),
+class NotificationApplicationStatusModel extends BaseNotificationModel {
+  NotificationApplicationStatusModel copyWith({
+    String? id,
+    String? type,
+    String? body,
+    String? title,
+    bool? isRead,
+    String? date,
+    NotificationDataModel<CompanyJobModel>? data,
+  }) {
+    return NotificationApplicationStatusModel(
+      id: id ?? super.id,
+      type: type ?? super.type,
+      body: body ?? super.body,
+      title: title ?? super.title,
+      isRead: isRead ?? super.isRead,
+      date: date ?? super.date,
+      data: data ?? this.data,
     );
   }
 
-  @override
-  String toString() {
-    return 'NotificationDataModel{item: $item, company: $company}';
-  }
-}
-
-class NotificationApplicationStatusModel extends BaseNotificationModel {
-  final NotificationApplicationDataModel? data;
+  final NotificationDataModel<CompanyJobModel>? data;
 
   const NotificationApplicationStatusModel({
     super.id,
@@ -222,35 +292,22 @@ class NotificationApplicationStatusModel extends BaseNotificationModel {
   });
 
   factory NotificationApplicationStatusModel.fromJson(
-      Map<String, dynamic> json) {
+      Map<String, dynamic>? json) {
     return NotificationApplicationStatusModel(
-      id: json["id"],
-      type: json["type"],
-      title: json["title"],
-      body: json["body"],
-      isRead: json["is_read"],
-      date: json["date"],
-      data: NotificationApplicationDataModel.fromJson(json["data"]),
-    );
-  }
-
-  NotificationApplicationStatusModel copyWith({
-    String? id,
-    String? type,
-    String? body,
-    String? title,
-    bool? isRead,
-    String? date,
-    NotificationApplicationDataModel? data,
-  }) {
-    return NotificationApplicationStatusModel(
-      id: id ?? super.id,
-      type: type ?? super.type,
-      body: body ?? super.body,
-      title: title ?? super.title,
-      isRead: isRead ?? super.isRead,
-      date: date ?? super.date,
-      data: data ?? this.data,
+      id: json?["id"],
+      type: json?["type"],
+      title: json?["title"],
+      body: json?["body"],
+      isRead: json?["is_read"],
+      date: json?["date"],
+      data: json?["date"] != null
+          ? NotificationDataModel.fromJson(
+              json?["data"],
+              (dataJson) => dataJson?["job"] != null
+                  ? CompanyJobModel.fromJson(dataJson?["job"])
+                  : null,
+            )
+          : null,
     );
   }
 
@@ -264,23 +321,187 @@ class NotificationApplicationStatusModel extends BaseNotificationModel {
   }
 }
 
-class NotificationApplicationDataModel {
-  final int? companyId;
-  final int? jobId;
+class NotificationDataModel<T> {
+  final T? item;
+  final CompanyDetailsModel? company;
 
-  const NotificationApplicationDataModel({this.companyId, this.jobId});
+  const NotificationDataModel({this.item, this.company});
 
-  factory NotificationApplicationDataModel.fromJson(
-    Map<String, dynamic> json,
+  factory NotificationDataModel.fromJson(
+    Map<String, dynamic>? json,
+    T? Function(Map<String, dynamic>? dataJson) fromItemJson,
   ) {
-    return NotificationApplicationDataModel(
-      companyId: json["company_id"],
-      jobId: json["job_id"],
+    return NotificationDataModel(
+      item: fromItemJson(json),
+      company: json?["company"] != null
+          ? CompanyDetailsModel.fromJson(json?["company"])
+          : null,
     );
   }
 
   @override
   String toString() {
-    return 'NotificationApplicationDataModel{companyId: $companyId, jobId: $jobId}';
+    return 'NotificationDataModel{item: $item, company: $company}';
+  }
+}
+
+class NotificationFollowerModel extends BaseNotificationModel {
+  final NotificationFollowerDataModel? data;
+
+  const NotificationFollowerModel({
+    super.id,
+    super.type,
+    super.title,
+    super.body,
+    super.isRead,
+    super.date,
+    this.data,
+  });
+
+  factory NotificationFollowerModel.fromJson(Map<String, dynamic>? json) {
+    return NotificationFollowerModel(
+      id: json?["id"],
+      type: json?["type"],
+      title: json?["title"],
+      body: json?["body"],
+      isRead: json?["is_read"],
+      date: json?["date"],
+      data: json?["data"] != null
+          ? NotificationFollowerDataModel.fromJson(json?["data"])
+          : null,
+    );
+  }
+
+  NotificationFollowerModel copyWith({
+    String? id,
+    String? type,
+    String? body,
+    String? title,
+    bool? isRead,
+    String? date,
+    NotificationFollowerDataModel? data,
+  }) {
+    return NotificationFollowerModel(
+      id: id ?? super.id,
+      type: type ?? super.type,
+      body: body ?? super.body,
+      title: title ?? super.title,
+      isRead: isRead ?? super.isRead,
+      date: date ?? super.date,
+      data: data ?? this.data,
+    );
+  }
+
+  NotificationFollowerModel copyWithSetIsRead(bool isRead) {
+    return this.copyWith(isRead: isRead);
+  }
+
+  @override
+  String toString() {
+    return 'NotificationFollowerModel{id: $id, type: $type, body: $body, title: $title, isRead: $isRead, date: $date, data: $data}';
+  }
+}
+
+class NotificationFollowerDataModel {
+  final ProfileInfoModel? customer;
+
+  const NotificationFollowerDataModel({this.customer});
+
+  factory NotificationFollowerDataModel.fromJson(
+    Map<String, dynamic>? json,
+  ) {
+    print("is null? : ${json?["customer"]}");
+    return NotificationFollowerDataModel(
+      customer: json?["customer"] != null
+          ? ProfileInfoModel.fromJson(json?["customer"])
+          : null,
+    );
+  }
+
+  @override
+  String toString() {
+    return 'NotificationFollowerDataModel{customerId: $customer}';
+  }
+}
+
+class NotificationApplicationReceivedModel extends BaseNotificationModel {
+  final NotificationApplicationReceivedDataModel? data;
+
+  const NotificationApplicationReceivedModel({
+    super.id,
+    super.type,
+    super.title,
+    super.body,
+    super.isRead,
+    super.date,
+    this.data,
+  });
+
+  factory NotificationApplicationReceivedModel.fromJson(
+      Map<String, dynamic>? json) {
+    return NotificationApplicationReceivedModel(
+      id: json?["id"],
+      type: json?["type"],
+      title: json?["title"],
+      body: json?["body"],
+      isRead: json?["is_read"],
+      date: json?["date"],
+      data: json?["data"] != null
+          ? NotificationApplicationReceivedDataModel.fromJson(json?["data"])
+          : null,
+    );
+  }
+
+  NotificationApplicationReceivedModel copyWith({
+    String? id,
+    String? type,
+    String? body,
+    String? title,
+    bool? isRead,
+    String? date,
+    NotificationApplicationReceivedDataModel? data,
+  }) {
+    return NotificationApplicationReceivedModel(
+      id: id ?? super.id,
+      type: type ?? super.type,
+      body: body ?? super.body,
+      title: title ?? super.title,
+      isRead: isRead ?? super.isRead,
+      date: date ?? super.date,
+      data: data ?? this.data,
+    );
+  }
+
+  NotificationApplicationReceivedModel copyWithSetIsRead(bool isRead) {
+    return this.copyWith(isRead: isRead);
+  }
+
+  @override
+  String toString() {
+    return 'NotificationApplicationReceivedModel{id: $id, type: $type, body: $body, title: $title, isRead: $isRead, date: $date, data: $data}';
+  }
+}
+
+class NotificationApplicationReceivedDataModel {
+  final ProfileInfoModel? customer;
+  final CompanyJobModel? job;
+
+  const NotificationApplicationReceivedDataModel({this.customer, this.job});
+
+  factory NotificationApplicationReceivedDataModel.fromJson(
+    Map<String, dynamic>? json,
+  ) =>
+      NotificationApplicationReceivedDataModel(
+        customer: json?["customer"] != null
+            ? ProfileInfoModel.fromJson(json?["customer"])
+            : null,
+        job: json?["job"] != null
+            ? CompanyJobModel.fromJson(json?["job"])
+            : null,
+      );
+
+  @override
+  String toString() {
+    return 'NotificationFollowerDataModel{customerId: $customer}';
   }
 }

@@ -2,7 +2,7 @@ import 'package:get/get_rx/src/rx_types/rx_types.dart';
 
 class GlobalSharedState<T> {
   GlobalSharedState({required Rx<T?> details}) : this._details = details;
-
+  Map<String, dynamic>? args;
   var _id = -1;
 
   int get id => _id;
@@ -12,6 +12,7 @@ class GlobalSharedState<T> {
   }
 
   void clearDetails(T? Function() cleaner) {
+    args = null;
     id = -1;
     details = cleaner();
     print("details after clear: $details");

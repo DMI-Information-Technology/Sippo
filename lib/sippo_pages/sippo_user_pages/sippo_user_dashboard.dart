@@ -4,8 +4,10 @@ import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
-
 import 'package:jobspot/JopController/dashboards_controller/user_dashboard_controller.dart';
+
+import '../../JopController/NotificationController/user_notification_application/user_notification_controller.dart';
+import '../../core/navigation_app_route.dart';
 
 class SippoUserDashboard extends StatefulWidget {
   const SippoUserDashboard({Key? key}) : super(key: key);
@@ -22,6 +24,21 @@ class _SippoUserDashboardState extends State<SippoUserDashboard> {
     JobstopPngImg.notifiBell,
     JobstopPngImg.order,
   ];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    final args = Get.arguments;
+    if (args is Map<String, dynamic> &&
+        args.containsKey(NavigationAppRoute.selectedNavIndex)) {
+      final selectedItemIndex =
+          Get.arguments[NavigationAppRoute.selectedNavIndex] as int?;
+      if (Get.isRegistered<UserNotificationController>())
+        UserNotificationController.instance.refreshPage();
+      _controller.selectedItemIndex = selectedItemIndex ?? 0;
+    }
+  }
 
   Widget _bottomTabBar(BuildContext context) {
     return Obx(

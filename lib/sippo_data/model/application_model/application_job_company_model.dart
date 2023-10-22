@@ -1,8 +1,10 @@
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
 
-import '../profile_resource_model/cv_file_model.dart';
-import '../profile_resource_model/profile_edit_model.dart';
+import '../profile_model/profile_resource_model/cv_file_model.dart';
+import '../profile_model/profile_resource_model/profile_edit_model.dart';
+
+
 
 class ApplicationCompanyModel {
   ApplicationCompanyModel({
@@ -23,17 +25,17 @@ class ApplicationCompanyModel {
   final String? createdAt;
   final CvModel? cv;
 
-  factory ApplicationCompanyModel.fromJson(Map<String, dynamic> json) {
+  factory ApplicationCompanyModel.fromJson(Map<String, dynamic>? json) {
     return ApplicationCompanyModel(
-      id: json["id"],
-      customer: json["customer"] != null
-          ? ProfileInfoModel.fromJson(json["customer"])
+      id: json?["id"],
+      customer: json?["customer"] != null
+          ? ProfileInfoModel.fromJson(json?["customer"])
           : null,
-      job: json["job"] != null ? CompanyJobModel.fromJson(json["job"]) : null,
-      description: json["description"],
-      status: json["status"],
-      createdAt: json["created_at"],
-      cv: json["cv"] != null ? CvModel.fromJson(json["cv"]) : null,
+      job: json?["job"] != null ? CompanyJobModel.fromJson(json?["job"]) : null,
+      description: json?["description"],
+      status: json?["status"],
+      createdAt: json?["created_at"],
+      cv: json?["cv"] != null ? CvModel.fromJson(json?["cv"]) : null,
     );
   }
 
@@ -105,17 +107,17 @@ class ApplicationUserModel {
   final String? createdAt;
   final CvModel? cv;
 
-  factory ApplicationUserModel.fromJson(Map<String, dynamic> json) {
+  factory ApplicationUserModel.fromJson(Map<String, dynamic>? json) {
     return ApplicationUserModel(
-      id: json["id"],
-      job: json["job"] != null ? CompanyJobModel.fromJson(json["job"]) : null,
-      description: json["description"],
-      status: json["status"],
-      company: json["company"] != null
-          ? CompanyDetailsModel.fromJson(json["company"])
+      id: json?["id"],
+      job: json?["job"] != null ? CompanyJobModel.fromJson(json?["job"]) : null,
+      description: json?["description"],
+      status: json?["status"],
+      company: json?["company"] != null
+          ? CompanyDetailsModel.fromJson(json?["company"])
           : null,
-      createdAt: json["created_at"],
-      cv: json["cv"] != null ? CvModel.fromJson(json["cv"]) : null,
+      createdAt: json?["created_at"],
+      cv: json?["cv"] != null ? CvModel.fromJson(json?["cv"]) : null,
     );
   }
 

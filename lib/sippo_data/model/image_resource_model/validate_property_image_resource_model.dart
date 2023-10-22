@@ -8,12 +8,13 @@ class ValidatePropertyImageResourceModel {
     return 'ValidatePropertyImageResourceModel{image: $image}';
   }
 
-  factory ValidatePropertyImageResourceModel.fromJson(dynamic json) {
+  factory ValidatePropertyImageResourceModel.fromJson(
+      Map<String, dynamic>? json) {
     return ValidatePropertyImageResourceModel(
-        image: json['image'] != null ? json['image'].cast<String>() : []);
+      image:
+          json?['image'] != null ? (json?['image'] ?? []).cast<String>() : null,
+    );
   }
 
   final List<String>? image;
-
-
 }

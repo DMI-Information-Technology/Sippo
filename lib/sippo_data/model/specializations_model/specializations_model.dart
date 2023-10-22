@@ -4,10 +4,10 @@ class SpecializationModel {
 
   SpecializationModel({this.id, this.name});
 
-  factory SpecializationModel.fromJson(Map<String, dynamic> json) {
+  factory SpecializationModel.fromJson(Map<String, dynamic>? json) {
     return SpecializationModel(
-      id: json['id'],
-      name: json['name'],
+      id: json?['id'],
+      name: json?['name'],
     );
   }
 

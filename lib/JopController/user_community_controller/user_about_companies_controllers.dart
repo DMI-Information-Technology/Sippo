@@ -1,23 +1,25 @@
 import 'package:get/get.dart';
-import 'package:jobspot/JobServices/shared_global_data_service.dart';
 import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
-
+import 'package:jobspot/JobServices/shared_global_data_service.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
 import 'package:jobspot/sippo_data/user_repos/user_companies_abouts_repo.dart';
-
 import 'package:jobspot/utils/states.dart';
+
+import 'show_about_companies_jobs_controller.dart';
+import 'show_about_companies_posts_controller.dart';
 
 class UserAboutCompaniesController extends GetxController {
   static UserAboutCompaniesController get instance => Get.find();
 
   final companyId = SharedGlobalDataService.instance.companyGlobalState.id;
 
-  bool get isNetworkConnected =>
-      InternetConnectionService.instance.isConnected;
+  bool get isNetworkConnected => InternetConnectionService.instance.isConnected;
   final aboutState = UserAboutCompaniesState();
   final _states = States().obs;
 
   States get states => _states.value;
+
+  void resetStates() => _states.value = States();
 
   void changeStates({
     bool? isLoading,
@@ -103,6 +105,24 @@ class UserAboutCompaniesController extends GetxController {
       changeStates(isLoading: true);
       await getCompanyById(companyId);
       changeStates(isLoading: false);
+    }
+    final tapIndex = SharedGlobalDataService.instance.companyGlobalState
+        .args?[SharedGlobalDataService.SELECTED_TAP_INDEX];
+    if (tapIndex != null && tapIndex is int && tapIndex >= 0 && tapIndex < 3) {
+      aboutState.selectedTaps = tapIndex;
+    }
+  }
+
+  void onRefreshPaged() async {
+    switch (aboutState.selectedTaps) {
+      case 1:
+        if (Get.isRegistered<ShowAboutsCompaniesPostsController>()) {
+          await ShowAboutsCompaniesPostsController.instance.refreshPage();
+        }
+      case 2:
+        if (Get.isRegistered<ShowAboutsCompaniesJobsController>()) {
+          await ShowAboutsCompaniesJobsController.instance.refreshPage();
+        }
     }
   }
 

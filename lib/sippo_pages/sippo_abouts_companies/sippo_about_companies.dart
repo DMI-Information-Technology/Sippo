@@ -1,23 +1,23 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
-import 'package:jobspot/JobGlobalclass/routes.dart';
-import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
-import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
-import 'package:jobspot/sippo_custom_widget/rounded_border_radius_card_widget.dart';
-import 'package:jobspot/sippo_custom_widget/widgets.dart';
-import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_abouts_companies/show_about_companies_details.dart';
-import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_abouts_companies/show_about_companies_jobs.dart';
-import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_abouts_companies/show_about_companies_posts.dart';
-
 import 'package:jobspot/JobGlobalclass/global_storage.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
+import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
+import 'package:jobspot/JobGlobalclass/routes.dart';
+import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/JopController/user_community_controller/user_about_companies_controllers.dart';
+import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
+import 'package:jobspot/sippo_custom_widget/rounded_border_radius_card_widget.dart';
 import 'package:jobspot/sippo_custom_widget/top_job_details_header.dart';
+import 'package:jobspot/sippo_custom_widget/widgets.dart';
+import 'package:jobspot/sippo_pages/sippo_abouts_companies/show_about_companies_details.dart';
+import 'package:jobspot/sippo_pages/sippo_abouts_companies/show_about_companies_jobs.dart';
+import 'package:jobspot/sippo_pages/sippo_abouts_companies/show_about_companies_posts.dart';
 import 'package:jobspot/utils/app_use.dart';
+
 import '../sippo_job_description/sippo_job_description.dart';
 
 class SippoAboutCompanies extends StatefulWidget {
@@ -51,34 +51,43 @@ class _SippoAboutCompaniesState extends State<SippoAboutCompanies> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Jobstopcolor.backgroudHome,
-      body: CustomScrollView(
-        slivers: [
-          SliverPersistentHeader(
-            delegate: CustomSliverAppBarDelegate(
-              expandedHeight: (context.height / 3.5),
-              onLeadingTap: () => Get.back(),
-            ),
-            pinned: true,
-          ),
-          SliverToBoxAdapter(child: SizedBox(height: context.height / 32)),
-          SliverToBoxAdapter(
-            child: _buildTopHeaderCompanyInfo(context),
-          ),
-          SliverToBoxAdapter(
-            child: SizedBox(height: context.height / 36),
-          ),
-          _buildTopHeaderButtons(context),
-          Obx(
-            () => SliverPadding(
-              padding: EdgeInsets.symmetric(
-                horizontal: context.fromWidth(
-                  CustomStyle.paddingValue,
-                ),
+      body: RefreshIndicator(
+        notificationPredicate: (notification) {
+          return _controller.aboutState.selectedTaps != 0;
+        },
+        onRefresh: () async {
+          _controller.onRefreshPaged();
+          print('index: ${_controller.aboutState.selectedTaps}');
+        },
+        child: CustomScrollView(
+          slivers: [
+            SliverPersistentHeader(
+              delegate: CustomSliverAppBarDelegate(
+                expandedHeight: (context.height / 3.5),
+                onLeadingTap: () => Get.back(),
               ),
-              sliver: _taps[_controller.aboutState.selectedTaps],
+              pinned: true,
             ),
-          ),
-        ],
+            SliverToBoxAdapter(child: SizedBox(height: context.height / 32)),
+            SliverToBoxAdapter(
+              child: _buildTopHeaderCompanyInfo(context),
+            ),
+            SliverToBoxAdapter(
+              child: SizedBox(height: context.height / 36),
+            ),
+            _buildTopHeaderButtons(context),
+            Obx(
+              () => SliverPadding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: context.fromWidth(
+                    CustomStyle.paddingValue,
+                  ),
+                ),
+                sliver: _taps[_controller.aboutState.selectedTaps],
+              ),
+            ),
+          ],
+        ),
       ),
       bottomNavigationBar: GlobalStorageService.appUse == AppUsingType.user
           ? _buildApplyBottomButton(context)
@@ -129,6 +138,7 @@ class _SippoAboutCompaniesState extends State<SippoAboutCompanies> {
             return Expanded(
               child: Obx(() => CustomButton(
                     onTapped: () {
+                      _controller.resetStates();
                       _controller.aboutState.selectedTaps = i;
                     },
                     text: steps[i],
@@ -218,7 +228,8 @@ class _SippoAboutCompaniesState extends State<SippoAboutCompanies> {
             context,
             'work_place'.tr,
             _controller.aboutState.company.locations
-                    ?.map((e) => e.address)
+                    ?.where((e) => e.locationAddress != null)
+                    .map((e) => e.locationAddress?.name ?? '')
                     .join(", ") ??
                 "",
           ),
@@ -320,33 +331,38 @@ class CustomSliverAppBarDelegate extends SliverPersistentHeaderDelegate {
                   (shrinkOffset <= minExtent
                       ? MediaQuery.of(context).viewPadding.top
                       : 0.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  IconButton(
-                    onPressed: onLeadingTap,
-                    icon: Icon(
-                      Icons.arrow_back_rounded,
-                      color: shrinkOffset <= minExtent
-                          ? Colors.white
-                          : Colors.black87,
+              child: Padding(
+                padding: shrinkOffset <= minExtent
+                    ? const EdgeInsets.only(top: 25)
+                    : EdgeInsets.zero,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    IconButton(
+                      onPressed: onLeadingTap,
+                      icon: Icon(
+                        Icons.arrow_back_rounded,
+                        color: shrinkOffset <= minExtent
+                            ? Colors.white
+                            : Colors.black87,
+                      ),
                     ),
-                  ),
-                  // if (actions.isNotEmpty) ...[
-                  Spacer(),
-                  IconButton(
-                    onPressed: onPopPubMenuTap,
-                    icon: Icon(
-                      Icons.more_vert,
-                      color: shrinkOffset <= minExtent
-                          ? Colors.white
-                          : Colors.black87,
+                    // if (actions.isNotEmpty) ...[
+                    Spacer(),
+                    IconButton(
+                      onPressed: onPopPubMenuTap,
+                      icon: Icon(
+                        Icons.more_vert,
+                        color: shrinkOffset <= minExtent
+                            ? Colors.white
+                            : Colors.black87,
+                      ),
                     ),
-                  ),
-                  // ...actions,
-                  // ]
-                ],
+                    // ...actions,
+                    // ]
+                  ],
+                ),
               ),
             ),
           ),

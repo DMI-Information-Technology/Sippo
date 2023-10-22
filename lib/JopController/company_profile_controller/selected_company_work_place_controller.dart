@@ -1,18 +1,20 @@
 import 'package:get/get.dart';
 import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
 import 'package:jobspot/custom_app_controller/google_map_view_controller.dart';
+import 'package:jobspot/sippo_data/company_repos/company_locations_repo.dart';
+import 'package:jobspot/sippo_data/locations/locationsRepo.dart';
+import 'package:jobspot/sippo_data/model/locations_model/location_address_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/work_location_model.dart';
 import 'package:jobspot/utils/states.dart';
 
-import 'package:jobspot/sippo_data/company_repos/company_locations_repo.dart';
 import '../dashboards_controller/company_dashboard_controller.dart';
 
 class SelectedCompanyWorkPlaceController extends GetxController {
   static SelectedCompanyWorkPlaceController get instance => Get.find();
 
   WorkLocationModel get workPlace => WorkLocationModel(
-        address: selectedWorkPlaceState.selectedLocationAddressName,
-        location: googleMapViewController.markerAsCoordLocation,
+        locationAddress: selectedWorkPlaceState.selectedLocationAddress,
+        cordLocation: googleMapViewController.markerAsCoordLocation,
         isHQ: selectedWorkPlaceState.isHq,
       );
   final googleMapViewController = GoogleMapViewController();
@@ -39,12 +41,22 @@ class SelectedCompanyWorkPlaceController extends GetxController {
       error: error,
     );
   }
+  Future<void> fetchLocationsAddress() async {
+    final response = await LocationsRepo.fetchLocations();
+    await response?.checkStatusResponse(
+      onSuccess: (data, _) {
+        if (data != null) {
+          selectedWorkPlaceState.locationsAddressList = data;
+        }
+      },
+      onValidateError: (validateError, _) {},
+      onError: (message, _) {},
+    );
+  }
 
   final selectedWorkPlaceState = SelectedCompanyWorkPlaceState();
 
-  Future<void> fetchAddressLocationNames() async {
-    // write the code for fetching the address location names here;.
-  }
+
 
   Future<void> addNewWorkPlace() async {
     print(workPlace);
@@ -72,7 +84,7 @@ class SelectedCompanyWorkPlaceController extends GetxController {
     if (InternetConnectionService.instance.isNotConnected) return;
     if (states.isLoading) return;
     changeStates(isLoading: true);
-    await fetchAddressLocationNames();
+    await fetchLocationsAddress();
     changeStates(isLoading: false);
   }
 
@@ -86,7 +98,7 @@ class SelectedCompanyWorkPlaceController extends GetxController {
             'the new location of work place.',
       );
     }
-    if (selectedWorkPlaceState.selectedLocationAddressName.isEmpty) {
+    if (selectedWorkPlaceState.selectedLocationAddress.id == null) {
       return changeStates(
         isWarning: true,
         message: 'Please select the address for'
@@ -100,7 +112,7 @@ class SelectedCompanyWorkPlaceController extends GetxController {
 
   @override
   void onInit() {
-    // startFetching();
+    startFetching();
     googleMapViewController.getCurrentLocation();
     super.onInit();
   }
@@ -113,20 +125,24 @@ class SelectedCompanyWorkPlaceController extends GetxController {
 }
 
 class SelectedCompanyWorkPlaceState {
-  final _selectedLocationAddressName = "".obs;
+  final _locationsAddress = <LocationAddress>[].obs;
 
-  String get selectedLocationAddressName => _selectedLocationAddressName.trim();
+  List<LocationAddress> get locationsAddressList => _locationsAddress.toList();
 
-  void set selectedLocationAddressName(String value) {
+  List<String> get locationsAddressNameList => locationsAddressList
+      .where((e) => e.name != null)
+      .map((e) => e.name ?? '')
+      .toList();
+
+  set locationsAddressList(List<LocationAddress> value) =>
+      _locationsAddress.value = value;
+  final _selectedLocationAddressName = LocationAddress().obs;
+
+  LocationAddress get selectedLocationAddress =>
+      _selectedLocationAddressName.value;
+
+  void set selectedLocationAddress(LocationAddress value) {
     _selectedLocationAddressName.value = value;
-  }
-
-  final _locationsAddress = <String>[].obs;
-
-  List<String> get locationsAddress => _locationsAddress.toList();
-
-  void set locationsAddress(List<String> value) {
-    _locationsAddress.value = value;
   }
 
   final _isHq = false.obs;

@@ -9,6 +9,7 @@ import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/JopController/NotificationController/company_notification_application/company_notification_application_controller.dart';
 import 'package:jobspot/sippo_custom_widget/loading_view_widgets/loading_scaffold.dart';
 import 'package:jobspot/sippo_pages/sippo_company_pages/company_notification_application/sippo_company_application.dart';
+import 'package:jobspot/sippo_pages/sippo_company_pages/company_notification_application/sippo_company_notification.dart';
 import 'package:jobspot/sippo_pages/sippo_message_pages/no_resource_screen.dart';
 
 class SippoCompanyNotificationApplication extends StatefulWidget {
@@ -31,7 +32,7 @@ class _SippoCompanyNotificationApplicationState
     image: JobstopPngImg.notificationimg,
   );
   final _taps = const [
-    SizedBox.shrink(),
+    SippoCompanyNotification(),
     SippoCompanyApplication(),
   ];
 
@@ -51,8 +52,9 @@ class _SippoCompanyNotificationApplicationState
     _tabController?.addListener(() {
       // When the tab controller's value is updated, make sure to update the
       // tab index value, which is state restorable.
+      _controller.resetStates();
 
-      setState(() => tabIndex.value = _tabController?.index ?? 0);
+      tabIndex.value = _tabController?.index ?? 0;
     });
   }
 
@@ -67,11 +69,11 @@ class _SippoCompanyNotificationApplicationState
     return LoadingScaffold(
       controller: _controller.loadingOverlayController,
       appBar: _buildAppBar(context),
-      body: _buildBodyPage(),
+      body: _buildBodyPage(context),
     );
   }
 
-  Widget _buildBodyPage() {
+  Widget _buildBodyPage(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [

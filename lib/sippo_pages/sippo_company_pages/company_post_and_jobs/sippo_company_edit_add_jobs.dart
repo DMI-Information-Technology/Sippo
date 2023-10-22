@@ -7,12 +7,11 @@ import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/JopController/company_profile_controller/company_edit_add_job_controller.dart';
-import 'package:jobspot/sippo_custom_widget/body_widget.dart';
-import 'package:jobspot/sippo_custom_widget/rounded_border_radius_card_widget.dart';
-
 import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
+import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/container_bottom_sheet_widget.dart';
 import 'package:jobspot/sippo_custom_widget/custom_drop_down_button.dart';
+import 'package:jobspot/sippo_custom_widget/rounded_border_radius_card_widget.dart';
 import 'package:jobspot/sippo_custom_widget/success_message_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 
@@ -276,6 +275,7 @@ class _SippoCompanyEditAddJobsState extends State<SippoCompanyEditAddJobs> {
     return Obx(
       () => AddJobOptionsCard(
         onTapAction: () {
+          print(jobState.locationsLabel);
           jobState.showAllActionButtonOptions();
           jobState.swithcActionLocation();
         },
@@ -289,15 +289,20 @@ class _SippoCompanyEditAddJobsState extends State<SippoCompanyEditAddJobs> {
               print(value);
               if (value != null) jobState.jobLocation = value;
             },
-            setInitialValue: jobState.jobLocation.address != null,
-            initialValue: jobState.jobLocation.address,
+            setInitialValue: jobState.jobLocation.locationAddress?.name != null,
+            initialValue: jobState.locationsLabel.firstWhereOrNull(
+              (e) => e.contains(
+                jobState.jobLocation.locationAddress?.name ?? '',
+              ),
+            ),
           ),
-          inputDone: jobState.jobLocation.address?.isNotEmpty == true,
+          inputDone:
+              jobState.jobLocation.locationAddress?.name?.isNotEmpty == true,
           onCloseTap: () {
             jobState.swithcActionLocation();
           },
         ),
-        subTitle: jobState.jobLocation.address,
+        subTitle: jobState.jobLocation.locationAddress?.name,
         showActionButton: jobState.showActionLocation,
       ),
     );

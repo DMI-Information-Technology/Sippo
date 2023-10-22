@@ -16,6 +16,7 @@ class GlobalStorageService extends GetxService {
   String? _tokenLogged = "";
   var _isAppLunchFirstTime = true;
   int _appUse = 0;
+  String _firebaseNotificationToken = '';
 
   static bool get isLogged => instance._isLogged;
 
@@ -26,6 +27,11 @@ class GlobalStorageService extends GetxService {
   static bool get isCompany =>
       AppUsingType.values[instance._appUse] == AppUsingType.company;
 
+  static String get notificationToken => instance._firebaseNotificationToken;
+
+  static set notificationToken(String value) =>
+      instance._firebaseNotificationToken = value;
+
   static Future<void> removeSavedToken(GetStorage box) async {
     await box.remove(global.tokenKey);
     await box.remove(global.loggedUserKey);
@@ -34,27 +40,7 @@ class GlobalStorageService extends GetxService {
     instance._isLogged = false;
   }
 
-  // static Future<void> saveLoggedUser(Map<String, dynamic>? userJson) async {
-  //   print("saveLoggedUser: the user is $userJson");
-  //   if (userJson == null) {
-  //     print("saveLoggedUser: the user is not saved.");
-  //     return;
-  //   }
-  //   final encodedUser = jsonEncode(userJson);
-  //   await box.write(global.loggedUserKey, encodedUser);
-  //   _userJson = userJson;
-  // }
-
-  // static Future<void> checkLoggedUser() async {
-  //   final String? encodedUser = await box.read(global.loggedUserKey);
-  //   if (encodedUser == null) {
-  //     print("saveLoggedUser: the user is not found.");
-  //     return;
-  //   }
-  //   // _userJson = jsonDecode(encodedUser) as Map<String, dynamic>;
-  // }
-
-  static Future<void> saveToken(GetStorage box,String? token, int? use) async {
+  static Future<void> saveToken(GetStorage box, String? token, int? use) async {
     await box.write(global.tokenKey, token);
     await box.write(global.app_logged_use, use);
     _setGlobalVariable(token, use);
@@ -92,7 +78,7 @@ class GlobalStorageService extends GetxService {
   static set isAppLunchFirstTime(bool value) =>
       instance._isAppLunchFirstTime = value;
 
-  static Future<void> lunchApp()async {
+  static Future<void> lunchApp() async {
     final box = GetStorage();
     final check = await isAppOpenBefore(box);
     if (!check) {

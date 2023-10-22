@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_model.dart';
+import 'package:jobspot/sippo_data/model/locations_model/location_address_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/cord_location.dart';
 
-import 'package:jobspot/JobGlobalclass/routes.dart';
+import '../../sippo_data/locations/locationsRepo.dart';
 
 class SignUpCompanyController extends GetxController {
   static SignUpCompanyController get instance => Get.find();
@@ -13,7 +15,7 @@ class SignUpCompanyController extends GetxController {
   final _phoneNumber = "".obs;
   final _password = "".obs;
   final _confirmPassword = "".obs;
-  final _companyAddress = "".obs;
+  final _companyAddress = LocationAddress().obs;
   final _confirmOnPolicy = false.obs;
   final _cordLocation = CoordLocation().obs;
 
@@ -29,7 +31,7 @@ class SignUpCompanyController extends GetxController {
           cordLocation.latitude ?? "0",
         ),
         specializations: selectedIdSpecializations,
-        city: companyAddress,
+        locationAddress: companyAddress,
       );
 
   CoordLocation get cordLocation => _cordLocation.value;
@@ -41,7 +43,8 @@ class SignUpCompanyController extends GetxController {
     );
   }
 
-  String get companyAddress => _companyAddress.toString();
+  LocationAddress get companyAddress => _companyAddress.value;
+  final _locationsAddress = <LocationAddress>[].obs;
 
   bool get confirmOnPolicy => _confirmOnPolicy.isTrue;
 
@@ -53,6 +56,15 @@ class SignUpCompanyController extends GetxController {
 
   String get phoneNumber => _phoneNumber.toString();
 
+  List<LocationAddress> get locationsAddressList => _locationsAddress.toList();
+
+  List<String> get locationsAddressNameList => locationsAddressList
+      .where((e) => e.name != null)
+      .map((e) => e.name ?? '')
+      .toList();
+
+  set locationsAddressList(List<LocationAddress> value) =>
+      _locationsAddress.value = value;
   final _selectedIdSpecializations = <int>[].obs;
 
   List<int> get selectedIdSpecializations =>
@@ -86,8 +98,21 @@ class SignUpCompanyController extends GetxController {
     _confirmOnPolicy.value = value;
   }
 
-  void set companyAddress(String value) {
+  void set companyAddress(LocationAddress value) {
     _companyAddress.value = value;
+  }
+
+  Future<void> fetchLocationsAddress() async {
+    final response = await LocationsRepo.fetchLocations();
+    await response?.checkStatusResponse(
+      onSuccess: (data, _) {
+        if (data != null) {
+          locationsAddressList = data;
+        }
+      },
+      onValidateError: (validateError, _) {},
+      onError: (message, _) {},
+    );
   }
 
   Future<void> onSubmitSignup() async {
