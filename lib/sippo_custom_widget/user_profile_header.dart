@@ -17,16 +17,17 @@ class UserProfileHeaderWidget extends StatelessWidget {
   final VoidCallback? onEditProfilePressed;
   final bool showConnectionLostBar;
   final bool isCompanyView;
+  final bool hasDrawer;
 
-  UserProfileHeaderWidget({
-    super.key,
-    required this.profileInfo,
-    this.onSettingsPressed,
-    this.onEditProfilePressed,
-    required this.profileImage,
-    this.showConnectionLostBar = false,
-    this.isCompanyView = false,
-  });
+  UserProfileHeaderWidget(
+      {super.key,
+      required this.profileInfo,
+      this.onSettingsPressed,
+      this.onEditProfilePressed,
+      required this.profileImage,
+      this.showConnectionLostBar = false,
+      this.isCompanyView = false,
+      this.hasDrawer = false});
 
   @override
   Widget build(BuildContext context) {
@@ -85,9 +86,7 @@ class UserProfileHeaderWidget extends StatelessWidget {
 
   Widget _buildProfileRow(BuildContext context) {
     return Row(
-      mainAxisAlignment: !isCompanyView
-          ? MainAxisAlignment.spaceBetween
-          : MainAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         NetworkBorderedCircularImage(
           imageUrl: profileImage,
@@ -95,6 +94,7 @@ class UserProfileHeaderWidget extends StatelessWidget {
           errorWidget: (context, url, error) => const CircleAvatar(),
           outerBorderColor: Colors.transparent,
         ),
+        const Spacer(),
         if (!isCompanyView && onSettingsPressed != null)
           InkWell(
             onTap: onSettingsPressed,
@@ -105,6 +105,20 @@ class UserProfileHeaderWidget extends StatelessWidget {
               color: Colors.white, // Change this to your desired color
             ),
           ),
+        if (hasDrawer) ...[
+          SizedBox(
+            width: context.fromWidth(CustomStyle.spaceBetween),
+          ),
+          InkWell(
+            onTap: () {
+              Scaffold.of(context).openDrawer();
+            },
+            child: Icon(
+              Icons.menu,
+              color: Colors.white,
+            ),
+          ),
+        ],
       ],
     );
   }

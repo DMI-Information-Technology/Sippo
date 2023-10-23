@@ -62,7 +62,7 @@ class FilePickerService {
         final bytes = pf.bytes;
         if (bytes != null) {
           return CustomFileModel.fromBytes(
-            fileField: 'cv',
+            fieldName: 'cv',
             name: pf.name,
             bytes: bytes,
             type: checkFileType(

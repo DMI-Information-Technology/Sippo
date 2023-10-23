@@ -3,12 +3,11 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart';
 import 'package:http_parser/http_parser.dart';
+import 'package:jobspot/utils/helper.dart';
 import 'package:path/path.dart';
 
-import 'package:jobspot/utils/helper.dart';
-
 class CustomFileModel {
-  final String? fileField;
+  final String? fieldName;
   final String? type;
   final String? subtype;
   final File? file;
@@ -19,7 +18,7 @@ class CustomFileModel {
 
   const CustomFileModel({
     this.file,
-    this.fileField,
+    this.fieldName,
     this.type,
     this.size,
     this.subtype,
@@ -29,7 +28,7 @@ class CustomFileModel {
 
   const CustomFileModel.fromBytes({
     this.bytes,
-    this.fileField,
+    this.fieldName,
     this.type,
     this.size,
     this.subtype,
@@ -63,6 +62,8 @@ class CustomFileModel {
 
   bool get isFileNull => file == null && bytes == null;
 
+  File? get asFile => file ?? bytesToFile;
+
   String get sizeToString => convertFileSize(size) ?? 'unknown file size';
 
   String get uploadDateToString =>
@@ -72,7 +73,7 @@ class CustomFileModel {
     final currentFile = file;
     if (currentFile != null) {
       return MultipartFile(
-        fileField ?? 'file',
+        fieldName ?? 'file',
         currentFile.readAsBytes().asStream(),
         currentFile.lengthSync(),
         filename: filename,
@@ -87,7 +88,7 @@ class CustomFileModel {
     final currentBytes = bytes;
     if (currentBytes != null) {
       return MultipartFile.fromBytes(
-        fileField ?? 'file',
+        fieldName ?? 'file',
         currentBytes,
         filename: filename,
         contentType: type != null && subtype != null
@@ -103,7 +104,7 @@ class CustomFileModel {
 
   @override
   String toString() {
-    return 'CustomFileModel{fileField: $fileField, name: $name type: $type, subtype: $subtype, size: $size file: $file, bytes: $bytes,}';
+    return 'CustomFileModel{fileField: $fieldName, name: $name type: $type, subtype: $subtype, size: $size file: $file, bytes: $bytes,}';
   }
 
   CustomFileModel copyWithFile({
@@ -116,7 +117,7 @@ class CustomFileModel {
     DateTime? uploadDate,
   }) {
     return CustomFileModel(
-      fileField: fileField ?? this.fileField,
+      fieldName: fileField ?? this.fieldName,
       type: type ?? this.type,
       subtype: subtype ?? this.subtype,
       file: file ?? this.file,
@@ -136,7 +137,7 @@ class CustomFileModel {
     DateTime? uploadDate,
   }) {
     return CustomFileModel.fromBytes(
-      fileField: fileField ?? this.fileField,
+      fieldName: fileField ?? this.fieldName,
       type: type ?? this.type,
       subtype: subtype ?? this.subtype,
       bytes: bytes ?? this.bytes,

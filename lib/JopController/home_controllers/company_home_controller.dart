@@ -1,25 +1,23 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
-import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
 import 'package:jobspot/JobServices/shared_global_data_service.dart';
-import 'package:jobspot/JopController/dashboards_controller/user_dashboard_controller.dart';
+import 'package:jobspot/JopController/dashboards_controller/company_dashboard_controller.dart';
 import 'package:jobspot/JopController/home_controllers/job_home_view_controller.dart';
 import 'package:jobspot/sippo_data/job_statistics_repo/job_statistics_repo.dart';
+import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
 import 'package:jobspot/sippo_data/model/job_statistics_model/job_statistics_model.dart';
-import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/profile_edit_model.dart';
 import 'package:jobspot/utils/states.dart';
 
-class UserHomeController extends GetxController {
-  static UserHomeController get instance => Get.find();
-  final dashboardController = UserDashBoardController.instance;
+class CompanyHomeController extends GetxController {
+  static CompanyHomeController get instance => Get.find();
+  final dashboardController = CompanyDashBoardController.instance;
   final sharedDataService = SharedGlobalDataService.instance;
 
-  final jobsHomeState = UserHomePageState();
+  final jobsHomeState = CompanyHomePageState();
 
-  ProfileInfoModel get user => dashboardController.user;
+  CompanyDetailsModel get user => dashboardController.company;
 
-  bool get isNetworkConnected => InternetConnectionService.instance.isConnected;
   final _states = States().obs;
 
   States get states => _states.value;
@@ -57,7 +55,7 @@ class UserHomeController extends GetxController {
 
   void refreshPage() async {
     await Future.wait([
-      dashboardController.userInformationRefresh(),
+      dashboardController.refreshUserProfileInfo(),
       if (Get.isRegistered<JobsHomeViewController>())
         JobsHomeViewController.instance.refreshJobs(),
       fetchJobStatistics(),
@@ -71,7 +69,7 @@ class UserHomeController extends GetxController {
   }
 }
 
-class UserHomePageState {
+class CompanyHomePageState {
   final _jobStatistic = JobStatisticsModel().obs;
 
   JobStatisticsModel get jobStatistic => _jobStatistic.value;

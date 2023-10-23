@@ -2,10 +2,13 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
-
 import 'package:jobspot/sippo_custom_widget/profile_completion_widget.dart';
+import 'package:jobspot/sippo_data/company_repos/company_gallery_images_repo.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
+import 'package:jobspot/sippo_data/model/custom_file_model/custom_file_model.dart';
+import 'package:jobspot/sippo_data/model/image_resource_model/image_resource_model.dart';
 import 'package:jobspot/utils/states.dart';
+
 import '../dashboards_controller/company_dashboard_controller.dart';
 
 class ProfileCompanyController extends GetxController {
@@ -64,6 +67,47 @@ class ProfileCompanyController extends GetxController {
     // _connectionSubscription?.cancel();
     profileState.close();
     super.onClose();
+  }
+
+  Future<bool> uploadCompanyImages(List<CustomFileModel> images) async {
+    if (InternetConnectionService.instance.isNotConnected) return false;
+    if (states.isLoading) return false;
+    states = States(isLoading: true);
+    final response = await CompanyGalleryImagesRepo.uploadCompanyImages(images);
+    final result = await response.checkStatusResponseAndGetData(
+      onValidateError: (validateError, _) {},
+      onError: (message, _) {},
+    );
+    states = states.copyWith(isLoading: false);
+    if (result != null && result.isNotEmpty) {
+      CompanyDashBoardController.instance.company = company.copyWith(
+        images: (() {
+          final temp = <ImageResourceModel>[];
+          for (final image in result) if (image != null) temp.add(image);
+          return temp;
+        })(),
+      );
+      return true;
+    }
+    return false;
+  }
+
+  Future<bool> removeImageCompany(int? id, int index) async {
+    if (InternetConnectionService.instance.isNotConnected) return false;
+    if (states.isLoading) return false;
+    states = States(isLoading: true);
+    final response = await CompanyGalleryImagesRepo.removeImageCompany(id);
+    final result = await response.checkStatusResponseAndGetData(
+      onValidateError: (validateError, statusType) {},
+      onError: (message, statusType) {},
+    );
+    states = states.copyWith(isLoading: false);
+    if (result != null) {
+      CompanyDashBoardController.instance.company =
+          company.copyWith(images: company.images?..removeAt(index));
+      return true;
+    }
+    return false;
   }
 }
 

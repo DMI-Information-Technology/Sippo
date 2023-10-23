@@ -39,6 +39,8 @@ const String companyJobsEndpoint = "company/profile/jobs";
 const String companyLocations= "company/profile/locations";
 const String companyChangeCompanyProfile= "company/profile/change-profile-image";
 const String companyApplicationEndpoint = "company/applications";
+const String companyGalleryImagesEndpoint = "company/profile/images";
+const String removeCompanyImageEndpoint = "company/profile/images";
 
 const String companyUserProfileViewEndpoint = "customers";
 

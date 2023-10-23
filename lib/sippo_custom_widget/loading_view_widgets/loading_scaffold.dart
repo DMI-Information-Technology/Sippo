@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-
 import 'package:jobspot/custom_app_controller/switch_status_controller.dart';
+
 import 'overly_loading.dart';
 
 class LoadingScaffold extends StatelessWidget {
@@ -11,6 +11,7 @@ class LoadingScaffold extends StatelessWidget {
     this.body,
     this.backgroundColor,
     this.extendBodyBehindAppBar = false,
+    this.canPopOnLoading = true,
   });
 
   final PreferredSizeWidget? appBar;
@@ -18,11 +19,13 @@ class LoadingScaffold extends StatelessWidget {
   final Color? backgroundColor;
   final SwitchStatusController? controller;
   final bool extendBodyBehindAppBar;
+  final bool canPopOnLoading;
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
       onWillPop: () async {
+        if (!canPopOnLoading && controller?.status == true) return false;
         if (controller?.status == true) {
           controller?.pause();
           return false;
@@ -51,7 +54,6 @@ class LoadingScaffold extends StatelessWidget {
     );
   }
 
-  Widget _buildLoadingWidget(bool show) => show
-      ? const LoadingOverlay()
-      : const SizedBox.shrink();
+  Widget _buildLoadingWidget(bool show) =>
+      show ? const LoadingOverlay() : const SizedBox.shrink();
 }

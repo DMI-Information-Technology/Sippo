@@ -59,10 +59,6 @@ class _SippoJobSearchState extends State<SippoJobSearch> {
                         timeAgo:
                             calculateElapsedTimeFromStringDate(item.createdAt),
                         isEditable: false,
-                        onActionTap: () {
-                          _controller.onToggleSavedJobsSubmitted(
-                              index, item.id);
-                        },
                         isSaved: item.isSaved == true,
                         onImageCompanyTap: () {
                           SharedGlobalDataService.onCompanyTap(item.company);
@@ -121,7 +117,7 @@ class _SippoJobSearchState extends State<SippoJobSearch> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          "Error",
+          "error".tr,
           style: dmsbold.copyWith(
             color: Jobstopcolor.primarycolor,
             fontSize: FontSize.title2(context),
@@ -129,7 +125,7 @@ class _SippoJobSearchState extends State<SippoJobSearch> {
         ),
         SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
         Text(
-          _controller.states.message ?? 'something wrong is happened.',
+          _controller.states.message ?? 'something_wrong_happened'.tr,
           style: dmsregular.copyWith(
             fontSize: FontSize.paragraph3(context),
           ),
@@ -144,7 +140,7 @@ class _SippoJobSearchState extends State<SippoJobSearch> {
               _controller.refreshPage();
               _controller.changeStates(isError: false, message: '');
             },
-            text: 'Try again',
+            text: 'try_again'.tr,
           ),
         )
       ],

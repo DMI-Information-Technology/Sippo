@@ -21,6 +21,7 @@ class CompanyDetailsModel extends EntityModel {
     this.bio,
     this.employeesCount,
     this.profileImage,
+    this.images,
     this.establishmentDate,
     this.specializations,
     this.isFollowed,
@@ -50,6 +51,11 @@ class CompanyDetailsModel extends EntityModel {
       profileImage: json?['profile_image'] != null
           ? ImageResourceModel.fromJson(json?['profile_image'])
           : null,
+      images: json?['images'] != null
+          ? List.of(json?['images'])
+              .map((e) => ImageResourceModel.fromJson(e))
+              .toList()
+          : null,
       specializations: json?["specializations"] != null
           ? List.of(json?["specializations"] ?? [])
               .map((cord) => SpecializationModel.fromJson(cord))
@@ -72,6 +78,7 @@ class CompanyDetailsModel extends EntityModel {
   final bool? hasApplied;
   final bool? isSubscribed;
   final List<SpecializationModel>? specializations;
+  final List<ImageResourceModel>? images;
 
   CompanyDetailsModel copyWith({
     int? id,
@@ -86,7 +93,10 @@ class CompanyDetailsModel extends EntityModel {
     int? employeesCount,
     String? establishmentDate,
     ImageResourceModel? profileImage,
+    List<ImageResourceModel>? images,
     bool? isFollowed,
+    bool? isSubscribed,
+    bool? hasApplied,
     List<SpecializationModel>? specializations,
   }) =>
       CompanyDetailsModel(
@@ -99,11 +109,13 @@ class CompanyDetailsModel extends EntityModel {
         locations: locations ?? this.locations,
         website: website ?? this.website,
         bio: bio ?? this.bio,
+        isSubscribed: isSubscribed ?? this.isSubscribed,
         employeesCount: employeesCount ?? this.employeesCount,
         establishmentDate: establishmentDate ?? this.establishmentDate,
         isFollowed: isFollowed ?? this.isFollowed,
         hasApplied: hasApplied ?? this.hasApplied,
         profileImage: profileImage ?? this.profileImage,
+        images: images ?? this.images,
         specializations: specializations ?? this.specializations,
       );
 
@@ -186,6 +198,7 @@ class CompanyDetailsModel extends EntityModel {
           isFollowed == other.isFollowed &&
           hasApplied == other.hasApplied &&
           isSubscribed == other.isSubscribed &&
+          listEquality(images, other.images) &&
           listEquality(specializations, other.specializations);
 
   @override
@@ -205,6 +218,7 @@ class CompanyDetailsModel extends EntityModel {
       isFollowed.hashCode ^
       hasApplied.hashCode ^
       isSubscribed.hashCode ^
+      images.hashCode ^
       specializations.hashCode;
 
   @override

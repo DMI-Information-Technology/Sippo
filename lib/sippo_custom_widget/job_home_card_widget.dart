@@ -122,7 +122,7 @@ class JobHomeCard extends StatelessWidget {
             ],
           ),
         ),
-        _buildActionButton(context),
+        if (onActionTap != null) _buildActionButton(context),
       ],
     );
   }

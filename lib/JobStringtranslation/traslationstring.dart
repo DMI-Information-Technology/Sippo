@@ -176,6 +176,17 @@ class Apptranslation extends Translations {
           'employmentType': "Employment Type",
           'Specializations': "Specializations",
           'k': "k",
+          'error': "Error",
+          'something_wrong_happened': "something wrong is happened.",
+          'try_again': "Try Again",
+          'upload_company_images': "Company Images",
+          'upload_images': "Upload Images",
+          'upload_images_success_desc':
+              "The images were uploaded successfully.",
+          'upload_images_field_desc': "Uploaded image fields.",
+          'confirm_upload_image_ask': "You want to upload the images?",
+          'confirm_remove_image': "Remove image",
+          'confirm_remove_image_ask': "Are you sure to remove the image?",
         },
         'ar_ab': {
           'Email': "Email",

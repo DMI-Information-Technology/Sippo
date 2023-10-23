@@ -8,13 +8,15 @@ import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/JopController/dashboards_controller/company_dashboard_controller.dart';
+import 'package:jobspot/JopController/home_controllers/company_home_controller.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
-import 'package:jobspot/sippo_custom_widget/job_home_card_widget.dart';
-
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
-import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
+import 'package:jobspot/utils/image_picker_service.dart';
 
+import '../../JobServices/shared_global_data_service.dart';
+import '../../sippo_custom_widget/find_yor_jop_dashboard_cards.dart';
 import '../../sippo_custom_widget/network_bordered_circular_image_widget.dart';
+import '../home_component_widget/job_home_view_widget.dart';
 
 class SippoCompanyHomePage extends StatefulWidget {
   const SippoCompanyHomePage({Key? key}) : super(key: key);
@@ -24,11 +26,12 @@ class SippoCompanyHomePage extends StatefulWidget {
 }
 
 class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
+  final _controller = CompanyHomeController.instance;
+  final jobsHomeView = const JobHomeViewWidget();
+
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery
-        .of(context)
-        .size;
+    Size size = MediaQuery.sizeOf(context);
     double height = size.height;
     double width = size.width;
 
@@ -65,7 +68,9 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
                       SizedBox(width: width / 64),
                       CustomChip(
                         height: height,
-                        onTap: () {},
+                        onTap: () {
+                          ImagePickerFile.pickMultiImageFromGallery();
+                        },
                         child: Text(
                           "Senior",
                           style: dmsregular.copyWith(color: Jobstopcolor.black),
@@ -77,10 +82,9 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
                     ],
                   );
                 },
-                separatorBuilder: (context, index) =>
-                    SizedBox(
-                      width: width / 32,
-                    ),
+                separatorBuilder: (_, __) => SizedBox(
+                  width: width / 32,
+                ),
               ),
             ),
             SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
@@ -94,9 +98,38 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
             SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
             Padding(
               padding: EdgeInsets.symmetric(
-                horizontal: context.fromWidth(CustomStyle.paddingValue),
+                horizontal: context.fromWidth(CustomStyle.s),
               ),
-              child: FindYorJopDashBoardCards(),
+              child: Obx(() {
+                final jobStatistic = _controller.jobsHomeState.jobStatistic;
+                return FindYorJopDashBoardCards(
+                  jobStatistics: jobStatistic,
+                  firstCardSubtitle: "Remote".tr,
+                  secondCardSubtitle: "Full Time".tr,
+                  thirdCardSubtitle: "Part Time".tr,
+                  onFirstTap: () {
+                    SharedGlobalDataService.instance.jobStatistics =
+                        jobStatistic.remoteJobs;
+                    Get.toNamed(SippoRoutes.sippoJobFilterSearch)?.then((_) {
+                      SharedGlobalDataService.instance.jobStatistics = null;
+                    });
+                  },
+                  onSecondTap: () {
+                    SharedGlobalDataService.instance.jobStatistics =
+                        jobStatistic.fullTimeJobs;
+                    Get.toNamed(SippoRoutes.sippoJobFilterSearch)?.then((_) {
+                      SharedGlobalDataService.instance.jobStatistics = null;
+                    });
+                  },
+                  onThirdTap: () {
+                    SharedGlobalDataService.instance.jobStatistics =
+                        jobStatistic.partTimeJobs;
+                    Get.toNamed(SippoRoutes.sippoJobFilterSearch)?.then((_) {
+                      SharedGlobalDataService.instance.jobStatistics = null;
+                    });
+                  },
+                );
+              }),
             ),
             SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
             Padding(
@@ -107,34 +140,7 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
                   style: dmsbold.copyWith(fontSize: 16)),
             ),
             SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
-            FutureBuilder(
-                future: Future.value([CompanyJobModel()]),
-                builder: (context, snapshot) {
-                  final data = snapshot.data;
-                  if (data == null) return const SizedBox.shrink();
-                  return SizedBox(
-                    height: height / 3.8,
-                    child: ListView.separated(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: data.length,
-                      padding: EdgeInsets.symmetric(
-                          horizontal: width / CustomStyle.spaceBetween),
-                      itemBuilder: (context, index) {
-                        return JobHomeCard(
-                          width: context.width / 1.3,
-                          onActionTap: () {
-                            print('${data[index].title} added to favorites');
-                          },
-                          onCardTap: () {},
-                          canApply: false,
-                        );
-                      },
-                      separatorBuilder: (context, index) {
-                        return SizedBox(width: context.width / 32);
-                      },
-                    ),
-                  );
-                })
+            _buildShowHomeJobsList()
           ],
         ),
       ),
@@ -142,11 +148,11 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
     );
   }
 
+  Widget _buildShowHomeJobsList() => jobsHomeView;
+
   AppBar _buildHomeAppBar(BuildContext context) {
     final dashboardController = CompanyDashBoardController.instance;
-    Size size = MediaQuery
-        .of(context)
-        .size;
+    Size size = MediaQuery.of(context).size;
     double height = size.height;
     double width = size.width;
     return AppBar(
@@ -178,10 +184,9 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
               ),
               InkWell(
                 onTap: () => Get.toNamed(SippoRoutes.sippocompanyprofile),
-                child: Obx(() =>
-                    NetworkBorderedCircularImage(
+                child: Obx(() => NetworkBorderedCircularImage(
                       imageUrl:
-                      dashboardController.company.profileImage?.url ?? '',
+                          dashboardController.company.profileImage?.url ?? '',
                       errorWidget: (___, __, _) => const CircleAvatar(),
                       size: context.fromHeight(24),
                       outerBorderColor: Jobstopcolor.backgroudHome,
@@ -212,15 +217,14 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
             ),
           ),
           Obx(
-                () =>
-            dashboardController.company.name != null
+            () => dashboardController.company.name != null
                 ? Text(
-              "${dashboardController.company.name}",
-              style: dmsbold.copyWith(
-                fontSize: FontSize.title3(context),
-                color: Jobstopcolor.primarycolor,
-              ),
-            )
+                    "${dashboardController.company.name}",
+                    style: dmsbold.copyWith(
+                      fontSize: FontSize.title3(context),
+                      color: Jobstopcolor.primarycolor,
+                    ),
+                  )
                 : const SizedBox.shrink(),
           ),
         ],
@@ -229,9 +233,7 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
   }
 
   Widget _buildAdsBoard() {
-    Size size = MediaQuery
-        .of(context)
-        .size;
+    Size size = MediaQuery.of(context).size;
     double height = size.height;
     double width = size.width;
 
@@ -266,112 +268,6 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
               )),
         ],
       ),
-    );
-  }
-}
-
-class FindYorJopDashBoardCards extends StatelessWidget {
-  const FindYorJopDashBoardCards({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    Size size = MediaQuery
-        .of(context)
-        .size;
-    double height = size.height;
-    double width = size.width;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        InkWell(
-          onTap: () {},
-          child: Container(
-            height: height / 4,
-            width: width / 2.3,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                color: Jobstopcolor.lightsky),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(
-                  JobstopPngImg.headhunting,
-                  height: height / 20,
-                ),
-                SizedBox(
-                  height: height / 96,
-                ),
-                Text(
-                  "44.5k",
-                  style:
-                  dmsbold.copyWith(fontSize: 16, color: Jobstopcolor.black),
-                ),
-                Text(
-                  "Remote Job",
-                  style: dmsregular.copyWith(
-                      fontSize: 14, color: Jobstopcolor.black),
-                ),
-              ],
-            ),
-          ),
-        ),
-        Column(
-          children: [
-            Container(
-              height: height / 9.5,
-              width: width / 2.3,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: Jobstopcolor.lightprimary),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "66.8k",
-                    style: dmsbold.copyWith(
-                        fontSize: 16, color: Jobstopcolor.black),
-                  ),
-                  Text(
-                    "Full Time",
-                    style: dmsregular.copyWith(
-                        fontSize: 14, color: Jobstopcolor.black),
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(
-              height: height / 36,
-            ),
-            Container(
-              height: height / 9.5,
-              width: width / 2.3,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: Jobstopcolor.lightorenge),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "38.9k",
-                    style: dmsbold.copyWith(
-                        fontSize: 16, color: Jobstopcolor.black),
-                  ),
-                  Text(
-                    "Part Time",
-                    style: dmsregular.copyWith(
-                        fontSize: 14, color: Jobstopcolor.black),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        )
-      ],
     );
   }
 }

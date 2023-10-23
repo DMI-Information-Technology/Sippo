@@ -13,11 +13,9 @@ import 'package:jobspot/JopController/dashboards_controller/user_dashboard_contr
 import 'package:jobspot/JopController/home_controllers/user_home_controllers.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/find_yor_jop_dashboard_cards.dart';
-import 'package:jobspot/sippo_custom_widget/job_home_card_widget.dart';
 import 'package:jobspot/sippo_custom_widget/network_bordered_circular_image_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
-import 'package:jobspot/utils/helper.dart' as helper;
-import 'package:jobspot/utils/states.dart';
+import 'package:jobspot/sippo_pages/home_component_widget/job_home_view_widget.dart';
 
 class SippoUserHome extends StatefulWidget {
   const SippoUserHome({Key? key}) : super(key: key);
@@ -29,6 +27,7 @@ class SippoUserHome extends StatefulWidget {
 class _SippoUserHomeState extends State<SippoUserHome> {
   // final _controller = Get.put(UserHomeController());
   final _controller = UserHomeController.instance;
+  final jobsHomeView = const JobHomeViewWidget();
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +35,7 @@ class _SippoUserHomeState extends State<SippoUserHome> {
       appBar: _buildHomeAppBar(),
       body: RefreshIndicator(
         onRefresh: () async {
-          _controller.jobsHomeState.refreshJobs();
+          _controller.refreshPage();
         },
         child: BodyWidget(
           paddingContent: EdgeInsets.only(
@@ -114,7 +113,7 @@ class _SippoUserHomeState extends State<SippoUserHome> {
               ),
               SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
               // _buildShowHomeJobPagination(context),
-              _buildShowHomeJobsList(context),
+              _buildShowHomeJobsList(),
               SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
             ],
           ),
@@ -124,121 +123,7 @@ class _SippoUserHomeState extends State<SippoUserHome> {
     );
   }
 
-  Widget _buildShowHomeJobsList(BuildContext context) {
-    return Obx(() => FutureBuilder(
-          future: Future.value(_controller.jobsHomeState.jobStates),
-          builder: (context, snapshot) {
-            final states = snapshot.data;
-            if (states == null) return const SizedBox.shrink();
-            if (states.isError) return _buildFieldJobsMessage(context, states);
-            if (states.isSuccess) return _buildJobCardList(context);
-            if (states.isLoading)
-              return const Center(child: CircularProgressIndicator());
-            return const SizedBox.shrink();
-          },
-        ));
-  }
-
-  SingleChildScrollView _buildJobCardList(
-    BuildContext context,
-  ) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: context.fromWidth(CustomStyle.spaceBetween),
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            ...List.generate(_controller.jobsHomeState.jobsList.length,
-                (index) {
-              return Obx(() {
-                final jobList = _controller.jobsHomeState.jobsList;
-                final item = jobList[index];
-                return JobHomeCard(
-                  padding: EdgeInsets.only(
-                    right: index == jobList.length - 1
-                        ? 0.0
-                        : context.fromWidth(CustomStyle.paddingValue),
-                  ),
-                  width: context.width / 1.3,
-                  jobDetailsPost: item,
-                  onActionTap: () {
-                    _controller.jobsHomeState
-                        .onToggleSavedJobsSubmitted(item.id);
-                  },
-                  imagePath: item.company?.profileImage?.url ?? "",
-                  onImageProfileTap: () {
-                    SharedGlobalDataService.onCompanyTap(item.company);
-                  },
-                  onCardTap: () {
-                    SharedGlobalDataService.onJobTap(item);
-                  },
-                  onApplyTap: () {
-                    SharedGlobalDataService.onJobTap(item);
-                  },
-                  isEditable: false,
-                  onAddressTextTap: (location) async {
-                    helper.lunchMapWithLocation(
-                      location.dLatitude,
-                      location.dLongitude,
-                    );
-                  },
-                );
-              });
-            }),
-            InkWell(
-              onTap: () => Get.toNamed(SippoRoutes.sippoJobFilterSearch),
-              child: Padding(
-                padding: EdgeInsets.all(
-                  context.fromWidth(CustomStyle.xxl),
-                ),
-                child: Icon(
-                  Icons.arrow_circle_right_rounded,
-                  color: Jobstopcolor.secondary,
-                  size: context.fromHeight(12),
-                ),
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
-  Center _buildFieldJobsMessage(BuildContext context, States states) {
-    return Center(
-      child: Padding(
-        padding:
-            EdgeInsets.symmetric(horizontal: context.fromWidth(CustomStyle.s)),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              states.message ?? 'something wrong is happened.',
-              style: dmsregular.copyWith(
-                fontSize: FontSize.paragraph3(context),
-              ),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(height: context.fromHeight(CustomStyle.huge)),
-            SizedBox(
-              width: context.fromWidth(CustomStyle.overBy3),
-              height: context.fromHeight(12),
-              child: CustomButton(
-                onTapped: () {
-                  _controller.jobsHomeState.refreshJobs();
-                },
-                text: 'Try again',
-              ),
-            )
-          ],
-        ),
-      ),
-    );
-  }
+  Widget _buildShowHomeJobsList() => jobsHomeView;
 
   Widget _buildWelcomeUser(BuildContext context) {
     final dashboardController = UserDashBoardController.instance;

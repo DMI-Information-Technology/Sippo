@@ -1,21 +1,23 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
-import 'package:jobspot/sippo_custom_widget/expandable_item_list_widget.dart';
-import 'package:readmore/readmore.dart';
-
-import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JopController/company_profile_controller/profile_company_controller.dart';
 import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
 import 'package:jobspot/sippo_custom_widget/add_info_profile_card.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
+import 'package:jobspot/sippo_custom_widget/expandable_item_list_widget.dart';
+import 'package:jobspot/sippo_custom_widget/gallry_image_uploader_widget_view.dart';
 import 'package:jobspot/sippo_custom_widget/profile_completion_widget.dart';
 import 'package:jobspot/sippo_custom_widget/user_profile_header.dart';
+import 'package:readmore/readmore.dart';
+
+import '../../sippo_custom_widget/network_bordered_circular_image_widget.dart';
 
 class SippoCompanyProfile extends StatefulWidget {
   const SippoCompanyProfile({Key? key}) : super(key: key);
@@ -30,6 +32,8 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: _buildDrawerApp(context),
+      // extendBodyBehindAppBar: true,
       appBar: AppBar(
         toolbarHeight: 0,
         backgroundColor: Colors.black87,
@@ -60,6 +64,68 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
             SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
           ],
         ),
+      ),
+    );
+  }
+
+  Drawer _buildDrawerApp(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          DrawerHeader(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(18),
+                bottomRight: Radius.circular(18),
+              ),
+              image: DecorationImage(
+                image: AssetImage(JobstopPngImg.backgroundProf),
+                fit: BoxFit.cover,
+              ),
+            ),
+            child: InkWell(
+              onTap: () => Get.back(),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  NetworkBorderedCircularImage(
+                    imageUrl: _controller.company.profileImage?.url ?? "",
+                    size: context.fromHeight(CustomStyle.imageSize2),
+                    errorWidget: (context, url, error) => const CircleAvatar(),
+                    outerBorderColor: Colors.grey[300],
+                  ),
+                  SizedBox(
+                    height: context.fromHeight(CustomStyle.spaceBetween),
+                  ),
+                  Text(
+                    _controller.company.name ?? "",
+                    style: dmsmedium.copyWith(
+                      color: Colors.white,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          ListTile(
+            leading: Icon(Icons.image),
+            title: Text('upload_company_images'.tr, style: dmsmedium),
+            onTap: _showUploadGalleryImagesScreen,
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showUploadGalleryImagesScreen() {
+    // print(_controller.company.images);
+    Get.to(
+      () => GalleryImageUploaderView(
+        title: 'Upload Company Images',
+        imagesResource: _controller.company.images,
+        onSaveTap: _controller.uploadCompanyImages,
+        onRemoveImage: _controller.removeImageCompany,
       ),
     );
   }
@@ -313,6 +379,7 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
 
   Widget _buildUserProfileHeader() {
     return Obx(() => UserProfileHeaderWidget(
+          hasDrawer: true,
           profileInfo: _controller.company,
           onSettingsPressed: () {
             if (_controller.netController.isNotConnected) return;
