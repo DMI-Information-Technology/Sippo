@@ -22,7 +22,7 @@ class SippoSearchJobsSpecializationsFilter extends StatefulWidget {
 
 class _SippoSearchJobsSpecializationsFilterState
     extends State<SippoSearchJobsSpecializationsFilter> {
-  final _controller = UserFilterSearchController.instance;
+  final _controller = SippoFilterSearchController.instance;
 
   @override
   Widget build(BuildContext context) {

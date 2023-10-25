@@ -18,6 +18,7 @@ class StatusResponseCodeChecker {
   ) async {
     print("from checkStatusResponseCode: \n${jsonDecode(response.body)}");
     Map<String, dynamic> responseData = jsonDecode(response.body);
+    print(response.statusCode);
     if (response.statusCode == 200) {
       return AuthResponse.registerSuccess(
         data: RegisterModel.fromJson(

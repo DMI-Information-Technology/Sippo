@@ -18,8 +18,6 @@ import 'package:jobspot/sippo_pages/sippo_abouts_companies/show_about_companies_
 import 'package:jobspot/sippo_pages/sippo_abouts_companies/show_about_companies_posts.dart';
 import 'package:jobspot/utils/app_use.dart';
 
-import '../sippo_job_description/sippo_job_description.dart';
-
 class SippoAboutCompanies extends StatefulWidget {
   const SippoAboutCompanies({Key? key}) : super(key: key);
 
@@ -37,9 +35,9 @@ class _SippoAboutCompaniesState extends State<SippoAboutCompanies> {
   void initState() {
     _taps = [
       SliverToBoxAdapter(
-        child: ShowAboutCompaniesDetails(
-          company: _controller.aboutState.company,
-        ),
+        child: Obx(() => ShowAboutCompaniesDetails(
+              company: _controller.aboutState.company,
+            )),
       ),
       const ShowAboutCompaniesPostsList(),
       const ShowAboutCompaniesJobsList()
@@ -63,6 +61,8 @@ class _SippoAboutCompaniesState extends State<SippoAboutCompanies> {
           slivers: [
             SliverPersistentHeader(
               delegate: CustomSliverAppBarDelegate(
+                imageUrl:
+                    _controller.aboutState.company.profileImage?.url ?? "",
                 expandedHeight: (context.height / 3.5),
                 onLeadingTap: () => Get.back(),
               ),
@@ -285,6 +285,7 @@ class CustomSliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   final double expandedHeight;
   final void Function()? onLeadingTap;
   final void Function()? onPopPubMenuTap;
+  final String? imageUrl;
 
   // final List<Widget> actions;
 
@@ -292,6 +293,7 @@ class CustomSliverAppBarDelegate extends SliverPersistentHeaderDelegate {
     required this.expandedHeight,
     this.onLeadingTap,
     this.onPopPubMenuTap,
+    this.imageUrl,
     // this.actions = const [],
   });
 
@@ -309,7 +311,7 @@ class CustomSliverAppBarDelegate extends SliverPersistentHeaderDelegate {
           imageOffsetDivider: 1.5,
           shrinkOffset: shrinkOffset,
           backgroundImageColor: Colors.white,
-          imageUrl: SippoJobDescription.imgUrl,
+          imageUrl: imageUrl,
           // onLeadingTap: () => Get.back(),
         ),
         if (shrinkOffset > minExtent)

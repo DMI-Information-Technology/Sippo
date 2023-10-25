@@ -27,6 +27,8 @@ class CompanyDetailsModel extends EntityModel {
     this.isFollowed,
     this.hasApplied,
     this.isSubscribed,
+    this.isEmailVerified,
+    this.pendingEmail,
   });
 
   factory CompanyDetailsModel.fromJson(Map<String, dynamic>? json) {
@@ -64,6 +66,8 @@ class CompanyDetailsModel extends EntityModel {
       isFollowed: json?['is_followed'],
       hasApplied: json?['has_applied'],
       isSubscribed: json?['has_applied'],
+      isEmailVerified: json?['is_email_verified'],
+      pendingEmail: json?['pending_email'],
     );
   }
 
@@ -79,6 +83,8 @@ class CompanyDetailsModel extends EntityModel {
   final bool? isSubscribed;
   final List<SpecializationModel>? specializations;
   final List<ImageResourceModel>? images;
+  final bool? isEmailVerified;
+  final String? pendingEmail;
 
   CompanyDetailsModel copyWith({
     int? id,
@@ -97,6 +103,8 @@ class CompanyDetailsModel extends EntityModel {
     bool? isFollowed,
     bool? isSubscribed,
     bool? hasApplied,
+    bool? isEmailVerified,
+    String? pendingEmail,
     List<SpecializationModel>? specializations,
   }) =>
       CompanyDetailsModel(
@@ -117,6 +125,8 @@ class CompanyDetailsModel extends EntityModel {
         profileImage: profileImage ?? this.profileImage,
         images: images ?? this.images,
         specializations: specializations ?? this.specializations,
+        isEmailVerified: isEmailVerified ?? this.isEmailVerified,
+        pendingEmail: pendingEmail ?? this.pendingEmail,
       );
 
   @override
@@ -128,6 +138,7 @@ class CompanyDetailsModel extends EntityModel {
       'secondary_phone': secondaryPhone,
       'email': email,
       'city': city,
+      'bio': bio,
       "latitude": locations?.firstOrNull?.cordLocation?.latitude,
       "longitude": locations?.firstOrNull?.cordLocation?.longitude,
       'website': website,
@@ -198,8 +209,9 @@ class CompanyDetailsModel extends EntityModel {
           isFollowed == other.isFollowed &&
           hasApplied == other.hasApplied &&
           isSubscribed == other.isSubscribed &&
-          listEquality(images, other.images) &&
-          listEquality(specializations, other.specializations);
+          isEmailVerified == other.isEmailVerified &&
+          listEquality(specializations, other.specializations) &&
+          listEquality(images, other.images);
 
   @override
   int get hashCode =>
@@ -217,12 +229,13 @@ class CompanyDetailsModel extends EntityModel {
       profileImage.hashCode ^
       isFollowed.hashCode ^
       hasApplied.hashCode ^
+      isEmailVerified.hashCode ^
       isSubscribed.hashCode ^
-      images.hashCode ^
-      specializations.hashCode;
+      specializations.hashCode ^
+      images.hashCode;
 
   @override
   String toString() {
-    return 'CompanyResponseDetailsModel{id: $id,name: $name, phone: $phone, secondaryPhone: $secondaryPhone, email: $email, city: $city, locations: $locations, website: $website, employeesCount: $employeesCount, establishmentDate: $establishmentDate, hasApplied: $hasApplied ,isFollowed: $isFollowed, specializations: $specializations, profileImage: $profileImage, bio: $bio}';
+    return 'CompanyResponseDetailsModel{id: $id,name: $name, phone: $phone, secondaryPhone: $secondaryPhone, email: $email, city: $city, images: $images, website: $website, employeesCount: $employeesCount, establishmentDate: $establishmentDate, hasApplied: $hasApplied ,isFollowed: $isFollowed, specializations: $specializations, profileImage: $profileImage, bio: $bio}';
   }
 }

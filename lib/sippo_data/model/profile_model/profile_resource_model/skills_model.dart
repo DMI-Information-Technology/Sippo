@@ -1,3 +1,5 @@
+import 'package:jobspot/utils/helper.dart';
+
 class SkillsModel {
   SkillsModel({
     this.skills,
@@ -26,4 +28,14 @@ class SkillsModel {
   Map<String, dynamic> toJson() => {
         'skills': skills,
       };
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is SkillsModel &&
+          runtimeType == other.runtimeType &&
+          listEquality(skills, other.skills);
+
+  @override
+  int get hashCode => skills.hashCode;
 }

@@ -254,9 +254,9 @@ class _SippoProfileSettingState extends State<SippoProfileSetting> {
                   authController.states.message ?? "",
                   backgroundColor: Colors.red,
                 );
-                authController.resetAllAuthStates();
+                authController.resetStates();
               } else if (authController.states.isSuccess) {
-                authController.resetAllAuthStates();
+                authController.resetStates();
                 if (GlobalStorageService.appUse == AppUsingType.user)
                   Get.offAllNamed(SippoRoutes.userLoginPage);
                 else

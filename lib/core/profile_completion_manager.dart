@@ -2,7 +2,7 @@ import 'package:jobspot/JobGlobalclass/global_storage.dart';
 import 'package:jobspot/utils/app_use.dart';
 
 class ProfileCompletionManager {
-  static const TOTAL_USER_COMPLETION = 120.0;
+  static const TOTAL_USER_COMPLETION = 130.0;
   static const TOTAL_COMPANY_COMPLETION = 110.0;
 
   static double get totalCompletionType =>

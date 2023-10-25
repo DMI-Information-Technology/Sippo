@@ -9,10 +9,9 @@ import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/JopController/company_profile_controller/company_edit_add_job_controller.dart';
 import 'package:jobspot/JopController/sippo_search_controller/user_filter_search.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
+import 'package:jobspot/sippo_custom_widget/custom_drop_down_button.dart';
 import 'package:jobspot/sippo_custom_widget/title_label_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
-
-import '../../sippo_custom_widget/custom_drop_down_button.dart';
 
 class SippoSearchJobsFilter extends StatefulWidget {
   const SippoSearchJobsFilter({Key? key}) : super(key: key);
@@ -25,7 +24,7 @@ class _SippoSearchJobsFilterState extends State<SippoSearchJobsFilter> {
   dynamic size;
   double height = 0.00;
   double width = 0.00;
-  final _controller = UserFilterSearchController.instance;
+  final _controller = SippoFilterSearchController.instance;
 
   @override
   Widget build(BuildContext context) {

@@ -51,7 +51,7 @@ class _SippoGeneralSearchState extends State<SippoGeneralSearch>
     _tabController.addListener(() {
       // When the tab controller's value is updated, make sure to update the
       // tab index value, which is state restorable.
-      print("${_tabController.index}");
+      _controller.resetStates();
       _controller.generalSearchState.tabsIndex = _tabController.index;
       tabIndex.value = _tabController.index;
     });

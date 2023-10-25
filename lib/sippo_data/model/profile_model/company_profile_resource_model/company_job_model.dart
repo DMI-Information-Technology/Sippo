@@ -129,6 +129,7 @@ class CompanyJobModel {
       other is CompanyJobModel &&
           runtimeType == other.runtimeType &&
           id == other.id &&
+          company == other.company &&
           title == other.title &&
           description == other.description &&
           requirements == other.requirements &&

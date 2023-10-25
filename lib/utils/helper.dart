@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -20,18 +21,18 @@ String calculateElapsedTime(DateTime dateTime) {
     milliseconds: currentTimeMillis - startTimeMillis,
   );
   if (duration.inDays > 0) {
-    return '${duration.inDays} days ago';
+    return '${duration.inDays} ${'days_ago'.tr}';
   }
   if (duration.inHours > 0) {
-    return '${duration.inHours} hours ago';
+    return '${duration.inHours} ${"hours_ago".tr}';
   }
   if (duration.inMinutes > 0) {
-    return '${duration.inMinutes} minutes ago';
+    return '${duration.inMinutes} ${"minutes_ago".tr}';
   }
   if (duration.inSeconds > 0) {
-    return '${duration.inSeconds} seconds ago';
+    return '${duration.inSeconds} ${"seconds_ago".tr}';
   }
-  return 'just now';
+  return 'just_now'.tr;
 }
 
 String calculateElapsedTimeAR(DateTime dateTime) {

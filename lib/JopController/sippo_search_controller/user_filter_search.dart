@@ -11,10 +11,10 @@ import 'package:jobspot/sippo_data/specializations/specializations_repo.dart';
 
 import '../../sippo_data/locations/locationsRepo.dart';
 
-class UserFilterSearchController extends GetxController {
+class SippoFilterSearchController extends GetxController {
   final filterSearchState = FilterSearchState();
 
-  static UserFilterSearchController get instance => Get.find();
+  static SippoFilterSearchController get instance => Get.find();
   final userSearchJobsController = SearchJobsController.instances;
 
   Future<void> fetchExperienceLevels() async {

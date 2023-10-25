@@ -18,6 +18,7 @@ import 'package:jobspot/utils/getx_text_editing_controller.dart';
 import 'package:jobspot/utils/image_picker_service.dart';
 import 'package:jobspot/utils/validating_input.dart';
 
+import '../../sippo_custom_widget/custom_drop_down_button.dart';
 import '../../sippo_custom_widget/network_bordered_circular_image_widget.dart';
 
 class EditUserProfilePage extends StatefulWidget {
@@ -71,75 +72,194 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
                       onCancelTap: () => _controller.warningState(false),
                     ),
                   )),
-              InputBorderedField(
-                hintText: "enter your name",
-                gController: profileEditState.name,
-                // height: context.fromHeight(CustomStyle.inputBorderedSize),
-                fontSize: FontSize.label(context),
-                suffixIcon: Icon(
-                  Icons.person_outline_outlined,
-                  color: Jobstopcolor.primarycolor,
-                ),
-                // textInputAction: TextInputAction.newline,
-                validator: (value) {
-                  return ValidatingInput.validateEmptyField(
-                    value,
-                    message: "name field is required.",
-                  );
-                },
-              ),
-              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-              InputBorderedField(
-                keyboardType: TextInputType.emailAddress,
-                hintText: "enter your email",
-                gController: profileEditState.email,
-                height: context.fromHeight(CustomStyle.inputBorderedSize),
-                fontSize: FontSize.label(context),
-                suffixIcon: Icon(
-                  Icons.email_outlined,
-                  color: Jobstopcolor.primarycolor,
-                ),
-                // textInputAction: TextInputAction.newline,
-              ),
-              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-              _buildInputPhoneNumberField(
-                context,
-                profileEditState.phone,
-                "Phone number",
-                isPrimary: true,
-              ),
-              SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
-              _buildInputPhoneNumberField(
-                context,
-                profileEditState.secondaryPhone,
-                "Secondary Phone number",
-              ),
-              SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
-              InputBorderedField(
-                readOnly: true,
-                hintText: "Select your Gender",
-                gController: profileEditState.gender,
-                height: context.fromHeight(CustomStyle.inputBorderedSize),
-                fontSize: FontSize.label(context),
-                suffixIcon: Icon(
-                  Icons.arrow_drop_down_sharp,
-                  color: Jobstopcolor.primarycolor,
-                ),
-                onTap: () {
-                  Get.dialog(
-                    Obx(
-                      () => GenderPickerDialog(
-                        onSelectedGender: (gender) {
-                          if (gender != null) {
-                            profileEditState.genderValue = gender;
-                          }
-                        },
-                        genderValue: profileEditState.genderValue,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: context.fromWidth(CustomStyle.paddingValue),
+                    ),
+                    child: Text(
+                      'Name',
+                      style:
+                          dmsmedium.copyWith(fontSize: FontSize.label(context)),
+                    ),
+                  ),
+                  InputBorderedField(
+                    hintText: "enter your name",
+                    gController: profileEditState.name,
+                    // height: context.fromHeight(CustomStyle.inputBorderedSize),
+                    fontSize: FontSize.label(context),
+                    suffixIcon: Icon(
+                      Icons.person_outline_outlined,
+                      color: Jobstopcolor.primarycolor,
+                    ),
+                    // textInputAction: TextInputAction.newline,
+                    validator: (value) {
+                      return ValidatingInput.validateEmptyField(
+                        value,
+                        message: "name field is required.",
+                      );
+                    },
+                  ),
+                  SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: context.fromWidth(CustomStyle.spaceBetween),
+                      ),
+                      Text(
+                        'Email',
+                        style: dmsmedium.copyWith(
+                            fontSize: FontSize.label(context)),
+                      ),
+                      SizedBox(
+                        width: context.fromWidth(CustomStyle.xxxl),
+                      ),
+                      Obx(() => CircleAvatar(
+                            backgroundColor: _controller.isEmailVerified
+                                ? Colors.green
+                                : Colors.orangeAccent,
+                            radius: context.fromWidth(95),
+                          ))
+                    ],
+                  ),
+                  InputBorderedField(
+                    keyboardType: TextInputType.emailAddress,
+                    hintText: "enter your email",
+                    gController: profileEditState.email,
+                    height: context.fromHeight(CustomStyle.inputBorderedSize),
+                    fontSize: FontSize.label(context),
+                    suffixIcon: Icon(
+                      Icons.email_outlined,
+                      color: Jobstopcolor.primarycolor,
+                    ),
+                    // textInputAction: TextInputAction.newline,
+                  ),
+                  Obx(
+                    () => ConditionalWidget(
+                      _controller.userDetails.pendingEmailIsNotEmpty,
+                      data: _controller.userDetails,
+                      guaranteedBuilder: (context, data) => Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal:
+                              context.fromWidth(CustomStyle.paddingValue),
+                        ),
+                        child: Text(
+                          'Pending email "${data?.pendingEmail}"',
+                          style: dmsregular.copyWith(
+                              fontSize: FontSize.label(context)),
+                        ),
                       ),
                     ),
-                  );
-                },
-              ),
+                  ),
+                  SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: context.fromWidth(CustomStyle.paddingValue),
+                    ),
+                    child: Text(
+                      'Phone Number',
+                      style:
+                          dmsmedium.copyWith(fontSize: FontSize.label(context)),
+                    ),
+                  ),
+                  _buildInputPhoneNumberField(
+                    context,
+                    profileEditState.phone,
+                    "Phone number",
+                    isPrimary: true,
+                  ),
+                  SizedBox(
+                    height: context.fromHeight(CustomStyle.spaceBetween),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: context.fromWidth(CustomStyle.paddingValue),
+                    ),
+                    child: Text(
+                      'Secondary Phone Number',
+                      style:
+                          dmsmedium.copyWith(fontSize: FontSize.label(context)),
+                    ),
+                  ),
+                  _buildInputPhoneNumberField(
+                    context,
+                    profileEditState.secondaryPhone,
+                    "Secondary Phone number",
+                  ),
+                  SizedBox(
+                    height: context.fromHeight(CustomStyle.spaceBetween),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: context.fromWidth(CustomStyle.paddingValue),
+                    ),
+                    child: Text(
+                      'Gender',
+                      style:
+                          dmsmedium.copyWith(fontSize: FontSize.label(context)),
+                    ),
+                  ),
+                  InputBorderedField(
+                    readOnly: true,
+                    hintText: "Select your Gender",
+                    gController: profileEditState.gender,
+                    height: context.fromHeight(CustomStyle.inputBorderedSize),
+                    fontSize: FontSize.label(context),
+                    suffixIcon: Icon(
+                      Icons.arrow_drop_down_sharp,
+                      color: Jobstopcolor.primarycolor,
+                    ),
+                    onTap: () {
+                      Get.dialog(
+                        Obx(
+                          () => GenderPickerDialog(
+                            onSelectedGender: (gender) {
+                              if (gender != null) {
+                                profileEditState.genderValue = gender;
+                              }
+                            },
+                            genderValue: profileEditState.genderValue,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                  SizedBox(
+                    height: context.fromHeight(CustomStyle.spaceBetween),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: context.fromWidth(CustomStyle.paddingValue),
+                    ),
+                    child: Text(
+                      'Location Address',
+                      style:
+                          dmsmedium.copyWith(fontSize: FontSize.label(context)),
+                    ),
+                  ),
+                  Obx(() {
+                    final location = _controller.profileEditState;
+                    return CustomDropdownButton(
+                      textHint: 'Select your location place.',
+                      labelList: location.locationsAddressNameList,
+                      values: location.locationsAddressList,
+                      fillColor: Colors.white,
+                      onItemSelected: (value) async {
+                        if (value == null) return;
+                        location.selectedLocationAddress = value;
+                        print(value);
+                      },
+                      setInitialValue:
+                          location.selectedLocationAddress.id != null,
+                      initialValue: location.selectedLocationAddress.name,
+                    );
+                  }),
+                ],
+              )
             ],
           ),
         ),

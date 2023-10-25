@@ -110,7 +110,7 @@ class IdentityVerificationController extends GetxController {
         // ),
       );
       if (authState.isSuccess) {
-        _authController.resetAllAuthStates();
+        _authController.resetStates();
         _showSuccessSignupAlert();
       }
     }
@@ -161,7 +161,7 @@ class IdentityVerificationController extends GetxController {
   void onClose() {
     timer?.cancel();
     _removeAllListener();
-    _authController.resetAllAuthStates();
+    _authController.resetStates();
     _loController.dispose();
     super.onClose();
   }

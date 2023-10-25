@@ -56,10 +56,11 @@ class _ShowGeneralSearchCompaniesListState
                 },
                 titleAlignment: ListTileTitleAlignment.center,
                 leading: NetworkBorderedCircularImage(
-                  imageUrl: '',
+                  imageUrl: item.profileImage?.url ?? '',
                   size: context.fromHeight(21),
                   outerBorderColor: Colors.grey[300],
-                  errorWidget: (_, __, ___) => CircleAvatar(),
+                  outerBorderWidth: context.fromWidth(CustomStyle.huge2),
+                  errorWidget: (_, __, ___) => const CircleAvatar(),
                 ),
                 title: AutoSizeText(
                   item.name ?? '',
@@ -67,7 +68,7 @@ class _ShowGeneralSearchCompaniesListState
                   overflow: TextOverflow.ellipsis,
                 ),
                 subtitle: AutoSizeText(
-                  "${item.city ?? ''}, ${item.establishmentDate ?? ''}",
+                  "${item.locations?.firstWhereOrNull((e) => e.isHQ == true)?.locationAddress?.name ?? ''}, ${item.establishmentDate ?? ''}",
                   style: dmsregular,
                   overflow: TextOverflow.ellipsis,
                 ),

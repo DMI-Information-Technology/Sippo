@@ -1,12 +1,11 @@
 import 'dart:ui';
 
 import 'package:get/get.dart';
-import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
-import 'package:jobspot/utils/states.dart';
-
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobServices/shared_global_data_service.dart';
+import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
 import 'package:jobspot/sippo_data/user_repos/user_jobs_repo.dart';
+import 'package:jobspot/utils/states.dart';
 
 class JobCompanyDetailsController extends GetxController {
   static JobCompanyDetailsController get instance => Get.find();
@@ -32,18 +31,21 @@ class JobCompanyDetailsController extends GetxController {
         changeStates(isError: true, error: message);
       },
     );
+    print(data?.company?.images);
     return data;
   }
 
   void requestJobDetails() async {
     changeStates(isLoading: true);
     if (requestedJobDetails?.id != null && requestedJobDetails?.title != null) {
-      jobDetailsState.jopDetails = requestedJobDetails??jobDetailsState.jopDetails;
+      jobDetailsState.jopDetails =
+          requestedJobDetails ?? jobDetailsState.jopDetails;
     }
 
     if (jobId != -1) {
       jobDetailsState.jopDetails =
           await getJobById(jobId) ?? jobDetailsState.jopDetails;
+
     }
 
     changeStates(isLoading: false);

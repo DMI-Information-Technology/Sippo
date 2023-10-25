@@ -5,12 +5,18 @@ import 'package:flutter_verification_code/flutter_verification_code.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
-import 'package:jobspot/sippo_custom_widget/widgets.dart';
-
-import 'package:jobspot/JobGlobalclass/routes.dart';
+import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
+import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
+import 'package:jobspot/JobGlobalclass/text_font_size.dart';
+import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
+import 'package:jobspot/JopController/AuthenticationController/sippo_auth_controller.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
-import 'package:jobspot/sippo_themes/themecontroller.dart';
+import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/utils/helper.dart';
+
+import '../../JobGlobalclass/routes.dart';
+import '../../sippo_custom_widget/ConditionalWidget.dart';
+import '../../sippo_custom_widget/success_message_widget.dart';
 
 class CheckOTPResetPasswordMessage extends StatefulWidget {
   const CheckOTPResetPasswordMessage({Key? key}) : super(key: key);
@@ -23,14 +29,13 @@ class CheckOTPResetPasswordMessage extends StatefulWidget {
 class _CheckOTPResetPasswordMessageState
     extends State<CheckOTPResetPasswordMessage> {
   bool _onEditing = false;
-  String _code = "";
+  // String _code = "";/
   dynamic size;
   double height = 0.00;
   double width = 0.00;
-  TextEditingController email = TextEditingController();
-  final themedata = Get.put(JobstopThemecontroler());
+
   Timer? _timer;
-  int _seconds = 60;
+  final authController = AuthController.instance;
 
   @override
   void initState() {
@@ -39,12 +44,15 @@ class _CheckOTPResetPasswordMessageState
   }
 
   void _startTimer() async {
-    _timer = await startTimer(_seconds, (value) => _seconds = value);
+    _timer = await startTimer(authController.seconds, (value) {
+      print(authController.seconds);
+      authController.seconds = value;
+    });
   }
 
   @override
   void dispose() {
-    _timer?.cancel();
+    if (_timer?.isActive == true) _timer?.cancel();
     super.dispose();
   }
 
@@ -65,20 +73,31 @@ class _CheckOTPResetPasswordMessageState
         isScrollable: true,
         paddingContent: EdgeInsets.symmetric(horizontal: width / 32),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(
-              height: height / 6,
+              height: context.fromHeight(4),
             ),
-            Text(
-              "Code has been sent to\n+92 - 26*********0",
-              style: dmsmedium.copyWith(
-                fontSize: height / 52,
-                color: Jobstopcolor.textColor,
-              ),
+            Text.rich(
               textAlign: TextAlign.center,
+              TextSpan(
+                style: dmsmedium.copyWith(
+                  fontSize: FontSize.title5(context),
+                ),
+                text: 'Code has been sent to\n',
+                children: [
+                  TextSpan(
+                    text: authController.resetEmail.text,
+                    style: dmsbold.copyWith(
+                      color: Jobstopcolor.primarycolor,
+                      fontSize: FontSize.title4(context),
+                    ),
+                  ),
+                ],
+              ),
             ),
             SizedBox(
-              height: height / 16,
+              height: height / 32,
             ),
             Center(
               child: VerificationCode(
@@ -86,79 +105,123 @@ class _CheckOTPResetPasswordMessageState
                     fontSize: height / 28, color: Jobstopcolor.textColor),
                 keyboardType: TextInputType.number,
                 underlineColor: Jobstopcolor.primarycolor,
-                length: 4,
+                length: 6,
                 fillColor: Colors.grey[200],
                 cursorColor: Jobstopcolor.primarycolor,
-                itemSize: height / 12,
+                itemSize: width / 8,
                 digitsOnly: true,
                 fullBorder: true,
+                clearAll: Padding(
+                  padding: EdgeInsets.all(
+                    context.fromWidth(CustomStyle.paddingValue),
+                  ),
+                  child: Icon(Icons.clear),
+                ),
                 onCompleted: (String value) {
-                  setState(() {
-                    _code = value;
-                  });
+                  // setState(() {
+                  authController.otpCode = value;
+                  // });
                 },
                 onEditing: (bool value) {
-                  setState(() {
-                    _onEditing = value;
-                  });
+                  _onEditing = value;
                   if (!_onEditing) FocusScope.of(context).unfocus();
                 },
               ),
             ),
             SizedBox(
-              height: height / 20,
+              height: context.fromHeight(CustomStyle.spaceBetween),
             ),
-            _buildResendButtonTimerRow(),
+            Obx(() => ConditionalWidget(
+                  authController.states.isLoading,
+                  isLoading: authController.states.isLoading,
+                  avoidBuilder: (context, _) =>
+                      _buildResendButtonTimerRow(context),
+                )),
+            Obx(() => ConditionalWidget(
+                  authController.states.isError,
+                  data: authController.states,
+                  guaranteedBuilder: (context, data) => CardNotifyMessage.error(
+                    state: data,
+                    onCancelTap: () => authController.resetStates(),
+                  ),
+                )),
+            SizedBox(
+              height: context.fromHeight(CustomStyle.spaceBetween),
+            ),
           ],
         ),
         paddingBottom: EdgeInsets.all(width / 32),
         bottomScreen: CustomButton(
           onTapped: () {
-            Get.toNamed(SippoRoutes.updateNewPassword);
+            if (InternetConnectionService.instance.isNotConnected) return;
+            if (authController.states.isLoading) return;
+            authController.confirmOtpCode().then((_) {
+              if (authController.states.isSuccess) {
+                authController.resetStates();
+                _timer?.cancel();
+                Get.toNamed(SippoRoutes.updateNewPassword);
+              }
+            });
           },
-          text: "Confirm",
+          text: "send_otp_code".tr,
         ),
       ),
     );
   }
 
-  Row _buildResendButtonTimerRow() {
-    return Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              if (_seconds > 0) ...[
-                Text(
-                  "Resend code in",
-                  style: dmsregular.copyWith(
-                    fontSize: height / 52,
-                  ),
+  Widget _buildResendButtonTimerRow(BuildContext context) {
+    return Obx(() {
+      final seconds = authController.seconds;
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          if (seconds > 0) ...[
+            Text(
+              "Resend code in",
+              style: dmsregular.copyWith(
+                fontSize: height / 52,
+              ),
+            ),
+            SizedBox(
+              width: width / 25,
+            ),
+            Text(
+              seconds.toString(),
+              style: dmsbold.copyWith(
+                fontSize: height / 52,
+                color: Jobstopcolor.primarycolor,
+              ),
+            ),
+          ],
+          if (seconds == 0)
+            TextButton(
+              onPressed: () async {
+                if (InternetConnectionService.instance.isNotConnected) return;
+                if (authController.states.isLoading) return;
+                await authController.forgetPassword();
+                if (authController.states.isSuccess) {
+                  authController.seconds = 60;
+                  _startTimer();
+                } else {
+                  Get.snackbar(
+                    'Reset Password',
+                    'You cannot reset the password now. Please try again later',
+                    boxShadows: [boxShadow],
+                    backgroundColor: Colors.grey[300],
+                  );
+                }
+                authController.resetStates();
+              },
+              child: Text(
+                "resend",
+                style: dmsbold.copyWith(
+                  fontSize: height / 52,
+                  color: Jobstopcolor.primarycolor,
                 ),
-                SizedBox(
-                  width: width / 25,
-                ),
-                Text(
-                  _seconds.toString(),
-                  style: dmsbold.copyWith(
-                    fontSize: height / 52,
-                    color: Jobstopcolor.primarycolor,
-                  ),
-                ),
-              ],
-              if (_seconds == 0)
-                TextButton(
-                  onPressed: () {
-                    _seconds = 60;
-                    _startTimer();
-                  },
-                  child: Text(
-                    "resend",
-                    style: dmsbold.copyWith(
-                      fontSize: height / 52,
-                      color: Jobstopcolor.primarycolor,
-                    ),
-                  ),
-                )
-            ],
-          );
+              ),
+            )
+        ],
+      );
+    });
   }
 }

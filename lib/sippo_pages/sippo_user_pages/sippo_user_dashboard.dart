@@ -72,19 +72,28 @@ class _SippoUserDashboardState extends State<SippoUserDashboard> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: _bottomTabBar(context),
-      body: Obx(() => _controller.pages[_controller.selectedItemIndex]),
-      floatingActionButtonLocation:
-          FloatingActionButtonLocation.miniCenterDocked,
-      floatingActionButton: FloatingActionButton(
-        mini: true,
-        onPressed: () {},
-        backgroundColor: Jobstopcolor.primarycolor,
-        child: const Icon(
-          Icons.add,
-          size: 20,
-          color: Jobstopcolor.white,
+    return WillPopScope(
+      onWillPop: () async {
+        if (_controller.selectedItemIndex != 0) {
+          _controller.selectedItemIndex = 0;
+          return false;
+        }
+        return true;
+      },
+      child: Scaffold(
+        bottomNavigationBar: _bottomTabBar(context),
+        body: Obx(() => _controller.pages[_controller.selectedItemIndex]),
+        floatingActionButtonLocation:
+            FloatingActionButtonLocation.miniCenterDocked,
+        floatingActionButton: FloatingActionButton(
+          mini: true,
+          onPressed: () {},
+          backgroundColor: Jobstopcolor.primarycolor,
+          child: const Icon(
+            Icons.add,
+            size: 20,
+            color: Jobstopcolor.white,
+          ),
         ),
       ),
     );

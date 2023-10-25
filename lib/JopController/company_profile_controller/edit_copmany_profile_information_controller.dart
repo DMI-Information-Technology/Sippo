@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JopController/company_profile_controller/profile_company_controller.dart';
+import 'package:jobspot/custom_app_controller/switch_status_controller.dart';
 import 'package:jobspot/sippo_data/company_repos/company_profile_info_repo.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
 import 'package:jobspot/sippo_data/model/custom_file_model/custom_file_model.dart';
@@ -9,6 +12,7 @@ import 'package:jobspot/utils/states.dart';
 
 class EditCompanyProfileInfoController extends GetxController {
   final profileController = ProfileCompanyController.instance;
+  final overlayLoadingController = SwitchStatusController();
 
   CompanyDetailsModel get companyDetails => profileController.company;
   final profileEditState = ProfileCompanyEditState();
@@ -58,10 +62,10 @@ class EditCompanyProfileInfoController extends GetxController {
       newProfileInfo,
     );
     await response.checkStatusResponse(
-      onSuccess: (data, _) {
+      onSuccess: (data, _) async {
         if (data != null) {
-          profileController.dashboard.company = data;
-          profileEditState.setAll(profileController.dashboard.company);
+          await profileController.dashboard.refreshUserProfileInfo();
+          profileEditState.setAll(companyDetails);
         }
         successState(true, 'company Profile is updated successfully.');
       },
@@ -77,6 +81,7 @@ class EditCompanyProfileInfoController extends GetxController {
         "sorry your connection is lost, please check your settings before continuing.",
       );
     }
+
     _states.value = States(isLoading: true);
     await updateProfileInfo();
     _states.value = states.copyWith(isLoading: false);
@@ -94,14 +99,24 @@ class EditCompanyProfileInfoController extends GetxController {
     _states.value = states.copyWith(isLoading: false);
   }
 
+
+  StreamSubscription<States>? stateSubs;
   @override
   void onInit() {
     profileEditState.setAll(profileController.company);
+    stateSubs = _states.listen((value) {
+      if (value.isLoading)
+        overlayLoadingController.start();
+      else
+        overlayLoadingController.pause();
+    });
     super.onInit();
   }
 
   @override
   void onClose() {
+    stateSubs?.cancel();
+    overlayLoadingController.dispose();
     profileEditState.disposeTextControllers();
     super.onClose();
   }
@@ -117,6 +132,7 @@ class ProfileCompanyEditState {
   final employeesCount = GetXTextEditingController();
   final _profileController = ProfileCompanyController.instance;
   final _pickedImageProfile = CustomFileModel().obs;
+  final bio = GetXTextEditingController();
 
   CustomFileModel get pickedImageProfile => _pickedImageProfile.value;
 
@@ -132,6 +148,7 @@ class ProfileCompanyEditState {
     website.text = "";
     city.text = "";
     employeesCount.text = "";
+    bio.text = "";
     pickedImageProfile = CustomFileModel();
     // imageProfileResource = ImageResourceModel();
   }
@@ -146,22 +163,27 @@ class ProfileCompanyEditState {
     employeesCount.text = data?.employeesCount != null
         ? data?.employeesCount?.toString() ?? ""
         : "";
+    bio.text = data?.bio ?? "";
   }
 
-  CompanyDetailsModel get form => _profileController.company.copyWith(
-        name: name.text.isBlank == true ? null : name.text,
-        phone: phone.text.isBlank == true ? null : phone.text,
-        email: email.text.isBlank == true ? null : email.text,
-        secondaryPhone:
-            secondaryPhone.text.isBlank == true ? null : secondaryPhone.text,
-        website: website.text.isBlank == true ? null : website.text,
-        city: city.text.isBlank == true ? null : city.text,
-        employeesCount: employeesCount.text.isBlank == true
-            ? null
-            : employeesCount.text.isNumericOnly
-                ? int.parse(employeesCount.text)
-                : null,
-      );
+  CompanyDetailsModel get form {
+    print(bio.text);
+    return _profileController.company.copyWith(
+      name: name.text.isBlank == true ? null : name.text,
+      phone: phone.text.isBlank == true ? null : phone.text,
+      email: email.text.isBlank == true ? null : email.text,
+      secondaryPhone:
+          secondaryPhone.text.isBlank == true ? null : secondaryPhone.text,
+      website: website.text.isBlank == true ? null : website.text,
+      city: city.text.isBlank == true ? null : city.text,
+      employeesCount: employeesCount.text.isBlank == true
+          ? null
+          : employeesCount.text.isNumericOnly
+              ? int.parse(employeesCount.text)
+              : null,
+      bio: bio.text.isEmpty ? null : bio.text,
+    );
+  }
 
   void disposeTextControllers() {
     name.dispose();
@@ -171,5 +193,6 @@ class ProfileCompanyEditState {
     website.dispose();
     city.dispose();
     employeesCount.dispose();
+    bio.dispose();
   }
 }

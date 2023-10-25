@@ -1,22 +1,36 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:jobspot/JobGlobalclass/global_storage.dart';
-import 'package:jobspot/sippo_data/model/auth_model/entity_model.dart';
-import 'package:jobspot/sippo_data/model/auth_model/user_model.dart';
-import 'package:jobspot/utils/app_use.dart';
-
+import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
 import 'package:jobspot/sippo_data/auth/auth_repo.dart';
 import 'package:jobspot/sippo_data/model/auth_model/auth_response.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_model.dart';
+import 'package:jobspot/sippo_data/model/auth_model/entity_model.dart';
+import 'package:jobspot/sippo_data/model/auth_model/user_model.dart';
 import 'package:jobspot/sippo_data/model/auth_model/user_register_type_response.dart';
+import 'package:jobspot/utils/app_use.dart';
+import 'package:jobspot/utils/getx_text_editing_controller.dart';
 import 'package:jobspot/utils/states.dart';
-import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
+
+import '../../sippo_data/locations/locationsRepo.dart';
+import '../../sippo_data/model/locations_model/location_address_model.dart';
 
 class AuthController extends GetxController {
   static AuthController get instance => Get.find();
   final _netController = InternetConnectionService.instance;
-  final _states = States().obs;
+  final _seconds = 60.obs;
 
+  int get seconds => _seconds.toInt();
+  final authLocationAddressState = AuthStates();
+
+  void set seconds(int value) => _seconds.value = value;
+  final _states = States().obs;
+  final resetEmail = GetXTextEditingController();
+  final _otpCode = "".obs;
+
+  String get otpCode => _otpCode.trim();
+
+  void set otpCode(String value) => _otpCode.value = value;
   final _isLogged = false.obs;
   final Rx<String?> _tokenLogged = "".obs;
   final box = GetStorage();
@@ -37,11 +51,13 @@ class AuthController extends GetxController {
 
   @override
   void onInit() {
+    fetchLocationsAddress();
     super.onInit();
   }
 
   Future<void> logout() async {
-    if (await userLogout()) await GlobalStorageService.removeSavedToken(GetStorage());
+    if (await userLogout())
+      await GlobalStorageService.removeSavedToken(GetStorage());
   }
 
   void set loadingState(bool value) {
@@ -52,7 +68,7 @@ class AuthController extends GetxController {
     _states.value = states.copyWith(isSuccess: value);
   }
 
-  void resetAllAuthStates() => _states.value = States();
+  void resetStates() => _states.value = States();
 
   States get states => _states.value;
 
@@ -178,4 +194,141 @@ class AuthController extends GetxController {
         break;
     }
   }
+
+  Future<void> forgetPassword() async {
+    loadingState = true;
+    final response = await AuthRepo.forgetPassword(resetEmail.text);
+    loadingState = false;
+    await response?.checkStatusResponse(
+      onSuccess: (data, _) {
+        if (data?.status == 'success') {
+          _states.value = States(
+            isSuccess: true,
+            message: data?.message,
+          );
+        }
+      },
+      onValidateError: (validateError, _) {
+        _states.value = States(
+          isError: true,
+          message: validateError?.message,
+        );
+      },
+      onError: (message, _) {
+        _states.value = States(
+          isError: true,
+          message: message,
+        );
+      },
+    );
+  }
+
+  Future<void> confirmOtpCode() async {
+    loadingState = true;
+    final response = await AuthRepo.confirmOtpCode({
+      'email': resetEmail.text,
+      'otp': otpCode,
+    });
+    loadingState = false;
+    await response?.checkStatusResponse(
+      onSuccess: (data, _) {
+        if (!(data?.containsKey('is_valid') == true)) return;
+        final isValid = data?['is_valid'] as bool?;
+        if (isValid == true) {
+          _states.value = States(
+            isSuccess: true,
+            message: 'OTP and Email is valid',
+          );
+        } else if (isValid == false) {
+          _states.value = States(
+            isError: true,
+            message: 'OTP and Email is not valid',
+          );
+        }
+      },
+      onValidateError: (validateError, _) {
+        _states.value = States(
+          isError: true,
+          message: validateError?.message,
+        );
+      },
+      onError: (message, _) {
+        _states.value = States(
+          isError: true,
+          message: message,
+        );
+      },
+    );
+  }
+
+  Future<void> resetNewPassword(Map<String, String> password) async {
+    loadingState = true;
+    final response = await AuthRepo.resetNewPassword({
+      'email': resetEmail.text,
+      'code': otpCode,
+      ...password,
+    });
+    loadingState = false;
+    await response?.checkStatusResponse(
+      onSuccess: (data, _) {
+        _states.value = States(
+          isSuccess: true,
+          message: data?['message'],
+        );
+      },
+      onValidateError: (validateError, _) {
+        _states.value = States(
+          isError: true,
+          message: validateError?.message,
+        );
+      },
+      onError: (message, _) {
+        _states.value = States(
+          isError: true,
+          message: message,
+        );
+      },
+    );
+  }
+
+  Future<void> fetchLocationsAddress() async {
+    authLocationAddressState.states.value = States(isLoading: true);
+    final response = await LocationsRepo.fetchLocations();
+    authLocationAddressState.states.value = States(isLoading: false);
+    await response?.checkStatusResponse(
+      onSuccess: (data, _) {
+        if (data != null) {
+          authLocationAddressState.locationsAddressList = data;
+          authLocationAddressState.states.value = States(isSuccess: true);
+        }
+      },
+      onValidateError: (validateError, _) {},
+      onError: (message, _) {
+        authLocationAddressState.states.value = States(isError: true);
+      },
+    );
+  }
+
+  @override
+  void onClose() {
+    resetEmail.dispose();
+    super.onClose();
+  }
+}
+
+class AuthStates {
+  final _locationsAddress = <LocationAddress>[].obs;
+  final states = States().obs;
+
+  void resetStates() => states.value = States();
+
+  List<LocationAddress> get locationsAddressList => _locationsAddress.toList();
+
+  List<String> get locationsAddressNameList => locationsAddressList
+      .where((e) => e.name != null)
+      .map((e) => e.name ?? '')
+      .toList();
+
+  set locationsAddressList(List<LocationAddress> value) =>
+      _locationsAddress.value = value;
 }

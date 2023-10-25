@@ -14,6 +14,8 @@ import 'package:jobspot/sippo_custom_widget/rounded_border_radius_card_widget.da
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_user_profile_view_model.dart';
 
+import '../../sippo_custom_widget/custom_drop_down_button.dart';
+
 class ShowGeneralSearchProfilesViewList extends StatefulWidget {
   const ShowGeneralSearchProfilesViewList({super.key});
 
@@ -32,51 +34,83 @@ class _ShowGeneralSearchProfilesViewListState
       onRefresh: () async {
         _controller.refreshPage();
       },
-      child: PagedListView<int, ProfileViewResourceModel>.separated(
-        padding: EdgeInsets.symmetric(
-          vertical: context.fromHeight(CustomStyle.paddingValue),
-          horizontal: context.fromWidth(CustomStyle.paddingValue),
-        ),
-        pagingController: _controller.pagingController,
-        builderDelegate: PagedChildBuilderDelegate(
-          firstPageErrorIndicatorBuilder: (context) =>
-              _buildErrorFirstLoad(context),
-          newPageErrorIndicatorBuilder: (context) =>
-              _buildErrorNewLoad(context),
-          newPageProgressIndicatorBuilder: (context) {
-            return _buildNewPageProgress(context);
-          },
-          itemBuilder: (context, item, i) {
-            return RoundedBorderRadiusCardWidget(
-              padding: EdgeInsets.zero,
-              child: ListTile(
-                onTap: () {
-                  SharedGlobalDataService.onProfileViewTap(item: item);
+      child: Column(
+        children: [
+          SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+          Obx(() {
+            final location = _controller.searchProfilesViewState;
+            return Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: context.fromWidth(CustomStyle.paddingValue),
+              ),
+              child: CustomDropdownButton(
+                underLineBorder: true,
+                textHint: 'Select your location place.',
+                labelList: location.locationsAddressNameList,
+                values: location.locationsAddressList,
+                fillColor: Colors.white,
+                onItemSelected: (value) async {
+                  if (value == null ||
+                      value.id == location.selectedLocationAddress.id) return;
+                  location.selectedLocationAddress = value;
+                  _controller.generalSearchController.refreshSearchPage();
+                  print(value);
                 },
-                titleAlignment: ListTileTitleAlignment.center,
-                leading: NetworkBorderedCircularImage(
-                  imageUrl: '',
-                  size: context.fromHeight(21),
-                  outerBorderColor: Colors.grey[300],
-                  errorWidget: (_, __, ___) => const CircleAvatar(),
-                ),
-                title: AutoSizeText(
-                  item.userInfo?.name ?? '',
-                  style: dmsmedium,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                subtitle: AutoSizeText(
-                  item.userInfo?.bio?.substring(0, 50) ?? '',
-                  style: dmsregular,
-                  overflow: TextOverflow.ellipsis,
-                ),
+                setInitialValue: location.selectedLocationAddress.id != null,
+                initialValue: location.selectedLocationAddress.name,
               ),
             );
-          },
-        ),
-        separatorBuilder: (_, __) => SizedBox(
-          height: context.fromHeight(CustomStyle.huge2),
-        ),
+          }),
+          Expanded(
+            child: PagedListView<int, ProfileViewResourceModel>.separated(
+              padding: EdgeInsets.symmetric(
+                vertical: context.fromHeight(CustomStyle.paddingValue),
+                horizontal: context.fromWidth(CustomStyle.paddingValue),
+              ),
+              pagingController: _controller.pagingController,
+              builderDelegate: PagedChildBuilderDelegate(
+                firstPageErrorIndicatorBuilder: (context) =>
+                    _buildErrorFirstLoad(context),
+                newPageErrorIndicatorBuilder: (context) =>
+                    _buildErrorNewLoad(context),
+                newPageProgressIndicatorBuilder: (context) {
+                  return _buildNewPageProgress(context);
+                },
+                itemBuilder: (context, item, i) {
+                  return RoundedBorderRadiusCardWidget(
+                    padding: EdgeInsets.zero,
+                    child: ListTile(
+                      onTap: () {
+                        SharedGlobalDataService.onProfileViewTap(item: item);
+                      },
+                      titleAlignment: ListTileTitleAlignment.center,
+                      leading: NetworkBorderedCircularImage(
+                        imageUrl: item.image?.url ?? '',
+                        size: context.fromHeight(21),
+                        outerBorderColor: Colors.grey[300],
+                        outerBorderWidth: context.fromWidth(CustomStyle.huge2),
+                        errorWidget: (_, __, ___) => const CircleAvatar(),
+                      ),
+                      title: AutoSizeText(
+                        item.userInfo?.name ?? '',
+                        style: dmsmedium,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      subtitle: AutoSizeText(
+                        item.userInfo?.bio?.substring(0, 50) ?? '',
+                        style: dmsregular,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  );
+                },
+              ),
+              separatorBuilder: (_, __) => SizedBox(
+                height: context.fromHeight(CustomStyle.huge2),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -10,7 +10,8 @@ class LanguageModel {
     return LanguageModel(
       id: json?["id"],
       name: json?["name"],
-      isNative: json?["isNative"],
+      isNative:
+          json?["is_native"] != null ? (json?["is_native"] == true) : false,
       level: json?["level"],
     );
   }

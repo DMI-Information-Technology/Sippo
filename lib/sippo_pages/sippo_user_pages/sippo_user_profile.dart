@@ -6,21 +6,19 @@ import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/jobstopprefname.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
+import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
+import 'package:jobspot/JopController/user_profile_controller/profile_user_controller.dart';
+import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
 import 'package:jobspot/sippo_custom_widget/add_info_profile_card.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
+import 'package:jobspot/sippo_custom_widget/expandable_item_list_widget.dart';
 import 'package:jobspot/sippo_custom_widget/loading_view_widgets/loading_scaffold.dart';
 import 'package:jobspot/sippo_custom_widget/profile_completion_widget.dart';
 import 'package:jobspot/sippo_custom_widget/resume_card_widget.dart';
+import 'package:jobspot/sippo_custom_widget/user_profile_header.dart';
 import 'package:jobspot/sippo_pages/sippo_user_pages/job_aboutme.dart';
 import 'package:readmore/readmore.dart';
-
-import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
-import 'package:jobspot/JopController/user_profile_controller/profile_user_controller.dart';
-import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
-import 'package:jobspot/sippo_custom_widget/error_messages_dialog_snackbar/network_connnection_lost_widget.dart';
-import 'package:jobspot/sippo_custom_widget/expandable_item_list_widget.dart';
-import 'package:jobspot/sippo_custom_widget/user_profile_header.dart';
 
 class SippoUserProfile extends StatefulWidget {
   const SippoUserProfile({Key? key}) : super(key: key);
@@ -43,13 +41,7 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
       body: BodyWidget(
         isTopScrollable: true,
         isScrollable: true,
-        connectionStatusBar: Obx(() => ConditionalWidget(
-              !_controller.netController.isConnected,
-              guaranteedBuilder: (_, __) => NetworkStatusNonWidget(),
-            )),
-        topScreen: Obx(
-          () => _buildUserProfileHeader(!_controller.netController.isConnected),
-        ),
+        topScreen: _buildUserProfileHeader(),
         paddingContent: EdgeInsets.symmetric(
           horizontal: context.fromWidth(CustomStyle.paddingValue),
         ),
@@ -68,7 +60,7 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
             SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
             _buildLanguagesInfo(context),
             SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-            _buildAppreciationInfo(context),
+            _buildProjectsInfo(context),
             SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
             _buildResumeInfo(context),
             SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
@@ -100,14 +92,13 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
     );
   }
 
-  Widget _buildUserProfileHeader([bool isLostConnect = false]) {
-    return UserProfileHeaderWidget(
-      showConnectionLostBar: isLostConnect,
-      profileInfo: _controller.user,
-      onSettingsPressed: () => Get.toNamed(SippoRoutes.sippoprofilesetting),
-      onEditProfilePressed: () => Get.toNamed(SippoRoutes.editUserProfile),
-      profileImage: _controller.user.profileImage?.url ?? "",
-    );
+  Widget _buildUserProfileHeader() {
+    return Obx(() => UserProfileHeaderWidget(
+          profileInfo: _controller.user,
+          onSettingsPressed: () => Get.toNamed(SippoRoutes.sippoprofilesetting),
+          onEditProfilePressed: () => Get.toNamed(SippoRoutes.editUserProfile),
+          profileImage: _controller.user.profileImage?.url ?? "",
+        ));
   }
 
   Widget _buildResumeInfo(BuildContext context) {
@@ -161,11 +152,11 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
     );
   }
 
-  Widget _buildAppreciationInfo(BuildContext context) {
+  Widget _buildProjectsInfo(BuildContext context) {
     return Obx(
       () => AddInfoProfileCard(
-        title: 'appreciation'.tr,
-        noInfoProfile: _controller.profileState.appreciations.isEmpty,
+        title: 'projects'.tr,
+        noInfoProfile: _controller.profileState.projectsList.isEmpty,
         leading: Image.asset(
           JobstopPngImg.appreciation,
           height: context.fromHeight(CustomStyle.l),
@@ -174,34 +165,37 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
         ),
         profileInfo: [
           ExpandableItemList(
-            isExpandable: _controller.profileState.appreciations.length > 1,
-            expandItems: _controller.profileState.showAllAppreciations,
+            isExpandable: _controller.profileState.projectsList.length > 1,
+            expandItems: _controller.profileState.showAllProjects,
             spacing: context.fromHeight(CustomStyle.xxxl),
-            itemCount: _controller.profileState.appreciations.length,
+            itemCount: _controller.profileState.projectsList.length,
             itemBuilder: (BuildContext context, int index) {
-              final item = _controller.profileState.appreciations[index];
+              final item = _controller.profileState.projectsList[index];
               return _buildTextDescriptionInfo(
                 context,
-                item.awardName,
-                item.categoryAchieve,
-                item.year,
+                item.name,
+                '',
+                item.date,
                 onEdit: () {
+                  _controller.editingId = item.id ?? -1;
                   Get.toNamed(
-                    SippoRoutes.appreciationaddedit,
-                    arguments: {appreciationArg: item.toJson()},
-                  );
+                    SippoRoutes.sippoEditAddUserProjects,
+                    arguments: {'project': item},
+                  )?.then((_) {
+                    _controller.editingId = -1;
+                  });
                 },
               );
             },
             onExpandClicked: () {
-              _controller.profileState.showAllAppreciations =
-                  !_controller.profileState.showAllAppreciations;
+              _controller.profileState.showAllProjects =
+                  !_controller.profileState.showAllProjects;
             },
           ),
         ],
         onAddClicked: () {
           Get.toNamed(
-            SippoRoutes.appreciationaddedit,
+            SippoRoutes.sippoEditAddUserProjects,
             arguments: {appreciationArg: null},
           );
         },
@@ -417,7 +411,7 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
               )
             : null,
         onAddClicked: () {
-          Get.to(JobAboutme());
+          Get.to(() => const SippoUserAbout());
         },
         profileInfo: [
           _controller.profileState.aboutMeText.isNotEmpty

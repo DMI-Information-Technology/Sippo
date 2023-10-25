@@ -3,12 +3,13 @@ import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
-
 import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JopController/AuthenticationController/sippo_signup_user_controller.dart';
 import 'package:jobspot/sippo_custom_widget/loading_view_widgets/overly_loading.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/utils/validating_input.dart';
+
+import '../../sippo_custom_widget/custom_drop_down_button.dart';
 
 class SippoUserSignup extends StatelessWidget {
   const SippoUserSignup({Key? key}) : super(key: key);
@@ -139,13 +140,38 @@ class SippoUserSignup extends StatelessWidget {
                     SizedBox(
                       height: height / 46,
                     ),
+                    Obx(() {
+                      final location =
+                          controller.authController.authLocationAddressState;
+                      return CustomDropdownButton(
+                        hPaddingValue: 0.0,
+                        prefixIcon: Icon(
+                          Icons.location_on_outlined,
+                          color: Jobstopcolor.primarycolor,
+                        ),
+                        hintTextColor: Colors.grey[500],
+                        underLineBorder: true,
+                        textHint: 'Select your location place.',
+                        labelList: location.locationsAddressNameList,
+                        values: location.locationsAddressList,
+                        fillColor: Colors.white,
+                        onItemSelected: (value) async {
+                          if (value == null) return;
+                          controller.selectedLocationAddress = value;
+                          print(value);
+                        },
+                        setInitialValue: false,
+                      );
+                    }),
+                    SizedBox(
+                      height: height / 46,
+                    ),
                     CustomButton(
                       text: "Sign_up".tr,
                       backgroundColor: Jobstopcolor.primarycolor,
                       textColor: Jobstopcolor.white,
                       onTapped: () async {
                         await controller.onSubmittedSignup();
-
                       },
                     ),
                     SizedBox(height: height / 40),

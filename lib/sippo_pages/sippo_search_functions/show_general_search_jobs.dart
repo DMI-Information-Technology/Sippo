@@ -9,12 +9,11 @@ import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/JobServices/shared_global_data_service.dart';
 import 'package:jobspot/JopController/sippo_search_controller/genral_search_jobs_controller.dart';
+import 'package:jobspot/sippo_custom_widget/job_card_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
 import 'package:jobspot/utils/app_use.dart';
 import 'package:jobspot/utils/helper.dart';
-
-import 'package:jobspot/sippo_custom_widget/job_card_widget.dart';
 
 class ShowGeneralSearchJobsList extends StatefulWidget {
   const ShowGeneralSearchJobsList({super.key});
@@ -58,7 +57,7 @@ class _ShowGeneralSearchJobsListState extends State<ShowGeneralSearchJobsList> {
                   SharedGlobalDataService.onCompanyTap(item.company);
                 },
                 imagePath: item.company?.profileImage?.url,
-                timeAgo: '21 min ago',
+                timeAgo: calculateElapsedTimeFromStringDate(item.createdAt),
                 isEditable: GlobalStorageService.appUse != AppUsingType.user,
                 isSaved: item.isSaved == true,
                 onActionTap: GlobalStorageService.appUse == AppUsingType.user

@@ -38,6 +38,7 @@ class UserGeneralSearchController extends GetxController {
       states.isLoading || InternetConnectionService.instance.isNotConnected;
 
   void onSearchSubmitted() async {
+    print(isRefreshPrevented);
     if (isRefreshPrevented) return;
     if (generalSearchState.isTextSearchEmpty) {
       generalSearchState.searchController.clear();

@@ -13,7 +13,6 @@ import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/error_messages_dialog_snackbar/network_connnection_lost_widget.dart';
 import 'package:jobspot/sippo_custom_widget/top_job_details_header.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
-import 'package:jobspot/sippo_pages/sippo_job_description/sippo_job_description.dart';
 
 class JobSuccess extends StatefulWidget {
   const JobSuccess({Key? key}) : super(key: key);
@@ -153,7 +152,9 @@ class _JobSuccessState extends State<JobSuccess> {
           coverHeight: context.height / 3.5,
           profileImageSize: context.height / 6,
           backgroundImageColor: Colors.white,
-          imageUrl: SippoJobDescription.imgUrl,
+          imageUrl: _controller
+                  .applyJobsState.jopDetails.company?.profileImage?.url ??
+              "",
           // onLeadingTap: () => Get.back(),
           actions: [
             IconButton(

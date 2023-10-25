@@ -74,25 +74,35 @@ class MyHttpClient {
     Map<String, dynamic>? queryParameter,
     String? resourceId,
   }) async {
-    final request = http.MultipartRequest(
-        'POST', _buildUri(endpoint, resourceId: resourceId));
-    request.headers.addAll(_buildHeaders(isMultipart: true));
-    if (fields != null) {
-      final data = <String, String>{};
-      fields.forEach((k, v) => {if (v != null) data[k] = v});
-      request.fields.addAll(data);
-      print("HttpClient.postMultipartRequest: fields: $data");
+    try {
+      final request = http.MultipartRequest(
+          'POST', _buildUri(endpoint, resourceId: resourceId));
+      request.headers.addAll(_buildHeaders(isMultipart: true));
+      if (fields != null) {
+        final data = <String, String>{};
+        fields.forEach((k, v) => {if (v != null) data[k] = v});
+        request.fields.addAll(data);
+        print("HttpClient.postMultipartRequest: fields: $data");
+      }
+
+      if (multipartFile != null) request.files.add(multipartFile);
+      print(
+        "HttpClient.postMultipartRequest: multipart file: ${multipartFile?.contentType}",
+      );
+
+      print("HttpClient.postMultipartRequest: file is uploaded...");
+      final response = await request.send();
+      print("HttpClient.postMultipartRequest: upload file is done!");
+      return response;
+    } catch (e, s) {
+      FlutterError.reportError(FlutterErrorDetails(
+        exception: e,
+        stack: s,
+        library: 'Flutter Custom Error',
+        context: ErrorSummary('while running async test code'),
+      ));
+      throw e;
     }
-
-    if (multipartFile != null) request.files.add(multipartFile);
-    print(
-      "HttpClient.postMultipartRequest: multipart file: ${multipartFile?.contentType}",
-    );
-
-    print("HttpClient.postMultipartRequest: file is uploaded...");
-    final response = await request.send();
-    print("HttpClient.postMultipartRequest: upload file is done!");
-    return response;
   }
 
   Future<http.StreamedResponse> postMultipartRequestFromList(
@@ -143,27 +153,37 @@ class MyHttpClient {
     Map<String, dynamic>? queryParameter,
     String? resourceId,
   }) async {
-    final request = http.MultipartRequest(
-      'PUT',
-      _buildUri(endpoint, resourceId: resourceId),
-    );
-    request.headers.addAll(_buildHeaders(isMultipart: true));
-    if (fields != null) {
-      final data = <String, String>{};
-      fields.forEach((k, v) => {if (v != null) data[k] = v});
-      request.fields.addAll(data);
-      print("HttpClient.postMultipartRequest: fields: $data");
+    try {
+      final request = http.MultipartRequest(
+        'PUT',
+        _buildUri(endpoint, resourceId: resourceId),
+      );
+      request.headers.addAll(_buildHeaders(isMultipart: true));
+      if (fields != null) {
+        final data = <String, String>{};
+        fields.forEach((k, v) => {if (v != null) data[k] = v});
+        request.fields.addAll(data);
+        print("HttpClient.postMultipartRequest: fields: $data");
+      }
+
+      if (multipartFile != null) request.files.add(multipartFile);
+      print(
+        "HttpClient.postMultipartRequest: multipart file: ${multipartFile?.contentType}",
+      );
+
+      print("HttpClient.postMultipartRequest: file is uploaded...");
+      final response = await request.send();
+      print("HttpClient.postMultipartRequest: upload file is done!");
+      return response;
+    } catch (e, s) {
+      FlutterError.reportError(FlutterErrorDetails(
+        exception: e,
+        stack: s,
+        library: 'Flutter Custom Error',
+        context: ErrorSummary('while running async test code'),
+      ));
+      throw e;
     }
-
-    if (multipartFile != null) request.files.add(multipartFile);
-    print(
-      "HttpClient.postMultipartRequest: multipart file: ${multipartFile?.contentType}",
-    );
-
-    print("HttpClient.postMultipartRequest: file is uploaded...");
-    final response = await request.send();
-    print("HttpClient.postMultipartRequest: upload file is done!");
-    return response;
   }
 
   Future<http.Response> put(
@@ -172,16 +192,29 @@ class MyHttpClient {
     Map<String, dynamic>? queryParameter,
     String? resourceId,
   }) async {
-    print("HttpClient.put: the body request before encode is = $data");
-    final body = jsonEncode(data);
-    // print("HttpClient.put: the endpoint is = $baseUrl/$endpoint");
-    print("HttpClient.put: the body request after encode is = $body");
-    final response = await _client.put(
-      _buildUri(endpoint, resourceId: resourceId, parameters: queryParameter),
-      body: body,
-      headers: _buildHeaders(),
-    );
-    return response;
+    try {
+      print("HttpClient.put: the body request before encode is = $data");
+      final body = jsonEncode(data);
+      // print("HttpClient.put: the endpoint is = $baseUrl/$endpoint");
+      print("HttpClient.put: the body request after encode is = $body");
+      print('request starting...');
+      final response = await _client.put(
+        _buildUri(endpoint, resourceId: resourceId, parameters: queryParameter),
+        body: body,
+        headers: _buildHeaders(),
+      );
+      print('request end.');
+
+      return response;
+    } catch (e, s) {
+      FlutterError.reportError(FlutterErrorDetails(
+        exception: e,
+        stack: s,
+        library: 'Flutter Custom Error',
+        context: ErrorSummary('while running async test code'),
+      ));
+      throw e;
+    }
   }
 
   Future<http.Response> delete(

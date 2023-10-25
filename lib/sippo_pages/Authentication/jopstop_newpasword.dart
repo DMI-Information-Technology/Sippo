@@ -1,10 +1,13 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
+import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
+
+import '../../JobServices/ConnectivityController/internet_connection_controller.dart';
+import '../../JopController/AuthenticationController/sippo_auth_controller.dart';
 
 class UpdatePasswordAfterVerification extends StatefulWidget {
   const UpdatePasswordAfterVerification({Key? key}) : super(key: key);
@@ -19,8 +22,9 @@ class _UpdatePasswordAfterVerificationState
   dynamic size;
   double height = 0.00;
   double width = 0.00;
-  TextEditingController password = TextEditingController();
-  TextEditingController confirmPpassword = TextEditingController();
+  final password = TextEditingController();
+  final confirmPassword = TextEditingController();
+  final authController = AuthController.instance;
 
   void _showSuccessAlert() {
     Get.dialog(
@@ -30,11 +34,20 @@ class _UpdatePasswordAfterVerificationState
         description: "Lorem ipsum idnnn kello dadddty lipoka bonan namll geme",
         confirmBtnTitle: "ok".tr,
         onConfirm: () {
-          Get.back();
+          if (Get.isOverlaysOpen) Get.back();
+          Get.until(
+            (route) =>
+                Get.currentRoute == SippoRoutes.userLoginPage ||
+                Get.currentRoute == SippoRoutes.sippoCompanyLogin,
+          );
         },
         confirmBtnColor: Jobstopcolor.primarycolor,
       ),
-    );
+    ).then((value) => Get.until(
+          (route) =>
+              Get.currentRoute == SippoRoutes.userLoginPage ||
+              Get.currentRoute == SippoRoutes.sippoCompanyLogin,
+        ));
   }
 
   @override
@@ -77,7 +90,7 @@ class _UpdatePasswordAfterVerificationState
               ),
               PasswordInputField(
                 icon: const Icon(Icons.lock_outline),
-                controller: confirmPpassword,
+                controller: confirmPassword,
                 hintText: "Confirm_Password".tr,
                 suffixIconColor: Colors.grey,
               ),
@@ -86,7 +99,18 @@ class _UpdatePasswordAfterVerificationState
               ),
               CustomButton(
                 onTapped: () {
-                  _showSuccessAlert();
+                  if (InternetConnectionService.instance.isNotConnected) return;
+                  if (authController.states.isLoading) return;
+                  authController.resetNewPassword({
+                    'password': password.text.trim(),
+                    'password_confirmation': confirmPassword.text.trim(),
+                  }).then((_) {
+                    if (authController.states.isSuccess) {
+                      authController.resetStates();
+                      _showSuccessAlert();
+                    }
+                  });
+                  // _showSuccessAlert();
                 },
                 text: "Confirm Password",
               ),

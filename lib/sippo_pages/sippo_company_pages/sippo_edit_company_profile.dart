@@ -1,13 +1,12 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
-import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
-import 'package:jobspot/JopController/company_profile_controller/edit_copmany_profile_information_controller.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
+import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
+import 'package:jobspot/JopController/company_profile_controller/edit_copmany_profile_information_controller.dart';
 import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/save_image_profle_page_widget.dart';
@@ -70,87 +69,139 @@ class _EditCompanyProfilePageState extends State<EditCompanyProfilePage> {
                       onCancelTap: () => _controller.warningState(false),
                     ),
                   )),
-              InputBorderedField(
-                hintText: "enter your name",
-                gController: profileEditState.name,
-                // height: context.fromHeight(CustomStyle.inputBorderedSize),
-                fontSize: FontSize.label(context),
-                suffixIcon: Icon(
-                  Icons.person_outline_outlined,
-                  color: Jobstopcolor.primarycolor,
-                ),
-                // textInputAction: TextInputAction.newline,
-                validator: (value) {
-                  return ValidatingInput.validateEmptyField(
-                    value,
-                    message: "name field is required.",
-                  );
-                },
-              ),
-              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-              InputBorderedField(
-                keyboardType: TextInputType.emailAddress,
-                hintText: "enter your email",
-                gController: profileEditState.email,
-                height: context.fromHeight(CustomStyle.inputBorderedSize),
-                fontSize: FontSize.label(context),
-                suffixIcon: Icon(
-                  Icons.email_outlined,
-                  color: Jobstopcolor.primarycolor,
-                ),
-                // textInputAction: TextInputAction.newline,
-              ),
-              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-              _buildInputPhoneNumberField(
-                context,
-                profileEditState.phone,
-                "Phone number",
-                isPrimary: true,
-              ),
-              SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
-              _buildInputPhoneNumberField(
-                context,
-                profileEditState.secondaryPhone,
-                "Secondary Phone number",
-              ),
-              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-              InputBorderedField(
-                keyboardType: TextInputType.text,
-                hintText: "enter your city",
-                gController: profileEditState.city,
-                height: context.fromHeight(CustomStyle.inputBorderedSize),
-                fontSize: FontSize.label(context),
-                suffixIcon: Icon(
-                  Icons.location_on_outlined,
-                  color: Jobstopcolor.primarycolor,
-                ),
-                // textInputAction: TextInputAction.newline,
-              ),
-              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-              InputBorderedField(
-                keyboardType: TextInputType.url,
-                hintText: "enter your website",
-                gController: profileEditState.website,
-                height: context.fromHeight(CustomStyle.inputBorderedSize),
-                fontSize: FontSize.label(context),
-                suffixIcon: Icon(
-                  Icons.web,
-                  color: Jobstopcolor.primarycolor,
-                ),
-                // textInputAction: TextInputAction.newline,
-              ),
-              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-              InputBorderedField(
-                keyboardType: TextInputType.number,
-                hintText: "enter your employees count",
-                gController: profileEditState.employeesCount,
-                height: context.fromHeight(CustomStyle.inputBorderedSize),
-                fontSize: FontSize.label(context),
-                suffixIcon: Icon(
-                  Icons.numbers,
-                  color: Jobstopcolor.primarycolor,
-                ),
-                // textInputAction: TextInputAction.newline,
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: context.fromWidth(CustomStyle.paddingValue),
+                    ),
+                    child: Text(
+                      'Name',
+                      style:
+                          dmsmedium.copyWith(fontSize: FontSize.label(context)),
+                    ),
+                  ),
+                  InputBorderedField(
+                    hintText: "enter your name",
+                    gController: profileEditState.name,
+                    // height: context.fromHeight(CustomStyle.inputBorderedSize),
+                    fontSize: FontSize.label(context),
+                    suffixIcon: Icon(
+                      Icons.person_outline_outlined,
+                      color: Jobstopcolor.primarycolor,
+                    ),
+                    // textInputAction: TextInputAction.newline,
+                    validator: (value) {
+                      return ValidatingInput.validateEmptyField(
+                        value,
+                        message: "name field is required.",
+                      );
+                    },
+                  ),
+                  SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: context.fromWidth(CustomStyle.paddingValue),
+                    ),
+                    child: Text(
+                      'Email',
+                      style:
+                          dmsmedium.copyWith(fontSize: FontSize.label(context)),
+                    ),
+                  ),
+                  InputBorderedField(
+                    keyboardType: TextInputType.emailAddress,
+                    hintText: "enter your email",
+                    gController: profileEditState.email,
+                    height: context.fromHeight(CustomStyle.inputBorderedSize),
+                    fontSize: FontSize.label(context),
+                    suffixIcon: Icon(
+                      Icons.email_outlined,
+                      color: Jobstopcolor.primarycolor,
+                    ),
+                    // textInputAction: TextInputAction.newline,
+                  ),
+                  SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: context.fromWidth(CustomStyle.paddingValue),
+                    ),
+                    child: Text(
+                      'Phone Number',
+                      style:
+                          dmsmedium.copyWith(fontSize: FontSize.label(context)),
+                    ),
+                  ),
+                  _buildInputPhoneNumberField(
+                    context,
+                    profileEditState.phone,
+                    "Phone number",
+                    isPrimary: true,
+                  ),
+                  SizedBox(
+                      height: context.fromHeight(CustomStyle.spaceBetween)),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: context.fromWidth(CustomStyle.paddingValue),
+                    ),
+                    child: Text(
+                      'Secondary Phone Number',
+                      style:
+                          dmsmedium.copyWith(fontSize: FontSize.label(context)),
+                    ),
+                  ),
+                  _buildInputPhoneNumberField(
+                    context,
+                    profileEditState.secondaryPhone,
+                    "Secondary Phone number",
+                  ),
+                  SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: context.fromWidth(CustomStyle.paddingValue),
+                    ),
+                    child: Text(
+                      'Website',
+                      style:
+                          dmsmedium.copyWith(fontSize: FontSize.label(context)),
+                    ),
+                  ),
+                  InputBorderedField(
+                    keyboardType: TextInputType.url,
+                    hintText: "enter your website",
+                    gController: profileEditState.website,
+                    height: context.fromHeight(CustomStyle.inputBorderedSize),
+                    fontSize: FontSize.label(context),
+                    suffixIcon: Icon(
+                      Icons.web,
+                      color: Jobstopcolor.primarycolor,
+                    ),
+                    // textInputAction: TextInputAction.newline,
+                  ),
+                  SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: context.fromWidth(CustomStyle.paddingValue),
+                    ),
+                    child: Text(
+                      'Employee counts',
+                      style:
+                          dmsmedium.copyWith(fontSize: FontSize.label(context)),
+                    ),
+                  ),
+                  InputBorderedField(
+                    keyboardType: TextInputType.number,
+                    hintText: "enter your employees count",
+                    gController: profileEditState.employeesCount,
+                    height: context.fromHeight(CustomStyle.inputBorderedSize),
+                    fontSize: FontSize.label(context),
+                    suffixIcon: Icon(
+                      Icons.numbers,
+                      color: Jobstopcolor.primarycolor,
+                    ),
+                  ),
+                ],
               ),
             ],
           ),
@@ -293,4 +344,3 @@ class _EditCompanyProfilePageState extends State<EditCompanyProfilePage> {
         ));
   }
 }
-

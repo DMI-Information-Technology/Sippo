@@ -2,16 +2,19 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jobspot/JopController/dashboards_controller/user_dashboard_controller.dart';
 import 'package:jobspot/JopController/user_profile_controller/profile_user_controller.dart';
+import 'package:jobspot/custom_app_controller/switch_status_controller.dart';
 import 'package:jobspot/sippo_custom_widget/gender_picker_widget.dart';
+import 'package:jobspot/sippo_data/model/custom_file_model/custom_file_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/profile_edit_model.dart';
 import 'package:jobspot/sippo_data/update_image_profile_repo/update_image_profile_repo.dart';
 import 'package:jobspot/sippo_data/user_repos/edit_profile_repo.dart';
+import 'package:jobspot/utils/getx_text_editing_controller.dart';
 import 'package:jobspot/utils/states.dart';
 
-import 'package:jobspot/custom_app_controller/switch_status_controller.dart';
-import 'package:jobspot/sippo_data/model/custom_file_model/custom_file_model.dart';
-import 'package:jobspot/utils/getx_text_editing_controller.dart';
+import '../../sippo_data/locations/locationsRepo.dart';
+import '../../sippo_data/model/locations_model/location_address_model.dart';
 
 class EditProfileInfoController extends GetxController {
   final _profileImagePath = "".obs;
@@ -25,6 +28,8 @@ class EditProfileInfoController extends GetxController {
   States get states => _states.value;
   final GlobalKey<FormState> formKey = GlobalKey();
 
+  bool get isEmailVerified => userDetails.isEmailVerified == true;
+
   void successState(bool value, [String? message]) {
     _states.value = states.copyWith(isSuccess: value, message: message);
   }
@@ -34,14 +39,69 @@ class EditProfileInfoController extends GetxController {
   }
 
   Future<void> updateProfileInfo() async {
+    final user = profileEditState.form;
+    print("is user profile true ${user == userDetails}");
+    if (user == userDetails) {
+      print('no changes to profile info for user ');
+      return;
+    }
     final response = await ProfileInfoRepo.updateProfile(profileEditState.form);
     await response.checkStatusResponse(
-      onSuccess: (data, _) {
-        if (data != null) _profileController.dashboard.user = data;
-        successState(true, 'Profile is updated successfully.');
+      onSuccess: (data, _) async {
+        if (data != null) {
+          _profileController.dashboard.user = data;
+
+          profileEditState.setAll(userDetails);
+          successState(true, 'Profile is updated successfully.');
+        }
       },
       onValidateError: (validateError, _) {},
       onError: (message, _) {},
+    );
+  }
+
+  Future<void> updateLocationAddress() async {
+    final loc = profileEditState.selectedLocationAddress;
+    print(
+        'is updating location address true ${loc == userDetails.locationAddress}');
+    if (loc == userDetails.locationAddress) {
+      print('no change in user location');
+      return;
+    }
+    final response = await ProfileInfoRepo.updateProfileLocation({
+      'location_id': profileEditState.selectedLocationAddress.id,
+      "longitude": 0,
+      "latitude": 0,
+    });
+    await response?.checkStatusResponse(
+      onSuccess: (data, _) async {
+        final locationAddress = data?.locationAddress;
+        if (data != null && locationAddress != null) {
+          _profileController.dashboard.user = data;
+          profileEditState.selectedLocationAddress = locationAddress;
+          successState(true, 'Profile is updated successfully.');
+        }
+      },
+      onValidateError: (validateError, _) {},
+      onError: (message, _) {},
+    );
+  }
+
+  Future<void> fetchLocationsAddress() async {
+    profileEditState.states.value = States(isLoading: true);
+    final response = await LocationsRepo.fetchLocations();
+    profileEditState.states.value = States(isLoading: false);
+    await response?.checkStatusResponse(
+      onSuccess: (data, _) {
+        if (data != null) {
+          profileEditState.locationsAddressList = data;
+          profileEditState.states.value = States(isSuccess: true);
+        }
+      },
+      onValidateError: (validateError, _) {},
+      onError: (message, _) {
+        profileEditState.states.value = States(isError: true);
+      },
     );
   }
 
@@ -73,7 +133,11 @@ class EditProfileInfoController extends GetxController {
       );
     }
     _states.value = States(isLoading: true);
-    await updateProfileInfo();
+    await Future.wait([
+      updateProfileInfo(),
+      updateLocationAddress(),
+    ]);
+
     _states.value = states.copyWith(isLoading: false);
   }
 
@@ -102,8 +166,11 @@ class EditProfileInfoController extends GetxController {
 
   @override
   void onInit() {
+    fetchLocationsAddress();
     _statesSub = _states.listen(_onStatesListener, cancelOnError: true);
-    profileEditState.setAll(_profileController.user);
+    profileEditState.setAll(userDetails);
+    profileEditState.selectedLocationAddress =
+        userDetails.locationAddress ?? profileEditState.selectedLocationAddress;
     super.onInit();
   }
 
@@ -121,12 +188,36 @@ class EditProfileInfoController extends GetxController {
 }
 
 class ProfileEditState {
+  final states = States().obs;
+
+  void resetStates() => states.value = States();
+
+  final _locationsAddress = <LocationAddress>[].obs;
+  List<LocationAddress> get locationsAddressList => _locationsAddress.toList();
+
+  List<String> get locationsAddressNameList => locationsAddressList
+      .where((e) => e.name != null)
+      .map((e) => e.name ?? '')
+      .toList();
+
+  set locationsAddressList(List<LocationAddress> value) =>
+      _locationsAddress.value = value;
+  final _selectedLocationAddressName = LocationAddress().obs;
+
+  LocationAddress get selectedLocationAddress =>
+      _selectedLocationAddressName.value;
+
+  void set selectedLocationAddress(LocationAddress value) {
+    _selectedLocationAddressName.value = value;
+  }
+
   final name = GetXTextEditingController();
   final email = GetXTextEditingController();
   final phone = GetXTextEditingController();
   final secondaryPhone = GetXTextEditingController();
   final gender = GetXTextEditingController();
   final _genderValue = (Gender.Male).obs;
+  final bio = GetXTextEditingController();
 
   Gender get genderValue => _genderValue.value;
 
@@ -158,15 +249,19 @@ class ProfileEditState {
     phone.text = data?.phone ?? "";
     secondaryPhone.text = data?.secondaryPhone ?? "";
     gender.text = data?.gender ?? "";
+    bio.text = data?.bio ?? '';
   }
 
-  ProfileInfoModel get form => ProfileInfoModel(
-        name: name.text,
-        phone: phone.text,
-        email: email.text,
-        secondaryPhone: secondaryPhone.text,
-        gender: gender.text,
-      );
+  ProfileInfoModel get form {
+    return UserDashBoardController.instance.user.copyWith(
+      name: name.text,
+      phone: phone.text,
+      email: email.text,
+      secondaryPhone: secondaryPhone.text,
+      gender: gender.text,
+      bio: bio.text,
+    );
+  }
 
   void disposeTextControllers() {
     name.dispose();
@@ -174,5 +269,6 @@ class ProfileEditState {
     email.dispose();
     secondaryPhone.dispose();
     gender.dispose();
+    bio.dispose();
   }
 }

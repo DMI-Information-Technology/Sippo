@@ -100,8 +100,8 @@ class _SippoCompanyUserProfileViewState
     return Obx(
       () => AddInfoProfileCard(
         isCompanyView: true,
-        title: 'appreciation'.tr,
-        noInfoProfile: _controller.profileState.appreciations.isEmpty,
+        title: 'projects'.tr,
+        noInfoProfile: _controller.profileState.projects.isEmpty,
         leading: Image.asset(
           JobstopPngImg.appreciation,
           height: context.fromHeight(CustomStyle.l),
@@ -110,22 +110,22 @@ class _SippoCompanyUserProfileViewState
         ),
         profileInfo: [
           ExpandableItemList(
-            isExpandable: _controller.profileState.appreciations.length > 1,
-            expandItems: _controller.profileState.showAllAppreciations,
+            isExpandable: _controller.profileState.projects.length > 1,
+            expandItems: _controller.profileState.showAllProjects,
             spacing: context.fromHeight(CustomStyle.xxxl),
-            itemCount: _controller.profileState.appreciations.length,
+            itemCount: _controller.profileState.projects.length,
             itemBuilder: (BuildContext context, int index) {
-              final item = _controller.profileState.appreciations[index];
+              final item = _controller.profileState.projects[index];
               return _buildTextDescriptionInfo(
                 context,
-                item.awardName,
-                item.categoryAchieve,
-                item.year,
+                item.name,
+                '',
+                item.date,
               );
             },
             onExpandClicked: () {
-              _controller.profileState.showAllAppreciations =
-                  !_controller.profileState.showAllAppreciations;
+              _controller.profileState.showAllProjects =
+                  !_controller.profileState.showAllProjects;
             },
           ),
         ],

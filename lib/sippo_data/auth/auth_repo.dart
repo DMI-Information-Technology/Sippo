@@ -6,11 +6,13 @@ import "package:jobspot/JobGlobalclass/global_storage.dart";
 import "package:jobspot/JopController/HttpClientController/http_client_controller.dart";
 import "package:jobspot/core/api_endpoints.dart" as endpoints;
 import "package:jobspot/core/header_api.dart";
+import 'package:jobspot/core/status_response_code_checker.dart';
 import "package:jobspot/sippo_data/model/auth_model/user_model.dart";
 import "package:jobspot/sippo_data/model/auth_model/user_register_type_response.dart";
+import "package:jobspot/sippo_data/model/status_message_model/status_message_model.dart";
 import "package:jobspot/utils/app_use.dart";
 
-import 'package:jobspot/core/status_response_code_checker.dart';
+import "../../core/resource.dart";
 import "../model/auth_model/auth_response.dart";
 import "../model/auth_model/company_model.dart";
 import "../model/auth_model/company_property_error_model.dart";
@@ -31,14 +33,17 @@ class AuthRepo {
         headers: Header.defaultHeader,
         body: body,
       );
+      print(response.body);
       userResponse =
           await StatusResponseCodeChecker.checkStatusAuthResponseCode(
         response,
         (entity) => UserResponseModel.fromJson(entity['user']),
         (errors) => UserPropError.fromJson(errors),
       );
-    } catch (error) {
+    } catch (error,s) {
       print(error);
+      print(s);
+
     } finally {
       return userResponse;
     }
@@ -46,8 +51,7 @@ class AuthRepo {
 
   static Future<AuthResponse<CompanyDetailsModel, CompanyPropError>?>
       companyRegister(CompanyModel company) async {
-    AuthResponse<CompanyDetailsModel, CompanyPropError>?
-        companyResponse;
+    AuthResponse<CompanyDetailsModel, CompanyPropError>? companyResponse;
     try {
       final url = Uri.parse(
           "${endpoints.baseUrl}/${endpoints.companyRegisterEndpoint}");
@@ -63,8 +67,9 @@ class AuthRepo {
         (entity) => CompanyDetailsModel.fromJson(entity['company']),
         (errors) => CompanyPropError.fromJson(errors),
       );
-    } catch (error) {
+    } catch (error,s) {
       print(error);
+      print(s);
     } finally {
       return companyResponse;
     }
@@ -126,8 +131,7 @@ class AuthRepo {
 
   static Future<AuthResponse<CompanyDetailsModel, CompanyPropError>?>
       companyLogin(CompanyModel company) async {
-    AuthResponse<CompanyDetailsModel, CompanyPropError>?
-        companyResponse;
+    AuthResponse<CompanyDetailsModel, CompanyPropError>? companyResponse;
     try {
       final url =
           Uri.parse("${endpoints.baseUrl}/${endpoints.companyLoginEndpoint}");
@@ -157,4 +161,120 @@ class AuthRepo {
       return companyResponse;
     }
   }
+
+  static Future<Resource<StatusMessageModel?, dynamic>?> forgetPassword(
+      String? email) async {
+    try {
+      final url =
+          Uri.parse("${endpoints.baseUrl}/${endpoints.forgetPasswordEndpoint}");
+      final body = jsonEncode({"email": email});
+      print("forget password after decode: $body");
+      final response = await http.post(
+        url,
+        headers: Header.defaultHeader,
+        body: body,
+      );
+      final responseData = jsonDecode(response.body);
+      return await StatusResponseCodeChecker.checkStatusResponseCode(
+        responseData,
+        response.statusCode,
+        (data) => StatusMessageModel.fromJson(data),
+        (errors) => null,
+      );
+    } on SocketException catch (e) {
+      print(e.message);
+      print(e.osError);
+      return const Resource.error(
+        errorMessage: "Unable to Establish Internet Connection "
+            "Please check your internet connection and try again.",
+        type: StatusType.INVALID_RESPONSE,
+      );
+    } catch (error) {
+      print(error);
+      return const Resource.error(
+        errorMessage: "Invalid response",
+        type: StatusType.INVALID_RESPONSE,
+      );
+    }
+  }
+
+  static Future<Resource<Map<String, dynamic>?, dynamic>?> confirmOtpCode(
+      Map<String, String> resetData) async {
+
+    try {
+      final url =
+          Uri.parse("${endpoints.baseUrl}/${endpoints.confirmOtpEndPoint}");
+      final body = jsonEncode(resetData);
+      print('forget password url: $url');
+      print("forget password after decode: $body");
+      final response = await http.post(
+        url,
+        headers: Header.defaultHeader,
+        body: body,
+      );
+      final responseData = jsonDecode(response.body);
+      print('forget password response data: $responseData');
+      return await StatusResponseCodeChecker.checkStatusResponseCode(
+        responseData,
+        response.statusCode,
+        (data) => data,
+        (errors) => null,
+      );
+    } on SocketException catch (e) {
+      print(e.message);
+      print(e.osError);
+      return const Resource.error(
+        errorMessage: "Unable to Establish Internet Connection "
+            "Please check your internet connection and try again.",
+        type: StatusType.INVALID_RESPONSE,
+      );
+    } catch (error) {
+      print(error);
+      return const Resource.error(
+        errorMessage: "Invalid response",
+        type: StatusType.INVALID_RESPONSE,
+      );
+    }
+
+  }
+  static Future<Resource<Map<String, dynamic>?, dynamic>?> resetNewPassword(
+      Map<String, String> resetData) async {
+
+    try {
+      final url =
+          Uri.parse("${endpoints.baseUrl}/${endpoints.resetPasswordEndpoint}");
+      final body = jsonEncode(resetData);
+      print('reset password url: $url');
+      print("reset password after decode: $body");
+      final response = await http.post(
+        url,
+        headers: Header.defaultHeader,
+        body: body,
+      );
+      final responseData = jsonDecode(response.body);
+      print('reset password response data: $responseData');
+      return await StatusResponseCodeChecker.checkStatusResponseCode(
+        responseData,
+        response.statusCode,
+        (data) => data,
+        (errors) => null,
+      );
+    } on SocketException catch (e) {
+      print(e.message);
+      print(e.osError);
+      return const Resource.error(
+        errorMessage: "Unable to Establish Internet Connection "
+            "Please check your internet connection and try again.",
+        type: StatusType.INVALID_RESPONSE,
+      );
+    } catch (error) {
+      print(error);
+      return const Resource.error(
+        errorMessage: "Invalid response",
+        type: StatusType.INVALID_RESPONSE,
+      );
+    }
+
+  }
+
 }

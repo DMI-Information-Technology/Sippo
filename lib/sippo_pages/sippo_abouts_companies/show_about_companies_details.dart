@@ -7,7 +7,10 @@ import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
+import 'package:jobspot/sippo_custom_widget/gallery_image_widget_components.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
+
+import '../../sippo_custom_widget/gallry_image_uploader_widget_view.dart';
 
 class ShowAboutCompaniesDetails extends StatelessWidget {
   const ShowAboutCompaniesDetails({super.key, this.company})
@@ -17,6 +20,7 @@ class ShowAboutCompaniesDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(company?.images);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -65,24 +69,32 @@ class ShowAboutCompaniesDetails extends StatelessWidget {
         ),
         SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
         SizedBox(
-          height: context.height / 7,
-          child: ListView.builder(
-            itemCount: gallery.length,
-            shrinkWrap: true,
+          height: context.fromHeight(7.1),
+          child: ListView.separated(
+            itemCount: company?.images?.take(3).length ?? 0,
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
-              return Container(
-                margin: EdgeInsets.only(right: context.width / 36),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: Image.asset(
-                  gallery[index],
-                  fit: BoxFit.fill,
-                  width: context.width / 2.3,
-                ),
+              final length = company?.images?.length ?? 0;
+              final images = company?.images;
+              final isShowMoreImages = index == 2 && length > 3;
+              return SingleImageViewWidget.fromNetwork(
+                url: images?[index].url,
+                isShowMoreImage: isShowMoreImages,
+                onTap: isShowMoreImages
+                    ? () {
+                        Get.to(
+                          () => GalleryImageScreenView.visitor(
+                            title: '${company?.name} albums',
+                            imagesResource: images,
+                          ),
+                        );
+                      }
+                    : null,
               );
             },
+            separatorBuilder: (context, index) => SizedBox(
+              width: context.fromWidth(CustomStyle.spaceBetween),
+            ),
           ),
         ),
         SizedBox(

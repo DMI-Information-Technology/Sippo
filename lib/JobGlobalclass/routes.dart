@@ -54,9 +54,9 @@ import 'package:jobspot/sippo_pages/sippo_search_functions/sippo_general_search.
 import 'package:jobspot/sippo_pages/sippo_search_functions/sippo_search_jobs.dart';
 import 'package:jobspot/sippo_pages/sippo_search_functions/sippo_search_jobs_filter.dart';
 import 'package:jobspot/sippo_pages/sippo_search_functions/sippo_search_jobs_specializations_filter.dart';
-import 'package:jobspot/sippo_pages/sippo_user_pages/edit_add_user_profile_info/job_add_edit_appreciation.dart';
 import 'package:jobspot/sippo_pages/sippo_user_pages/edit_add_user_profile_info/job_add_edit_education.dart';
 import 'package:jobspot/sippo_pages/sippo_user_pages/edit_add_user_profile_info/job_add_edit_language.dart';
+import 'package:jobspot/sippo_pages/sippo_user_pages/edit_add_user_profile_info/job_add_edit_projects.dart';
 import 'package:jobspot/sippo_pages/sippo_user_pages/edit_add_user_profile_info/job_add_language_user.dart';
 import 'package:jobspot/sippo_pages/sippo_user_pages/edit_add_user_profile_info/job_edit_add_experience.dart';
 import 'package:jobspot/sippo_pages/sippo_user_pages/edit_add_user_profile_info/jobstop_add_edit_skills.dart';
@@ -65,6 +65,8 @@ import 'package:jobspot/sippo_pages/sippo_user_pages/jobstop_upload_cv.dart';
 import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_user_dashboard.dart';
 import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_user_notification_application/sippo_user_notification_application.dart';
 import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_user_profile.dart';
+
+import '../SippoControllerBinding/profile_binding/edit_add_projects_controller_binding.dart';
 
 class SippoRoutes {
   const SippoRoutes._();
@@ -85,7 +87,6 @@ class SippoRoutes {
   static const String sippoUserProfile = "/sippo-user-profile";
   static const String userWorkExperience = "/user-work-experience";
   static const String educationaddedit = "/user-education-add-edit";
-  static const String appreciationaddedit = "/user-appreciation-add-edit";
   static const String skillsaddedit = "/skills-add-edit";
   static const String languageeditadd = "/user-language-add-edit";
   static const String languageUserAdd = "/sippo-user-language-add";
@@ -100,6 +101,7 @@ class SippoRoutes {
   static const String sippoCompanyUserProfileView =
       "/sippo-company-user-profile-view";
 
+  static const String sippoEditAddUserProjects = "/sippo-edit-add-projects";
   static const String otpresetpassmsgpage = "/reset-pass-otp";
   static const String sippoJobFilterSearch = "/sippo-job-search";
   static const String sippoFilterOptionJobSearch = "/sippo-filter-job-search";
@@ -189,7 +191,10 @@ class SippoRoutes {
         page: () => const SippoCompanyProfile(),
         binding: const ProfileCompanyBindingController()),
     GetPage(
-        name: appreciationaddedit, page: () => const JobAppreciationAddEdit()),
+      name: sippoEditAddUserProjects,
+      page: () => const SippoProjectsAddEdit(),
+      binding: const EditAddProjectsBindingController(),
+    ),
     GetPage(
         name: companySignupSpecializations,
         page: () => const CompanySignUpSpecializations()),

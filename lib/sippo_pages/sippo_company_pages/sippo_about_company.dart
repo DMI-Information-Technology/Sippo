@@ -5,25 +5,27 @@ import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
-import 'package:jobspot/JopController/user_profile_controller/edit_profile_information_controller.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/loading_view_widgets/loading_scaffold.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/utils/validating_input.dart';
 
-class SippoUserAbout extends StatefulWidget {
-  const SippoUserAbout({Key? key}) : super(key: key);
+import '../../JopController/company_profile_controller/edit_copmany_profile_information_controller.dart';
+
+class SippoAboutCompany extends StatefulWidget {
+  const SippoAboutCompany({Key? key}) : super(key: key);
 
   @override
-  State<SippoUserAbout> createState() => _SippoUserAboutState();
+  State<SippoAboutCompany> createState() => _SippoAboutCompanyState();
 }
 
-class _SippoUserAboutState extends State<SippoUserAbout> {
+class _SippoAboutCompanyState extends State<SippoAboutCompany> {
   dynamic size;
   double height = 0.00;
   double width = 0.00;
+  final aboutme = TextEditingController();
   final _formKey = GlobalKey<FormState>();
-  final _controller = Get.put(EditProfileInfoController());
+  final _controller = Get.put(EditCompanyProfileInfoController());
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,7 @@ class _SippoUserAboutState extends State<SippoUserAbout> {
     height = size.height;
     width = size.width;
     return LoadingScaffold(
-      controller: _controller.loadingOverlayController,
+      controller: _controller.overlayLoadingController,
       appBar: AppBar(),
       body: Form(
         key: _formKey,
@@ -44,7 +46,7 @@ class _SippoUserAboutState extends State<SippoUserAbout> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "About me",
+                "About us",
                 style: dmsbold.copyWith(
                   fontSize: 16,
                   color: Jobstopcolor.primarycolor,
@@ -52,11 +54,11 @@ class _SippoUserAboutState extends State<SippoUserAbout> {
               ),
               SizedBox(height: height / CustomStyle.verticalSpaceBetween),
               InputBorderedField(
-                gController: _controller.profileEditState.bio,
                 verticalPaddingValue: context.fromHeight(
                   CustomStyle.paddingValue,
                 ),
-                hintText: 'tell me about you',
+                gController: _controller.profileEditState.bio,
+                hintText: 'talk about the company.',
                 hintStyle: dmsregular.copyWith(
                   fontSize: FontSize.label(context),
                 ),

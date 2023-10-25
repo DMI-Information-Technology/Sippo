@@ -10,6 +10,7 @@ class ExceptionHandlerUtils {
 
   static void onError(FlutterErrorDetails errorDetails) {
     final exception = errorDetails.exception;
+    print("hello");
     switch (exception) {
       case SocketException():
         _onSocketExceptionError(exception, errorDetails.stack);

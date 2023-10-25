@@ -2,6 +2,9 @@ class ValidatingInput {
   static final RegExp _fullNameRegex = RegExp(r'^[a-zA-Z\s]+$');
   static final RegExp _phoneNumberRegex = RegExp(r'^(092|091)\d{7}$');
   static final RegExp _wordRegExp = RegExp(r'^[a-zA-Z\u0600-\u06FF ]+$');
+  static final _emailRegExp = RegExp(
+      r"^[a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$");
+
   // static final RegExp _noPhoneRegex = RegExp(r'^(\+2189|09)([12]|[0-9]{7})$');
   // static final RegExp _emailRegex =
   //     RegExp(r'^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]+$');
@@ -50,6 +53,16 @@ class ValidatingInput {
     }
 
     return '';
+  }
+
+  static String? validateEmail(String? email) {
+    if (email == null || email.isEmpty) {
+      return 'Please enter an email address.';
+    } else if (!_emailRegExp.hasMatch(email.trim())) {
+      return 'Please enter a valid email address.';
+    } else {
+      return null;
+    }
   }
 
   static String? validateDescription(String? value) {

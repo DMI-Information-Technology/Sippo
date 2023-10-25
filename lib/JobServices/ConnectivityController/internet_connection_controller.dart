@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
-
 import 'package:jobspot/sippo_custom_widget/error_messages_dialog_snackbar/error_messages.dart'
     as errorMessage;
 
@@ -22,8 +21,16 @@ class InternetConnectionService extends GetxService {
 
   bool get isConnected {
     print(connectionCounter);
+
     final connection = _isConnected.isTrue;
-    if (!connection && connectionCounter >= 3) {
+    connectionWarning(connection);
+
+    return connection;
+  }
+
+  void connectionWarning(bool connection) {
+
+    if (!connection && connectionCounter >= 3 && !Get.isOverlaysOpen) {
       Get.snackbar(
         icon: Icon(Icons.signal_wifi_statusbar_connected_no_internet_4_rounded),
         'No Connection',
@@ -34,13 +41,11 @@ class InternetConnectionService extends GetxService {
       connectionCounter = 0;
     }
     connectionCounter++;
-    return connection;
   }
 
   bool get isNotConnected => !isConnected;
 
   void set isConnected(bool value) {
-    // print("from is connected: $value");
     _isConnected.value = value;
     _connectionStreamController.add(value);
   }

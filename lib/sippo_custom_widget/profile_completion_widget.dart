@@ -23,7 +23,7 @@ class ProfileCompletionController extends ChangeNotifier {
   }
 
   void updateCompletionLength(int length) {
-    this._percentage =
+    _percentage =
         ProfileCompletionManager.calculateCompletionPercentageLength(length);
     notifyListeners();
   }

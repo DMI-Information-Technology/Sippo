@@ -18,6 +18,7 @@ import 'package:jobspot/sippo_custom_widget/user_profile_header.dart';
 import 'package:readmore/readmore.dart';
 
 import '../../sippo_custom_widget/network_bordered_circular_image_widget.dart';
+import 'sippo_about_company.dart';
 
 class SippoCompanyProfile extends StatefulWidget {
   const SippoCompanyProfile({Key? key}) : super(key: key);
@@ -121,7 +122,7 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
   void _showUploadGalleryImagesScreen() {
     // print(_controller.company.images);
     Get.to(
-      () => GalleryImageUploaderView(
+      () => GalleryImageScreenView(
         title: 'Upload Company Images',
         imagesResource: _controller.company.images,
         onSaveTap: _controller.uploadCompanyImages,
@@ -366,6 +367,7 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
               : null,
           onAddClicked: () {
             if (_controller.netController.isNotConnected) return;
+            Get.to(() => const SippoAboutCompany());
           },
           profileInfo: [
             ReadMoreText(

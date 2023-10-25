@@ -6,27 +6,27 @@ import 'package:get/get.dart';
 import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
 import 'package:jobspot/JopController/dashboards_controller/user_dashboard_controller.dart';
 import 'package:jobspot/core/Refresh.dart';
+import 'package:jobspot/custom_app_controller/switch_status_controller.dart';
+import 'package:jobspot/sippo_custom_widget/profile_completion_widget.dart';
 import 'package:jobspot/sippo_data/model/custom_file_model/custom_file_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_user_profile_view_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/education_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/language_model.dart';
+import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/profile_edit_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/skills_model.dart';
+import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/user_projects_model.dart';
+import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/work_experiences_model.dart';
 import 'package:jobspot/sippo_data/user_repos/add_delete_cv_repo.dart';
 import 'package:jobspot/sippo_data/user_repos/education_repo.dart';
 import 'package:jobspot/sippo_data/user_repos/language_repo.dart';
 import 'package:jobspot/sippo_data/user_repos/skills_repo.dart';
-import 'package:jobspot/utils/states.dart';
-import 'package:open_file/open_file.dart';
-import 'package:path_provider/path_provider.dart';
-
-import 'package:jobspot/custom_app_controller/switch_status_controller.dart';
-import 'package:jobspot/sippo_custom_widget/profile_completion_widget.dart';
-import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/profile_edit_model.dart';
-import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/work_experiences_model.dart';
-import 'package:jobspot/sippo_data/model/profile_model/profile_widget_model/jobstop_appreciation_info_card_model.dart';
+import 'package:jobspot/sippo_data/user_repos/user_projects_repo.dart';
 import 'package:jobspot/sippo_data/user_repos/work_experiences_repo.dart';
 import 'package:jobspot/utils/file_downloader_service.dart';
+import 'package:jobspot/utils/states.dart';
 import 'package:jobspot/utils/storage_permission_service.dart';
+import 'package:open_file/open_file.dart';
+import 'package:path_provider/path_provider.dart';
 
 class ProfileUserController extends GetxController {
   final netController = InternetConnectionService.instance;
@@ -61,6 +61,21 @@ class ProfileUserController extends GetxController {
           newData: data,
           currentData: profileState.workExList,
           updateData: (data) => profileState.workExList = data,
+        );
+      },
+      onValidateError: (validateError, statusType) {},
+      onError: (message, statusType) {},
+    );
+  }
+
+  Future<void> fetchAllProjects() async {
+    final response = await UserProjectRepo.fetchProjects();
+    await response?.checkStatusResponse(
+      onSuccess: (data, statusType) {
+        Refresher.dataListUpdater(
+          newData: data,
+          currentData: profileState.projectsList,
+          updateData: (data) => profileState.projectsList = data,
         );
       },
       onValidateError: (validateError, statusType) {},
@@ -147,6 +162,7 @@ class ProfileUserController extends GetxController {
     states = states.copyWith(isLoading: true);
     await Future.wait([
       fetchAllWorkExperience(),
+      fetchAllProjects(),
       fetchAllEducation(),
       fetchUserSkills(),
       fetchUserLanguage(),
@@ -221,6 +237,7 @@ class ProfileUserController extends GetxController {
         );
       },
     );
+    profileState.aboutMeText = user.bio ?? '';
     _startListeningToConnection();
     super.onInit();
   }
@@ -263,35 +280,37 @@ class ProfileState {
       educations: educationList,
       skills: SkillsModel(skills: skillsList),
       languages: languages,
+      projects: projectsList,
     );
   }
 
-  final _aboutMeText =
-      "lorem ispum dolor sit amet, consectetur adipiscing elit in aenean non proident"
-          .obs;
+  final _aboutMeText = "".obs;
   final _showAllWei = false.obs;
+  final _showAllProjects = false.obs;
   final _showAllEdui = false.obs;
-  final _showAllAppreciations = false.obs;
   final _showAllSkills = false.obs;
   final _showAllLangs = false.obs;
   final _wei = <WorkExperiencesModel>[].obs;
+  final _projectsList = <UserProjectsModel>[].obs;
   final _educationList = <EducationModel>[].obs;
   final _skills = <String>[].obs;
   final _languages = <LanguageModel>[].obs;
-  final _appreciations = <AppreciationInfoCardModel>[].obs;
   final _cvFile = CustomFileModel().obs;
 
   List<WorkExperiencesModel> get workExList => _wei.toList();
+
+  List<UserProjectsModel> get projectsList => _projectsList.toList();
 
   List<EducationModel> get educationList => _educationList.toList();
 
   List<String> get skillsList => _skills.toList();
 
-  List<AppreciationInfoCardModel> get appreciations => _appreciations.toList();
-
   List<LanguageModel> get languages => _languages.toList();
 
   void set workExList(List<WorkExperiencesModel> value) => _wei.value = value;
+
+  void set projectsList(List<UserProjectsModel> value) =>
+      _projectsList.value = value;
 
   void set educationList(List<EducationModel> value) {
     _educationList.value = value;
@@ -309,24 +328,23 @@ class ProfileState {
 
   bool get showAllWei => _showAllWei.isTrue;
 
+  bool get showAllProjects => _showAllProjects.isTrue;
+
   bool get showAllEdui => _showAllEdui.isTrue;
 
   bool get showAllSkills => _showAllSkills.isTrue;
 
   bool get showAllLangs => _showAllLangs.isTrue;
 
-  bool get showAllAppreciations => _showAllAppreciations.isTrue;
-
   void set showAllWei(bool value) => _showAllWei.value = value;
+
+  void set showAllProjects(bool value) => _showAllProjects.value = value;
 
   void set showAllEdui(bool value) => _showAllEdui.value = value;
 
   void set showAllSkills(bool value) => _showAllSkills.value = value;
 
   void set showAllLangs(bool value) => _showAllLangs.value = value;
-
-  void set showAllAppreciations(bool value) =>
-      _showAllAppreciations.value = value;
 
   CustomFileModel get cvFile => _cvFile.value;
 

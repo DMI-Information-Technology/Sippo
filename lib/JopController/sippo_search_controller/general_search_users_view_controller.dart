@@ -4,22 +4,24 @@ import 'package:jobspot/JobServices/ConnectivityController/internet_connection_c
 import 'package:jobspot/JopController/sippo_search_controller/general_search_controller.dart';
 import 'package:jobspot/sippo_data/company_repos/compan_user_profile_view_repo.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_user_profile_view_model.dart';
-
 import 'package:jobspot/utils/states.dart';
+
+import '../../sippo_data/locations/locationsRepo.dart';
+import '../../sippo_data/model/locations_model/location_address_model.dart';
 
 class GeneralSearchProfilesViewController extends GetxController {
   final generalSearchController = UserGeneralSearchController.instance;
 
   static GeneralSearchProfilesViewController get instance => Get.find();
   final pagingController =
-  PagingController<int, ProfileViewResourceModel>(firstPageKey: 0);
+      PagingController<int, ProfileViewResourceModel>(firstPageKey: 0);
   final searchProfilesViewState = GeneralSearchProfilesViewState();
 
   States get states => generalSearchController.states;
 
   Future<void> fetchSearchProfilesUsersPages(
-      int pageKey,
-      ) async {
+    int pageKey,
+  ) async {
     final response = await CompanyUserProfileViewRepo.fetchUserProfilesView(
       searchProfilesViewState.buildQuerySearch,
     );
@@ -40,6 +42,28 @@ class GeneralSearchProfilesViewController extends GetxController {
       onError: (message, _) {
         pagingController.error = true;
         generalSearchController.changeStates(isError: true, message: message);
+      },
+    );
+  }
+
+  Future<void> fetchLocationsAddress() async {
+    searchProfilesViewState.states.value = States(isLoading: true);
+    final response = await LocationsRepo.fetchLocations();
+    searchProfilesViewState.states.value = States(isLoading: false);
+    await response?.checkStatusResponse(
+      onSuccess: (data, _) {
+        if (data != null) {
+          searchProfilesViewState.locationsAddressList = data
+            ..insert(
+              0,
+              LocationAddress(id: null, name: 'All'),
+            );
+          searchProfilesViewState.states.value = States(isSuccess: true);
+        }
+      },
+      onValidateError: (validateError, _) {},
+      onError: (message, _) {
+        searchProfilesViewState.states.value = States(isError: true);
       },
     );
   }
@@ -76,21 +100,46 @@ class GeneralSearchProfilesViewController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    fetchLocationsAddress();
     _pageProfilesViewRequester(searchProfilesViewState.pageNumber);
   }
 }
 
 class GeneralSearchProfilesViewState {
+  final _locationsAddress = <LocationAddress>[].obs;
+
+  List<LocationAddress> get locationsAddressList => _locationsAddress.toList();
+  final states = States().obs;
+
+  void resetStates() => states.value = States();
+
+  List<String> get locationsAddressNameList => locationsAddressList
+      .where((e) => e.name != null)
+      .map((e) => e.name ?? '')
+      .toList();
+
+  set locationsAddressList(List<LocationAddress> value) =>
+      _locationsAddress.value = value;
+  final _selectedLocationAddressName = LocationAddress().obs;
+
+  LocationAddress get selectedLocationAddress =>
+      _selectedLocationAddressName.value;
+
+  void set selectedLocationAddress(LocationAddress value) {
+    _selectedLocationAddressName.value = value;
+  }
+
   var pageNumber = 1;
 
   void incrementPageNumber() => pageNumber++;
 
   Map<String, String> get buildQuerySearch => {
-    'page': '${pageNumber}',
-    'per_page': "6",
-    'name': UserGeneralSearchController
-        .instance.generalSearchState.searchController.text
-        .split(" ")
-        .join("+"),
-  };
+        'page': '${pageNumber}',
+        'per_page': "6",
+        'location_id': (selectedLocationAddress.id ?? "").toString(),
+        'name': UserGeneralSearchController
+            .instance.generalSearchState.searchController.text
+            .split(" ")
+            .join("+"),
+      }..removeWhere((_, v) => v.isEmpty);
 }

@@ -4,7 +4,7 @@ import 'package:jobspot/JopController/sippo_search_controller/user_filter_search
 class UserSearchJobsFilterBindingController implements Bindings {
   @override
   void dependencies() {
-    Get.put<UserFilterSearchController>(UserFilterSearchController());
+    Get.put<SippoFilterSearchController>(SippoFilterSearchController());
   }
 
   const UserSearchJobsFilterBindingController();

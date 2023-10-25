@@ -1,5 +1,7 @@
 import 'package:jobspot/sippo_data/model/auth_model/entity_model.dart';
 import 'package:jobspot/sippo_data/model/image_resource_model/image_resource_model.dart';
+import 'package:jobspot/sippo_data/model/locations_model/location_address_model.dart';
+import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/work_location_model.dart';
 import 'package:jobspot/utils/app_use.dart';
 
 import 'cv_file_model.dart';
@@ -15,6 +17,9 @@ class ProfileInfoModel extends EntityModel {
     this.bio,
     this.cv,
     this.profileImage,
+    this.isEmailVerified,
+    this.pendingEmail,
+    this.myLocation,
   });
 
   factory ProfileInfoModel.fromJson(Map<String, dynamic>? json) =>
@@ -25,7 +30,12 @@ class ProfileInfoModel extends EntityModel {
         secondaryPhone: json?["secondary_phone"],
         email: json?["email"],
         gender: json?['gender'],
+        isEmailVerified: json?['is_email_verified'],
+        pendingEmail: json?['pending_email'],
         bio: json?['bio'],
+        myLocation: json?['location'] != null
+            ? WorkLocationModel.fromJson(json?["location"])
+            : null,
         cv: json?['cv'] != null ? CvModel.fromJson(json?['cv']) : null,
         profileImage: json?['profile_image'] != null
             ? ImageResourceModel.fromJson(json?['profile_image'])
@@ -36,6 +46,9 @@ class ProfileInfoModel extends EntityModel {
   final CvModel? cv;
   final String? bio;
   final ImageResourceModel? profileImage;
+  final bool? isEmailVerified;
+  final String? pendingEmail;
+  final WorkLocationModel? myLocation;
 
   ProfileInfoModel copyWith({
     int? id,
@@ -45,8 +58,11 @@ class ProfileInfoModel extends EntityModel {
     String? phone,
     String? gender,
     String? bio,
+    bool? isEmailVerified,
+    String? pendingEmail,
     CvModel? cv,
     ImageResourceModel? profileImage,
+    WorkLocationModel? locationAddress,
   }) =>
       ProfileInfoModel(
         id: id ?? this.id,
@@ -58,7 +74,14 @@ class ProfileInfoModel extends EntityModel {
         bio: bio ?? this.bio,
         cv: cv ?? this.cv,
         profileImage: profileImage ?? this.profileImage,
+        isEmailVerified: isEmailVerified ?? this.isEmailVerified,
+        pendingEmail: pendingEmail ?? this.pendingEmail,
+        myLocation: myLocation ?? this.myLocation,
       );
+
+  bool get pendingEmailIsNotEmpty => pendingEmail?.isNotEmpty == true;
+
+  bool get pendingEmailIsEmpty => pendingEmail?.isEmpty == true;
 
   ProfileInfoModel copyWithRemoveCv({
     int? id,
@@ -69,6 +92,9 @@ class ProfileInfoModel extends EntityModel {
     String? gender,
     String? bio,
     ImageResourceModel? profileImage,
+    bool? isEmailVerified,
+    String? pendingEmail,
+    WorkLocationModel? locationAddress,
   }) =>
       ProfileInfoModel(
         id: id ?? this.id,
@@ -79,6 +105,9 @@ class ProfileInfoModel extends EntityModel {
         gender: gender ?? this.gender,
         bio: bio ?? this.bio,
         profileImage: profileImage ?? this.profileImage,
+        isEmailVerified: isEmailVerified ?? this.isEmailVerified,
+        pendingEmail: pendingEmail ?? this.pendingEmail,
+        myLocation: myLocation ?? this.myLocation,
       );
 
   Map<String, dynamic> toJson() => {
@@ -89,10 +118,16 @@ class ProfileInfoModel extends EntityModel {
         'phone': phone,
         'secondary_phone': secondaryPhone,
         'bio': bio,
-      }..removeWhere((_, v) => v == null || (v as String).trim().isEmpty);
+      }..removeWhere((_, v) {
+          if (v == null) return true;
+          if (v is String && v.isEmpty) return true;
+          return false;
+        });
 
   @override
-  String? get locationCity => null;
+  String? get locationCity => myLocation?.locationAddress?.name;
+
+  LocationAddress? get locationAddress => myLocation?.locationAddress?.copyWith();
 
   @override
   AppUsingType get userType => AppUsingType.user;
@@ -115,6 +150,9 @@ class ProfileInfoModel extends EntityModel {
           profileImage == other.profileImage &&
           cv == other.cv &&
           gender == other.gender &&
+          isEmailVerified == other.isEmailVerified &&
+          pendingEmail == other.pendingEmail &&
+          locationAddress == other.locationAddress &&
           bio == other.bio;
 
   @override
@@ -127,5 +165,8 @@ class ProfileInfoModel extends EntityModel {
       cv.hashCode ^
       profileImage.hashCode ^
       gender.hashCode ^
+      isEmailVerified.hashCode ^
+      pendingEmail.hashCode ^
+      locationAddress.hashCode ^
       bio.hashCode;
 }

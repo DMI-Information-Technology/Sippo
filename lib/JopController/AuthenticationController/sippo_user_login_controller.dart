@@ -46,7 +46,7 @@ class UserLoginController extends GetxController {
       print(authState);
     }
     if (authController.states.isSuccess) {
-      authController.resetAllAuthStates();
+      authController.resetStates();
       Get.offAllNamed(SippoRoutes.userDashboard);
     }
   }

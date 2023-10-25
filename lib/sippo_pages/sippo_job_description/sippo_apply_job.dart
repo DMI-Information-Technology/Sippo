@@ -20,11 +20,8 @@ import 'package:jobspot/sippo_custom_widget/resume_card_widget.dart';
 import 'package:jobspot/sippo_custom_widget/success_message_widget.dart';
 import 'package:jobspot/sippo_custom_widget/top_job_details_header.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
-import 'package:jobspot/sippo_pages/sippo_job_description/sippo_job_description.dart';
 import 'package:jobspot/sippo_pages/sippo_user_pages/jobstop_success.dart';
 import 'package:jobspot/utils/helper.dart';
-
-
 
 class SippoApplyJob extends StatefulWidget {
   const SippoApplyJob({Key? key}) : super(key: key);
@@ -238,7 +235,9 @@ class _SippoApplyJobState extends State<SippoApplyJob> {
               coverHeight: context.height / 3.5,
               profileImageSize: context.height / 6,
               backgroundImageColor: Colors.white,
-              imageUrl: SippoJobDescription.imgUrl,
+              imageUrl: _controller
+                      .applyJobsState.jopDetails.company?.profileImage?.url ??
+                  '',
               // onLeadingTap: () => Get.back(),
               actions: [
                 IconButton(

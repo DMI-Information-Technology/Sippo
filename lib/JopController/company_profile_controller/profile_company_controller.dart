@@ -14,6 +14,7 @@ import '../dashboards_controller/company_dashboard_controller.dart';
 class ProfileCompanyController extends GetxController {
   static ProfileCompanyController get instance => Get.find();
   final profileCompletionController = ProfileCompletionController(0.0);
+
   final _states = States().obs;
 
   States get states => _states.value;

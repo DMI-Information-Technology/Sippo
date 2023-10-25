@@ -8,11 +8,10 @@ import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/education_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/language_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/profile_edit_model.dart';
-import 'package:jobspot/utils/states.dart';
-
+import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/user_projects_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/work_experiences_model.dart';
-import 'package:jobspot/sippo_data/model/profile_model/profile_widget_model/jobstop_appreciation_info_card_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_widget_model/jobstop_resume_file_info.dart';
+import 'package:jobspot/utils/states.dart';
 
 class ProfileUserViewController extends GetxController {
   final netController = InternetConnectionService.instance;
@@ -110,12 +109,14 @@ class ProfileState {
   final _profileInfo = ProfileInfoModel().obs;
 
   void setAll(ProfileViewResourceModel data) {
-    profileInfo = data.userInfo?.copyWith(profileImage: data.image) ?? profileInfo;
+    profileInfo =
+        data.userInfo?.copyWith(profileImage: data.image) ?? profileInfo;
     aboutMeText = data.userInfo?.bio ?? '';
     skillsList = data.skills?.skills ?? skillsList;
     educationList = data.educations ?? educationList;
     languages = data.languages ?? languages;
     workExList = data.workExperiences ?? workExList;
+    projects = data.projects ?? projects;
   }
 
   ProfileInfoModel get profileInfo => _profileInfo.value;
@@ -131,14 +132,14 @@ class ProfileState {
 
   final _showAllWei = false.obs;
   final _showAllEdui = false.obs;
-  final _showAllAppreciations = false.obs;
+  final _showAllProjects = false.obs;
   final _showAllSkills = false.obs;
   final _showAllLangs = false.obs;
   final _wei = <WorkExperiencesModel>[].obs;
   final _educationList = <EducationModel>[].obs;
   final _skills = <String>[].obs;
   final _languages = <LanguageModel>[].obs;
-  final _appreciations = <AppreciationInfoCardModel>[].obs;
+  final _projects = <UserProjectsModel>[].obs;
   final Rx<ResumeFileInfo?> _resumeFiles = ResumeFileInfo.getNull().obs;
 
   List<WorkExperiencesModel> get workExList => _wei.toList();
@@ -147,7 +148,7 @@ class ProfileState {
 
   List<String> get skillsList => _skills.toList();
 
-  List<AppreciationInfoCardModel> get appreciations => _appreciations.toList();
+  List<UserProjectsModel> get projects => _projects.toList();
 
   List<LanguageModel> get languages => _languages.toList();
 
@@ -161,6 +162,8 @@ class ProfileState {
 
   void set languages(List<LanguageModel> value) => _languages.value = value;
 
+  void set projects(List<UserProjectsModel> value) => _projects.value = value;
+
   String get aboutMeText => _aboutMeText.toString();
 
   bool get showAllWei => _showAllWei.isTrue;
@@ -171,7 +174,7 @@ class ProfileState {
 
   bool get showAllLangs => _showAllLangs.isTrue;
 
-  bool get showAllAppreciations => _showAllAppreciations.isTrue;
+  bool get showAllProjects => _showAllProjects.isTrue;
 
   void set showAllWei(bool value) => _showAllWei.value = value;
 
@@ -181,8 +184,7 @@ class ProfileState {
 
   void set showAllLangs(bool value) => _showAllLangs.value = value;
 
-  void set showAllAppreciations(bool value) =>
-      _showAllAppreciations.value = value;
+  void set showAllProjects(bool value) => _showAllProjects.value = value;
 
   ResumeFileInfo? get resumeFiles => _resumeFiles.value;
 

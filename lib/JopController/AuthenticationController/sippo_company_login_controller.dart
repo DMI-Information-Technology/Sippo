@@ -48,7 +48,7 @@ class CompanyLoginController extends GetxController {
       await authController.companyLogin(companyForm);
     }
     if (authController.states.isSuccess) {
-      authController.resetAllAuthStates();
+      authController.resetStates();
       if (kIsWeb) {
         Get.offAllNamed(SippoRoutes.sippoCompanyDashboard);
       } else {

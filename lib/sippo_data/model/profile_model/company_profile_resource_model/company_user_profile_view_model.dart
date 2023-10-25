@@ -1,11 +1,13 @@
 import 'package:get/get.dart';
 import 'package:jobspot/sippo_data/model/image_resource_model/image_resource_model.dart';
+import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/cv_file_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/education_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/language_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/profile_edit_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/skills_model.dart';
+import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/user_projects_model.dart';
+import 'package:jobspot/utils/helper.dart';
 
-import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/cv_file_model.dart';
 import '../profile_resource_model/work_experiences_model.dart';
 
 class ProfileViewResourceModel {
@@ -16,6 +18,7 @@ class ProfileViewResourceModel {
   final List<EducationModel>? educations;
   final SkillsModel? skills;
   final List<LanguageModel>? languages;
+  final List<UserProjectsModel>? projects;
 
   const ProfileViewResourceModel({
     this.userInfo,
@@ -25,6 +28,7 @@ class ProfileViewResourceModel {
     this.educations,
     this.skills,
     this.languages,
+    this.projects,
   });
 
   Map<String, String> blankProfileMessages() {
@@ -51,6 +55,8 @@ class ProfileViewResourceModel {
         'skills': "The profile account does not have an skills.",
       if (languages == null || languages?.isBlank == true)
         'languages': "The profile account does not have an languages.",
+      if (projects == null || projects?.isBlank == true)
+        'projects': "The profile account does not have an projects.",
     };
   }
 
@@ -79,6 +85,11 @@ class ProfileViewResourceModel {
               .map((e) => EducationModel.fromJson(e))
               .toList()
           : null,
+      projects: json?["projects"] is List
+          ? List.of(json?["projects"])
+              .map((e) => UserProjectsModel.fromJson(e))
+              .toList()
+          : null,
       skills: SkillsModel.fromViewJson(json),
       languages: json?["languages"] is List
           ? List.of(json?["languages"])
@@ -96,6 +107,7 @@ class ProfileViewResourceModel {
     List<EducationModel>? educations,
     SkillsModel? skills,
     List<LanguageModel>? languages,
+    List<UserProjectsModel>? projects,
   }) {
     return ProfileViewResourceModel(
       userInfo: userInfo ?? this.userInfo,
@@ -105,6 +117,32 @@ class ProfileViewResourceModel {
       educations: educations ?? this.educations,
       skills: skills ?? this.skills,
       languages: languages ?? this.languages,
+      projects: projects ?? this.projects,
     );
   }
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is ProfileViewResourceModel &&
+          runtimeType == other.runtimeType &&
+          userInfo == other.userInfo &&
+          image == other.image &&
+          cv == other.cv &&
+          listEquality(workExperiences, other.workExperiences) &&
+          listEquality(educations, other.educations) &&
+          skills == other.skills &&
+          listEquality(languages, other.languages) &&
+          listEquality(projects, other.projects);
+
+  @override
+  int get hashCode =>
+      userInfo.hashCode ^
+      image.hashCode ^
+      cv.hashCode ^
+      workExperiences.hashCode ^
+      educations.hashCode ^
+      skills.hashCode ^
+      languages.hashCode ^
+      projects.hashCode;
 }

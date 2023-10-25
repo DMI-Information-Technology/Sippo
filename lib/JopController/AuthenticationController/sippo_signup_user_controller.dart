@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JopController/AuthenticationController/sippo_auth_controller.dart';
-
+import 'package:jobspot/JobGlobalclass/global_storage.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
+import 'package:jobspot/JopController/AuthenticationController/sippo_auth_controller.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_data/model/auth_model/user_model.dart';
 import 'package:jobspot/utils/states.dart';
 
+import '../../sippo_data/model/locations_model/location_address_model.dart';
+
 class SignUpUserController extends GetxController {
   static SignUpUserController get instance => Get.find();
-  final AuthController _authController = AuthController.instance;
+  final AuthController authController = AuthController.instance;
   final GlobalKey<FormState> formKey = GlobalKey();
 
-  States get authState => _authController.states;
+  States get authState => authController.states;
   final _fullname = "".obs;
   final _phoneNumber = "".obs;
   final _password = "".obs;
@@ -33,7 +35,17 @@ class SignUpUserController extends GetxController {
         phone: phoneNumber,
         password: password,
         passwordConfirmation: confirmPassword,
+        fcmToken: GlobalStorageService.notificationToken,
+        locationId: selectedLocationAddress.id,
       );
+  final _selectedLocationAddressName = LocationAddress().obs;
+
+  LocationAddress get selectedLocationAddress =>
+      _selectedLocationAddressName.value;
+
+  void set selectedLocationAddress(LocationAddress value) {
+    _selectedLocationAddressName.value = value;
+  }
 
   void set fullname(String value) {
     _fullname.value = value;
@@ -53,10 +65,10 @@ class SignUpUserController extends GetxController {
 
   Future<void> onSubmittedSignup() async {
     if (formKey.currentState!.validate()) {
-      await _authController.userRegister(userForm);
+      await authController.userRegister(userForm);
     }
     if (authState.isSuccess) {
-      _authController.resetAllAuthStates();
+      authController.resetStates();
       _showRegisterSuccessAlert();
     }
   }

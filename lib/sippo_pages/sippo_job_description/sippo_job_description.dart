@@ -20,11 +20,6 @@ import 'package:jobspot/utils/helper.dart';
 
 class SippoJobDescription extends StatefulWidget {
   const SippoJobDescription({Key? key}) : super(key: key);
-  static const imgUrl = 'https://scontent.fmji4-1.fna.fbcdn.net/v/t39.30808-'
-      '6/283989525_172048385265472_5677841309342210083_n.jpg?_'
-      'nc_cat=107&ccb=1-7&_nc_sid=a2f6c7&_nc_ohc=NqB7-Psc_aIAX_7Ivx'
-      '0&_nc_ht=scontent.fmji4-1.fna&oh=00_AfB7PaSwlVJwrtt003d9CMK5B'
-      'xy6ubHVMV9iWwxxol30Bg&oe=650B7982';
 
   @override
   State<SippoJobDescription> createState() => _SippoJobDescriptionState();

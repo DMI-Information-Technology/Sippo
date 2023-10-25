@@ -20,8 +20,13 @@ class CustomDropdownButton<T> extends StatelessWidget {
     this.setInitialValue = false,
     this.initialValue,
     this.fillColor,
+    this.underLineBorder = false,
+    this.prefixIcon,
+    this.hPaddingValue,
+    this.hintTextColor,
   });
 
+  final bool underLineBorder;
   final String? initialValue;
   final bool setInitialValue;
   final Color? fillColor;
@@ -31,6 +36,9 @@ class CustomDropdownButton<T> extends StatelessWidget {
   final List<T>? values;
   final List<String>? labelList;
   final void Function(T? value) onItemSelected;
+  final Widget? prefixIcon;
+  final double? hPaddingValue;
+  final Color? hintTextColor;
 
   @override
   Widget build(BuildContext context) {
@@ -41,18 +49,45 @@ class CustomDropdownButton<T> extends StatelessWidget {
         value: setInitialValue ? initialValue ?? labelList?.first : null,
         isExpanded: true,
         decoration: InputDecoration(
-          contentPadding: const EdgeInsets.symmetric(vertical: 16),
+          contentPadding: EdgeInsets.symmetric(
+            vertical: 16,
+            horizontal: hPaddingValue ?? 0.0,
+          ),
           filled: true,
           fillColor: fillColor ?? Jobstopcolor.backgroudHome,
+          enabledBorder: underLineBorder
+              ? UnderlineInputBorder(
+                  borderRadius:
+                      BorderRadius.circular(context.fromWidth(CustomStyle.s)),
+                  borderSide: BorderSide(
+                    color: Jobstopcolor.grey[400] ?? Colors.grey,
+                    width: 3,
+                  ),
+                )
+              : null,
+          focusedBorder: underLineBorder
+              ? UnderlineInputBorder(
+                  borderRadius:
+                      BorderRadius.circular(context.fromWidth(CustomStyle.s)),
+                  borderSide: BorderSide(
+                    color: Jobstopcolor.primarycolor,
+                    width: 3,
+                  ),
+                )
+              : null,
+          prefixIcon: prefixIcon,
           border: OutlineInputBorder(
             borderRadius:
                 BorderRadius.circular(context.fromWidth(CustomStyle.s)),
-            borderSide: BorderSide.none,
+            borderSide: underLineBorder ? const BorderSide() : BorderSide.none,
           ),
         ),
         hint: Text(
           textHint ?? "",
-          style: dmsregular.copyWith(fontSize: FontSize.title5(context)),
+          style: dmsregular.copyWith(
+            fontSize: FontSize.title5(context),
+            color: hintTextColor,
+          ),
         ),
         onChanged: (value) {},
         items: List.generate(labelList?.length ?? 0, (index) {

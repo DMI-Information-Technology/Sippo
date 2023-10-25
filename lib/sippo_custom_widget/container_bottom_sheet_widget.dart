@@ -91,6 +91,9 @@ class ContainerBottomSheetWidget extends StatelessWidget {
             ),
           ],
           _buildWidget(),
+          SizedBox(
+            height: context.fromHeight(CustomStyle.spaceBetween),
+          )
         ],
       ),
     );
