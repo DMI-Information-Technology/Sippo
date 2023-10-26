@@ -239,6 +239,7 @@ class _SippoUserLoginState extends State<SippoUserLogin> {
                     ),
                     CustomButton(
                       onTapped: () {
+                        _controller.authController.resetStates();
                         Get.offAndToNamed(SippoRoutes.sippoCompanyLogin);
                       },
                       text: "Company_Login".tr,
@@ -251,6 +252,7 @@ class _SippoUserLoginState extends State<SippoUserLogin> {
                     ),
                     CustomButton(
                       onTapped: () {
+                        _controller.authController.resetStates();
                         Get.offAllNamed(SippoRoutes.userDashboard);
                       },
                       text: "Guest_login.".tr,

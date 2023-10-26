@@ -102,17 +102,7 @@ class SippoUserSignup extends StatelessWidget {
                           Icons.lock_outline,
                           color: Jobstopcolor.primarycolor,
                         ),
-                        validator: (value) {
-                          if (value == null || value.trim().isEmpty) {
-                            return "password_is_req".tr;
-                          }
-                          String accepted =
-                              ValidatingInput.validatePassword(value.trim());
-                          if (accepted.isNotEmpty) {
-                            return accepted;
-                          }
-                          return null;
-                        },
+                        validator: ValidatingInput.validatePassword,
                         onChangedText: (val) =>
                             controller.password = val.trim()),
                     SizedBox(
@@ -170,9 +160,7 @@ class SippoUserSignup extends StatelessWidget {
                       text: "Sign_up".tr,
                       backgroundColor: Jobstopcolor.primarycolor,
                       textColor: Jobstopcolor.white,
-                      onTapped: () async {
-                        await controller.onSubmittedSignup();
-                      },
+                      onTapped: () => controller.onSubmittedSignup(),
                     ),
                     SizedBox(height: height / 40),
                     Row(
@@ -190,6 +178,7 @@ class SippoUserSignup extends StatelessWidget {
                           highlightColor: Jobstopcolor.transparent,
                           splashColor: Jobstopcolor.transparent,
                           onTap: () {
+                            controller.authController.resetStates();
                             Get.offAndToNamed(SippoRoutes.userLoginPage);
                           },
                           child: Text(
@@ -210,6 +199,7 @@ class SippoUserSignup extends StatelessWidget {
                     SizedBox(height: height / 52),
                     CustomButton(
                       onTapped: () {
+                        controller.authController.resetStates();
                         Get.offAndToNamed(SippoRoutes.companysignup);
                       },
                       text: "company_signup".tr,

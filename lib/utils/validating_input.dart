@@ -1,3 +1,5 @@
+import 'package:get/get.dart';
+
 class ValidatingInput {
   static final RegExp _fullNameRegex = RegExp(r'^[a-zA-Z\s]+$');
   static final RegExp _phoneNumberRegex = RegExp(r'^(092|091)\d{7}$');
@@ -36,23 +38,27 @@ class ValidatingInput {
         : message ?? 'this field is required.';
   }
 
-  static String validatePassword(String value) {
-    if (!passwordRegex.hasMatch(value)) {
-      if (value.length < 8) {
+  static String? validatePassword(String? value) {
+    final password = value?.trim();
+    if (password == null || password.trim().isEmpty) {
+      return "password_is_req".tr;
+    }
+    if (!passwordRegex.hasMatch(password)) {
+      if (password.length < 8) {
         return 'Password should be at least 8 characters long.';
-      } else if (!RegExp(r'[a-z]').hasMatch(value)) {
+      } else if (!RegExp(r'[a-z]').hasMatch(password)) {
         return 'Password should contain at least one lowercase letter.';
-      } else if (!RegExp(r'[A-Z]').hasMatch(value)) {
+      } else if (!RegExp(r'[A-Z]').hasMatch(password)) {
         return 'Password should contain at least one uppercase letter.';
-      } else if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(value)) {
-        return 'Password should contain at least one symbol.';
+        // } else if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(value)) {
+        //   return 'Password should contain at least one symbol.';
       } else if (!RegExp(r'[0-9].*[0-9].*[0-9].*[0-9].*[0-9].*[0-9]')
-          .hasMatch(value)) {
+          .hasMatch(password)) {
         return 'Password should contain at least 6 digits.';
       }
     }
 
-    return '';
+    return null;
   }
 
   static String? validateEmail(String? email) {
@@ -83,7 +89,7 @@ class ValidatingInput {
 
   static bool containsValidPhoneNumber(String text) {
     RegExp phoneRegex = RegExp(
-      r'(?:(?:09[12]-?\d{7})|(?:\+?218-0?[91][12]\d{7})|(?:\d{7}))',
+      r'09[12]-?\d{7}|\+?218-0?[91][12]\d{7}|\d{7}',
     );
     return phoneRegex.hasMatch(text);
   }

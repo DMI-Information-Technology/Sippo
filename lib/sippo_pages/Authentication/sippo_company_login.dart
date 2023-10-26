@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
-
 import 'package:jobspot/JobGlobalclass/jobstopprefname.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JopController/AuthenticationController/sippo_company_login_controller.dart';
@@ -168,9 +167,8 @@ class SippoCompanyLogin extends StatelessWidget {
                       text: "Login".tr,
                       backgroundColor: Jobstopcolor.primarycolor,
                       textColor: Jobstopcolor.white,
-                      onTapped: () async {
-                        await CompanyLoginController.instance
-                            .onSubmittedLogin();
+                      onTapped: () {
+                        controller.onSubmittedLogin();
                       },
                     ),
                     SizedBox(height: height / 35),
@@ -195,6 +193,7 @@ class SippoCompanyLogin extends StatelessWidget {
                         ),
                         TextButton(
                           onPressed: () {
+                            controller.authController.resetStates();
                             Get.offAndToNamed(SippoRoutes.companysignup);
                           },
                           child: Text(
@@ -218,6 +217,7 @@ class SippoCompanyLogin extends StatelessWidget {
                     ),
                     CustomButton(
                       onTapped: () {
+                        controller.authController.resetStates();
                         Get.offAndToNamed(SippoRoutes.userLoginPage);
                       },
                       text: "User_Login".tr,

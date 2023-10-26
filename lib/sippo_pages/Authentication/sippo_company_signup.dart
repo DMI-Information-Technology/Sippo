@@ -3,8 +3,9 @@ import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
-import 'package:jobspot/JopController/AuthenticationController/sippo_signup_company_controller.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
+import 'package:jobspot/JopController/AuthenticationController/sippo_auth_controller.dart';
+import 'package:jobspot/JopController/AuthenticationController/sippo_signup_company_controller.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/utils/validating_input.dart';
 
@@ -100,17 +101,7 @@ class SippoCompanySignup extends StatelessWidget {
                     Icons.lock_outline,
                     color: Jobstopcolor.primarycolor,
                   ),
-                  validator: (value) {
-                    if (value == null || value.trim().isEmpty) {
-                      return "password_is_req".tr;
-                    }
-                    String accepted =
-                        ValidatingInput.validatePassword(value.trim());
-                    if (accepted.isNotEmpty) {
-                      return accepted;
-                    }
-                    return null;
-                  },
+                  validator: ValidatingInput.validatePassword,
                 ),
                 SizedBox(
                   height: height / 46,
@@ -140,9 +131,7 @@ class SippoCompanySignup extends StatelessWidget {
                   text: "Sign_up".tr,
                   backgroundColor: Jobstopcolor.primarycolor,
                   textColor: Jobstopcolor.white,
-                  onTapped: () async {
-                    await controller.onSubmitSignup();
-                  },
+                  onTapped: ()  => controller.onSubmitSignup(),
                 ),
                 SizedBox(
                   height: height / 40,
@@ -159,6 +148,7 @@ class SippoCompanySignup extends StatelessWidget {
                     ),
                     TextButton(
                       onPressed: () {
+                        AuthController.instance.resetStates();
                         Get.offAndToNamed(SippoRoutes.sippoCompanyLogin);
                       },
                       child: Text(
@@ -183,6 +173,7 @@ class SippoCompanySignup extends StatelessWidget {
                 ),
                 CustomButton(
                   onTapped: () {
+                    AuthController.instance.resetStates();
                     Get.offAndToNamed(SippoRoutes.userSignupPage);
                   },
                   text: "user_signup".tr,
