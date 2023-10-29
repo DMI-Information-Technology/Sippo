@@ -10,6 +10,7 @@ import 'package:jobspot/JopController/user_community_controller/show_about_compa
 import 'package:jobspot/sippo_custom_widget/company_post_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_post_model.dart';
+import 'package:jobspot/utils/helper.dart';
 
 class ShowAboutCompaniesPostsList extends StatefulWidget {
   const ShowAboutCompaniesPostsList({super.key});
@@ -34,10 +35,13 @@ class _ShowAboutCompaniesPostsListState
         itemBuilder: (context, item, index) {
           return Obx(
             () => PostWidget(
-              authorName: _controller.company.name ?? 'unknown',
-              timeAgo: '21 minutes ago',
-              postTitle: item.title ?? "unknown title",
-              postContent: item.body ?? "unknown content",
+              authorName: _controller.company.name ?? '',
+              timeAgo: calculateElapsedTimeFromStringDate(
+                    DateTime.now().toString(),
+                  ) ??
+                  "",
+              postTitle: item.title ?? "",
+              postContent: item.body ?? "",
               imageUrl: item.image?.url,
               isCompany: false,
               onActionButtonPresses: () {},
@@ -89,7 +93,7 @@ class _ShowAboutCompaniesPostsListState
         ),
         SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
         Text(
-          _controller.states.message ?? 'something wrong is happened.',
+          _controller.states.message ?? 'something_wrong_happened'.tr,
           style: dmsregular.copyWith(
             fontSize: FontSize.paragraph3(context),
           ),
@@ -104,7 +108,7 @@ class _ShowAboutCompaniesPostsListState
               _controller.states =
                   _controller.states.copyWith(isError: false, message: '');
             },
-            text: 'Try again',
+            text: 'try_again'.tr,
           ),
         )
       ],

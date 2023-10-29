@@ -12,6 +12,7 @@ class LoadingScaffold extends StatelessWidget {
     this.backgroundColor,
     this.extendBodyBehindAppBar = false,
     this.canPopOnLoading = true,
+
   });
 
   final PreferredSizeWidget? appBar;

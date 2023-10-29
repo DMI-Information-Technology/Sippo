@@ -106,7 +106,7 @@ class _SippoAboutCompaniesState extends State<SippoAboutCompanies> {
               onTapped: () {
                 Get.toNamed(SippoRoutes.sippoUserApplyCompany);
               },
-              text: "apply",
+              text: "apply".tr,
             ),
           ),
         ));

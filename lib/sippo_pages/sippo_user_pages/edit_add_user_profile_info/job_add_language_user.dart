@@ -1,17 +1,18 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
-import 'package:jobspot/sippo_custom_widget/body_widget.dart';
-import 'package:jobspot/sippo_custom_widget/widgets.dart';
-import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JopController/user_profile_controller/language_edit_add_controller.dart';
 import 'package:jobspot/sippo_custom_widget/SearchDelegteImpl.dart';
+import 'package:jobspot/sippo_custom_widget/body_widget.dart';
+import 'package:jobspot/sippo_custom_widget/loading_view_widgets/loading_scaffold.dart';
 import 'package:jobspot/sippo_custom_widget/success_message_widget.dart';
+import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_themes/themecontroller.dart';
 
 class LanguageUserAdd extends StatefulWidget {
@@ -34,7 +35,8 @@ class _LanguageUserAddState extends State<LanguageUserAdd> {
     Size size = MediaQuery.of(context).size;
     double height = size.height;
     double width = size.width;
-    return Scaffold(
+    return LoadingScaffold(
+      controller: _controller.loadingController,
       appBar: AppBar(),
       body: BodyWidget(
         isScrollable: true,
@@ -55,10 +57,6 @@ class _LanguageUserAddState extends State<LanguageUserAdd> {
               ),
             ),
             SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
-            Obx(() => CardNotifyMessage.success(
-                  state: _controller.states,
-                  onCancelTap: () => _controller.successState(false),
-                )),
             Obx(() => CardNotifyMessage.warning(
                   state: _controller.states,
                   onCancelTap: () => _controller.warningState(false),
@@ -122,7 +120,13 @@ class _LanguageUserAddState extends State<LanguageUserAdd> {
           context.fromWidth(CustomStyle.paddingValue),
         ),
         bottomScreen: CustomButton(
-          onTapped: () async => await _controller.onSavedSubmitted(),
+          onTapped: () {
+            _controller.onSavedSubmitted().then((_) {
+              if (_controller.states.isSuccess) {
+                Get.back();
+              }
+            });
+          },
           text: "Save",
         ),
       ),

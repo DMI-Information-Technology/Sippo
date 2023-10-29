@@ -112,7 +112,7 @@ class _UpdatePasswordAfterVerificationState
                   });
                   // _showSuccessAlert();
                 },
-                text: "Confirm Password",
+                text: "confirm_password".tr,
               ),
             ],
           ),

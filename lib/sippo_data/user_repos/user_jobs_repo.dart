@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:jobspot/core/api_endpoints.dart' as endpoints;
+import 'package:jobspot/sippo_data/model/application_model/application_job_company_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/validate_property_user_job_application_model.dart';
 
 import 'package:jobspot/JopController/HttpClientController/http_client_controller.dart';
@@ -81,7 +82,7 @@ class SippoJobsRepo {
     }
   }
 
-  static Future<Resource<CompanyJobModel?, ValidatePropUserJobApplication?>?>
+  static Future<Resource<ApplicationUserModel?, ValidatePropUserJobApplication?>?>
       sendApplicationJob(
           UserSendApplicationModel application, String? resourceId) async {
     final httpController = HttpClientController.instance;
@@ -100,7 +101,7 @@ class SippoJobsRepo {
       return StatusResponseCodeChecker.checkStatusResponseCode(
         responseData,
         response.statusCode,
-        (data) => CompanyJobModel.fromJson(data),
+        (data) => ApplicationUserModel.fromJson(data),
         (errors) => ValidatePropUserJobApplication.fromJson(errors),
       );
     } catch (e) {

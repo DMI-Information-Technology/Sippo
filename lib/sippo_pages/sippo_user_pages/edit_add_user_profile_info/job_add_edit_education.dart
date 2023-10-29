@@ -4,17 +4,17 @@ import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
-import 'package:jobspot/JobGlobalclass/text_font_size.dart';
-import 'package:jobspot/sippo_custom_widget/body_widget.dart';
-import 'package:jobspot/sippo_custom_widget/widgets.dart';
-import 'package:jobspot/utils/helper.dart' as helper;
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
+import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/JopController/user_profile_controller/edit_add_education_controller.dart';
 import 'package:jobspot/sippo_custom_widget/SearchDelegteImpl.dart';
+import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/confirmation_bottom_sheet.dart';
 import 'package:jobspot/sippo_custom_widget/container_bottom_sheet_widget.dart';
-import 'package:jobspot/sippo_custom_widget/loading_empty_feild_widget.dart';
+import 'package:jobspot/sippo_custom_widget/loading_view_widgets/loading_scaffold.dart';
 import 'package:jobspot/sippo_custom_widget/success_message_widget.dart';
+import 'package:jobspot/sippo_custom_widget/widgets.dart';
+import 'package:jobspot/utils/helper.dart' as helper;
 import 'package:jobspot/utils/validating_input.dart';
 
 class JobEducationAddEdit extends StatefulWidget {
@@ -28,13 +28,9 @@ class _JobEducationAddEditState extends State<JobEducationAddEdit> {
   final _controller = EditAddEducationController.instance;
 
   @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return LoadingScaffold(
+      controller: _controller.loadingOverly,
       appBar: AppBar(),
       body: BodyWidget(
         isScrollable: true,
@@ -54,7 +50,6 @@ class _JobEducationAddEditState extends State<JobEducationAddEdit> {
                 ),
               ),
               SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
-              _buildSuccessMessage(),
               _buildWarningMessage(),
               _buildLabelText(context, "Level of education"),
               SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
@@ -166,13 +161,9 @@ class _JobEducationAddEditState extends State<JobEducationAddEdit> {
       fontSize: FontSize.label(context),
       width: context.width / 2.3,
       controller: eduState.endDate.controller,
-      suffixIcon: Obx(
-        () => _controller.isTextLoading(eduState.endDate.isTextEmpty)
-            ? const LoadingInputField()
-            : const Icon(
-                Icons.date_range_outlined,
-                color: Jobstopcolor.primarycolor,
-              ),
+      suffixIcon: const Icon(
+        Icons.date_range_outlined,
+        color: Jobstopcolor.primarycolor,
       ),
     );
   }
@@ -192,13 +183,9 @@ class _JobEducationAddEditState extends State<JobEducationAddEdit> {
       fontSize: FontSize.label(context),
       width: context.width / 2.3,
       gController: eduState.startDate,
-      suffixIcon: Obx(
-        () => _controller.isTextLoading(eduState.startDate.isTextEmpty)
-            ? const LoadingInputField()
-            : const Icon(
-                Icons.date_range_outlined,
-                color: Jobstopcolor.primarycolor,
-              ),
+      suffixIcon: const Icon(
+        Icons.date_range_outlined,
+        color: Jobstopcolor.primarycolor,
       ),
     );
   }
@@ -227,11 +214,6 @@ class _JobEducationAddEditState extends State<JobEducationAddEdit> {
           ),
         );
       },
-      suffixIcon: Obx(
-        () => _controller.isTextLoading(eduState.fieldStudy.isTextEmpty)
-            ? const LoadingInputField()
-            : const SizedBox.shrink(),
-      ),
     );
   }
 
@@ -261,11 +243,6 @@ class _JobEducationAddEditState extends State<JobEducationAddEdit> {
           ),
         );
       },
-      suffixIcon: Obx(
-        () => _controller.isTextLoading(eduState.institution.isTextEmpty)
-            ? const LoadingInputField()
-            : const SizedBox.shrink(),
-      ),
     );
   }
 
@@ -293,11 +270,6 @@ class _JobEducationAddEditState extends State<JobEducationAddEdit> {
           ),
         );
       },
-      suffixIcon: Obx(
-        () => _controller.isTextLoading(eduState.level.isTextEmpty)
-            ? const LoadingInputField()
-            : const SizedBox.shrink(),
-      ),
     );
   }
 
@@ -331,21 +303,6 @@ class _JobEducationAddEditState extends State<JobEducationAddEdit> {
     );
   }
 
-  Widget _buildSuccessMessage() {
-    final controller = EditAddEducationController.instance;
-    return Obx(
-      () {
-        return controller.states.isSuccess
-            ? CardNotifyMessage(
-                controller.states.message ?? '',
-                onCancelTap: () => controller.successState(false),
-                messageType: MessageType.SUCCESS,
-              )
-            : const SizedBox.shrink();
-      },
-    );
-  }
-
   Widget _buildWarningMessage() {
     final controller = EditAddEducationController.instance;
     return Obx(
@@ -362,7 +319,6 @@ class _JobEducationAddEditState extends State<JobEducationAddEdit> {
   }
 
   Widget _buildBottomButtons(BuildContext context) {
-
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -391,8 +347,8 @@ class _JobEducationAddEditState extends State<JobEducationAddEdit> {
     );
   }
 
-  void _showSaveBottomSheet() {
-    Get.bottomSheet(
+  void _showSaveBottomSheet() async {
+    await Get.bottomSheet(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(25),
@@ -407,12 +363,19 @@ class _JobEducationAddEditState extends State<JobEducationAddEdit> {
             title: "Are you sure you want to change what you entered?",
             description: "Are you sure you want to change what you entered?",
             onConfirm: () async {
+              Get.back();
               if (_controller.formKey.currentState?.validate() == true) {
-                await _controller.onSavedSubmitted();
-                Get.back();
+                await _controller.onSavedSubmitted().then((_) {
+                  if (_controller.states.isSuccess) {
+                    if (Get.isOverlaysOpen) Get.back();
+                    Get.back();
+                  }
+                });
               }
             },
-            onUndo: () {},
+            onUndo: () {
+              if (Get.isOverlaysOpen) Get.back();
+            },
           )
         ],
       ),
@@ -435,9 +398,16 @@ class _JobEducationAddEditState extends State<JobEducationAddEdit> {
             title: "Remove Appreciation ?",
             description: "Are you sure you want to change what you entered?",
             onConfirm: () async {
+              Get.back();
               await _controller.onDeleteSubmitted();
+              if (_controller.states.isSuccess) {
+                if (Get.isOverlaysOpen) Get.back();
+                Get.back();
+              }
             },
-            onUndo: () {},
+            onUndo: () {
+              if (Get.isOverlaysOpen) Get.back();
+            },
           )
         ],
       ),

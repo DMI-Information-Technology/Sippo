@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:jobspot/sippo_data/model/specializations_model/specializations_model.dart';
 
 import '../../JobServices/ConnectivityController/internet_connection_controller.dart';
 import '../../core/Refresh.dart';
@@ -48,8 +49,12 @@ class JobsHomeViewController extends GetxController {
     );
   }
 
-  Future<void> fetchJobPages() async {
-    final query = {'page': "1", "per_page": "5"};
+  Future<void> fetchJobPages([SpecializationModel? special]) async {
+    final query = {
+      'page': "1",
+      "per_page": "5",
+      if (special?.id != null) 'specialization_id': '${special?.id ?? ''}'
+    };
     final response = await SippoJobsRepo.fetchJobs(query);
     response?.checkStatusResponse(
       onSuccess: (page, _) {
@@ -76,9 +81,9 @@ class JobsHomeViewController extends GetxController {
     );
   }
 
-  void pageJobsRequester() async {
+  void pageJobsRequester([SpecializationModel? special]) async {
     changeJobsStates(isLoading: true);
-    await fetchJobPages();
+    await fetchJobPages(special);
     changeJobsStates(isLoading: false);
   }
 
@@ -90,7 +95,7 @@ class JobsHomeViewController extends GetxController {
     _jobsList.value = value;
   }
 
-  Future<void> refreshJobs() async {
+  Future<void> refreshJobs([SpecializationModel? special]) async {
     if (!isNetworkConnected) {
       if (jobsList.isEmpty)
         changeJobsStates(
@@ -102,7 +107,7 @@ class JobsHomeViewController extends GetxController {
       return;
     }
     if (jobStates.isLoading) return;
-    pageJobsRequester();
+    pageJobsRequester(special);
   }
 
   void changeIsSaved(int index, bool isSaved) {
@@ -114,8 +119,7 @@ class JobsHomeViewController extends GetxController {
         jobsList;
   }
 
-  Future<void> toggleSavedJobs(int? id) async {
-    final index = jobsList.indexWhere((e) => e.id == id);
+  Future<void> toggleSavedJobs(int? id, int index) async {
     changeIsSaved(index, !(jobsList[index].isSaved == true));
     final response = await SavedJobsRepo.toggleSavedJob(id);
     await response?.checkStatusResponse(
@@ -135,8 +139,8 @@ class JobsHomeViewController extends GetxController {
     super.onInit();
   }
 
-  void onToggleSavedJobsSubmitted(int? id) async {
+  void onToggleSavedJobsTap(int? id, int index) async {
     if (!isNetworkConnected) return;
-    await toggleSavedJobs(id);
+    await toggleSavedJobs(id, index);
   }
 }

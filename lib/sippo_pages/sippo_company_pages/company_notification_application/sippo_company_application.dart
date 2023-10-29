@@ -112,7 +112,7 @@ class _SippoCompanyApplicationState extends State<SippoCompanyApplication> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          "Error",
+          "error".tr,
           style: dmsbold.copyWith(
             color: Jobstopcolor.primarycolor,
             fontSize: FontSize.title2(context),
@@ -120,7 +120,7 @@ class _SippoCompanyApplicationState extends State<SippoCompanyApplication> {
         ),
         SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
         Text(
-          _controller.states.message ?? 'something wrong is happened.',
+          _controller.states.message ?? 'something_wrong_happened'.tr,
           style: dmsregular.copyWith(
             fontSize: FontSize.paragraph3(context),
           ),
@@ -136,7 +136,7 @@ class _SippoCompanyApplicationState extends State<SippoCompanyApplication> {
               notificationApplicationController.changeStates(
                   isError: false, message: '');
             },
-            text: 'Try again',
+            text: 'try_again'.tr,
           ),
         )
       ],
@@ -160,7 +160,7 @@ class _SippoCompanyApplicationState extends State<SippoCompanyApplication> {
         builder: (context, setState) => Column(
           children: [
             SettingItemWidget(
-              title: 'Application Status',
+              title: 'application_status'.tr,
               icon: Icon(Icons.confirmation_number_outlined),
               onTap: () async {
                 Get.back();
@@ -168,8 +168,8 @@ class _SippoCompanyApplicationState extends State<SippoCompanyApplication> {
                   _showConfirmDeleteDialog(context, applicationId);
                 } else if (isPending == false) {
                   Get.snackbar(
-                    'Application Status',
-                    "The application status is checked out.",
+                    'application_status'.tr,
+                    'application_status_desc_dialog'.tr,
                     backgroundColor: Jobstopcolor.backgroudHome,
                     boxShadows: [boxShadow],
                   );
@@ -189,9 +189,9 @@ class _SippoCompanyApplicationState extends State<SippoCompanyApplication> {
   void _showConfirmDeleteDialog(BuildContext context, int? ApplicationId) {
     Get.dialog(
       CustomAlertDialog(
-        title: 'Application Status',
-        description: 'Rejected Application or Accepted Application',
-        confirmBtnTitle: 'Accepted',
+        title: 'application_status'.tr,
+        description: 'application_ask_status_dialog',
+        confirmBtnTitle: 'accepted'.tr,
         onConfirm: () async {
           Get.back();
           await _controller.onUpdateStatusApplicationSubmitted(
@@ -199,7 +199,7 @@ class _SippoCompanyApplicationState extends State<SippoCompanyApplication> {
             ApplicationId,
           );
         },
-        cancelBtnTitle: 'Rejected',
+        cancelBtnTitle: 'rejected'.tr,
         onCancel: () async {
           Get.back();
           await _controller.onUpdateStatusApplicationSubmitted(

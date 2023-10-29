@@ -2,13 +2,12 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JobGlobalclass/text_font_size.dart';
-import 'package:jobspot/JopController/AuthenticationController/sippo_appusing_controller.dart';
-
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
+import 'package:jobspot/JobGlobalclass/text_font_size.dart';
+import 'package:jobspot/JopController/AuthenticationController/sippo_appusing_controller.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 
 class SippoAppUsing extends StatelessWidget {
@@ -23,8 +22,7 @@ class SippoAppUsing extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(automaticallyImplyLeading: false),
       body: SingleChildScrollView(
-        child:
-        Padding(
+        child: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: width / 26,
             vertical: height / 26,
@@ -48,7 +46,7 @@ class SippoAppUsing extends StatelessWidget {
                 height: height / 32,
               ),
               AutoSizeText(
-                'If you are a user and you want to find a job, please choose "Job Search." If you want to search for employees, please choose "Employee Search."',
+                'find_desc'.tr,
                 style: dmsregular.copyWith(
                   fontSize: FontSize.paragraph(context),
                 ),
@@ -72,8 +70,8 @@ class SippoAppUsing extends StatelessWidget {
                                 isSelected: appUsingController.findEmployee,
                                 image: JobstopPngImg.find_empLogo,
                                 backGroundIconColor: Jobstopcolor.lightprimary,
-                                title: "Find Employees",
-                                description: "I want to search for a job seekers",
+                                title: "find_employees_title".tr,
+                                description: 'find_employees_desc'.tr,
                                 onTapped: () {
                                   appUsingController.findOnEmployee();
                                 },
@@ -89,10 +87,10 @@ class SippoAppUsing extends StatelessWidget {
                             return JopSelctedUsingAppCard(
                               color: Jobstopcolor.secondary,
                               isSelected: appUsingController.findJop,
-                               image: JobstopPngImg.find_jobLog,
+                              image: JobstopPngImg.find_jobLog,
                               backGroundIconColor: Jobstopcolor.lightsecondary,
                               title: "Find Job",
-                              description: "I want to search for a job.",
+                              description: "find_job_desc".tr,
                               onTapped: () {
                                 appUsingController.findOnJop();
                               },
@@ -126,7 +124,7 @@ class SippoAppUsing extends StatelessWidget {
       Get.dialog(
         CustomAlertDialog(
           imageAsset: JobstopPngImg.appuse,
-          title: "Chooce how you would to use the app",
+          title: 'select_find_dialog'.tr,
           confirmBtnTitle: "ok".tr,
           onConfirm: () {
             Get.back();
@@ -168,7 +166,7 @@ class JopSelctedUsingAppCard extends StatelessWidget {
     double height = size.height;
     double width = size.width;
     return SizedBox(
-      height: height/3,
+      height: height / 3,
       child: InkWell(
         onTap: () {
           onTapped();

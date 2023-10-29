@@ -2,15 +2,16 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:jobspot/JopController/user_profile_controller/profile_user_controller.dart';
-import 'package:jobspot/utils/states.dart';
-
 import 'package:jobspot/core/Refresh.dart';
+import 'package:jobspot/custom_app_controller/switch_status_controller.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/skills_model.dart';
 import 'package:jobspot/sippo_data/user_repos/skills_repo.dart';
+import 'package:jobspot/utils/states.dart';
 
 class EditAddSkillsController extends GetxController {
   static EditAddSkillsController get instance => Get.find();
   final _profileController = ProfileUserController.instance;
+  final loadingController = SwitchStatusController();
 
   List<String> get _profileSkills => _profileController.profileState.skillsList;
   final _states = States().obs;
@@ -31,13 +32,13 @@ class EditAddSkillsController extends GetxController {
         await SkillsRepo.addSkills(SkillsModel(skills: skillsState.skillsList));
 
     await response?.checkStatusResponse(
-      onSuccess: (data, statusType) async {
+      onSuccess: (data, statusType) {
         if (data != null && data.status?.trim() != "success") {
           _profileController.profileState.skillsList = skillsState.skillsList;
         } else {
-          await _profileController.fetchUserSkills();
+          _profileController.fetchUserSkills();
         }
-        successState(true, 'Skills changed successfully.');
+        _states.value = states.copyWith(isSuccess: true);
       },
       onValidateError: (validateError, _) {
         resetSkillsState();
@@ -88,11 +89,13 @@ class EditAddSkillsController extends GetxController {
     final nothingChanged =
         _profileSkills.length == skillsState.skillsList.length &&
             _profileSkills.every((e) => skillsState.skillsList.contains(e));
-    _states.value = states.copyWith(isLoading: true);
+    _states.value = States(isLoading: true);
     if (!nothingChanged) {
       await addSkills();
     }
     _states.value = states.copyWith(isLoading: false);
+    print('is loading: ${states.isLoading}');
+    print('is success: ${states.isSuccess}');
   }
 
   void resetSkillsState() {
@@ -101,8 +104,19 @@ class EditAddSkillsController extends GetxController {
     }
   }
 
+  StreamSubscription<States>? statesSubs;
+
   @override
   void onInit() {
+    statesSubs = _states.listen(
+      (value) {
+        if (value.isLoading) {
+          loadingController.start();
+        } else {
+          loadingController.pause();
+        }
+      },
+    );
     (() async {
       await fetchSuggestionsSkills();
       resetSkillsState();
@@ -112,6 +126,8 @@ class EditAddSkillsController extends GetxController {
 
   @override
   void onClose() {
+    statesSubs?.cancel();
+    loadingController.dispose();
     super.onClose();
   }
 }

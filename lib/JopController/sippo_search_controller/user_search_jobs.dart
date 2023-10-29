@@ -158,9 +158,15 @@ class SearchJobsController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    final args = Get.arguments;
+    if (args is Map<String, int?> && args.containsKey('specialization_id')) {
+      final special = args['specialization_id'];
+      searchJobsState.querySearch['specialization_id'] =
+          (special ?? '').toString();
+    }
     searchJobsState.textSearch.text =
         SharedGlobalDataService.instance.searchTextKey;
-    final jobStatistics = SharedGlobalDataService.instance.jobStatistics;
+    final jobStatistics = SharedGlobalDataService.instance.jobStatistic;
     switch (jobStatistics?.type) {
       case "employment_type":
         searchJobsState.employmentType =
@@ -172,6 +178,7 @@ class SearchJobsController extends GetxController {
     startSearchJob(jobStatistics);
     pagingController.addPageRequestListener(_pageRequester);
   }
+
   @override
   void onClose() {
     pagingController.dispose();

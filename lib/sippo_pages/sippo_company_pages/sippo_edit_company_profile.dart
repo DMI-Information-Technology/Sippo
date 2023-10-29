@@ -100,15 +100,28 @@ class _EditCompanyProfilePageState extends State<EditCompanyProfilePage> {
                     },
                   ),
                   SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: context.fromWidth(CustomStyle.paddingValue),
-                    ),
-                    child: Text(
-                      'Email',
-                      style:
-                          dmsmedium.copyWith(fontSize: FontSize.label(context)),
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        width: context.fromWidth(CustomStyle.spaceBetween),
+                      ),
+                      Text(
+                        'Email',
+                        style: dmsmedium.copyWith(
+                            fontSize: FontSize.label(context)),
+                      ),
+                      SizedBox(
+                        width: context.fromWidth(CustomStyle.xxxl),
+                      ),
+                      Obx(() => CircleAvatar(
+                            backgroundColor: _controller.isEmailVerified
+                                ? Colors.green
+                                : Colors.orangeAccent,
+                            radius: context.fromWidth(95),
+                          ))
+                    ],
                   ),
                   InputBorderedField(
                     keyboardType: TextInputType.emailAddress,
@@ -121,6 +134,23 @@ class _EditCompanyProfilePageState extends State<EditCompanyProfilePage> {
                       color: Jobstopcolor.primarycolor,
                     ),
                     // textInputAction: TextInputAction.newline,
+                  ),
+                  Obx(
+                    () => ConditionalWidget(
+                      _controller.companyDetails.pendingEmailIsNotEmpty,
+                      data: _controller.companyDetails,
+                      guaranteedBuilder: (context, data) => Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal:
+                              context.fromWidth(CustomStyle.paddingValue),
+                        ),
+                        child: Text(
+                          'Pending email "${data?.pendingEmail}"',
+                          style: dmsregular.copyWith(
+                              fontSize: FontSize.label(context)),
+                        ),
+                      ),
+                    ),
                   ),
                   SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
                   Padding(

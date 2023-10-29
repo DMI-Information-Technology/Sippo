@@ -35,8 +35,9 @@ class _SippoLocationCompanySelectorState
   @override
   void initState() {
     super.initState();
-    _signUpCompanyController.fetchLocationsAddress();
     googleMapViewController.getCurrentLocation();
+      _signUpCompanyController.fetchLocationsAddress();
+
   }
 
   @override
@@ -48,7 +49,9 @@ class _SippoLocationCompanySelectorState
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery
+        .of(context)
+        .size;
     double height = size.height;
     double width = size.width;
     return WillPopScope(
@@ -81,24 +84,29 @@ class _SippoLocationCompanySelectorState
                 "Address City".tr,
                 style: dmsbold.copyWith(fontSize: FontSize.title5(context)),
               ),
-              CustomDropdownButton(
-                textHint: 'Select Company Work Place',
-                labelList: _signUpCompanyController.locationsAddressNameList,
-                values: _signUpCompanyController.locationsAddressList,
-                fillColor: Colors.white,
-                onItemSelected: (value) async {
-                  if (value == null || value.id == null) return;
-                  _textLocationController.text = value.name ?? "";
-                  _signUpCompanyController.companyAddress = value;
-                  print(value);
-                },
-                setInitialValue: false,
+              InkWell(
+                onTap: loadLocationAddressOnTap,
+                child: Obx(() => CustomDropdownButton(
+                    textHint: 'Select Company Work Place',
+                    labelList: _signUpCompanyController
+                        .locationsAddressNameList,
+                    values: _signUpCompanyController.locationsAddressList,
+                    fillColor: Colors.white,
+                    onItemSelected: (value) async {
+                      if (value == null || value.id == null) return;
+                      _textLocationController.text = value.name ?? "";
+                      _signUpCompanyController.companyAddress = value;
+                      print(value);
+                    },
+                    setInitialValue: false,
+                  )),
               ),
               SizedBox(
                 height: height / 42,
               ),
               Obx(
-                () => !netConnController.isConnected
+                    () =>
+                !netConnController.isConnected
                     ? _buildMessageNoConnectionToGetAddress(height)
                     : SizedBox(),
               ),
@@ -111,35 +119,38 @@ class _SippoLocationCompanySelectorState
                   );
                 },
               ),
-              Obx(() => ConditionalWidget(
+              Obx(() =>
+                  ConditionalWidget(
                     _signUpCompanyController.companyAddress.name?.isNotEmpty ==
                         true,
-                    guaranteedBuilder: (context, _) => ListTile(
-                      title: _locationAddressNameTextBuilder(context),
-                      subtitle: ListenableBuilder(
-                        listenable: googleMapViewController,
-                        builder: _coordinatesTextBuilder,
-                      ),
-                    ),
+                    guaranteedBuilder: (context, _) =>
+                        ListTile(
+                          title: _locationAddressNameTextBuilder(context),
+                          subtitle: ListenableBuilder(
+                            listenable: googleMapViewController,
+                            builder: _coordinatesTextBuilder,
+                          ),
+                        ),
                   )),
               SizedBox(height: height / 256),
               Obx(
-                () => CheckboxListTile(
-                  title: Text(
-                    "terms_policy_title".tr,
-                    textAlign: TextAlign.start,
-                    style: dmsbold.copyWith(fontSize: height / 42),
-                  ),
-                  subtitle: Text(
-                    "accept_terms".tr,
-                    style: dmsregular.copyWith(fontSize: height / 52),
-                  ),
-                  value: _signUpCompanyController.confirmOnPolicy,
-                  onChanged: (value) {
-                    _signUpCompanyController.toggleConfirmPolicy();
-                  },
-                  activeColor: Jobstopcolor.primarycolor,
-                ),
+                    () =>
+                    CheckboxListTile(
+                      title: Text(
+                        "terms_policy_title".tr,
+                        textAlign: TextAlign.start,
+                        style: dmsbold.copyWith(fontSize: height / 42),
+                      ),
+                      subtitle: Text(
+                        "accept_terms".tr,
+                        style: dmsregular.copyWith(fontSize: height / 52),
+                      ),
+                      value: _signUpCompanyController.confirmOnPolicy,
+                      onChanged: (value) {
+                        _signUpCompanyController.toggleConfirmPolicy();
+                      },
+                      activeColor: Jobstopcolor.primarycolor,
+                    ),
               ),
             ],
           ),
@@ -167,7 +178,7 @@ class _SippoLocationCompanySelectorState
     final markerPlace = googleMapViewController.markerPlace;
     return Text(
       "${markerPlace.position.latitude.toStringAsFixed(7)},"
-      " ${markerPlace.position.longitude.toStringAsFixed(7)}",
+          " ${markerPlace.position.longitude.toStringAsFixed(7)}",
       style: dmsregular,
     );
   }
@@ -211,5 +222,23 @@ class _SippoLocationCompanySelectorState
         ),
       ],
     );
+  }
+
+  void loadLocationAddressOnTap() {
+    print('_SippoLocationCompanySelectorState.loadLocationAddressOnTap');
+    if (_signUpCompanyController.locationState.value.isError) {
+      print('hello world');
+      if (InternetConnectionService.instance.isConnectionLostWithDialog())
+        return;
+      _signUpCompanyController.fetchLocationsAddress();
+    }
+    // else if (!_signUpCompanyController.locationState.value.isLoading &&
+    //     _signUpCompanyController.locationsAddressList.isEmpty) {
+    //   print('hello world 2');
+    //
+    //   if (InternetConnectionService.instance.isConnectionLostWithDialog())
+    //     return;
+    //   _signUpCompanyController.fetchLocationsAddress();
+    // }
   }
 }

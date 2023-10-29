@@ -1,3 +1,4 @@
+import 'package:jobspot/sippo_data/model/application_model/application_job_company_model.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
 import 'package:jobspot/sippo_data/model/salary_model/range_salary_model.dart';
 import 'package:jobspot/sippo_data/model/specializations_model/specializations_model.dart';
@@ -25,6 +26,7 @@ class CompanyJobModel {
   final bool? hasApplied;
   final bool? isSaved;
   final LocationAddress? locationAddress;
+  final ApplicationUserModel? application;
 
   CompanyJobModel({
     this.id,
@@ -47,6 +49,7 @@ class CompanyJobModel {
     this.currencyType,
     this.hasApplied,
     this.isSaved,
+    this.application,
   });
 
   RangeSalaryModel get salaryRange =>
@@ -62,8 +65,10 @@ class CompanyJobModel {
       description: json?['description'],
       requirements: json?['requirements'],
       workplaceType: json?['workplace_type'],
-      longitude: json?['longitude'] != null ? (json?['longitude']??0) * 1.0 : null,
-      latitude: json?['longitude'] != null ? (json?['latitude']??0) * 1.0 : null,
+      longitude:
+          json?['longitude'] != null ? (json?['longitude'] ?? 0) * 1.0 : null,
+      latitude:
+          json?['longitude'] != null ? (json?['latitude'] ?? 0) * 1.0 : null,
       locationAddress: json?['location'] != null
           ? LocationAddress.fromJson(json?['location'])
           : null,
@@ -98,6 +103,9 @@ class CompanyJobModel {
               ? SpecializationModel.fromJson(json?['specialization'])
               : null,
       isSaved: json?['is_saved'],
+      application: json?['application'] != null
+          ? ApplicationUserModel.fromJson(json?['application'])
+          : null,
     );
   }
 
@@ -123,6 +131,7 @@ class CompanyJobModel {
     return 'CompanyJobModel{id: $id, title: $title, description: $description, requirements: $requirements, workplaceType: $workplaceType, longitude: $longitude, latitude: $latitude, location: $locationAddress, employmentType: $employmentType, isSaved: $isSaved, salaryFrom: $salaryFrom, salaryTo: $salaryTo, experienceLevel: $experienceLevel, specialization: $specialization, createdAt: $createdAt, isExpired: $isExpired, hasApplied: $hasApplied, isActive: $isActive}';
   }
 
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -134,19 +143,21 @@ class CompanyJobModel {
           description == other.description &&
           requirements == other.requirements &&
           workplaceType == other.workplaceType &&
-          longitude == other.longitude &&
-          latitude == other.latitude &&
-          locationAddress == other.locationAddress &&
-          employmentType == other.employmentType &&
           salaryFrom == other.salaryFrom &&
           salaryTo == other.salaryTo &&
-          isSaved == other.isSaved &&
-          isActive == other.isActive &&
-          isExpired == other.isExpired &&
-          currencyType == other.currencyType &&
+          employmentType == other.employmentType &&
           experienceLevel == other.experienceLevel &&
+          specialization == other.specialization &&
+          longitude == other.longitude &&
+          latitude == other.latitude &&
+          currencyType == other.currencyType &&
+          createdAt == other.createdAt &&
+          isExpired == other.isExpired &&
+          isActive == other.isActive &&
           hasApplied == other.hasApplied &&
-          specialization == other.specialization;
+          isSaved == other.isSaved &&
+          locationAddress == other.locationAddress &&
+          application == other.application;
 
   @override
   int get hashCode =>
@@ -156,20 +167,21 @@ class CompanyJobModel {
       description.hashCode ^
       requirements.hashCode ^
       workplaceType.hashCode ^
-      longitude.hashCode ^
-      latitude.hashCode ^
-      locationAddress.hashCode ^
-      employmentType.hashCode ^
       salaryFrom.hashCode ^
       salaryTo.hashCode ^
-      currencyType.hashCode ^
+      employmentType.hashCode ^
       experienceLevel.hashCode ^
       specialization.hashCode ^
+      longitude.hashCode ^
+      latitude.hashCode ^
+      currencyType.hashCode ^
       createdAt.hashCode ^
       isExpired.hashCode ^
+      isActive.hashCode ^
       hasApplied.hashCode ^
       isSaved.hashCode ^
-      isActive.hashCode;
+      locationAddress.hashCode ^
+      application.hashCode;
 
   CompanyJobModel copyWith({
     int? id,
@@ -178,20 +190,21 @@ class CompanyJobModel {
     String? description,
     String? requirements,
     String? workplaceType,
-    double? longitude,
-    double? latitude,
-    LocationAddress? locationAddress,
-    String? employmentType,
     double? salaryFrom,
     double? salaryTo,
-    String? currencyType,
+    String? employmentType,
     ExperienceLevel? experienceLevel,
     SpecializationModel? specialization,
+    double? longitude,
+    double? latitude,
+    String? currencyType,
     String? createdAt,
     bool? isExpired,
     bool? isActive,
-    bool? isSaved,
     bool? hasApplied,
+    bool? isSaved,
+    LocationAddress? locationAddress,
+    ApplicationUserModel? application,
   }) {
     return CompanyJobModel(
       id: id ?? this.id,
@@ -200,20 +213,21 @@ class CompanyJobModel {
       description: description ?? this.description,
       requirements: requirements ?? this.requirements,
       workplaceType: workplaceType ?? this.workplaceType,
-      longitude: longitude ?? this.longitude,
-      latitude: latitude ?? this.latitude,
-      locationAddress: locationAddress ?? this.locationAddress,
-      employmentType: employmentType ?? this.employmentType,
       salaryFrom: salaryFrom ?? this.salaryFrom,
       salaryTo: salaryTo ?? this.salaryTo,
-      currencyType: currencyType ?? this.currencyType,
+      employmentType: employmentType ?? this.employmentType,
       experienceLevel: experienceLevel ?? this.experienceLevel,
       specialization: specialization ?? this.specialization,
+      longitude: longitude ?? this.longitude,
+      latitude: latitude ?? this.latitude,
+      currencyType: currencyType ?? this.currencyType,
       createdAt: createdAt ?? this.createdAt,
       isExpired: isExpired ?? this.isExpired,
       isActive: isActive ?? this.isActive,
       hasApplied: hasApplied ?? this.hasApplied,
       isSaved: isSaved ?? this.isSaved,
+      locationAddress: locationAddress ?? this.locationAddress,
+      application: application ?? this.application,
     );
   }
 }

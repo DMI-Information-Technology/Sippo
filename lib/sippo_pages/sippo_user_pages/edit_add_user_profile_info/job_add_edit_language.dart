@@ -56,15 +56,11 @@ class _LanguageEditAddState extends State<LanguageEditAdd> {
                     color: Jobstopcolor.primarycolor,
                   ),
                 ),
-                onPressed: _goTAddLanguage,
+                onPressed: _addLanguage,
               ),
             ],
           ),
           SizedBox(height: height / 64),
-          Obx(() => CardNotifyMessage.success(
-                state: _controller.states,
-                onCancelTap: () => _controller.successState(false),
-              )),
           Obx(() => CardNotifyMessage.warning(
                 state: _controller.states,
                 onCancelTap: () => _controller.warningState(false),
@@ -94,7 +90,7 @@ class _LanguageEditAddState extends State<LanguageEditAdd> {
     );
   }
 
-  void _goTAddLanguage() async {
+  void _addLanguage() async {
     _controller.resetState();
     await Get.toNamed(SippoRoutes.languageUserAdd);
     _controller.resetNewLanguage();

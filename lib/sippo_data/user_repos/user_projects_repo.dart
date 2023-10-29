@@ -10,7 +10,7 @@ import '../model/profile_model/profile_resource_model/user_projects_model.dart';
 
 class UserProjectRepo {
   static Future<Resource<UserProjectsModel, ValidatePropertyProjectsModel?>?>
-      addWorkProjects(UserProjectsModel project) async {
+      addProject(UserProjectsModel project) async {
     final httpController = HttpClientController.instance;
     try {
       final response = await httpController.client.post(

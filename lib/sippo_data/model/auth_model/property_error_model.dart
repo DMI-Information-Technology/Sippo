@@ -5,4 +5,6 @@ abstract class EntityPropertyError {
   List<String>? passwordConfirmation;
 
   EntityPropertyError({this.phone, this.name, this.password, this.passwordConfirmation});
+
+
 }

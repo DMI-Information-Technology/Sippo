@@ -4,8 +4,6 @@ import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_
 import '../profile_model/profile_resource_model/cv_file_model.dart';
 import '../profile_model/profile_resource_model/profile_edit_model.dart';
 
-
-
 class ApplicationCompanyModel {
   ApplicationCompanyModel({
     this.id,
@@ -84,7 +82,7 @@ class ApplicationCompanyModel {
 
   @override
   String toString() {
-    return 'ApplicationJobCompanyModel{id: $id, customer: $customer, job: $job, description: $description, status: $status, createdAt: $createdAt, cv: $cv}';
+    return 'ApplicationCompanyModel{id: $id, description: $description, status: $status, createdAt: $createdAt, cv: $cv, customer: $customer, job: $job}';
   }
 }
 
@@ -108,6 +106,7 @@ class ApplicationUserModel {
   final CvModel? cv;
 
   factory ApplicationUserModel.fromJson(Map<String, dynamic>? json) {
+    print(json?['cv']);
     return ApplicationUserModel(
       id: json?["id"],
       job: json?["job"] != null ? CompanyJobModel.fromJson(json?["job"]) : null,
@@ -165,6 +164,6 @@ class ApplicationUserModel {
 
   @override
   String toString() {
-    return 'ApplicationJobCompanyModel{id: $id, job: $job, description: $description, status: $status, createdAt: $createdAt, cv: $cv, company: $company}';
+    return 'ApplicationUserModel{id: $id, description: $description, status: $status, createdAt: $createdAt, cv: $cv, job: $job, company: $company,}';
   }
 }

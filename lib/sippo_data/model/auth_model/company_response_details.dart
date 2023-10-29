@@ -30,6 +30,7 @@ class CompanyDetailsModel extends EntityModel {
     this.isEmailVerified,
     this.pendingEmail,
   });
+  bool get pendingEmailIsNotEmpty => pendingEmail?.isNotEmpty == true;
 
   factory CompanyDetailsModel.fromJson(Map<String, dynamic>? json) {
     return CompanyDetailsModel(
@@ -184,7 +185,8 @@ class CompanyDetailsModel extends EntityModel {
   int get blankProfileMessagesLength => blankProfileMessages().length;
 
   @override
-  String? get locationCity => city;
+  String? get locationCity =>
+      locations?.firstWhereOrNull((e) => e.isHQ == true)?.locationAddress?.name;
 
   @override
   AppUsingType get userType => AppUsingType.company;

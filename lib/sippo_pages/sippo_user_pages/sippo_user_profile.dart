@@ -17,6 +17,7 @@ import 'package:jobspot/sippo_custom_widget/loading_view_widgets/loading_scaffol
 import 'package:jobspot/sippo_custom_widget/profile_completion_widget.dart';
 import 'package:jobspot/sippo_custom_widget/resume_card_widget.dart';
 import 'package:jobspot/sippo_custom_widget/user_profile_header.dart';
+import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_pages/sippo_user_pages/job_aboutme.dart';
 import 'package:readmore/readmore.dart';
 
@@ -29,6 +30,24 @@ class SippoUserProfile extends StatefulWidget {
 
 class _SippoUserProfileState extends State<SippoUserProfile> {
   final _controller = ProfileUserController.instance;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(
+      Duration(seconds: 3),
+      () {
+        if (_controller.user.isEmailVerified == true)
+          Get.dialog(CustomAlertDialog(
+            imageAsset: JobstopPngImg.emailV,
+            title: 'email_verification'.tr,
+            description:
+                'check_email_verification_dialog_desc'.tr,
+            onConfirm: () => Get.back(),
+          ));
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +140,7 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
             Get.toNamed(SippoRoutes.uploadresume);
             print(_controller.profileState.cvFile);
           },
-          noInfoProfile: false,
+          hasNotInfoProfile: _controller.user.cv == null,
           profileInfo: [
             _buildResumeCardWidget(context),
           ],
@@ -156,7 +175,7 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
     return Obx(
       () => AddInfoProfileCard(
         title: 'projects'.tr,
-        noInfoProfile: _controller.profileState.projectsList.isEmpty,
+        hasNotInfoProfile: _controller.profileState.projectsList.isEmpty,
         leading: Image.asset(
           JobstopPngImg.appreciation,
           height: context.fromHeight(CustomStyle.l),
@@ -209,7 +228,7 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
     return Obx(
       () => AddInfoProfileCard(
         title: 'language'.tr,
-        noInfoProfile: _controller.profileState.languages.isEmpty,
+        hasNotInfoProfile: _controller.profileState.languages.isEmpty,
         leading: Image.asset(
           JobstopPngImg.language,
           height: context.fromHeight(CustomStyle.l),
@@ -262,7 +281,7 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
     return Obx(
       () => AddInfoProfileCard(
         title: 'skill'.tr,
-        noInfoProfile: _controller.profileState.skillsList.isEmpty,
+        hasNotInfoProfile: _controller.profileState.skillsList.isEmpty,
         leading: Image.asset(
           JobstopPngImg.skil,
           height: context.fromHeight(CustomStyle.l),
@@ -305,7 +324,7 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
   Obx _buildEducationInfo(BuildContext context) {
     return Obx(() => AddInfoProfileCard(
           title: 'education'.tr,
-          noInfoProfile: _controller.profileState.educationList.isEmpty,
+          hasNotInfoProfile: _controller.profileState.educationList.isEmpty,
           leading: Image.asset(
             JobstopPngImg.education,
             height: context.fromHeight(CustomStyle.spaceBetween),
@@ -350,7 +369,7 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
     return Obx(
       () => AddInfoProfileCard(
         title: 'work_experience'.tr,
-        noInfoProfile: _controller.profileState.workExList.isEmpty,
+        hasNotInfoProfile: _controller.profileState.workExList.isEmpty,
         leading: Image.asset(
           JobstopPngImg.bag,
           height: context.fromHeight(CustomStyle.l),
@@ -396,7 +415,7 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
     return Obx(
       () => AddInfoProfileCard(
         title: 'about_me'.tr,
-        noInfoProfile: _controller.profileState.aboutMeText.isEmpty,
+        hasNotInfoProfile: _controller.profileState.aboutMeText.isEmpty,
         leading: Image.asset(
           JobstopPngImg.aboutme,
           height: context.fromHeight(CustomStyle.l),

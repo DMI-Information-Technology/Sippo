@@ -8,11 +8,10 @@ import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/JopController/company_profile_controller/company_edit_add_post_controller.dart';
-import 'package:jobspot/sippo_custom_widget/body_widget.dart';
-import 'package:jobspot/sippo_custom_widget/widgets.dart';
-
 import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
+import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/success_message_widget.dart';
+import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/utils/validating_input.dart';
 
 class SippoCompanyEditAddPost extends StatefulWidget {
@@ -54,7 +53,7 @@ class _SippoCompanyEditAddPostState extends State<SippoCompanyEditAddPost> {
                   }
                 },
                 child: Text(
-                  "Post",
+                  "post".tr,
                   style: dmsbold.copyWith(
                     fontSize: FontSize.title5(context),
                     color: Jobstopcolor.primarycolor,
@@ -76,7 +75,7 @@ class _SippoCompanyEditAddPostState extends State<SippoCompanyEditAddPost> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "${_controller.isEditing ? "Edit" : "Add"} Post",
+                  "${_controller.isEditing ? "edit".tr : "add".tr} ${'post'.tr}",
                   style: dmsbold.copyWith(
                       fontSize: FontSize.title3(context),
                       color: Jobstopcolor.primarycolor),
@@ -112,7 +111,7 @@ class _SippoCompanyEditAddPostState extends State<SippoCompanyEditAddPost> {
                       ),
                     )),
                 Text(
-                  "Post title",
+                  "post_title".tr,
                   style: dmsbold.copyWith(
                     fontSize: FontSize.label(context),
                     color: Jobstopcolor.primarycolor,
@@ -121,13 +120,13 @@ class _SippoCompanyEditAddPostState extends State<SippoCompanyEditAddPost> {
                 SizedBox(height: height / 46),
                 InputBorderedField(
                   gController: _controller.newPostState.title,
-                  hintText: "Write the title of your post here",
+                  hintText: "post_hint_text".tr,
                   validator: (value) =>
                       ValidatingInput.validateEmptyField(value),
                 ),
                 SizedBox(height: height / 36),
                 Text(
-                  "Description",
+                  "description".tr,
                   style: dmsbold.copyWith(
                     fontSize: FontSize.label(context),
                     color: Jobstopcolor.primarycolor,
@@ -137,7 +136,7 @@ class _SippoCompanyEditAddPostState extends State<SippoCompanyEditAddPost> {
                 InputBorderedField(
                   gController: _controller.newPostState.description,
                   verticalPaddingValue: context.fromHeight(CustomStyle.xxl),
-                  hintText: "What do you want to talk about?",
+                  hintText: "post_desc_hint_text".tr,
                   maxLine: 6,
                   validator: (value) =>
                       ValidatingInput.validateEmptyField(value),
@@ -252,7 +251,7 @@ class _SippoCompanyEditAddPostState extends State<SippoCompanyEditAddPost> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              _controller.company.name ?? "unknown",
+              _controller.company.name ?? "",
               style: dmsbold.copyWith(
                 fontSize: FontSize.title6(context),
                 color: Jobstopcolor.primarycolor,
@@ -260,7 +259,7 @@ class _SippoCompanyEditAddPostState extends State<SippoCompanyEditAddPost> {
             ),
             SizedBox(height: context.fromHeight(CustomStyle.huge2)),
             Text(
-              _controller.company.city ?? "unknown",
+              _controller.company.city ?? "",
               style: dmsregular.copyWith(
                 fontSize: FontSize.label(context),
                 color: Jobstopcolor.darkgrey,

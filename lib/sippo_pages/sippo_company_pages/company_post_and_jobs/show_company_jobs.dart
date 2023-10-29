@@ -42,7 +42,10 @@ class _ShowCompanyJobsListState extends State<ShowCompanyJobsList> {
               jobDetails: item,
               isActive: item.isActive,
               imagePath: item.company?.profileImage?.url ?? '',
-              timeAgo: '21 min ago',
+              timeAgo: helper.calculateElapsedTimeFromStringDate(
+                    item.createdAt,
+                  ) ??
+                  "",
               isEditable: true,
               onActionTap: () {
                 _openBottomJobSheetOption(context, item.id, item.isActive);
@@ -99,7 +102,7 @@ class _ShowCompanyJobsListState extends State<ShowCompanyJobsList> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          "Error",
+          "error".tr,
           style: dmsbold.copyWith(
             color: Jobstopcolor.primarycolor,
             fontSize: FontSize.title2(context),
@@ -107,7 +110,7 @@ class _ShowCompanyJobsListState extends State<ShowCompanyJobsList> {
         ),
         SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
         Text(
-          _controller.states.message ?? 'something wrong is happened.',
+          _controller.states.message ?? 'something_wrong_happened'.tr,
           style: dmsregular.copyWith(
             fontSize: FontSize.paragraph3(context),
           ),
@@ -122,7 +125,7 @@ class _ShowCompanyJobsListState extends State<ShowCompanyJobsList> {
               _controller.refreshPage();
               showWrapperController.changeStates(isError: false, message: '');
             },
-            text: 'Try again',
+            text: 'try_again'.tr,
           ),
         )
       ],
@@ -157,7 +160,7 @@ class _ShowCompanyJobsListState extends State<ShowCompanyJobsList> {
               isSelected: false,
             ),
             SettingItemWidget(
-              title: "Edit",
+              title: "edit".tr,
               icon: Icon(Icons.edit_note_rounded),
               onTap: () async {
                 Get.back();
@@ -185,10 +188,9 @@ class _ShowCompanyJobsListState extends State<ShowCompanyJobsList> {
       [bool? isActive]) {
     Get.dialog(
       CustomAlertDialog(
-        title: 'Job Status',
-        description: 'Are you sure you want'
-            ' ${isActive == true ? 'InActive' : 'Active'} '
-            'this Job.',
+        title: 'job_status'.tr,
+        description: '${'confirm_job_status'.tr}'
+            ' ${isActive == true ? 'inactive'.tr : 'active'.tr} ',
         onConfirm: () async {
           Get.back();
           await _controller.onUpdateStatusJobSubmitted(postId);

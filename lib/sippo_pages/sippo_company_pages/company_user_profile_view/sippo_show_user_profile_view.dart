@@ -7,6 +7,7 @@ import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/JopController/company_profile_controller/profile_user_view_controller.dart';
+import 'package:jobspot/JopController/dashboards_controller/company_dashboard_controller.dart';
 import 'package:jobspot/sippo_custom_widget/add_info_profile_card.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/expandable_item_list_widget.dart';
@@ -86,10 +87,12 @@ class _SippoCompanyUserProfileViewState
         color: Jobstopcolor.primarycolor,
         colorBlendMode: BlendMode.srcIn,
       ),
-      noInfoProfile: false,
+      hasNotInfoProfile:
+          CompanyDashBoardController.instance.company.isSubscribed == false ||
+              _controller.profileState.cv == null,
       profileInfo: [
         CvCardWidget.fromRemote(
-          remoteCv: _controller.profileState.profileInfo.cv,
+          remoteCv: _controller.profileState.cv,
           onCvTapped: () {},
         )
       ],
@@ -101,7 +104,7 @@ class _SippoCompanyUserProfileViewState
       () => AddInfoProfileCard(
         isCompanyView: true,
         title: 'projects'.tr,
-        noInfoProfile: _controller.profileState.projects.isEmpty,
+        hasNotInfoProfile: _controller.profileState.projects.isEmpty,
         leading: Image.asset(
           JobstopPngImg.appreciation,
           height: context.fromHeight(CustomStyle.l),
@@ -140,7 +143,7 @@ class _SippoCompanyUserProfileViewState
       () => AddInfoProfileCard(
         isCompanyView: true,
         title: 'language'.tr,
-        noInfoProfile: _controller.profileState.languages.isEmpty,
+        hasNotInfoProfile: _controller.profileState.languages.isEmpty,
         leading: Image.asset(
           JobstopPngImg.language,
           height: context.fromHeight(CustomStyle.l),
@@ -177,7 +180,7 @@ class _SippoCompanyUserProfileViewState
       () => AddInfoProfileCard(
         isCompanyView: true,
         title: 'skill'.tr,
-        noInfoProfile: _controller.profileState.skillsList.isEmpty,
+        hasNotInfoProfile: _controller.profileState.skillsList.isEmpty,
         leading: Image.asset(
           JobstopPngImg.skil,
           height: context.fromHeight(CustomStyle.l),
@@ -208,7 +211,7 @@ class _SippoCompanyUserProfileViewState
     return Obx(() => AddInfoProfileCard(
           isCompanyView: true,
           title: 'education'.tr,
-          noInfoProfile: _controller.profileState.educationList.isEmpty,
+          hasNotInfoProfile: _controller.profileState.educationList.isEmpty,
           leading: Image.asset(
             JobstopPngImg.education,
             height: context.fromHeight(CustomStyle.spaceBetween),
@@ -244,7 +247,7 @@ class _SippoCompanyUserProfileViewState
       () => AddInfoProfileCard(
         isCompanyView: true,
         title: 'work_experience'.tr,
-        noInfoProfile: _controller.profileState.workExList.isEmpty,
+        hasNotInfoProfile: _controller.profileState.workExList.isEmpty,
         leading: Image.asset(
           JobstopPngImg.bag,
           height: context.fromHeight(CustomStyle.l),
@@ -282,7 +285,7 @@ class _SippoCompanyUserProfileViewState
       () => AddInfoProfileCard(
         isCompanyView: true,
         title: 'about_me'.tr,
-        noInfoProfile: _controller.profileState.aboutMeText.isEmpty,
+        hasNotInfoProfile: _controller.profileState.aboutMeText.isEmpty,
         leading: Image.asset(
           JobstopPngImg.aboutme,
           height: context.fromHeight(CustomStyle.l),

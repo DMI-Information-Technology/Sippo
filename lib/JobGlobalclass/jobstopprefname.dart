@@ -8,4 +8,4 @@ const langListArg = "langList";
 const tokenKey = "savedtoken";
 const loggedUserKey = "userlogged";
 
-const app_logged_use = "appuse";
+const appUseKey = "appuse";

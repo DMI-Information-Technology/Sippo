@@ -5,6 +5,7 @@ import 'package:jobspot/JobServices/ConnectivityController/internet_connection_c
 import 'package:jobspot/JobServices/shared_global_data_service.dart';
 import 'package:jobspot/sippo_data/company_repos/compan_user_profile_view_repo.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_user_profile_view_model.dart';
+import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/cv_file_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/education_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/language_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/profile_edit_model.dart';
@@ -129,7 +130,7 @@ class ProfileState {
   void set aboutMeText(String value) {
     _aboutMeText.value = value;
   }
-
+CvModel? get cv => profileInfo.cv;
   final _showAllWei = false.obs;
   final _showAllEdui = false.obs;
   final _showAllProjects = false.obs;

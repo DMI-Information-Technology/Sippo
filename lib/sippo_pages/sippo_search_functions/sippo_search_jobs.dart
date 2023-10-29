@@ -35,6 +35,7 @@ class _SippoJobSearchState extends State<SippoJobSearch> {
           _controller.refreshPage();
         },
         child: CustomBodyWidget.children(
+          pinnedAppBar: true,
           automaticallyImplyLeading: true,
           expandedAppBarHeight: context.fromHeight(4.5),
           expandedAppBar: _buildScrollableTopAppBar(context, haveToolBar: true),
@@ -168,7 +169,7 @@ class _SippoJobSearchState extends State<SippoJobSearch> {
     return Row(
       children: [
         InkWell(
-          onTap: () => Get.toNamed(SippoRoutes.filterSpecializationsJobsSearch),
+          onTap: () => Get.toNamed(SippoRoutes.sippoFilterOptionJobSearch),
           child: Padding(
             padding: EdgeInsets.symmetric(
               horizontal: context.fromWidth(CustomStyle.paddingValue2),

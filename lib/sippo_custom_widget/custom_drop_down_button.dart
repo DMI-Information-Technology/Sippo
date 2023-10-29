@@ -24,6 +24,7 @@ class CustomDropdownButton<T> extends StatelessWidget {
     this.prefixIcon,
     this.hPaddingValue,
     this.hintTextColor,
+    this.validator,
   });
 
   final bool underLineBorder;
@@ -39,6 +40,7 @@ class CustomDropdownButton<T> extends StatelessWidget {
   final Widget? prefixIcon;
   final double? hPaddingValue;
   final Color? hintTextColor;
+  final String? Function(String?)? validator;
 
   @override
   Widget build(BuildContext context) {
@@ -75,6 +77,16 @@ class CustomDropdownButton<T> extends StatelessWidget {
                   ),
                 )
               : null,
+          errorBorder: underLineBorder
+              ? UnderlineInputBorder(
+                  borderRadius:
+                      BorderRadius.circular(context.fromWidth(CustomStyle.s)),
+                  borderSide: BorderSide(
+                    color: Colors.red,
+                    width: 3,
+                  ),
+                )
+              : null,
           prefixIcon: prefixIcon,
           border: OutlineInputBorder(
             borderRadius:
@@ -82,6 +94,7 @@ class CustomDropdownButton<T> extends StatelessWidget {
             borderSide: underLineBorder ? const BorderSide() : BorderSide.none,
           ),
         ),
+        validator: validator,
         hint: Text(
           textHint ?? "",
           style: dmsregular.copyWith(
@@ -89,7 +102,9 @@ class CustomDropdownButton<T> extends StatelessWidget {
             color: hintTextColor,
           ),
         ),
-        onChanged: (value) {},
+        onChanged: (value) {
+          print('CustomDropdownButton.build');
+        },
         items: List.generate(labelList?.length ?? 0, (index) {
           return DropdownMenuItem(
             value: labelList?[index],

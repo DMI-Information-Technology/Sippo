@@ -10,12 +10,15 @@ import 'package:jobspot/sippo_data/model/job_statistics_model/job_statistics_mod
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/profile_edit_model.dart';
 import 'package:jobspot/utils/states.dart';
 
+import '../../sippo_data/model/specializations_model/specializations_model.dart';
+import '../../sippo_data/specializations/specializations_repo.dart';
+
 class UserHomeController extends GetxController {
   static UserHomeController get instance => Get.find();
   final dashboardController = UserDashBoardController.instance;
   final sharedDataService = SharedGlobalDataService.instance;
 
-  final jobsHomeState = UserHomePageState();
+  final userHomeState = UserHomePageState();
 
   ProfileInfoModel get user => dashboardController.user;
 
@@ -48,7 +51,19 @@ class UserHomeController extends GetxController {
     final response = await JobStatisticsRepo.fetchLocations();
     await response?.checkStatusResponse(
       onSuccess: (data, _) {
-        if (data != null) jobsHomeState.jobStatistic = data;
+        if (data != null) userHomeState.jobsStatistic = data;
+      },
+      onValidateError: (validateError, _) {},
+      onError: (message, _) {},
+    );
+  }
+
+  Future<void> fetchSpecializations() async {
+    final response = await SpecializationRepo.fetchSpecializationsResource();
+    await response?.checkStatusResponse(
+      onSuccess: (data, _) {
+        if (data != null)
+          userHomeState.specializationList = data.take(10).toList();
       },
       onValidateError: (validateError, _) {},
       onError: (message, _) {},
@@ -56,27 +71,57 @@ class UserHomeController extends GetxController {
   }
 
   void refreshPage() async {
+    if (!isNetworkConnected) return;
+    if (states.isLoading) return;
+    changeStates(isLoading: true);
     await Future.wait([
       dashboardController.userInformationRefresh(),
+      fetchSpecializations(),
+      fetchJobStatistics(),
       if (Get.isRegistered<JobsHomeViewController>())
         JobsHomeViewController.instance.refreshJobs(),
-      fetchJobStatistics(),
     ]);
+    changeStates(isLoading: false);
   }
 
   @override
   void onInit() {
     super.onInit();
-    fetchJobStatistics();
+    Future.wait([
+      fetchSpecializations(),
+      fetchJobStatistics(),
+    ]);
   }
 }
 
 class UserHomePageState {
   final _jobStatistic = JobStatisticsModel().obs;
 
-  JobStatisticsModel get jobStatistic => _jobStatistic.value;
+  JobStatisticsModel get jobsStatistic => _jobStatistic.value;
 
-  set jobStatistic(JobStatisticsModel value) {
+  set jobsStatistic(JobStatisticsModel value) {
     _jobStatistic.value = value;
+  }
+
+  final _selectedSpecialization = SpecializationModel().obs;
+
+  SpecializationModel get selectedSpecialization =>
+      _selectedSpecialization.value;
+
+  void set selectedSpecialization(SpecializationModel value) {
+    if (selectedSpecialization == value) {
+      _selectedSpecialization.value = SpecializationModel();
+      return;
+    }
+    _selectedSpecialization.value = value;
+  }
+
+  final _specializationList = <SpecializationModel>[].obs;
+
+  List<SpecializationModel> get specializationList =>
+      _specializationList.toList();
+
+  set specializationList(List<SpecializationModel> value) {
+    _specializationList.value = value;
   }
 }

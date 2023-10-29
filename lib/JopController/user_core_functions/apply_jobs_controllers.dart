@@ -3,11 +3,10 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
 import 'package:jobspot/JobServices/shared_global_data_service.dart';
-import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/user_job_application_model.dart';
-import 'package:jobspot/sippo_data/user_repos/user_jobs_repo.dart';
-
 import 'package:jobspot/sippo_data/model/custom_file_model/custom_file_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
+import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/user_job_application_model.dart';
+import 'package:jobspot/sippo_data/user_repos/user_jobs_repo.dart';
 import 'package:jobspot/utils/file_picker_service.dart';
 import 'package:jobspot/utils/states.dart';
 
@@ -75,7 +74,12 @@ class ApplyJobsController extends GetxController {
     await response?.checkStatusResponse(
       onSuccess: (data, _) {
         if (data != null) {
-          applyJobsState.jopDetails = data;
+          applyJobsState.jopDetails = applyJobsState.jopDetails.copyWith(
+            hasApplied: true,
+            application: data,
+          );
+          SharedGlobalDataService.instance.jobGlobalState.details =
+              applyJobsState.jopDetails;
         }
         changeStates(
           isSuccess: true,
@@ -96,11 +100,11 @@ class ApplyJobsController extends GetxController {
 
   void requestJobDetails() async {
     changeStates(isLoading: true);
-    if (requestedJobDetails?.id != null && requestedJobDetails?.title != null) {
+    if (requestedJobDetails?.title != null) {
       applyJobsState.jopDetails =
           requestedJobDetails ?? applyJobsState.jopDetails;
     }
-    if (jobId != -1) {
+    if (requestedJobDetails?.application == null && jobId != -1) {
       applyJobsState.jopDetails =
           await getJobById(jobId) ?? applyJobsState.jopDetails;
     }

@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
@@ -8,20 +7,21 @@ import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
-import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
 import 'package:jobspot/JopController/user_core_functions/apply_jobs_controllers.dart';
 import 'package:jobspot/custom_app_controller/switch_status_controller.dart';
 import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
-import 'package:jobspot/sippo_custom_widget/error_messages_dialog_snackbar/network_connnection_lost_widget.dart';
 import 'package:jobspot/sippo_custom_widget/file_upload_widget.dart';
 import 'package:jobspot/sippo_custom_widget/loading_view_widgets/loading_scaffold.dart';
 import 'package:jobspot/sippo_custom_widget/resume_card_widget.dart';
+import 'package:jobspot/sippo_custom_widget/rounded_border_radius_card_widget.dart';
 import 'package:jobspot/sippo_custom_widget/success_message_widget.dart';
 import 'package:jobspot/sippo_custom_widget/top_job_details_header.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_pages/sippo_user_pages/jobstop_success.dart';
 import 'package:jobspot/utils/helper.dart';
+
+import '../../sippo_custom_widget/top_description_info_company.dart';
 
 class SippoApplyJob extends StatefulWidget {
   const SippoApplyJob({Key? key}) : super(key: key);
@@ -56,27 +56,10 @@ class _SippoApplyJobState extends State<SippoApplyJob> {
           right: context.fromWidth(CustomStyle.xs),
           left: context.fromWidth(CustomStyle.xs),
         ),
-        connectionStatusBar: Obx(() => ConditionalWidget(
-              !InternetConnectionService.instance.isConnected,
-              guaranteedBuilder: (_, __) =>
-                  NetworkStatusNonWidget(color: Colors.black54),
-            )),
         topScreen: _buildTopJobDetailsHeader(context),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Obx(() => ConditionalWidget(
-                  _controller.states.isSuccess,
-                  data: _controller.states,
-                  guaranteedBuilder: (context, data) =>
-                      CardNotifyMessage.success(
-                    state: data,
-                    onCancelTap: () => _controller.changeStates(
-                      isSuccess: false,
-                      message: '',
-                    ),
-                  ),
-                )),
             Obx(() => ConditionalWidget(
                   _controller.states.isError,
                   data: _controller.states,
@@ -124,7 +107,12 @@ class _SippoApplyJobState extends State<SippoApplyJob> {
         ? Column(
             children: [
               CustomButton(
-                onTapped: () {},
+                onTapped: () {
+                  Get.toNamed(SippoRoutes.sippoJobFilterSearch, arguments: {
+                    'specialization_id':
+                        _controller.applyJobsState.jopDetails.specialization?.id
+                  });
+                },
                 text: "Find Another Job".tr,
                 backgroundColor: Jobstopcolor.lightprimary,
                 textColor: Jobstopcolor.primarycolor,
@@ -214,6 +202,14 @@ class _SippoApplyJobState extends State<SippoApplyJob> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
+        RoundedBorderRadiusCardWidget(
+          color: Jobstopcolor.lightprimary4,
+          child: CvCardWidget.fromRemote(
+            remoteCv: _controller.applyJobsState.jopDetails.application?.cv,
+            createAt:
+                _controller.applyJobsState.jopDetails.application?.createdAt,
+          ),
+        ),
         Image.asset(
           JobstopPngImg.done,
           height: height / 8,
@@ -231,9 +227,8 @@ class _SippoApplyJobState extends State<SippoApplyJob> {
     return Obx(() => Column(
           children: [
             TopJobDetailsHeader(
-              isConnectionLost: !InternetConnectionService.instance.isConnected,
               coverHeight: context.height / 3.5,
-              profileImageSize: context.height / 6,
+              profileImageSize: context.height / 8,
               backgroundImageColor: Colors.white,
               imageUrl: _controller
                       .applyJobsState.jopDetails.company?.profileImage?.url ??
@@ -271,65 +266,19 @@ class _SippoApplyJobState extends State<SippoApplyJob> {
                 _controller.applyJobsState.jopDetails.title ?? '',
                 style: dmsbold.copyWith(
                   fontSize: FontSize.title2(context),
-                  color: Jobstopcolor.primarycolor,
+                  color: Jobstopcolor.secondary,
                 ),
                 overflow: TextOverflow.clip,
               )),
           SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-          Obx(() => _buildTopInfoJobText(
-                context,
-                'Company name',
-                _controller.applyJobsState.jopDetails.company?.name ?? '',
-              )),
-          SizedBox(height: context.fromHeight(CustomStyle.huge2)),
-          Obx(() => _buildTopInfoJobText(
-                context,
-                'Work place',
-                _controller.applyJobsState.jopDetails.company?.city ?? '',
-              )),
-          SizedBox(height: context.fromHeight(CustomStyle.huge2)),
-          Obx(() => _buildTopInfoJobText(
-                context,
-                'Publish time',
-                calculateElapsedTimeFromStringDate(
-                      _controller.applyJobsState.jopDetails.createdAt ?? '',
-                    ) ??
-                    "",
-              )),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildTopInfoJobText(
-    BuildContext context,
-    String label,
-    String content,
-  ) {
-    return SizedBox(
-      width: context.width,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          AutoSizeText(
-            label,
-            style: dmsregular.copyWith(
-              fontSize: FontSize.title5(context),
-              color: Jobstopcolor.primarycolor,
-            ),
-            overflow: TextOverflow.clip,
-          ),
-          SizedBox(width: context.fromWidth(CustomStyle.xxxl)),
-          Expanded(
-            child: AutoSizeText(
-              content,
-              style: dmsmedium.copyWith(
-                fontSize: FontSize.title5(context),
-                color: Jobstopcolor.primarycolor,
-              ),
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
+          Obx(() {
+            final job = _controller.applyJobsState.jopDetails;
+            return TopDescriptionInfoCompanyWidget(
+              startText: job.company?.name,
+              middleText: job.locationAddress?.name,
+              endText: calculateElapsedTimeFromStringDate(job.createdAt),
+            );
+          }),
         ],
       ),
     );

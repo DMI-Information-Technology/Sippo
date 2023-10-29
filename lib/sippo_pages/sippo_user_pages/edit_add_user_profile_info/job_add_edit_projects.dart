@@ -10,11 +10,11 @@ import 'package:jobspot/JopController/user_profile_controller/edit_add_projects_
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/confirmation_bottom_sheet.dart';
 import 'package:jobspot/sippo_custom_widget/container_bottom_sheet_widget.dart';
+import 'package:jobspot/sippo_custom_widget/loading_view_widgets/loading_scaffold.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/user_projects_model.dart';
 import 'package:jobspot/sippo_themes/themecontroller.dart';
 
-import '../../../sippo_custom_widget/loading_empty_feild_widget.dart';
 import '../../../sippo_custom_widget/success_message_widget.dart';
 import '../../../utils/helper.dart';
 
@@ -48,7 +48,8 @@ class _SippoProjectsAddEditState extends State<SippoProjectsAddEdit> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
     double height = size.height;
-    return Scaffold(
+    return LoadingScaffold(
+      controller: _controller.loadingOverly,
       appBar: AppBar(),
       body: BodyWidget(
         isScrollable: true,
@@ -64,10 +65,6 @@ class _SippoProjectsAddEditState extends State<SippoProjectsAddEdit> {
                   color: Jobstopcolor.primarycolor),
             ),
             SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
-            Obx(() => CardNotifyMessage.success(
-                  state: _controller.states,
-                  onCancelTap: () => _controller.successState(false),
-                )),
             Obx(() => CardNotifyMessage.warning(
                   state: _controller.states,
                   onCancelTap: () => _controller.warningState(false),
@@ -79,43 +76,51 @@ class _SippoProjectsAddEditState extends State<SippoProjectsAddEdit> {
                   color: Jobstopcolor.primarycolor),
             ),
             SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-            InputBorderedField(
-              height: context.fromHeight(CustomStyle.inputBorderedSize),
-              fontSize: FontSize.label(context),
-              gController: _controller.projectState.name,
-            ),
-            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                _buildLabelText(context, "End date"),
-                SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-                _buildDateInput(context),
-              ],
-            ),
-            SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
-            AutoSizeText(
-              "description".tr,
-              style: dmsbold.copyWith(
-                  fontSize: FontSize.label(context),
-                  color: themedata.isdark
-                      ? Jobstopcolor.white
-                      : Jobstopcolor.primarycolor),
-            ),
-            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-            InputBorderedField(
-              verticalPaddingValue:
-                  context.fromHeight(CustomStyle.paddingValue),
-              gController: _controller.projectState.desc,
-              height: height / 5,
-              hintText: "additional_information".tr,
-              hintStyle: dmsregular.copyWith(
-                fontSize: FontSize.label(context),
-                color: Jobstopcolor.grey,
-              ),
-              keyboardType: TextInputType.multiline,
-              maxLine: 5,
-            ),
+            Form(
+              key: _controller.formKey,
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    InputBorderedField(
+                      height: context.fromHeight(CustomStyle.inputBorderedSize),
+                      fontSize: FontSize.label(context),
+                      gController: _controller.projectState.name,
+                    ),
+                    SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _buildLabelText(context, "End date"),
+                        SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+                        _buildDateInput(context),
+                      ],
+                    ),
+                    SizedBox(
+                        height: context.fromHeight(CustomStyle.spaceBetween)),
+                    AutoSizeText(
+                      "description".tr,
+                      style: dmsbold.copyWith(
+                          fontSize: FontSize.label(context),
+                          color: themedata.isdark
+                              ? Jobstopcolor.white
+                              : Jobstopcolor.primarycolor),
+                    ),
+                    SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+                    InputBorderedField(
+                      verticalPaddingValue:
+                          context.fromHeight(CustomStyle.paddingValue),
+                      gController: _controller.projectState.desc,
+                      height: height / 5,
+                      hintText: "additional_information".tr,
+                      hintStyle: dmsregular.copyWith(
+                        fontSize: FontSize.label(context),
+                        color: Jobstopcolor.grey,
+                      ),
+                      keyboardType: TextInputType.multiline,
+                      maxLine: 5,
+                    ),
+                  ]),
+            )
           ],
         ),
         paddingBottom:
@@ -179,13 +184,9 @@ class _SippoProjectsAddEditState extends State<SippoProjectsAddEdit> {
       fontSize: FontSize.label(context),
       width: context.width / 2.3,
       controller: projectState.date.controller,
-      suffixIcon: Obx(
-        () => _controller.isTextLoading(projectState.date.isTextEmpty)
-            ? const LoadingInputField()
-            : const Icon(
-                Icons.date_range_outlined,
-                color: Jobstopcolor.primarycolor,
-              ),
+      suffixIcon: const Icon(
+        Icons.date_range_outlined,
+        color: Jobstopcolor.primarycolor,
       ),
     );
   }
@@ -205,9 +206,17 @@ class _SippoProjectsAddEditState extends State<SippoProjectsAddEdit> {
           ConfirmationBottomSheet(
             title: "Are you sure you want to change what you entered?",
             description: "Are you sure you want to change what you entered?",
-            onConfirm: () {
+            onConfirm: () async {
               Navigator.pop(context);
-              _controller.onSaveSubmitted();
+              if (_controller.formKey.currentState?.validate() == true) {
+                _controller.onSaveSubmitted().then((_) {
+                  print("projects states: ${_controller.states.isSuccess}");
+                  if (_controller.states.isSuccess) {
+                    if (Get.isOverlaysOpen) Navigator.pop(context);
+                    Navigator.pop(context);
+                  }
+                });
+              }
             },
             onUndo: () => Get.isOverlaysOpen ? Navigator.pop(context) : null,
           )
@@ -231,7 +240,15 @@ class _SippoProjectsAddEditState extends State<SippoProjectsAddEdit> {
           ConfirmationBottomSheet(
             title: "Remove Project ?",
             description: "Are you sure you want to remove project?",
-            onConfirm: () => _controller.onDeleteSubmitted(),
+            onConfirm: () {
+              Navigator.pop(context);
+              _controller.onDeleteSubmitted().then((_) {
+                if (_controller.states.isSuccess) {
+                  if (Get.isOverlaysOpen) Navigator.pop(context);
+                  Navigator.pop(context);
+                }
+              });
+            },
             onUndo: () => Get.isOverlaysOpen ? Navigator.pop(context) : null,
           )
         ],

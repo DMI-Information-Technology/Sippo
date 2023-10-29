@@ -2,10 +2,13 @@ import 'dart:ui';
 
 import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
+import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
 import 'package:jobspot/JobServices/shared_global_data_service.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
 import 'package:jobspot/sippo_data/user_repos/user_jobs_repo.dart';
 import 'package:jobspot/utils/states.dart';
+
+import '../../sippo_data/user_repos/user_saved_job_repo.dart';
 
 class JobCompanyDetailsController extends GetxController {
   static JobCompanyDetailsController get instance => Get.find();
@@ -20,6 +23,33 @@ class JobCompanyDetailsController extends GetxController {
   final _states = States().obs;
 
   States get states => _states.value;
+
+  Future<void> toggleSavedJobs(int? id) async {
+    jobDetailsState.jopDetails = jobDetailsState.jopDetails
+        .copyWith(isSaved: !(jobDetailsState.jopDetails.isSaved == true));
+    final response = await SavedJobsRepo.toggleSavedJob(id);
+    await response?.checkStatusResponse(
+      onSuccess: (data, _) {
+        sharedDataService.jobGlobalState.details = jobDetailsState.jopDetails;
+      },
+      onValidateError: (validateError, _) {
+        jobDetailsState.jopDetails =
+            jobDetailsState.jopDetails.copyWith(isSaved: false);
+      },
+      onError: (message, _) {
+        jobDetailsState.jopDetails =
+            jobDetailsState.jopDetails.copyWith(isSaved: false);
+      },
+    );
+  }
+
+  void onToggleSavedJobs() async {
+    if (InternetConnectionService.instance.isNotConnected) return;
+    if(states.isLoading)return;
+    _states.value = States(isLoading: true);
+    await toggleSavedJobs(jobId);
+    _states.value = states.copyWith(isLoading: false);
+  }
 
   Future<CompanyJobModel?> getJobById(int id) async {
     final response = await SippoJobsRepo.getJobById(id);
@@ -45,7 +75,6 @@ class JobCompanyDetailsController extends GetxController {
     if (jobId != -1) {
       jobDetailsState.jopDetails =
           await getJobById(jobId) ?? jobDetailsState.jopDetails;
-
     }
 
     changeStates(isLoading: false);
@@ -74,6 +103,13 @@ class JobCompanyDetailsController extends GetxController {
   void onInit() {
     requestJobDetails();
     super.onInit();
+  }
+
+  void setJobDetailsState() {
+    final job = requestedJobDetails;
+    if (job != null) {
+      jobDetailsState.jopDetails = job;
+    }
   }
 }
 

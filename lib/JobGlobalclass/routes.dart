@@ -205,6 +205,7 @@ class SippoRoutes {
     GetPage(
       name: sippoFilterOptionJobSearch,
       page: () => const SippoSearchJobsFilter(),
+      binding: const SearchJobsFilterBindingController(),
     ),
     GetPage(
       name: languageUserAdd,
@@ -280,7 +281,6 @@ class SippoRoutes {
     GetPage(
       name: filterSpecializationsJobsSearch,
       page: () => SippoSearchJobsSpecializationsFilter(),
-      binding: const UserSearchJobsFilterBindingController(),
     ),
     GetPage(
       name: sippoGeneralSearchPage,

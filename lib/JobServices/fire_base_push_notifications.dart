@@ -9,7 +9,7 @@ import 'package:permission_handler/permission_handler.dart';
 
 import '../JobGlobalclass/global_storage.dart';
 
-Future<void> _onHandleBackgroundMessage(RemoteMessage? message) async {
+Future<void> _onHandleBackgroundMessageNotification(RemoteMessage? message) async {
   if (message == null) return;
   print("from on background message notification.");
   print(message.notification?.title);
@@ -17,8 +17,9 @@ Future<void> _onHandleBackgroundMessage(RemoteMessage? message) async {
   print(message.data);
 }
 
-Future<void> _handleMessageNotification(RemoteMessage? message) async {
+Future<void> _onHandleMessageNotification(RemoteMessage? message) async {
   print("the current route: ${Get.currentRoute}");
+
   try {
     NavigationAppRoute.gotoRoute(Get.currentRoute);
   } catch (e, s) {
@@ -34,7 +35,7 @@ Future<void> _onDidReceiveBackgroundNotificationResponse(
     jsonDecode(details.payload ?? "{}"),
   );
   print("0#0#0# from on did receive background notification #0#0#0");
-  _handleMessageNotification(message);
+  _onHandleMessageNotification(message);
 }
 
 const notificationChannel = const AndroidNotificationChannel(
@@ -59,8 +60,8 @@ class FirebasePushNotificationService {
     // _firebasePushNotification
     //     .getInitialMessage()
     //     .then(_handleMessageNotification);
-    FirebaseMessaging.onMessageOpenedApp.listen(_handleMessageNotification);
-    FirebaseMessaging.onBackgroundMessage(_onHandleBackgroundMessage);
+    FirebaseMessaging.onMessageOpenedApp.listen(_onHandleMessageNotification);
+    FirebaseMessaging.onBackgroundMessage(_onHandleBackgroundMessageNotification);
     FirebaseMessaging.onMessage.listen((message) {
       print("#####message notification is received.#######");
       final notification = message.notification;
@@ -94,7 +95,7 @@ class FirebasePushNotificationService {
           jsonDecode(details.payload ?? "{}"),
         );
         print("#%#%#%#%#from InitializationSettings notification#%#%#%#%#");
-        _handleMessageNotification(message);
+        _onHandleMessageNotification(message);
       },
       onDidReceiveBackgroundNotificationResponse:
           _onDidReceiveBackgroundNotificationResponse,
@@ -107,7 +108,7 @@ class FirebasePushNotificationService {
   Future<void> init() async {
     final result = await _firebasePushNotification.requestPermission();
     print(result.authorizationStatus);
-    GlobalStorageService.notificationToken =
+    GlobalStorageService.fcmToken =
         switch (result.authorizationStatus) {
               AuthorizationStatus.authorized =>
                 await _firebasePushNotification.getToken(),
@@ -117,7 +118,7 @@ class FirebasePushNotificationService {
               AuthorizationStatus.provisional => await _requestedNotification()
             } ??
             "";
-    print("fcm token: ${GlobalStorageService.notificationToken}");
+    print("fcm token: ${GlobalStorageService.fcmToken}");
     await _initPushNotification();
     await _initLocalNotification();
   }

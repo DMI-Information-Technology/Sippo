@@ -131,26 +131,34 @@ class SippoUserSignup extends StatelessWidget {
                       height: height / 46,
                     ),
                     Obx(() {
-                      final location =
-                          controller.authController.authLocationAddressState;
-                      return CustomDropdownButton(
-                        hPaddingValue: 0.0,
-                        prefixIcon: Icon(
-                          Icons.location_on_outlined,
-                          color: Jobstopcolor.primarycolor,
-                        ),
-                        hintTextColor: Colors.grey[500],
-                        underLineBorder: true,
-                        textHint: 'Select your location place.',
-                        labelList: location.locationsAddressNameList,
-                        values: location.locationsAddressList,
-                        fillColor: Colors.white,
-                        onItemSelected: (value) async {
-                          if (value == null) return;
-                          controller.selectedLocationAddress = value;
-                          print(value);
+                      final location = controller.locationAddressState;
+                      return InkWell(
+                        onTap: () {
+                          if (location.isLocationAddressError) {
+                            if (controller.isConnectionLostWithDialog) return;
+                            controller.fetchLocationsAddress();
+                          }
                         },
-                        setInitialValue: false,
+                        child: CustomDropdownButton(
+                          hPaddingValue: 0.0,
+                          prefixIcon: Icon(
+                            Icons.location_on_outlined,
+                            color: Jobstopcolor.primarycolor,
+                          ),
+                          hintTextColor: Colors.grey[500],
+                          underLineBorder: true,
+                          textHint: 'Select your location place.',
+                          labelList: location.locationsAddressNameList,
+                          values: location.locationsAddressList,
+                          fillColor: Colors.white,
+                          onItemSelected: (value) async {
+                            if (value == null) return;
+                            location.selectedLocationAddress = value;
+                            print(value);
+                          },
+                          validator: ValidatingInput.validateEmptyField,
+                          setInitialValue: false,
+                        ),
                       );
                     }),
                     SizedBox(

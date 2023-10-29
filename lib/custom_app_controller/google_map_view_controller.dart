@@ -83,7 +83,7 @@ class GoogleMapViewController extends ChangeNotifier {
     );
   }
 
-  void getCurrentLocation() async {
+  Future<void> getCurrentLocation() async {
     states = states.copyWith(isLoading: true);
     final locationData = await LocationServices.getCurrentLocation();
     states = states.copyWith(isLoading: false);

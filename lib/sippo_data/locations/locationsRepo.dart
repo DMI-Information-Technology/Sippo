@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:jobspot/core/api_endpoints.dart' as endpoints;
 import 'package:jobspot/core/resource.dart';
@@ -32,8 +33,14 @@ abstract class LocationsRepo {
         (errors) => null,
       );
     } catch (e, s) {
-      print(s);
       print(e);
+      print(s);
+      FlutterError.reportError(FlutterErrorDetails(
+        exception: e,
+        stack: s,
+        library: 'Flutter Custom Error',
+        context: ErrorSummary('while running async test code'),
+      ));
       return Resource.error(
         errorMessage: 'Invalid Response',
         type: StatusType.INVALID_RESPONSE,

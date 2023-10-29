@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
@@ -11,9 +12,9 @@ import 'package:jobspot/JopController/dashboards_controller/company_dashboard_co
 import 'package:jobspot/JopController/home_controllers/company_home_controller.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
-import 'package:jobspot/utils/image_picker_service.dart';
 
 import '../../JobServices/shared_global_data_service.dart';
+import '../../JopController/home_controllers/job_home_view_controller.dart';
 import '../../sippo_custom_widget/find_yor_jop_dashboard_cards.dart';
 import '../../sippo_custom_widget/network_bordered_circular_image_widget.dart';
 import '../home_component_widget/job_home_view_widget.dart';
@@ -31,10 +32,6 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.sizeOf(context);
-    double height = size.height;
-    double width = size.width;
-
     return Scaffold(
       appBar: _buildHomeAppBar(context),
       body: BodyWidget(
@@ -53,41 +50,19 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
               ),
               child: _buildAdsBoard(),
             ),
-            SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
-            SizedBox(
-              height: height / 16,
-              child: ListView.separated(
-                padding: EdgeInsets.symmetric(
-                  horizontal: context.fromWidth(CustomStyle.paddingValue),
-                ),
-                scrollDirection: Axis.horizontal,
-                itemCount: 10,
-                itemBuilder: (context, index) {
-                  return Row(
-                    children: [
-                      SizedBox(width: width / 64),
-                      CustomChip(
-                        height: height,
-                        onTap: () {
-                          ImagePickerFile.pickMultiImageFromGallery();
-                        },
-                        child: Text(
-                          "Senior",
-                          style: dmsregular.copyWith(color: Jobstopcolor.black),
-                        ),
-                        backgroundColor: Jobstopcolor.grey2,
-                        borderRadius: height / 64,
-                        paddingValue: height / 64,
-                      ),
-                    ],
-                  );
-                },
-                separatorBuilder: (_, __) => SizedBox(
-                  width: width / 32,
-                ),
+            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: context.fromWidth(CustomStyle.s),
+              ),
+              child: Text(
+                "Category".tr,
+                style: dmsbold.copyWith(fontSize: FontSize.title5(context)),
               ),
             ),
-            SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
+            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+            _buildSpecialListView(context),
+            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
             Padding(
               padding: EdgeInsets.symmetric(
                 horizontal: context.fromWidth(CustomStyle.paddingValue),
@@ -101,31 +76,31 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
                 horizontal: context.fromWidth(CustomStyle.s),
               ),
               child: Obx(() {
-                final jobStatistic = _controller.jobsHomeState.jobStatistic;
+                final jobStatistic = _controller.companyHomeState.jobStatistic;
                 return FindYorJopDashBoardCards(
                   jobStatistics: jobStatistic,
                   firstCardSubtitle: "Remote".tr,
                   secondCardSubtitle: "Full Time".tr,
                   thirdCardSubtitle: "Part Time".tr,
                   onFirstTap: () {
-                    SharedGlobalDataService.instance.jobStatistics =
+                    SharedGlobalDataService.instance.jobStatistic =
                         jobStatistic.remoteJobs;
                     Get.toNamed(SippoRoutes.sippoJobFilterSearch)?.then((_) {
-                      SharedGlobalDataService.instance.jobStatistics = null;
+                      SharedGlobalDataService.instance.jobStatistic = null;
                     });
                   },
                   onSecondTap: () {
-                    SharedGlobalDataService.instance.jobStatistics =
+                    SharedGlobalDataService.instance.jobStatistic =
                         jobStatistic.fullTimeJobs;
                     Get.toNamed(SippoRoutes.sippoJobFilterSearch)?.then((_) {
-                      SharedGlobalDataService.instance.jobStatistics = null;
+                      SharedGlobalDataService.instance.jobStatistic = null;
                     });
                   },
                   onThirdTap: () {
-                    SharedGlobalDataService.instance.jobStatistics =
+                    SharedGlobalDataService.instance.jobStatistic =
                         jobStatistic.partTimeJobs;
                     Get.toNamed(SippoRoutes.sippoJobFilterSearch)?.then((_) {
-                      SharedGlobalDataService.instance.jobStatistics = null;
+                      SharedGlobalDataService.instance.jobStatistic = null;
                     });
                   },
                 );
@@ -149,6 +124,59 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
   }
 
   Widget _buildShowHomeJobsList() => jobsHomeView;
+
+  SizedBox _buildSpecialListView(BuildContext context) {
+    Size size = MediaQuery.sizeOf(context);
+    double width = size.width;
+    return SizedBox(
+      height: context.fromHeight(CustomStyle.xs),
+      child: Obx(() {
+        final specializations = _controller.companyHomeState.specializationList;
+        return ListView.separated(
+          padding: EdgeInsets.symmetric(
+            horizontal: context.fromWidth(CustomStyle.s),
+          ),
+          scrollDirection: Axis.horizontal,
+          itemCount: specializations.length,
+          itemBuilder: (context, index) {
+            return Obx(() {
+              final special = specializations[index];
+              return CustomChip(
+                onTap: () {
+                  _controller.companyHomeState.selectedSpecialization = special;
+                  if (Get.isRegistered<JobsHomeViewController>())
+                    JobsHomeViewController.instance.refreshJobs(
+                      _controller.companyHomeState.selectedSpecialization,
+                    );
+                },
+                child: AutoSizeText(
+                  specializations[index].name ?? '',
+                  style: dmsregular.copyWith(
+                    color:
+                        _controller.companyHomeState.selectedSpecialization ==
+                                special
+                            ? Colors.white
+                            : Jobstopcolor.black,
+                    fontSize: FontSize.label(context),
+                  ),
+                ),
+                backgroundColor:
+                    _controller.companyHomeState.selectedSpecialization ==
+                            special
+                        ? Jobstopcolor.primarycolor
+                        : Jobstopcolor.grey2,
+                borderRadius: width / 32,
+                paddingValue: context.fromHeight(CustomStyle.xxxl),
+              );
+            });
+          },
+          separatorBuilder: (context, index) => SizedBox(
+            width: context.fromWidth(CustomStyle.s),
+          ),
+        );
+      }),
+    );
+  }
 
   AppBar _buildHomeAppBar(BuildContext context) {
     final dashboardController = CompanyDashBoardController.instance;

@@ -8,8 +8,8 @@ import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
-import 'package:jobspot/JobServices/shared_global_data_service.dart';
 import 'package:jobspot/JopController/dashboards_controller/user_dashboard_controller.dart';
+import 'package:jobspot/JopController/home_controllers/job_home_view_controller.dart';
 import 'package:jobspot/JopController/home_controllers/user_home_controllers.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/find_yor_jop_dashboard_cards.dart';
@@ -54,7 +54,17 @@ class _SippoUserHomeState extends State<SippoUserHome> {
                 child: _buildAdsBoard(),
               ),
               SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-              _buildWorkExListView(context),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: context.fromWidth(CustomStyle.s),
+                ),
+                child: Text(
+                  "Category".tr,
+                  style: dmsbold.copyWith(fontSize: FontSize.title5(context)),
+                ),
+              ),
+              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+              _buildSpecialListView(context),
               SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
               Padding(
                 padding: EdgeInsets.symmetric(
@@ -71,31 +81,31 @@ class _SippoUserHomeState extends State<SippoUserHome> {
                   horizontal: context.fromWidth(CustomStyle.s),
                 ),
                 child: Obx(() {
-                  final jobStatistic = _controller.jobsHomeState.jobStatistic;
+                  final jobStatistic = _controller.userHomeState.jobsStatistic;
                   return FindYorJopDashBoardCards(
                     jobStatistics: jobStatistic,
                     firstCardSubtitle: "Remote".tr,
                     secondCardSubtitle: "Full Time".tr,
                     thirdCardSubtitle: "Part Time".tr,
                     onFirstTap: () {
-                      SharedGlobalDataService.instance.jobStatistics =
+                      _controller.sharedDataService.jobStatistic =
                           jobStatistic.remoteJobs;
                       Get.toNamed(SippoRoutes.sippoJobFilterSearch)?.then((_) {
-                        SharedGlobalDataService.instance.jobStatistics = null;
+                        _controller.sharedDataService.jobStatistic = null;
                       });
                     },
                     onSecondTap: () {
-                      SharedGlobalDataService.instance.jobStatistics =
+                      _controller.sharedDataService.jobStatistic =
                           jobStatistic.fullTimeJobs;
                       Get.toNamed(SippoRoutes.sippoJobFilterSearch)?.then((_) {
-                        SharedGlobalDataService.instance.jobStatistics = null;
+                        _controller.sharedDataService.jobStatistic = null;
                       });
                     },
                     onThirdTap: () {
-                      SharedGlobalDataService.instance.jobStatistics =
+                      _controller.sharedDataService.jobStatistic =
                           jobStatistic.partTimeJobs;
                       Get.toNamed(SippoRoutes.sippoJobFilterSearch)?.then((_) {
-                        SharedGlobalDataService.instance.jobStatistics = null;
+                        _controller.sharedDataService.jobStatistic = null;
                       });
                     },
                   );
@@ -183,41 +193,54 @@ class _SippoUserHomeState extends State<SippoUserHome> {
     );
   }
 
-  SizedBox _buildWorkExListView(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    double height = size.height;
+  SizedBox _buildSpecialListView(BuildContext context) {
+    Size size = MediaQuery.sizeOf(context);
     double width = size.width;
     return SizedBox(
       height: context.fromHeight(CustomStyle.xs),
-      child: ListView.separated(
-        scrollDirection: Axis.horizontal,
-        itemCount: 10,
-        itemBuilder: (context, index) {
-          return Row(
-            children: [
-              if (index == 0) SizedBox(width: context.fromWidth(CustomStyle.s)),
-              CustomChip(
-                height: height,
-                onTap: () {},
+      child: Obx(() {
+        final specializations = _controller.userHomeState.specializationList;
+        return ListView.separated(
+          padding: EdgeInsets.symmetric(
+            horizontal: context.fromWidth(CustomStyle.s),
+          ),
+          scrollDirection: Axis.horizontal,
+          itemCount: specializations.length,
+          itemBuilder: (context, index) {
+            return Obx(() {
+              final special = specializations[index];
+              return CustomChip(
+                onTap: () {
+                  _controller.userHomeState.selectedSpecialization = special;
+                  if (Get.isRegistered<JobsHomeViewController>())
+                    JobsHomeViewController.instance.refreshJobs(
+                      _controller.userHomeState.selectedSpecialization,
+                    );
+                },
                 child: AutoSizeText(
-                  "Senior",
+                  specializations[index].name ?? '',
                   style: dmsregular.copyWith(
-                    color: Jobstopcolor.black,
-                    fontSize: FontSize.title6(context),
+                    color: _controller.userHomeState.selectedSpecialization ==
+                            special
+                        ? Colors.white
+                        : Jobstopcolor.black,
+                    fontSize: FontSize.label(context),
                   ),
                 ),
-                backgroundColor: Jobstopcolor.grey2,
+                backgroundColor:
+                    _controller.userHomeState.selectedSpecialization == special
+                        ? Jobstopcolor.primarycolor
+                        : Jobstopcolor.grey2,
                 borderRadius: width / 32,
                 paddingValue: context.fromHeight(CustomStyle.xxxl),
-              ),
-              if (index == 9) SizedBox(width: context.fromWidth(CustomStyle.s)),
-            ],
-          );
-        },
-        separatorBuilder: (context, index) => SizedBox(
-          width: context.fromWidth(CustomStyle.s),
-        ),
-      ),
+              );
+            });
+          },
+          separatorBuilder: (context, index) => SizedBox(
+            width: context.fromWidth(CustomStyle.s),
+          ),
+        );
+      }),
     );
   }
 

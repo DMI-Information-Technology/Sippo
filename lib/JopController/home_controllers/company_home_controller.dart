@@ -9,12 +9,15 @@ import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dar
 import 'package:jobspot/sippo_data/model/job_statistics_model/job_statistics_model.dart';
 import 'package:jobspot/utils/states.dart';
 
+import '../../sippo_data/model/specializations_model/specializations_model.dart';
+import '../../sippo_data/specializations/specializations_repo.dart';
+
 class CompanyHomeController extends GetxController {
   static CompanyHomeController get instance => Get.find();
   final dashboardController = CompanyDashBoardController.instance;
   final sharedDataService = SharedGlobalDataService.instance;
 
-  final jobsHomeState = CompanyHomePageState();
+  final companyHomeState = CompanyHomePageState();
 
   CompanyDetailsModel get user => dashboardController.company;
 
@@ -46,7 +49,19 @@ class CompanyHomeController extends GetxController {
     final response = await JobStatisticsRepo.fetchLocations();
     await response?.checkStatusResponse(
       onSuccess: (data, _) {
-        if (data != null) jobsHomeState.jobStatistic = data;
+        if (data != null) companyHomeState.jobStatistic = data;
+      },
+      onValidateError: (validateError, _) {},
+      onError: (message, _) {},
+    );
+  }
+
+  Future<void> fetchSpecializations() async {
+    final response = await SpecializationRepo.fetchSpecializationsResource();
+    await response?.checkStatusResponse(
+      onSuccess: (data, _) {
+        if (data != null)
+          companyHomeState.specializationList = data.take(10).toList();
       },
       onValidateError: (validateError, _) {},
       onError: (message, _) {},
@@ -56,16 +71,20 @@ class CompanyHomeController extends GetxController {
   void refreshPage() async {
     await Future.wait([
       dashboardController.refreshUserProfileInfo(),
+      fetchSpecializations(),
+      fetchJobStatistics(),
       if (Get.isRegistered<JobsHomeViewController>())
         JobsHomeViewController.instance.refreshJobs(),
-      fetchJobStatistics(),
     ]);
   }
 
   @override
   void onInit() {
     super.onInit();
-    fetchJobStatistics();
+    Future.wait([
+      fetchSpecializations(),
+      fetchJobStatistics(),
+    ]);
   }
 }
 
@@ -76,5 +95,27 @@ class CompanyHomePageState {
 
   set jobStatistic(JobStatisticsModel value) {
     _jobStatistic.value = value;
+  }
+
+  final _selectedSpecialization = SpecializationModel().obs;
+
+  SpecializationModel get selectedSpecialization =>
+      _selectedSpecialization.value;
+
+  void set selectedSpecialization(SpecializationModel value) {
+    if (selectedSpecialization == value) {
+      _selectedSpecialization.value = SpecializationModel();
+      return;
+    }
+    _selectedSpecialization.value = value;
+  }
+
+  final _specializationList = <SpecializationModel>[].obs;
+
+  List<SpecializationModel> get specializationList =>
+      _specializationList.toList();
+
+  set specializationList(List<SpecializationModel> value) {
+    _specializationList.value = value;
   }
 }

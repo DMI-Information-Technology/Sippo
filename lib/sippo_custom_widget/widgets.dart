@@ -51,10 +51,13 @@ class CustomAlertDialog extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            if (imageAsset != null) ...[
-              Image.asset(imageAsset!, height: height / 4),
-              SizedBox(height: height / 42),
-            ],
+            if (imageAsset != null)
+              Padding(
+                padding: EdgeInsets.all(context.fromHeight(
+                  CustomStyle.paddingValue,
+                )),
+                child: Image.asset(imageAsset!, height: height / 5),
+              ),
             AutoSizeText(
               title,
               style: dmsbold.copyWith(
@@ -87,7 +90,7 @@ class CustomAlertDialog extends StatelessWidget {
                 if (onConfirm != null) ...[
                   ElevatedButton(
                     onPressed: () {
-                      if (onConfirm != null) onConfirm!();
+                      onConfirm?.call();
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: confirmBtnColor,
@@ -104,7 +107,7 @@ class CustomAlertDialog extends StatelessWidget {
                 if (onCancel != null)
                   ElevatedButton(
                     onPressed: () {
-                      onCancel!();
+                      onCancel?.call();
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: cancelBtnColor,

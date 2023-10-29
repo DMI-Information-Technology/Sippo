@@ -27,7 +27,7 @@ class CompanyLoginController extends GetxController {
   CompanyModel get companyForm => CompanyModel(
         phone: phoneNumber,
         password: password,
-        fcmToken: GlobalStorageService.notificationToken,
+        fcmToken: GlobalStorageService.fcmToken,
       );
 
   bool get isRememberMeChecked => _isRememberMeChecked.isTrue;

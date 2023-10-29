@@ -26,9 +26,9 @@ class _SippoCompanyNotificationApplicationState
   final _controller = Get.put(CompanyNotificationApplicationController());
   TabController? _tabController;
   final RestorableInt tabIndex = RestorableInt(0);
-  final nonResource = const NoResourceScreen(
-    title: 'No notifications',
-    description: 'You have no notifications at this time\nthank you',
+  final nonResource =  NoResourceScreen(
+    title: 'empty_notification_title'.tr,
+    description: 'empty_notification_desc'.tr,
     image: JobstopPngImg.notificationimg,
   );
   final _taps = const [

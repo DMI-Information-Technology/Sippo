@@ -154,7 +154,7 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
   Widget _buildEstablishmentCompanyDate(BuildContext context) {
     return Obx(() => AddInfoProfileCard(
           title: 'Establishment Date'.tr,
-          noInfoProfile:
+          hasNotInfoProfile:
               _controller.company.establishmentDate?.isEmpty == true ||
                   _controller.company.establishmentDate?.isEmpty == null,
           leading: Image.asset(
@@ -180,7 +180,7 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
   Widget _buildEmployeeCompanyCount(BuildContext context) {
     return Obx(() => AddInfoProfileCard(
           title: 'Employee Count'.tr,
-          noInfoProfile: _controller.company.employeesCount == null,
+          hasNotInfoProfile: _controller.company.employeesCount == null,
           leading: Image.asset(
             JobstopPngImg.aboutme,
             height: context.fromHeight(CustomStyle.l),
@@ -225,7 +225,7 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
 
     return Obx(() => AddInfoProfileCard(
           title: 'Company specializations'.tr,
-          noInfoProfile: _controller.company.specializations?.isEmpty == true,
+          hasNotInfoProfile: _controller.company.specializations?.isEmpty == true,
           leading: Image.asset(
             JobstopPngImg.aboutme,
             height: context.fromHeight(CustomStyle.l),
@@ -269,7 +269,7 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
   Widget _buildWebsiteCompanyLink(BuildContext context) {
     return Obx(() => AddInfoProfileCard(
           title: 'Website Company'.tr,
-          noInfoProfile: _controller.company.website?.isEmpty == true ||
+          hasNotInfoProfile: _controller.company.website?.isEmpty == true ||
               _controller.company.website?.isEmpty == null,
           leading: Image.asset(
             JobstopPngImg.aboutme,
@@ -310,7 +310,7 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
     return Obx(() {
       return AddInfoProfileCard(
         title: 'Work Places'.tr,
-        noInfoProfile: _controller.company.locations?.isEmpty == true ||
+        hasNotInfoProfile: _controller.company.locations?.isEmpty == true ||
             _controller.company.locations?.isEmpty == null,
         leading: Image.asset(
           JobstopPngImg.aboutme,
@@ -350,7 +350,7 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
   Widget _buildBioCompanyProfile(BuildContext context) {
     return Obx(() => AddInfoProfileCard(
           title: 'Personal Info'.tr,
-          noInfoProfile: _controller.company.bio?.isEmpty == true ||
+          hasNotInfoProfile: _controller.company.bio?.isEmpty == true ||
               _controller.company.bio?.isEmpty == null,
           leading: Image.asset(
             JobstopPngImg.companysignup,

@@ -158,7 +158,7 @@ class _SippoCompanyEditAddJobsState extends State<SippoCompanyEditAddJobs> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Slide Left and Right to Set Salary Range',
+                'salary_range_slider_message'.tr,
                 textAlign: TextAlign.start,
                 style:
                     dmsregular.copyWith(fontSize: FontSize.paragraph3(context)),
@@ -213,9 +213,9 @@ class _SippoCompanyEditAddJobsState extends State<SippoCompanyEditAddJobs> {
               ),
               SizedBox(height: context.fromHeight(CustomStyle.huge)),
               Text(
-                'The accepted range salary start '
-                'from ${CompanyEditAddJobState.MAX_SALARY_RANGE} '
-                'to ${CompanyEditAddJobState.MAX_SALARY_RANGE}',
+                '${'The accepted range salary start'.tr} '
+                '${'from'.tr} ${CompanyEditAddJobState.MAX_SALARY_RANGE} '
+                '${"to".tr} ${CompanyEditAddJobState.MAX_SALARY_RANGE}',
                 textAlign: TextAlign.start,
                 style: dmsregular.copyWith(
                     fontSize: FontSize.label(context),
@@ -230,7 +230,7 @@ class _SippoCompanyEditAddJobsState extends State<SippoCompanyEditAddJobs> {
 
   Widget _buildLevelExperienceOption(BuildContext context) {
     return Obx(() => AddJobOptionsCard(
-        title: "Level Experience",
+        title:'level_experience_title'.tr,
         subTitle: jobState.experienceLevel.label,
         onTapAction: () {
           _showLevelExperiences(context);
@@ -243,7 +243,7 @@ class _SippoCompanyEditAddJobsState extends State<SippoCompanyEditAddJobs> {
             jobState.showAllActionButtonOptions();
             jobState.swithcActionDescription();
           },
-          title: "Description",
+          title: "description".tr,
           editorWidget: InputCloser(
             child: InputBorderedField(
               verticalPaddingValue: context.fromWidth(CustomStyle.paddingValue),
@@ -264,7 +264,7 @@ class _SippoCompanyEditAddJobsState extends State<SippoCompanyEditAddJobs> {
 
   Widget _buildEmploymentTypeOption(BuildContext context) {
     return Obx(() => AddJobOptionsCard(
-        title: "Employment type",
+        title: "employment_type_title".tr,
         subTitle: jobState.employmentType,
         onTapAction: () {
           _showJobType(context);
@@ -279,10 +279,10 @@ class _SippoCompanyEditAddJobsState extends State<SippoCompanyEditAddJobs> {
           jobState.showAllActionButtonOptions();
           jobState.swithcActionLocation();
         },
-        title: "Job location",
+        title: 'job_location'.tr,
         editorWidget: InputCloser(
           child: CustomDropdownButton(
-            textHint: 'Select Job work location',
+            textHint: 'select_job_work_location_hint_text'.tr,
             labelList: jobState.locationsLabel,
             values: jobState.locationsList,
             onItemSelected: (value) async {
@@ -315,10 +315,10 @@ class _SippoCompanyEditAddJobsState extends State<SippoCompanyEditAddJobs> {
           jobState.showAllActionButtonOptions();
           jobState.swithcActionSpecialization();
         },
-        title: "Specialization",
+        title: "specialization".tr,
         editorWidget: InputCloser(
           child: CustomDropdownButton(
-            textHint: 'Select Specialization Job',
+            textHint: 'select_specialization_hint_text'.tr,
             labelList: jobState.specializationLabel,
             values: jobState.specializationList,
             onItemSelected: (value) async {
@@ -340,7 +340,7 @@ class _SippoCompanyEditAddJobsState extends State<SippoCompanyEditAddJobs> {
 
   Widget _buildWorkplaceOption(BuildContext context) {
     return Obx(() => AddJobOptionsCard(
-        title: "Type of workplace",
+        title: "type_of_workplace_title".tr,
         subTitle: jobState.workPLaceType,
         onTapAction: () {
           _showWorkPlaceType(context);
@@ -353,7 +353,7 @@ class _SippoCompanyEditAddJobsState extends State<SippoCompanyEditAddJobs> {
             jobState.showAllActionButtonOptions();
             jobState.swithcActionRequirements();
           },
-          title: "Requirements",
+          title: "requirements".tr,
           editorWidget: InputCloser(
             child: InputBorderedField(
               verticalPaddingValue: context.fromWidth(CustomStyle.paddingValue),
@@ -378,7 +378,7 @@ class _SippoCompanyEditAddJobsState extends State<SippoCompanyEditAddJobs> {
             jobState.showAllActionButtonOptions();
             jobState.swithcActionPosition();
           },
-          title: "Job position",
+          title: "job_position_title".tr,
           editorWidget: InputCloser(
             child: InputBorderedField(
               initialValue: jobState.position,
@@ -411,13 +411,13 @@ class _SippoCompanyEditAddJobsState extends State<SippoCompanyEditAddJobs> {
         children: [
           SizedBox(height: height / CustomStyle.spaceBetween),
           Text(
-            "Choose the type of workplace",
+            "choose_type_workplace".tr,
             style: dmsbold.copyWith(
                 fontSize: 16, color: Jobstopcolor.primarycolor),
           ),
           SizedBox(height: height / CustomStyle.xxxl),
           Text(
-            "Decide and choose the type of place to work\naccording to what you want",
+            "decide_choose_type_place_desc".tr,
             style:
                 dmsregular.copyWith(fontSize: 12, color: Jobstopcolor.darkgrey),
             textAlign: TextAlign.center,
@@ -467,7 +467,7 @@ class _SippoCompanyEditAddJobsState extends State<SippoCompanyEditAddJobs> {
           children: [
             SizedBox(height: height / CustomStyle.spaceBetween),
             Text(
-              "Choose Job Type",
+              "choose_job_type_title".tr,
               style: dmsbold.copyWith(
                 fontSize: FontSize.title4(context),
                 color: Jobstopcolor.primarycolor,
@@ -475,7 +475,7 @@ class _SippoCompanyEditAddJobsState extends State<SippoCompanyEditAddJobs> {
             ),
             SizedBox(height: height / CustomStyle.xxxl),
             Text(
-              "Determine and choose the type of work according to\nwhat you want",
+              "choose_job_type_desc".tr,
               style: dmsregular.copyWith(
                 fontSize: FontSize.label(context),
                 color: Jobstopcolor.darkgrey,
@@ -528,7 +528,7 @@ class _SippoCompanyEditAddJobsState extends State<SippoCompanyEditAddJobs> {
           children: [
             SizedBox(height: height / CustomStyle.spaceBetween),
             Text(
-              "Choose Level Experience",
+              "choose_level_experience".tr,
               style: dmsbold.copyWith(
                 fontSize: FontSize.title4(context),
                 color: Jobstopcolor.primarycolor,
@@ -536,7 +536,7 @@ class _SippoCompanyEditAddJobsState extends State<SippoCompanyEditAddJobs> {
             ),
             SizedBox(height: height / CustomStyle.xxxl),
             Text(
-              "Determine and choose the type of Level Experiences according to\nwhat you want",
+              "choose_level_experience_desc".tr,
               style: dmsregular.copyWith(
                 fontSize: FontSize.label(context),
                 color: Jobstopcolor.darkgrey,
@@ -637,7 +637,7 @@ class _AddJobOptionsCardState extends State<AddJobOptionsCard> {
             : Align(
                 alignment: AlignmentDirectional.centerStart,
                 child: Text(
-                  widget.subTitle ?? 'unknown',
+                  widget.subTitle ?? '',
                   style: dmsregular,
                 ),
               ));

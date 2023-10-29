@@ -84,21 +84,50 @@ class SippoFilterSearchController extends GetxController {
 
 class FilterSearchState {
   final _specializationSearch = "".obs;
+  final specializationsSearchController = TextEditingController(text: '');
 
   String get specializationsSearch => _specializationSearch.toString();
 
   set specializationsSearch(String value) =>
       _specializationSearch.value = value;
-  final _experienceLevel = ExperienceLevel().obs;
+  final _specializationList = <SpecializationModel>[].obs;
+
+  SpecializationModel get specialization => _specialization.value;
+
+  set specialization(SpecializationModel value) {
+    if (value == specialization) {
+      _specialization.value = SpecializationModel();
+      return;
+    }
+    _specialization.value = value;
+  }
+
   final specializationFocusNode = FocusNode();
   final _specialization = SpecializationModel().obs;
+
+  List<SpecializationModel> get specializationList =>
+      _specializationList.toList();
+
+  set specializationList(List<SpecializationModel> value) {
+    _specializationList.value = value;
+  }
+
+  List<SpecializationModel> filteredSpecializations(String searchKey) =>
+      _specializationList.where((e) {
+        final specialName = e.name;
+        if (specialName == null || specialName.isEmpty) return false;
+        return specialName
+            .toLowerCase()
+            .contains(searchKey.trim().toLowerCase());
+      }).toList();
+
+  final _experienceLevel = ExperienceLevel().obs;
   final _locationAddress = LocationAddress().obs;
   final _rangeSalary = RangeValues(
     CompanyEditAddJobState.MIN_SALARY_RANGE,
     CompanyEditAddJobState.MAX_SALARY_RANGE,
   ).obs;
   var salary = RangeSalaryModel();
-  final _specializationList = <SpecializationModel>[].obs;
   final _experienceLevelList = <ExperienceLevel>[].obs;
   final _locationAddressList = <LocationAddress>[].obs;
 
@@ -110,16 +139,6 @@ class FilterSearchState {
       return;
     }
     _experienceLevel.value = value;
-  }
-
-  SpecializationModel get specialization => _specialization.value;
-
-  set specialization(SpecializationModel value) {
-    if (value == specialization) {
-      _specialization.value = SpecializationModel();
-      return;
-    }
-    _specialization.value = value;
   }
 
   LocationAddress get locationAddress => _locationAddress.value;
@@ -134,20 +153,6 @@ class FilterSearchState {
   String get endSalary => rangeSalary.end.round().toString();
 
   set rangeSalary(RangeValues value) => _rangeSalary.value = value;
-
-  List<SpecializationModel> get specializationList =>
-      _specializationList.toList();
-
-  List<SpecializationModel> filteredSpecializations(String searchKey) =>
-      _specializationList.where((e) {
-        final specialName = e.name;
-        if (specialName == null || specialName.isEmpty) return false;
-        return specialName.contains(searchKey.trim());
-      }).toList();
-
-  set specializationList(List<SpecializationModel> value) {
-    _specializationList.value = value;
-  }
 
   List<ExperienceLevel> get experienceLevelList =>
       _experienceLevelList.toList();
@@ -195,6 +200,7 @@ class FilterSearchState {
       };
 
   void close() {
+    specializationsSearchController.dispose();
     specializationFocusNode.dispose();
   }
 }

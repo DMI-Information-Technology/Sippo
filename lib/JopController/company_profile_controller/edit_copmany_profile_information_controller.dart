@@ -19,7 +19,7 @@ class EditCompanyProfileInfoController extends GetxController {
   final _states = States().obs;
 
   final GlobalKey<FormState> formKey = GlobalKey();
-
+  bool get isEmailVerified => companyDetails.isEmailVerified == true;
   States get states => _states.value;
 
   void successState(bool value, [String? message]) {

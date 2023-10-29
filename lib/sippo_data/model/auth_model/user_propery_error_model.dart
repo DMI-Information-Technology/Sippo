@@ -20,4 +20,9 @@ class UserPropError extends EntityPropertyError {
           : null,
     );
   }
+
+  @override
+  String toString() {
+    return 'UserPropError{phone: $phone, name: $name, password: $password, passwordConfirmation: $passwordConfirmation}';
+  }
 }

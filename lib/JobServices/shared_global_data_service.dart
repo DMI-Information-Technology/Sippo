@@ -10,7 +10,7 @@ class SharedGlobalDataService extends GetxService {
   static SharedGlobalDataService get instance => Get.find();
   static const SELECTED_TAP_INDEX = 'selected_tap_index';
   var searchTextKey = "";
-  JobStatisticsData? jobStatistics;
+  JobStatisticsData? jobStatistic;
   var profileIdState = -1;
   final jobGlobalState = GlobalSharedState(details: CompanyJobModel().obs);
   final profileViewGlobalState =
@@ -21,6 +21,7 @@ class SharedGlobalDataService extends GetxService {
 
   static Future<void> onJobTap(
     CompanyJobModel? item, {
+    void Function(CompanyJobModel? job)? handler,
     Map<String, dynamic>? args,
   }) async {
     final localInstance = instance;
@@ -29,6 +30,7 @@ class SharedGlobalDataService extends GetxService {
     localInstance.jobGlobalState.id = id;
     localInstance.jobGlobalState.details = item;
     await Get.toNamed(SippoRoutes.sippoJobDescription);
+    handler?.call(localInstance.jobGlobalState.details);
     localInstance.jobGlobalState.clearDetails(() => CompanyJobModel());
   }
 

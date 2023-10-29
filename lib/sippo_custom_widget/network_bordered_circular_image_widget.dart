@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 
@@ -16,8 +15,10 @@ class NetworkBorderedCircularImage extends StatelessWidget {
     this.backgroundColor,
     this.outerBorderWidth,
     this.innerBorderWidth,
+    this.placeholder,
   });
 
+  final Widget Function(BuildContext context, String url)? placeholder;
   final Color? backgroundColor;
   final double size;
   final Color? outerBorderColor;
@@ -26,7 +27,7 @@ class NetworkBorderedCircularImage extends StatelessWidget {
   final double? innerBorderWidth;
   final String imageUrl;
   final Widget Function(BuildContext context, String url, dynamic error)?
-  errorWidget;
+      errorWidget;
 
   @override
   Widget build(BuildContext context) {
@@ -53,6 +54,7 @@ class NetworkBorderedCircularImage extends StatelessWidget {
             width: size,
             height: size,
             errorWidget: errorWidget,
+            placeholder: placeholder,
           ),
         ),
       ),

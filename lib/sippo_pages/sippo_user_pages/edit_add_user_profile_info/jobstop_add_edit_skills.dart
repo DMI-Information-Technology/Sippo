@@ -2,16 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
-import 'package:jobspot/sippo_custom_widget/body_widget.dart';
-import 'package:jobspot/sippo_custom_widget/widgets.dart';
-
 import 'package:jobspot/JopController/user_profile_controller/edit_add_skills_controller.dart';
 import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
 import 'package:jobspot/sippo_custom_widget/SearchDelegteImpl.dart';
+import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/confirmation_bottom_sheet.dart';
 import 'package:jobspot/sippo_custom_widget/container_bottom_sheet_widget.dart';
+import 'package:jobspot/sippo_custom_widget/loading_view_widgets/loading_scaffold.dart';
 import 'package:jobspot/sippo_custom_widget/success_message_widget.dart';
-import 'package:jobspot/sippo_themes/themecontroller.dart';
+import 'package:jobspot/sippo_custom_widget/widgets.dart';
 
 class JobSkillsAddEdit extends StatefulWidget {
   const JobSkillsAddEdit({Key? key}) : super(key: key);
@@ -21,16 +20,6 @@ class JobSkillsAddEdit extends StatefulWidget {
 }
 
 class _JobJobSkillsAddEditState extends State<JobSkillsAddEdit> {
-  bool check = true;
-  final themedata = Get.put(JobstopThemecontroler());
-  List<String>? skillsList;
-
-  @override
-  void initState() {
-    // skillsList = Get.arguments[skillsListArg] ?? [];
-    super.initState();
-  }
-
   final _controller = EditAddSkillsController.instance;
 
   @override
@@ -39,7 +28,8 @@ class _JobJobSkillsAddEditState extends State<JobSkillsAddEdit> {
     Size size = MediaQuery.of(context).size;
     double height = size.height;
     double width = size.width;
-    return Scaffold(
+    return LoadingScaffold(
+      controller: _controller.loadingController,
       appBar: AppBar(),
       body: BodyWidget(
         isScrollable: true,
@@ -50,7 +40,7 @@ class _JobJobSkillsAddEditState extends State<JobSkillsAddEdit> {
             Obx(
               () => Text(
                 !skillsState.isChangeSkills
-                    ? "Skills(${skillsState.skillsList.length})"
+                    ? "${'skills'.tr}(${skillsState.skillsList.length})"
                     : "Add skills",
                 style: dmsbold.copyWith(
                     fontSize: 16, color: Jobstopcolor.primarycolor),
@@ -86,7 +76,7 @@ class _JobJobSkillsAddEditState extends State<JobSkillsAddEdit> {
                   ),
                 )),
             SizedBox(height: height / 36),
-            _buildSuccessMessage(),
+            // _buildSuccessMessage(),
             _buildWarningMessage(),
             _buildSkillsChipsWrapper(context),
           ],
@@ -185,10 +175,15 @@ class _JobJobSkillsAddEditState extends State<JobSkillsAddEdit> {
           ConfirmationBottomSheet(
             title: "Are you sure you want to change what you entered?",
             description: "Are you sure you want to change what you entered?",
-            onConfirm: () async {
+            onConfirm: () {
               Get.back();
-              await _controller.onSaveSubmitted();
-              skillsState.isChangeSkills = !skillsState.isChangeSkills;
+              _controller.onSaveSubmitted().then((_) {
+                skillsState.isChangeSkills = !skillsState.isChangeSkills;
+                if (_controller.states.isSuccess) {
+                  if (Get.isOverlaysOpen) Get.back();
+                  Get.back();
+                }
+              });
             },
             onUndo: () {
               _controller.resetSkillsState();
@@ -199,18 +194,6 @@ class _JobJobSkillsAddEditState extends State<JobSkillsAddEdit> {
         ],
       ),
     );
-  }
-
-  Widget _buildSuccessMessage() {
-    final controller = EditAddSkillsController.instance;
-    return Obx(() => ConditionalWidget(
-          controller.states.isSuccess,
-          data: controller.states,
-          guaranteedBuilder: (context, data) => CardNotifyMessage.success(
-            state: data,
-            onCancelTap: () => controller.successState(false),
-          ),
-        ));
   }
 
   Widget _buildWarningMessage() {

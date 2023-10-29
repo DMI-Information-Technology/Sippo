@@ -4,6 +4,7 @@ import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_model.dart';
 import 'package:jobspot/sippo_data/model/locations_model/location_address_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/cord_location.dart';
+import 'package:jobspot/utils/states.dart';
 
 import '../../sippo_data/locations/locationsRepo.dart';
 
@@ -18,6 +19,7 @@ class SignUpCompanyController extends GetxController {
   final _companyAddress = LocationAddress().obs;
   final _confirmOnPolicy = false.obs;
   final _cordLocation = CoordLocation().obs;
+  final locationState = States().obs;
 
   CompanyModel get companyForm => CompanyModel(
         name: fullname,
@@ -103,15 +105,24 @@ class SignUpCompanyController extends GetxController {
   }
 
   Future<void> fetchLocationsAddress() async {
+    if (locationState.value.isLoading) return;
+    locationState.value = States(isLoading: true);
     final response = await LocationsRepo.fetchLocations();
+    locationState.value = States(isLoading: false);
     await response?.checkStatusResponse(
       onSuccess: (data, _) {
         if (data != null) {
+          print('hello location address');
           locationsAddressList = data;
+          locationState.value = States(isSuccess: true);
         }
       },
-      onValidateError: (validateError, _) {},
-      onError: (message, _) {},
+      onValidateError: (validateError, _) {
+        locationState.value = States(isError: true);
+      },
+      onError: (message, _) {
+        locationState.value = States(isError: true);
+      },
     );
   }
 

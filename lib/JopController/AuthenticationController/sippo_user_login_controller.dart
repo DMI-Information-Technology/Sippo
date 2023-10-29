@@ -25,7 +25,7 @@ class UserLoginController extends GetxController {
   UserModel get userForm => UserModel(
         phone: phoneNumber,
         password: password,
-        fcmToken: GlobalStorageService.notificationToken,
+        fcmToken: GlobalStorageService.fcmToken,
       );
 
   set phoneNumber(String value) {

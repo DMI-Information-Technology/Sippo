@@ -46,7 +46,7 @@ class _SippoAboutCompanyState extends State<SippoAboutCompany> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "About us",
+                "about_us".tr,
                 style: dmsbold.copyWith(
                   fontSize: 16,
                   color: Jobstopcolor.primarycolor,
@@ -58,7 +58,7 @@ class _SippoAboutCompanyState extends State<SippoAboutCompany> {
                   CustomStyle.paddingValue,
                 ),
                 gController: _controller.profileEditState.bio,
-                hintText: 'talk about the company.',
+                hintText: 'talk_about_company'.tr,
                 hintStyle: dmsregular.copyWith(
                   fontSize: FontSize.label(context),
                 ),
@@ -78,7 +78,7 @@ class _SippoAboutCompanyState extends State<SippoAboutCompany> {
                 _controller.onSaveSubmitted();
               }
             },
-            text: "Save",
+            text: "save".tr,
           ),
         ),
       ),

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JopController/user_profile_controller/profile_user_controller.dart';
@@ -7,9 +9,12 @@ import 'package:jobspot/utils/getx_text_editing_controller.dart';
 import 'package:jobspot/utils/helper.dart' as helper;
 import 'package:jobspot/utils/states.dart';
 
+import '../../custom_app_controller/switch_status_controller.dart';
+
 class EditAddProjectsController extends GetxController {
   EditAddProjectsState projectState = EditAddProjectsState();
   final formKey = GlobalKey<FormState>();
+  final loadingOverly = SwitchStatusController();
 
   static EditAddProjectsController get instance => Get.find();
   final _states = States().obs;
@@ -35,17 +40,17 @@ class EditAddProjectsController extends GetxController {
 
   Future<void> addNewProjects() async {
     // make response
-    final response = await UserProjectRepo.addWorkProjects(projectState.form);
+    final response = await UserProjectRepo.addProject(projectState.form);
     // check response
     await response?.checkStatusResponse(
-      onSuccess: (data, statusType) async {
+      onSuccess: (data, statusType) {
         if (data == null) {
-          await _profileUserController.fetchAllProjects();
+          _profileUserController.fetchAllProjects();
         } else {
           _profileUserController.profileState.projectsList =
               _profileUserController.profileState.projectsList..add(data);
         }
-        successState(true, 'new work experience is added successfully.');
+        _states.value = states.copyWith(isSuccess: true);
       },
       onValidateError: (validateError, _) {
         _states.value =
@@ -177,7 +182,7 @@ class EditAddProjectsController extends GetxController {
       return;
     }
     if (states.isLoading) return;
-    _states.value = states.copyWith(isLoading: true);
+    _states.value = States(isLoading: true);
     if (isEditing)
       await updateProjectById();
     else
@@ -192,8 +197,17 @@ class EditAddProjectsController extends GetxController {
     _states.value = states.copyWith(isLoading: false);
   }
 
+  StreamSubscription<States>? statesSubs;
+
   @override
   void onInit() {
+    statesSubs = _states.listen((value) {
+      if (value.isLoading) {
+        loadingOverly.start();
+      } else {
+        loadingOverly.pause();
+      }
+    });
     super.onInit();
     openEditing();
   }
@@ -201,6 +215,7 @@ class EditAddProjectsController extends GetxController {
   @override
   void onClose() {
     _profileUserController.editingId = -1;
+    loadingOverly.dispose();
     projectState.disposeTextControllers();
     super.onClose();
   }

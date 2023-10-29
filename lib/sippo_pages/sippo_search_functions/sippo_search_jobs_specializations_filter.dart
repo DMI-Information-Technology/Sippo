@@ -3,13 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
+import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/JopController/sippo_search_controller/user_filter_search.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
+import 'package:jobspot/sippo_custom_widget/network_bordered_circular_image_widget.dart';
 import 'package:jobspot/sippo_custom_widget/rounded_border_radius_card_widget.dart';
-
-import 'package:jobspot/JobGlobalclass/routes.dart';
-import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 
 class SippoSearchJobsSpecializationsFilter extends StatefulWidget {
@@ -48,7 +47,7 @@ class _SippoSearchJobsSpecializationsFilterState
         Expanded(
           child: InputBorderedField(
             verticalPaddingValue: 0.0,
-            hintText: 'Search on Specializations',
+            hintText: 'search_on_specializations'.tr,
             hintStyle: TextStyle(
               fontSize: FontSize.title6(context),
             ),
@@ -62,7 +61,11 @@ class _SippoSearchJobsSpecializationsFilterState
           width: context.fromWidth(CustomStyle.spaceBetween),
         ),
         FilterButtonWidget(
-          onTap: () => Get.toNamed(SippoRoutes.sippoFilterOptionJobSearch),
+          onTap: () {
+            _controller.filterSearchState.specializationsSearchController.text =
+                _controller.filterSearchState.specialization.name??'';
+            Get.back();
+          },
         )
       ],
     );
@@ -101,11 +104,11 @@ class _SippoSearchJobsSpecializationsFilterState
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      CircleAvatar(
-                        radius: context.height / 21,
-                        backgroundColor: specialization == data[index]
-                            ? Colors.white
-                            : Jobstopcolor.primarycolor,
+                      NetworkBorderedCircularImage(
+                        imageUrl: data[index].image?.url ?? '',
+                        size: context.height / 12,
+                        backgroundColor: Colors.white,
+                        outerBorderWidth: 0.0,
                       ),
                       SizedBox(
                         height: context.fromHeight(CustomStyle.spaceBetween),

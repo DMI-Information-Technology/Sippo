@@ -15,6 +15,7 @@ class CvCardWidget extends StatelessWidget {
   final CustomFileModel? _fileCv;
   final CvModel? _remoteCv;
   final VoidCallback? onCvTapped;
+  final String? createAt;
 
   const CvCardWidget({
     CustomFileModel? fileCv,
@@ -22,13 +23,15 @@ class CvCardWidget extends StatelessWidget {
     super.key,
     this.onCvTapped,
   })  : _fileCv = fileCv,
-        _remoteCv = null;
+        _remoteCv = null,
+        this.createAt = null;
 
   CvCardWidget.fromRemote({
     CvModel? remoteCv,
     this.onDeleteTapped,
     super.key,
     this.onCvTapped,
+    this.createAt,
   })  : _fileCv = null,
         _remoteCv = remoteCv;
 
@@ -50,8 +53,7 @@ class CvCardWidget extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 AutoSizeText(
-                  (_fileCv != null ? _fileCv?.name : _remoteCv?.name) ??
-                      "unknown",
+                  (_fileCv?.name ?? _remoteCv?.name) ?? "",
                   style: dmsregular.copyWith(
                     fontSize: FontSize.title6(context),
                     color: Jobstopcolor.primarycolor,
@@ -60,7 +62,7 @@ class CvCardWidget extends StatelessWidget {
                 ),
                 SizedBox(height: height / CustomStyle.varyHuge),
                 Text(
-                  "${(_fileCv != null ? _fileCv?.sizeToString : _remoteCv?.size) ?? 'unknown'} . ${_fileCv != null ? _fileCv?.uploadDateToString : ''}",
+                  "${(_fileCv?.sizeToString ?? _remoteCv?.size) ?? ''}, ${(createAt ?? _fileCv?.uploadDateToString) ?? ''}",
                   style: dmsregular.copyWith(
                     fontSize: FontSize.label(context),
                     color: Colors.black54,

@@ -8,7 +8,7 @@ class AddInfoProfileCard extends StatelessWidget {
   const AddInfoProfileCard({
     super.key,
     required this.title,
-    required this.noInfoProfile,
+    required this.hasNotInfoProfile,
     this.leading,
     this.profileInfo,
     this.iconAction,
@@ -19,7 +19,7 @@ class AddInfoProfileCard extends StatelessWidget {
 
   final bool isCompanyView;
   final bool? alignmentFromStart;
-  final bool noInfoProfile;
+  final bool hasNotInfoProfile;
   final VoidCallback? onAddClicked;
   final String title;
   final Widget? leading;
@@ -38,22 +38,21 @@ class AddInfoProfileCard extends StatelessWidget {
             ? CrossAxisAlignment.start
             : CrossAxisAlignment.center,
         children: [
-          Row(
-            children: [
-              if (leading != null) leading!,
-              SizedBox(
-                width: width / 36,
-              ),
-              Text(
-                title,
-                style: dmsbold.copyWith(
-                    fontSize: 14, color: Jobstopcolor.primarycolor),
-              ),
-              if (!isCompanyView) ...[
-                const Spacer(),
-                InkWell(
-                  onTap: onAddClicked,
-                  child: iconAction ??
+          InkWell(onTap: onAddClicked,
+            child: Row(
+              children: [
+                if (leading != null) leading!,
+                SizedBox(
+                  width: width / 36,
+                ),
+                Text(
+                  title,
+                  style: dmsbold.copyWith(
+                      fontSize: 14, color: Jobstopcolor.primarycolor),
+                ),
+                if (!isCompanyView) ...[
+                  const Spacer(),
+                  iconAction ??
                       CircleAvatar(
                         radius: 10,
                         backgroundColor: Jobstopcolor.lightprimary2,
@@ -62,12 +61,12 @@ class AddInfoProfileCard extends StatelessWidget {
                           size: 15,
                           color: Jobstopcolor.primarycolor,
                         ),
-                      ),
-                )
-              ]
-            ],
+                      )
+                ]
+              ],
+            ),
           ),
-          if (!noInfoProfile &&
+          if (!hasNotInfoProfile &&
               profileInfo != null &&
               profileInfo!.isNotEmpty) ...[
             SizedBox(

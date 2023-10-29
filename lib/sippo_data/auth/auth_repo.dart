@@ -1,6 +1,7 @@
 import "dart:convert";
 import "dart:io";
 
+import "package:flutter/foundation.dart";
 import "package:http/http.dart" as http;
 import "package:jobspot/JobGlobalclass/global_storage.dart";
 import "package:jobspot/JopController/HttpClientController/http_client_controller.dart";
@@ -40,10 +41,15 @@ class AuthRepo {
         (entity) => UserResponseModel.fromJson(entity['user']),
         (errors) => UserPropError.fromJson(errors),
       );
-    } catch (error,s) {
-      print(error);
+    } catch (e, s) {
+      print(e);
       print(s);
-
+      FlutterError.reportError(FlutterErrorDetails(
+        exception: e,
+        stack: s,
+        library: 'Flutter Custom Error',
+        context: ErrorSummary('while running async test code'),
+      ));
     } finally {
       return userResponse;
     }
@@ -67,9 +73,15 @@ class AuthRepo {
         (entity) => CompanyDetailsModel.fromJson(entity['company']),
         (errors) => CompanyPropError.fromJson(errors),
       );
-    } catch (error,s) {
-      print(error);
+    } catch (e, s) {
+      print(e);
       print(s);
+      FlutterError.reportError(FlutterErrorDetails(
+        exception: e,
+        stack: s,
+        library: 'Flutter Custom Error',
+        context: ErrorSummary('while running async test code'),
+      ));
     } finally {
       return companyResponse;
     }
@@ -94,13 +106,20 @@ class AuthRepo {
         (entity) => UserResponseModel.fromJson(entity['user']),
         (errors) => UserPropError.fromJson(errors),
       );
-    } on SocketException catch (e) {
-      print(e.message);
-      print(e.osError);
+    } on SocketException catch (e, s) {
       userResponse = AuthResponse.registerAuthError(
-          authMessageError: "Unable to Establish Internet Connection "
-              "Please check your internet connection and try again.",
-          type: RegisterTypeResponse.auth_error);
+        authMessageError: "Unable to Establish Internet Connection "
+            "Please check your internet connection and try again.",
+        type: RegisterTypeResponse.auth_error,
+      );
+      print(e);
+      print(s);
+      FlutterError.reportError(FlutterErrorDetails(
+        exception: e,
+        stack: s,
+        library: 'Flutter Custom Error',
+        context: ErrorSummary('while running async test code'),
+      ));
     } catch (error) {
       print(error);
     } finally {
@@ -148,13 +167,20 @@ class AuthRepo {
         (entity) => CompanyDetailsModel.fromJson(entity['company']),
         (errors) => CompanyPropError.fromJson(errors),
       );
-    } on SocketException catch (e) {
-      print(e.message);
-      print(e.osError);
+    } on SocketException catch (e, s) {
       companyResponse = AuthResponse.registerAuthError(
-          authMessageError: "Unable to Establish Internet Connection "
-              "Please check your internet connection and try again.",
-          type: RegisterTypeResponse.auth_error);
+        authMessageError: "Unable to Establish Internet Connection "
+            "Please check your internet connection and try again.",
+        type: RegisterTypeResponse.auth_error,
+      );
+      print(e);
+      print(s);
+      FlutterError.reportError(FlutterErrorDetails(
+        exception: e,
+        stack: s,
+        library: 'Flutter Custom Error',
+        context: ErrorSummary('while running async test code'),
+      ));
     } catch (error) {
       print(error);
     } finally {
@@ -181,16 +207,15 @@ class AuthRepo {
         (data) => StatusMessageModel.fromJson(data),
         (errors) => null,
       );
-    } on SocketException catch (e) {
-      print(e.message);
-      print(e.osError);
-      return const Resource.error(
-        errorMessage: "Unable to Establish Internet Connection "
-            "Please check your internet connection and try again.",
-        type: StatusType.INVALID_RESPONSE,
-      );
-    } catch (error) {
-      print(error);
+    } catch (e, s) {
+      print(e);
+      print(s);
+      FlutterError.reportError(FlutterErrorDetails(
+        exception: e,
+        stack: s,
+        library: 'Flutter Custom Error',
+        context: ErrorSummary('while running async test code'),
+      ));
       return const Resource.error(
         errorMessage: "Invalid response",
         type: StatusType.INVALID_RESPONSE,
@@ -200,7 +225,6 @@ class AuthRepo {
 
   static Future<Resource<Map<String, dynamic>?, dynamic>?> confirmOtpCode(
       Map<String, String> resetData) async {
-
     try {
       final url =
           Uri.parse("${endpoints.baseUrl}/${endpoints.confirmOtpEndPoint}");
@@ -220,26 +244,25 @@ class AuthRepo {
         (data) => data,
         (errors) => null,
       );
-    } on SocketException catch (e) {
-      print(e.message);
-      print(e.osError);
-      return const Resource.error(
-        errorMessage: "Unable to Establish Internet Connection "
-            "Please check your internet connection and try again.",
-        type: StatusType.INVALID_RESPONSE,
-      );
-    } catch (error) {
-      print(error);
+    } catch (e, s) {
+      print(e);
+      print(s);
+      FlutterError.reportError(FlutterErrorDetails(
+        exception: e,
+        stack: s,
+        library: 'Flutter Custom Error',
+        context: ErrorSummary('while running async test code'),
+      ));
       return const Resource.error(
         errorMessage: "Invalid response",
         type: StatusType.INVALID_RESPONSE,
       );
     }
-
   }
-  static Future<Resource<Map<String, dynamic>?, dynamic>?> resetNewPassword(
-      Map<String, String> resetData) async {
 
+  static Future<Resource<Map<String, dynamic>?, dynamic>?> resetNewPassword(
+    Map<String, String> resetData,
+  ) async {
     try {
       final url =
           Uri.parse("${endpoints.baseUrl}/${endpoints.resetPasswordEndpoint}");
@@ -259,22 +282,19 @@ class AuthRepo {
         (data) => data,
         (errors) => null,
       );
-    } on SocketException catch (e) {
-      print(e.message);
-      print(e.osError);
-      return const Resource.error(
-        errorMessage: "Unable to Establish Internet Connection "
-            "Please check your internet connection and try again.",
-        type: StatusType.INVALID_RESPONSE,
-      );
-    } catch (error) {
-      print(error);
+    } catch (e, s) {
+      print(e);
+      print(s);
+      FlutterError.reportError(FlutterErrorDetails(
+        exception: e,
+        stack: s,
+        library: 'Flutter Custom Error',
+        context: ErrorSummary('while running async test code'),
+      ));
       return const Resource.error(
         errorMessage: "Invalid response",
         type: StatusType.INVALID_RESPONSE,
       );
     }
-
   }
-
 }

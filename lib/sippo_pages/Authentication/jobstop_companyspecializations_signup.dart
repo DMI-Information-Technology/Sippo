@@ -45,7 +45,7 @@ class _CompanySignUpSpecializationsState
                 child: Column(
                   children: [
                     AutoSizeText(
-                      "Company Specializations",
+                      "company_specializations".tr,
                       style: dmsbold.copyWith(
                         fontSize: FontSize.title2(context),
                       ),
@@ -53,7 +53,7 @@ class _CompanySignUpSpecializationsState
                     ),
                     SizedBox(height: height / 50),
                     AutoSizeText(
-                      "Please choose a few specialties for the company\n(maximum 3)",
+                      "choose_few_specialties".tr,
                       style: dmsregular.copyWith(
                         fontSize: FontSize.paragraph2(context),
                       ),

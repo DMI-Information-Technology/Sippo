@@ -1,6 +1,9 @@
+import 'dart:async';
+
 import 'package:get/get.dart';
 import 'package:jobspot/JopController/user_profile_controller/profile_user_controller.dart';
 import 'package:jobspot/core/Refresh.dart';
+import 'package:jobspot/custom_app_controller/switch_status_controller.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/language_model.dart';
 import 'package:jobspot/sippo_data/user_repos/language_repo.dart';
 import 'package:jobspot/utils/states.dart';
@@ -14,6 +17,7 @@ class LanguageEditAddController extends GetxController {
   final _suggestionsLanguage = <LanguageModel>[].obs;
 
   List<LanguageModel> get suggestionsLanguage => _suggestionsLanguage.toList();
+  final loadingController = SwitchStatusController();
 
   Future<void> fetchSuggestionsLanguages() async {
     final response = await LanguageRepo.fetchLanguages();
@@ -35,10 +39,6 @@ class LanguageEditAddController extends GetxController {
   final _states = States().obs;
 
   States get states => _states.value;
-
-  void successState(bool value, [String? message]) {
-    _states.value = states.copyWith(isSuccess: value, message: message);
-  }
 
   void warningState(bool value, [String? message]) {
     _states.value = states.copyWith(isWarning: value, message: message);
@@ -73,16 +73,16 @@ class LanguageEditAddController extends GetxController {
   Future<void> addNewLanguage() async {
     final response = await LanguageRepo.addNewLanguage(newLanguage);
     await response?.checkStatusResponse(
-      onSuccess: (data, statusType) async {
+      onSuccess: (data, statusType) {
         if (data != null) {
           _profileController.profileState.languages = langProfileList
             ..add(data);
           print(langProfileList);
         } else {
-          await _profileController.fetchUserLanguage();
+          _profileController.fetchUserLanguage();
         }
         _profileController.profileState.refreshProfileView();
-        successState(true, 'New language added successfully.');
+        _states.value = states.copyWith(isSuccess: true);
       },
       onValidateError: (validateError, _) {
         _states.value =
@@ -108,7 +108,7 @@ class LanguageEditAddController extends GetxController {
           await _profileController.fetchUserLanguage();
         }
         _profileController.profileState.refreshProfileView();
-        successState(true, 'Language deleted successfully.');
+        _states.value = states.copyWith(isSuccess: true);
       },
       onValidateError: (validateError, _) {
         _states.value = states.copyWith(
@@ -134,7 +134,7 @@ class LanguageEditAddController extends GetxController {
       );
       return;
     }
-    _states.value = states.copyWith(isLoading: true);
+    _states.value = States(isLoading: true);
     if (newLanguage.id == null) {
       print("Lang.onSavedSubmitted: select language before submission.");
       warningState(true, "select language before submission.");
@@ -157,8 +157,19 @@ class LanguageEditAddController extends GetxController {
     _states.value = states.copyWith(isLoading: false);
   }
 
+  StreamSubscription<States>? statesSubs;
+
   @override
   void onInit() {
+    statesSubs = _states.listen(
+      (value) {
+        if (value.isLoading) {
+          loadingController.start();
+        } else {
+          loadingController.pause();
+        }
+      },
+    );
     (() async {
       await fetchSuggestionsLanguages();
     })();
@@ -167,6 +178,8 @@ class LanguageEditAddController extends GetxController {
 
   @override
   void onClose() {
+    statesSubs?.cancel();
+    loadingController.dispose();
     super.onClose();
   }
 }

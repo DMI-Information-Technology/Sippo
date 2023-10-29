@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 
@@ -15,6 +16,7 @@ class CustomBodyWidget extends StatefulWidget {
     this.automaticallyImplyLeading = false,
     this.leading,
     this.actions,
+    this.pinnedAppBar = false,
   })  : this.children = const [],
         this.itemCount = 0,
         this.itemBuilder = null,
@@ -30,6 +32,7 @@ class CustomBodyWidget extends StatefulWidget {
     this.automaticallyImplyLeading = false,
     this.leading,
     this.actions,
+    this.pinnedAppBar = false,
   })  : this.contentPadding = null,
         this.itemCount = 0,
         this.itemBuilder = null,
@@ -49,6 +52,7 @@ class CustomBodyWidget extends StatefulWidget {
     this.leading,
     this.separatedBuilder,
     this.actions,
+    this.pinnedAppBar = false,
   })  : this.child = null,
         this.children = const [];
 
@@ -65,6 +69,7 @@ class CustomBodyWidget extends StatefulWidget {
   final Widget? Function(BuildContext context, int index)? separatedBuilder;
   final Widget? leading;
   final List<Widget>? actions;
+  final bool pinnedAppBar;
 
   @override
   State<CustomBodyWidget> createState() => _CustomBodyWidgetState();
@@ -88,7 +93,7 @@ class _CustomBodyWidgetState extends State<CustomBodyWidget> {
             onTap: () => Get.back(),
             child: Icon(
               Icons.arrow_back,
-              color: Colors.white,
+              color: widget.pinnedAppBar ? Colors.black54 : Colors.white,
             ),
           )
         : widget.leading;
@@ -133,10 +138,14 @@ class _CustomBodyWidgetState extends State<CustomBodyWidget> {
           SliverAppBar(
             automaticallyImplyLeading: widget.automaticallyImplyLeading,
             leading: _inLeading(),
+            backgroundColor: widget.pinnedAppBar
+                ? Jobstopcolor.backgroudHome
+                : Colors.transparent,
+            pinned: widget.pinnedAppBar,
             actions: widget.actions,
             expandedHeight: _expandedAppBarHeight(),
             // toolbarHeight: widget.toolBarHeight ?? kToolbarHeight,
-            floating: true,
+            // floating: true,
             flexibleSpace: FlexibleSpaceBar(
               background: SizedBox(
                 key: _flexibleChildKey,

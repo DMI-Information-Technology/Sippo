@@ -62,6 +62,11 @@ class UserProfileHeaderWidget extends StatelessWidget {
                   SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
                   _buildNameText(context),
                   SizedBox(height: context.fromHeight(CustomStyle.huge2)),
+                  if (profileInfo.email != null &&
+                      profileInfo.email!.trim().isNotEmpty) ...[
+                    _buildEmailText(context),
+                    SizedBox(height: context.fromHeight(CustomStyle.huge2)),
+                  ],
                   if (profileInfo.locationCity != null &&
                       profileInfo.locationCity!.trim().isNotEmpty) ...[
                     _buildLocationText(context),
@@ -91,7 +96,16 @@ class UserProfileHeaderWidget extends StatelessWidget {
         NetworkBorderedCircularImage(
           imageUrl: profileImage,
           size: context.fromHeight(CustomStyle.imageSize2),
-          errorWidget: (context, url, error) => const CircleAvatar(),
+          errorWidget: (_, __, ___) {
+            print('hello');
+
+            return Image.asset(JobstopPngImg.signup);
+          },
+          placeholder: (_, __) {
+            print('hello');
+            return Image.asset(JobstopPngImg.signup);
+
+          },
           outerBorderColor: Colors.transparent,
         ),
         const Spacer(),
@@ -136,6 +150,16 @@ class UserProfileHeaderWidget extends StatelessWidget {
   Widget _buildLocationText(BuildContext context) {
     return Text(
       profileInfo.locationCity ?? "",
+      style: dmsregular.copyWith(
+        fontSize: FontSize.label(context),
+        color: Jobstopcolor.white,
+      ),
+    );
+  }
+
+  Widget _buildEmailText(BuildContext context) {
+    return Text(
+      profileInfo.email ?? "",
       style: dmsregular.copyWith(
         fontSize: FontSize.label(context),
         color: Jobstopcolor.white,

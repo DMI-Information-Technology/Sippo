@@ -12,6 +12,7 @@ import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/JopController/JobDescriptionController/job_description_controller.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/list_item_text.dart';
+import 'package:jobspot/sippo_custom_widget/top_description_info_company.dart';
 import 'package:jobspot/sippo_custom_widget/top_job_details_header.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_pages/sippo_abouts_companies/show_about_companies_details.dart';
@@ -29,16 +30,6 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
   final gallery = [JobstopPngImg.gallery1, JobstopPngImg.gallery2];
   final _controller = JobCompanyDetailsController.instance;
 
-  final bottomButtonScreen = [
-    BottomCompanyDetailsButtons(
-      onApplyClicked: () => Get.toNamed(SippoRoutes.userApplyJobs),
-    ),
-    CustomButton(
-      onTapped: () => Get.toNamed(SippoRoutes.userApplyJobs),
-      text: "Apply Now".tr,
-    ),
-  ];
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,12 +40,6 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
       body: BodyWidget(
         isScrollable: true,
         isTopScrollable: true,
-        // connectionStatusBar: Obx(() => ConditionalWidget(
-        //       !InternetConnectionService.instance.isConnected,
-        //       guaranteedBuilder: (_, __) => NetworkStatusNonWidget(
-        //         color: Colors.black54,
-        //       ),
-        //     )),
         paddingContent: EdgeInsets.only(
           top: context.fromHeight(CustomStyle.paddingValue),
           right: context.fromWidth(CustomStyle.paddingValue),
@@ -78,12 +63,35 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
             EdgeInsets.all(context.fromWidth(CustomStyle.paddingValue)),
         bottomScreen: GlobalStorageService.appUse == AppUsingType.user
             ? Obx(
-                () => bottomButtonScreen[
-                    _controller.jobDetailsState.selectedPageView],
+                () {
+                  final isSaved =
+                      _controller.jobDetailsState.jopDetails.isSaved == true;
+                  return [
+                    BottomCompanyDetailsButtons(
+                      onApplyClicked: applyTapped,
+                      onFavClicked: () => _controller.onToggleSavedJobs(),
+                      isSaved: isSaved,
+                    ),
+                    CustomButton(
+                      onTapped: applyTapped,
+                      text: "Apply Now".tr,
+                    ),
+                  ][_controller.jobDetailsState.selectedPageView];
+                },
               )
             : null,
       ),
     );
+  }
+
+  void applyTapped() {
+    _controller.sharedDataService.jobGlobalState.details =
+        _controller.jobDetailsState.jopDetails;
+    _controller.sharedDataService.jobGlobalState.id =
+        _controller.jobDetailsState.jopDetails.id ?? -1;
+    Get.toNamed(SippoRoutes.userApplyJobs)?.then((_) {
+      _controller.setJobDetailsState();
+    });
   }
 
   Widget _buildTopJobDetailsHeader(BuildContext context) {
@@ -132,100 +140,20 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
           SizedBox(
             height: context.fromHeight(CustomStyle.xxxl),
           ),
-          FittedBox(
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                //   SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-                Obx(() => _buildTopInfoJobText(
-                      context,
-                      //'Company name',
-                      _controller.jobDetailsState.jopDetails.company?.name ??
-                          '',
-                    )),
-                Container(
-                  width: 10,
-                  height: 10,
-                  decoration: ShapeDecoration(
-                    color: Jobstopcolor.primarycolor,
-                    shape: OvalBorder(),
-                  ),
-                ),
-                SizedBox(width: context.fromWidth(CustomStyle.xxxl)),
-                Obx(() => _buildTopInfoJobText(
-                      context,
-                      //'Work place',
-                      _controller.jobDetailsState.jopDetails.company?.city ??
-                          '',
-                    )),
-                //  SizedBox(height: context.fromHeight(CustomStyle.huge2)),
-                Container(
-                  width: 10,
-                  height: 10,
-                  decoration: ShapeDecoration(
-                    color: Jobstopcolor.primarycolor,
-                    shape: OvalBorder(),
-                  ),
-                ),
-                SizedBox(width: context.fromWidth(CustomStyle.xxxl)),
-                Obx(() {
-                  final createAt =
-                      _controller.jobDetailsState.jopDetails.createdAt;
-                  return createAt != null && createAt.isNotEmpty
-                      ? _buildTopInfoJobText(
-                          context,
-                          // 'Publish time',
-                          calculateElapsedTimeFromStringDate(
-                                _controller
-                                        .jobDetailsState.jopDetails.createdAt ??
-                                    '',
-                              ) ??
-                              "",
-                        )
-                      : const SizedBox.shrink();
-                }),
-              ],
-            ),
-          )
+          Obx(() {
+            final job = _controller.jobDetailsState.jopDetails;
+            return TopDescriptionInfoCompanyWidget(
+              startText: job.company?.name,
+              middleText: job.locationAddress?.name,
+              endText: calculateElapsedTimeFromStringDate(job.createdAt),
+            );
+          }),
         ],
       ),
     );
   }
 
-  Widget _buildTopInfoJobText(
-    BuildContext context,
-    // String label,
-    String content,
-  ) {
-    return SizedBox(
-      width: context.width / 3,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          // AutoSizeText(
-          //   label,
-          //   style: dmsregular.copyWith(
-          //     fontSize: FontSize.title5(context),
-          //     color: Jobstopcolor.primarycolor,
-          //   ),
-          //   overflow: TextOverflow.clip,
-          // ),
-          //SizedBox(width: context.fromWidth(CustomStyle.xxxl)),
-          Expanded(
-            child: AutoSizeText(
-              content,
-              style: dmsmedium.copyWith(
-                fontSize: FontSize.title5(context),
-                color: Jobstopcolor.secondary,
-              ),
-              overflow: TextOverflow.ellipsis,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
+
 
   Widget _buildButtonTaps(BuildContext) {
     Size size = MediaQuery.of(context).size;
@@ -417,11 +345,13 @@ class BottomCompanyDetailsButtons extends StatelessWidget {
   const BottomCompanyDetailsButtons({
     super.key,
     this.onFavClicked,
+    this.isSaved = false,
     required this.onApplyClicked,
   });
 
   final void Function()? onFavClicked;
   final void Function() onApplyClicked;
+  final bool isSaved;
 
   @override
   Widget build(BuildContext context) {
@@ -431,28 +361,21 @@ class BottomCompanyDetailsButtons extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Container(
-          height: height / 15,
-          width: height / 15,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(50),
-            color: Jobstopcolor.white,
-            boxShadow: const [
-              BoxShadow(
-                blurRadius: 5,
-                color: Jobstopcolor.shedo,
-              )
-            ],
-          ),
-          child: InkWell(
-            onTap: onFavClicked,
-            child: Padding(
-              padding: EdgeInsets.all(width / 28),
-              child: Image.asset(
-                JobstopPngImg.order,
-                color: Jobstopcolor.secondary,
-              ),
+        ElevatedButton(
+          onPressed: onFavClicked,
+          child: Padding(
+            padding: EdgeInsets.all(
+              context.fromWidth(CustomStyle.xxxl),
             ),
+            child: Icon(
+              isSaved ? Icons.bookmark_rounded : Icons.bookmark_border_rounded,
+              color: isSaved ? Colors.yellow : Jobstopcolor.secondary,
+              size: height / 21,
+            ),
+          ),
+          style: ElevatedButton.styleFrom(
+            shape: CircleBorder(),
+            backgroundColor: Colors.white,
           ),
         ),
         SizedBox(width: width / 36),

@@ -1,9 +1,11 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JopController/user_profile_controller/profile_user_controller.dart';
+import 'package:jobspot/custom_app_controller/switch_status_controller.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/education_model.dart';
 import 'package:jobspot/sippo_data/user_repos/education_repo.dart';
-
 import 'package:jobspot/utils/getx_text_editing_controller.dart';
 import 'package:jobspot/utils/helper.dart' as helper;
 import 'package:jobspot/utils/states.dart';
@@ -11,7 +13,7 @@ import 'package:jobspot/utils/states.dart';
 class EditAddEducationController extends GetxController {
   static EditAddEducationController get instance => Get.find();
   final GlobalKey<FormState> formKey = GlobalKey();
-
+  final loadingOverly = SwitchStatusController();
   final _states = States().obs;
 
   States get states => _states.value;
@@ -181,13 +183,13 @@ class EditAddEducationController extends GetxController {
 
   Future<void> onDeleteSubmitted() async {
     if (states.isLoading) return;
-    _states.value = states.copyWith(isLoading: true);
+    _states.value = States(isLoading: true);
     await deleteEducationById();
     _states.value = states.copyWith(isLoading: false);
   }
 
   Future<void> openEditing() async {
-    _states.value = states.copyWith(isLoading: true);
+    _states.value = States(isLoading: true);
     if (isEditing) {
       _education.value = await getEducationById(editingId) ?? _education.value;
       if (_education.value.id != null) eduState.setAll(_education.value);
@@ -196,8 +198,17 @@ class EditAddEducationController extends GetxController {
     print("isLoading: ${states.isLoading}");
   }
 
+  StreamSubscription<States>? statesSubs;
+
   @override
   void onInit() {
+    statesSubs = _states.listen((value) {
+      if (value.isLoading) {
+        loadingOverly.start();
+      } else {
+        loadingOverly.pause();
+      }
+    });
     super.onInit();
     openEditing();
   }
@@ -205,6 +216,7 @@ class EditAddEducationController extends GetxController {
   @override
   void onClose() {
     eduState.disposeTextControllers();
+    loadingOverly.dispose();
     _profileUserController.editingId = -1;
     super.onClose();
   }

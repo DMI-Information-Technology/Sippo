@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jobspot/JobGlobalclass/global_storage.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
@@ -32,7 +33,9 @@ class _JobHomeViewWidgetState extends State<JobHomeViewWidget> {
             if (states == null) return const SizedBox.shrink();
             if (states.isError) return _buildFieldJobsMessage(context, states);
             if (states.isSuccess) return _buildJobsCards(context);
-            if (states.isLoading)
+            if (states.isLoading && _controller.jobsList.isNotEmpty)
+              return _buildJobsCards(context);
+            else if (states.isLoading)
               return const Center(child: CircularProgressIndicator());
             return const SizedBox.shrink();
           },
@@ -94,17 +97,30 @@ class _JobHomeViewWidgetState extends State<JobHomeViewWidget> {
                   ),
                   width: context.width / 1.3,
                   jobDetailsPost: item,
-                  canApply: false,
+                  canApply: GlobalStorageService.isUser,
                   imagePath: item.company?.profileImage?.url ?? "",
                   onImageProfileTap: () {
                     SharedGlobalDataService.onCompanyTap(item.company);
                   },
-                  onCardTap: () {
-                    SharedGlobalDataService.onJobTap(item);
+                  onCardTap: () async {
+                    SharedGlobalDataService.onJobTap(
+                      item,
+                      handler: (job) {
+                        if (job?.isSaved != item.isSaved)
+                          _controller.refreshJobs();
+                      },
+                    );
                   },
-                  onApplyTap: () {
-                    SharedGlobalDataService.onJobTap(item);
+                  onApplyTap: () async {
+                    SharedGlobalDataService.onJobTap(
+                      item,
+                      handler: (job) {
+                        if (job?.isSaved != item.isSaved)
+                          _controller.refreshJobs();
+                      },
+                    );
                   },
+                  onActionTap: () => _controller.onToggleSavedJobsTap(item.id,index),
                   isEditable: false,
                   onAddressTextTap: (location) async {
                     lunchMapWithLocation(

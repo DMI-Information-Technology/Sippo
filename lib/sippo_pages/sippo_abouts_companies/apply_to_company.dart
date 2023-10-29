@@ -124,7 +124,7 @@ class _SippoApplyCompanyState extends State<SippoApplyCompany> {
             children: [
               CustomButton(
                 onTapped: () {},
-                text: "Find Another Job".tr,
+                text: "find_another_job".tr,
                 backgroundColor: Jobstopcolor.lightprimary,
                 textColor: Jobstopcolor.primarycolor,
               ),
@@ -135,7 +135,7 @@ class _SippoApplyCompanyState extends State<SippoApplyCompany> {
                     return Get.currentRoute == SippoRoutes.userDashboard;
                   });
                 },
-                text: "Back to home".tr,
+                text: "back_to_home".tr,
               ),
             ],
           )
@@ -146,7 +146,7 @@ class _SippoApplyCompanyState extends State<SippoApplyCompany> {
               //   Get.to(() => const JobSuccess());
               // }
             },
-            text: 'Apply Now'.tr,
+            text: 'apply_now'.tr,
           ));
   }
 
@@ -155,7 +155,7 @@ class _SippoApplyCompanyState extends State<SippoApplyCompany> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Upload CV".tr,
+          "upload_cv".tr,
           style: dmsbold.copyWith(
             fontSize: FontSize.title5(context),
             color: Jobstopcolor.primarycolor,
@@ -163,7 +163,7 @@ class _SippoApplyCompanyState extends State<SippoApplyCompany> {
         ),
         SizedBox(height: context.fromHeight(CustomStyle.huge)),
         Text(
-          "Add your CV/Resume to apply for a job".tr,
+          "add_cv_desc".tr,
           style: dmsregular.copyWith(
             fontSize: FontSize.paragraph3(context),
             color: Jobstopcolor.darkgrey,
@@ -176,7 +176,7 @@ class _SippoApplyCompanyState extends State<SippoApplyCompany> {
             // isJobApplied: true,
             cvCardWidget: CvCardWidget(
                 fileCv: _controller.applyCompanyState.cvCompanyApply),
-            title: 'Upload your CV',
+            title: 'upload_your_cv'.tr,
             onUploadTapped: () async {
               loadingController.status = true;
               await _controller.uploadCvFile();
@@ -196,7 +196,7 @@ class _SippoApplyCompanyState extends State<SippoApplyCompany> {
         SizedBox(height: context.fromHeight(CustomStyle.xxl)),
         InputBorderedField(
           controller: _controller.applyCompanyState.description,
-          hintText: "Explain why you are the right person for this company".tr,
+          hintText: "company_apply_desc".tr,
           maxLine: 5,
           verticalPaddingValue: context.fromWidth(
             CustomStyle.paddingValue,
@@ -218,7 +218,7 @@ class _SippoApplyCompanyState extends State<SippoApplyCompany> {
         ),
         SizedBox(height: height / 36),
         Text(
-          "You Applied has been sent".tr,
+          "you_applied_sent".tr,
           style: dmsbold.copyWith(fontSize: 16, color: Jobstopcolor.darkgrey),
         ),
       ],
@@ -279,7 +279,7 @@ class _SippoApplyCompanyState extends State<SippoApplyCompany> {
               )),
           Obx(() => _buildTopInfoJobText(
                 context,
-                'Invented Date',
+                'invented_date',
                 _controller.applyCompanyState.company.establishmentDate ?? "",
               )),
         ],

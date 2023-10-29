@@ -49,8 +49,7 @@ class _ShowCommunityCompanyCompaniesListState
             return InkWell(
               onTap: () => _onCompanyCardTapped(item),
               child: ConnectionCard(
-                imageUrl: 'https://www.designbust.com/download/1060/'
-                    'png/microsoft_logo_transparent512.png',
+                imageUrl: item.profileImage?.url??"",
                 connectionName: item.name ?? '',
                 isFollowing: item.isFollowed == true,
                 onFollowTapped: () => _controller.onToggleSubmitted(item),

@@ -12,16 +12,12 @@ import 'package:jobspot/utils/app_use.dart';
 import 'package:jobspot/utils/getx_text_editing_controller.dart';
 import 'package:jobspot/utils/states.dart';
 
-import '../../sippo_data/locations/locationsRepo.dart';
-import '../../sippo_data/model/locations_model/location_address_model.dart';
-
 class AuthController extends GetxController {
   static AuthController get instance => Get.find();
   final _netController = InternetConnectionService.instance;
   final _seconds = 60.obs;
 
   int get seconds => _seconds.toInt();
-  final authLocationAddressState = AuthStates();
 
   void set seconds(int value) => _seconds.value = value;
   final _states = States().obs;
@@ -51,7 +47,6 @@ class AuthController extends GetxController {
 
   @override
   void onInit() {
-    fetchLocationsAddress();
     super.onInit();
   }
 
@@ -184,6 +179,9 @@ class AuthController extends GetxController {
         print(
           "from checkAuthResponseState on error: ${response?.validateError?.message}",
         );
+        print(
+          "from checkAuthResponseState on error: ${response?.validateError?.errors}",
+        );
         _states.value = states.copyWith(
           isError: true,
           message: response?.validateError?.message,
@@ -291,44 +289,9 @@ class AuthController extends GetxController {
     );
   }
 
-  Future<void> fetchLocationsAddress() async {
-    authLocationAddressState.states.value = States(isLoading: true);
-    final response = await LocationsRepo.fetchLocations();
-    authLocationAddressState.states.value = States(isLoading: false);
-    await response?.checkStatusResponse(
-      onSuccess: (data, _) {
-        if (data != null) {
-          authLocationAddressState.locationsAddressList = data;
-          authLocationAddressState.states.value = States(isSuccess: true);
-        }
-      },
-      onValidateError: (validateError, _) {},
-      onError: (message, _) {
-        authLocationAddressState.states.value = States(isError: true);
-      },
-    );
-  }
-
   @override
   void onClose() {
     resetEmail.dispose();
     super.onClose();
   }
-}
-
-class AuthStates {
-  final _locationsAddress = <LocationAddress>[].obs;
-  final states = States().obs;
-
-  void resetStates() => states.value = States();
-
-  List<LocationAddress> get locationsAddressList => _locationsAddress.toList();
-
-  List<String> get locationsAddressNameList => locationsAddressList
-      .where((e) => e.name != null)
-      .map((e) => e.name ?? '')
-      .toList();
-
-  set locationsAddressList(List<LocationAddress> value) =>
-      _locationsAddress.value = value;
 }

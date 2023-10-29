@@ -1,11 +1,12 @@
 import 'package:get/get.dart';
 
 class ValidatingInput {
-  static final RegExp _fullNameRegex = RegExp(r'^[a-zA-Z\s]+$');
-  static final RegExp _phoneNumberRegex = RegExp(r'^(092|091)\d{7}$');
-  static final RegExp _wordRegExp = RegExp(r'^[a-zA-Z\u0600-\u06FF ]+$');
+  static final _fullNameRegex = RegExp(r'^[a-zA-Z\s]+$');
+  static final _phoneNumberRegex = RegExp(r'^(092|091)\d{7}$');
+  static final _wordRegExp = RegExp(r'^[a-zA-Z\u0600-\u06FF ]+$');
   static final _emailRegExp = RegExp(
-      r"^[a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$");
+    r"^[a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$",
+  );
 
   // static final RegExp _noPhoneRegex = RegExp(r'^(\+2189|09)([12]|[0-9]{7})$');
   // static final RegExp _emailRegex =
@@ -17,8 +18,9 @@ class ValidatingInput {
   // static final RegExp passwordRegex = RegExp(
   //     r'^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])[a-zA-Z0-9!@#$%^&*(),.?":{}|<>]{8,}$');
   static final RegExp passwordRegex = RegExp(
-      r'^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>])'
-      r'(?=.*[0-9].*[0-9].*[0-9].*[0-9].*[0-9].*[0-9])[a-zA-Z0-9!@#$%^&*(),.?":{}|<>]{8,}$');
+    r'^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&*(),.?":{}|<>])'
+    r'(?=.*[0-9].*[0-9].*[0-9].*[0-9].*[0-9].*[0-9])[a-zA-Z0-9!@#$%^&*(),.?":{}|<>]{8,}$',
+  );
 
   static bool validateWords(String value) {
     return _wordRegExp.hasMatch(value);
@@ -35,7 +37,7 @@ class ValidatingInput {
   static String? validateEmptyField(String? value, {String? message}) {
     return value != null && value.trim().isNotEmpty
         ? null
-        : message ?? 'this field is required.';
+        : message ?? "is_req".tr;
   }
 
   static String? validatePassword(String? value) {
@@ -45,16 +47,15 @@ class ValidatingInput {
     }
     if (!passwordRegex.hasMatch(password)) {
       if (password.length < 8) {
-        return 'Password should be at least 8 characters long.';
+        return 'password_with_8_char_long'.tr;
       } else if (!RegExp(r'[a-z]').hasMatch(password)) {
-        return 'Password should contain at least one lowercase letter.';
+        return 'password_with_lowercase'.tr;
       } else if (!RegExp(r'[A-Z]').hasMatch(password)) {
-        return 'Password should contain at least one uppercase letter.';
+        return 'password_with_uppercase'.tr;
         // } else if (!RegExp(r'[!@#$%^&*(),.?":{}|<>]').hasMatch(value)) {
         //   return 'Password should contain at least one symbol.';
-      } else if (!RegExp(r'[0-9].*[0-9].*[0-9].*[0-9].*[0-9].*[0-9]')
-          .hasMatch(password)) {
-        return 'Password should contain at least 6 digits.';
+      } else if (!RegExp(r'[0-9]').hasMatch(password)) {
+        return 'password_with_digit_number'.tr;
       }
     }
 
@@ -63,9 +64,9 @@ class ValidatingInput {
 
   static String? validateEmail(String? email) {
     if (email == null || email.isEmpty) {
-      return 'Please enter an email address.';
+      return 'enter_email_address'.tr;
     } else if (!_emailRegExp.hasMatch(email.trim())) {
-      return 'Please enter a valid email address.';
+      return 'enter_valid_email_address'.tr;
     } else {
       return null;
     }
@@ -74,18 +75,18 @@ class ValidatingInput {
   static String? validateDescription(String? value) {
     final validateEmptyString = validateEmptyField(value) ?? '';
     if (validateEmptyString.isNotEmpty) return validateEmptyString;
+    bool containEmail =
+        RegExp(r'[\w\.]+[@][\w\.]+').hasMatch(value??"");
+    print(containEmail);
     String cleanedDescription = removeSymbolsAnSpace(value ?? '');
-    print("cleanedDescription: $cleanedDescription");
     bool containsPhoneNumber = containsValidPhoneNumber(cleanedDescription);
-    return containsPhoneNumber
-        ? 'Please do not enter phone number or email in the description.'
+    return containsPhoneNumber || containEmail
+        ? 'do_not_enter_phone_number_in_description'.tr
         : null;
   }
 
-  static String removeSymbolsAnSpace(String text) {
-    RegExp regex = RegExp(r'[._#$%@\-,$-/\s]');
-    return text.replaceAll(regex, '');
-  }
+  static String removeSymbolsAnSpace(String text) =>
+      text.replaceAll(RegExp(r'[._#$%@\-,$-/\s]'), '');
 
   static bool containsValidPhoneNumber(String text) {
     RegExp phoneRegex = RegExp(

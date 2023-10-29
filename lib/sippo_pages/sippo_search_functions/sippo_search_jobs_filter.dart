@@ -53,9 +53,13 @@ class _SippoSearchJobsFilterState extends State<SippoSearchJobsFilter> {
               fontSize: FontSize.title4(context),
             ),
             InputBorderedField(
+              controller:
+                  _controller.filterSearchState.specializationsSearchController,
               readOnly: true,
-              onTap: () => Get.back(),
-              initialValue: _controller.filterSearchState.specialization.name,
+              onTap: () => Get.toNamed(
+                SippoRoutes.filterSpecializationsJobsSearch,
+              ),
+              hintText: 'Choose a category...',
             ),
             SizedBox(height: height / 36),
             TitleLabelWidget(
@@ -131,9 +135,7 @@ class _SippoSearchJobsFilterState extends State<SippoSearchJobsFilter> {
         ),
         bottomScreen: CustomButton(
           onTapped: () async {
-            await _controller.onApplyFilterSubmitted();
-            Get.until(
-                (_) => Get.currentRoute == SippoRoutes.sippoJobFilterSearch);
+            await _controller.onApplyFilterSubmitted().then((_) => Get.back());
           },
           text: "Apply now",
         ),

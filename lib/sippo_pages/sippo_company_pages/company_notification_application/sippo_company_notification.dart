@@ -99,7 +99,7 @@ class _SippoCompanyNotificationState extends State<SippoCompanyNotification> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          "Error",
+          "error".tr,
           style: dmsbold.copyWith(
             color: Jobstopcolor.primarycolor,
             fontSize: FontSize.title2(context),
@@ -107,7 +107,7 @@ class _SippoCompanyNotificationState extends State<SippoCompanyNotification> {
         ),
         SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
         Text(
-          _controller.states.message ?? 'something wrong is happened.',
+          _controller.states.message ?? 'something_wrong_happened'.tr,
           style: dmsregular.copyWith(
             fontSize: FontSize.paragraph3(context),
           ),
@@ -123,7 +123,7 @@ class _SippoCompanyNotificationState extends State<SippoCompanyNotification> {
               notificationApplicationController.changeStates(
                   isError: false, message: '');
             },
-            text: 'Try again',
+            text: 'try_again'.tr,
           ),
         )
       ],
@@ -147,7 +147,7 @@ class _SippoCompanyNotificationState extends State<SippoCompanyNotification> {
         builder: (context, setState) => Column(
           children: [
             SettingItemWidget(
-              title: "Remove this notification",
+              title: "remove_notification".tr,
               icon: Icon(
                 Icons.delete_forever_outlined,
                 // color:
@@ -163,7 +163,7 @@ class _SippoCompanyNotificationState extends State<SippoCompanyNotification> {
               // isSelected: _controller.isMatchOptionOfIndex(0),
             ),
             SettingItemWidget(
-              title: 'Turn off Notification',
+              title: 'turn_off_notification'.tr,
               icon: Icon(
                 Icons.notifications_off_outlined,
                 // color: _controller.isMatchOptionOfIndex(1) ? Colors.white : null,
@@ -202,17 +202,17 @@ class _SippoCompanyNotificationState extends State<SippoCompanyNotification> {
   void _onDeleteConfirmation(
       BuildContext context, int index, String? notificationId) async {
     Get.dialog(CustomAlertDialog(
-      title: 'Delete Notification',
-      description: 'Are you sure you want to delete this notification?',
+      title: 'delete_notification'.tr,
+      description: 'confirm_delete_notification'.tr,
       onConfirm: () {
         Get.back();
         _controller.removedNotification(index, notificationId);
       },
-      confirmBtnTitle: 'Yes',
+      confirmBtnTitle: 'Yes'.tr,
       onCancel: () {
         Get.back();
       },
-      cancelBtnTitle: 'Cancel',
+      cancelBtnTitle: 'cancel'.tr,
     ));
   }
 

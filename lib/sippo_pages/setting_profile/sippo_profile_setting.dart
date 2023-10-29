@@ -8,13 +8,13 @@ import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
-import 'package:jobspot/utils/app_use.dart';
-
 import 'package:jobspot/JopController/AuthenticationController/sippo_auth_controller.dart';
 import 'package:jobspot/sippo_custom_widget/confirmation_bottom_sheet.dart';
 import 'package:jobspot/sippo_custom_widget/container_bottom_sheet_widget.dart';
 import 'package:jobspot/sippo_custom_widget/setting_item_widget.dart';
 import 'package:jobspot/sippo_themes/themecontroller.dart';
+import 'package:jobspot/utils/app_use.dart';
+
 import '../sippo_user_pages/job_updatepassword.dart';
 
 class SippoProfileSetting extends StatefulWidget {
@@ -55,7 +55,14 @@ class _SippoProfileSettingState extends State<SippoProfileSetting> {
                 contentPadding: context.fromHeight(CustomStyle.paddingValue2),
                 title: 'personal_information'.tr,
                 icon: Icon(Icons.person, color: Jobstopcolor.primarycolor),
-                onTap: () {},
+                onTap: () {
+                  switch (GlobalStorageService.appUse) {
+                    case AppUsingType.user:
+                      Get.toNamed(SippoRoutes.editUserProfile);
+                    case AppUsingType.company:
+                      Get.toNamed(SippoRoutes.editCompanyProfile);
+                  }
+                },
               ),
               SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
               SettingItemWidget(

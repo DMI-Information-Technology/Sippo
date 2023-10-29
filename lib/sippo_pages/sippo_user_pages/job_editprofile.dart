@@ -148,7 +148,7 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
                               context.fromWidth(CustomStyle.paddingValue),
                         ),
                         child: Text(
-                          'Pending email "${data?.pendingEmail}"',
+                          '${'pending_email'.tr} "${data?.pendingEmail}"',
                           style: dmsregular.copyWith(
                               fontSize: FontSize.label(context)),
                         ),
@@ -169,7 +169,7 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
                   _buildInputPhoneNumberField(
                     context,
                     profileEditState.phone,
-                    "Phone number",
+                    "phone_number".tr,
                     isPrimary: true,
                   ),
                   SizedBox(
@@ -180,7 +180,7 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
                       horizontal: context.fromWidth(CustomStyle.paddingValue),
                     ),
                     child: Text(
-                      'Secondary Phone Number',
+                      'second_phone_number'.tr,
                       style:
                           dmsmedium.copyWith(fontSize: FontSize.label(context)),
                     ),
@@ -188,7 +188,7 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
                   _buildInputPhoneNumberField(
                     context,
                     profileEditState.secondaryPhone,
-                    "Secondary Phone number",
+                    "second_phone_number".tr,
                   ),
                   SizedBox(
                     height: context.fromHeight(CustomStyle.spaceBetween),
@@ -198,14 +198,14 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
                       horizontal: context.fromWidth(CustomStyle.paddingValue),
                     ),
                     child: Text(
-                      'Gender',
+                      'gender'.tr,
                       style:
                           dmsmedium.copyWith(fontSize: FontSize.label(context)),
                     ),
                   ),
                   InputBorderedField(
                     readOnly: true,
-                    hintText: "Select your Gender",
+                    hintText: "select_your_gender".tr,
                     gController: profileEditState.gender,
                     height: context.fromHeight(CustomStyle.inputBorderedSize),
                     fontSize: FontSize.label(context),
@@ -236,7 +236,7 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
                       horizontal: context.fromWidth(CustomStyle.paddingValue),
                     ),
                     child: Text(
-                      'Location Address',
+                      'location_address'.tr,
                       style:
                           dmsmedium.copyWith(fontSize: FontSize.label(context)),
                     ),
@@ -244,7 +244,7 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
                   Obx(() {
                     final location = _controller.profileEditState;
                     return CustomDropdownButton(
-                      textHint: 'Select your location place.',
+                      textHint: 'select_location_address'.tr,
                       labelList: location.locationsAddressNameList,
                       values: location.locationsAddressList,
                       fillColor: Colors.white,
@@ -272,7 +272,7 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
                 await _controller.onSaveSubmitted();
               }
             },
-            text: "Save"),
+            text: "save".tr),
       ),
       backgroundColor: Jobstopcolor.backgroudHome,
     );
@@ -378,7 +378,7 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
             ? (value) {
                 return ValidatingInput.validateEmptyField(
                   value?.number,
-                  message: "phone number field is required.",
+                  message: "phone_number_required".tr,
                 );
               }
             : null,
