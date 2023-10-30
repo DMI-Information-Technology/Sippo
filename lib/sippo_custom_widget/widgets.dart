@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
+import 'package:jobspot/custom_app_controller/switch_status_controller.dart';
 import 'package:jobspot/utils/getx_text_editing_controller.dart';
 
 import '../JobGlobalclass/jobstopfontstyle.dart';
@@ -552,6 +553,7 @@ class InputBorderedField extends StatelessWidget {
     this.focusNode,
     this.fontColor,
     this.prefixIconColor,
+
     // this.isLoading = false,
   });
 
@@ -583,7 +585,6 @@ class InputBorderedField extends StatelessWidget {
   final Color? prefixIconColor;
 
   // final bool isLoading;
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -636,6 +637,144 @@ class InputBorderedField extends StatelessWidget {
         onTapOutside: onTapOutside,
       ),
     );
+  }
+}
+
+class PasswordInputBorderedField extends StatefulWidget {
+const   PasswordInputBorderedField({
+    super.key,
+    this.height,
+    this.width,
+    this.hintText,
+    this.hintStyle,
+    this.keyboardType,
+    this.maxLine = 1,
+    this.fontSize,
+    this.onTap,
+    this.onTextChanged,
+    this.prefixIcon,
+    this.readOnly = false,
+    this.controller,
+    this.initialValue,
+    this.validator,
+    this.textInputAction = TextInputAction.done,
+    this.onFieldSubmitted,
+    this.onTapOutside,
+    this.borderRadiusValue,
+    this.verticalPaddingValue,
+    this.gController,
+    this.fillColor,
+    this.maxLength,
+    this.focusNode,
+    this.fontColor,
+    this.prefixIconColor,
+
+    // this.isLoading = false,
+  });
+
+  final Color? fontColor;
+  final double? verticalPaddingValue;
+  final String? Function(String? value)? validator;
+  final GetXTextEditingController? gController;
+  final String? initialValue;
+  final String? hintText;
+  final TextStyle? hintStyle;
+  final double? height;
+  final double? width;
+  final TextEditingController? controller;
+  final TextInputType? keyboardType;
+  final int? maxLine;
+  final double? fontSize;
+  final bool readOnly;
+  final VoidCallback? onTap;
+  final void Function(String value)? onTextChanged;
+  final void Function(String value)? onFieldSubmitted;
+  final void Function(PointerDownEvent event)? onTapOutside;
+  final Widget? prefixIcon;
+  final TextInputAction? textInputAction;
+  final double? borderRadiusValue;
+  final Color? fillColor;
+  final int? maxLength;
+  final FocusNode? focusNode;
+  final Color? prefixIconColor;
+
+  @override
+  State<PasswordInputBorderedField> createState() => _PasswordInputBorderedFieldState();
+}
+
+class _PasswordInputBorderedFieldState extends State<PasswordInputBorderedField> {
+  final _obscureController = SwitchStatusController();
+
+  // final bool isLoading;
+  @override
+  Widget build(BuildContext context) {
+    return ListenableBuilder(
+        listenable: _obscureController,
+        builder: (context, _) {
+          return Container(
+            height: widget.height,
+            width: widget.width,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              // color: Jobstopcolor.white,
+            ),
+            child: TextFormField(
+              focusNode: widget.focusNode,
+              maxLength: widget.maxLength,
+              textInputAction: widget.textInputAction,
+              initialValue: widget.initialValue,
+              readOnly: widget.readOnly,
+              controller: widget.gController?.controller ?? widget.controller,
+              style: dmsregular.copyWith(
+                  fontSize: widget.fontSize,
+                  color: widget.fontColor ?? Colors.black87),
+              cursorColor: Jobstopcolor.grey,
+              textAlignVertical: TextAlignVertical.center,
+              decoration: InputDecoration(
+                counterStyle: TextStyle(height: 0.0),
+                counterText: '',
+                contentPadding: EdgeInsets.symmetric(
+                  vertical: widget.verticalPaddingValue ?? 0.0,
+                  horizontal: context.fromWidth(CustomStyle.paddingValue),
+                ),
+                filled: true,
+                hintText: widget.hintText,
+                hintStyle: widget.hintStyle ??
+                    dmsregular.copyWith(
+                      fontSize: FontSize.label(context),
+                      color: Colors.grey,
+                    ),
+                border: OutlineInputBorder(
+                  borderRadius:
+                      BorderRadius.circular(widget.borderRadiusValue ?? 15),
+                  borderSide: BorderSide.none,
+                ),
+                fillColor: widget.fillColor ?? Jobstopcolor.white,
+                suffixIcon:InkWell(
+                  onTap: () {
+                    _obscureController.status =
+                    !_obscureController.status;
+                  },
+                  child: Icon(
+                    _obscureController.status == true
+                        ? Icons.visibility_off
+                        : Icons.visibility,
+                  ),
+                ),
+                prefixIcon: widget.prefixIcon,
+                prefixIconColor: widget.prefixIconColor,
+              ),
+              obscureText: _obscureController.status == true,
+              keyboardType: widget.keyboardType,
+              maxLines: widget.maxLine,
+              onTap: widget.onTap,
+              onChanged: widget.onTextChanged,
+              validator: widget.validator,
+              onFieldSubmitted: widget.onFieldSubmitted,
+              onTapOutside: widget.onTapOutside,
+            ),
+          );
+        });
   }
 }
 

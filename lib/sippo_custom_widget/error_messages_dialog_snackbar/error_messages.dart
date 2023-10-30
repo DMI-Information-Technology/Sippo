@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
+
 import '../widgets.dart';
 
 void showNoConnectionDialog() {
@@ -17,6 +17,8 @@ void showNoConnectionDialog() {
     ),
   );
 }
+
+
 
 void invalidOTPSnackbar([String? message]) {
   Get.snackbar(

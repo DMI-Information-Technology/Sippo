@@ -10,6 +10,9 @@ const String companyLoginEndpoint = "auth/company/login";
 const String forgetPasswordEndpoint = "auth/forgot-password";
 const String confirmOtpEndPoint = "auth/otp-check";
 const String resetPasswordEndpoint = "auth/reset-password";
+const String changePasswordCompanyEndpoint = "company/profile/update-password";
+const String changePasswordUserEndpoint = "user/profile/update-password";
+
 const String companyLogoutEndpoint = "company/logout";
 const String skillsEndpoint = "skills";
 const String languageEndpoint = "languages";

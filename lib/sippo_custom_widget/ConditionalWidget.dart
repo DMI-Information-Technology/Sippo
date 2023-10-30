@@ -24,7 +24,8 @@ class ConditionalWidget<T> extends StatelessWidget {
   final T? data;
   final Widget? Function(BuildContext context, T? data)? guaranteedBuilder;
   final Widget? Function(BuildContext context, T? data)? avoidBuilder;
-  final Widget? Function(BuildContext context)? onLoadingProgress;
+  final Widget? Function(BuildContext context, Widget progress)?
+      onLoadingProgress;
   final bool Function(T? data)? predict;
   final bool condition;
   final bool isLoading;
@@ -41,7 +42,8 @@ class ConditionalWidget<T> extends StatelessWidget {
     }
     if (isLoading)
       return onLoadingProgress != null
-          ? onLoadingProgress!(context) ?? circularIndicatorProgress
+          ? onLoadingProgress?.call(context, circularIndicatorProgress) ??
+              circularIndicatorProgress
           : circularIndicatorProgress;
     return Visibility(
       visible: result,

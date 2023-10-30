@@ -11,6 +11,7 @@ import 'package:jobspot/core/status_response_code_checker.dart';
 import "package:jobspot/sippo_data/model/auth_model/user_model.dart";
 import "package:jobspot/sippo_data/model/auth_model/user_register_type_response.dart";
 import "package:jobspot/sippo_data/model/status_message_model/status_message_model.dart";
+import "package:jobspot/sippo_pages/sippo_user_pages/job_updatepassword.dart";
 import "package:jobspot/utils/app_use.dart";
 
 import "../../core/resource.dart";
@@ -281,6 +282,43 @@ class AuthRepo {
         response.statusCode,
         (data) => data,
         (errors) => null,
+      );
+    } catch (e, s) {
+      print(e);
+      print(s);
+      FlutterError.reportError(FlutterErrorDetails(
+        exception: e,
+        stack: s,
+        library: 'Flutter Custom Error',
+        context: ErrorSummary('while running async test code'),
+      ));
+      return const Resource.error(
+        errorMessage: "Invalid response",
+        type: StatusType.INVALID_RESPONSE,
+      );
+    }
+  }
+
+  static Future<
+          Resource<CompanyDetailsModel?, ValidatePropChangePasswordModel?>?>
+      changePassword(
+    ChangePasswordModel password,
+  ) async {
+    try {
+      final response = await HttpClientController.instance.client.put(
+          switch (GlobalStorageService.appUse) {
+            AppUsingType.user => endpoints.changePasswordUserEndpoint,
+            AppUsingType.company => endpoints.changePasswordCompanyEndpoint,
+          },
+          data: password.toJson());
+
+      final responseData = jsonDecode(response.body);
+      print('reset password response data: $responseData');
+      return await StatusResponseCodeChecker.checkStatusResponseCode(
+        responseData,
+        response.statusCode,
+        (data) => CompanyDetailsModel.fromJson(data),
+        (errors) => ValidatePropChangePasswordModel.fromJson(errors),
       );
     } catch (e, s) {
       print(e);
