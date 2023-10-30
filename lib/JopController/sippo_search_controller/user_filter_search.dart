@@ -96,9 +96,11 @@ class FilterSearchState {
 
   set specialization(SpecializationModel value) {
     if (value == specialization) {
+      specializationsSearchController.text = '';
       _specialization.value = SpecializationModel();
       return;
     }
+    specializationsSearchController.text = value.name ?? "";
     _specialization.value = value;
   }
 

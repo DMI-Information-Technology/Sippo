@@ -142,7 +142,7 @@ class _ShowGeneralSearchProfilesViewListState
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            '${_controller.generalSearchController.states.message}',
+            '${_controller.states.message}',
             textAlign: TextAlign.center,
             style: dmsregular.copyWith(
               fontSize: FontSize.paragraph3(context),
@@ -177,7 +177,7 @@ class _ShowGeneralSearchProfilesViewListState
         ),
         SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
         Text(
-          _controller.generalSearchController.states.message ??
+          _controller.states.message ??
               'Something wrong is happened.',
           style: dmsregular.copyWith(
             fontSize: FontSize.paragraph3(context),

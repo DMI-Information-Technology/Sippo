@@ -6,7 +6,6 @@ import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
-import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/JopController/JobDescriptionController/job_description_controller.dart';
@@ -27,7 +26,7 @@ class SippoJobDescription extends StatefulWidget {
 }
 
 class _SippoJobDescriptionState extends State<SippoJobDescription> {
-  final gallery = [JobstopPngImg.gallery1, JobstopPngImg.gallery2];
+  final gallery = const [JobstopPngImg.gallery1, JobstopPngImg.gallery2];
   final _controller = JobCompanyDetailsController.instance;
 
   @override
@@ -68,12 +67,12 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
                       _controller.jobDetailsState.jopDetails.isSaved == true;
                   return [
                     BottomCompanyDetailsButtons(
-                      onApplyClicked: applyTapped,
+                      onApplyClicked: _controller.applyTapped,
                       onFavClicked: () => _controller.onToggleSavedJobs(),
                       isSaved: isSaved,
                     ),
                     CustomButton(
-                      onTapped: applyTapped,
+                      onTapped: _controller.applyTapped,
                       text: "Apply Now".tr,
                     ),
                   ][_controller.jobDetailsState.selectedPageView];
@@ -82,16 +81,6 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
             : null,
       ),
     );
-  }
-
-  void applyTapped() {
-    _controller.sharedDataService.jobGlobalState.details =
-        _controller.jobDetailsState.jopDetails;
-    _controller.sharedDataService.jobGlobalState.id =
-        _controller.jobDetailsState.jopDetails.id ?? -1;
-    Get.toNamed(SippoRoutes.userApplyJobs)?.then((_) {
-      _controller.setJobDetailsState();
-    });
   }
 
   Widget _buildTopJobDetailsHeader(BuildContext context) {
@@ -152,8 +141,6 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
       ),
     );
   }
-
-
 
   Widget _buildButtonTaps(BuildContext) {
     Size size = MediaQuery.of(context).size;

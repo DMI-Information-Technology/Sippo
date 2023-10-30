@@ -2,40 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
 import 'package:jobspot/JopController/sippo_search_controller/general_search_users_view_controller.dart';
-
 import 'package:jobspot/utils/getx_text_editing_controller.dart';
 import 'package:jobspot/utils/states.dart';
+
 import 'general_search_companies_controller.dart';
 import 'genral_search_jobs_controller.dart';
 
 class UserGeneralSearchController extends GetxController {
   static UserGeneralSearchController get instance => Get.find();
   final _states = States().obs;
-
-  States get states => _states.value;
-
-  void resetStates() => _states.value = States();
+  late final TabController tabController;
+  final RestorableInt tabIndex = RestorableInt(0);
   final generalSearchState = GeneralSearchState();
 
-  void changeStates({
-    bool? isLoading,
-    bool? isSuccess,
-    bool? isError,
-    bool? isWarning,
-    String? message,
-    String? error,
-  }) =>
-      _states.value = states.copyWith(
-        isLoading: isLoading,
-        isSuccess: isLoading == true ? false : isSuccess,
-        isError: isLoading == true ? false : isError,
-        message: message,
-        isWarning: isLoading == true ? false : isWarning,
-        error: error,
-      );
-
   bool get isRefreshPrevented =>
-      states.isLoading || InternetConnectionService.instance.isNotConnected;
+      InternetConnectionService.instance.isNotConnected;
 
   void onSearchSubmitted() async {
     print(isRefreshPrevented);
@@ -64,22 +45,27 @@ class UserGeneralSearchController extends GetxController {
   }
 
   void refreshSearchPage() {
+    print('tab index: ${generalSearchState.tabsIndex}');
     switch (generalSearchState.tabsIndex) {
       case 0:
+        if (Get.isRegistered<GeneralTopSearchCompaniesController>()) {
+          GeneralTopSearchCompaniesController.instance.refreshPage();
+        }
+        if (Get.isRegistered<GeneralTopSearchJobsController>()) {
+          GeneralTopSearchJobsController.instance.refreshPage();
+        }
+      case 1:
         if (Get.isRegistered<GeneralSearchCompaniesController>()) {
           GeneralSearchCompaniesController.instance.refreshPage();
         }
-        break;
-      case 1:
+      case 2:
         if (Get.isRegistered<GeneralSearchJobsController>()) {
           GeneralSearchJobsController.instance.refreshPage();
         }
-        break;
-      case 2:
+      case 3:
         if (Get.isRegistered<GeneralSearchProfilesViewController>()) {
           GeneralSearchProfilesViewController.instance.refreshPage();
         }
-        break;
     }
   }
 
@@ -105,8 +91,8 @@ class GeneralSearchState {
 
   void set tabsIndex(int value) {
     Get.focusScope?.unfocus();
-    if (value > 3 || value < 0 || value == tabsIndex) return;
-    isJobTab = value == 1;
+    if (value > 4 || value < 0 || value == tabsIndex) return;
+    isJobTab = value == 2;
     _tabsIndex = value;
   }
 

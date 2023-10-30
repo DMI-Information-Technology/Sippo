@@ -28,6 +28,8 @@ class CompanyJobModel {
   final LocationAddress? locationAddress;
   final ApplicationUserModel? application;
 
+  bool get isJobContentBlank => id == null || title == null;
+
   CompanyJobModel({
     this.id,
     this.company,
@@ -130,7 +132,6 @@ class CompanyJobModel {
   String toString() {
     return 'CompanyJobModel{id: $id, title: $title, description: $description, requirements: $requirements, workplaceType: $workplaceType, longitude: $longitude, latitude: $latitude, location: $locationAddress, employmentType: $employmentType, isSaved: $isSaved, salaryFrom: $salaryFrom, salaryTo: $salaryTo, experienceLevel: $experienceLevel, specialization: $specialization, createdAt: $createdAt, isExpired: $isExpired, hasApplied: $hasApplied, isActive: $isActive}';
   }
-
 
   @override
   bool operator ==(Object other) =>

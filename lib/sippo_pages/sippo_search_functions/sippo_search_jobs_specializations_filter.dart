@@ -63,7 +63,7 @@ class _SippoSearchJobsSpecializationsFilterState
         FilterButtonWidget(
           onTap: () {
             _controller.filterSearchState.specializationsSearchController.text =
-                _controller.filterSearchState.specialization.name??'';
+                _controller.filterSearchState.specialization.name ?? '';
             Get.back();
           },
         )
@@ -92,6 +92,7 @@ class _SippoSearchJobsSpecializationsFilterState
             return InkWell(
               onTap: () {
                 _controller.filterSearchState.specialization = data[index];
+
               },
               child: Obx(() {
                 final specialization =

@@ -111,16 +111,20 @@ class _JobHomeViewWidgetState extends State<JobHomeViewWidget> {
                       },
                     );
                   },
-                  onApplyTap: () async {
-                    SharedGlobalDataService.onJobTap(
-                      item,
-                      handler: (job) {
-                        if (job?.isSaved != item.isSaved)
-                          _controller.refreshJobs();
-                      },
-                    );
-                  },
-                  onActionTap: () => _controller.onToggleSavedJobsTap(item.id,index),
+                  onApplyTap: GlobalStorageService.isUser
+                      ? () async {
+                          SharedGlobalDataService.onJobTap(
+                            item,
+                            handler: (job) {
+                              if (job?.isSaved != item.isSaved)
+                                _controller.refreshJobs();
+                            },
+                            args: {SharedGlobalDataService.GO_TO_APPLY: true},
+                          );
+                        }
+                      : null,
+                  onActionTap: () =>
+                      _controller.onToggleSavedJobsTap(item.id, index),
                   isEditable: false,
                   onAddressTextTap: (location) async {
                     lunchMapWithLocation(

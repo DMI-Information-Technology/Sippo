@@ -8,6 +8,7 @@ import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_
 import 'package:jobspot/sippo_data/user_repos/user_jobs_repo.dart';
 import 'package:jobspot/utils/states.dart';
 
+import '../../JobGlobalclass/routes.dart';
 import '../../sippo_data/user_repos/user_saved_job_repo.dart';
 
 class JobCompanyDetailsController extends GetxController {
@@ -45,7 +46,7 @@ class JobCompanyDetailsController extends GetxController {
 
   void onToggleSavedJobs() async {
     if (InternetConnectionService.instance.isNotConnected) return;
-    if(states.isLoading)return;
+    if (states.isLoading) return;
     _states.value = States(isLoading: true);
     await toggleSavedJobs(jobId);
     _states.value = states.copyWith(isLoading: false);
@@ -67,17 +68,25 @@ class JobCompanyDetailsController extends GetxController {
 
   void requestJobDetails() async {
     changeStates(isLoading: true);
-    if (requestedJobDetails?.id != null && requestedJobDetails?.title != null) {
-      jobDetailsState.jopDetails =
-          requestedJobDetails ?? jobDetailsState.jopDetails;
+    final job = requestedJobDetails;
+    if (job == null || job.isJobContentBlank == true || jobId == -1) {
+      return changeStates(isLoading: false);
     }
-
-    if (jobId != -1) {
-      jobDetailsState.jopDetails =
-          await getJobById(jobId) ?? jobDetailsState.jopDetails;
-    }
-
+    jobDetailsState.jopDetails = job;
+    jobDetailsState.jopDetails = await getJobById(jobId) ?? job;
+    sharedDataService.jobGlobalState.details = jobDetailsState.jopDetails;
+    sharedDataService.jobGlobalState.id = jobDetailsState.jopDetails.id ?? -1;
     changeStates(isLoading: false);
+    final args = sharedDataService.jobGlobalState.args;
+    if (args != null && args.containsKey(SharedGlobalDataService.GO_TO_APPLY)) {
+      if (args[SharedGlobalDataService.GO_TO_APPLY]) applyTapped();
+    }
+  }
+
+  void applyTapped() {
+    Get.toNamed(SippoRoutes.userApplyJobs)?.then((_) {
+      setJobDetailsState();
+    });
   }
 
   void changeStates({

@@ -30,9 +30,9 @@ class ApplyJobsController extends GetxController {
     applyJobsState.cvJobApply = const CustomFileModel();
   }
 
-  final requestedJobDetails =
+  CompanyJobModel? get requestedJobDetails =>
       SharedGlobalDataService.instance.jobGlobalState.details;
-  final jobId = SharedGlobalDataService.instance.jobGlobalState.id;
+  int get jobId => SharedGlobalDataService.instance.jobGlobalState.id;
   final _states = States().obs;
 
   States get states => _states.value;
@@ -99,16 +99,18 @@ class ApplyJobsController extends GetxController {
   }
 
   void requestJobDetails() async {
-    changeStates(isLoading: true);
-    if (requestedJobDetails?.title != null) {
-      applyJobsState.jopDetails =
-          requestedJobDetails ?? applyJobsState.jopDetails;
+    _states.value = States(isLoading: true);
+    final job = requestedJobDetails;
+    if (job == null || job.isJobContentBlank || jobId == -1) {
+      _states.value = States(isLoading: false);
+      return;
     }
-    if (requestedJobDetails?.application == null && jobId != -1) {
+    applyJobsState.jopDetails = job;
+    if (job.application == null) {
       applyJobsState.jopDetails =
           await getJobById(jobId) ?? applyJobsState.jopDetails;
     }
-    changeStates(isLoading: false);
+    _states.value = States(isLoading: false);
   }
 
   void changeStates({

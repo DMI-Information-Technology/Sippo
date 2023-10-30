@@ -17,8 +17,24 @@ class GeneralSearchProfilesViewController extends GetxController {
       PagingController<int, ProfileViewResourceModel>(firstPageKey: 0);
   final searchProfilesViewState = GeneralSearchProfilesViewState();
 
-  States get states => generalSearchController.states;
-
+  final _states = States().obs;
+  States get states => _states.value;
+  void changeStates({
+    bool? isLoading,
+    bool? isSuccess,
+    bool? isError,
+    bool? isWarning,
+    String? message,
+    String? error,
+  }) =>
+      _states.value = states.copyWith(
+        isLoading: isLoading,
+        isSuccess: isLoading == true ? false : isSuccess,
+        isError: isLoading == true ? false : isError,
+        message: message,
+        isWarning: isLoading == true ? false : isWarning,
+        error: error,
+      );
   Future<void> fetchSearchProfilesUsersPages(
     int pageKey,
   ) async {
@@ -41,7 +57,7 @@ class GeneralSearchProfilesViewController extends GetxController {
       onValidateError: (validateError, _) {},
       onError: (message, _) {
         pagingController.error = true;
-        generalSearchController.changeStates(isError: true, message: message);
+        changeStates(isError: true, message: message);
       },
     );
   }
@@ -71,21 +87,21 @@ class GeneralSearchProfilesViewController extends GetxController {
   void retryLastFailedRequest() {
     print("dd");
     if (InternetConnectionService.instance.isNotConnected) return;
-    if (generalSearchController.states.isLoading) return;
-    generalSearchController.changeStates(isError: false, message: '');
+    if (states.isLoading) return;
+    changeStates(isError: false, message: '');
     pagingController.retryLastFailedRequest();
     _pageProfilesViewRequester(searchProfilesViewState.pageNumber);
   }
 
   void _pageProfilesViewRequester(int pageKey) async {
-    generalSearchController.changeStates(isLoading: true);
+    changeStates(isLoading: true);
     await fetchSearchProfilesUsersPages(pageKey);
-    generalSearchController.changeStates(isLoading: false);
+    changeStates(isLoading: false);
   }
 
   void refreshPage() {
     if (InternetConnectionService.instance.isNotConnected) return;
-    if (generalSearchController.states.isLoading) return;
+    if (states.isLoading) return;
     searchProfilesViewState.pageNumber = 1;
     pagingController.refresh();
     _pageProfilesViewRequester(searchProfilesViewState.pageNumber);
@@ -93,7 +109,7 @@ class GeneralSearchProfilesViewController extends GetxController {
 
   void onLoadMoreProfilesViewSubmitted() {
     if (InternetConnectionService.instance.isNotConnected) return;
-    if (generalSearchController.states.isLoading) return;
+    if (states.isLoading) return;
     _pageProfilesViewRequester(searchProfilesViewState.pageNumber);
   }
 

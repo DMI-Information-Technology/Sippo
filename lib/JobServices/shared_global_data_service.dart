@@ -9,6 +9,7 @@ import 'package:jobspot/utils/global_shared_state.dart';
 class SharedGlobalDataService extends GetxService {
   static SharedGlobalDataService get instance => Get.find();
   static const SELECTED_TAP_INDEX = 'selected_tap_index';
+  static const GO_TO_APPLY = 'go_to_apply';
   var searchTextKey = "";
   JobStatisticsData? jobStatistic;
   var profileIdState = -1;
@@ -27,6 +28,7 @@ class SharedGlobalDataService extends GetxService {
     final localInstance = instance;
     final id = item?.id;
     if (id == null) return;
+    localInstance.jobGlobalState.args = args;
     localInstance.jobGlobalState.id = id;
     localInstance.jobGlobalState.details = item;
     await Get.toNamed(SippoRoutes.sippoJobDescription);
