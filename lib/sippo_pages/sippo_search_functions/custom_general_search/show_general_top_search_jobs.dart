@@ -37,7 +37,7 @@ class _ShowGeneralTopSearchJobsListState
         newPageErrorIndicatorBuilder: (context) => _buildErrorNewLoad(context),
         newPageProgressIndicatorBuilder: (context) =>
             _buildNewPageProgress(context),
-        firstPageProgressIndicatorBuilder: (context) => const SizedBox.shrink(),
+        firstPageProgressIndicatorBuilder: (context) =>  const SizedBox.shrink(),
         itemBuilder: (context, item, index) {
           return InkWell(
             onTap: () {
