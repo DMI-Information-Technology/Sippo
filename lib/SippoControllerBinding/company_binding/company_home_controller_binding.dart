@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:jobspot/JopController/home_controllers/company_home_controller.dart';
+import 'package:jobspot/sippo_controller/home_controllers/company_home_controller.dart';
 
 class CompanyHomeBindingController implements Bindings {
   @override

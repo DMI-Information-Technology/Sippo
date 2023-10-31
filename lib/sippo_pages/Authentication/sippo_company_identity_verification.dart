@@ -9,7 +9,7 @@ import 'package:jobspot/sippo_custom_widget/loading_view_widgets/loading_scaffol
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
-import 'package:jobspot/JopController/AuthenticationController/sippo_identity_verification_controller.dart';
+import 'package:jobspot/sippo_controller/AuthenticationController/sippo_identity_verification_controller.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 

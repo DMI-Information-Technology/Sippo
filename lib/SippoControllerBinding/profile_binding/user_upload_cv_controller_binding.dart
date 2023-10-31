@@ -1,7 +1,7 @@
 
 import 'package:get/get.dart';
 
-import 'package:jobspot/JopController/user_profile_controller/upload_cv_controller.dart';
+import 'package:jobspot/sippo_controller/user_profile_controller/upload_cv_controller.dart';
 
 class UserUploadCvBindingController implements Bindings {
   @override

@@ -9,7 +9,7 @@ import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/JobServices/shared_global_data_service.dart';
-import 'package:jobspot/JopController/sippo_search_controller/user_search_jobs.dart';
+import 'package:jobspot/sippo_controller/sippo_search_controller/user_search_jobs.dart';
 import 'package:jobspot/sippo_custom_widget/custom_body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/job_card_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';

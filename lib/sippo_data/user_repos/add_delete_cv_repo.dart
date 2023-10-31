@@ -5,10 +5,10 @@ import 'package:jobspot/sippo_data/model/custom_file_model/custom_file_model.dar
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/cv_file_model.dart';
 import 'package:jobspot/sippo_data/model/status_message_model/status_message_model.dart';
 
-import 'package:jobspot/JopController/HttpClientController/http_client_controller.dart';
+import 'package:jobspot/sippo_controller/HttpClientController/http_client_controller.dart';
 import 'package:jobspot/core/resource.dart';
 import 'package:jobspot/core/status_response_code_checker.dart';
-import '../model/profile_model/profile_resource_model/validate_property_cv_uploader_model.dart';
+import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/validate_property_cv_uploader_model.dart';
 
 class CvUploaderRepo {
   static Future<Resource<CvModel?, dynamic>?> addCvFile(

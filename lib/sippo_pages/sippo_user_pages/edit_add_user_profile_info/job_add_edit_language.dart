@@ -6,7 +6,7 @@ import 'package:jobspot/sippo_custom_widget/success_message_widget.dart';
 
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
-import 'package:jobspot/JopController/user_profile_controller/language_edit_add_controller.dart';
+import 'package:jobspot/sippo_controller/user_profile_controller/language_edit_add_controller.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/confirmation_bottom_sheet.dart';
 import 'package:jobspot/sippo_custom_widget/container_bottom_sheet_widget.dart';

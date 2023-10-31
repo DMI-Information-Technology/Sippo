@@ -7,7 +7,7 @@ import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/JobServices/shared_global_data_service.dart';
-import 'package:jobspot/JopController/NotificationController/user_notification_application/user_notification_controller.dart';
+import 'package:jobspot/sippo_controller/NotificationController/user_notification_application/user_notification_controller.dart';
 import 'package:jobspot/sippo_custom_widget/container_bottom_sheet_widget.dart';
 import 'package:jobspot/sippo_custom_widget/rounded_border_radius_card_widget.dart';
 import 'package:jobspot/sippo_custom_widget/setting_item_widget.dart';
@@ -15,7 +15,7 @@ import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_data/model/notification/notification_model.dart';
 import 'package:jobspot/sippo_data/model/notification/notifications_types.dart';
 
-import '../../../sippo_custom_widget/network_bordered_circular_image_widget.dart';
+import 'package:jobspot/sippo_custom_widget/network_bordered_circular_image_widget.dart';
 
 class SippoUserNotification extends StatefulWidget {
   const SippoUserNotification({super.key});

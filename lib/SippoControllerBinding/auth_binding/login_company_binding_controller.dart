@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:jobspot/JopController/AuthenticationController/sippo_company_login_controller.dart';
+import 'package:jobspot/sippo_controller/AuthenticationController/sippo_company_login_controller.dart';
 
 class LoginCompanyBindingController implements Bindings {
   @override

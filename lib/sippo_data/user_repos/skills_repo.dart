@@ -2,13 +2,13 @@ import 'dart:convert';
 
 import 'package:jobspot/core/header_api.dart';
 
-import 'package:jobspot/JopController/HttpClientController/http_client_controller.dart';
+import 'package:jobspot/sippo_controller/HttpClientController/http_client_controller.dart';
 import 'package:jobspot/core/api_endpoints.dart' as endpoints;
 import 'package:jobspot/core/resource.dart';
 import 'package:jobspot/core/status_response_code_checker.dart';
-import '../model/profile_model/profile_resource_model/skills_model.dart';
-import '../model/profile_model/profile_resource_model/validate_property_skills.dart';
-import '../model/status_message_model/status_message_model.dart';
+import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/skills_model.dart';
+import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/validate_property_skills.dart';
+import 'package:jobspot/sippo_data/model/status_message_model/status_message_model.dart';
 
 class SkillsRepo {
   static Future<Resource<StatusMessageModel, ValidatePropSkillsModel?>?>

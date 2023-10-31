@@ -4,10 +4,10 @@ import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
-import 'package:jobspot/JopController/dashboards_controller/user_dashboard_controller.dart';
+import 'package:jobspot/sippo_controller/dashboards_controller/user_dashboard_controller.dart';
 
-import '../../JopController/NotificationController/user_notification_application/user_notification_controller.dart';
-import '../../core/navigation_app_route.dart';
+import 'package:jobspot/sippo_controller/NotificationController/user_notification_application/user_notification_controller.dart';
+import 'package:jobspot/core/navigation_app_route.dart';
 
 class SippoUserDashboard extends StatefulWidget {
   const SippoUserDashboard({Key? key}) : super(key: key);

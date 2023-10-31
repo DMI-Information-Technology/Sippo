@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:jobspot/JopController/dashboards_controller/company_dashboard_controller.dart';
+import 'package:jobspot/sippo_controller/dashboards_controller/company_dashboard_controller.dart';
 
 import 'package:jobspot/JobServices/shared_global_data_service.dart';
 

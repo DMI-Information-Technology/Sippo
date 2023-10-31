@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:jobspot/JopController/home_controllers/user_home_controllers.dart';
+import 'package:jobspot/sippo_controller/home_controllers/user_home_controllers.dart';
 
 class UserHomeBindingController implements Bindings {
   @override

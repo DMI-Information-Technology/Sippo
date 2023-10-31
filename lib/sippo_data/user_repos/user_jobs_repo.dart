@@ -4,13 +4,13 @@ import 'package:jobspot/core/api_endpoints.dart' as endpoints;
 import 'package:jobspot/sippo_data/model/application_model/application_job_company_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/validate_property_user_job_application_model.dart';
 
-import 'package:jobspot/JopController/HttpClientController/http_client_controller.dart';
+import 'package:jobspot/sippo_controller/HttpClientController/http_client_controller.dart';
 import 'package:jobspot/core/resource.dart';
 import 'package:jobspot/core/status_response_code_checker.dart';
-import '../model/pagination_company_models/posts_pagination_model.dart';
-import '../model/profile_model/company_profile_resource_model/company_job_model.dart';
-import '../model/profile_model/company_profile_resource_model/vlidate_property_company_job_model.dart';
-import '../model/profile_model/profile_resource_model/user_job_application_model.dart';
+import 'package:jobspot/sippo_data/model/pagination_company_models/posts_pagination_model.dart';
+import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
+import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/vlidate_property_company_job_model.dart';
+import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/user_job_application_model.dart';
 
 class SippoJobsRepo {
   static Future<

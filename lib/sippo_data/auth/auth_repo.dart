@@ -4,7 +4,7 @@ import "dart:io";
 import "package:flutter/foundation.dart";
 import "package:http/http.dart" as http;
 import "package:jobspot/JobGlobalclass/global_storage.dart";
-import "package:jobspot/JopController/HttpClientController/http_client_controller.dart";
+import "package:jobspot/sippo_controller/HttpClientController/http_client_controller.dart";
 import "package:jobspot/core/api_endpoints.dart" as endpoints;
 import "package:jobspot/core/header_api.dart";
 import 'package:jobspot/core/status_response_code_checker.dart';

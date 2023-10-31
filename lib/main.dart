@@ -11,8 +11,8 @@ import 'package:jobspot/sippo_themes/theme.dart';
 import 'package:jobspot/utils/exception_handler_utils.dart';
 
 import 'JobGlobalclass/routes.dart';
-import 'JopController/AuthenticationController/sippo_auth_controller.dart';
-import 'JopController/HttpClientController/http_client_controller.dart';
+import 'sippo_controller/AuthenticationController/sippo_auth_controller.dart';
+import 'sippo_controller/HttpClientController/http_client_controller.dart';
 import 'firebase_options.dart';
 
 void main() async {

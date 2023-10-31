@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:jobspot/JopController/sippo_search_controller/user_search_jobs.dart';
+import 'package:jobspot/sippo_controller/sippo_search_controller/user_search_jobs.dart';
 
 class UserSearchJobsBindingController implements Bindings {
   @override

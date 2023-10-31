@@ -6,7 +6,7 @@ import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
-import 'package:jobspot/JopController/user_profile_controller/upload_cv_controller.dart';
+import 'package:jobspot/sippo_controller/user_profile_controller/upload_cv_controller.dart';
 import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
 import 'package:jobspot/sippo_custom_widget/file_upload_widget.dart';
 import 'package:jobspot/sippo_custom_widget/resume_card_widget.dart';

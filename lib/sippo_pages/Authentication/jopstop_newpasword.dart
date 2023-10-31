@@ -6,8 +6,8 @@ import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 
-import '../../JobServices/ConnectivityController/internet_connection_controller.dart';
-import '../../JopController/AuthenticationController/sippo_auth_controller.dart';
+import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
+import 'package:jobspot/sippo_controller/AuthenticationController/sippo_auth_controller.dart';
 
 class UpdatePasswordAfterVerification extends StatefulWidget {
   const UpdatePasswordAfterVerification({Key? key}) : super(key: key);

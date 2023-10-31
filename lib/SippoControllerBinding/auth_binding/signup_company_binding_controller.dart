@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:jobspot/JopController/AuthenticationController/sippo_signup_company_controller.dart';
+import 'package:jobspot/sippo_controller/AuthenticationController/sippo_signup_company_controller.dart';
 
 
 class SignupCompanyBindingController implements Bindings {

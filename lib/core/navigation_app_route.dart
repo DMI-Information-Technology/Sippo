@@ -2,9 +2,9 @@ import 'package:get/get.dart';
 
 import '../JobGlobalclass/global_storage.dart';
 import '../JobGlobalclass/routes.dart';
-import '../JopController/NotificationController/company_notification_application/company_notification_controller.dart';
-import '../JopController/NotificationController/user_notification_application/user_notification_controller.dart';
-import '../JopController/dashboards_controller/user_dashboard_controller.dart';
+import '../sippo_controller/NotificationController/company_notification_application/company_notification_controller.dart';
+import '../sippo_controller/NotificationController/user_notification_application/user_notification_controller.dart';
+import '../sippo_controller/dashboards_controller/user_dashboard_controller.dart';
 import '../utils/app_use.dart';
 
 class NavigationAppRoute {

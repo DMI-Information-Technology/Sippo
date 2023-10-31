@@ -8,7 +8,7 @@ import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/JobServices/shared_global_data_service.dart';
-import 'package:jobspot/JopController/home_controllers/job_home_view_controller.dart';
+import 'package:jobspot/sippo_controller/home_controllers/job_home_view_controller.dart';
 import 'package:jobspot/sippo_custom_widget/job_home_card_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/utils/helper.dart';

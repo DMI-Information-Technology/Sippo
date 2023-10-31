@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
-import 'package:jobspot/JopController/sippo_search_controller/general_search_companies_controller.dart';
-import 'package:jobspot/JopController/sippo_search_controller/genral_search_jobs_controller.dart';
+import 'package:jobspot/sippo_controller/sippo_search_controller/general_search_companies_controller.dart';
+import 'package:jobspot/sippo_controller/sippo_search_controller/genral_search_jobs_controller.dart';
 import 'package:jobspot/sippo_pages/sippo_search_functions/custom_general_search/show_general_top_search_companies.dart';
 import 'package:jobspot/sippo_pages/sippo_search_functions/custom_general_search/show_general_top_search_jobs.dart';
 

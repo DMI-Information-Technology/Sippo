@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:jobspot/JopController/HttpClientController/http_client_controller.dart';
+import 'package:jobspot/sippo_controller/HttpClientController/http_client_controller.dart';
 import 'package:jobspot/core/api_endpoints.dart' as endpoints;
 import 'package:jobspot/core/resource.dart';
 import 'package:jobspot/sippo_data/model/job_statistics_model/job_statistics_model.dart';

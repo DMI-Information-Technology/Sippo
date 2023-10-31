@@ -7,11 +7,11 @@ import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
-import 'package:jobspot/JopController/NotificationController/user_notification_application/user_application_controller.dart';
+import 'package:jobspot/sippo_controller/NotificationController/user_notification_application/user_application_controller.dart';
 import 'package:jobspot/sippo_custom_widget/resume_card_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 
-import '../../../sippo_custom_widget/network_bordered_circular_image_widget.dart';
+import 'package:jobspot/sippo_custom_widget/network_bordered_circular_image_widget.dart';
 
 class JobApplication extends StatelessWidget {
   const JobApplication({Key? key}) : super(key: key);

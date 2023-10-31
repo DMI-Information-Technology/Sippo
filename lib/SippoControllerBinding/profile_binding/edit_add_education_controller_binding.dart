@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:jobspot/JopController/user_profile_controller/edit_add_education_controller.dart';
+import 'package:jobspot/sippo_controller/user_profile_controller/edit_add_education_controller.dart';
 
 
 class EditAddEducationBindingController implements Bindings {

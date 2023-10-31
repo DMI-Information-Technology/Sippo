@@ -10,7 +10,7 @@ import 'package:jobspot/sippo_custom_widget/loading_view_widgets/loading_scaffol
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/utils/validating_input.dart';
 
-import '../../JopController/company_profile_controller/edit_copmany_profile_information_controller.dart';
+import 'package:jobspot/sippo_controller/company_profile_controller/edit_copmany_profile_information_controller.dart';
 
 class SippoAboutCompany extends StatefulWidget {
   const SippoAboutCompany({Key? key}) : super(key: key);

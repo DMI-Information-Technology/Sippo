@@ -7,7 +7,7 @@ import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
-import 'package:jobspot/JopController/AuthenticationController/sippo_appusing_controller.dart';
+import 'package:jobspot/sippo_controller/AuthenticationController/sippo_appusing_controller.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 
 class SippoAppUsing extends StatelessWidget {

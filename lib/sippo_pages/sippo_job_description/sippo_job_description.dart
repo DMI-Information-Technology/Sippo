@@ -8,7 +8,7 @@ import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
-import 'package:jobspot/JopController/JobDescriptionController/job_description_controller.dart';
+import 'package:jobspot/sippo_controller/JobDescriptionController/job_description_controller.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/list_item_text.dart';
 import 'package:jobspot/sippo_custom_widget/top_description_info_company.dart';

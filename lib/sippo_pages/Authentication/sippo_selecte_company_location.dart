@@ -8,7 +8,7 @@ import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
-import 'package:jobspot/JopController/AuthenticationController/sippo_signup_company_controller.dart';
+import 'package:jobspot/sippo_controller/AuthenticationController/sippo_signup_company_controller.dart';
 import 'package:jobspot/custom_app_controller/google_map_view_controller.dart';
 import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';

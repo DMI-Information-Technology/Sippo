@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:jobspot/JopController/user_profile_controller/user_saved_jobs_controller.dart';
+import 'package:jobspot/sippo_controller/user_profile_controller/user_saved_jobs_controller.dart';
 
 class UserSavedJobBindingController implements Bindings {
   @override

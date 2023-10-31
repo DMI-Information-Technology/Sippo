@@ -8,7 +8,7 @@ import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/JobServices/shared_global_data_service.dart';
-import 'package:jobspot/JopController/sippo_search_controller/general_search_controller.dart';
+import 'package:jobspot/sippo_controller/sippo_search_controller/general_search_controller.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_pages/sippo_search_functions/show_general_search_companies.dart';
 import 'package:jobspot/sippo_pages/sippo_search_functions/show_general_search_jobs.dart';
@@ -35,7 +35,7 @@ class _SippoGeneralSearchState extends State<SippoGeneralSearch>
     _controller.tabController.index = _controller.tabIndex.value;
   }
 
-  final _controller = UserGeneralSearchController.instance;
+  final _controller = GeneralSearchController.instance;
   final _tabs = [
     const SippoGeneralTopSearch(),
     const ShowGeneralSearchCompaniesList(),

@@ -10,7 +10,7 @@ import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopprefname.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
-import 'package:jobspot/JopController/AuthenticationController/sippo_user_login_controller.dart';
+import 'package:jobspot/sippo_controller/AuthenticationController/sippo_user_login_controller.dart';
 import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
 import 'package:jobspot/sippo_custom_widget/loading_view_widgets/overly_loading.dart';
 import 'package:jobspot/sippo_custom_widget/success_message_widget.dart';

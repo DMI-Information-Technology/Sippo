@@ -8,14 +8,14 @@ import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
-import 'package:jobspot/JopController/dashboards_controller/company_dashboard_controller.dart';
-import 'package:jobspot/JopController/home_controllers/company_home_controller.dart';
+import 'package:jobspot/sippo_controller/dashboards_controller/company_dashboard_controller.dart';
+import 'package:jobspot/sippo_controller/home_controllers/company_home_controller.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 
-import '../../JobServices/shared_global_data_service.dart';
-import '../../JopController/home_controllers/job_home_view_controller.dart';
-import '../../sippo_custom_widget/find_yor_jop_dashboard_cards.dart';
+import 'package:jobspot/JobServices/shared_global_data_service.dart';
+import 'package:jobspot/sippo_controller/home_controllers/job_home_view_controller.dart';
+import 'package:jobspot/sippo_custom_widget/find_yor_jop_dashboard_cards.dart';
 import '../../sippo_custom_widget/network_bordered_circular_image_widget.dart';
 import '../home_component_widget/job_home_view_widget.dart';
 
