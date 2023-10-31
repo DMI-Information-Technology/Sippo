@@ -1,8 +1,7 @@
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:jobspot/JobServices/shared_global_data_service.dart';
 import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
-
+import 'package:jobspot/JobServices/shared_global_data_service.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
 import 'package:jobspot/sippo_data/user_repos/user_saved_job_repo.dart';
 import 'package:jobspot/utils/states.dart';
@@ -14,8 +13,7 @@ class UserSavedJobsController extends GetxController {
   final pagingController =
       PagingController<int, CompanyJobModel>(firstPageKey: 0);
 
-  bool get isNetworkConnected =>
-      InternetConnectionService.instance.isConnected;
+  bool get isNetworkConnected => InternetConnectionService.instance.isConnected;
   final savedJobState = SavedJobsJobState();
 
   final _states = States().obs;
@@ -100,7 +98,6 @@ class UserSavedJobsController extends GetxController {
 
   Future<void> removeSavedJob(int? id) async {
     final index = pagingController.itemList?.indexWhere((e) => e.id == id);
-
     final response = await SavedJobsRepo.toggleSavedJob(id);
     await response?.checkStatusResponse(
       onSuccess: (data, _) {
@@ -129,6 +126,22 @@ class UserSavedJobsController extends GetxController {
   void onClose() {
     pagingController.dispose();
     super.onClose();
+  }
+
+  Future<void> removeAllJobs() async {
+    if (states.isLoading) return;
+    _states.value = States(isLoading: true);
+    final response = await SavedJobsRepo.removeAllSavedJobs();
+    changeStates(isLoading: false);
+    await response?.checkStatusResponse(
+      onSuccess: (data, _) {
+        if (pagingController.itemList?.isNotEmpty == true) {
+          refreshPage();
+        }
+      },
+      onValidateError: (validate, _) {},
+      onError: (message, _) {},
+    );
   }
 }
 

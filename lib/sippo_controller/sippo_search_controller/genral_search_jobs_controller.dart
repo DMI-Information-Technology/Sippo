@@ -221,12 +221,6 @@ class GeneralTopSearchJobsController extends GetxController {
     _pageJobRequester(searchJobsState.pageNumber);
   }
 
-  void onLoadMoreJobsSubmitted() {
-    Get.focusScope?.unfocus();
-    if (isRefreshPrevented) return;
-    _pageJobRequester(searchJobsState.pageNumber);
-  }
-
   bool get isRefreshPrevented =>
       networkController.isNotConnected ||
       states.isLoading;

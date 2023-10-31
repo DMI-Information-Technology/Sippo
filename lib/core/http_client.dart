@@ -41,7 +41,7 @@ class MyHttpClient {
 
   Future<http.Response> post(
     String endpoint, {
-    Map<String, dynamic>? data,
+    Map<String, dynamic>? data = const {},
     Map<String, dynamic>? queryParameter,
     String? resourceId,
   }) async {

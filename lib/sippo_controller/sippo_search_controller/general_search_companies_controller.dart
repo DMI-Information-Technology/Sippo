@@ -189,12 +189,6 @@ class GeneralTopSearchCompaniesController extends GetxController {
     _pageCompaniesRequester(searchCompaniesState.pageNumber);
   }
 
-  void onLoadMoreCompaniesSubmitted() {
-    Get.focusScope?.unfocus();
-    if (InternetConnectionService.instance.isNotConnected) return;
-    if (states.isLoading) return;
-    _pageCompaniesRequester(searchCompaniesState.pageNumber);
-  }
 
   @override
   void onInit() {

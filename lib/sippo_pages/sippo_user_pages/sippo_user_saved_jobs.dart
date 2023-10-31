@@ -53,7 +53,19 @@ class _SippoUserSavedJobState extends State<SippoUserSavedJob> {
           Padding(
             padding: const EdgeInsets.all(kToolbarHeight / 3),
             child: InkWell(
-              onTap: () {},
+              onTap: () {
+                Get.dialog(CustomAlertDialog(
+                  title: "Remove All Saved Jobs",
+                  description: 'are you sure you want remove all saved jobs?',
+                  onConfirm: () {
+                    if (Get.isOverlaysOpen) Get.back();
+                    _controller.removeAllJobs();
+                  },
+                  onCancel: () {
+                    if (Get.isOverlaysOpen) Get.back();
+                  },
+                ));
+              },
               child: AutoSizeText(
                 "Delete all",
                 style: dmsregular.copyWith(
