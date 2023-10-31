@@ -14,7 +14,7 @@ import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 
 class SippoCompanyIdentityVerification extends StatelessWidget {
-  SippoCompanyIdentityVerification({super.key});
+  const SippoCompanyIdentityVerification({super.key});
 
   @override
   Widget build(BuildContext context) {

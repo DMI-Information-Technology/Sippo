@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jobspot/JobGlobalclass/global_storage.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
+import 'package:jobspot/JopController/AuthenticationController/sippo_auth_controller.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_model.dart';
 import 'package:jobspot/sippo_data/model/locations_model/location_address_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/cord_location.dart';
@@ -11,7 +13,7 @@ import '../../sippo_data/locations/locationsRepo.dart';
 class SignUpCompanyController extends GetxController {
   static SignUpCompanyController get instance => Get.find();
   final GlobalKey<FormState> formKey = GlobalKey();
-
+  final authController = AuthController.instance;
   final _fullname = "".obs;
   final _phoneNumber = "".obs;
   final _password = "".obs;
@@ -34,6 +36,7 @@ class SignUpCompanyController extends GetxController {
         ),
         specializations: selectedIdSpecializations,
         locationAddress: companyAddress,
+        fcmToken: GlobalStorageService.fcmToken,
       );
 
   CoordLocation get cordLocation => _cordLocation.value;

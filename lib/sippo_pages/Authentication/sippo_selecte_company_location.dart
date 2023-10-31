@@ -36,8 +36,7 @@ class _SippoLocationCompanySelectorState
   void initState() {
     super.initState();
     googleMapViewController.getCurrentLocation();
-      _signUpCompanyController.fetchLocationsAddress();
-
+    _signUpCompanyController.fetchLocationsAddress();
   }
 
   @override
@@ -49,9 +48,7 @@ class _SippoLocationCompanySelectorState
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery
-        .of(context)
-        .size;
+    Size size = MediaQuery.of(context).size;
     double height = size.height;
     double width = size.width;
     return WillPopScope(
@@ -87,26 +84,25 @@ class _SippoLocationCompanySelectorState
               InkWell(
                 onTap: loadLocationAddressOnTap,
                 child: Obx(() => CustomDropdownButton(
-                    textHint: 'Select Company Work Place',
-                    labelList: _signUpCompanyController
-                        .locationsAddressNameList,
-                    values: _signUpCompanyController.locationsAddressList,
-                    fillColor: Colors.white,
-                    onItemSelected: (value) async {
-                      if (value == null || value.id == null) return;
-                      _textLocationController.text = value.name ?? "";
-                      _signUpCompanyController.companyAddress = value;
-                      print(value);
-                    },
-                    setInitialValue: false,
-                  )),
+                      textHint: 'Select Company Work Place',
+                      labelList:
+                          _signUpCompanyController.locationsAddressNameList,
+                      values: _signUpCompanyController.locationsAddressList,
+                      fillColor: Colors.white,
+                      onItemSelected: (value) async {
+                        if (value == null || value.id == null) return;
+                        _textLocationController.text = value.name ?? "";
+                        _signUpCompanyController.companyAddress = value;
+                        print(value);
+                      },
+                      setInitialValue: false,
+                    )),
               ),
               SizedBox(
                 height: height / 42,
               ),
               Obx(
-                    () =>
-                !netConnController.isConnected
+                () => !netConnController.isConnected
                     ? _buildMessageNoConnectionToGetAddress(height)
                     : SizedBox(),
               ),
@@ -119,38 +115,35 @@ class _SippoLocationCompanySelectorState
                   );
                 },
               ),
-              Obx(() =>
-                  ConditionalWidget(
+              Obx(() => ConditionalWidget(
                     _signUpCompanyController.companyAddress.name?.isNotEmpty ==
                         true,
-                    guaranteedBuilder: (context, _) =>
-                        ListTile(
-                          title: _locationAddressNameTextBuilder(context),
-                          subtitle: ListenableBuilder(
-                            listenable: googleMapViewController,
-                            builder: _coordinatesTextBuilder,
-                          ),
-                        ),
+                    guaranteedBuilder: (context, _) => ListTile(
+                      title: _locationAddressNameTextBuilder(context),
+                      subtitle: ListenableBuilder(
+                        listenable: googleMapViewController,
+                        builder: _coordinatesTextBuilder,
+                      ),
+                    ),
                   )),
               SizedBox(height: height / 256),
               Obx(
-                    () =>
-                    CheckboxListTile(
-                      title: Text(
-                        "terms_policy_title".tr,
-                        textAlign: TextAlign.start,
-                        style: dmsbold.copyWith(fontSize: height / 42),
-                      ),
-                      subtitle: Text(
-                        "accept_terms".tr,
-                        style: dmsregular.copyWith(fontSize: height / 52),
-                      ),
-                      value: _signUpCompanyController.confirmOnPolicy,
-                      onChanged: (value) {
-                        _signUpCompanyController.toggleConfirmPolicy();
-                      },
-                      activeColor: Jobstopcolor.primarycolor,
-                    ),
+                () => CheckboxListTile(
+                  title: Text(
+                    "terms_policy_title".tr,
+                    textAlign: TextAlign.start,
+                    style: dmsbold.copyWith(fontSize: height / 42),
+                  ),
+                  subtitle: Text(
+                    "accept_terms".tr,
+                    style: dmsregular.copyWith(fontSize: height / 52),
+                  ),
+                  value: _signUpCompanyController.confirmOnPolicy,
+                  onChanged: (value) {
+                    _signUpCompanyController.toggleConfirmPolicy();
+                  },
+                  activeColor: Jobstopcolor.primarycolor,
+                ),
               ),
             ],
           ),
@@ -178,7 +171,7 @@ class _SippoLocationCompanySelectorState
     final markerPlace = googleMapViewController.markerPlace;
     return Text(
       "${markerPlace.position.latitude.toStringAsFixed(7)},"
-          " ${markerPlace.position.longitude.toStringAsFixed(7)}",
+      " ${markerPlace.position.longitude.toStringAsFixed(7)}",
       style: dmsregular,
     );
   }
@@ -187,10 +180,40 @@ class _SippoLocationCompanySelectorState
     if (_signUpCompanyController.confirmOnPolicy &&
         _signUpCompanyController.companyAddress.id != null &&
         _signUpCompanyController.cordLocation.validateCords()) {
-      Get.toNamed(SippoRoutes.identityverification);
+      await _signUpCompanyController.authController.companyRegister(
+        _signUpCompanyController.companyForm,
+        // CompanyModel(
+        //   password: "@aA123456",
+        //   passwordConfirmation: "@aA123456",
+        //   name: "hatem",
+        //   phone: "0922698540",
+        //   city: "tripoli",
+        //   latitude: 35,
+        //   longitude: -35,
+        //   specializations: [1, 2, 3],
+        // ),
+      );
+      if (_signUpCompanyController.authController.states.isSuccess) {
+        _signUpCompanyController.authController.resetStates();
+        _showSuccessSignupAlert();
+      }
     } else {
       _showBadConfirmDialog();
     }
+  }
+
+  void _showSuccessSignupAlert() {
+    Get.dialog(
+      CustomAlertDialog(
+        imageAsset: JobstopPngImg.successful1,
+        title: "Success",
+        description:
+            "the account has been created successfully want continue to dashboard",
+        confirmBtnColor: Jobstopcolor.primarycolor,
+        confirmBtnTitle: "ok".tr,
+        onConfirm: () => Get.offAllNamed(SippoRoutes.sippoCompanyDashboard),
+      ),
+    ).then((value) => Get.offAllNamed(SippoRoutes.sippoCompanyDashboard));
   }
 
   void _showBadConfirmDialog() {

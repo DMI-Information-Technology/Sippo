@@ -221,7 +221,7 @@ class SippoRoutes {
         binding: const UserApplyJobBindingController()),
     GetPage(
         name: identityverification,
-        page: () => SippoCompanyIdentityVerification(),
+        page: () => const SippoCompanyIdentityVerification(),
         binding: const IdentityVerificationBindingController()),
     GetPage(
       name: sippoJobFilterSearch,
