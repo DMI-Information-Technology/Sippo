@@ -11,9 +11,9 @@ import 'package:jobspot/sippo_themes/theme.dart';
 import 'package:jobspot/utils/exception_handler_utils.dart';
 
 import 'JobGlobalclass/routes.dart';
+import 'firebase_options.dart';
 import 'sippo_controller/AuthenticationController/sippo_auth_controller.dart';
 import 'sippo_controller/HttpClientController/http_client_controller.dart';
-import 'firebase_options.dart';
 
 void main() async {
   await GetStorage.init();
@@ -23,7 +23,9 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  Get.put<GlobalStorageService>(GlobalStorageService());
+  GlobalStorageService.initService(
+    Get.put<GlobalStorageService>(GlobalStorageService()),
+  );
   await GlobalStorageService.lunchApp();
 
   await FirebasePushNotificationService().init();

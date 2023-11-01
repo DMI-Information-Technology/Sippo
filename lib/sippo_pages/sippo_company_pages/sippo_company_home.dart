@@ -8,14 +8,15 @@ import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
+import 'package:jobspot/JobServices/shared_global_data_service.dart';
 import 'package:jobspot/sippo_controller/dashboards_controller/company_dashboard_controller.dart';
 import 'package:jobspot/sippo_controller/home_controllers/company_home_controller.dart';
-import 'package:jobspot/sippo_custom_widget/body_widget.dart';
-import 'package:jobspot/sippo_custom_widget/widgets.dart';
-
-import 'package:jobspot/JobServices/shared_global_data_service.dart';
 import 'package:jobspot/sippo_controller/home_controllers/job_home_view_controller.dart';
+import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/find_yor_jop_dashboard_cards.dart';
+import 'package:jobspot/sippo_custom_widget/widgets.dart';
+import 'package:jobspot/sippo_pages/ads_view/ads_view_widget.dart';
+
 import '../../sippo_custom_widget/network_bordered_circular_image_widget.dart';
 import '../home_component_widget/job_home_view_widget.dart';
 
@@ -34,89 +35,90 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: _buildHomeAppBar(context),
-      body: BodyWidget(
-        paddingContent: EdgeInsets.only(
-            bottom: context.fromHeight(CustomStyle.paddingValue)),
-        isScrollable: true,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _buildWelcomeUser(context),
-            SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: context.fromWidth(CustomStyle.paddingValue),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          _controller.refreshPage();
+        },
+        child: BodyWidget(
+          paddingContent: EdgeInsets.only(
+              bottom: context.fromHeight(CustomStyle.paddingValue)),
+          isScrollable: true,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              _buildWelcomeUser(context),
+              SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
+              const AdsViewWidget(),
+              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: context.fromWidth(CustomStyle.s),
+                ),
+                child: Text(
+                  "Category".tr,
+                  style: dmsbold.copyWith(fontSize: FontSize.title5(context)),
+                ),
               ),
-              child: _buildAdsBoard(),
-            ),
-            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: context.fromWidth(CustomStyle.s),
+              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+              _buildSpecialListView(context),
+              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: context.fromWidth(CustomStyle.paddingValue),
+                ),
+                child: Text("Find_Your_Job".tr,
+                    style: dmsbold.copyWith(fontSize: 16)),
               ),
-              child: Text(
-                "Category".tr,
-                style: dmsbold.copyWith(fontSize: FontSize.title5(context)),
+              SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: context.fromWidth(CustomStyle.s),
+                ),
+                child: Obx(() {
+                  final jobStatistic =
+                      _controller.companyHomeState.jobStatistic;
+                  return FindYorJopDashBoardCards(
+                    jobStatistics: jobStatistic,
+                    firstCardSubtitle: "Remote".tr,
+                    secondCardSubtitle: "Full Time".tr,
+                    thirdCardSubtitle: "Part Time".tr,
+                    onFirstTap: () {
+                      SharedGlobalDataService.instance.jobStatistic =
+                          jobStatistic.remoteJobs;
+                      Get.toNamed(SippoRoutes.sippoJobFilterSearch)?.then((_) {
+                        SharedGlobalDataService.instance.jobStatistic = null;
+                      });
+                    },
+                    onSecondTap: () {
+                      SharedGlobalDataService.instance.jobStatistic =
+                          jobStatistic.fullTimeJobs;
+                      Get.toNamed(SippoRoutes.sippoJobFilterSearch)?.then((_) {
+                        SharedGlobalDataService.instance.jobStatistic = null;
+                      });
+                    },
+                    onThirdTap: () {
+                      SharedGlobalDataService.instance.jobStatistic =
+                          jobStatistic.partTimeJobs;
+                      Get.toNamed(SippoRoutes.sippoJobFilterSearch)?.then((_) {
+                        SharedGlobalDataService.instance.jobStatistic = null;
+                      });
+                    },
+                  );
+                }),
               ),
-            ),
-            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-            _buildSpecialListView(context),
-            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: context.fromWidth(CustomStyle.paddingValue),
+              SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: context.fromWidth(CustomStyle.paddingValue),
+                ),
+                child: Text("Recent_Job_List".tr,
+                    style: dmsbold.copyWith(fontSize: 16)),
               ),
-              child: Text("Find_Your_Job".tr,
-                  style: dmsbold.copyWith(fontSize: 16)),
-            ),
-            SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: context.fromWidth(CustomStyle.s),
-              ),
-              child: Obx(() {
-                final jobStatistic = _controller.companyHomeState.jobStatistic;
-                return FindYorJopDashBoardCards(
-                  jobStatistics: jobStatistic,
-                  firstCardSubtitle: "Remote".tr,
-                  secondCardSubtitle: "Full Time".tr,
-                  thirdCardSubtitle: "Part Time".tr,
-                  onFirstTap: () {
-                    SharedGlobalDataService.instance.jobStatistic =
-                        jobStatistic.remoteJobs;
-                    Get.toNamed(SippoRoutes.sippoJobFilterSearch)?.then((_) {
-                      SharedGlobalDataService.instance.jobStatistic = null;
-                    });
-                  },
-                  onSecondTap: () {
-                    SharedGlobalDataService.instance.jobStatistic =
-                        jobStatistic.fullTimeJobs;
-                    Get.toNamed(SippoRoutes.sippoJobFilterSearch)?.then((_) {
-                      SharedGlobalDataService.instance.jobStatistic = null;
-                    });
-                  },
-                  onThirdTap: () {
-                    SharedGlobalDataService.instance.jobStatistic =
-                        jobStatistic.partTimeJobs;
-                    Get.toNamed(SippoRoutes.sippoJobFilterSearch)?.then((_) {
-                      SharedGlobalDataService.instance.jobStatistic = null;
-                    });
-                  },
-                );
-              }),
-            ),
-            SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: context.fromWidth(CustomStyle.paddingValue),
-              ),
-              child: Text("Recent_Job_List".tr,
-                  style: dmsbold.copyWith(fontSize: 16)),
-            ),
-            SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
-            _buildShowHomeJobsList()
-          ],
+              SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
+              _buildShowHomeJobsList()
+            ],
+          ),
         ),
       ),
       backgroundColor: Jobstopcolor.backgroudHome,

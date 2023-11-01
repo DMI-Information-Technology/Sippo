@@ -4,14 +4,14 @@ import "dart:io";
 import "package:flutter/foundation.dart";
 import "package:http/http.dart" as http;
 import "package:jobspot/JobGlobalclass/global_storage.dart";
-import "package:jobspot/sippo_controller/HttpClientController/http_client_controller.dart";
 import "package:jobspot/core/api_endpoints.dart" as endpoints;
 import "package:jobspot/core/header_api.dart";
 import 'package:jobspot/core/status_response_code_checker.dart';
+import "package:jobspot/sippo_controller/HttpClientController/http_client_controller.dart";
 import "package:jobspot/sippo_data/model/auth_model/user_model.dart";
 import "package:jobspot/sippo_data/model/auth_model/user_register_type_response.dart";
+import "package:jobspot/sippo_data/model/settings_model/change_password_model.dart";
 import "package:jobspot/sippo_data/model/status_message_model/status_message_model.dart";
-import "package:jobspot/sippo_pages/sippo_user_pages/job_updatepassword.dart";
 import "package:jobspot/utils/app_use.dart";
 
 import "../../core/resource.dart";

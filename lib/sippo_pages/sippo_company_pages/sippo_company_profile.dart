@@ -15,6 +15,7 @@ import 'package:jobspot/sippo_custom_widget/expandable_item_list_widget.dart';
 import 'package:jobspot/sippo_custom_widget/gallry_image_uploader_widget_view.dart';
 import 'package:jobspot/sippo_custom_widget/profile_completion_widget.dart';
 import 'package:jobspot/sippo_custom_widget/user_profile_header.dart';
+import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:readmore/readmore.dart';
 
 import '../../sippo_custom_widget/network_bordered_circular_image_widget.dart';
@@ -29,7 +30,22 @@ class SippoCompanyProfile extends StatefulWidget {
 
 class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
   final _controller = ProfileCompanyController.instance;
-
+@override
+  void initState() {
+    super.initState();
+    Future.delayed(
+      const Duration(milliseconds: 2700),
+          () {
+        if (_controller.company.isEmailVerified == false)
+          Get.dialog(CustomAlertDialog(
+            imageAsset: JobstopPngImg.emailV,
+            title: 'email_verification'.tr,
+            description: 'check_email_verification_dialog_desc'.tr,
+            onConfirm: () => Get.back(),
+          ));
+      },
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -123,7 +139,7 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
     // print(_controller.company.images);
     Get.to(
       () => GalleryImageScreenView(
-        title: 'Upload Company Images',
+        title: 'Company Album Images',
         imagesResource: _controller.company.images,
         onSaveTap: _controller.uploadCompanyImages,
         onRemoveImage: _controller.removeImageCompany,
@@ -138,7 +154,7 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
         return ConditionalWidget(
           isLoading: _controller.states.isLoading,
           profileMessages.isNotEmpty == true &&
-              _controller.netController.isConnected,
+              _controller.netController.isConnectedNorm,
           data: profileMessages,
           guaranteedBuilder: (context, data) {
             return ProfileCompletionWidget(

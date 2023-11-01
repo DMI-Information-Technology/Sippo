@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:jobspot/JobGlobalclass/global_storage.dart';
@@ -30,6 +32,12 @@ class AuthController extends GetxController {
   final _isLogged = false.obs;
   final Rx<String?> _tokenLogged = "".obs;
   final box = GetStorage();
+
+  StreamSubscription<States> addListenerStates(
+    void Function(States value) handler,
+  ) {
+    return _states.listen(handler);
+  }
 
   LightSubscription<States> addStateListener(
     void Function(States states) listener,
@@ -107,9 +115,9 @@ class AuthController extends GetxController {
 
   Future<bool> userLogout() async {
     if (_netController.isConnectionLostWithDialog()) return false;
-    loadingState = true;
+    _states.value = States(isLoading: true);
     final response = await AuthRepo.userLogout();
-    loadingState = false;
+    _states.value = States(isLoading: false);
     print(response);
     if (response?["error"] != null) {
       print(response?["error"]);
@@ -121,7 +129,9 @@ class AuthController extends GetxController {
       return false;
     }
     print("AuthController.userLogout success: $response");
-    successState = true;
+    _states.value = states.copyWith(
+      isSuccess: true,
+    );
     return true;
     // await GlobalStorage.saveLoggedUser(response?.data?.model?.toJson());
   }

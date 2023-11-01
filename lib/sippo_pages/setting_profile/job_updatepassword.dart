@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
+import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
@@ -11,69 +12,10 @@ import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/success_message_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_data/auth/auth_repo.dart';
+import 'package:jobspot/sippo_data/model/settings_model/change_password_model.dart';
 import 'package:jobspot/utils/states.dart';
 import 'package:jobspot/utils/validating_input.dart';
 
-import '../../JobGlobalclass/jobstopimges.dart';
-
-class ChangePasswordModel {
-  final String? currentPassword;
-  final String? newPassword;
-  final String? confirmPassword;
-
-  const ChangePasswordModel({
-    this.currentPassword,
-    this.newPassword,
-    this.confirmPassword,
-  });
-
-  Map<String, dynamic> toJson() {
-    return {
-      "current_password": this.currentPassword,
-      "password": this.newPassword,
-      "password_confirmation": this.confirmPassword,
-    };
-  }
-
-  @override
-  String toString() {
-    return 'ChangePasswordModel{currentPassword: $currentPassword, newPassword: $newPassword, confirmPassword: $confirmPassword}';
-  }
-}
-
-class ValidatePropChangePasswordModel {
-  final List<String>? currentPassword;
-  final List<String>? newPassword;
-  final List<String>? confirmPassword;
-
-  const ValidatePropChangePasswordModel({
-    this.currentPassword,
-    this.newPassword,
-    this.confirmPassword,
-  });
-
-  factory ValidatePropChangePasswordModel.fromJson(Map<String, dynamic> json) {
-    return ValidatePropChangePasswordModel(
-      currentPassword: json["current_password"] != null
-          ? List.of(json["current_password"]).map((i) => i.toString()).toList()
-          : null,
-      newPassword: json["password"] != null
-          ? List.of(json["password"]).map((i) => i.toString()).toList()
-          : null,
-      confirmPassword: json["password_confirmation"] != null
-          ? List.of(json["password_confirmation"])
-              .map((i) => i.toString())
-              .toList()
-          : null,
-    );
-  }
-
-  @override
-  String toString() {
-    return 'ValidatePropChangePasswordModel{currentPassword: $currentPassword, newPassword: $newPassword, confirmPassword: $confirmPassword}';
-  }
-//
-}
 
 class ChangePasswordController extends GetxController {
   final currentPassword = TextEditingController();
@@ -82,12 +24,14 @@ class ChangePasswordController extends GetxController {
   final formKey = GlobalKey<FormState>();
   final states = States().obs;
 
+  ChangePasswordModel get form => ChangePasswordModel(
+        currentPassword: currentPassword.text.trim(),
+        newPassword: newPassword.text.trim(),
+        confirmPassword: confirmPassword.text.trim(),
+      );
+
   Future<void> changePassword() async {
-    final response = await AuthRepo.changePassword(ChangePasswordModel(
-      currentPassword: currentPassword.text.trim(),
-      newPassword: newPassword.text.trim(),
-      confirmPassword: confirmPassword.text.trim(),
-    ));
+    final response = await AuthRepo.changePassword(form);
     await response?.checkStatusResponse(
       onSuccess: (data, _) {
         states.value = States(isSuccess: true);

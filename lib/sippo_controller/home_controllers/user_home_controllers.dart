@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:get/get.dart';
 import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
 import 'package:jobspot/JobServices/shared_global_data_service.dart';
+import 'package:jobspot/sippo_controller/ads_controller/ads_controller.dart';
 import 'package:jobspot/sippo_controller/dashboards_controller/user_dashboard_controller.dart';
 import 'package:jobspot/sippo_controller/home_controllers/job_home_view_controller.dart';
 import 'package:jobspot/sippo_data/job_statistics_repo/job_statistics_repo.dart';
@@ -76,6 +77,8 @@ class UserHomeController extends GetxController {
     changeStates(isLoading: true);
     await Future.wait([
       dashboardController.userInformationRefresh(),
+      if (Get.isRegistered<AdsViewController>())
+        AdsViewController.instance.fetchAds(),
       fetchSpecializations(),
       fetchJobStatistics(),
       if (Get.isRegistered<JobsHomeViewController>())

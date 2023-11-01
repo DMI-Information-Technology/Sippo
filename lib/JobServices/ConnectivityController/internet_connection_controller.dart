@@ -1,10 +1,7 @@
 import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
-import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/sippo_custom_widget/error_messages_dialog_snackbar/error_messages.dart'
     as errorMessage;
 
@@ -20,28 +17,20 @@ class InternetConnectionService extends GetxService {
   var connectionCounter = 0;
 
   bool get isConnected {
-    print(connectionCounter);
-
     final connection = _isConnected.isTrue;
     connectionWarning(connection);
-
     return connection;
   }
 
   void connectionWarning(bool connection) {
-
-    if (!connection && connectionCounter >= 3 && !Get.isOverlaysOpen) {
-      Get.snackbar(
-        icon: Icon(Icons.signal_wifi_statusbar_connected_no_internet_4_rounded),
-        'No Connection',
-        'Your connection is lost, please check your connection and try again',
-        backgroundColor: Jobstopcolor.backgroudHome,
-        boxShadows: [boxShadow],
-      );
+    if (!connection && connectionCounter >= 3) {
+      errorMessage.showNoConnectionSnackbar();
       connectionCounter = 0;
     }
     connectionCounter++;
   }
+
+  bool get isConnectedNorm => _isConnected.isTrue;
 
   bool get isNotConnected => !isConnected;
 

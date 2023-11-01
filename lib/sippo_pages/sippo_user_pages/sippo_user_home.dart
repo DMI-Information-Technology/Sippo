@@ -15,6 +15,7 @@ import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/find_yor_jop_dashboard_cards.dart';
 import 'package:jobspot/sippo_custom_widget/network_bordered_circular_image_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
+import 'package:jobspot/sippo_pages/ads_view/ads_view_widget.dart';
 import 'package:jobspot/sippo_pages/home_component_widget/job_home_view_widget.dart';
 
 class SippoUserHome extends StatefulWidget {
@@ -48,11 +49,12 @@ class _SippoUserHomeState extends State<SippoUserHome> {
             children: [
               _buildWelcomeUser(context),
               SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                    horizontal: context.fromWidth(CustomStyle.s)),
-                child: _buildAdsBoard(),
-              ),
+              // Padding(
+              //   padding: EdgeInsets.symmetric(
+              //       horizontal: context.fromWidth(CustomStyle.s)),
+              //   child: _buildAdsBoard(),
+              // ),
+              const AdsViewWidget(),
               SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
               Padding(
                 padding: EdgeInsets.symmetric(

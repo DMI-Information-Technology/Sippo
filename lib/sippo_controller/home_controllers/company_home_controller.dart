@@ -2,15 +2,15 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:jobspot/JobServices/shared_global_data_service.dart';
+import 'package:jobspot/sippo_controller/ads_controller/ads_controller.dart';
 import 'package:jobspot/sippo_controller/dashboards_controller/company_dashboard_controller.dart';
 import 'package:jobspot/sippo_controller/home_controllers/job_home_view_controller.dart';
 import 'package:jobspot/sippo_data/job_statistics_repo/job_statistics_repo.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
 import 'package:jobspot/sippo_data/model/job_statistics_model/job_statistics_model.dart';
-import 'package:jobspot/utils/states.dart';
-
 import 'package:jobspot/sippo_data/model/specializations_model/specializations_model.dart';
 import 'package:jobspot/sippo_data/specializations/specializations_repo.dart';
+import 'package:jobspot/utils/states.dart';
 
 class CompanyHomeController extends GetxController {
   static CompanyHomeController get instance => Get.find();
@@ -71,6 +71,8 @@ class CompanyHomeController extends GetxController {
   void refreshPage() async {
     await Future.wait([
       dashboardController.refreshUserProfileInfo(),
+      if (Get.isRegistered<AdsViewController>())
+        AdsViewController.instance.fetchAds(),
       fetchSpecializations(),
       fetchJobStatistics(),
       if (Get.isRegistered<JobsHomeViewController>())

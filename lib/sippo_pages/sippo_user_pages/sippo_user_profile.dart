@@ -35,14 +35,13 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
   void initState() {
     super.initState();
     Future.delayed(
-      Duration(seconds: 3),
+      const Duration(milliseconds: 2700),
       () {
-        if (_controller.user.isEmailVerified == true)
+        if (_controller.user.isEmailVerified == false)
           Get.dialog(CustomAlertDialog(
             imageAsset: JobstopPngImg.emailV,
             title: 'email_verification'.tr,
-            description:
-                'check_email_verification_dialog_desc'.tr,
+            description: 'check_email_verification_dialog_desc'.tr,
             onConfirm: () => Get.back(),
           ));
       },
@@ -97,7 +96,7 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
         return ConditionalWidget(
           isLoading: _controller.states.isLoading,
           profileMessages.isNotEmpty == true &&
-              _controller.netController.isConnected,
+              _controller.netController.isConnectedNorm,
           data: profileMessages,
           guaranteedBuilder: (context, data) {
             return ProfileCompletionWidget(

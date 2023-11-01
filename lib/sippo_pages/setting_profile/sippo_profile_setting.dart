@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,14 +10,15 @@ import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
+import 'package:jobspot/custom_app_controller/switch_status_controller.dart';
 import 'package:jobspot/sippo_controller/AuthenticationController/sippo_auth_controller.dart';
 import 'package:jobspot/sippo_custom_widget/confirmation_bottom_sheet.dart';
 import 'package:jobspot/sippo_custom_widget/container_bottom_sheet_widget.dart';
+import 'package:jobspot/sippo_custom_widget/loading_view_widgets/loading_scaffold.dart';
 import 'package:jobspot/sippo_custom_widget/setting_item_widget.dart';
-import 'package:jobspot/sippo_themes/themecontroller.dart';
+import 'package:jobspot/sippo_pages/setting_profile/job_updatepassword.dart';
 import 'package:jobspot/utils/app_use.dart';
-
-import '../sippo_user_pages/job_updatepassword.dart';
+import 'package:jobspot/utils/states.dart';
 
 class SippoProfileSetting extends StatefulWidget {
   const SippoProfileSetting({Key? key}) : super(key: key);
@@ -25,12 +28,33 @@ class SippoProfileSetting extends StatefulWidget {
 }
 
 class _SippoProfileSettingState extends State<SippoProfileSetting> {
-  final themedata = Get.put(JobstopThemecontroler());
   final AuthController authController = AuthController.instance;
+  StreamSubscription<States>? _subscription;
+  final loadingOverlay = SwitchStatusController();
+
+  @override
+  void initState() {
+    super.initState();
+    _subscription = authController.addListenerStates((value) {
+      if (value.isLoading) {
+        loadingOverlay.start();
+      } else {
+        loadingOverlay.pause();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _subscription?.cancel();
+    loadingOverlay.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return LoadingScaffold(
+      controller: loadingOverlay,
       appBar: AppBar(),
       body: SingleChildScrollView(
         child: Padding(
@@ -45,9 +69,7 @@ class _SippoProfileSettingState extends State<SippoProfileSetting> {
                 'settings'.tr,
                 style: dmsbold.copyWith(
                   fontSize: FontSize.title2(context),
-                  color: themedata.isdark
-                      ? Jobstopcolor.white
-                      : Jobstopcolor.primarycolor,
+                  color: Jobstopcolor.primarycolor,
                 ),
               ),
               SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
@@ -112,8 +134,7 @@ class _SippoProfileSettingState extends State<SippoProfileSetting> {
     Size size = MediaQuery.of(context).size;
     double height = size.height;
     showModalBottomSheet(
-      backgroundColor:
-          themedata.isdark ? Jobstopcolor.black : Jobstopcolor.white,
+      backgroundColor: Jobstopcolor.white,
       context: context,
       builder: (BuildContext context) {
         return StatefulBuilder(
@@ -161,9 +182,7 @@ class _SippoProfileSettingState extends State<SippoProfileSetting> {
                             'ltr'.tr,
                             style: dmsregular.copyWith(
                               fontSize: 15,
-                              color: themedata.isdark
-                                  ? Jobstopcolor.white
-                                  : Jobstopcolor.black,
+                              color: Jobstopcolor.black,
                             ),
                           ),
                         ],
@@ -191,10 +210,7 @@ class _SippoProfileSettingState extends State<SippoProfileSetting> {
                           Text(
                             'rtl'.tr,
                             style: dmsregular.copyWith(
-                                fontSize: 15,
-                                color: themedata.isdark
-                                    ? Jobstopcolor.white
-                                    : Jobstopcolor.black),
+                                fontSize: 15, color: Jobstopcolor.black),
                           ),
                         ],
                       ),
@@ -210,7 +226,7 @@ class _SippoProfileSettingState extends State<SippoProfileSetting> {
                     child: InkWell(
                       highlightColor: Jobstopcolor.transparent,
                       splashColor: Jobstopcolor.transparent,
-                      onTap: () async {
+                      onTap: () {
                         Navigator.of(context).pop();
                       },
                       child: Row(
@@ -254,23 +270,28 @@ class _SippoProfileSettingState extends State<SippoProfileSetting> {
             confirmTitle: "Logout".tr,
             undoTitle: "undo".tr,
             onConfirm: () async {
-              await authController.logout();
-              if (authController.states.isError) {
-                Get.snackbar(
-                  "logout is failed",
-                  authController.states.message ?? "",
-                  backgroundColor: Colors.red,
-                );
-                authController.resetStates();
-              } else if (authController.states.isSuccess) {
-                authController.resetStates();
-                if (GlobalStorageService.appUse == AppUsingType.user)
-                  Get.offAllNamed(SippoRoutes.userLoginPage);
-                else
-                  Get.offAllNamed(SippoRoutes.sippoCompanyLogin);
-              }
+              Navigator.pop(context);
+
+              authController.logout().then((_) {
+                if (authController.states.isError) {
+                  Get.snackbar(
+                    "logout is failed",
+                    authController.states.message ?? "",
+                    backgroundColor: Colors.red,
+                  );
+                  authController.resetStates();
+                } else if (authController.states.isSuccess) {
+                  authController.resetStates();
+                  switch (GlobalStorageService.appUse) {
+                    case AppUsingType.user:
+                      Get.offAllNamed(SippoRoutes.userLoginPage);
+                    case AppUsingType.company:
+                      Get.offAllNamed(SippoRoutes.sippoCompanyLogin);
+                  }
+                }
+              });
             },
-            onUndo: () => Get.back(),
+            onUndo: () => Navigator.of(context).pop(),
           )
         ],
       ),
