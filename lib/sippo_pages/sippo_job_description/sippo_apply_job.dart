@@ -43,8 +43,33 @@ class _SippoApplyJobState extends State<SippoApplyJob> {
   @override
   Widget build(BuildContext context) {
     return LoadingScaffold(
-      appBar: AppBar(
-        backgroundColor: Jobstopcolor.backgroudHome,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(kToolbarHeight),
+        child: Obx(() {
+          final isHeightOverAppBar =
+              _controller.applyJobsState.isHeightOverAppBar;
+          return AppBar(
+            // toolbarHeight: 0,
+            notificationPredicate: (notification) {
+              if (notification.metrics.pixels > kToolbarHeight) {
+                _controller.applyJobsState.isHeightOverAppBar = true;
+              } else {
+                _controller.applyJobsState.isHeightOverAppBar = false;
+              }
+              return false;
+            },
+            leading: IconButton(
+              onPressed: () => Get.back(),
+              icon: Icon(
+                Icons.arrow_back_rounded,
+                color: isHeightOverAppBar ? Colors.black : Colors.white,
+              ),
+            ),
+            backgroundColor: isHeightOverAppBar
+                ? Jobstopcolor.backgroudHome
+                : Colors.transparent,
+          );
+        }),
       ),
       extendBodyBehindAppBar: true,
       controller: loadingController,

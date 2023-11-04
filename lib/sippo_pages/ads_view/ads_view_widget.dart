@@ -80,7 +80,19 @@ class _AdsViewWidgetState extends State<AdsViewWidget> {
           );
         }
       }
-      return const SizedBox.shrink();
+      return Padding(
+        padding: EdgeInsets.symmetric(
+          vertical: context.fromHeight(CustomStyle.paddingValue),
+        ),
+        child: Center(
+          child: Text(
+            'No Ads Found, Reload the Page',
+            style: dmsbold.copyWith(
+              fontSize: FontSize.title4(context),
+            ),
+          ),
+        ),
+      );
     });
   }
 

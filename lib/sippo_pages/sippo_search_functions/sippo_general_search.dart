@@ -127,12 +127,12 @@ class _SippoGeneralSearchState extends State<SippoGeneralSearch>
       labelColor: Jobstopcolor.primarycolor,
       labelStyle: dmsmedium.copyWith(
         fontSize: FontSize.title5(context),
-      ),
+      ),isScrollable: true,
       tabs: [
         const Tab(text: "Tops"),
         const Tab(text: "Companies"),
         const Tab(text: 'Jobs'),
-        if (GlobalStorageService.isCompany) const Tab(text: 'Customers'),
+        if (GlobalStorageService.isCompany) const Tab(text: 'Users'),
       ],
     );
   }

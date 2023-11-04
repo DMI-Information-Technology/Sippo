@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jobspot/JobGlobalclass/global_storage.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/sippo_data/model/auth_model/entity_model.dart';
+import 'package:jobspot/utils/app_use.dart';
 
 import '../JobGlobalclass/jobstopcolor.dart';
 import '../JobGlobalclass/jobstopfontstyle.dart';
@@ -97,14 +99,24 @@ class UserProfileHeaderWidget extends StatelessWidget {
           imageUrl: profileImage,
           size: context.fromHeight(CustomStyle.imageSize2),
           errorWidget: (_, __, ___) {
-            print('hello');
-
-            return Image.asset(JobstopPngImg.signup);
+            return CircleAvatar(
+              backgroundColor: Colors.white,
+              child: switch (GlobalStorageService.appUse) {
+                AppUsingType.user => Image.asset(JobstopPngImg.signup),
+                AppUsingType.company =>
+                  Image.asset(JobstopPngImg.companysignup),
+              },
+            );
           },
           placeholder: (_, __) {
-            print('hello');
-            return Image.asset(JobstopPngImg.signup);
-
+            return CircleAvatar(
+              backgroundColor: Colors.white,
+              child: switch (GlobalStorageService.appUse) {
+                AppUsingType.user => Image.asset(JobstopPngImg.signup),
+                AppUsingType.company =>
+                  Image.asset(JobstopPngImg.companysignup),
+              },
+            );
           },
           outerBorderColor: Colors.transparent,
         ),

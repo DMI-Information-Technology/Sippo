@@ -6,53 +6,12 @@ import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
-import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
+import 'package:jobspot/sippo_controller/sippo_settings_controller/change_password_controller.dart';
 import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/success_message_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
-import 'package:jobspot/sippo_data/auth/auth_repo.dart';
-import 'package:jobspot/sippo_data/model/settings_model/change_password_model.dart';
-import 'package:jobspot/utils/states.dart';
 import 'package:jobspot/utils/validating_input.dart';
-
-
-class ChangePasswordController extends GetxController {
-  final currentPassword = TextEditingController();
-  final newPassword = TextEditingController();
-  final confirmPassword = TextEditingController();
-  final formKey = GlobalKey<FormState>();
-  final states = States().obs;
-
-  ChangePasswordModel get form => ChangePasswordModel(
-        currentPassword: currentPassword.text.trim(),
-        newPassword: newPassword.text.trim(),
-        confirmPassword: confirmPassword.text.trim(),
-      );
-
-  Future<void> changePassword() async {
-    final response = await AuthRepo.changePassword(form);
-    await response?.checkStatusResponse(
-      onSuccess: (data, _) {
-        states.value = States(isSuccess: true);
-      },
-      onValidateError: (validateError, _) {
-        states.value = States(isError: true, message: validateError?.message);
-      },
-      onError: (message, _) {
-        states.value = States(isError: true, message: message);
-      },
-    );
-  }
-
-  Future<void> onSaveSubmitted() async {
-    if (InternetConnectionService.instance.isNotConnected) return;
-    if (states.value.isLoading) return;
-    states.value = States(isLoading: true);
-    await changePassword();
-    states.value = states.value.copyWith(isLoading: false);
-  }
-}
 
 class JobUpdatePassword extends StatefulWidget {
   const JobUpdatePassword({Key? key}) : super(key: key);
@@ -66,9 +25,6 @@ class _JobUpdatePasswordState extends State<JobUpdatePassword> {
 
   @override
   Widget build(BuildContext context) {
-    // Size size = MediaQuery.sizeOf(context);
-    // double height = size.height;
-    // double width = size.width;
     return Scaffold(
       appBar: AppBar(),
       body: BodyWidget(

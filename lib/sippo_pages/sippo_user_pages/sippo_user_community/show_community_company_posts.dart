@@ -37,6 +37,7 @@ class _ShowCommunityCompanyPostsListState
           itemBuilder: (context, item, index) {
             return PostWidget(
               authorName: item.company?.name ?? 'unknown',
+              imageProfileUrl: item.company?.profileImage?.url,
               timeAgo: '21 minutes ago',
               postTitle: item.title ?? "unknown title",
               postContent: item.body ?? "unknown content",

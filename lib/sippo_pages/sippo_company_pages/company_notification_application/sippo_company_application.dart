@@ -10,6 +10,7 @@ import 'package:jobspot/JobServices/shared_global_data_service.dart';
 import 'package:jobspot/sippo_controller/NotificationController/company_notification_application/company_application_controller.dart';
 import 'package:jobspot/sippo_custom_widget/company_post_widget.dart';
 import 'package:jobspot/sippo_custom_widget/container_bottom_sheet_widget.dart';
+import 'package:jobspot/sippo_custom_widget/error_messages_dialog_snackbar/error_messages.dart';
 import 'package:jobspot/sippo_custom_widget/setting_item_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_data/model/application_model/application_job_company_model.dart';
@@ -42,6 +43,7 @@ class _SippoCompanyApplicationState extends State<SippoCompanyApplication> {
           newPageErrorIndicatorBuilder: (context) =>
               _buildErrorNewLoad(context),
           itemBuilder: (context, item, index) {
+            print(item.cv);
             final company =
                 _controller.notificationApplicationController.company;
             return PostApplicationWidget(
@@ -61,8 +63,12 @@ class _SippoCompanyApplicationState extends State<SippoCompanyApplication> {
                     item.status == "Pending",
                   );
                 },
-                onShowCvTap: (cvUrl) {
-                  _controller.openFile(cvUrl);
+                onShowCvTap: (cvUrl, [size]) {
+                  if (_controller.company.isNotSubscribed) {
+                    showNotSubscriptionAlert('');
+                    return;
+                  }
+                  _controller.openFile(cvUrl, size);
                 });
           },
         ),
@@ -79,7 +85,9 @@ class _SippoCompanyApplicationState extends State<SippoCompanyApplication> {
     return InkWell(
       onTap: () {
         notificationApplicationController.changeStates(
-            isError: false, message: '');
+          isError: false,
+          message: '',
+        );
         _controller.retryLastFieldRequest();
       },
       child: Column(
@@ -134,7 +142,9 @@ class _SippoCompanyApplicationState extends State<SippoCompanyApplication> {
             onTapped: () {
               _controller.refreshPage();
               notificationApplicationController.changeStates(
-                  isError: false, message: '');
+                isError: false,
+                message: '',
+              );
             },
             text: 'try_again'.tr,
           ),
@@ -194,6 +204,10 @@ class _SippoCompanyApplicationState extends State<SippoCompanyApplication> {
         confirmBtnTitle: 'accepted'.tr,
         onConfirm: () async {
           Get.back();
+          if (_controller.company.isNotSubscribed) {
+            showNotSubscriptionAlert('');
+            return;
+          }
           await _controller.onUpdateStatusApplicationSubmitted(
             ApplicationStatusType.Accepted,
             ApplicationId,

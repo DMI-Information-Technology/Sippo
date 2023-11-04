@@ -30,6 +30,7 @@ class CompanyDetailsModel extends EntityModel {
     this.isEmailVerified,
     this.pendingEmail,
   });
+
   bool get pendingEmailIsNotEmpty => pendingEmail?.isNotEmpty == true;
 
   factory CompanyDetailsModel.fromJson(Map<String, dynamic>? json) {
@@ -66,7 +67,7 @@ class CompanyDetailsModel extends EntityModel {
           : null,
       isFollowed: json?['is_followed'],
       hasApplied: json?['has_applied'],
-      isSubscribed: json?['has_applied'],
+      isSubscribed: json?['is_subscribed'],
       isEmailVerified: json?['is_email_verified'],
       pendingEmail: json?['pending_email'],
     );
@@ -86,6 +87,8 @@ class CompanyDetailsModel extends EntityModel {
   final List<ImageResourceModel>? images;
   final bool? isEmailVerified;
   final String? pendingEmail;
+
+  bool get isNotSubscribed => isSubscribed == null || isSubscribed == false;
 
   CompanyDetailsModel copyWith({
     int? id,
@@ -145,7 +148,8 @@ class CompanyDetailsModel extends EntityModel {
       'website': website,
       'employees_count': employeesCount,
       'establishment_date': establishmentDate,
-      'specializations': specializations?.map((e) => e.id).toList(),
+      'specializations':
+          specializations?.where((e) => e.id != null).map((e) => e.id).toList(),
     };
     for (var key in map.keys) {
       if (map[key] == null) continue;

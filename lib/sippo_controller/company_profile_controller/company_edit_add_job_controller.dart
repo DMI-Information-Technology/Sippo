@@ -1,5 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
+import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
 import 'package:jobspot/sippo_data/company_repos/company_job_repo.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
@@ -39,7 +43,6 @@ class CompanyEditAddJobController extends GetxController {
     String? error,
   }) {
     _states.value = states.copyWith(
-      error: error,
       message: isLoading == true ? '' : message,
       isSuccess: isLoading == true ? false : isSuccess,
       isError: isLoading == true ? false : isError,
@@ -52,11 +55,9 @@ class CompanyEditAddJobController extends GetxController {
     final response = await CompanyJobRepo.addNewJob(newJobState.form);
     await response?.checkStatusResponse(
       onSuccess: (data, _) {
-        if (data != null)
-          changeStates(
-            isSuccess: true,
-            message: "the job is updated successfully.",
-          );
+        if (data != null) {
+          popOut();
+        }
       },
       onValidateError: (validateError, _) {
         changeStates(
@@ -85,18 +86,15 @@ class CompanyEditAddJobController extends GetxController {
         "${newJob == _job.value}",
       );
       return changeStates(
-          isWarning: true, message: "nothing is changed in the job.");
+        isWarning: true,
+        message: "nothing is changed in the job.",
+      );
     }
     final response = await CompanyJobRepo.updateJob(newJobState.form, jobId);
     await response?.checkStatusResponse(
       onSuccess: (data, _) {
         if (data != null) {
-          _job.value = data;
-          newJobState.setAll(_job.value);
-          changeStates(
-            isSuccess: true,
-            message: "the job is updated successfully.",
-          );
+          popOut();
         }
       },
       onValidateError: (validateError, _) {
@@ -125,7 +123,7 @@ class CompanyEditAddJobController extends GetxController {
       },
     );
     print(data);
-    return data;
+    return data?.copyForEdit();
   }
 
   Future<void> fetchExperienceLevels() async {
@@ -158,8 +156,10 @@ class CompanyEditAddJobController extends GetxController {
     }
     changeStates(isLoading: true);
     if (isEditing) {
+      print('isEditing true');
       await updateJob(_dashboardController.dashboardState.editId);
     } else {
+      print('isEditing false');
       await addNewJob();
     }
     changeStates(isLoading: false);
@@ -179,9 +179,21 @@ class CompanyEditAddJobController extends GetxController {
 
   States get states => _states.value;
 
+  void popOut() {
+    final localIsEditing = isEditing;
+    Get.back(result: true, closeOverlays: true);
+    Get.snackbar(
+      localIsEditing ? 'edit_job'.tr : 'new_job'.tr,
+      localIsEditing ? 'edit_job_done'.tr : 'job_added_successfully'.tr,
+      boxShadows: [boxShadow],
+      backgroundColor: Jobstopcolor.backgroudHome,
+    );
+  }
+
   @override
   void onInit() {
     super.onInit();
+
     (() async {
       newJobState.specializationList =
           company.specializations?.where((e) => e.name != null).toList() ?? [];
@@ -217,6 +229,12 @@ class CompanyEditAddJobController extends GetxController {
 }
 
 class CompanyEditAddJobState {
+  ({
+    String? createdAt,
+    bool? isExpired,
+    bool? hasApplied,
+    bool? isActive
+  })? extraInfo;
   static const MAX_SALARY_RANGE = 20000.0;
   static const MIN_SALARY_RANGE = 1000.0;
   static const DIVISION = (CompanyEditAddJobState.MAX_SALARY_RANGE -
@@ -257,6 +275,10 @@ class CompanyEditAddJobState {
         salaryTo: salary.to,
         experienceLevel: experienceLevel,
         specialization: specialization,
+        hasApplied: extraInfo?.hasApplied,
+        isActive: extraInfo?.isActive,
+        isExpired: extraInfo?.isExpired,
+        createdAt: extraInfo?.createdAt,
       );
   final _locationsList = <WorkLocationModel>[].obs;
   final _specializationList = <SpecializationModel>[].obs;
@@ -265,6 +287,12 @@ class CompanyEditAddJobState {
   final _employmentTypeList = <String>[].obs;
 
   void setAll(CompanyJobModel? value) {
+    extraInfo = (
+      createdAt: value?.createdAt,
+      hasApplied: value?.hasApplied,
+      isActive: value?.isActive,
+      isExpired: value?.isExpired,
+    );
     position = value?.title ?? "";
     requirements = value?.requirements ?? "";
     workPLaceType = value?.workplaceType ?? "";
@@ -274,7 +302,7 @@ class CompanyEditAddJobState {
       experienceLevel = value!.experienceLevel!;
     if (value?.specialization != null) specialization = value!.specialization!;
     jobLocation = WorkLocationModel(
-      locationAddress: value?.company?.locations?.first.locationAddress,
+      locationAddress: value?.locationAddress,
       cordLocation: CoordLocation(
         longitude: value?.longitude.toString(),
         latitude: value?.latitude.toString(),

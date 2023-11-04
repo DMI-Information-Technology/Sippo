@@ -26,7 +26,7 @@ class _SippoCompanyNotificationApplicationState
   final _controller = Get.put(CompanyNotificationApplicationController());
   TabController? _tabController;
   final RestorableInt tabIndex = RestorableInt(0);
-  final nonResource =  NoResourceScreen(
+  final nonResource = NoResourceScreen(
     title: 'empty_notification_title'.tr,
     description: 'empty_notification_desc'.tr,
     image: JobstopPngImg.notificationimg,
@@ -53,7 +53,7 @@ class _SippoCompanyNotificationApplicationState
       // When the tab controller's value is updated, make sure to update the
       // tab index value, which is state restorable.
       _controller.resetStates();
-
+      _controller.notifiState.selectedTapIndex = _tabController?.index ?? 0;
       tabIndex.value = _tabController?.index ?? 0;
     });
   }
@@ -112,23 +112,29 @@ class _SippoCompanyNotificationApplicationState
         style: dmsbold.copyWith(fontSize: FontSize.title3(context)),
       ),
       actions: [
-        Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: context.fromWidth(CustomStyle.xs),
-            vertical: kToolbarHeight / CustomStyle.overBy3,
-          ),
-          child: InkWell(
-              splashColor: Jobstopcolor.transparent,
-              highlightColor: Jobstopcolor.transparent,
-              // onTap: () => Get.to(() => const AllNotification()),
-              child: Text(
-                'read_all'.tr,
-                style: dmsregular.copyWith(
-                  fontSize: FontSize.label(context),
-                  color: Jobstopcolor.secondary,
-                ),
-              )),
-        )
+        Obx(() => Visibility(
+            visible: _controller.notifiState.selectedTapIndex == 0,
+            maintainState: true,
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: context.fromWidth(CustomStyle.xs),
+                vertical: kToolbarHeight / CustomStyle.overBy3,
+              ),
+              child: InkWell(
+                  splashColor: Jobstopcolor.transparent,
+                  highlightColor: Jobstopcolor.transparent,
+                  onTap: () {
+                    _controller.markAllNotificationsAsRead();
+                  },
+                  child: Text(
+                    'read_all'.tr,
+                    style: dmsregular.copyWith(
+                      fontSize: FontSize.label(context),
+                      color: Jobstopcolor.secondary,
+                    ),
+                  )),
+            ),
+          ))
       ],
     );
   }

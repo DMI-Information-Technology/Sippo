@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
+import 'package:jobspot/custom_app_controller/switch_status_controller.dart';
 import 'package:jobspot/sippo_controller/NotificationController/company_notification_application/company_notification_controller.dart';
 import 'package:jobspot/sippo_controller/dashboards_controller/company_dashboard_controller.dart';
-import 'package:jobspot/custom_app_controller/switch_status_controller.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
 import 'package:jobspot/sippo_data/notification_repo/notifications_repo.dart';
 import 'package:jobspot/utils/states.dart';
@@ -18,7 +18,9 @@ class CompanyNotificationApplicationController extends GetxController {
   bool get isNetworkConnected => InternetConnectionService.instance.isConnected;
 
   States get states => _states.value;
+
   void resetStates() => _states.value = States();
+  final notifiState = CompanyNotificationApplicationState();
 
   void changeStates({
     bool? isLoading,
@@ -59,4 +61,13 @@ class CompanyNotificationApplicationController extends GetxController {
   }
 }
 
-class CompanyNotificationApplicationState {}
+class CompanyNotificationApplicationState {
+  final _selectedTapIndex = 0.obs;
+
+  int get selectedTapIndex => _selectedTapIndex.toInt();
+
+  void set selectedTapIndex(int value) {
+    if (value == selectedTapIndex) return;
+    _selectedTapIndex.value = value;
+  }
+}

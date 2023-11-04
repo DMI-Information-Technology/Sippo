@@ -1,21 +1,17 @@
-import 'dart:io';
-
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/sippo_controller/NotificationController/company_notification_application/company_notification_application_controller.dart';
+import 'package:jobspot/sippo_controller/dashboards_controller/company_dashboard_controller.dart';
 import 'package:jobspot/sippo_data/company_repos/compnay_applications_repo.dart';
-import 'package:jobspot/sippo_data/model/notification/job_application_model.dart';
 import 'package:jobspot/sippo_data/model/application_model/application_change_status_model.dart';
 import 'package:jobspot/sippo_data/model/application_model/application_job_company_model.dart';
-import 'package:jobspot/utils/file_downloader_service.dart';
+import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
+import 'package:jobspot/sippo_data/model/notification/job_application_model.dart';
 import 'package:jobspot/utils/states.dart';
 import 'package:jobspot/utils/storage_permission_service.dart';
-import 'package:open_file/open_file.dart';
-import 'package:path_provider/path_provider.dart';
 
 class CompanyApplicationController extends GetxController {
   final pagingController =
@@ -23,6 +19,9 @@ class CompanyApplicationController extends GetxController {
   final notificationApplicationController =
       CompanyNotificationApplicationController.instance;
   final companyApplicationState = CompanyApplicationState();
+
+  CompanyDetailsModel get company =>
+      CompanyDashBoardController.instance.company;
 
   States get states => notificationApplicationController.states;
 
@@ -150,53 +149,14 @@ class CompanyApplicationController extends GetxController {
     );
   }
 
-  void openFile(String fileUrl) async {
+  void openFile(String fileUrl, [String? size]) async {
     if (!notificationApplicationController.isNetworkConnected) return;
-    notificationApplicationController.loadingOverlayController.start();
-    final hasPermission = await StoragePermissionsService.storageRequested(
-      DeviceInfoPlugin(),
-    );
-    if (!hasPermission) {
-      notificationApplicationController.loadingOverlayController.pause();
-      return;
-    }
-    final fileDownloader = FileDownloader();
-    final String fileName = fileUrl.split('/').last;
-    final downloadData = <int>[];
-    Directory downloadDirectory;
-    if (Platform.isIOS) {
-      downloadDirectory = await getApplicationDocumentsDirectory();
-    } else {
-      downloadDirectory = Directory('/storage/emulated/0/Download');
-      if (!downloadDirectory.existsSync())
-        downloadDirectory = (await getExternalStorageDirectory())!;
-    }
-    final filePathName = "${downloadDirectory.path}/$fileName";
-    final savedFile = File(filePathName);
-    if (!savedFile.existsSync()) {
-      notificationApplicationController.loadingOverlayController.pause();
-      return;
-    }
-    fileDownloader.downloadFileListener(
-      url: fileUrl,
-      onData: (d) {
-        downloadData.addAll(d);
-      },
-      onDone: () {
-        final raf = savedFile.openSync(mode: FileMode.write);
-        raf.writeFromSync(downloadData);
-        raf.closeSync();
-        fileDownloader.close();
-        notificationApplicationController.loadingOverlayController
-            .pause();
-        OpenFile.open(savedFile.path);
-      },
-      onError: (e, s) {
-        print(e);
-        print(s);
-        notificationApplicationController.loadingOverlayController
-            .pause();
-        fileDownloader.close();
+    await StoragePermissionsService.openFile(
+      fileUrl,
+      size: size,
+      fn: (value) {
+        notificationApplicationController.loadingOverlayController.status =
+            value;
       },
     );
   }

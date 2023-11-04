@@ -231,6 +231,52 @@ class CompanyJobModel {
       application: application ?? this.application,
     );
   }
+
+  CompanyJobModel copyForEdit({
+    int? id,
+    String? title,
+    String? description,
+    String? requirements,
+    String? workplaceType,
+    double? salaryFrom,
+    double? salaryTo,
+    String? employmentType,
+    ExperienceLevel? experienceLevel,
+    SpecializationModel? specialization,
+    double? longitude,
+    double? latitude,
+    String? currencyType,
+    String? createdAt,
+    bool? isExpired,
+    bool? isActive,
+    bool? hasApplied,
+    LocationAddress? locationAddress,
+    ApplicationUserModel? application,
+  }) {
+    return CompanyJobModel(
+      id: id ?? this.id,
+      company: null,
+      title: title ?? this.title,
+      description: description ?? this.description,
+      requirements: requirements ?? this.requirements,
+      workplaceType: workplaceType ?? this.workplaceType,
+      salaryFrom: salaryFrom ?? this.salaryFrom,
+      salaryTo: salaryTo ?? this.salaryTo,
+      employmentType: employmentType ?? this.employmentType,
+      experienceLevel: experienceLevel ?? this.experienceLevel,
+      specialization: specialization ?? this.specialization,
+      longitude: longitude ?? this.longitude,
+      latitude: latitude ?? this.latitude,
+      currencyType: currencyType ?? this.currencyType,
+      createdAt: createdAt ?? this.createdAt,
+      isExpired: isExpired ?? this.isExpired,
+      isActive: isActive ?? this.isActive,
+      hasApplied: hasApplied ?? this.hasApplied,
+      isSaved: null,
+      locationAddress: locationAddress ?? this.locationAddress,
+      application: application ?? this.application,
+    );
+  }
 }
 
 class ExperienceLevel {

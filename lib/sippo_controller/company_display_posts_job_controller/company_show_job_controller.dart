@@ -17,7 +17,7 @@ class CompanyShowJobController extends GetxController {
   States get states => showWrapperController.states;
 
   void refreshJobsAfterEdit(dynamic value) {
-    if (value is bool && value.runtimeType == bool && value == true) {
+    if (value case bool _) {
       refreshPage();
     }
   }

@@ -18,6 +18,21 @@ class TopDescriptionInfoCompanyWidget extends StatelessWidget {
 
   bool isTextNotBlank(String? text) => !isTextBlank(text);
 
+  int _calculateTextFlexibility(String text, List<String> textList) {
+    if ([startText, middleText, endText].where((e) => e != null).length >=3)
+      return 1;
+    // if (textList.where((e) => e.trim().isNotEmpty).length == 0) return 1;
+    if (textList.where((e) => e.trim().isNotEmpty).every((e) {
+      final l1 = text.trim().length;
+      final l2 = e.trim().length;
+
+      return ((l1 / 2).floor() > l2);
+    })) {
+      return 2;
+    }
+    return 1;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -26,6 +41,10 @@ class TopDescriptionInfoCompanyWidget extends StatelessWidget {
       children: [
         if (isTextNotBlank(startText))
           Expanded(
+            flex: _calculateTextFlexibility(startText!, [
+              middleText ?? '',
+              endText ?? '',
+            ]),
             child: AutoSizeText(
               textAlign: TextAlign.center,
               this.startText ?? "",
@@ -38,6 +57,10 @@ class TopDescriptionInfoCompanyWidget extends StatelessWidget {
           DotWith.ensSpace,
         if (isTextNotBlank(middleText))
           Expanded(
+            flex: _calculateTextFlexibility(middleText!, [
+              startText ?? '',
+              endText ?? '',
+            ]),
             child: AutoSizeText(
               textAlign: TextAlign.center,
               middleText ?? "Libya, Tripoli, Ain-zara, El-sedra",
@@ -52,6 +75,10 @@ class TopDescriptionInfoCompanyWidget extends StatelessWidget {
           DotWith.startSpace,
         if (isTextNotBlank(endText))
           Expanded(
+            flex: _calculateTextFlexibility(endText!, [
+              startText ?? '',
+              middleText ?? '',
+            ]),
             child: AutoSizeText(
               textAlign: TextAlign.center,
               endText ?? "99999999 days ago",

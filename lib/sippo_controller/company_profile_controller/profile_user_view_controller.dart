@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:get/get.dart';
 import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
 import 'package:jobspot/JobServices/shared_global_data_service.dart';
+import 'package:jobspot/custom_app_controller/switch_status_controller.dart';
 import 'package:jobspot/sippo_data/company_repos/compan_user_profile_view_repo.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_user_profile_view_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/cv_file_model.dart';
@@ -13,6 +14,7 @@ import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/us
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/work_experiences_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_widget_model/jobstop_resume_file_info.dart';
 import 'package:jobspot/utils/states.dart';
+import 'package:jobspot/utils/storage_permission_service.dart';
 
 class ProfileUserViewController extends GetxController {
   final netController = InternetConnectionService.instance;
@@ -99,19 +101,39 @@ class ProfileUserViewController extends GetxController {
     super.onInit();
   }
 
+  final loadingOverlayController = SwitchStatusController();
+
+  void openFile(String fileUrl, [String? size]) async {
+    if (netController.isNotConnected) return;
+    await StoragePermissionsService.openFile(
+      fileUrl,
+      size: size,
+      fn: (value) {
+        loadingOverlayController.status = value;
+      },
+    );
+  }
+
   @override
   void onClose() {
+    loadingOverlayController.dispose();
     // _connectionSubscription?.cancel();
     super.onClose();
   }
 }
 
 class ProfileState {
+  final _isHeightOverAppBar = false.obs;
+
+  bool get isHeightOverAppBar => _isHeightOverAppBar.isTrue;
+
+  set isHeightOverAppBar(bool value) => _isHeightOverAppBar.value = value;
   final _profileInfo = ProfileInfoModel().obs;
 
   void setAll(ProfileViewResourceModel data) {
     profileInfo =
-        data.userInfo?.copyWith(profileImage: data.image) ?? profileInfo;
+        data.userInfo?.copyWith(profileImage: data.image, cv: data.cv) ??
+            profileInfo;
     aboutMeText = data.userInfo?.bio ?? '';
     skillsList = data.skills?.skills ?? skillsList;
     educationList = data.educations ?? educationList;
@@ -130,7 +152,8 @@ class ProfileState {
   void set aboutMeText(String value) {
     _aboutMeText.value = value;
   }
-CvModel? get cv => profileInfo.cv;
+
+  CvModel? get cv => profileInfo.cv;
   final _showAllWei = false.obs;
   final _showAllEdui = false.obs;
   final _showAllProjects = false.obs;

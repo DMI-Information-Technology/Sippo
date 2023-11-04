@@ -252,6 +252,11 @@ class ProfileUserController extends GetxController {
 }
 
 class ProfileState {
+  final _isHeightOverAppBar = false.obs;
+
+  bool get isHeightOverAppBar => _isHeightOverAppBar.isTrue;
+
+  set isHeightOverAppBar(bool value) => _isHeightOverAppBar.value = value;
   final _profileView = ProfileViewResourceModel().obs;
   StreamSubscription? profileViewSubscription;
 

@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/global_storage.dart';
@@ -11,12 +10,15 @@ import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/sippo_controller/user_community_controller/user_about_companies_controllers.dart';
 import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
 import 'package:jobspot/sippo_custom_widget/rounded_border_radius_card_widget.dart';
+import 'package:jobspot/sippo_custom_widget/top_description_info_company.dart';
 import 'package:jobspot/sippo_custom_widget/top_job_details_header.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_pages/sippo_abouts_companies/show_about_companies_details.dart';
 import 'package:jobspot/sippo_pages/sippo_abouts_companies/show_about_companies_jobs.dart';
 import 'package:jobspot/sippo_pages/sippo_abouts_companies/show_about_companies_posts.dart';
 import 'package:jobspot/utils/app_use.dart';
+import 'package:jobspot/utils/helper.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class SippoAboutCompanies extends StatefulWidget {
   const SippoAboutCompanies({Key? key}) : super(key: key);
@@ -171,7 +173,22 @@ class _SippoAboutCompaniesState extends State<SippoAboutCompanies> {
               size: context.height / CustomStyle.m,
             ),
             backgroundColor: Colors.red[100],
-            onTapped: () {},
+            onTapped: () {
+              final link = _controller.aboutState.company.website ?? "";
+
+              try {
+                if (link.isURL) {
+                  launchUrl(
+                    Uri.parse(link),
+                  );
+                } else {
+                  throw Exception("${'invalid_url'.tr}: " + link);
+                }
+              } catch (e, s) {
+                print(e);
+                print(s);
+              }
+            },
             text: "visit_website".tr,
             textColor: Colors.red[300],
           ),
@@ -224,60 +241,19 @@ class _SippoAboutCompaniesState extends State<SippoAboutCompanies> {
                 overflow: TextOverflow.clip,
               )),
           SizedBox(height: context.fromHeight(CustomStyle.huge2)),
-          _buildTopInfoJobText(
-            context,
-            'work_place'.tr,
-            _controller.aboutState.company.locations
-                    ?.where((e) => e.locationAddress != null)
-                    .map((e) => e.locationAddress?.name ?? '')
-                    .join(", ") ??
-                "",
-          ),
-          SizedBox(height: context.fromHeight(CustomStyle.huge2)),
-          _buildTopInfoJobText(
-            context,
-            'invented_date'.tr,
-            _controller.aboutState.company.establishmentDate ?? "",
-          ),
+          Obx(() {
+            final company = _controller.aboutState.company;
+            print("establishmentDate: ${company.establishmentDate}");
+            return TopDescriptionInfoCompanyWidget(
+              startText: company.locationCity,
+              endText: calculateElapsedTimeFromStringDate(
+                company.establishmentDate,
+              ),
+            );
+          }),
         ],
       ),
     );
-  }
-
-  Widget _buildTopInfoJobText(
-    BuildContext context,
-    String label,
-    String content,
-  ) {
-    return content.trim().isNotEmpty
-        ? SizedBox(
-            width: context.width,
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                AutoSizeText(
-                  label,
-                  style: dmsregular.copyWith(
-                    fontSize: FontSize.title5(context),
-                    color: Jobstopcolor.primarycolor,
-                  ),
-                  overflow: TextOverflow.clip,
-                ),
-                SizedBox(width: context.fromWidth(CustomStyle.xxxl)),
-                Expanded(
-                  child: AutoSizeText(
-                    content,
-                    style: dmsmedium.copyWith(
-                      fontSize: FontSize.title5(context),
-                      color: Jobstopcolor.primarycolor,
-                    ),
-                    overflow: TextOverflow.ellipsis,
-                  ),
-                ),
-              ],
-            ),
-          )
-        : const SizedBox.shrink();
   }
 }
 
@@ -338,7 +314,7 @@ class CustomSliverAppBarDelegate extends SliverPersistentHeaderDelegate {
                     ? const EdgeInsets.only(top: 25)
                     : EdgeInsets.zero,
                 child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     IconButton(
@@ -351,16 +327,16 @@ class CustomSliverAppBarDelegate extends SliverPersistentHeaderDelegate {
                       ),
                     ),
                     // if (actions.isNotEmpty) ...[
-                    Spacer(),
-                    IconButton(
-                      onPressed: onPopPubMenuTap,
-                      icon: Icon(
-                        Icons.more_vert,
-                        color: shrinkOffset <= minExtent
-                            ? Colors.white
-                            : Colors.black87,
-                      ),
-                    ),
+                    // Spacer(),
+                    // IconButton(
+                    //   onPressed: onPopPubMenuTap,
+                    //   icon: Icon(
+                    //     Icons.more_vert,
+                    //     color: shrinkOffset <= minExtent
+                    //         ? Colors.white
+                    //         : Colors.black87,
+                    //   ),
+                    // ),
                     // ...actions,
                     // ]
                   ],

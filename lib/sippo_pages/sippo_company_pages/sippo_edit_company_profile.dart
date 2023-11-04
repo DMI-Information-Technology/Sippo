@@ -13,6 +13,7 @@ import 'package:jobspot/sippo_custom_widget/save_image_profle_page_widget.dart';
 import 'package:jobspot/sippo_custom_widget/success_message_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/utils/getx_text_editing_controller.dart';
+import 'package:jobspot/utils/helper.dart';
 import 'package:jobspot/utils/image_picker_service.dart';
 import 'package:jobspot/utils/validating_input.dart';
 
@@ -67,6 +68,19 @@ class _EditCompanyProfilePageState extends State<EditCompanyProfilePage> {
                         CardNotifyMessage.warning(
                       state: data,
                       onCancelTap: () => _controller.warningState(false),
+                    ),
+                  )),
+              Obx(() => ConditionalWidget(
+                    _controller.states.isError,
+                    data: _controller.states,
+                    guaranteedBuilder: (context, data) =>
+                        CardNotifyMessage.error(
+                      state: data,
+                      onCancelTap: () =>
+                          _controller.states = _controller.states.copyWith(
+                        isError: false,
+                        message: '',
+                      ),
                     ),
                   )),
               Column(
@@ -231,6 +245,18 @@ class _EditCompanyProfilePageState extends State<EditCompanyProfilePage> {
                       color: Jobstopcolor.primarycolor,
                     ),
                   ),
+                  SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: context.fromWidth(CustomStyle.paddingValue),
+                    ),
+                    child: Text(
+                      'Establishment Date',
+                      style:
+                          dmsmedium.copyWith(fontSize: FontSize.label(context)),
+                    ),
+                  ),
+                  _buildStartDateInput(context),
                 ],
               ),
             ],
@@ -372,5 +398,27 @@ class _EditCompanyProfilePageState extends State<EditCompanyProfilePage> {
             ],
           ),
         ));
+  }
+
+  Widget _buildStartDateInput(BuildContext context) {
+    final eduState = _controller.profileEditState;
+
+    return InputBorderedField(
+      onTap: () {
+        showMyDatePicker(context, (date) {
+          eduState.establishedDate.controller.text =
+              customDateFormatter(date.toString(), "yyyy-MM-dd");
+        });
+      },
+      readOnly: true,
+      height: context.fromHeight(CustomStyle.inputBorderedSize),
+      hintText: 'pick company establishment date',
+      fontSize: FontSize.label(context),
+      gController: eduState.establishedDate,
+      suffixIcon: const Icon(
+        Icons.date_range_outlined,
+        color: Jobstopcolor.primarycolor,
+      ),
+    );
   }
 }

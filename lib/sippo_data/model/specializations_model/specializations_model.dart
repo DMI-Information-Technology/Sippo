@@ -25,17 +25,18 @@ class SpecializationModel {
     };
   }
 
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       other is SpecializationModel &&
           runtimeType == other.runtimeType &&
           id == other.id &&
-          name == other.name&&
+          name == other.name &&
           image == other.image;
 
   @override
-  int get hashCode => id.hashCode ^ name.hashCode^image.hashCode;
+  int get hashCode => id.hashCode ^ name.hashCode ^ image.hashCode;
 
   @override
   String toString() {

@@ -29,6 +29,8 @@ class _SippoUserHomeState extends State<SippoUserHome> {
   // final _controller = Get.put(UserHomeController());
   final _controller = UserHomeController.instance;
   final jobsHomeView = const JobHomeViewWidget();
+  final adsView = const AdsViewWidget();
+  final jobStatisticBoard = const JobStatisticBoardViewWidget();
 
   @override
   Widget build(BuildContext context) {
@@ -49,12 +51,7 @@ class _SippoUserHomeState extends State<SippoUserHome> {
             children: [
               _buildWelcomeUser(context),
               SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-              // Padding(
-              //   padding: EdgeInsets.symmetric(
-              //       horizontal: context.fromWidth(CustomStyle.s)),
-              //   child: _buildAdsBoard(),
-              // ),
-              const AdsViewWidget(),
+              _buildShowAdsBoard(),
               SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
               Padding(
                 padding: EdgeInsets.symmetric(
@@ -78,41 +75,7 @@ class _SippoUserHomeState extends State<SippoUserHome> {
                 ),
               ),
               SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: context.fromWidth(CustomStyle.s),
-                ),
-                child: Obx(() {
-                  final jobStatistic = _controller.userHomeState.jobsStatistic;
-                  return FindYorJopDashBoardCards(
-                    jobStatistics: jobStatistic,
-                    firstCardSubtitle: "Remote".tr,
-                    secondCardSubtitle: "Full Time".tr,
-                    thirdCardSubtitle: "Part Time".tr,
-                    onFirstTap: () {
-                      _controller.sharedDataService.jobStatistic =
-                          jobStatistic.remoteJobs;
-                      Get.toNamed(SippoRoutes.sippoJobFilterSearch)?.then((_) {
-                        _controller.sharedDataService.jobStatistic = null;
-                      });
-                    },
-                    onSecondTap: () {
-                      _controller.sharedDataService.jobStatistic =
-                          jobStatistic.fullTimeJobs;
-                      Get.toNamed(SippoRoutes.sippoJobFilterSearch)?.then((_) {
-                        _controller.sharedDataService.jobStatistic = null;
-                      });
-                    },
-                    onThirdTap: () {
-                      _controller.sharedDataService.jobStatistic =
-                          jobStatistic.partTimeJobs;
-                      Get.toNamed(SippoRoutes.sippoJobFilterSearch)?.then((_) {
-                        _controller.sharedDataService.jobStatistic = null;
-                      });
-                    },
-                  );
-                }),
-              ),
+              _buildShowJobStatisticBoard(),
               SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
               Padding(
                 padding: EdgeInsets.symmetric(
@@ -136,6 +99,10 @@ class _SippoUserHomeState extends State<SippoUserHome> {
   }
 
   Widget _buildShowHomeJobsList() => jobsHomeView;
+
+  Widget _buildShowAdsBoard() => adsView;
+
+  Widget _buildShowJobStatisticBoard() => jobStatisticBoard;
 
   Widget _buildWelcomeUser(BuildContext context) {
     final dashboardController = UserDashBoardController.instance;
@@ -265,7 +232,7 @@ class _SippoUserHomeState extends State<SippoUserHome> {
   }
 
   AppBar _buildHomeAppBar() {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery.sizeOf(context);
     double height = size.height;
     double width = size.width;
     return AppBar(
@@ -288,7 +255,14 @@ class _SippoUserHomeState extends State<SippoUserHome> {
                 onTap: () => Get.toNamed(SippoRoutes.sippoUserProfile),
                 child: Obx(() => NetworkBorderedCircularImage(
                       imageUrl: _controller.user.profileImage?.url ?? '',
-                      errorWidget: (___, __, _) => const CircleAvatar(),
+                      errorWidget: (___, __, _) => CircleAvatar(
+                        backgroundColor: Colors.white,
+                        child: Image.asset(JobstopPngImg.signup),
+                      ),
+                      placeholder: (_, __) => CircleAvatar(
+                        backgroundColor: Colors.white,
+                        child: Image.asset(JobstopPngImg.signup),
+                      ),
                       size: context.fromHeight(24),
                       outerBorderColor: Jobstopcolor.backgroudHome,
                     )),
@@ -300,45 +274,4 @@ class _SippoUserHomeState extends State<SippoUserHome> {
     );
   }
 
-  Widget _buildAdsBoard() {
-    Size size = MediaQuery.of(context).size;
-    double height = size.height;
-    double width = size.width;
-    return Container(
-      decoration: BoxDecoration(
-          color: Jobstopcolor.primarycolor,
-          borderRadius: BorderRadius.circular(height / 32)),
-      child: Stack(
-        children: [
-          Image.asset(JobstopPngImg.banner),
-          Positioned(
-              top: 50,
-              left: 20,
-              child: Text(
-                "50% off\ntake any courses",
-                style: dmsregular.copyWith(
-                    fontSize: 18, color: Jobstopcolor.white),
-              )),
-          Positioned(
-            bottom: 30,
-            left: 20,
-            child: Container(
-              height: height / 30,
-              width: width / 3.8,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: Jobstopcolor.orenge),
-              child: Center(
-                child: Text(
-                  "Join Now",
-                  style: dmsmedium.copyWith(
-                      fontSize: 13, color: Jobstopcolor.white),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 }

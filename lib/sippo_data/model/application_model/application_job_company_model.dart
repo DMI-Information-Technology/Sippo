@@ -139,6 +139,7 @@ class ApplicationUserModel {
         cv: cv ?? this.cv,
       );
 
+
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -146,8 +147,8 @@ class ApplicationUserModel {
           runtimeType == other.runtimeType &&
           id == other.id &&
           job == other.job &&
-          description == other.description &&
           company == other.company &&
+          description == other.description &&
           status == other.status &&
           createdAt == other.createdAt &&
           cv == other.cv;
@@ -156,9 +157,9 @@ class ApplicationUserModel {
   int get hashCode =>
       id.hashCode ^
       job.hashCode ^
+      company.hashCode ^
       description.hashCode ^
       status.hashCode ^
-      company.hashCode ^
       createdAt.hashCode ^
       cv.hashCode;
 

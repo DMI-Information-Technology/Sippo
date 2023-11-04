@@ -36,6 +36,7 @@ class _ShowAboutCompaniesPostsListState
           return Obx(
             () => PostWidget(
               authorName: _controller.company.name ?? '',
+              imageProfileUrl: _controller.company.profileImage?.url,
               timeAgo: calculateElapsedTimeFromStringDate(
                     DateTime.now().toString(),
                   ) ??

@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/sippo_controller/company_profile_controller/profile_company_controller.dart';
 import 'package:jobspot/custom_app_controller/switch_status_controller.dart';
+import 'package:jobspot/sippo_controller/company_profile_controller/profile_company_controller.dart';
 import 'package:jobspot/sippo_data/company_repos/company_profile_info_repo.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
 import 'package:jobspot/sippo_data/model/custom_file_model/custom_file_model.dart';
@@ -19,8 +19,12 @@ class EditCompanyProfileInfoController extends GetxController {
   final _states = States().obs;
 
   final GlobalKey<FormState> formKey = GlobalKey();
+
   bool get isEmailVerified => companyDetails.isEmailVerified == true;
+
   States get states => _states.value;
+
+  void set states(States value) => _states.value = value;
 
   void successState(bool value, [String? message]) {
     _states.value = states.copyWith(isSuccess: value, message: message);
@@ -34,7 +38,7 @@ class EditCompanyProfileInfoController extends GetxController {
     final response = await EditCompanyProfileInfoRepo.updateProfileImage(
       profileEditState.pickedImageProfile,
     );
-    response?.checkStatusResponse(
+    await response?.checkStatusResponse(
       onSuccess: (data, _) {
         if (data != null) {
           final company = profileController.dashboard.company;
@@ -69,8 +73,13 @@ class EditCompanyProfileInfoController extends GetxController {
         }
         successState(true, 'company Profile is updated successfully.');
       },
-      onValidateError: (validateError, _) {},
-      onError: (message, _) {},
+      onValidateError: (validateError, _) {
+        states =
+            states.copyWith(isError: true, message: validateError?.message);
+      },
+      onError: (message, _) {
+        states = states.copyWith(isError: true, message: message);
+      },
     );
   }
 
@@ -99,8 +108,8 @@ class EditCompanyProfileInfoController extends GetxController {
     _states.value = states.copyWith(isLoading: false);
   }
 
-
   StreamSubscription<States>? stateSubs;
+
   @override
   void onInit() {
     profileEditState.setAll(profileController.company);
@@ -130,6 +139,7 @@ class ProfileCompanyEditState {
   final website = GetXTextEditingController();
   final city = GetXTextEditingController();
   final employeesCount = GetXTextEditingController();
+  final establishedDate = GetXTextEditingController();
   final _profileController = ProfileCompanyController.instance;
   final _pickedImageProfile = CustomFileModel().obs;
   final bio = GetXTextEditingController();
@@ -150,6 +160,7 @@ class ProfileCompanyEditState {
     employeesCount.text = "";
     bio.text = "";
     pickedImageProfile = CustomFileModel();
+    establishedDate.text = '';
     // imageProfileResource = ImageResourceModel();
   }
 
@@ -164,6 +175,7 @@ class ProfileCompanyEditState {
         ? data?.employeesCount?.toString() ?? ""
         : "";
     bio.text = data?.bio ?? "";
+    establishedDate.text = data?.establishmentDate ?? "";
   }
 
   CompanyDetailsModel get form {
@@ -182,6 +194,8 @@ class ProfileCompanyEditState {
               ? int.parse(employeesCount.text)
               : null,
       bio: bio.text.isEmpty ? null : bio.text,
+      establishmentDate:
+          establishedDate.text.isBlank == true ? null : establishedDate.text,
     );
   }
 

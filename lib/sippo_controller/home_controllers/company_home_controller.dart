@@ -1,13 +1,13 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
+import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
 import 'package:jobspot/JobServices/shared_global_data_service.dart';
 import 'package:jobspot/sippo_controller/ads_controller/ads_controller.dart';
 import 'package:jobspot/sippo_controller/dashboards_controller/company_dashboard_controller.dart';
 import 'package:jobspot/sippo_controller/home_controllers/job_home_view_controller.dart';
-import 'package:jobspot/sippo_data/job_statistics_repo/job_statistics_repo.dart';
+import 'package:jobspot/sippo_custom_widget/find_yor_jop_dashboard_cards.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
-import 'package:jobspot/sippo_data/model/job_statistics_model/job_statistics_model.dart';
 import 'package:jobspot/sippo_data/model/specializations_model/specializations_model.dart';
 import 'package:jobspot/sippo_data/specializations/specializations_repo.dart';
 import 'package:jobspot/utils/states.dart';
@@ -45,17 +45,6 @@ class CompanyHomeController extends GetxController {
     );
   }
 
-  Future<void> fetchJobStatistics() async {
-    final response = await JobStatisticsRepo.fetchLocations();
-    await response?.checkStatusResponse(
-      onSuccess: (data, _) {
-        if (data != null) companyHomeState.jobStatistic = data;
-      },
-      onValidateError: (validateError, _) {},
-      onError: (message, _) {},
-    );
-  }
-
   Future<void> fetchSpecializations() async {
     final response = await SpecializationRepo.fetchSpecializationsResource();
     await response?.checkStatusResponse(
@@ -69,36 +58,36 @@ class CompanyHomeController extends GetxController {
   }
 
   void refreshPage() async {
+    if (InternetConnectionService.instance.isNotConnected) return;
+    if (states.isLoading) return;
+    _states(States(isLoading: true));
     await Future.wait([
       dashboardController.refreshUserProfileInfo(),
       if (Get.isRegistered<AdsViewController>())
         AdsViewController.instance.fetchAds(),
       fetchSpecializations(),
-      fetchJobStatistics(),
+      if (Get.isRegistered<JobStatisticBoardController>())
+        JobStatisticBoardController.instance.fetchJobStatistics(),
       if (Get.isRegistered<JobsHomeViewController>())
         JobsHomeViewController.instance.refreshJobs(),
     ]);
+    _states(States(isLoading: false));
   }
 
   @override
   void onInit() {
     super.onInit();
-    Future.wait([
-      fetchSpecializations(),
-      fetchJobStatistics(),
-    ]);
+    Timer.periodic(Duration(milliseconds: 700), (timer) {
+      if (Get.isRegistered<JobStatisticBoardController>()) {
+        JobStatisticBoardController.instance.fetchJobStatistics();
+        timer.cancel();
+      }
+    });
+    fetchSpecializations();
   }
 }
 
 class CompanyHomePageState {
-  final _jobStatistic = JobStatisticsModel().obs;
-
-  JobStatisticsModel get jobStatistic => _jobStatistic.value;
-
-  set jobStatistic(JobStatisticsModel value) {
-    _jobStatistic.value = value;
-  }
-
   final _selectedSpecialization = SpecializationModel().obs;
 
   SpecializationModel get selectedSpecialization =>

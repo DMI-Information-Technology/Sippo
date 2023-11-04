@@ -10,6 +10,7 @@ import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/sippo_controller/company_profile_controller/company_edit_add_post_controller.dart';
 import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
+import 'package:jobspot/sippo_custom_widget/network_bordered_circular_image_widget.dart';
 import 'package:jobspot/sippo_custom_widget/success_message_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/utils/validating_input.dart';
@@ -27,7 +28,9 @@ class _SippoCompanyEditAddPostState extends State<SippoCompanyEditAddPost> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery
+        .of(context)
+        .size;
     double height = size.height;
     final newPostState = _controller.newPostState;
     return WillPopScope(
@@ -67,15 +70,16 @@ class _SippoCompanyEditAddPostState extends State<SippoCompanyEditAddPost> {
           isScrollable: true,
           paddingContent: EdgeInsets.symmetric(
               horizontal: context.fromWidth(
-            CustomStyle.paddingValue,
-          )),
+                CustomStyle.paddingValue,
+              )),
           child: Form(
             key: _controller.formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "${_controller.isEditing ? "edit".tr : "add".tr} ${'post'.tr}",
+                  "${_controller.isEditing ? "edit".tr : "add".tr} ${'post'
+                      .tr}",
                   style: dmsbold.copyWith(
                       fontSize: FontSize.title3(context),
                       color: Jobstopcolor.primarycolor),
@@ -84,31 +88,26 @@ class _SippoCompanyEditAddPostState extends State<SippoCompanyEditAddPost> {
                 _buildCompanyHeaderPage(context),
                 _buildLoadingProgress(context),
                 SizedBox(height: height / 36),
-                Obx(() => ConditionalWidget(
-                      _controller.states.isSuccess,
-                      data: _controller.states,
-                      guaranteedBuilder: (context, data) =>
-                          CardNotifyMessage.success(
-                        state: data,
-                        onCancelTap: () => _controller.successState(false),
-                      ),
-                    )),
-                Obx(() => ConditionalWidget(
+                Obx(() =>
+                    ConditionalWidget(
                       _controller.states.isError,
                       data: _controller.states,
-                      guaranteedBuilder: (_, data) => CardNotifyMessage.error(
-                        state: data,
-                        onCancelTap: () => _controller.errorState(false, ''),
-                      ),
+                      guaranteedBuilder: (_, data) =>
+                          CardNotifyMessage.error(
+                            state: data,
+                            onCancelTap: () =>
+                                _controller.errorState(false, ''),
+                          ),
                     )),
-                Obx(() => ConditionalWidget(
+                Obx(() =>
+                    ConditionalWidget(
                       _controller.states.isWarning,
                       data: _controller.states,
                       guaranteedBuilder: (context, data) =>
                           CardNotifyMessage.warning(
-                        state: data,
-                        onCancelTap: () => _controller.warningState(false),
-                      ),
+                            state: data,
+                            onCancelTap: () => _controller.warningState(false),
+                          ),
                     )),
                 Text(
                   "post_title".tr,
@@ -157,15 +156,19 @@ class _SippoCompanyEditAddPostState extends State<SippoCompanyEditAddPost> {
   }
 
   Widget _buildLoadingProgress(BuildContext context) {
-    double height = MediaQuery.sizeOf(context).height;
-    return Obx(() => ConditionalWidget(
+    double height = MediaQuery
+        .sizeOf(context)
+        .height;
+    return Obx(() =>
+        ConditionalWidget(
           _controller.states.isLoading,
-          guaranteedBuilder: (__, _) => Column(
-            children: [
-              SizedBox(height: height / 36),
-              const Center(child: CircularProgressIndicator()),
-            ],
-          ),
+          guaranteedBuilder: (__, _) =>
+              Column(
+                children: [
+                  SizedBox(height: height / 36),
+                  const Center(child: CircularProgressIndicator()),
+                ],
+              ),
         ));
   }
 
@@ -175,18 +178,19 @@ class _SippoCompanyEditAddPostState extends State<SippoCompanyEditAddPost> {
       return ConditionalWidget(
         image != null,
         data: image,
-        guaranteedBuilder: (context, data) => data != null
+        guaranteedBuilder: (context, data) =>
+        data != null
             ? Stack(
-                children: [
-                  Image.file(data, fit: BoxFit.fill),
-                  CloseCornerButton(
-                    onTap: () {
-                      _controller.newPostState.clearLoadedImage();
-                    },
-                    paddingValue: _context.fromWidth(CustomStyle.xxxl),
-                  ),
-                ],
-              )
+          children: [
+            Image.file(data, fit: BoxFit.fill),
+            CloseCornerButton(
+              onTap: () {
+                _controller.newPostState.clearLoadedImage();
+              },
+              paddingValue: _context.fromWidth(CustomStyle.xxxl),
+            ),
+          ],
+        )
             : null,
       );
     });
@@ -198,21 +202,22 @@ class _SippoCompanyEditAddPostState extends State<SippoCompanyEditAddPost> {
       return ConditionalWidget(
         image != null,
         data: image,
-        guaranteedBuilder: (_, data) => data != null
+        guaranteedBuilder: (_, data) =>
+        data != null
             ? Stack(
-                children: [
-                  CachedNetworkImage(imageUrl: data),
-                  CloseCornerButton(
-                    icon: Icons.delete,
-                    backgroundColor: Colors.black.withOpacity(0.7),
-                    iconColor: Colors.redAccent,
-                    onTap: () {
-                      _controller.newPostState.deleteUrlImage();
-                    },
-                    paddingValue: _context.fromWidth(CustomStyle.xxxl),
-                  ),
-                ],
-              )
+          children: [
+            CachedNetworkImage(imageUrl: data),
+            CloseCornerButton(
+              icon: Icons.delete,
+              backgroundColor: Colors.black.withOpacity(0.7),
+              iconColor: Colors.redAccent,
+              onTap: () {
+                _controller.newPostState.deleteUrlImage();
+              },
+              paddingValue: _context.fromWidth(CustomStyle.xxxl),
+            ),
+          ],
+        )
             : null,
       );
     });
@@ -242,9 +247,10 @@ class _SippoCompanyEditAddPostState extends State<SippoCompanyEditAddPost> {
   Row _buildCompanyHeaderPage(BuildContext context) {
     return Row(
       children: [
-        CircleAvatar(
-          radius: context.fromHeight(CustomStyle.m),
-          backgroundImage: AssetImage(JobstopPngImg.photo),
+        NetworkBorderedCircularImage(
+          imageUrl: _controller.company.profileImage?.url ?? '',
+          size: context.fromWidth(8),
+          outerBorderWidth: context.fromWidth(CustomStyle.huge2),
         ),
         SizedBox(width: context.width / 36),
         Column(

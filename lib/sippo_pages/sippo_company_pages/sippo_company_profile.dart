@@ -14,11 +14,12 @@ import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/expandable_item_list_widget.dart';
 import 'package:jobspot/sippo_custom_widget/gallry_image_uploader_widget_view.dart';
 import 'package:jobspot/sippo_custom_widget/profile_completion_widget.dart';
+import 'package:jobspot/sippo_custom_widget/rounded_border_radius_card_widget.dart';
 import 'package:jobspot/sippo_custom_widget/user_profile_header.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:readmore/readmore.dart';
 
-import '../../sippo_custom_widget/network_bordered_circular_image_widget.dart';
+import 'edit_add_specialization_company.dart';
 import 'sippo_about_company.dart';
 
 class SippoCompanyProfile extends StatefulWidget {
@@ -30,12 +31,13 @@ class SippoCompanyProfile extends StatefulWidget {
 
 class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
   final _controller = ProfileCompanyController.instance;
-@override
+
+  @override
   void initState() {
     super.initState();
     Future.delayed(
       const Duration(milliseconds: 2700),
-          () {
+      () {
         if (_controller.company.isEmailVerified == false)
           Get.dialog(CustomAlertDialog(
             imageAsset: JobstopPngImg.emailV,
@@ -46,14 +48,58 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
       },
     );
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: _buildDrawerApp(context),
-      // extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        toolbarHeight: 0,
-        backgroundColor: Colors.black87,
+      extendBodyBehindAppBar: true,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(kToolbarHeight),
+        child: Obx(() {
+          final isHeightOverAppBar =
+              _controller.profileState.isHeightOverAppBar;
+          return AppBar(
+            // toolbarHeight: 0,
+            notificationPredicate: (notification) {
+              if (notification.metrics.pixels > kToolbarHeight) {
+                _controller.profileState.isHeightOverAppBar = true;
+              } else {
+                _controller.profileState.isHeightOverAppBar = false;
+              }
+              return false;
+            },
+            leading: IconButton(
+              onPressed: () => Get.back(),
+              icon: Icon(
+                Icons.arrow_back_rounded,
+                color: _controller.profileState.isHeightOverAppBar
+                    ? Colors.black
+                    : Colors.white,
+              ),
+            ),
+            actions: [
+              InkWell(
+                onTap: () {
+                  if (_controller.netController.isNotConnected) return;
+                  Get.toNamed(SippoRoutes.sippoprofilesetting);
+                },
+                child: Padding(
+                  padding: EdgeInsets.all(context.fromHeight(CustomStyle.xxl)),
+                  child: Image.asset(
+                    JobstopPngImg.setting,
+
+                    color: _controller.profileState.isHeightOverAppBar
+                        ? Colors.black
+                        : Colors.white, // Change this to your desired color
+                  ),
+                ),
+              ),
+            ],
+            backgroundColor: isHeightOverAppBar
+                ? Jobstopcolor.backgroudHome
+                : Colors.transparent,
+          );
+        }),
       ),
       body: BodyWidget(
         isTopScrollable: true,
@@ -66,6 +112,8 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
           children: [
             SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
             _buildProfileCompletion(context),
+            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+            _buildAlbumImagesProfile(context),
             SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
             _buildBioCompanyProfile(context),
             SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
@@ -81,56 +129,6 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
             SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
           ],
         ),
-      ),
-    );
-  }
-
-  Drawer _buildDrawerApp(BuildContext context) {
-    return Drawer(
-      child: ListView(
-        padding: EdgeInsets.zero,
-        children: [
-          DrawerHeader(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(18),
-                bottomRight: Radius.circular(18),
-              ),
-              image: DecorationImage(
-                image: AssetImage(JobstopPngImg.backgroundProf),
-                fit: BoxFit.cover,
-              ),
-            ),
-            child: InkWell(
-              onTap: () => Get.back(),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  NetworkBorderedCircularImage(
-                    imageUrl: _controller.company.profileImage?.url ?? "",
-                    size: context.fromHeight(CustomStyle.imageSize2),
-                    errorWidget: (context, url, error) => const CircleAvatar(),
-                    outerBorderColor: Colors.grey[300],
-                  ),
-                  SizedBox(
-                    height: context.fromHeight(CustomStyle.spaceBetween),
-                  ),
-                  Text(
-                    _controller.company.name ?? "",
-                    style: dmsmedium.copyWith(
-                      color: Colors.white,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          ListTile(
-            leading: Icon(Icons.image),
-            title: Text('upload_company_images'.tr, style: dmsmedium),
-            onTap: _showUploadGalleryImagesScreen,
-          ),
-        ],
       ),
     );
   }
@@ -188,8 +186,15 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
               : null,
           onAddClicked: () {
             if (_controller.netController.isNotConnected) return;
+            Get.toNamed(SippoRoutes.editCompanyProfile);
           },
-          profileInfo: [],
+          alignmentFromStart: true,
+          profileInfo: [
+            AutoSizeText(
+              "Establishment in ${_controller.company.establishmentDate}",
+              style: dmsregular,
+            )
+          ],
         ));
   }
 
@@ -241,7 +246,8 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
 
     return Obx(() => AddInfoProfileCard(
           title: 'Company specializations'.tr,
-          hasNotInfoProfile: _controller.company.specializations?.isEmpty == true,
+          hasNotInfoProfile:
+              _controller.company.specializations?.isEmpty == true,
           leading: Image.asset(
             JobstopPngImg.aboutme,
             height: context.fromHeight(CustomStyle.l),
@@ -258,6 +264,7 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
           alignmentFromStart: true,
           onAddClicked: () {
             if (_controller.netController.isNotConnected) return;
+            Get.to(() => const EditAddSpecializationCompany());
           },
           profileInfo: [
             ExpandableItemList.wrapBuilder(
@@ -395,14 +402,38 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
         ));
   }
 
+  Widget _buildAlbumImagesProfile(BuildContext context) {
+    return RoundedBorderRadiusCardWidget(
+      paddingType: PaddingType.horizontal,
+      child: ListTile(
+        contentPadding: EdgeInsets.zero,
+        horizontalTitleGap: 0.0,
+        leading: Icon(
+          Icons.image,
+          color: Jobstopcolor.primarycolor,
+          size: context.fromHeight(CustomStyle.l),
+        ),
+        title: Text(
+          'Album Images',
+          style: dmsbold.copyWith(
+            color: Jobstopcolor.primarycolor,
+            fontSize: 14,
+          ),
+        ),
+        trailing: Icon(
+          Icons.arrow_forward_ios_sharp,
+          color: Jobstopcolor.primarycolor,
+        ),
+        onTap: () {
+          _showUploadGalleryImagesScreen();
+        },
+      ),
+    );
+  }
+
   Widget _buildUserProfileHeader() {
     return Obx(() => UserProfileHeaderWidget(
-          hasDrawer: true,
           profileInfo: _controller.company,
-          onSettingsPressed: () {
-            if (_controller.netController.isNotConnected) return;
-            Get.toNamed(SippoRoutes.sippoprofilesetting);
-          },
           onEditProfilePressed: () {
             if (_controller.netController.isNotConnected) return;
             Get.toNamed(SippoRoutes.editCompanyProfile);

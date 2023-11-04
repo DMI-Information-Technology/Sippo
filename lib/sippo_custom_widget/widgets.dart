@@ -22,19 +22,107 @@ class CustomAlertDialog extends StatelessWidget {
   final String? cancelBtnTitle;
   final Color? cancelBtnColor;
   final VoidCallback? onCancel;
+  final bool _vertical;
 
   const CustomAlertDialog({
     super.key,
     this.imageAsset,
     required this.title,
     this.description,
-    this.confirmBtnTitle = "ok",
+    this.confirmBtnTitle,
     this.confirmBtnColor = Jobstopcolor.primarycolor,
     this.onConfirm,
-    this.cancelBtnTitle = "cancel",
+    this.cancelBtnTitle,
     this.cancelBtnColor = Jobstopcolor.lightprimary,
     this.onCancel,
-  });
+  }) : _vertical = false;
+
+  const CustomAlertDialog.verticalButtons({
+    super.key,
+    this.imageAsset,
+    required this.title,
+    this.description,
+    this.confirmBtnTitle,
+    this.confirmBtnColor = Jobstopcolor.primarycolor,
+    this.onConfirm,
+    this.cancelBtnTitle,
+    this.cancelBtnColor = Jobstopcolor.lightprimary,
+    this.onCancel,
+  }) : _vertical = true;
+
+  Widget _buildButtonsLayout(BuildContext context) {
+    Size size = MediaQuery.sizeOf(context);
+    double height = size.height;
+
+    return switch (_vertical) {
+      // TODO: Handle this case.
+      true => Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (onConfirm != null)
+              CustomButton(
+                fitHeight: true,
+                onTapped: () {
+                  onConfirm?.call();
+                },
+                text: confirmBtnTitle ?? 'ok'.tr,
+                textColor: cancelBtnColor,
+                backgroundColor: confirmBtnColor,
+              ),
+            if (onCancel != null)
+              CustomButton(
+                textPadding: EdgeInsets.zero,
+                fitHeight: true,
+                onTapped: () {
+                  onCancel?.call();
+                },
+                text: cancelBtnTitle ?? 'cancel'.tr,
+                textColor: confirmBtnColor,
+                backgroundColor: cancelBtnColor,
+              ),
+          ],
+        ),
+      false => Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (onConfirm != null) ...[
+              ElevatedButton(
+                onPressed: () {
+                  onConfirm?.call();
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: confirmBtnColor,
+                  shape: customStyles.circularBorderedShapeButton(height / 64),
+                ),
+                child: Text(
+                  confirmBtnTitle ?? "",
+                  style: dmsregular.copyWith(color: Colors.white),
+                ),
+              ),
+              SizedBox(width: context.fromWidth(CustomStyle.spaceBetween)),
+            ],
+            if (onCancel != null)
+              ElevatedButton(
+                onPressed: () {
+                  onCancel?.call();
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: cancelBtnColor,
+                  shape: customStyles.circularBorderedShapeButton(height / 64),
+                ),
+                child: Text(
+                  cancelBtnTitle ?? "",
+                  style: dmsregular.copyWith(
+                    color: Jobstopcolor.primarycolor,
+                  ),
+                ),
+              ),
+          ],
+        ),
+    };
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,45 +172,7 @@ class CustomAlertDialog extends StatelessWidget {
                 ],
               ),
             SizedBox(height: height / 64),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                if (onConfirm != null) ...[
-                  ElevatedButton(
-                    onPressed: () {
-                      onConfirm?.call();
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: confirmBtnColor,
-                      shape:
-                          customStyles.circularBorderedShapeButton(height / 64),
-                    ),
-                    child: Text(
-                      confirmBtnTitle ?? "",
-                      style: dmsregular.copyWith(color: Jobstopcolor.white),
-                    ),
-                  ),
-                  SizedBox(width: context.fromWidth(CustomStyle.spaceBetween)),
-                ],
-                if (onCancel != null)
-                  ElevatedButton(
-                    onPressed: () {
-                      onCancel?.call();
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: cancelBtnColor,
-                      shape:
-                          customStyles.circularBorderedShapeButton(height / 64),
-                    ),
-                    child: Text(
-                      cancelBtnTitle ?? "",
-                      style:
-                          dmsregular.copyWith(color: Jobstopcolor.primarycolor),
-                    ),
-                  ),
-              ],
-            )
+            _buildButtonsLayout(context),
           ],
         ),
       ),
@@ -332,7 +382,11 @@ class CustomButton extends StatelessWidget {
     this.fontSize,
     this.elevation = 0,
     this.borderRadiusValue,
+    this.fitHeight = false,
+    this.textPadding = EdgeInsets.zero,
   });
+
+  final EdgeInsets textPadding;
 
   final double elevation;
   final Widget? leadingIcon;
@@ -343,11 +397,12 @@ class CustomButton extends StatelessWidget {
   final Color? borderColor;
   final double? fontSize;
   final double? borderRadiusValue;
+  final bool fitHeight;
 
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: context.height / 16,
+      height: fitHeight ? null : context.height / 16,
       width: context.width / 1.1,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
@@ -369,11 +424,14 @@ class CustomButton extends StatelessWidget {
               leadingIcon ?? const SizedBox.shrink(),
               SizedBox(width: context.width / 46),
             ],
-            Text(
-              text,
-              style: dmsbold.copyWith(
-                fontSize: fontSize ?? FontSize.title6(context),
-                color: textColor ?? Jobstopcolor.white,
+            Padding(
+              padding: textPadding,
+              child: Text(
+                text,
+                style: dmsbold.copyWith(
+                  fontSize: fontSize ?? FontSize.title6(context),
+                  color: textColor ?? Jobstopcolor.white,
+                ),
               ),
             ),
           ],
@@ -641,7 +699,7 @@ class InputBorderedField extends StatelessWidget {
 }
 
 class PasswordInputBorderedField extends StatefulWidget {
-const   PasswordInputBorderedField({
+  const PasswordInputBorderedField({
     super.key,
     this.height,
     this.width,
@@ -699,10 +757,12 @@ const   PasswordInputBorderedField({
   final Color? prefixIconColor;
 
   @override
-  State<PasswordInputBorderedField> createState() => _PasswordInputBorderedFieldState();
+  State<PasswordInputBorderedField> createState() =>
+      _PasswordInputBorderedFieldState();
 }
 
-class _PasswordInputBorderedFieldState extends State<PasswordInputBorderedField> {
+class _PasswordInputBorderedFieldState
+    extends State<PasswordInputBorderedField> {
   final _obscureController = SwitchStatusController();
 
   // final bool isLoading;
@@ -750,10 +810,9 @@ class _PasswordInputBorderedFieldState extends State<PasswordInputBorderedField>
                   borderSide: BorderSide.none,
                 ),
                 fillColor: widget.fillColor ?? Jobstopcolor.white,
-                suffixIcon:InkWell(
+                suffixIcon: InkWell(
                   onTap: () {
-                    _obscureController.status =
-                    !_obscureController.status;
+                    _obscureController.status = !_obscureController.status;
                   },
                   child: Icon(
                     _obscureController.status == true

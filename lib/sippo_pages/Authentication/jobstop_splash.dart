@@ -1,24 +1,21 @@
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/global_storage.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/utils/app_use.dart';
 
-class JobstopSplash extends StatefulWidget {
-  const JobstopSplash({Key? key}) : super(key: key);
+class SippoSplash extends StatefulWidget {
+  const SippoSplash({Key? key}) : super(key: key);
 
   @override
-  State<JobstopSplash> createState() => _JobstopSplashState();
+  State<SippoSplash> createState() => _SippoSplashState();
 }
 
-class _JobstopSplashState extends State<JobstopSplash> {
-  dynamic size;
-  double height = 0.00;
-  double width = 0.00;
-
+class _SippoSplashState extends State<SippoSplash> {
   String _dashboardScreens() => switch (GlobalStorageService.appUse) {
         AppUsingType.user => SippoRoutes.userDashboard,
         AppUsingType.company => SippoRoutes.sippoCompanyDashboard
@@ -39,12 +36,14 @@ class _JobstopSplashState extends State<JobstopSplash> {
       return _entryScreen();
     }
   }
-
+@override
+  void initState() {
+    super.initState();
+    Get.focusScope?.unfocus();
+  }
   @override
   Widget build(BuildContext context) {
-    size = MediaQuery.of(context).size;
-    height = size.height;
-    width = size.width;
+    double height = MediaQuery.sizeOf(context).height;
     return AnimatedSplashScreen.withScreenRouteFunction(
       curve: Curves.easeIn,
       splashTransition: SplashTransition.sizeTransition,

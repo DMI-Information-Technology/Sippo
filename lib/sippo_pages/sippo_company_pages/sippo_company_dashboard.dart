@@ -57,6 +57,7 @@ class _SippoCompanyDashboardState extends State<SippoCompanyDashboard> {
               icon: Image.asset(
                 JobstopPngImg.home,
                 height: context.height / 36,
+                color: Colors.grey,
               ),
               activeIcon: Image.asset(
                 JobstopPngImg.home,
@@ -69,6 +70,7 @@ class _SippoCompanyDashboardState extends State<SippoCompanyDashboard> {
               icon: Image.asset(
                 JobstopPngImg.posting,
                 height: context.height / 36,
+                color: Colors.grey,
               ),
               activeIcon: Image.asset(
                 JobstopPngImg.posting,
@@ -79,23 +81,14 @@ class _SippoCompanyDashboardState extends State<SippoCompanyDashboard> {
             ),
             BottomNavigationBarItem(
               icon: Image.asset(
-                JobstopPngImg.message,
+                JobstopPngImg.notifiBell,
                 height: context.height / 36,
+                color: Colors.grey,
               ),
               activeIcon: Image.asset(JobstopPngImg.message,
                   height: context.height / 36,
                   color: Jobstopcolor.primarycolor),
               label: "",
-            ),
-            BottomNavigationBarItem(
-              icon: Image.asset(
-                JobstopPngImg.order,
-                height: context.height / 36,
-              ),
-              activeIcon: Image.asset(JobstopPngImg.order,
-                  height: context.height / 36,
-                  color: Jobstopcolor.primarycolor),
-              label: '',
             ),
           ],
         ));
@@ -110,8 +103,7 @@ class _SippoCompanyDashboardState extends State<SippoCompanyDashboard> {
     return Scaffold(
       bottomNavigationBar: _bottomTabBar(context),
       body: Obx(() => _pages[_controller.selectedItemIndex]),
-      floatingActionButtonLocation:
-          FloatingActionButtonLocation.miniCenterDocked,
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
       floatingActionButton: FloatingActionButton(
         mini: true,
         onPressed: _chooseAddNewBottomSheet,

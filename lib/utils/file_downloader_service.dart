@@ -31,9 +31,6 @@ class FileDownloader {
   Future<Resource<CustomFileModel, dynamic>?> downloadFile({
     String? fileName,
     required String url,
-    void Function(List<int>)? onData,
-    void Function()? onDone,
-    void Function(dynamic e, dynamic s)? onError,
   }) async {
     try {
       print("Waiting...");
@@ -60,7 +57,11 @@ class FileDownloader {
     }
   }
 
-  void close() {
-    _client.close();
-  }
+  void close() => _client.close();
+
+  // @override
+  // void onClose() {
+  //   close();
+  //   super.onClose();
+  // }
 }

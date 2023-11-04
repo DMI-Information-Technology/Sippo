@@ -30,14 +30,26 @@ class _JobHomeViewWidgetState extends State<JobHomeViewWidget> {
           future: _controller.jobStatesAsFuture,
           builder: (context, snapshot) {
             final states = snapshot.data;
-            if (states == null) return const SizedBox.shrink();
-            if (states.isError) return _buildFieldJobsMessage(context, states);
-            if (states.isSuccess) return _buildJobsCards(context);
-            if (states.isLoading && _controller.jobsList.isNotEmpty)
-              return _buildJobsCards(context);
-            else if (states.isLoading)
-              return const Center(child: CircularProgressIndicator());
-            return const SizedBox.shrink();
+            if (states != null) {
+              if (states.isError)
+                return _buildFieldJobsMessage(context, states);
+              if (states.isSuccess && _controller.jobsListLength > 0)
+                return _buildJobsCards(context);
+              if (states.isLoading && _controller.jobsList.isNotEmpty)
+                return _buildJobsCards(context);
+              else if (states.isLoading)
+                return const Center(child: CircularProgressIndicator());
+            }
+            return Center(
+              child: Text(
+                'No Jobs Found',
+                textAlign: TextAlign.center,
+                style: dmsbold.copyWith(
+                  color: Jobstopcolor.primarycolor,
+                  fontSize: FontSize.title4(context),
+                ),
+              ),
+            );
           },
         ));
   }
@@ -123,8 +135,9 @@ class _JobHomeViewWidgetState extends State<JobHomeViewWidget> {
                           );
                         }
                       : null,
-                  onActionTap: () =>
-                      _controller.onToggleSavedJobsTap(item.id, index),
+                  onActionTap: GlobalStorageService.isUser
+                      ? () => _controller.onToggleSavedJobsTap(item.id, index)
+                      : null,
                   isEditable: false,
                   onAddressTextTap: (location) async {
                     lunchMapWithLocation(
@@ -135,19 +148,24 @@ class _JobHomeViewWidgetState extends State<JobHomeViewWidget> {
                 );
               });
             }),
-            InkWell(
-              onTap: () => Get.toNamed(SippoRoutes.sippoJobFilterSearch),
-              child: Padding(
-                padding: EdgeInsets.all(
-                  context.fromWidth(CustomStyle.xxl),
-                ),
-                child: Icon(
-                  Icons.arrow_circle_right_rounded,
-                  color: Jobstopcolor.secondary,
-                  size: context.fromHeight(12),
-                ),
-              ),
-            )
+            Obx(() {
+              return _controller.jobsListLength > 0
+                  ? InkWell(
+                      onTap: () =>
+                          Get.toNamed(SippoRoutes.sippoJobFilterSearch),
+                      child: Padding(
+                        padding: EdgeInsets.all(
+                          context.fromWidth(CustomStyle.xxl),
+                        ),
+                        child: Icon(
+                          Icons.arrow_circle_right_rounded,
+                          color: Jobstopcolor.secondary,
+                          size: context.fromHeight(12),
+                        ),
+                      ),
+                    )
+                  : const SizedBox.shrink();
+            })
           ],
         ),
       ),

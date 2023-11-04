@@ -1,4 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -58,7 +59,8 @@ class MyApp extends StatelessWidget {
       }),
       translations: Apptranslation(),
       locale: const Locale('en', 'US'),
-      initialRoute: SippoRoutes.splashScreen,
+      initialRoute:
+          kIsWeb ? SippoRoutes.userSignupPage : SippoRoutes.splashScreen,
       // initialRoute: SippoRoutes.identityverification,
       // home: const JobNotification(),
       getPages: SippoRoutes.routes,

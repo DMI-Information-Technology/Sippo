@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
+import 'package:jobspot/utils/helper.dart';
 
 import '../../JobGlobalclass/jobstopcolor.dart';
 import '../../JobGlobalclass/sippo_customstyle.dart';
@@ -13,6 +14,45 @@ void showNoConnectionSnackbar() {
     'Your connection is lost, please check your connection and try again',
     backgroundColor: Jobstopcolor.backgroudHome,
     boxShadows: [boxShadow],
+  );
+}
+
+void showNotSubscriptionAlert(phoneNumber) {
+  Get.dialog(
+    CustomAlertDialog.verticalButtons(
+      imageAsset: JobstopPngImg.noSubs,
+      title: 'Not Subscribed',
+      description:
+          "Subscribing to our platform will give you access to this user information and many other benefits",
+      confirmBtnTitle: 'Contact With us on WhatsApp',
+      onConfirm: () {
+        final context = Get.overlayContext;
+        if (context != null) {
+          Navigator.pop(context);
+        } else {
+          try {
+            Get.back();
+          } catch (e, s) {
+            print(e);
+            print(s);
+          }
+        }
+        openWhatsapp(phoneNumber);
+      },
+      onCancel: () {
+        final context = Get.overlayContext;
+        if (context != null) {
+          Navigator.pop(context);
+        } else {
+          try {
+            Get.back();
+          } catch (e, s) {
+            print(e);
+            print(s);
+          }
+        }
+      },
+    ),
   );
 }
 

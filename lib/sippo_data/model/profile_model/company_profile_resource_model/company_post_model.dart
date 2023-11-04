@@ -1,7 +1,6 @@
 import 'package:http/http.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
 import 'package:jobspot/sippo_data/model/custom_file_model/custom_file_model.dart';
-
 import 'package:jobspot/sippo_data/model/image_resource_model/image_resource_model.dart';
 
 abstract class BaseCompanyPost {
@@ -22,23 +21,27 @@ class CompanyDetailsPostModel extends BaseCompanyPost {
     super.body,
     this.image,
     this.company,
+    this.createdAt,
   });
 
   factory CompanyDetailsPostModel.fromJson(Map<String, dynamic>? json) {
     return CompanyDetailsPostModel(
-        id: json?["id"],
-        title: json?["title"],
-        body: json?["body"],
-        image: json?['image'] != null
-            ? ImageResourceModel.fromJson(json?['image'])
-            : null,
-        company: json?['company'] != null
-            ? CompanyDetailsModel.fromJson(json?['company'])
-            : null);
+      id: json?["id"],
+      title: json?["title"],
+      body: json?["body"],
+      image: json?['image'] != null
+          ? ImageResourceModel.fromJson(json?['image'])
+          : null,
+      company: json?['company'] != null
+          ? CompanyDetailsModel.fromJson(json?['company'])
+          : null,
+      createdAt: json?['created_at'],
+    );
   }
 
   ImageResourceModel? image;
   CompanyDetailsModel? company;
+  String? createdAt;
 
   CompanyDetailsPostModel copyWith({
     int? id,
@@ -46,6 +49,7 @@ class CompanyDetailsPostModel extends BaseCompanyPost {
     String? body,
     ImageResourceModel? image,
     CompanyDetailsModel? company,
+    String? createdAt,
   }) =>
       CompanyDetailsPostModel(
         id: id ?? super.id,
@@ -53,6 +57,7 @@ class CompanyDetailsPostModel extends BaseCompanyPost {
         body: body ?? super.body,
         image: image ?? this.image,
         company: company ?? this.company,
+        createdAt: createdAt??this.createdAt
       );
 
   @override

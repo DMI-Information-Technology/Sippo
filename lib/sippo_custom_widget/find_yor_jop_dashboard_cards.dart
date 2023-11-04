@@ -1,11 +1,110 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
+import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
+import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
+import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
+import 'package:jobspot/JobGlobalclass/routes.dart';
+import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
+import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
+import 'package:jobspot/JobServices/shared_global_data_service.dart';
+import 'package:jobspot/sippo_data/job_statistics_repo/job_statistics_repo.dart';
+import 'package:jobspot/sippo_data/model/job_statistics_model/job_statistics_model.dart';
+import 'package:jobspot/utils/states.dart';
 
-import '../JobGlobalclass/jobstopcolor.dart';
-import '../JobGlobalclass/jobstopfontstyle.dart';
-import '../JobGlobalclass/jobstopimges.dart';
-import '../sippo_data/model/job_statistics_model/job_statistics_model.dart';
+class JobStatisticBoardController extends GetxController {
+  static JobStatisticBoardController get instance => Get.find();
+  final _jobStatistic = JobStatisticsModel().obs;
 
-class FindYorJopDashBoardCards extends StatelessWidget {
+  JobStatisticsModel get jobsStatistic => _jobStatistic.value;
+
+  set jobsStatistic(JobStatisticsModel value) {
+    _jobStatistic.value = value;
+  }
+
+  final _states = States().obs;
+
+  States get states => _states.value;
+
+  void set states(States value) => _states.value = value;
+
+  Future<void> fetchJobStatistics() async {
+    if (InternetConnectionService.instance.isNotConnected) return;
+    if (states.isLoading) return;
+    states = States(isLoading: true);
+    final response = await JobStatisticsRepo.fetchLocations();
+    states = States(isLoading: false);
+    await response?.checkStatusResponse(
+      onSuccess: (data, _) {
+        if (data != null) jobsStatistic = data;
+        states = States(isSuccess: true);
+      },
+      onValidateError: (validateError, _) {
+        states = States(isError: true);
+      },
+      onError: (message, _) {
+        states = States(isError: true, message: message);
+      },
+    );
+  }
+}
+
+class JobStatisticBoardViewWidget extends StatefulWidget {
+  const JobStatisticBoardViewWidget({super.key});
+
+  @override
+  State<JobStatisticBoardViewWidget> createState() =>
+      _JobStatisticBoardViewWidgetState();
+}
+
+class _JobStatisticBoardViewWidgetState
+    extends State<JobStatisticBoardViewWidget> {
+  final _controller = Get.put(JobStatisticBoardController());
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: context.fromWidth(CustomStyle.s),
+      ),
+      child: Obx(() {
+        final jobStatistic = _controller.jobsStatistic;
+        return JobStatisticBoardCards(
+          jobStatistics: jobStatistic,
+          firstCardSubtitle: "Remote".tr,
+          secondCardSubtitle: "Full Time".tr,
+          thirdCardSubtitle: "Part Time".tr,
+          onFirstTap: () {
+            if (jobStatistic.remoteJobs == null) return;
+            SharedGlobalDataService.instance.jobStatistic =
+                jobStatistic.remoteJobs;
+            Get.toNamed(SippoRoutes.sippoJobFilterSearch)?.then((_) {
+              SharedGlobalDataService.instance.jobStatistic = null;
+            });
+          },
+          onSecondTap: () {
+            if (jobStatistic.fullTimeJobs == null) return;
+            SharedGlobalDataService.instance.jobStatistic =
+                jobStatistic.fullTimeJobs;
+            Get.toNamed(SippoRoutes.sippoJobFilterSearch)?.then((_) {
+              SharedGlobalDataService.instance.jobStatistic = null;
+            });
+          },
+          onThirdTap: () {
+            if (jobStatistic.partTimeJobs == null) return;
+            SharedGlobalDataService.instance.jobStatistic =
+                jobStatistic.partTimeJobs;
+            Get.toNamed(SippoRoutes.sippoJobFilterSearch)?.then((_) {
+              SharedGlobalDataService.instance.jobStatistic = null;
+            });
+          },
+        );
+      }),
+    );
+  }
+}
+
+class JobStatisticBoardCards extends StatelessWidget {
   final String? firstCardSubtitle;
   final String? secondCardSubtitle;
   final String? thirdCardSubtitle;
@@ -14,7 +113,7 @@ class FindYorJopDashBoardCards extends StatelessWidget {
   final VoidCallback? onThirdTap;
   final JobStatisticsModel? jobStatistics;
 
-  const FindYorJopDashBoardCards({
+  const JobStatisticBoardCards({
     this.firstCardSubtitle,
     this.secondCardSubtitle,
     this.thirdCardSubtitle,

@@ -90,6 +90,7 @@ class CompanyDashBoardState {
   int get editId => _editId.toInt();
 
   void set editId(int value) {
+    print(Get.currentRoute);
     _editId.value = value;
   }
 }

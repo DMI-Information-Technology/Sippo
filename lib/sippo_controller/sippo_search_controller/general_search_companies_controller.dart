@@ -74,6 +74,7 @@ final _states = States().obs;
   }
 
   void refreshPage() {
+    print('hello');
     if (InternetConnectionService.instance.isNotConnected) return;
     if (states.isLoading) return;
     searchCompaniesState.pageNumber = 1;

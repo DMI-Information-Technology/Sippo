@@ -123,6 +123,11 @@ class JobCompanyDetailsController extends GetxController {
 }
 
 class JobCompanyDetailsState {
+  final _isHeightOverAppBar = false.obs;
+
+  bool get isHeightOverAppBar => _isHeightOverAppBar.isTrue;
+
+  set isHeightOverAppBar(bool value) => _isHeightOverAppBar.value = value;
   final _jopDetails = CompanyJobModel().obs;
 
   CompanyJobModel get jopDetails => _jopDetails.value;

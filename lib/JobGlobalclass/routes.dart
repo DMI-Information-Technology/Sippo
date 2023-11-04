@@ -123,7 +123,7 @@ class SippoRoutes {
       "/company-signup-specializations";
 
   static List<GetPage> routes = [
-    GetPage(name: splashScreen, page: () => const JobstopSplash()),
+    GetPage(name: splashScreen, page: () => const SippoSplash()),
     GetPage(name: onboarding, page: () => const SippoOnboarding()),
     GetPage(
       name: userLoginPage,

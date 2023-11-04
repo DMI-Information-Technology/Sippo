@@ -113,6 +113,11 @@ class ProfileCompanyController extends GetxController {
 }
 
 class ProfileCompanyState {
+  final _isHeightOverAppBar = false.obs;
+
+  bool get isHeightOverAppBar => _isHeightOverAppBar.isTrue;
+
+  set isHeightOverAppBar(bool value) => _isHeightOverAppBar.value = value;
   StreamSubscription? companyProfileSubscription;
 
   void close() {

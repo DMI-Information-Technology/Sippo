@@ -7,15 +7,20 @@ class JobstopPngImg {
   static const String forget = "Assets/jobstop_assets/jobpngimg/forget.png";
   static const String done = "Assets/jobstop_assets/jobpngimg/done.png";
   static const String emailV = "Assets/jobstop_assets/jobpngimg/emailV.png";
+  static const String noSubs = "Assets/jobstop_assets/jobpngimg/noSubs.png";
   static const String morning = "Assets/jobstop_assets/jobpngimg/morning.png";
-  static const String afternoon = "Assets/jobstop_assets/jobpngimg/afternoon.png";
+  static const String afternoon =
+      "Assets/jobstop_assets/jobpngimg/afternoon.png";
   static const String warning = "Assets/jobstop_assets/jobpngimg/warning.png";
   static const String error = "Assets/jobstop_assets/jobpngimg/error.png";
   static const String night = "Assets/jobstop_assets/jobpngimg/night.png";
   static const String checkmsg = "Assets/jobstop_assets/jobpngimg/checkmsg.png";
-  static const String profileComp = "Assets/jobstop_assets/jobpngimg/profileComp.png";
-  static const String find_empLogo = "Assets/jobstop_assets/jobpngimg/find_emp.png";
-  static const String find_jobLog =  "Assets/jobstop_assets/jobpngimg/find_job.png";
+  static const String profileComp =
+      "Assets/jobstop_assets/jobpngimg/profileComp.png";
+  static const String find_empLogo =
+      "Assets/jobstop_assets/jobpngimg/find_emp.png";
+  static const String find_jobLog =
+      "Assets/jobstop_assets/jobpngimg/find_job.png";
   static const String phonenymberempty =
       "Assets/jobstop_assets/jobpngimg/phonenymberempty.png";
   static const String successful =
@@ -35,8 +40,10 @@ class JobstopPngImg {
       "Assets/jobstop_assets/jobpngimg/newpass.png";
   static const String successchangepassword =
       "Assets/jobstop_assets/jobpngimg/successchangepassword.png";
-  static const String onboard1 = "Assets/jobstop_assets/json_animation/onBoarding2.json";
-  static const String onboard2 = "Assets/jobstop_assets/json_animation/onBoarding3.json";
+  static const String onboard1 =
+      "Assets/jobstop_assets/json_animation/onBoarding2.json";
+  static const String onboard2 =
+      "Assets/jobstop_assets/json_animation/onBoarding3.json";
 
   static const String companysignup =
       "Assets/jobstop_assets/jobpngimg/comp.png";
@@ -155,3 +162,4 @@ class JobstopPngImg {
 class JobstopSvgImg {
   static String swap = "Assets/jobstop_assets/jovsvgimg/swap.svg";
 }
+

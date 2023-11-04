@@ -60,7 +60,7 @@ class _ShowGeneralSearchJobsListState extends State<ShowGeneralSearchJobsList> {
                 timeAgo: calculateElapsedTimeFromStringDate(item.createdAt),
                 isEditable: GlobalStorageService.appUse != AppUsingType.user,
                 isSaved: item.isSaved == true,
-                onActionTap: GlobalStorageService.appUse == AppUsingType.user
+                onActionTap: GlobalStorageService.isUser
                     ? () {
                         _controller.onToggleSavedJobsSubmitted(item.id);
                       }

@@ -58,16 +58,16 @@ class _SippoCompanyEditAddJobsState extends State<SippoCompanyEditAddJobs> {
             ),
             _buildLoadingProgress(context),
             SizedBox(height: height / 36),
-            Obx(() => ConditionalWidget(
-                  _controller.states.isSuccess,
-                  data: _controller.states,
-                  guaranteedBuilder: (context, data) =>
-                      CardNotifyMessage.success(
-                    state: data,
-                    onCancelTap: () =>
-                        _controller.changeStates(isSuccess: false, message: ''),
-                  ),
-                )),
+            // Obx(() => ConditionalWidget(
+            //       _controller.states.isSuccess,
+            //       data: _controller.states,
+            //       guaranteedBuilder: (context, data) =>
+            //           CardNotifyMessage.success(
+            //         state: data,
+            //         onCancelTap: () =>
+            //             _controller.changeStates(isSuccess: false, message: ''),
+            //       ),
+            //     )),
             Obx(() => ConditionalWidget(
                   _controller.states.isError,
                   data: _controller.states,

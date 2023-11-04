@@ -10,7 +10,9 @@ import 'package:jobspot/sippo_controller/company_profile_controller/profile_user
 import 'package:jobspot/sippo_controller/dashboards_controller/company_dashboard_controller.dart';
 import 'package:jobspot/sippo_custom_widget/add_info_profile_card.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
+import 'package:jobspot/sippo_custom_widget/error_messages_dialog_snackbar/error_messages.dart';
 import 'package:jobspot/sippo_custom_widget/expandable_item_list_widget.dart';
+import 'package:jobspot/sippo_custom_widget/loading_view_widgets/loading_scaffold.dart';
 import 'package:jobspot/sippo_custom_widget/resume_card_widget.dart';
 import 'package:jobspot/sippo_custom_widget/user_profile_header.dart';
 import 'package:readmore/readmore.dart';
@@ -28,11 +30,53 @@ class _SippoCompanyUserProfileViewState
   final _controller = ProfileUserViewController.instance;
 
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Future.delayed(
+      const Duration(seconds: 3),
+      () {
+        if (CompanyDashBoardController.instance.company.isNotSubscribed) {
+          showNotSubscriptionAlert('');
+          return;
+        }
+      },
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        toolbarHeight: 0,
-        backgroundColor: Colors.black87,
+    return LoadingScaffold(
+      extendBodyBehindAppBar: true,
+      controller: _controller.loadingOverlayController,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(kToolbarHeight),
+        child: Obx(() {
+          final isHeightOverAppBar =
+              _controller.profileState.isHeightOverAppBar;
+          return AppBar(
+            // toolbarHeight: 0,
+            notificationPredicate: (notification) {
+              if (notification.metrics.pixels > kToolbarHeight) {
+                _controller.profileState.isHeightOverAppBar = true;
+              } else {
+                _controller.profileState.isHeightOverAppBar = false;
+              }
+              return false;
+            },
+            leading: IconButton(
+              onPressed: () {},
+              icon: Icon(
+                Icons.arrow_back_rounded,
+                color: isHeightOverAppBar ? Colors.black : Colors.white,
+              ),
+            ),
+
+            backgroundColor: isHeightOverAppBar
+                ? Jobstopcolor.backgroudHome
+                : Colors.transparent,
+          );
+        }),
       ),
       body: RefreshIndicator(
         onRefresh: () async {
@@ -78,25 +122,33 @@ class _SippoCompanyUserProfileViewState
   }
 
   Widget _buildResumeInfo(BuildContext context) {
-    return AddInfoProfileCard(
-      isCompanyView: true,
-      title: 'resume'.tr,
-      leading: Image.asset(
-        JobstopPngImg.resume,
-        height: context.fromHeight(CustomStyle.l),
-        color: Jobstopcolor.primarycolor,
-        colorBlendMode: BlendMode.srcIn,
-      ),
-      hasNotInfoProfile:
-          CompanyDashBoardController.instance.company.isSubscribed == false ||
-              _controller.profileState.cv == null,
-      profileInfo: [
-        CvCardWidget.fromRemote(
-          remoteCv: _controller.profileState.cv,
-          onCvTapped: () {},
-        )
-      ],
-    );
+    return Obx(() => AddInfoProfileCard(
+          isCompanyView: true,
+          title: 'resume'.tr,
+          leading: Image.asset(
+            JobstopPngImg.resume,
+            height: context.fromHeight(CustomStyle.l),
+            color: Jobstopcolor.primarycolor,
+            colorBlendMode: BlendMode.srcIn,
+          ),
+          hasNotInfoProfile:
+              CompanyDashBoardController.instance.company.isNotSubscribed ||
+                  _controller.profileState.cv == null,
+          profileInfo: [
+            CvCardWidget.fromRemote(
+              remoteCv: _controller.profileState.cv,
+              onCvTapped: () {
+                final fileUrl = _controller.profileState.cv?.url;
+                if (fileUrl != null) {
+                  _controller.openFile(
+                    fileUrl,
+                    _controller.profileState.cv?.size,
+                  );
+                }
+              },
+            )
+          ],
+        ));
   }
 
   Widget _buildAppreciationInfo(BuildContext context) {

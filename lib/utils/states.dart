@@ -4,7 +4,6 @@ class States {
   final bool isError;
   final bool isWarning;
   final String? message;
-  final String? error;
 
   States({
     this.isLoading = false,
@@ -12,7 +11,6 @@ class States {
     this.isError = false,
     this.isWarning = false,
     this.message,
-    this.error,
   });
 
   States copyWith({
@@ -29,12 +27,11 @@ class States {
       isError: isError ?? this.isError,
       isWarning: isWarning ?? this.isWarning,
       message: message ?? this.message,
-      error: error ?? this.error,
     );
   }
 
   @override
   String toString() {
-    return 'States{isLoading: $isLoading, isSuccess: $isSuccess, isError: $isError, isWarning: $isWarning, message: $message, error: $error}';
+    return 'States{isLoading: $isLoading, isSuccess: $isSuccess, isError: $isError, isWarning: $isWarning, message: $message}';
   }
 }

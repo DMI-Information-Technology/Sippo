@@ -90,6 +90,7 @@ class JobsHomeViewController extends GetxController {
   final _jobsList = <CompanyJobModel>[].obs;
 
   List<CompanyJobModel> get jobsList => _jobsList.toList();
+  int get jobsListLength => _jobsList.length;
 
   void set jobsList(List<CompanyJobModel> value) {
     _jobsList.value = value;

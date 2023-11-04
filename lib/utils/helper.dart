@@ -20,6 +20,8 @@ String calculateElapsedTime(DateTime dateTime) {
   Duration duration = Duration(
     milliseconds: currentTimeMillis - startTimeMillis,
   );
+  print('startTimeMillis: $dateTime');
+  print('currentTimeMillis: ${DateTime.now()}');
   if (duration.inDays > 0) {
     return '${duration.inDays} ${'days_ago'.tr}';
   }
@@ -88,7 +90,50 @@ String? convertFileSize(int? bytes) {
     return '${mb.toStringAsFixed(2)} MB';
   }
 }
+void openWhatsapp(String phoneNumber){
+  try {
+    String url = 'https://wa.me/$phoneNumber';
+    launchUrl(Uri.parse(url));
+  } catch (e, s) {
+    print(e);
+    print(s);
 
+  }
+}
+int convertStringFileSize(String? fileSizeStr) {
+  try {
+    if(fileSizeStr == null) throw Exception('fileSizeStr is null');
+    // Remove the file size unit from the string.
+   final fileSizeStrNum = fileSizeStr.substring(0, fileSizeStr.length - 2).trim();
+
+    // Convert the file size string to a number.
+    double fileSizeNum = double.parse(fileSizeStrNum);
+    String sizeType = fileSizeStr.substring(fileSizeStr.length - 2).toLowerCase();
+    print(sizeType);
+    // Convert the file size number to bytes based on the file size unit.
+    switch (sizeType) {
+      case 'kb':
+        fileSizeNum *= 1024;
+        break;
+      case 'mb':
+        fileSizeNum *= 1024 * 1024;
+        break;
+      case 'gb':
+        fileSizeNum *= 1024 * 1024 * 1024;
+        break;
+    }
+
+    // Return the file size in bytes as an integer.
+    return fileSizeNum.toInt();
+  } catch (e, s) {
+    print(e);
+    print(s);
+    return 1;
+  }
+}
+int calculateDownloadProgressFile(int downloadedBytes, int totalBytes){
+  return ((downloadedBytes / totalBytes) * 100).round();
+}
 String otpPhoneNumberFormat(String phoneNumber, {String countryCode = "218"}) {
   return "+$countryCode${phoneNumber.substring(1)}";
 }

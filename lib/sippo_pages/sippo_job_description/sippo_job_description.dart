@@ -33,8 +33,33 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        iconTheme: IconThemeData(color: Colors.white),
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(kToolbarHeight),
+        child: Obx(() {
+          final isHeightOverAppBar =
+              _controller.jobDetailsState.isHeightOverAppBar;
+          return AppBar(
+            // toolbarHeight: 0,
+            notificationPredicate: (notification) {
+              if (notification.metrics.pixels > kToolbarHeight) {
+                _controller.jobDetailsState.isHeightOverAppBar = true;
+              } else {
+                _controller.jobDetailsState.isHeightOverAppBar = false;
+              }
+              return false;
+            },
+            leading: IconButton(
+              onPressed: () => Get.back(),
+              icon: Icon(
+                Icons.arrow_back_rounded,
+                color: isHeightOverAppBar ? Colors.black : Colors.white,
+              ),
+            ),
+            backgroundColor: isHeightOverAppBar
+                ? Jobstopcolor.backgroudHome
+                : Colors.transparent,
+          );
+        }),
       ),
       body: BodyWidget(
         isScrollable: true,

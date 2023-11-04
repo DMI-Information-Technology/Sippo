@@ -6,9 +6,8 @@ import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/sippo_custom_widget/notification_widget.dart';
 import 'package:jobspot/sippo_custom_widget/rounded_border_radius_card_widget.dart';
-import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
 import 'package:jobspot/sippo_data/model/application_model/application_job_company_model.dart';
-
+import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
 import 'package:jobspot/utils/helper.dart';
 import 'package:readmore/readmore.dart';
 
@@ -25,6 +24,7 @@ class PostWidget extends StatelessWidget {
   final String? imageUrl;
   final bool? isCompany;
   final VoidCallback? onActionButtonPresses;
+  final String? imageProfileUrl;
 
   const PostWidget({
     Key? key,
@@ -35,6 +35,7 @@ class PostWidget extends StatelessWidget {
     this.imageUrl,
     this.isCompany = false,
     this.onActionButtonPresses,
+    this.imageProfileUrl,
   }) : super(key: key);
 
   @override
@@ -114,9 +115,11 @@ class PostWidget extends StatelessWidget {
     double width = size.width;
     return Row(
       children: [
-        CircleAvatar(
-          radius: 28,
-          backgroundImage: AssetImage(JobstopPngImg.photo),
+        NetworkBorderedCircularImage(
+          imageUrl: imageProfileUrl ?? "",
+          outerBorderWidth: context.fromWidth(CustomStyle.huge),
+          size: context.fromWidth(8),
+          outerBorderColor: Colors.grey[300],
         ),
         SizedBox(
           width: width / 46,
@@ -195,7 +198,7 @@ class PostApplicationWidget extends StatelessWidget {
   final CompanyDetailsModel? company;
   final VoidCallback? onActionButtonPresses;
   final VoidCallback? onProfileImageTap;
-  final void Function(String cvUrl)? onShowCvTap;
+  final void Function(String cvUrl,[String? size])? onShowCvTap;
   final bool isSubscribed;
 
   const PostApplicationWidget({

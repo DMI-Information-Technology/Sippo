@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:jobspot/JobGlobalclass/global_storage.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
+import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
+import 'package:jobspot/JobServices/shared_global_data_service.dart';
 import 'package:jobspot/sippo_controller/user_community_controller/show_about_companies_jobs_controller.dart';
 import 'package:jobspot/sippo_custom_widget/job_card_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
@@ -33,22 +36,28 @@ class _ShowAboutCompaniesJobsListState
             _buildErrorFirstLoad(context),
         newPageErrorIndicatorBuilder: (context) => _buildErrorNewLoad(context),
         itemBuilder: (context, item, index) {
-          return JobPostingCard(
-            jobDetails: item,
-            companyName: _controller.company.name,
-            imagePath: _controller.company.profileImage?.url,
-            timeAgo: calculateElapsedTimeFromStringDate(item.createdAt),
-            isEditable: false,
-            isSaved: item.isSaved == true,
-            onActionTap: () {
-              _controller.onToggleSavedJobsSubmitted(index, item.id);
+          return InkWell(
+            onTap: () {
+              if (InternetConnectionService.instance.isNotConnected) return;
+              SharedGlobalDataService.onJobTap(item);
             },
-            onAddressTextTap: (location) async {
-              await lunchMapWithLocation(
-                location?.dLatitude,
-                location?.dLongitude,
-              );
-            },
+            child: JobPostingCard(
+              jobDetails: item,
+              companyName: _controller.company.name,
+              imagePath: _controller.company.profileImage?.url,
+              timeAgo: calculateElapsedTimeFromStringDate(item.createdAt),
+              isEditable: false,
+              isSaved: item.isSaved == true,
+              onActionTap: GlobalStorageService.isUser
+                  ? () => _controller.onToggleSavedJobsSubmitted(index, item.id)
+                  : null,
+              onAddressTextTap: (location) async {
+                await lunchMapWithLocation(
+                  location?.dLatitude,
+                  location?.dLongitude,
+                );
+              },
+            ),
           );
         },
       ),

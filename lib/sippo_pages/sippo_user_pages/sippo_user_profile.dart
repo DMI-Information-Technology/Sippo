@@ -52,9 +52,53 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
   Widget build(BuildContext context) {
     return LoadingScaffold(
       controller: _controller.loadingOverlayController,
-      appBar: AppBar(
-        toolbarHeight: 0,
-        backgroundColor: Colors.black87,
+      appBar: PreferredSize(
+        preferredSize: Size.fromHeight(kToolbarHeight),
+        child: Obx(() {
+          final isHeightOverAppBar =
+              _controller.profileState.isHeightOverAppBar;
+          return AppBar(
+            // toolbarHeight: 0,
+            notificationPredicate: (notification) {
+              if (notification.metrics.pixels > kToolbarHeight) {
+                _controller.profileState.isHeightOverAppBar = true;
+              } else {
+                _controller.profileState.isHeightOverAppBar = false;
+              }
+              return false;
+            },
+            leading: IconButton(
+              onPressed: () => Get.back(),
+              icon: Icon(
+                Icons.arrow_back_rounded,
+                color: _controller.profileState.isHeightOverAppBar
+                    ? Colors.black
+                    : Colors.white,
+              ),
+            ),
+            actions: [
+              InkWell(
+                onTap: () {
+                  if (_controller.netController.isNotConnected) return;
+                  Get.toNamed(SippoRoutes.sippoprofilesetting);
+                },
+                child: Padding(
+                  padding: EdgeInsets.all(context.fromHeight(CustomStyle.xxl)),
+                  child: Image.asset(
+                    JobstopPngImg.setting,
+
+                    color: _controller.profileState.isHeightOverAppBar
+                        ? Colors.black
+                        : Colors.white, // Change this to your desired color
+                  ),
+                ),
+              ),
+            ],
+            backgroundColor: isHeightOverAppBar
+                ? Jobstopcolor.backgroudHome
+                : Colors.transparent,
+          );
+        }),
       ),
       body: BodyWidget(
         isTopScrollable: true,

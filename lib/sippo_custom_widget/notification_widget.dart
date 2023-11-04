@@ -174,7 +174,7 @@ class UserApplicationWidget extends StatelessWidget {
 }
 
 class UserJobApplicationWidget extends StatelessWidget {
-  final void Function(String cvUrl)? onShowCvTap;
+  final void Function(String cvUrl,[String? size])? onShowCvTap;
   final CompanyDetailsModel? company;
   final ApplicationCompanyModel? application;
   final bool isSubscribed;
@@ -235,7 +235,7 @@ class UserJobApplicationWidget extends StatelessWidget {
                 ? () {
                     final cvUrl = cv.url;
                     if (cvUrl != null) {
-                      onShowCvTap!(cvUrl);
+                      onShowCvTap!(cvUrl,cv.size);
                     }
                   }
                 : null,
@@ -314,7 +314,7 @@ class UserCompanyApplicationWidget extends StatelessWidget {
     this.isSubscribed = false,
   });
 
-  final void Function(String cvUrl)? onShowCvTap;
+  final void Function(String cvUrl,[String? size])? onShowCvTap;
   final CompanyDetailsModel? company;
   final String? applicationStatus;
   final CvModel? cv;
@@ -347,7 +347,7 @@ class UserCompanyApplicationWidget extends StatelessWidget {
                     ? () {
                         final cvUrl = myCv.url;
                         if (cvUrl != null) {
-                          onShowCvTap!(cvUrl);
+                          onShowCvTap!(cvUrl,myCv.size);
                         }
                       }
                     : null,

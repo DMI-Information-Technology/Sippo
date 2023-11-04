@@ -14,6 +14,9 @@ import 'package:jobspot/utils/states.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
 import 'package:jobspot/sippo_data/model/image_resource_model/image_resource_model.dart';
 
+import '../../JobGlobalclass/jobstopcolor.dart';
+import '../../JobGlobalclass/sippo_customstyle.dart';
+
 class CompanyEditAddPostController extends GetxController {
   final CompanyPostState newPostState = CompanyPostState();
   final _states = States().obs;
@@ -41,6 +44,7 @@ class CompanyEditAddPostController extends GetxController {
     // check response
     await response?.checkStatusResponse(
       onSuccess: (data, _) async {
+        popOut();
         successState(true, 'new post is added successfully.');
       },
       onValidateError: (validateError, _) {
@@ -70,10 +74,8 @@ class CompanyEditAddPostController extends GetxController {
     await response?.checkStatusResponse(
       onSuccess: (data, _) async {
         if (data != null) {
-          _post.value = data;
-          newPostState.setAll(post);
-          newPostState.clearLoadedImage();
           newPostState.isUpdated = true;
+          popOut();
         }
         successState(true, 'the post updated successfully.');
       },
@@ -126,6 +128,16 @@ class CompanyEditAddPostController extends GetxController {
       await addNewCompanyPost();
     }
     _states.value = states.copyWith(isLoading: false);
+  }
+  void popOut() {
+    final localIsEditing = isEditing;
+    Get.back(result: true, closeOverlays: true);
+    Get.snackbar(
+      localIsEditing ? 'edit_post'.tr : 'new_post'.tr,
+      localIsEditing ? 'edit_post_done'.tr : 'post_added_successfully'.tr,
+      boxShadows: [boxShadow],
+      backgroundColor: Jobstopcolor.backgroudHome,
+    );
   }
 
   Future<void> openEditing() async {

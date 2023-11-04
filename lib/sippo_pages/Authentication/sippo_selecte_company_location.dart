@@ -8,8 +8,8 @@ import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
-import 'package:jobspot/sippo_controller/AuthenticationController/sippo_signup_company_controller.dart';
 import 'package:jobspot/custom_app_controller/google_map_view_controller.dart';
+import 'package:jobspot/sippo_controller/AuthenticationController/sippo_signup_company_controller.dart';
 import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/custom_drop_down_button.dart';
@@ -182,20 +182,15 @@ class _SippoLocationCompanySelectorState
         _signUpCompanyController.cordLocation.validateCords()) {
       await _signUpCompanyController.authController.companyRegister(
         _signUpCompanyController.companyForm,
-        // CompanyModel(
-        //   password: "@aA123456",
-        //   passwordConfirmation: "@aA123456",
-        //   name: "hatem",
-        //   phone: "0922698540",
-        //   city: "tripoli",
-        //   latitude: 35,
-        //   longitude: -35,
-        //   specializations: [1, 2, 3],
-        // ),
       );
       if (_signUpCompanyController.authController.states.isSuccess) {
         _signUpCompanyController.authController.resetStates();
         _showSuccessSignupAlert();
+      }
+      if (_signUpCompanyController.authController.states.isError) {
+        _showRegisterErrorAlert(
+            _signUpCompanyController.authController.states.message);
+        _signUpCompanyController.authController.resetStates();
       }
     } else {
       _showBadConfirmDialog();
@@ -263,5 +258,20 @@ class _SippoLocationCompanySelectorState
     //     return;
     //   _signUpCompanyController.fetchLocationsAddress();
     // }
+  }
+
+  void _showRegisterErrorAlert(String? message) {
+    Get.dialog(
+      CustomAlertDialog(
+        imageAsset: JobstopPngImg.error,
+        title: "error".tr,
+        description: message ?? '',
+        confirmBtnColor: Jobstopcolor.primarycolor,
+        confirmBtnTitle: "ok".tr,
+        onConfirm: () {
+          if (Get.isOverlaysOpen) Get.back();
+        },
+      ),
+    );
   }
 }
