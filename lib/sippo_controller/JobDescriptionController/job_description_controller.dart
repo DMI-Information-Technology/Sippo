@@ -52,7 +52,7 @@ class JobCompanyDetailsController extends GetxController {
     _states.value = states.copyWith(isLoading: false);
   }
 
-  Future<CompanyJobModel?> getJobById(int id) async {
+  Future<CompanyJobModel?> getJobById(int? id) async {
     final response = await SippoJobsRepo.getJobById(id);
     final data = await response?.checkStatusResponseAndGetData(
       onValidateError: (validateError, _) {
@@ -69,17 +69,19 @@ class JobCompanyDetailsController extends GetxController {
   void requestJobDetails() async {
     changeStates(isLoading: true);
     final job = requestedJobDetails;
-    if (job == null || job.isJobContentBlank == true || jobId == -1) {
-      return changeStates(isLoading: false);
+    if (job != null && !job.isJobContentBlank) {
+      jobDetailsState.jopDetails = job;
+      jobDetailsState.jopDetails = await getJobById(job.id) ?? job;
+    } else if (jobId != -1) {
+      jobDetailsState.jopDetails =
+          await getJobById(jobId) ?? jobDetailsState.jopDetails;
     }
-    jobDetailsState.jopDetails = job;
-    jobDetailsState.jopDetails = await getJobById(jobId) ?? job;
     sharedDataService.jobGlobalState.details = jobDetailsState.jopDetails;
     sharedDataService.jobGlobalState.id = jobDetailsState.jopDetails.id ?? -1;
     changeStates(isLoading: false);
     final args = sharedDataService.jobGlobalState.args;
     if (args != null && args.containsKey(SharedGlobalDataService.GO_TO_APPLY)) {
-      if (args[SharedGlobalDataService.GO_TO_APPLY]) applyTapped();
+      if (args[SharedGlobalDataService.GO_TO_APPLY] case bool _) applyTapped();
     }
   }
 

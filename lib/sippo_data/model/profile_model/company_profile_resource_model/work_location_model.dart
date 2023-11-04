@@ -26,6 +26,12 @@ class WorkLocationModel {
     );
   }
 
+  bool isEqualToContentOf(WorkLocationModel? value) {
+    return value?.cordLocation == this.cordLocation &&
+        value?.locationAddress == this.locationAddress &&
+        value?.isHQ == this.isHQ;
+  }
+
   final int? id;
   final int? userId;
   final CoordLocation? cordLocation;
@@ -63,4 +69,3 @@ class WorkLocationModel {
       cordLocation.hashCode ^
       isHQ.hashCode;
 }
-

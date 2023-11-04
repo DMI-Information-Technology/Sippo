@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
+import 'package:get/get.dart';
+import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/sippo_controller/company_profile_controller/selected_company_work_place_controller.dart';
 import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
+import 'package:jobspot/sippo_custom_widget/confirmation_bottom_sheet.dart';
+import 'package:jobspot/sippo_custom_widget/container_bottom_sheet_widget.dart';
 import 'package:jobspot/sippo_custom_widget/custom_drop_down_button.dart';
 import 'package:jobspot/sippo_custom_widget/google_map_view_widget.dart';
 import 'package:jobspot/sippo_custom_widget/success_message_widget.dart';
@@ -62,17 +65,6 @@ class _SippoSelectCompanyWorkPlacesState
                       },
                     ),
                   )),
-              Obx(() => ConditionalWidget(
-                    _controller.states.isSuccess,
-                    data: _controller.states,
-                    guaranteedBuilder: (context, data) =>
-                        CardNotifyMessage.success(
-                      state: data,
-                      onCancelTap: () {
-                        _controller.changeStates(isSuccess: false, message: '');
-                      },
-                    ),
-                  )),
               Text(
                 'City',
                 style: dmsbold.copyWith(
@@ -93,7 +85,11 @@ class _SippoSelectCompanyWorkPlacesState
                           .selectedLocationAddress = value;
                       print(value);
                     },
-                    setInitialValue: false,
+                    setInitialValue: _controller.selectedWorkPlaceState
+                            .selectedLocationAddress.id !=
+                        null,
+                    initialValue: _controller
+                        .selectedWorkPlaceState.selectedLocationAddress.name,
                   )),
               SizedBox(
                 height: context.fromHeight(CustomStyle.spaceBetween),
@@ -121,12 +117,66 @@ class _SippoSelectCompanyWorkPlacesState
           ),
         ),
       ),
-      bottomNavigationBar: Padding(
-        padding: EdgeInsets.all(context.fromWidth(CustomStyle.paddingValue)),
-        child: CustomButton(
-          onTapped: () => _controller.onSaveWorkPlaceSubmitted(),
-          text: 'Save Work Place',
+      bottomNavigationBar: _buildSubmitButtons(context),
+    );
+  }
+
+  Padding _buildSubmitButtons(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(context.fromWidth(CustomStyle.paddingValue)),
+      child: Row(
+        children: [
+          if (_controller.isEditing) ...[
+            Expanded(
+              child: CustomButton(
+                onTapped: _showRemove,
+                text: 'Remove',
+                textColor: Jobstopcolor.primarycolor,
+                backgroundColor: Jobstopcolor.lightprimary,
+              ),
+            ),
+            SizedBox(width: context.fromWidth(CustomStyle.spaceBetween)),
+          ],
+          Expanded(
+            child: CustomButton(
+              onTapped: () => _controller.onSaveWorkPlaceSubmitted(),
+              text: 'Save',
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _showRemove() {
+    Get.bottomSheet(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(25),
         ),
+      ),
+      backgroundColor: Colors.white,
+      isScrollControlled: true,
+      ContainerBottomSheetWidget(
+        notchColor: Jobstopcolor.primarycolor,
+        children: [
+          ConfirmationBottomSheet(
+            title: "Remove Work Place ?",
+            description: "Are you sure you want to change what you entered?",
+            onConfirm: () async {
+              Get.back();
+              _controller.onDeleteSubmitted().then((value) {
+                if (_controller.states.isSuccess) {
+                  if (Get.isOverlaysOpen) Get.back();
+                  Get.back();
+                }
+              });
+            },
+            onUndo: () {
+              if (Get.isOverlaysOpen) Get.back();
+            },
+          )
+        ],
       ),
     );
   }

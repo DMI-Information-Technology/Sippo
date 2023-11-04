@@ -159,7 +159,9 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
             return TopDescriptionInfoCompanyWidget(
               startText: job.company?.name,
               middleText: job.locationAddress?.name,
-              endText: calculateElapsedTimeFromStringDate(job.createdAt),
+              endText: job.createdAt != null
+                  ? calculateElapsedTimeFromStringDate(job.createdAt ?? "")
+                  : null,
             );
           }),
         ],

@@ -9,8 +9,16 @@ import 'package:permission_handler/permission_handler.dart';
 
 import '../JobGlobalclass/global_storage.dart';
 
-Future<void> _onHandleBackgroundMessageNotification(RemoteMessage? message) async {
+@pragma('vm:entry-point')
+Future<void> _onHandleBackgroundMessageNotification(
+    RemoteMessage? message) async {
   if (message == null) return;
+  try {
+    NavigationAppRoute.gotoRoute(Get.currentRoute);
+  } catch (e, s) {
+    print(e);
+    print(s);
+  }
   print("from on background message notification.");
   print(message.notification?.title);
   print(message.notification?.body);
@@ -57,11 +65,13 @@ class FirebasePushNotificationService {
       badge: true,
       sound: true,
     );
+
     // _firebasePushNotification
     //     .getInitialMessage()
     //     .then(_handleMessageNotification);
     FirebaseMessaging.onMessageOpenedApp.listen(_onHandleMessageNotification);
-    FirebaseMessaging.onBackgroundMessage(_onHandleBackgroundMessageNotification);
+    FirebaseMessaging.onBackgroundMessage(
+        _onHandleBackgroundMessageNotification);
     FirebaseMessaging.onMessage.listen((message) {
       print("#####message notification is received.#######");
       final notification = message.notification;
@@ -108,16 +118,14 @@ class FirebasePushNotificationService {
   Future<void> init() async {
     final result = await _firebasePushNotification.requestPermission();
     print(result.authorizationStatus);
-    GlobalStorageService.fcmToken =
-        switch (result.authorizationStatus) {
-              AuthorizationStatus.authorized =>
-                await _firebasePushNotification.getToken(),
-              AuthorizationStatus.denied => await _requestedNotification(),
-              AuthorizationStatus.notDetermined =>
-                await _requestedNotification(),
-              AuthorizationStatus.provisional => await _requestedNotification()
-            } ??
-            "";
+    GlobalStorageService.fcmToken = switch (result.authorizationStatus) {
+          AuthorizationStatus.authorized =>
+            await _firebasePushNotification.getToken(),
+          AuthorizationStatus.denied => await _requestedNotification(),
+          AuthorizationStatus.notDetermined => await _requestedNotification(),
+          AuthorizationStatus.provisional => await _requestedNotification()
+        } ??
+        "";
     print("fcm token: ${GlobalStorageService.fcmToken}");
     await _initPushNotification();
     await _initLocalNotification();

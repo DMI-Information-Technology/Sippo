@@ -1,6 +1,8 @@
 class JobstopPngImg {
   static const String splashlogo =
       "Assets/jobstop_assets/jobpngimg/splashlogo.png";
+  static const String loadingProgress =
+      "Assets/jobstop_assets/json_animation/loadingProgress.json";
   static const String onboarding =
       "Assets/jobstop_assets/json_animation/onBoarding1.json";
   static const String google = "Assets/jobstop_assets/jobpngimg/google.png";

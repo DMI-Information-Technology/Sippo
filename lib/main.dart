@@ -28,8 +28,7 @@ void main() async {
     Get.put<GlobalStorageService>(GlobalStorageService()),
   );
   await GlobalStorageService.lunchApp();
-
-  await FirebasePushNotificationService().init();
+  if (!kIsWeb) await FirebasePushNotificationService().init();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,

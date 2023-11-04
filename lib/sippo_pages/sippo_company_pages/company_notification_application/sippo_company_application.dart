@@ -200,7 +200,7 @@ class _SippoCompanyApplicationState extends State<SippoCompanyApplication> {
     Get.dialog(
       CustomAlertDialog(
         title: 'application_status'.tr,
-        description: 'application_ask_status_dialog',
+        description: 'application_ask_status_dialog'.tr,
         confirmBtnTitle: 'accepted'.tr,
         onConfirm: () async {
           Get.back();

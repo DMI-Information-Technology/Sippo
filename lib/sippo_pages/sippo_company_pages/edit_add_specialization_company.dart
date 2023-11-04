@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,194 +6,11 @@ import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
-import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
-import 'package:jobspot/custom_app_controller/switch_status_controller.dart';
-import 'package:jobspot/sippo_controller/dashboards_controller/company_dashboard_controller.dart';
+import 'package:jobspot/sippo_controller/company_profile_controller/edit_add_specialization_company_controller.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/loading_view_widgets/loading_scaffold.dart';
 import 'package:jobspot/sippo_custom_widget/success_message_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
-import 'package:jobspot/sippo_data/company_repos/company_profile_info_repo.dart';
-import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
-import 'package:jobspot/sippo_data/model/specializations_model/specializations_model.dart';
-import 'package:jobspot/sippo_data/specializations/specializations_repo.dart';
-import 'package:jobspot/utils/helper.dart';
-import 'package:jobspot/utils/states.dart';
-
-class EditAddSpecializationCompanyController extends GetxController {
-  CompanyDetailsModel get company =>
-      CompanyDashBoardController.instance.company;
-  final loadingOverly = SwitchStatusController();
-
-  bool get isModifyStateChanged =>
-      modifyStates.isError || modifyStates.isWarning;
-  final _fetchStates = States().obs;
-
-  States get fetchStates => _fetchStates.value;
-
-  void set fetchStates(States state) => _fetchStates.value = state;
-  final _modifyStates = States().obs;
-
-  States get modifyStates => _modifyStates.value;
-
-  void set modifyStates(States state) => _modifyStates.value = state;
-
-  void resetState() => _modifyStates.value = States();
-  final _specializations = <SpecializationModel>[].obs;
-
-  bool get isNetworkConnected => InternetConnectionService.instance.isConnected;
-
-  List<SpecializationModel> get specializations => _specializations.toList();
-
-  int get specializationsLength => _specializations.length;
-
-  set specializations(List<SpecializationModel> value) {
-    _specializations.value = value;
-  }
-
-  final _selectedSpecialization = <SpecializationModel>[].obs;
-
-  List<SpecializationModel> get selectedSpecialization {
-    return _selectedSpecialization.toList();
-  }
-
-  void set selectedSpecialization(List<SpecializationModel> value) {
-    _selectedSpecialization.value = value;
-  }
-
-  bool isSpecialSelected(SpecializationModel value) {
-    return _specializations.firstWhereOrNull(
-          (e) => e.id == value.id,
-        ) !=
-        null;
-  }
-
-  bool fromSelectedSpecial(SpecializationModel value) {
-    return _selectedSpecialization.firstWhereOrNull(
-          (e) => e.id == value.id,
-        ) !=
-        null;
-  }
-
-  void toggleSpecialization(SpecializationModel value) {
-    if (fromSelectedSpecial(value)) {
-      return _selectedSpecialization.removeWhere(
-        (e) => e.id == value.id,
-      );
-    }
-    _selectedSpecialization.add(value);
-  }
-
-  Future<void> fetchSpecializations() async {
-    if (!isNetworkConnected) return;
-    fetchStates = States(isLoading: true);
-    final response = await SpecializationRepo.fetchSpecializationsResource();
-    fetchStates = States(isLoading: false);
-    await response?.checkStatusResponse(
-      onSuccess: (data, statusType) {
-        if (data != null) {
-          specializations = data;
-          fetchStates = States(isSuccess: true);
-        }
-      },
-      onValidateError: (validateError, statusType) {
-        fetchStates = States(isError: true, message: validateError?.message);
-      },
-      onError: (message, statusType) {
-        fetchStates = States(isError: true, message: message);
-      },
-    );
-  }
-
-  Future<void> updateSpecializations() async {
-    if (!isNetworkConnected) return;
-    if (modifyStates.isLoading) return;
-    if (selectedSpecialization.length == 0 ||
-        selectedSpecialization.length > 3) {
-      _modifyStates(
-        States(
-          isError: true,
-          message: 'You have pick one specialization at least and maximum 3.',
-        ),
-      );
-      return;
-    }
-    if (listEquality(selectedSpecialization, company.specializations)) {
-      _modifyStates(
-        States(
-          isWarning: true,
-          message: 'Nothing is Changed in Specializations.',
-        ),
-      );
-      return;
-    }
-    modifyStates = States(isLoading: true);
-    final response = await EditCompanyProfileInfoRepo.updateCompanyProfile(
-      company.copyWith(
-        specializations: selectedSpecialization,
-      ),
-    );
-    modifyStates = States(isLoading: false);
-
-    await response.checkStatusResponse(
-      onSuccess: (data, _) async {
-        if (data == null ||
-            data.specializations == null ||
-            data.specializations!.isEmpty) {
-          CompanyDashBoardController.instance.refreshUserProfileInfo();
-        } else {
-          CompanyDashBoardController.instance.company = data;
-        }
-        Get.dialog(
-          CustomAlertDialog(
-            title: 'Specializations Company',
-            description: 'Specializations is Added Successfully.',
-            confirmBtnTitle: 'ok'.tr,
-            onConfirm: () => {if (Get.isOverlaysOpen) Get.back()},
-          ),
-        ).then((_) => Get.back());
-      },
-      onValidateError: (validateError, _) {
-        modifyStates = States(isError: true, message: validateError?.message);
-      },
-      onError: (message, _) {
-        modifyStates = States(isError: true, message: message);
-      },
-    );
-  }
-
-  StreamSubscription<States>? fetchStateStubs;
-  StreamSubscription<States>? modifyStatesSubs;
-
-  @override
-  void onInit() {
-    fetchStateStubs = _fetchStates.listen((value) {
-      if (value.isLoading) {
-        loadingOverly.start();
-      } else {
-        loadingOverly.pause();
-      }
-    });
-    modifyStatesSubs = _modifyStates.listen((value) {
-      if (value.isLoading) {
-        loadingOverly.start();
-      } else {
-        loadingOverly.pause();
-      }
-    });
-    selectedSpecialization =
-        company.specializations?.toList() ?? selectedSpecialization;
-    fetchSpecializations();
-    super.onInit();
-  }
-
-  @override
-  void onClose() {
-    fetchStateStubs?.cancel();
-    modifyStatesSubs?.cancel();
-    super.onClose();
-  }
-}
 
 class EditAddSpecializationCompany extends StatefulWidget {
   const EditAddSpecializationCompany({super.key});
@@ -207,7 +22,7 @@ class EditAddSpecializationCompany extends StatefulWidget {
 
 class _EditAddSpecializationCompanyState
     extends State<EditAddSpecializationCompany> {
-  final _controller = Get.put(EditAddSpecializationCompanyController());
+  final _controller = EditAddSpecializationCompanyController.instance;
 
   @override
   Widget build(BuildContext context) {

@@ -4,6 +4,7 @@ import 'package:jobspot/SippoControllerBinding/auth_binding/login_company_bindin
 import 'package:jobspot/SippoControllerBinding/auth_binding/login_user_binding_controller.dart';
 import 'package:jobspot/SippoControllerBinding/auth_binding/signup_company_binding_controller.dart';
 import 'package:jobspot/SippoControllerBinding/auth_binding/signup_user_binding_controller.dart';
+import 'package:jobspot/SippoControllerBinding/company_binding/company_edit_add_specialization_binding_controller.dart';
 import 'package:jobspot/SippoControllerBinding/company_binding/company_home_controller_binding.dart';
 import 'package:jobspot/SippoControllerBinding/company_binding/company_job_controller_binding.dart';
 import 'package:jobspot/SippoControllerBinding/company_binding/company_post_controller_binding.dart';
@@ -44,6 +45,7 @@ import 'package:jobspot/sippo_pages/sippo_abouts_companies/sippo_about_companies
 import 'package:jobspot/sippo_pages/sippo_company_pages/company_post_and_jobs/sippo_company_edit_add_jobs.dart';
 import 'package:jobspot/sippo_pages/sippo_company_pages/company_post_and_jobs/sippo_company_edit_add_post.dart';
 import 'package:jobspot/sippo_pages/sippo_company_pages/company_user_profile_view/sippo_show_user_profile_view.dart';
+import 'package:jobspot/sippo_pages/sippo_company_pages/edit_add_specialization_company.dart';
 import 'package:jobspot/sippo_pages/sippo_company_pages/sippo_company_dashboard.dart';
 import 'package:jobspot/sippo_pages/sippo_company_pages/sippo_company_profile.dart';
 import 'package:jobspot/sippo_pages/sippo_company_pages/sippo_edit_company_profile.dart';
@@ -108,7 +110,9 @@ class SippoRoutes {
   static const String filterSpecializationsJobsSearch =
       "/sippo-filter-specializations-job-search";
   static const String sippoGeneralSearchPage = "/sippo-general-search";
-  static const String sippoOpenGoogleMapView = "/sippo-open-google-map-view";
+  static const String sippoSelectedCompanyWorkPlace = "/sippo-open-google-map-view";
+  static const String sippoEditAddSpecializationCompany =
+      "/sippo-edit-add-specialization-company";
 
   // company
   static const String sippoCompanyDashboard = "/sippo-company-dashboard";
@@ -220,9 +224,15 @@ class SippoRoutes {
         page: () => const SippoApplyJob(),
         binding: const UserApplyJobBindingController()),
     GetPage(
-        name: identityverification,
-        page: () => const SippoCompanyIdentityVerification(),
-        binding: const IdentityVerificationBindingController()),
+      name: identityverification,
+      page: () => const SippoCompanyIdentityVerification(),
+      binding: const IdentityVerificationBindingController(),
+    ),
+    GetPage(
+      name: sippoEditAddSpecializationCompany,
+      page: () => const EditAddSpecializationCompany(),
+      binding: const CompanyEditAddSpecializationBindingController(),
+    ),
     GetPage(
       name: sippoJobFilterSearch,
       page: () => const SippoJobSearch(),
@@ -288,7 +298,7 @@ class SippoRoutes {
       binding: const UserGeneralSearchBindingController(),
     ),
     GetPage(
-      name: sippoOpenGoogleMapView,
+      name: sippoSelectedCompanyWorkPlace,
       page: () => const SippoSelectCompanyWorkPlaces(),
       binding: const SelectedCompanyWorkPlaceBindingController(),
     ),

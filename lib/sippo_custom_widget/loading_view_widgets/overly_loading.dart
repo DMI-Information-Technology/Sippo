@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
+import 'package:lottie/lottie.dart';
 
 class LoadingOverlay extends StatelessWidget {
   const LoadingOverlay();
@@ -8,7 +11,10 @@ class LoadingOverlay extends StatelessWidget {
     return Container(
       alignment: Alignment.center,
       color: Colors.black.withOpacity(0.3),
-      child: const CircularProgressIndicator(),
+      child: Lottie.asset(
+        JobstopPngImg.loadingProgress,
+        height: context.height / 3,
+      ),
     );
   }
 }

@@ -19,7 +19,6 @@ import 'package:jobspot/sippo_custom_widget/user_profile_header.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:readmore/readmore.dart';
 
-import 'edit_add_specialization_company.dart';
 import 'sippo_about_company.dart';
 
 class SippoCompanyProfile extends StatefulWidget {
@@ -264,7 +263,7 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
           alignmentFromStart: true,
           onAddClicked: () {
             if (_controller.netController.isNotConnected) return;
-            Get.to(() => const EditAddSpecializationCompany());
+            Get.toNamed(SippoRoutes.sippoEditAddSpecializationCompany);
           },
           profileInfo: [
             ExpandableItemList.wrapBuilder(
@@ -343,22 +342,37 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
         ),
         onAddClicked: () {
           if (_controller.netController.isNotConnected) return;
-          Get.toNamed(SippoRoutes.sippoOpenGoogleMapView);
+          Get.toNamed(SippoRoutes.sippoSelectedCompanyWorkPlace);
         },
         profileInfo: [
           ExpandableItemList(
             isExpandable: (_controller.company.locations?.length ?? 0) > 1,
             itemCount: _controller.company.locations?.length ?? 0,
             expandItems: profileState.showAllLocations,
-            spacing: context.fromHeight(CustomStyle.xxxl),
-            alignmentFromStart: true,
+            // spacing: context.fromHeight(CustomStyle.huge2),
+            alignmentFromStart: false,
             itemBuilder: (context, index) {
               final item = _controller.company.locations?[index];
-              return AutoSizeText(
-                item?.locationAddress?.name ?? '',
-                style: dmsregular.copyWith(
-                  color: Jobstopcolor.primarycolor,
+              return ListTile(
+                style: ListTileStyle.drawer,
+                contentPadding: EdgeInsets.zero,
+                horizontalTitleGap: 0.0,
+                title: AutoSizeText(
+                  item?.locationAddress?.name ?? '',
+                  style: dmsregular.copyWith(
+                    color: Jobstopcolor.primarycolor,
+                  ),
                 ),
+                trailing: IconButton(
+                    onPressed: () {
+                      _controller.editLocation = item;
+                      Get.toNamed(SippoRoutes.sippoSelectedCompanyWorkPlace)
+                          ?.then((_) => _controller.editLocation = null);
+                    },
+                    icon: Icon(
+                      Icons.mode_edit_outline_outlined,
+                      color: Jobstopcolor.primarycolor,
+                    )),
               );
             },
             onExpandClicked: () {

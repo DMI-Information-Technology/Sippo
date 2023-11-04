@@ -7,6 +7,7 @@ import 'package:jobspot/sippo_data/company_repos/company_gallery_images_repo.dar
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
 import 'package:jobspot/sippo_data/model/custom_file_model/custom_file_model.dart';
 import 'package:jobspot/sippo_data/model/image_resource_model/image_resource_model.dart';
+import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/work_location_model.dart';
 import 'package:jobspot/utils/states.dart';
 
 import '../dashboards_controller/company_dashboard_controller.dart';
@@ -14,7 +15,7 @@ import '../dashboards_controller/company_dashboard_controller.dart';
 class ProfileCompanyController extends GetxController {
   static ProfileCompanyController get instance => Get.find();
   final profileCompletionController = ProfileCompletionController(0.0);
-
+  WorkLocationModel? editLocation;
   final _states = States().obs;
 
   States get states => _states.value;

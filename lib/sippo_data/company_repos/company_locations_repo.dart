@@ -1,12 +1,12 @@
 import 'dart:convert';
 
-import 'package:jobspot/sippo_controller/HttpClientController/http_client_controller.dart';
 import 'package:jobspot/core/api_endpoints.dart' as endpoints;
 import 'package:jobspot/core/resource.dart';
 import 'package:jobspot/core/status_response_code_checker.dart';
+import 'package:jobspot/sippo_controller/HttpClientController/http_client_controller.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/validate_property_work_location_model.dart';
-import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/vlidate_property_company_job_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/work_location_model.dart';
+import 'package:jobspot/sippo_data/model/status_message_model/status_message_model.dart';
 
 class CompanyLocationsRepo {
   static Future<
@@ -140,64 +140,40 @@ class CompanyLocationsRepo {
     }
   }
 
-  static Future<Resource<List<String>?, ValidatePropCompanyJobModel?>?>
-      fetchEmploymentTypes() async {
+  static Future<Resource<StatusMessageModel?, dynamic>?> deleteWorkPlaceById(
+      int? workLocationId) async {
     final httpController = HttpClientController.instance;
     try {
-      final response = await httpController.client.get(
-        endpoints.employmentTypesEndpoint,
-      );
-      print(
-          "CompanyJobRepo.fetchEmploymentTypes: response data = ${response.body}");
-      print(
-        "CompanyJobRepo.fetchEmploymentTypes: response status code = ${response.statusCode}",
+      final response = await httpController.client.delete(
+        endpoints.companyLocations,
+        resourceId: workLocationId.toString(),
       );
 
-      final responseData = jsonDecode(response.body);
-      return StatusResponseCodeChecker.checkStatusResponseCode(
+      final responseString = response.body;
+      print(
+          "CompanyLocationsRepo.deleteWorkPlaceById: response data = $responseString");
+      print(
+        "CompanyLocationsRepo.deleteWorkPlaceById: response status code = ${response.statusCode}",
+      );
+
+      late final responseData;
+      if (responseString.trim().isEmpty)
+        responseData = {'message': 'the work place was deleted successfully.'};
+      else
+        responseData = jsonDecode(responseString);
+
+      return await StatusResponseCodeChecker.checkStatusResponseCode(
         responseData,
         response.statusCode,
-        (data) => List<String>.from(data.values),
+        (data) => StatusMessageModel.fromJson(data),
         (errors) => null,
       );
     } catch (e) {
-      print("CompanyJobRepo.fetchEmploymentTypes error: $e");
+      print("CompanyJobRepo.deleteWorkPlaceById error: $e");
       return Resource.error(
         errorMessage: e.toString(),
         type: StatusType.INVALID_RESPONSE,
       );
     }
   }
-
-// static Future<Resource<Map<int, String>?, ValidatePropCompanyJobModel?>?>
-//     fetchEmploymentTypesMap() async {
-//   final httpController = HttpClientController.instance;
-//   try {
-//     final response = await httpController.client.get(
-//       endpoints.employmentTypesEndpoint,
-//     );
-//     print(
-//         "CompanyJobRepo.fetchEmploymentTypes: response data = ${response.body}");
-//     print(
-//       "CompanyJobRepo.fetchEmploymentTypes: response status code = ${response.statusCode}",
-//     );
-//
-//     final responseData = jsonDecode(response.body);
-//     return StatusResponseCodeChecker.checkStatusResponseCode(
-//       responseData,
-//       response.statusCode,
-//       (data) => data.map((key, value) {
-//         if (key.isNumericOnly) return MapEntry(int.parse(key), value);
-//         return MapEntry();
-//       }),
-//       (errors) => null,
-//     );
-//   } catch (e) {
-//     print("CompanyJobRepo.fetchEmploymentTypes error: $e");
-//     return Resource.error(
-//       errorMessage: e.toString(),
-//       type: StatusType.INVALID_RESPONSE,
-//     );
-//   }
-// }
 }
