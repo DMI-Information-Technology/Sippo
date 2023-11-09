@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import '../JobGlobalclass/jobstopcolor.dart';
 import '../JobGlobalclass/jobstopfontstyle.dart';
@@ -62,8 +63,8 @@ class ExpandableItemList extends StatelessWidget {
           onPressed: onExpandClicked,
           child: Text(
             expandItems
-                ? shrinkTitle ?? 'Show Less'
-                : expandTitle ?? 'Show More',
+                ? shrinkTitle ?? 'show_less'.tr
+                : expandTitle ?? 'show_more'.tr,
             style: dmsregular.copyWith(
               color: titleExpandColor ?? Jobstopcolor.primarycolor,
             ),

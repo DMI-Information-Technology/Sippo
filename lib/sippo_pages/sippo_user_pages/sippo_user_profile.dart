@@ -7,7 +7,6 @@ import 'package:jobspot/JobGlobalclass/jobstopprefname.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
-import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/sippo_controller/user_profile_controller/profile_user_controller.dart';
 import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
 import 'package:jobspot/sippo_custom_widget/add_info_profile_card.dart';
@@ -52,6 +51,7 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
   Widget build(BuildContext context) {
     return LoadingScaffold(
       controller: _controller.loadingOverlayController,
+      extendBodyBehindAppBar: true,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),
         child: Obx(() {
@@ -71,9 +71,7 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
               onPressed: () => Get.back(),
               icon: Icon(
                 Icons.arrow_back_rounded,
-                color: _controller.profileState.isHeightOverAppBar
-                    ? Colors.black
-                    : Colors.white,
+                color: isHeightOverAppBar ? Colors.black : Colors.white,
               ),
             ),
             actions: [
@@ -87,7 +85,7 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
                   child: Image.asset(
                     JobstopPngImg.setting,
 
-                    color: _controller.profileState.isHeightOverAppBar
+                    color: isHeightOverAppBar
                         ? Colors.black
                         : Colors.white, // Change this to your desired color
                   ),
@@ -157,7 +155,6 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
   Widget _buildUserProfileHeader() {
     return Obx(() => UserProfileHeaderWidget(
           profileInfo: _controller.user,
-          onSettingsPressed: () => Get.toNamed(SippoRoutes.sippoprofilesetting),
           onEditProfilePressed: () => Get.toNamed(SippoRoutes.editUserProfile),
           profileImage: _controller.user.profileImage?.url ?? "",
         ));
@@ -229,7 +226,7 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
           ExpandableItemList(
             isExpandable: _controller.profileState.projectsList.length > 1,
             expandItems: _controller.profileState.showAllProjects,
-            spacing: context.fromHeight(CustomStyle.xxxl),
+            // spacing: context.fromHeight(CustomStyle.xxxl),
             itemCount: _controller.profileState.projectsList.length,
             itemBuilder: (BuildContext context, int index) {
               final item = _controller.profileState.projectsList[index];
@@ -517,47 +514,48 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
     String? periodic, {
     required VoidCallback onEdit,
   }) {
-    return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-      Row(
+    return ListTile(
+      style: ListTileStyle.drawer,
+      contentPadding: EdgeInsets.zero,
+      minVerticalPadding: 0.0,
+      horizontalTitleGap: 0.0,
+      title: Text(
+        title ?? "",
+        style: dmsbold.copyWith(
+          color: Jobstopcolor.primarycolor,
+        ),
+        overflow: TextOverflow.ellipsis,
+      ),
+      subtitle: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(
-            width: context.fromWidth(CustomStyle.halfFullSize),
-            child: Text(
-              title ?? "",
-              style: dmsbold.copyWith(
-                fontSize: FontSize.title6(context),
-                color: Jobstopcolor.primarycolor,
+          if (from != null && from.trim().isNotEmpty) ...[
+            Text(
+              from,
+              style: dmsregular.copyWith(
+                color: Jobstopcolor.darkgrey,
               ),
-              overflow: TextOverflow.ellipsis,
             ),
+            SizedBox(
+              height: context.fromHeight(CustomStyle.huge2),
+            ),
+          ],
+          Text(
+            periodic ?? "",
+            style: dmsregular.copyWith(color: Jobstopcolor.darkgrey),
           ),
-          const Spacer(),
-          InkWell(
-              onTap: onEdit,
-              child: Image.asset(
-                JobstopPngImg.edit,
-                height: context.fromHeight(CustomStyle.l),
-                color: Jobstopcolor.primarycolor,
-                colorBlendMode: BlendMode.srcIn,
-              )),
         ],
       ),
-      SizedBox(
-        height: context.fromHeight(CustomStyle.huge2),
+      trailing: InkWell(
+        onTap: onEdit,
+        child: Image.asset(
+          JobstopPngImg.edit,
+          height: context.fromHeight(CustomStyle.l),
+          color: Jobstopcolor.primarycolor,
+          colorBlendMode: BlendMode.srcIn,
+        ),
       ),
-      Text(
-        from ?? "",
-        style: dmsregular.copyWith(
-            fontSize: FontSize.label(context), color: Jobstopcolor.darkgrey),
-      ),
-      SizedBox(
-        height: context.fromHeight(CustomStyle.huge2),
-      ),
-      Text(
-        periodic ?? "",
-        style: dmsregular.copyWith(
-            fontSize: FontSize.label(context), color: Jobstopcolor.darkgrey),
-      ),
-    ]);
+    );
   }
 }

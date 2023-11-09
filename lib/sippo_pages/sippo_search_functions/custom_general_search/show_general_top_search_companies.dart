@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
+import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
@@ -14,6 +15,7 @@ import 'package:jobspot/sippo_custom_widget/network_bordered_circular_image_widg
 import 'package:jobspot/sippo_custom_widget/rounded_border_radius_card_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
+import 'package:lottie/lottie.dart';
 
 class ShowGeneralTopSearchCompaniesList extends StatefulWidget {
   const ShowGeneralTopSearchCompaniesList({super.key});
@@ -37,6 +39,12 @@ class _ShowGeneralTopSearchCompaniesListState
         newPageErrorIndicatorBuilder: (context) => _buildErrorNewLoad(context),
         newPageProgressIndicatorBuilder: (context) =>
             _buildNewPageProgress(context),
+        firstPageProgressIndicatorBuilder: (context) => Center(
+          child: Lottie.asset(
+            JobstopPngImg.loadingProgress,
+            height: context.height / 6,
+          ),
+        ),
         itemBuilder: (context, item, index) {
           return RoundedBorderRadiusCardWidget(
             padding: EdgeInsets.zero,

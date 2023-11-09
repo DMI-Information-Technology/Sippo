@@ -13,8 +13,8 @@ import 'body_widget.dart';
 import 'circular_image.dart';
 import 'loading_view_widgets/loading_scaffold.dart';
 
-class SaveImagePageView extends StatelessWidget {
-  SaveImagePageView({
+class SaveImageProfilePageView extends StatelessWidget {
+  SaveImageProfilePageView({
     super.key,
     required this.imageFile,
     required this.onUpdateTapped,
@@ -33,7 +33,7 @@ class SaveImagePageView extends StatelessWidget {
       appBar: AppBar(
         titleSpacing: 0.0,
         title: Text(
-          "Update Profile Image",
+          'title_update_profile_image'.tr,
           style: dmsmedium.copyWith(fontSize: FontSize.title5(context)),
         ),
       ),
@@ -53,7 +53,7 @@ class SaveImagePageView extends StatelessWidget {
               height: context.fromHeight(CustomStyle.spaceBetween),
             ),
             Text(
-              "The New Profile Image",
+              "message_new_profile_image".tr,
               style: dmsbold.copyWith(
                 fontSize: FontSize.title3(context),
               ),
@@ -69,7 +69,7 @@ class SaveImagePageView extends StatelessWidget {
             loadingUpdateImageController.dispose();
             Navigator.of(context).pop();
           },
-          text: "Update",
+          text: "update".tr,
         ),
       ),
     );

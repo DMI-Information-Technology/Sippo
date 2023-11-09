@@ -34,7 +34,7 @@ class _SippoUploadCVState extends State<SippoUploadCV> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               AutoSizeText(
-                "Add Resume",
+                "label_add_cv".tr,
                 style: dmsbold.copyWith(
                   fontSize: FontSize.title3(context),
                   color: Jobstopcolor.primarycolor,
@@ -55,7 +55,7 @@ class _SippoUploadCVState extends State<SippoUploadCV> {
                       fileCv: _controller.profileState.cvFile,
                     ),
                   ),
-                  title: 'Upload your CV'.tr,
+                  title: 'title_upload_cv'.tr,
                   onUploadTapped: () {
                     _controller.uploadFileCvFromStorage();
                   },

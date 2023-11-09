@@ -4,6 +4,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:jobspot/JobGlobalclass/global_storage.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
+import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
@@ -14,6 +15,7 @@ import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
 import 'package:jobspot/utils/app_use.dart';
 import 'package:jobspot/utils/helper.dart';
+import 'package:lottie/lottie.dart';
 
 class ShowGeneralSearchJobsList extends StatefulWidget {
   const ShowGeneralSearchJobsList({super.key});
@@ -45,6 +47,12 @@ class _ShowGeneralSearchJobsListState extends State<ShowGeneralSearchJobsList> {
               _buildErrorNewLoad(context),
           newPageProgressIndicatorBuilder: (context) =>
               _buildNewPageProgress(context),
+          firstPageProgressIndicatorBuilder: (context) => Center(
+            child: Lottie.asset(
+              JobstopPngImg.loadingProgress,
+              height: context.height / 6,
+            ),
+          ),
           itemBuilder: (context, item, index) {
             return InkWell(
               onTap: () {
@@ -65,8 +73,8 @@ class _ShowGeneralSearchJobsListState extends State<ShowGeneralSearchJobsList> {
                         _controller.onToggleSavedJobsSubmitted(item.id);
                       }
                     : null,
-                onAddressTextTap: (location) async {
-                  await lunchMapWithLocation(
+                onAddressTextTap: (location) {
+                  lunchMapWithLocation(
                     location?.dLatitude,
                     location?.dLongitude,
                   );
@@ -138,8 +146,7 @@ class _ShowGeneralSearchJobsListState extends State<ShowGeneralSearchJobsList> {
         ),
         SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
         Text(
-          _controller.states.message ??
-              'Something wrong is happened.',
+          _controller.states.message ?? 'Something wrong is happened.',
           style: dmsregular.copyWith(
             fontSize: FontSize.paragraph3(context),
           ),

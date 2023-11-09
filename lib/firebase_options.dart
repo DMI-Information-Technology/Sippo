@@ -43,7 +43,7 @@ class DefaultFirebaseOptions {
     }
   }
 
-  static const FirebaseOptions web = FirebaseOptions(
+  static const FirebaseOptions web = const FirebaseOptions(
     apiKey: 'AIzaSyCWhg7vxUiTL4CaC4I9QhGkmEEtA2O6L4E',
     appId: '1:856202568320:web:c916b34937cda7e1f13c65',
     messagingSenderId: '856202568320',
@@ -53,7 +53,7 @@ class DefaultFirebaseOptions {
     measurementId: 'G-QS2MM3V273',
   );
 
-  static const FirebaseOptions android = FirebaseOptions(
+  static const FirebaseOptions android = const FirebaseOptions(
     apiKey: 'AIzaSyDUXMfqrZyVGTfzX2XjkwRrBvUZnTapEdY',
     appId: '1:856202568320:android:b055fceaa935e081f13c65',
     messagingSenderId: '856202568320',
@@ -61,7 +61,7 @@ class DefaultFirebaseOptions {
     storageBucket: 'sippo-31b8b.appspot.com',
   );
 
-  static const FirebaseOptions ios = FirebaseOptions(
+  static const FirebaseOptions ios = const FirebaseOptions(
     apiKey: 'AIzaSyCsg-M3eKZyoVuXJ7Zv01HXjPq2x9BKEVo',
     appId: '1:856202568320:ios:f663fcee55dd289ff13c65',
     messagingSenderId: '856202568320',
@@ -72,7 +72,7 @@ class DefaultFirebaseOptions {
     iosBundleId: 'com.example.jobspot',
   );
 
-  static const FirebaseOptions macos = FirebaseOptions(
+  static const FirebaseOptions macos = const FirebaseOptions(
     apiKey: 'AIzaSyCsg-M3eKZyoVuXJ7Zv01HXjPq2x9BKEVo',
     appId: '1:856202568320:ios:f663fcee55dd289ff13c65',
     messagingSenderId: '856202568320',

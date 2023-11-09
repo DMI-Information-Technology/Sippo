@@ -89,7 +89,7 @@ class _ShowGeneralTopSearchJobsListState
                         GeneralSearchJobsController.instance.refreshPage();
                       }
                     },
-                    text: 'Load More...',
+                    text: '${'load_more'.tr}...',
                     backgroundColor: Colors.transparent,
                     textColor: Jobstopcolor.primarycolor,
                     borderColor: Jobstopcolor.primarycolor,
@@ -150,7 +150,7 @@ class _ShowGeneralTopSearchJobsListState
             onTapped: () {
               _controller.retryLastFailedRequest();
             },
-            text: 'Try again',
+            text: 'try_again'.tr,
           ),
         )
       ],

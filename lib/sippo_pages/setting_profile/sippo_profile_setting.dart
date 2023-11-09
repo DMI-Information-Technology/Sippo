@@ -10,6 +10,7 @@ import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
+import 'package:jobspot/app_local_language_services/app_local_language_service.dart';
 import 'package:jobspot/custom_app_controller/switch_status_controller.dart';
 import 'package:jobspot/sippo_controller/AuthenticationController/sippo_auth_controller.dart';
 import 'package:jobspot/sippo_custom_widget/confirmation_bottom_sheet.dart';
@@ -101,7 +102,7 @@ class _SippoProfileSettingState extends State<SippoProfileSetting> {
               SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
               SettingItemWidget(
                 contentPadding: context.fromHeight(CustomStyle.paddingValue2),
-                title: "change_layout".tr,
+                title: "change_language".tr,
                 icon: Icon(
                   Icons.swap_horiz_rounded,
                   color: Jobstopcolor.primarycolor,
@@ -153,7 +154,7 @@ class _SippoProfileSettingState extends State<SippoProfileSetting> {
                       bottom: height / 76,
                     ),
                     child: Text(
-                      'selectapplicationlayout'.tr,
+                      'select_view_language'.tr,
                       style: dmsbold.copyWith(
                         fontSize: 18,
                         color: Jobstopcolor.grey,
@@ -170,16 +171,17 @@ class _SippoProfileSettingState extends State<SippoProfileSetting> {
                     child: InkWell(
                       highlightColor: Jobstopcolor.transparent,
                       splashColor: Jobstopcolor.transparent,
-                      onTap: () async {
-                        final navigator = Navigator.of(context);
-                        await Get.updateLocale(const Locale('en', 'US'));
-                        navigator.pop();
+                      onTap: () {
+                        Navigator.pop(context);
+                        LocalLanguageService.changeLocale(
+                          LocalLanguageService.englishLocale,
+                        );
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'ltr'.tr,
+                            'english_lang'.tr,
                             style: dmsregular.copyWith(
                               fontSize: 15,
                               color: Jobstopcolor.black,
@@ -189,26 +191,29 @@ class _SippoProfileSettingState extends State<SippoProfileSetting> {
                       ),
                     ),
                   ),
-                  Container(
-                    height: 0.8,
-                    width: MediaQuery.of(context).size.width,
-                    color: Jobstopcolor.grey,
+                  ColoredBox(
+                    color: Colors.grey,
+                    child: SizedBox(
+                      height: 0.8,
+                      width: MediaQuery.of(context).size.width,
+                    ),
                   ),
                   SizedBox(
                     height: context.fromHeight(CustomStyle.xs),
                     child: InkWell(
                       highlightColor: Jobstopcolor.transparent,
                       splashColor: Jobstopcolor.transparent,
-                      onTap: () async {
-                        final navigator = Navigator.of(context);
-                        await Get.updateLocale(const Locale('ar', 'ab'));
-                        navigator.pop();
+                      onTap: ()  {
+                        Navigator.pop(context);
+                        LocalLanguageService.changeLocale(
+                          LocalLanguageService.arabicLocale,
+                        );
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'rtl'.tr,
+                            'arabic_lang'.tr,
                             style: dmsregular.copyWith(
                                 fontSize: 15, color: Jobstopcolor.black),
                           ),
@@ -216,19 +221,19 @@ class _SippoProfileSettingState extends State<SippoProfileSetting> {
                       ),
                     ),
                   ),
-                  Container(
-                    height: 0.8,
-                    width: MediaQuery.of(context).size.width,
+                  ColoredBox(
                     color: Jobstopcolor.grey,
+                    child: SizedBox(
+                      height: 0.8,
+                      width: MediaQuery.of(context).size.width,
+                    ),
                   ),
                   SizedBox(
                     height: context.fromHeight(CustomStyle.xs),
                     child: InkWell(
                       highlightColor: Jobstopcolor.transparent,
                       splashColor: Jobstopcolor.transparent,
-                      onTap: () {
-                        Navigator.of(context).pop();
-                      },
+                      onTap: () => Navigator.pop(context),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -275,7 +280,7 @@ class _SippoProfileSettingState extends State<SippoProfileSetting> {
               authController.logout().then((_) {
                 if (authController.states.isError) {
                   Get.snackbar(
-                    "logout is failed",
+                    "logout_field_message".tr,
                     authController.states.message ?? "",
                     backgroundColor: Colors.red,
                   );

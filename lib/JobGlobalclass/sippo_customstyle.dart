@@ -57,4 +57,6 @@ class CustomStyle {
   static const expandedTopBarHeight2 = 4.0;
   static const expandedTopBarHeight3 = 4.5;
   static const connectionLostHeight = 25.0;
+
+  static const huge3 = 256.0;
 }

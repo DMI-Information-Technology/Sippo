@@ -110,8 +110,8 @@ class _LanguageEditAddState extends State<LanguageEditAdd> {
         notchColor: Jobstopcolor.primarycolor,
         children: [
           ConfirmationBottomSheet(
-            title: "Remove Work Experience ?",
-            description: "Are you sure you want to deleted this language?",
+            title: "title_dialog_remove_language".tr,
+            description: "ask_dialog_remove".tr,
             onConfirm: () async {
               Get.back();
               await _controller.onDeletedSubmitted(langId, index);

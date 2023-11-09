@@ -33,7 +33,14 @@ class _SippoUserHomeState extends State<SippoUserHome> {
   final jobStatisticBoard = const JobStatisticBoardViewWidget();
 
   @override
+  void didUpdateWidget(covariant SippoUserHome oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    print('_SippoUserHomeState.didUpdateWidget');
+  }
+
+  @override
   Widget build(BuildContext context) {
+    print('_SippoUserHomeState.build');
     return Scaffold(
       appBar: _buildHomeAppBar(),
       body: RefreshIndicator(
@@ -221,11 +228,11 @@ class _SippoUserHomeState extends State<SippoUserHome> {
     // Determine if it is morning, noon, or evening.
     String timeOfDay;
     if (hour < 12) {
-      timeOfDay = 'Good Morning';
+      timeOfDay = 'good_morning'.tr;
     } else if (hour < 18) {
-      timeOfDay = 'Good Afternoon';
+      timeOfDay = 'good_afternoon'.tr;
     } else {
-      timeOfDay = 'Good Evening';
+      timeOfDay = 'good_evening'.tr;
     }
 
     return timeOfDay;
@@ -273,5 +280,4 @@ class _SippoUserHomeState extends State<SippoUserHome> {
       ],
     );
   }
-
 }

@@ -49,20 +49,13 @@ class JobStatisticBoardController extends GetxController {
   }
 }
 
-class JobStatisticBoardViewWidget extends StatefulWidget {
+class JobStatisticBoardViewWidget extends StatelessWidget {
   const JobStatisticBoardViewWidget({super.key});
 
   @override
-  State<JobStatisticBoardViewWidget> createState() =>
-      _JobStatisticBoardViewWidgetState();
-}
-
-class _JobStatisticBoardViewWidgetState
-    extends State<JobStatisticBoardViewWidget> {
-  final _controller = Get.put(JobStatisticBoardController());
-
-  @override
   Widget build(BuildContext context) {
+  final _controller = JobStatisticBoardController.instance;
+    print('_JobStatisticBoardViewWidgetState.build');
     return Padding(
       padding: EdgeInsets.symmetric(
         horizontal: context.fromWidth(CustomStyle.s),
@@ -71,9 +64,9 @@ class _JobStatisticBoardViewWidgetState
         final jobStatistic = _controller.jobsStatistic;
         return JobStatisticBoardCards(
           jobStatistics: jobStatistic,
-          firstCardSubtitle: "Remote".tr,
-          secondCardSubtitle: "Full Time".tr,
-          thirdCardSubtitle: "Part Time".tr,
+          firstCardSubtitle: "remote_job".tr,
+          secondCardSubtitle: "full_time_job".tr,
+          thirdCardSubtitle: "part_time_job".tr,
           onFirstTap: () {
             if (jobStatistic.remoteJobs == null) return;
             SharedGlobalDataService.instance.jobStatistic =

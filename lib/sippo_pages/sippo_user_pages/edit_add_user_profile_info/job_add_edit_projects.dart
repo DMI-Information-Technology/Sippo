@@ -15,8 +15,8 @@ import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/user_projects_model.dart';
 import 'package:jobspot/sippo_themes/themecontroller.dart';
 
-import '../../../sippo_custom_widget/success_message_widget.dart';
-import '../../../utils/helper.dart';
+import 'package:jobspot/sippo_custom_widget/success_message_widget.dart';
+import 'package:jobspot/utils/helper.dart';
 
 class SippoProjectsAddEdit extends StatefulWidget {
   const SippoProjectsAddEdit({Key? key}) : super(key: key);
@@ -90,7 +90,7 @@ class _SippoProjectsAddEditState extends State<SippoProjectsAddEdit> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _buildLabelText(context, "End date"),
+                        _buildLabelText(context, "label_date".tr),
                         SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
                         _buildDateInput(context),
                       ],
@@ -150,7 +150,7 @@ class _SippoProjectsAddEditState extends State<SippoProjectsAddEdit> {
           SizedBox(
             width: width / 2.3,
             child: CustomButton(
-              onTapped: () => _showremove(context),
+              onTapped: () => _showRemove(context),
               text: "REMOVE".tr,
               backgroundColor: Jobstopcolor.lightprimary,
             ),
@@ -192,6 +192,7 @@ class _SippoProjectsAddEditState extends State<SippoProjectsAddEdit> {
   }
 
   void _showSave(BuildContext context) {
+
     Get.bottomSheet(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
@@ -204,8 +205,8 @@ class _SippoProjectsAddEditState extends State<SippoProjectsAddEdit> {
         notchColor: Jobstopcolor.primarycolor,
         children: [
           ConfirmationBottomSheet(
-            title: "Are you sure you want to change what you entered?",
-            description: "Are you sure you want to change what you entered?",
+            title: "title_dialog_save_new_project".tr,
+            description: "ask_dialog_confirm_entered_change".tr,
             onConfirm: () async {
               Navigator.pop(context);
               if (_controller.formKey.currentState?.validate() == true) {
@@ -223,9 +224,10 @@ class _SippoProjectsAddEditState extends State<SippoProjectsAddEdit> {
         ],
       ),
     );
+
   }
 
-  void _showremove(BuildContext context) {
+  void _showRemove(BuildContext context) {
     Get.bottomSheet(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
@@ -238,8 +240,8 @@ class _SippoProjectsAddEditState extends State<SippoProjectsAddEdit> {
         notchColor: Jobstopcolor.primarycolor,
         children: [
           ConfirmationBottomSheet(
-            title: "Remove Project ?",
-            description: "Are you sure you want to remove project?",
+            title: "title_dialog_remove_project".tr,
+            description: "ask_dialog_remove".tr,
             onConfirm: () {
               Navigator.pop(context);
               _controller.onDeleteSubmitted().then((_) {

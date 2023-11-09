@@ -65,7 +65,7 @@ class _JobstopForgetState extends State<JobstopForget> {
                 height: context.fromHeight(CustomStyle.spaceBetween),
               ),
               Text(
-                'Enter your email address to receive the password reset code.',
+                'ask_enter_email_reset_password'.tr,
               ),
               Form(
                 key: formKey,

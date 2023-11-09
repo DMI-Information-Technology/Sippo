@@ -3,19 +3,20 @@ import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
+import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/JobServices/shared_global_data_service.dart';
 import 'package:jobspot/sippo_controller/NotificationController/user_notification_application/user_notification_controller.dart';
 import 'package:jobspot/sippo_custom_widget/container_bottom_sheet_widget.dart';
+import 'package:jobspot/sippo_custom_widget/network_bordered_circular_image_widget.dart';
 import 'package:jobspot/sippo_custom_widget/rounded_border_radius_card_widget.dart';
 import 'package:jobspot/sippo_custom_widget/setting_item_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_data/model/notification/notification_model.dart';
 import 'package:jobspot/sippo_data/model/notification/notifications_types.dart';
-
-import 'package:jobspot/sippo_custom_widget/network_bordered_circular_image_widget.dart';
+import 'package:lottie/lottie.dart';
 
 class SippoUserNotification extends StatefulWidget {
   const SippoUserNotification({super.key});
@@ -42,6 +43,12 @@ class _SippoUserNotificationState extends State<SippoUserNotification> {
               _buildErrorFirstLoad(context),
           newPageErrorIndicatorBuilder: (context) =>
               _buildErrorNewLoad(context),
+          firstPageProgressIndicatorBuilder: (context) => Center(
+            child: Lottie.asset(
+              JobstopPngImg.loadingProgress,
+              height: context.height / 6,
+            ),
+          ),
           itemBuilder: (context, item, index) {
             return NotificationCardWidget(
               notification: item,
@@ -99,7 +106,7 @@ class _SippoUserNotificationState extends State<SippoUserNotification> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          "Error",
+          "error".tr,
           style: dmsbold.copyWith(
             color: Jobstopcolor.primarycolor,
             fontSize: FontSize.title2(context),
@@ -107,7 +114,7 @@ class _SippoUserNotificationState extends State<SippoUserNotification> {
         ),
         SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
         Text(
-          _controller.states.message ?? 'something wrong is happened.',
+          _controller.states.message ?? 'something_wrong_happened'.tr,
           style: dmsregular.copyWith(
             fontSize: FontSize.paragraph3(context),
           ),
@@ -123,7 +130,7 @@ class _SippoUserNotificationState extends State<SippoUserNotification> {
               notificationApplicationController.changeStates(
                   isError: false, message: '');
             },
-            text: 'Try again',
+            text: 'try_again'.tr,
           ),
         )
       ],
@@ -147,7 +154,7 @@ class _SippoUserNotificationState extends State<SippoUserNotification> {
         builder: (context, setState) => Column(
           children: [
             SettingItemWidget(
-              title: "Remove this notification",
+              title: "option_delete_notification".tr,
               icon: Icon(
                 Icons.delete_forever_outlined,
                 // color:
@@ -163,7 +170,7 @@ class _SippoUserNotificationState extends State<SippoUserNotification> {
               // isSelected: _controller.isMatchOptionOfIndex(0),
             ),
             SettingItemWidget(
-              title: 'Turn off Notification',
+              title: 'option_turn_off_notification'.tr,
               icon: Icon(
                 Icons.notifications_off_outlined,
                 // color: _controller.isMatchOptionOfIndex(1) ? Colors.white : null,
@@ -202,8 +209,8 @@ class _SippoUserNotificationState extends State<SippoUserNotification> {
   void _onDeleteConfirmation(
       BuildContext context, int index, String? notificationId) async {
     Get.dialog(CustomAlertDialog(
-      title: 'Delete Notification',
-      description: 'Are you sure you want to delete this notification?',
+      title: 'title_confirm_delete_notification'.tr,
+      description: 'ask_delete_notification'.tr,
       onConfirm: () {
         Get.back();
         _controller.removedNotification(index, notificationId);

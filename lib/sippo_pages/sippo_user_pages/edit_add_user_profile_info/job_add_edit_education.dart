@@ -201,9 +201,9 @@ class _JobEducationAddEditState extends State<JobEducationAddEdit> {
         showSearch(
           context: context,
           delegate: MySearchDelegate(
-            hintText: "search on field of study",
+            hintText: "hint_text_search_field_study".tr,
             textFieldStyle: TextStyle(fontSize: FontSize.title6(context)),
-            pageTitle: "Field of study",
+            pageTitle: "title_field_study".tr,
             suggestions: eduState.data,
             onSelectedSearch: (value) {
               eduState.fieldStudy.controller.text = value;
@@ -229,11 +229,11 @@ class _JobEducationAddEditState extends State<JobEducationAddEdit> {
         showSearch(
           context: context,
           delegate: MySearchDelegate(
-            hintText: "search on institution name",
+            hintText: "hint_text_search_institution_name".tr,
             textFieldStyle: dmsmedium.copyWith(
               fontSize: FontSize.title6(context),
             ),
-            pageTitle: "Institution name",
+            pageTitle: "title_institution_name".tr,
             suggestions: eduState.data,
             onSelectedSearch: (value) =>
                 eduState.institution.controller.text = value,
@@ -257,9 +257,9 @@ class _JobEducationAddEditState extends State<JobEducationAddEdit> {
         showSearch(
           context: context,
           delegate: MySearchDelegate(
-            hintText: "search on level of education",
+            hintText: "hint_text_search_level_education".tr,
             textFieldStyle: TextStyle(fontSize: FontSize.title6(context)),
-            pageTitle: "Level of education",
+            pageTitle: "title_level_education".tr,
             suggestions: eduState.data,
             onSelectedSearch: (value) {
               eduState.level.controller.text = value;
@@ -280,7 +280,7 @@ class _JobEducationAddEditState extends State<JobEducationAddEdit> {
       textInputAction: TextInputAction.newline,
       gController: eduState.description,
       height: context.height / 7,
-      hintText: "Write additional information here",
+      hintText: "hint_text_write_information".tr,
       fontSize: FontSize.paragraph3(context),
       hintStyle: dmsregular.copyWith(
         fontSize: FontSize.label(context),
@@ -360,8 +360,8 @@ class _JobEducationAddEditState extends State<JobEducationAddEdit> {
         notchColor: Jobstopcolor.primarycolor,
         children: [
           ConfirmationBottomSheet(
-            title: "Are you sure you want to change what you entered?",
-            description: "Are you sure you want to change what you entered?",
+            title: "title_dialog_save_new_education".tr,
+            description: "ask_dialog_confirm_entered_change".tr,
             onConfirm: () async {
               Get.back();
               if (_controller.formKey.currentState?.validate() == true) {
@@ -395,8 +395,8 @@ class _JobEducationAddEditState extends State<JobEducationAddEdit> {
         notchColor: Jobstopcolor.primarycolor,
         children: [
           ConfirmationBottomSheet(
-            title: "Remove Appreciation ?",
-            description: "Are you sure you want to change what you entered?",
+            title: "title_dialog_remove_education".tr,
+            description: "ask_dialog_remove".tr,
             onConfirm: () async {
               Get.back();
               await _controller.onDeleteSubmitted();

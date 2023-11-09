@@ -19,17 +19,13 @@ class SippoUserAbout extends StatefulWidget {
 }
 
 class _SippoUserAboutState extends State<SippoUserAbout> {
-  dynamic size;
-  double height = 0.00;
-  double width = 0.00;
   final _formKey = GlobalKey<FormState>();
   final _controller = Get.put(EditProfileInfoController());
-
   @override
   Widget build(BuildContext context) {
-    size = MediaQuery.sizeOf(context);
-    height = size.height;
-    width = size.width;
+    Size size = MediaQuery.sizeOf(context);
+    double height = size.height;
+    double width = size.width;
     return LoadingScaffold(
       controller: _controller.loadingOverlayController,
       appBar: AppBar(),
@@ -44,7 +40,7 @@ class _SippoUserAboutState extends State<SippoUserAbout> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "About me",
+                "label_about_me".tr,
                 style: dmsbold.copyWith(
                   fontSize: 16,
                   color: Jobstopcolor.primarycolor,
@@ -56,7 +52,7 @@ class _SippoUserAboutState extends State<SippoUserAbout> {
                 verticalPaddingValue: context.fromHeight(
                   CustomStyle.paddingValue,
                 ),
-                hintText: 'tell me about you',
+                hintText: 'hint_text_about_me'.tr,
                 hintStyle: dmsregular.copyWith(
                   fontSize: FontSize.label(context),
                 ),
@@ -76,7 +72,7 @@ class _SippoUserAboutState extends State<SippoUserAbout> {
                 _controller.onSaveSubmitted();
               }
             },
-            text: "Save",
+            text: "save".tr,
           ),
         ),
       ),

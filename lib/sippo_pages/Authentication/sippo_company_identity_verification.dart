@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
-import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
-import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
-import 'package:jobspot/sippo_custom_widget/error_messages_dialog_snackbar/network_connnection_lost_widget.dart';
-import 'package:jobspot/sippo_custom_widget/loading_view_widgets/loading_scaffold.dart';
-
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
+import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
+import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/sippo_controller/AuthenticationController/sippo_identity_verification_controller.dart';
+import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
+import 'package:jobspot/sippo_custom_widget/error_messages_dialog_snackbar/network_connnection_lost_widget.dart';
+import 'package:jobspot/sippo_custom_widget/loading_view_widgets/loading_scaffold.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 
 class SippoCompanyIdentityVerification extends StatelessWidget {
@@ -73,8 +72,7 @@ class SippoCompanyIdentityVerification extends StatelessWidget {
     return Obx(
       () => PhoneResetPasswordCard(
         phoneNumber: controller.phoneNumber,
-        description:
-            'Secret code message will be sent after ${controller.initTimer}',
+        description: '${'message_send_secret_code'.tr} ${controller.initTimer}',
         borderColor: Jobstopcolor.primarycolor,
       ),
     );
@@ -91,7 +89,7 @@ class SippoCompanyIdentityVerification extends StatelessWidget {
             await controller.resendOTPClicked();
           },
           child: Text(
-            "resend ${controller.isResendTimerNotFinish() ? "after " + controller.resendTimer.toString() : ""}",
+            "resend ${controller.isResendTimerNotFinish() ? "after".tr + controller.resendTimer.toString() : ""}",
           ),
         ),
       ),

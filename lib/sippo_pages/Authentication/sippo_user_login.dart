@@ -187,7 +187,7 @@ class _SippoUserLoginState extends State<SippoUserLogin> {
                       text: "Login".tr,
                       backgroundColor: Jobstopcolor.primarycolor,
                       textColor: Jobstopcolor.white,
-                      onTapped: () async {
+                      onTapped: ()  {
                         _controller.onSubmittedLogin();
                       },
                     ),

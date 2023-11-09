@@ -9,6 +9,7 @@ import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
+import 'package:jobspot/JobServices/shared_global_data_service.dart';
 import 'package:jobspot/sippo_controller/user_profile_controller/user_saved_jobs_controller.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/container_bottom_sheet_widget.dart';
@@ -17,6 +18,7 @@ import 'package:jobspot/sippo_custom_widget/setting_item_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
 import 'package:jobspot/utils/helper.dart' as helper;
+import 'package:lottie/lottie.dart';
 
 import '../sippo_message_pages/no_resource_screen.dart';
 
@@ -108,20 +110,27 @@ class _SippoUserSavedJobState extends State<SippoUserSavedJob> {
               _buildErrorFirstLoad(context),
           newPageErrorIndicatorBuilder: (context) =>
               _buildErrorNewLoad(context),
+          firstPageProgressIndicatorBuilder: (context) => Center(
+            child: Lottie.asset(
+              JobstopPngImg.loadingProgress,
+              height: context.height / 6,
+            ),
+          ),
           itemBuilder: (context, item, index) {
             return JobPostingCard(
               jobDetails: item,
               isActive: item.isActive,
-              imagePath: [
-                'https://www.designbust.com/download/1060/png/microsoft_logo_transparent512.png',
-                'https://logodownload.org/wp-content/uploads/2014/09/facebook-logo-1-2.png',
-              ][index % 2 == 0 ? 0 : 1],
+              imagePath: item.company?.profileImage?.url,
               timeAgo:
                   helper.calculateElapsedTimeFromStringDate(item.createdAt) ??
                       '',
               isEditable: true,
               onActionTap: () {
                 _openBottomSheetOption(context, item);
+              },
+              onImageCompanyTap: () {
+                if (!_controller.isNetworkConnected) return;
+                SharedGlobalDataService.onCompanyTap(item.company);
               },
               onAddressTextTap: (location) async {
                 await helper.lunchMapWithLocation(
@@ -157,7 +166,7 @@ class _SippoUserSavedJobState extends State<SippoUserSavedJob> {
         children: [
           Obx(
             () => SettingItemWidget(
-              title: 'Delete',
+              title: 'delete'.tr,
               icon: Image.asset(
                 JobstopPngImg.deleted,
                 color: _controller.savedJobState.selectedOption == 1
@@ -179,7 +188,7 @@ class _SippoUserSavedJobState extends State<SippoUserSavedJob> {
           ),
           Obx(
             () => SettingItemWidget(
-              title: 'Apply'.tr,
+              title: 'title_apply'.tr,
               icon: Image.asset(
                 JobstopPngImg.applay,
                 color: _controller.savedJobState.selectedOption == 2
@@ -239,7 +248,7 @@ class _SippoUserSavedJobState extends State<SippoUserSavedJob> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          "Error",
+          "error".tr,
           style: dmsbold.copyWith(
             color: Jobstopcolor.primarycolor,
             fontSize: FontSize.title2(context),
@@ -247,7 +256,7 @@ class _SippoUserSavedJobState extends State<SippoUserSavedJob> {
         ),
         SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
         Text(
-          _controller.states.message ?? 'something wrong is happened.',
+          _controller.states.message ?? 'something_wrong_happened'.tr,
           style: dmsregular.copyWith(
             fontSize: FontSize.paragraph3(context),
           ),
@@ -262,30 +271,10 @@ class _SippoUserSavedJobState extends State<SippoUserSavedJob> {
               _controller.refreshPage();
               _controller.changeStates(isError: false, message: '');
             },
-            text: 'Try again',
+            text: 'try_again'.tr,
           ),
         )
       ],
     );
   }
 }
-
-// Widget _buildTag(String text) {
-//   return Container(
-//     height: 28,
-//     padding: const EdgeInsets.symmetric(horizontal: 8),
-//     decoration: BoxDecoration(
-//       borderRadius: BorderRadius.circular(5),
-//       color: Colors.grey[200],
-//     ),
-//     child: Center(
-//       child: Text(
-//         text,
-//         style: const TextStyle(
-//           fontSize: 12,
-//           color: Colors.grey,
-//         ),
-//       ),
-//     ),
-//   );
-// }

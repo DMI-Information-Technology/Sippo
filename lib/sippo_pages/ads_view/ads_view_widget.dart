@@ -3,11 +3,13 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
+import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/sippo_controller/ads_controller/ads_controller.dart';
 import 'package:jobspot/sippo_data/model/ads_model/ad_model.dart';
+import 'package:lottie/lottie.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AdsViewWidget extends StatefulWidget {
@@ -29,7 +31,12 @@ class _AdsViewWidgetState extends State<AdsViewWidget> {
           padding: EdgeInsets.symmetric(
             vertical: context.fromHeight(CustomStyle.paddingValue),
           ),
-          child: const Center(child: CircularProgressIndicator()),
+          child: Center(
+            child: Lottie.asset(
+              JobstopPngImg.loadingProgress,
+              height: context.height / 6,
+            ),
+          ),
         );
       if (_controller.states.isError)
         return Padding(
@@ -38,7 +45,7 @@ class _AdsViewWidgetState extends State<AdsViewWidget> {
           ),
           child: Center(
             child: Text(
-              _controller.states.message ?? "Error occurred.",
+              _controller.states.message ?? "message_error_occurred".tr,
               style: dmsbold.copyWith(
                 fontSize: FontSize.title4(context),
               ),
@@ -58,7 +65,7 @@ class _AdsViewWidgetState extends State<AdsViewWidget> {
             items: adItems.map(
               (e) {
                 return AdsWidgetItem(
-                  adItem: e,
+                  item: e,
                   onAdTapped: onAdItemTapped,
                 );
               },
@@ -71,7 +78,7 @@ class _AdsViewWidgetState extends State<AdsViewWidget> {
             ),
             child: Center(
               child: Text(
-                'No Ads Found',
+                'message_no_ds_found'.tr,
                 style: dmsbold.copyWith(
                   fontSize: FontSize.title4(context),
                 ),
@@ -86,7 +93,7 @@ class _AdsViewWidgetState extends State<AdsViewWidget> {
         ),
         child: Center(
           child: Text(
-            'No Ads Found, Reload the Page',
+            'message_no_ds_found_reload'.tr,
             style: dmsbold.copyWith(
               fontSize: FontSize.title4(context),
             ),
@@ -115,16 +122,19 @@ class _AdsViewWidgetState extends State<AdsViewWidget> {
 }
 
 class AdsWidgetItem extends StatelessWidget {
-  const AdsWidgetItem(
-      {super.key, required this.adItem, required this.onAdTapped});
+  const AdsWidgetItem({
+    super.key,
+    required this.item,
+    required this.onAdTapped,
+  });
 
-  final AdModel adItem;
+  final AdModel item;
   final void Function(AdModel item) onAdTapped;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () => onAdTapped(adItem),
+      onTap: () => onAdTapped(item),
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(
@@ -133,7 +143,7 @@ class AdsWidgetItem extends StatelessWidget {
           image: DecorationImage(
             fit: BoxFit.cover,
             image: CachedNetworkImageProvider(
-              adItem.image?.url ?? "",
+              item.image?.url ?? "",
             ),
           ),
         ),

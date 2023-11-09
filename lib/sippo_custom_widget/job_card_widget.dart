@@ -180,10 +180,11 @@ class JobPostingCard extends StatelessWidget {
                           AutoSizeText(
                             jobDetails?.locationAddress?.name ?? '',
                             style: dmsregular.copyWith(
-                                fontSize: FontSize.paragraph4(context),
-                                color: Jobstopcolor.primarycolor,
-                                decoration: TextDecoration.underline,
-                                decorationColor: Jobstopcolor.primarycolor),
+                              fontSize: FontSize.paragraph4(context),
+                              color: Jobstopcolor.primarycolor,
+                              decoration: TextDecoration.underline,
+                              decorationColor: Jobstopcolor.primarycolor,
+                            ),
                           ),
                         ],
                       )

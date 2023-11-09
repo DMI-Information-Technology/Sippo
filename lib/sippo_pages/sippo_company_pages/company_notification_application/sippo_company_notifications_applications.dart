@@ -112,7 +112,8 @@ class _SippoCompanyNotificationApplicationState
         style: dmsbold.copyWith(fontSize: FontSize.title3(context)),
       ),
       actions: [
-        Obx(() => Visibility(
+        Obx(
+          () => Visibility(
             visible: _controller.notifiState.selectedTapIndex == 0,
             maintainState: true,
             child: Padding(
@@ -121,26 +122,21 @@ class _SippoCompanyNotificationApplicationState
                 vertical: kToolbarHeight / CustomStyle.overBy3,
               ),
               child: InkWell(
-                  splashColor: Jobstopcolor.transparent,
-                  highlightColor: Jobstopcolor.transparent,
-                  onTap: () {
-                    _controller.markAllNotificationsAsRead();
-                  },
-                  child: Text(
-                    'read_all'.tr,
-                    style: dmsregular.copyWith(
-                      fontSize: FontSize.label(context),
-                      color: Jobstopcolor.secondary,
-                    ),
-                  )),
+                splashColor: Jobstopcolor.transparent,
+                highlightColor: Jobstopcolor.transparent,
+                onTap: _controller.markAllNotificationsAsRead,
+                child: Text(
+                  'read_all'.tr,
+                  style: dmsregular.copyWith(
+                    fontSize: FontSize.label(context),
+                    color: Jobstopcolor.secondary,
+                  ),
+                ),
+              ),
             ),
-          ))
+          ),
+        ),
       ],
     );
   }
-
-// this method will be sent into
-// NotificationListView -> NotificationApplicationWidget
-// and called by each call back function in NotificationApplicationWidget item
-// to showing an bottom sheet options for notification option
 }

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
+import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
@@ -15,6 +16,7 @@ import 'package:jobspot/sippo_custom_widget/setting_item_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_data/model/application_model/application_job_company_model.dart';
 import 'package:jobspot/sippo_data/model/notification/job_application_model.dart';
+import 'package:lottie/lottie.dart';
 
 class SippoCompanyApplication extends StatefulWidget {
   const SippoCompanyApplication({super.key});
@@ -42,6 +44,12 @@ class _SippoCompanyApplicationState extends State<SippoCompanyApplication> {
               _buildErrorFirstLoad(context),
           newPageErrorIndicatorBuilder: (context) =>
               _buildErrorNewLoad(context),
+          firstPageProgressIndicatorBuilder: (context) => Center(
+            child: Lottie.asset(
+              JobstopPngImg.loadingProgress,
+              height: context.height / 6,
+            ),
+          ),
           itemBuilder: (context, item, index) {
             print(item.cv);
             final company =

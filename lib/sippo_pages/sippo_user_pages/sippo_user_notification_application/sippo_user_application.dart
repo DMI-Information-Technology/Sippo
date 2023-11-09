@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
+import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
@@ -12,6 +13,7 @@ import 'package:jobspot/sippo_custom_widget/notification_widget.dart';
 import 'package:jobspot/sippo_custom_widget/setting_item_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_data/model/application_model/application_job_company_model.dart';
+import 'package:lottie/lottie.dart';
 
 import 'job_application.dart';
 
@@ -40,6 +42,12 @@ class _SippoUserApplicationState extends State<SippoUserApplication> {
               _buildErrorFirstLoad(context),
           newPageErrorIndicatorBuilder: (context) =>
               _buildErrorNewLoad(context),
+          firstPageProgressIndicatorBuilder: (context) => Center(
+            child: Lottie.asset(
+              JobstopPngImg.loadingProgress,
+              height: context.height / 6,
+            ),
+          ),
           itemBuilder: (context, item, index) {
             return UserApplicationWidget(
               company: item.company,
@@ -103,7 +111,7 @@ class _SippoUserApplicationState extends State<SippoUserApplication> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          "Error",
+          "error".tr,
           style: dmsbold.copyWith(
             color: Jobstopcolor.primarycolor,
             fontSize: FontSize.title2(context),
@@ -111,7 +119,7 @@ class _SippoUserApplicationState extends State<SippoUserApplication> {
         ),
         SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
         Text(
-          _controller.states.message ?? 'something wrong is happened.',
+          _controller.states.message ?? 'something_wrong_happened'.tr,
           style: dmsregular.copyWith(
             fontSize: FontSize.paragraph3(context),
           ),
@@ -127,7 +135,7 @@ class _SippoUserApplicationState extends State<SippoUserApplication> {
               notificationApplicationController.changeStates(
                   isError: false, message: '');
             },
-            text: 'Try again',
+            text: 'try_again'.tr,
           ),
         )
       ],
@@ -152,7 +160,7 @@ class _SippoUserApplicationState extends State<SippoUserApplication> {
         builder: (context, setState) => Column(
           children: [
             SettingItemWidget(
-              title: "Delete",
+              title: "delete".tr,
               icon: Icon(
                 Icons.delete_forever_outlined,
                 // color:

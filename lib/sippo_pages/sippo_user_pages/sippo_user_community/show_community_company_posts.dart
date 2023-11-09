@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
+import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
@@ -10,6 +11,8 @@ import 'package:jobspot/sippo_controller/user_community_controller/user_show_com
 import 'package:jobspot/sippo_custom_widget/company_post_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_post_model.dart';
+import 'package:jobspot/utils/helper.dart';
+import 'package:lottie/lottie.dart';
 
 class ShowCommunityCompanyPostsList extends StatefulWidget {
   const ShowCommunityCompanyPostsList({super.key});
@@ -34,13 +37,21 @@ class _ShowCommunityCompanyPostsListState
               _buildErrorFirstLoad(context),
           newPageErrorIndicatorBuilder: (context) =>
               _buildErrorNewLoad(context),
+          firstPageProgressIndicatorBuilder: (context) => Center(
+            child: Lottie.asset(
+              JobstopPngImg.loadingProgress,
+              height: context.height / 6,
+            ),
+          ),
           itemBuilder: (context, item, index) {
             return PostWidget(
-              authorName: item.company?.name ?? 'unknown',
+              authorName: item.company?.name ?? '',
               imageProfileUrl: item.company?.profileImage?.url,
-              timeAgo: '21 minutes ago',
-              postTitle: item.title ?? "unknown title",
-              postContent: item.body ?? "unknown content",
+              timeAgo: item.createdAt != null
+                  ? calculateElapsedTimeFromStringDate(item.createdAt) ?? ''
+                  : '',
+              postTitle: item.title ?? "",
+              postContent: item.body ?? "",
               imageUrl: item.image?.url,
               isCompany: false,
               onActionButtonPresses: () {},
@@ -90,7 +101,7 @@ class _ShowCommunityCompanyPostsListState
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          "Error",
+          "error".tr,
           style: dmsbold.copyWith(
             color: Jobstopcolor.primarycolor,
             fontSize: FontSize.title2(context),
@@ -98,7 +109,7 @@ class _ShowCommunityCompanyPostsListState
         ),
         SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
         Text(
-          _controller.states.message ?? 'something wrong is happened.',
+          _controller.states.message ?? 'something_wrong_happened'.tr,
           style: dmsregular.copyWith(
             fontSize: FontSize.paragraph3(context),
           ),
@@ -113,7 +124,7 @@ class _ShowCommunityCompanyPostsListState
               _controller.refreshPage();
               showWrapperController.changeStates(isError: false, message: '');
             },
-            text: 'Try again',
+            text: 'try_again'.tr,
           ),
         )
       ],

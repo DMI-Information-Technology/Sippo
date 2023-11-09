@@ -201,9 +201,9 @@ class _SippoLocationCompanySelectorState
     Get.dialog(
       CustomAlertDialog(
         imageAsset: JobstopPngImg.successful1,
-        title: "Success",
+        title: "success".tr,
         description:
-            "the account has been created successfully want continue to dashboard",
+            "message_success_account_created".tr,
         confirmBtnColor: Jobstopcolor.primarycolor,
         confirmBtnTitle: "ok".tr,
         onConfirm: () => Get.offAllNamed(SippoRoutes.sippoCompanyDashboard),

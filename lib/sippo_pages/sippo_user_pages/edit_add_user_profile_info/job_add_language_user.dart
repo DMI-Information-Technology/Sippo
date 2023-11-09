@@ -13,7 +13,6 @@ import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/loading_view_widgets/loading_scaffold.dart';
 import 'package:jobspot/sippo_custom_widget/success_message_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
-import 'package:jobspot/sippo_themes/themecontroller.dart';
 
 class LanguageUserAdd extends StatefulWidget {
   @override
@@ -23,13 +22,7 @@ class LanguageUserAdd extends StatefulWidget {
 }
 
 class _LanguageUserAddState extends State<LanguageUserAdd> {
-  final themedata = Get.put(JobstopThemecontroler());
   final _controller = LanguageEditAddController.instance;
-  final flagList = [
-    {"English": JobstopPngImg.english},
-    {"Arabic": JobstopPngImg.arabic},
-  ];
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -104,7 +97,7 @@ class _LanguageUserAddState extends State<LanguageUserAdd> {
                     title: _buildTitleText(context, "Level".tr),
                     subtitle: Obx(
                       () => Text(
-                        _controller.newLanguage.level ?? "no level",
+                        _controller.newLanguage.level ?? "hint_text_no_level".tr,
                       ),
                     ),
                     onTap: () {
@@ -127,7 +120,7 @@ class _LanguageUserAddState extends State<LanguageUserAdd> {
               }
             });
           },
-          text: "Save",
+          text: "SAVE".tr,
         ),
       ),
     );
@@ -140,7 +133,7 @@ class _LanguageUserAddState extends State<LanguageUserAdd> {
           onLevelChange: (value) {
             _controller.setNewLanguage(level: value);
           },
-          levelSelect: _controller.newLanguage.level ?? "no level",
+          levelSelect: _controller.newLanguage.level ?? "hint_text_no_level".tr,
         ),
       ),
     );
@@ -311,7 +304,7 @@ class _LanguageSkillLevelDialogState extends State<LanguageSkillLevelDialog> {
       ),
       actions: [
         CustomButton(
-            text: "Done",
+            text: "label_done".tr,
             onTapped: () {
               if (widget.onSkillLevelDone != null)
                 widget.onSkillLevelDone!(widget.levelSelect);

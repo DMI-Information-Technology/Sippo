@@ -89,7 +89,7 @@ class SippoAppUsing extends StatelessWidget {
                               isSelected: appUsingController.findJop,
                               image: JobstopPngImg.find_jobLog,
                               backGroundIconColor: Jobstopcolor.lightsecondary,
-                              title: "Find Job",
+                              title: "find_job_title".tr,
                               description: "find_job_desc".tr,
                               onTapped: () {
                                 appUsingController.findOnJop();

@@ -42,12 +42,13 @@ class UserLoginController extends GetxController {
 
   Future<void> onSubmittedLogin() async {
     if (formKey.currentState!.validate()) {
-      await authController.userLogin(userForm);
-      print(authState);
-    }
-    if (authController.states.isSuccess) {
-      authController.resetStates();
-      Get.offAllNamed(SippoRoutes.userDashboard);
+      authController.userLogin(userForm).then((_) {
+        print(authState);
+        if (authController.states.isSuccess) {
+          authController.resetStates();
+          Get.offAllNamed(SippoRoutes.userDashboard);
+        }
+      });
     }
   }
 }

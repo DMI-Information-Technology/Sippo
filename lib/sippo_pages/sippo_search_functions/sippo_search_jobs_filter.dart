@@ -59,7 +59,7 @@ class _SippoSearchJobsFilterState extends State<SippoSearchJobsFilter> {
               onTap: () => Get.toNamed(
                 SippoRoutes.filterSpecializationsJobsSearch,
               ),
-              hintText: 'Choose a category...',
+              hintText: '${'hint_text_choose_category'.tr}...',
             ),
             SizedBox(height: height / 36),
             TitleLabelWidget(
@@ -72,7 +72,7 @@ class _SippoSearchJobsFilterState extends State<SippoSearchJobsFilter> {
               final locationAddressNames =
                   _controller.filterSearchState.locationsAddressNameList;
               return CustomDropdownButton(
-                textHint: 'Select Company Work Place',
+                textHint: 'select_company_work_place'.tr,
                 labelList: locationAddressNames,
                 values: locationAddressList,
                 fillColor: Colors.white,
@@ -137,7 +137,7 @@ class _SippoSearchJobsFilterState extends State<SippoSearchJobsFilter> {
           onTapped: () async {
             await _controller.onApplyFilterSubmitted().then((_) => Get.back());
           },
-          text: "Apply now",
+          text: "apply_now".tr,
         ),
       ),
     );
@@ -246,9 +246,9 @@ class _SippoSearchJobsFilterState extends State<SippoSearchJobsFilter> {
         }),
         SizedBox(height: height / 64),
         Text(
-          'The accepted range salary start '
-          'from ${CompanyEditAddJobState.MAX_SALARY_RANGE} '
-          'to ${CompanyEditAddJobState.MAX_SALARY_RANGE}',
+          '${'accepted_range_salary'.tr}'
+          '${"from".tr} ${CompanyEditAddJobState.MAX_SALARY_RANGE} '
+          '${"to".tr} ${CompanyEditAddJobState.MAX_SALARY_RANGE}',
           textAlign: TextAlign.start,
           style: dmsregular.copyWith(
             fontSize: FontSize.title6(context),

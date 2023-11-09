@@ -207,7 +207,7 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "Hello",
+            "hello".tr,
             style: dmsbold.copyWith(
               fontSize: FontSize.title3(context),
               color: Jobstopcolor.primarycolor,

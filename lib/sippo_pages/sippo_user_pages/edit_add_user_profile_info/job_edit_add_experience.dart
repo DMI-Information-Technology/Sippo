@@ -296,7 +296,7 @@ class JobExperiences extends StatelessWidget {
                   width: width / 2.3,
                   child: CustomButton(
                     onTapped: () {
-                      _showremove();
+                      _showRemove();
                     },
                     text: "REMOVE".tr,
                     backgroundColor: Jobstopcolor.lightprimary,
@@ -334,8 +334,8 @@ class JobExperiences extends StatelessWidget {
         notchColor: Jobstopcolor.primarycolor,
         children: [
           ConfirmationBottomSheet(
-            title: "Save Work Experience ?",
-            description: "Are you sure you want to change what you entered?",
+            title: "title_dialog_save_work_experience".tr,
+            description: "ask_dialog_confirm_entered_change".tr,
             onConfirm: () async {
               if (controller.formKey.currentState?.validate() == true) {
                 await controller.onSaveSubmitted();
@@ -349,7 +349,7 @@ class JobExperiences extends StatelessWidget {
     );
   }
 
-  void _showremove() {
+  void _showRemove() {
     Get.bottomSheet(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(
@@ -362,8 +362,8 @@ class JobExperiences extends StatelessWidget {
         notchColor: Jobstopcolor.primarycolor,
         children: [
           ConfirmationBottomSheet(
-            title: "Remove Work Experience ?",
-            description: "Are you sure you want to change what you entered?",
+            title: "title_dialog_remove_work_experience".tr,
+            description: "ask_dialog_remove".tr,
             onConfirm: () async {
               await EditAddWorkExperienceController.instance
                   .onDeleteSubmitted();

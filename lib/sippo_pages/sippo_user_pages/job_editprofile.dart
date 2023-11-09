@@ -80,13 +80,13 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
                       horizontal: context.fromWidth(CustomStyle.paddingValue),
                     ),
                     child: Text(
-                      'Name',
+                      'label_name'.tr,
                       style:
                           dmsmedium.copyWith(fontSize: FontSize.label(context)),
                     ),
                   ),
                   InputBorderedField(
-                    hintText: "enter your name",
+                    hintText: "hint_text_enter_name".tr,
                     gController: profileEditState.name,
                     // height: context.fromHeight(CustomStyle.inputBorderedSize),
                     fontSize: FontSize.label(context),
@@ -98,7 +98,7 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
                     validator: (value) {
                       return ValidatingInput.validateEmptyField(
                         value,
-                        message: "name field is required.",
+                        message: "is_req".tr,
                       );
                     },
                   ),
@@ -111,7 +111,7 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
                         width: context.fromWidth(CustomStyle.spaceBetween),
                       ),
                       Text(
-                        'Email',
+                        'Email'.tr,
                         style: dmsmedium.copyWith(
                             fontSize: FontSize.label(context)),
                       ),
@@ -128,7 +128,7 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
                   ),
                   InputBorderedField(
                     keyboardType: TextInputType.emailAddress,
-                    hintText: "enter your email",
+                    hintText: "hint_text_enter_email".tr,
                     gController: profileEditState.email,
                     height: context.fromHeight(CustomStyle.inputBorderedSize),
                     fontSize: FontSize.label(context),
@@ -161,7 +161,7 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
                       horizontal: context.fromWidth(CustomStyle.paddingValue),
                     ),
                     child: Text(
-                      'Phone Number',
+                      'phone_number'.tr,
                       style:
                           dmsmedium.copyWith(fontSize: FontSize.label(context)),
                     ),
@@ -300,7 +300,7 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
               if (file != null) {
                 _controller.profileEditState.pickedImageProfile = file;
                 await Get.to(
-                  () => SaveImagePageView(
+                  () => SaveImageProfilePageView(
                     imageFile: file.file!,
                     onUpdateTapped: (loadingController) async {
                       loadingController.start();

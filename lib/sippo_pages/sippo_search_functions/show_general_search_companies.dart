@@ -4,17 +4,18 @@ import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
+import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/JobServices/shared_global_data_service.dart';
 import 'package:jobspot/sippo_controller/sippo_search_controller/general_search_companies_controller.dart';
+import 'package:jobspot/sippo_custom_widget/network_bordered_circular_image_widget.dart';
 import 'package:jobspot/sippo_custom_widget/rounded_border_radius_card_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
-
-import '../../sippo_custom_widget/network_bordered_circular_image_widget.dart';
+import 'package:lottie/lottie.dart';
 
 class ShowGeneralSearchCompaniesList extends StatefulWidget {
   const ShowGeneralSearchCompaniesList({super.key});
@@ -31,9 +32,7 @@ class _ShowGeneralSearchCompaniesListState
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-      onRefresh: () async {
-        _controller.refreshPage();
-      },
+      onRefresh: () async => _controller.refreshPage(),
       child: PagedListView<int, CompanyDetailsModel>.separated(
         padding: EdgeInsets.symmetric(
           vertical: context.fromHeight(CustomStyle.paddingValue),
@@ -47,6 +46,12 @@ class _ShowGeneralSearchCompaniesListState
               _buildErrorNewLoad(context),
           newPageProgressIndicatorBuilder: (context) =>
               _buildNewPageProgress(context),
+          firstPageProgressIndicatorBuilder: (context) => Center(
+            child: Lottie.asset(
+              JobstopPngImg.loadingProgress,
+              height: context.height / 6,
+            ),
+          ),
           itemBuilder: (context, item, index) {
             return RoundedBorderRadiusCardWidget(
               padding: EdgeInsets.zero,
@@ -121,7 +126,7 @@ class _ShowGeneralSearchCompaniesListState
                   width: context.width / 2,
                   child: CustomButton(
                     onTapped: () => _controller.onLoadMoreCompaniesSubmitted(),
-                    text: 'Load More...',
+                    text: 'load_more'.tr,
                     backgroundColor: Colors.transparent,
                     textColor: Jobstopcolor.primarycolor,
                     borderColor: Jobstopcolor.primarycolor,
@@ -136,7 +141,7 @@ class _ShowGeneralSearchCompaniesListState
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          "Error",
+          "error".tr,
           style: dmsbold.copyWith(
             color: Jobstopcolor.primarycolor,
             fontSize: FontSize.title2(context),
@@ -144,8 +149,7 @@ class _ShowGeneralSearchCompaniesListState
         ),
         SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
         Text(
-          _controller.states.message ??
-              'Something wrong is happened.',
+          _controller.states.message ?? 'something_wrong_happened'.tr,
           style: dmsregular.copyWith(
             fontSize: FontSize.paragraph3(context),
           ),
@@ -159,7 +163,7 @@ class _ShowGeneralSearchCompaniesListState
             onTapped: () {
               _controller.retryLastFailedRequest();
             },
-            text: 'Try again',
+            text: 'try_again'.tr,
           ),
         )
       ],

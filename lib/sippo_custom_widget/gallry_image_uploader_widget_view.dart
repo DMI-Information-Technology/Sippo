@@ -171,7 +171,7 @@ class _GalleryImageScreenViewState extends State<GalleryImageScreenView> {
                               : null,
                         );
                       },
-                      noImagesWidget: Text("No images found."),
+                      noImagesWidget: Text("message_no_images_found".tr),
                     );
                   }),
               if (isCompany) ...[
@@ -179,7 +179,7 @@ class _GalleryImageScreenViewState extends State<GalleryImageScreenView> {
                     height: context.fromHeight(CustomStyle.spaceBetween),
                     thickness: 1.5),
                 Text(
-                  'Uploaded Gallery Images',
+                  'label_uploaded_gallery_images'.tr,
                   style: dmsbold.copyWith(
                     fontSize: FontSize.title5(context),
                   ),
@@ -216,7 +216,7 @@ class _GalleryImageScreenViewState extends State<GalleryImageScreenView> {
                 builder: (context, _) {
                   return CustomButton(
                     onTapped: () => _onSaveTapped(context),
-                    text: 'Save',
+                    text: 'save'.tr,
                     backgroundColor:
                         _controller.images.isEmpty ? Colors.grey : null,
                   );
@@ -263,7 +263,7 @@ class _GalleryImageScreenViewState extends State<GalleryImageScreenView> {
       CustomAlertDialog(
         title: 'confirm_remove_image'.tr,
         description: 'confirm_remove_image_ask'.tr,
-        confirmBtnTitle: 'Remove',
+        confirmBtnTitle: 'remove'.tr,
         onConfirm: () {
           Navigator.pop(context);
           _controller.overlayLoading.start();
@@ -284,12 +284,11 @@ class _GalleryImageScreenViewState extends State<GalleryImageScreenView> {
 
   void _onSaveTapped(BuildContext context) {
     if (_controller.images.isEmpty) {
-      print('klmvlkdsmldvs');
       Get.snackbar(
         backgroundColor: Colors.grey[300],
         boxShadows: [boxShadow],
-        'No Images Uploaded',
-        'No new images found. Please pick some images and continue',
+        'title_no_images_uploaded'.tr,
+        'message_no_images_uploaded'.tr,
       );
       return;
     }
@@ -297,7 +296,7 @@ class _GalleryImageScreenViewState extends State<GalleryImageScreenView> {
       CustomAlertDialog(
         title: 'upload_images'.tr,
         description: 'confirm_upload_image_ask'.tr,
-        confirmBtnTitle: 'Continue',
+        confirmBtnTitle: 'continue'.tr,
         onConfirm: () {
           Navigator.pop(context);
           _controller.overlayLoading.start();

@@ -8,7 +8,6 @@ import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/sippo_controller/user_core_functions/apply_jobs_controllers.dart';
-import 'package:jobspot/custom_app_controller/switch_status_controller.dart';
 import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/file_upload_widget.dart';
@@ -16,12 +15,10 @@ import 'package:jobspot/sippo_custom_widget/loading_view_widgets/loading_scaffol
 import 'package:jobspot/sippo_custom_widget/resume_card_widget.dart';
 import 'package:jobspot/sippo_custom_widget/rounded_border_radius_card_widget.dart';
 import 'package:jobspot/sippo_custom_widget/success_message_widget.dart';
+import 'package:jobspot/sippo_custom_widget/top_description_info_company.dart';
 import 'package:jobspot/sippo_custom_widget/top_job_details_header.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
-import 'package:jobspot/sippo_pages/sippo_user_pages/jobstop_success.dart';
 import 'package:jobspot/utils/helper.dart';
-
-import '../../sippo_custom_widget/top_description_info_company.dart';
 
 class SippoApplyJob extends StatefulWidget {
   const SippoApplyJob({Key? key}) : super(key: key);
@@ -32,13 +29,6 @@ class SippoApplyJob extends StatefulWidget {
 
 class _SippoApplyJobState extends State<SippoApplyJob> {
   final _controller = ApplyJobsController.instance;
-  final loadingController = SwitchStatusController();
-
-  @override
-  void dispose() {
-    loadingController.dispose();
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +62,7 @@ class _SippoApplyJobState extends State<SippoApplyJob> {
         }),
       ),
       extendBodyBehindAppBar: true,
-      controller: loadingController,
+      controller: _controller.loadingController,
       body: BodyWidget(
         isScrollable: true,
         isTopScrollable: true,
@@ -126,8 +116,7 @@ class _SippoApplyJobState extends State<SippoApplyJob> {
   }
 
   Widget buildSubmissionButtons(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    double height = size.height;
+    final height = MediaQuery.sizeOf(context).height;
     return Obx(() => _controller.applyJobsState.hasApplied
         ? Column(
             children: [
@@ -138,7 +127,7 @@ class _SippoApplyJobState extends State<SippoApplyJob> {
                         _controller.applyJobsState.jopDetails.specialization?.id
                   });
                 },
-                text: "Find Another Job".tr,
+                text: "find_another_job".tr,
                 backgroundColor: Jobstopcolor.lightprimary,
                 textColor: Jobstopcolor.primarycolor,
               ),
@@ -149,18 +138,15 @@ class _SippoApplyJobState extends State<SippoApplyJob> {
                     return Get.currentRoute == SippoRoutes.userDashboard;
                   });
                 },
-                text: "Back to home".tr,
+                text: "back_to_home".tr,
               ),
             ],
           )
         : CustomButton(
             onTapped: () {
               _controller.onApplySubmitted();
-              if (_controller.states.isSuccess) {
-                Get.to(() => const JobSuccess());
-              }
             },
-            text: 'Apply Now'.tr,
+            text: 'apply_now'.tr,
           ));
   }
 
@@ -169,7 +155,7 @@ class _SippoApplyJobState extends State<SippoApplyJob> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "Upload CV".tr,
+          "upload_cv".tr,
           style: dmsbold.copyWith(
             fontSize: FontSize.title5(context),
             color: Jobstopcolor.primarycolor,
@@ -177,7 +163,7 @@ class _SippoApplyJobState extends State<SippoApplyJob> {
         ),
         SizedBox(height: context.fromHeight(CustomStyle.huge)),
         Text(
-          "Add your CV/Resume to apply for a job".tr,
+          "add_cv_desc".tr,
           style: dmsregular.copyWith(
             fontSize: FontSize.paragraph3(context),
             color: Jobstopcolor.darkgrey,
@@ -191,12 +177,8 @@ class _SippoApplyJobState extends State<SippoApplyJob> {
             cvCardWidget: CvCardWidget(
               fileCv: _controller.applyJobsState.cvJobApply,
             ),
-            title: 'Upload your CV',
-            onUploadTapped: () async {
-              loadingController.status = true;
-              await _controller.uploadCvFile();
-              loadingController.status = false;
-            },
+            title: 'upload_your_cv'.tr,
+            onUploadTapped: _controller.uploadCvFile,
             onDeletedFile: () async {
               await _controller.removeCvFile();
             },
@@ -211,7 +193,7 @@ class _SippoApplyJobState extends State<SippoApplyJob> {
         SizedBox(height: context.fromHeight(CustomStyle.xxl)),
         InputBorderedField(
           controller: _controller.applyJobsState.description,
-          hintText: "Explain why you are the right person for this job".tr,
+          hintText: "hint_text_application_description".tr,
           maxLine: 5,
           verticalPaddingValue: context.fromWidth(
             CustomStyle.paddingValue,
@@ -222,10 +204,10 @@ class _SippoApplyJobState extends State<SippoApplyJob> {
   }
 
   Widget _buildHasAppliedJobsState(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    double height = size.height;
+    final height = MediaQuery.sizeOf(context).height;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         RoundedBorderRadiusCardWidget(
           color: Jobstopcolor.lightprimary4,
@@ -241,7 +223,7 @@ class _SippoApplyJobState extends State<SippoApplyJob> {
         ),
         SizedBox(height: height / 36),
         Text(
-          "You Applied has been sent".tr,
+          "you_applied_sent".tr,
           style: dmsbold.copyWith(fontSize: 16, color: Jobstopcolor.darkgrey),
         ),
       ],

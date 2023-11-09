@@ -136,7 +136,7 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
     // print(_controller.company.images);
     Get.to(
       () => GalleryImageScreenView(
-        title: 'Company Album Images',
+        title: 'title_company_album_images'.tr,
         imagesResource: _controller.company.images,
         onSaveTap: _controller.uploadCompanyImages,
         onRemoveImage: _controller.removeImageCompany,
@@ -166,7 +166,7 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
 
   Widget _buildEstablishmentCompanyDate(BuildContext context) {
     return Obx(() => AddInfoProfileCard(
-          title: 'Establishment Date'.tr,
+          title: 'label_establishment_date'.tr,
           hasNotInfoProfile:
               _controller.company.establishmentDate?.isEmpty == true ||
                   _controller.company.establishmentDate?.isEmpty == null,
@@ -190,7 +190,7 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
           alignmentFromStart: true,
           profileInfo: [
             AutoSizeText(
-              "Establishment in ${_controller.company.establishmentDate}",
+              "${'label_establishment_in'.tr} ${_controller.company.establishmentDate}",
               style: dmsregular,
             )
           ],
@@ -199,7 +199,7 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
 
   Widget _buildEmployeeCompanyCount(BuildContext context) {
     return Obx(() => AddInfoProfileCard(
-          title: 'Employee Count'.tr,
+          title: 'label_employee_count'.tr,
           hasNotInfoProfile: _controller.company.employeesCount == null,
           leading: Image.asset(
             JobstopPngImg.aboutme,
@@ -225,13 +225,13 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
               data: _controller.company.employeesCount,
               guaranteedBuilder: (context, data) {
                 return AutoSizeText(
-                  "${data ?? 0} employee work in the company.",
+                  "${data ?? 0} ${'desc_employee_count'.tr}",
                   style: dmsregular,
                 );
               },
               avoidBuilder: (context, data) {
                 return AutoSizeText(
-                  "No employee yet in the company.",
+                  "zero_employee_count_message",
                   style: dmsregular,
                 );
               },
@@ -244,7 +244,7 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
     final profileState = _controller.profileState;
 
     return Obx(() => AddInfoProfileCard(
-          title: 'Company specializations'.tr,
+          title: 'company_specializations'.tr,
           hasNotInfoProfile:
               _controller.company.specializations?.isEmpty == true,
           leading: Image.asset(
@@ -277,7 +277,7 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
                 final item = _controller.company.specializations?[index];
                 return _buildChips(
                   context,
-                  item?.name ?? 'unknown',
+                  item?.name ?? '',
                 );
               },
               onExpandClicked: () {
@@ -290,7 +290,7 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
 
   Widget _buildWebsiteCompanyLink(BuildContext context) {
     return Obx(() => AddInfoProfileCard(
-          title: 'Website Company'.tr,
+          title: 'label_website_company'.tr,
           hasNotInfoProfile: _controller.company.website?.isEmpty == true ||
               _controller.company.website?.isEmpty == null,
           leading: Image.asset(
@@ -331,7 +331,7 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
 
     return Obx(() {
       return AddInfoProfileCard(
-        title: 'Work Places'.tr,
+        title: 'label_work_places'.tr,
         hasNotInfoProfile: _controller.company.locations?.isEmpty == true ||
             _controller.company.locations?.isEmpty == null,
         leading: Image.asset(
@@ -386,7 +386,7 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
 
   Widget _buildBioCompanyProfile(BuildContext context) {
     return Obx(() => AddInfoProfileCard(
-          title: 'Personal Info'.tr,
+          title: 'personal_information'.tr,
           hasNotInfoProfile: _controller.company.bio?.isEmpty == true ||
               _controller.company.bio?.isEmpty == null,
           leading: Image.asset(
@@ -428,7 +428,7 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
           size: context.fromHeight(CustomStyle.l),
         ),
         title: Text(
-          'Album Images',
+          'label_album_images'.tr,
           style: dmsbold.copyWith(
             color: Jobstopcolor.primarycolor,
             fontSize: 14,

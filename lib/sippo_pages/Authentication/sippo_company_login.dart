@@ -253,7 +253,7 @@ class SippoCompanyLogin extends StatelessWidget {
 
   void _onPressedForgetPassword() {
     final controller = CompanyLoginController.instance;
-
+Get.deviceLocale;
     if (controller.phoneNumber.isNotEmpty) {
       Get.toNamed(
         SippoRoutes.forgetPassword,

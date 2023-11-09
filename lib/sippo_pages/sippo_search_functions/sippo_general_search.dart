@@ -25,7 +25,6 @@ class SippoGeneralSearch extends StatefulWidget {
 
 class _SippoGeneralSearchState extends State<SippoGeneralSearch>
     with SingleTickerProviderStateMixin, RestorationMixin {
-
   @override
   get restorationId => "tab_non_scrollable_view";
 
@@ -47,11 +46,13 @@ class _SippoGeneralSearchState extends State<SippoGeneralSearch>
   @override
   void initState() {
     super.initState();
-    _controller.tabController = TabController(initialIndex: 0, length: 4, vsync: this);
+    _controller.tabController =
+        TabController(initialIndex: 0, length: 4, vsync: this);
     _controller.tabController.addListener(() {
       // When the tab controller's value is updated, make sure to update the
       // tab index value, which is state restorable.
-      _controller.generalSearchState.tabsIndex = _controller.tabController.index;
+      _controller.generalSearchState.tabsIndex =
+          _controller.tabController.index;
       _controller.tabIndex.value = _controller.tabController.index;
     });
   }
@@ -91,7 +92,7 @@ class _SippoGeneralSearchState extends State<SippoGeneralSearch>
       title: InputBorderedField(
         gController: _controller.generalSearchState.searchController,
         focusNode: _controller.generalSearchState.focusNode,
-        hintText: 'Search...',
+        hintText: '${'search'.tr}...',
         hintStyle: TextStyle(
           fontSize: FontSize.title6(context),
         ),
@@ -127,12 +128,15 @@ class _SippoGeneralSearchState extends State<SippoGeneralSearch>
       labelColor: Jobstopcolor.primarycolor,
       labelStyle: dmsmedium.copyWith(
         fontSize: FontSize.title5(context),
-      ),isScrollable: true,
+      ),
+      isScrollable: GlobalStorageService.isCompany,
       tabs: [
-        const Tab(text: "Tops"),
-        const Tab(text: "Companies"),
-        const Tab(text: 'Jobs'),
-        if (GlobalStorageService.isCompany) const Tab(text: 'Users'),
+        Tab(
+          text: "top".tr,
+        ),
+        Tab(text: "companies".tr),
+        Tab(text: 'jobs'.tr),
+        if (GlobalStorageService.isCompany) Tab(text: 'users'.tr),
       ],
     );
   }

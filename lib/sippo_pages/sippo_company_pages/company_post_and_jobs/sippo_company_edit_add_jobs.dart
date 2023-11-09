@@ -58,16 +58,6 @@ class _SippoCompanyEditAddJobsState extends State<SippoCompanyEditAddJobs> {
             ),
             _buildLoadingProgress(context),
             SizedBox(height: height / 36),
-            // Obx(() => ConditionalWidget(
-            //       _controller.states.isSuccess,
-            //       data: _controller.states,
-            //       guaranteedBuilder: (context, data) =>
-            //           CardNotifyMessage.success(
-            //         state: data,
-            //         onCancelTap: () =>
-            //             _controller.changeStates(isSuccess: false, message: ''),
-            //       ),
-            //     )),
             Obx(() => ConditionalWidget(
                   _controller.states.isError,
                   data: _controller.states,
@@ -121,20 +111,13 @@ class _SippoCompanyEditAddJobsState extends State<SippoCompanyEditAddJobs> {
           )),
       actions: [
         InkWell(
-          onTap: () async {
-            // Navigator.push(context, MaterialPageRoute(
-            //   builder: (context) {
-            //     return const JobstopShared();
-            //   },
-            // ));
-            await _controller.onSavedSubmitted();
-          },
+          onTap: _controller.onSavedSubmitted,
           child: Padding(
             padding: EdgeInsets.all(context.fromWidth(
               CustomStyle.paddingValue,
             )),
             child: Text(
-              "Post",
+              "posted".tr,
               style: dmsbold.copyWith(
                 fontSize: FontSize.title5(context),
                 color: Jobstopcolor.primarycolor,
@@ -153,7 +136,7 @@ class _SippoCompanyEditAddJobsState extends State<SippoCompanyEditAddJobs> {
             jobState.setSalaryRange(jobState.rangeSalary);
             jobState.swithcActionSalary();
           },
-          title: "Salary",
+          title: "Salary".tr,
           editorWidget: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -213,8 +196,8 @@ class _SippoCompanyEditAddJobsState extends State<SippoCompanyEditAddJobs> {
               ),
               SizedBox(height: context.fromHeight(CustomStyle.huge)),
               Text(
-                '${'The accepted range salary start'.tr} '
-                '${'from'.tr} ${CompanyEditAddJobState.MAX_SALARY_RANGE} '
+                '${'range_salary_message'.tr} '
+                '${'from'.tr} ${CompanyEditAddJobState.MIN_SALARY_RANGE} '
                 '${"to".tr} ${CompanyEditAddJobState.MAX_SALARY_RANGE}',
                 textAlign: TextAlign.start,
                 style: dmsregular.copyWith(
@@ -230,7 +213,7 @@ class _SippoCompanyEditAddJobsState extends State<SippoCompanyEditAddJobs> {
 
   Widget _buildLevelExperienceOption(BuildContext context) {
     return Obx(() => AddJobOptionsCard(
-        title:'level_experience_title'.tr,
+        title: 'level_experience_title'.tr,
         subTitle: jobState.experienceLevel.label,
         onTapAction: () {
           _showLevelExperiences(context);

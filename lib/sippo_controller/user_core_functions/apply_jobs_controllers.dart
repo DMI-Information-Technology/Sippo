@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
 import 'package:jobspot/JobServices/shared_global_data_service.dart';
+import 'package:jobspot/custom_app_controller/switch_status_controller.dart';
 import 'package:jobspot/sippo_data/model/custom_file_model/custom_file_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/user_job_application_model.dart';
@@ -12,14 +13,17 @@ import 'package:jobspot/utils/states.dart';
 
 class ApplyJobsController extends GetxController {
   final applyJobsState = ApplyJobsState();
+  final loadingController = SwitchStatusController();
 
   static ApplyJobsController get instance => Get.find();
 
   Future<void> uploadCvFile() async {
+    loadingController.start();
     final result = await FilePickerService.uploadFileCv(
       onFileUploading: (status) =>
           applyJobsState.uploadFileStatus = status == FilePickerStatus.picking,
     );
+    loadingController.pause();
     print("file details: $result");
     if (result != null) {
       applyJobsState.cvJobApply = result;
@@ -32,6 +36,7 @@ class ApplyJobsController extends GetxController {
 
   CompanyJobModel? get requestedJobDetails =>
       SharedGlobalDataService.instance.jobGlobalState.details;
+
   int get jobId => SharedGlobalDataService.instance.jobGlobalState.id;
   final _states = States().obs;
 
@@ -152,6 +157,12 @@ class ApplyJobsController extends GetxController {
   void onInit() {
     requestJobDetails();
     super.onInit();
+  }
+
+  @override
+  void onClose() {
+    loadingController.dispose();
+    super.onClose();
   }
 }
 

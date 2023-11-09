@@ -39,7 +39,7 @@ class _SippoSelectCompanyWorkPlacesState
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Add New Work Place',
+                'add_new_work_place'.tr,
                 style: dmsbold.copyWith(
                   fontSize: FontSize.title4(context),
                 ),
@@ -66,14 +66,14 @@ class _SippoSelectCompanyWorkPlacesState
                     ),
                   )),
               Text(
-                'City',
+                'City'.tr,
                 style: dmsbold.copyWith(
                   fontSize: FontSize.title5(context),
                 ),
                 textAlign: TextAlign.start,
               ),
               Obx(() => CustomDropdownButton(
-                    textHint: 'Select Company Work Place',
+                    textHint: 'select_company_work_place'.tr,
                     labelList: _controller
                         .selectedWorkPlaceState.locationsAddressNameList,
                     values:
@@ -95,7 +95,7 @@ class _SippoSelectCompanyWorkPlacesState
                 height: context.fromHeight(CustomStyle.spaceBetween),
               ),
               Text(
-                'Location Coordinates',
+                'location_coordinates'.tr,
                 style: dmsbold.copyWith(
                   fontSize: FontSize.title5(context),
                 ),
@@ -130,7 +130,7 @@ class _SippoSelectCompanyWorkPlacesState
             Expanded(
               child: CustomButton(
                 onTapped: _showRemove,
-                text: 'Remove',
+                text: 'remove'.tr,
                 textColor: Jobstopcolor.primarycolor,
                 backgroundColor: Jobstopcolor.lightprimary,
               ),
@@ -140,7 +140,7 @@ class _SippoSelectCompanyWorkPlacesState
           Expanded(
             child: CustomButton(
               onTapped: () => _controller.onSaveWorkPlaceSubmitted(),
-              text: 'Save',
+              text: 'save'.tr,
             ),
           ),
         ],
@@ -161,8 +161,8 @@ class _SippoSelectCompanyWorkPlacesState
         notchColor: Jobstopcolor.primarycolor,
         children: [
           ConfirmationBottomSheet(
-            title: "Remove Work Place ?",
-            description: "Are you sure you want to change what you entered?",
+            title: "title_remove_work_place".tr,
+            description: "ask_dialog_confirm_entered_change".tr,
             onConfirm: () async {
               Get.back();
               _controller.onDeleteSubmitted().then((value) {

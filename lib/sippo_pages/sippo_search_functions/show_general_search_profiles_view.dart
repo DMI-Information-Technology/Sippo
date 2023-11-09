@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
+import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
@@ -13,6 +14,7 @@ import 'package:jobspot/sippo_custom_widget/network_bordered_circular_image_widg
 import 'package:jobspot/sippo_custom_widget/rounded_border_radius_card_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_user_profile_view_model.dart';
+import 'package:lottie/lottie.dart';
 
 import '../../sippo_custom_widget/custom_drop_down_button.dart';
 
@@ -76,6 +78,12 @@ class _ShowGeneralSearchProfilesViewListState
                 newPageProgressIndicatorBuilder: (context) {
                   return _buildNewPageProgress(context);
                 },
+                firstPageProgressIndicatorBuilder: (context) => Center(
+                  child: Lottie.asset(
+                    JobstopPngImg.loadingProgress,
+                    height: context.height / 6,
+                  ),
+                ),
                 itemBuilder: (context, item, i) {
                   return RoundedBorderRadiusCardWidget(
                     padding: EdgeInsets.zero,
@@ -97,7 +105,7 @@ class _ShowGeneralSearchProfilesViewListState
                         overflow: TextOverflow.ellipsis,
                       ),
                       subtitle: AutoSizeText(
-                        item.userInfo?.bio?.substring(0, 50) ?? '',
+                        item.userInfo?.bio?? '',
                         style: dmsregular,
                         overflow: TextOverflow.ellipsis,
                       ),

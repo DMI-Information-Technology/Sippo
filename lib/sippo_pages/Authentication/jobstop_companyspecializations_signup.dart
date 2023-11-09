@@ -4,12 +4,11 @@ import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
+import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
+import 'package:jobspot/sippo_controller/AuthenticationController/sippo_signup_company_controller.dart';
 import 'package:jobspot/sippo_controller/AuthenticationController/specialization_list_controller.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
-
-import 'package:jobspot/JobGlobalclass/routes.dart';
-import 'package:jobspot/sippo_controller/AuthenticationController/sippo_signup_company_controller.dart';
 
 class CompanySignUpSpecializations extends StatefulWidget {
   const CompanySignUpSpecializations({super.key});
@@ -120,7 +119,7 @@ class _CompanySignUpSpecializationsState
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        const Text("Data is fetching from the server..."),
+        Text("message_fetching_specializations".tr),
         SizedBox(height: MediaQuery.of(context).size.height / 36),
         const LinearProgressIndicator(),
       ],

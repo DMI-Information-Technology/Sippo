@@ -130,15 +130,15 @@ class _SippoCompanyDashboardState extends State<SippoCompanyDashboard> {
         notchColor: Jobstopcolor.primarycolor,
         children: [
           ConfirmationBottomSheet(
-            title: "What would you like to add?",
+            title: "ask_type_company_post".tr,
             description:
-                "Would you like to post your tips and experiences or create a job?",
-            confirmTitle: "POST",
+                "desc_ask_type_company_post".tr,
+            confirmTitle: "post".tr,
             onConfirm: () async {
               Get.back();
               Get.toNamed(SippoRoutes.companyAddPost);
             },
-            undoTitle: "JOB",
+            undoTitle: "title_job".tr,
             onUndo: () async {
               Get.back();
               Get.toNamed(SippoRoutes.companyAddJobs);

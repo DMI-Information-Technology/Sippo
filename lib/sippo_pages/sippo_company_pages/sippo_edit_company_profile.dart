@@ -17,7 +17,7 @@ import 'package:jobspot/utils/helper.dart';
 import 'package:jobspot/utils/image_picker_service.dart';
 import 'package:jobspot/utils/validating_input.dart';
 
-import '../../sippo_custom_widget/network_bordered_circular_image_widget.dart';
+import 'package:jobspot/sippo_custom_widget/network_bordered_circular_image_widget.dart';
 
 class EditCompanyProfilePage extends StatefulWidget {
   const EditCompanyProfilePage({Key? key}) : super(key: key);
@@ -91,13 +91,13 @@ class _EditCompanyProfilePageState extends State<EditCompanyProfilePage> {
                       horizontal: context.fromWidth(CustomStyle.paddingValue),
                     ),
                     child: Text(
-                      'Name',
+                      'label_name'.tr,
                       style:
                           dmsmedium.copyWith(fontSize: FontSize.label(context)),
                     ),
                   ),
                   InputBorderedField(
-                    hintText: "enter your name",
+                    hintText: "hint_text_enter_name".tr,
                     gController: profileEditState.name,
                     // height: context.fromHeight(CustomStyle.inputBorderedSize),
                     fontSize: FontSize.label(context),
@@ -109,7 +109,7 @@ class _EditCompanyProfilePageState extends State<EditCompanyProfilePage> {
                     validator: (value) {
                       return ValidatingInput.validateEmptyField(
                         value,
-                        message: "name field is required.",
+                        message: "fullname_is_req".tr,
                       );
                     },
                   ),
@@ -122,7 +122,7 @@ class _EditCompanyProfilePageState extends State<EditCompanyProfilePage> {
                         width: context.fromWidth(CustomStyle.spaceBetween),
                       ),
                       Text(
-                        'Email',
+                        'Email'.tr,
                         style: dmsmedium.copyWith(
                             fontSize: FontSize.label(context)),
                       ),
@@ -139,7 +139,7 @@ class _EditCompanyProfilePageState extends State<EditCompanyProfilePage> {
                   ),
                   InputBorderedField(
                     keyboardType: TextInputType.emailAddress,
-                    hintText: "enter your email",
+                    hintText: "hint_text_enter_email".tr,
                     gController: profileEditState.email,
                     height: context.fromHeight(CustomStyle.inputBorderedSize),
                     fontSize: FontSize.label(context),
@@ -159,7 +159,7 @@ class _EditCompanyProfilePageState extends State<EditCompanyProfilePage> {
                               context.fromWidth(CustomStyle.paddingValue),
                         ),
                         child: Text(
-                          'Pending email "${data?.pendingEmail}"',
+                          '${'pending_email'.tr} "${data?.pendingEmail}"',
                           style: dmsregular.copyWith(
                               fontSize: FontSize.label(context)),
                         ),
@@ -172,7 +172,7 @@ class _EditCompanyProfilePageState extends State<EditCompanyProfilePage> {
                       horizontal: context.fromWidth(CustomStyle.paddingValue),
                     ),
                     child: Text(
-                      'Phone Number',
+                      'phone_number'.tr,
                       style:
                           dmsmedium.copyWith(fontSize: FontSize.label(context)),
                     ),
@@ -180,7 +180,7 @@ class _EditCompanyProfilePageState extends State<EditCompanyProfilePage> {
                   _buildInputPhoneNumberField(
                     context,
                     profileEditState.phone,
-                    "Phone number",
+                    "phone_number".tr,
                     isPrimary: true,
                   ),
                   SizedBox(
@@ -190,7 +190,7 @@ class _EditCompanyProfilePageState extends State<EditCompanyProfilePage> {
                       horizontal: context.fromWidth(CustomStyle.paddingValue),
                     ),
                     child: Text(
-                      'Secondary Phone Number',
+                      'second_phone_number'.tr,
                       style:
                           dmsmedium.copyWith(fontSize: FontSize.label(context)),
                     ),
@@ -206,14 +206,14 @@ class _EditCompanyProfilePageState extends State<EditCompanyProfilePage> {
                       horizontal: context.fromWidth(CustomStyle.paddingValue),
                     ),
                     child: Text(
-                      'Website',
+                      'Website'.tr,
                       style:
                           dmsmedium.copyWith(fontSize: FontSize.label(context)),
                     ),
                   ),
                   InputBorderedField(
                     keyboardType: TextInputType.url,
-                    hintText: "enter your website",
+                    hintText: "enter_website".tr,
                     gController: profileEditState.website,
                     height: context.fromHeight(CustomStyle.inputBorderedSize),
                     fontSize: FontSize.label(context),
@@ -229,7 +229,7 @@ class _EditCompanyProfilePageState extends State<EditCompanyProfilePage> {
                       horizontal: context.fromWidth(CustomStyle.paddingValue),
                     ),
                     child: Text(
-                      'Employee counts',
+                      'employee_counts'.tr,
                       style:
                           dmsmedium.copyWith(fontSize: FontSize.label(context)),
                     ),
@@ -251,7 +251,7 @@ class _EditCompanyProfilePageState extends State<EditCompanyProfilePage> {
                       horizontal: context.fromWidth(CustomStyle.paddingValue),
                     ),
                     child: Text(
-                      'Establishment Date',
+                      'establishment_date'.tr,
                       style:
                           dmsmedium.copyWith(fontSize: FontSize.label(context)),
                     ),
@@ -271,7 +271,7 @@ class _EditCompanyProfilePageState extends State<EditCompanyProfilePage> {
               await _controller.onSaveSubmitted();
             }
           },
-          text: "Save",
+          text: "save".tr,
         ),
       ),
       backgroundColor: Jobstopcolor.backgroudHome,
@@ -300,7 +300,7 @@ class _EditCompanyProfilePageState extends State<EditCompanyProfilePage> {
               if (file != null) {
                 _controller.profileEditState.pickedImageProfile = file;
                 await Get.to(
-                  () => SaveImagePageView(
+                  () => SaveImageProfilePageView(
                     imageFile: file.file!,
                     onUpdateTapped: (loadingController) async {
                       loadingController.start();
@@ -378,7 +378,7 @@ class _EditCompanyProfilePageState extends State<EditCompanyProfilePage> {
             ? (value) {
                 return ValidatingInput.validateEmptyField(
                   value?.number,
-                  message: "phone number field is required.",
+                  message: "phone_number_required".tr,
                 );
               }
             : null,
@@ -412,7 +412,7 @@ class _EditCompanyProfilePageState extends State<EditCompanyProfilePage> {
       },
       readOnly: true,
       height: context.fromHeight(CustomStyle.inputBorderedSize),
-      hintText: 'pick company establishment date',
+      hintText: 'enter_establishment_date'.tr,
       fontSize: FontSize.label(context),
       gController: eduState.establishedDate,
       suffixIcon: const Icon(

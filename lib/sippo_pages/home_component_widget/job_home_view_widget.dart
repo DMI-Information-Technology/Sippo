@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/global_storage.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
+import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
@@ -13,6 +14,7 @@ import 'package:jobspot/sippo_custom_widget/job_home_card_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/utils/helper.dart';
 import 'package:jobspot/utils/states.dart';
+import 'package:lottie/lottie.dart';
 
 class JobHomeViewWidget extends StatefulWidget {
   const JobHomeViewWidget({super.key});
@@ -24,8 +26,12 @@ class JobHomeViewWidget extends StatefulWidget {
 class _JobHomeViewWidgetState extends State<JobHomeViewWidget> {
   final _controller = Get.put(JobsHomeViewController());
 
+
+
   @override
   Widget build(BuildContext context) {
+    print('_JobHomeViewWidgetState.build');
+
     return Obx(() => FutureBuilder(
           future: _controller.jobStatesAsFuture,
           builder: (context, snapshot) {
@@ -38,7 +44,12 @@ class _JobHomeViewWidgetState extends State<JobHomeViewWidget> {
               if (states.isLoading && _controller.jobsList.isNotEmpty)
                 return _buildJobsCards(context);
               else if (states.isLoading)
-                return const Center(child: CircularProgressIndicator());
+                return Center(
+                  child: Lottie.asset(
+                    JobstopPngImg.loadingProgress,
+                    height: context.height / 6,
+                  ),
+                );
             }
             return Center(
               child: Text(

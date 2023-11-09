@@ -77,7 +77,7 @@ class CompanyHomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    Timer.periodic(Duration(milliseconds: 700), (timer) {
+    Timer.periodic(const Duration(milliseconds: 700), (timer) {
       if (Get.isRegistered<JobStatisticBoardController>()) {
         JobStatisticBoardController.instance.fetchJobStatistics();
         timer.cancel();

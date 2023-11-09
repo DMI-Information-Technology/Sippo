@@ -31,6 +31,11 @@ class ShowAboutCompaniesDetails extends StatelessWidget {
         ),
         _buildTextDetailsWidgets(
           context,
+          "phone_number".tr,
+          company?.phone ?? "",
+        ),
+        _buildTextDetailsWidgets(
+          context,
           "Website".tr,
           company?.website ?? "",
         ),
@@ -84,7 +89,7 @@ class ShowAboutCompaniesDetails extends StatelessWidget {
                     ? () {
                         Get.to(
                           () => GalleryImageScreenView.visitor(
-                            title: '${company?.name} albums',
+                            title: '${company?.name} ${'albums'.tr}',
                             imagesResource: images,
                           ),
                         );

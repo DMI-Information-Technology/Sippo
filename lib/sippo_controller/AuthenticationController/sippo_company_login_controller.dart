@@ -45,16 +45,18 @@ class CompanyLoginController extends GetxController {
 
   Future<void> onSubmittedLogin() async {
     if (formKey.currentState!.validate()) {
-      await authController.companyLogin(companyForm);
+      await authController.companyLogin(companyForm).then((_) {
+        if (authController.states.isSuccess) {
+            authController.resetStates();
+            if (kIsWeb) {
+              Get.offAllNamed(SippoRoutes.sippoCompanyDashboard);
+            } else {
+              _showSuccessAlert();
+            }
+          }
+        },);
     }
-    if (authController.states.isSuccess) {
-      authController.resetStates();
-      if (kIsWeb) {
-        Get.offAllNamed(SippoRoutes.sippoCompanyDashboard);
-      } else {
-        _showSuccessAlert();
-      }
-    }
+
   }
 
   void _showSuccessAlert() {

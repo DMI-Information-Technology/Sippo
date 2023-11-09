@@ -28,9 +28,9 @@ class _SippoUserNotificationApplicationState
   late final TabController _tabController;
   final RestorableInt tabIndex = RestorableInt(0);
 
-  final nonResource = const NoResourceScreen(
-    title: 'No notifications',
-    description: 'You have no notifications at this time\nthank you',
+  final nonResource =  NoResourceScreen(
+    title: 'title_no_notification_found'.tr,
+    description: 'description_no_notification_found'.tr,
     image: JobstopPngImg.notificationimg,
   );
 
@@ -143,17 +143,17 @@ class _SippoUserNotificationApplicationState
 
   void _onReadAllNotificationsConfirmation(BuildContext context) {
     Get.dialog(CustomAlertDialog(
-      title: 'Delete Notification',
-      description: 'Are you sure you want to delete this notification?',
+      title: 'title_confirm_delete_notification'.tr,
+      description: 'ask_delete_notification'.tr,
       onConfirm: () {
         Get.back();
         _notifiController.markAllNotificationsAsRead();
       },
-      confirmBtnTitle: 'Yes',
+      confirmBtnTitle: 'yes'.tr,
       onCancel: () {
         Get.back();
       },
-      cancelBtnTitle: 'Cancel',
+      cancelBtnTitle: 'cancel'.tr,
     ));
   }
 }

@@ -71,7 +71,7 @@ class _SippoJobsPostsCompanyWrapperState
                 onTapped: () {
                   _controller.switchSelectedTap(0);
                 },
-                text: "Posts".tr,
+                text: "posts".tr,
                 backgroundColor: _controller.selected == 0
                     ? Jobstopcolor.primarycolor
                     : Jobstopcolor.lightprimary,
@@ -88,7 +88,7 @@ class _SippoJobsPostsCompanyWrapperState
                   _controller.resetStates();
                   _controller.switchSelectedTap(1);
                 },
-                text: "Jobs".tr,
+                text: "jobs".tr,
                 backgroundColor: _controller.selected == 1
                     ? Jobstopcolor.primarycolor
                     : Jobstopcolor.lightprimary,

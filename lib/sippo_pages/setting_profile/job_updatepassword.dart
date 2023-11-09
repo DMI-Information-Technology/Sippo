@@ -40,7 +40,7 @@ class _JobUpdatePasswordState extends State<JobUpdatePassword> {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               AutoSizeText(
-                'Change Password',
+                'change_password'.tr,
                 style: dmsbold.copyWith(fontSize: FontSize.title3(context)),
               ),
               Obx(() => ConditionalWidget(
@@ -82,14 +82,14 @@ class _JobUpdatePasswordState extends State<JobUpdatePassword> {
                 height: context.fromHeight(CustomStyle.xxxl),
               ),
               AutoSizeText(
-                'Current password',
+                'current_password'.tr,
                 style: dmsbold.copyWith(fontSize: FontSize.label(context)),
               ),
               PasswordInputBorderedField(
-                hintText: 'enter your current password here...',
+                hintText: 'hint_text_current_password'.tr,
                 validator: (value) => ValidatingInput.validateEmptyField(
                   value,
-                  message: 'The current password is required.',
+                  message: 'current_password_is_req'.tr,
                 ),
                 controller: _controller.currentPassword,
               ),
@@ -97,11 +97,11 @@ class _JobUpdatePasswordState extends State<JobUpdatePassword> {
                 height: context.fromHeight(CustomStyle.xxxl),
               ),
               AutoSizeText(
-                'New password',
+                'new_password'.tr,
                 style: dmsbold.copyWith(fontSize: FontSize.label(context)),
               ),
               PasswordInputBorderedField(
-                hintText: 'enter your new password here...',
+                hintText: 'hint_text_new_password'.tr,
                 validator: ValidatingInput.validatePassword,
                 controller: _controller.newPassword,
               ),
@@ -109,11 +109,11 @@ class _JobUpdatePasswordState extends State<JobUpdatePassword> {
                 height: context.fromHeight(CustomStyle.xxxl),
               ),
               AutoSizeText(
-                'Confirm password',
+                'confirm_password'.tr,
                 style: dmsbold.copyWith(fontSize: FontSize.label(context)),
               ),
               PasswordInputBorderedField(
-                hintText: 'confirm your confirmation password...',
+                hintText: 'hint_text_confirm_password'.tr,
                 validator: ValidatingInput.validatePassword,
                 controller: _controller.confirmPassword,
               ),
@@ -123,7 +123,7 @@ class _JobUpdatePasswordState extends State<JobUpdatePassword> {
         paddingBottom: EdgeInsets.all(
           context.fromWidth(CustomStyle.paddingValue),
         ),
-        bottomScreen: CustomButton(onTapped: onSaveTapped, text: 'Save'),
+        bottomScreen: CustomButton(onTapped: onSaveTapped, text: 'save'.tr),
       ),
     );
   }
@@ -135,8 +135,8 @@ class _JobUpdatePasswordState extends State<JobUpdatePassword> {
           Get.dialog(
             CustomAlertDialog(
               imageAsset: JobstopPngImg.successchangepassword,
-              title: 'Password changed',
-              description: 'Your password has been changed successfully.',
+              title: 'password_changed'.tr,
+              description: 'message_password_changed'.tr,
               onConfirm: () {
                 if (Get.isOverlaysOpen) Get.back();
               },

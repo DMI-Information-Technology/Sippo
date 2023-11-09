@@ -64,7 +64,7 @@ class _SippoUserCommunityState extends State<SippoUserCommunity> {
                 onTapped: () {
                   _controller.switchSelectedTap(0);
                 },
-                text: "Posts".tr,
+                text: "posts".tr,
                 borderRadiusValue: 12,
                 backgroundColor: _controller.selected == 0
                     ? Jobstopcolor.primarycolor
@@ -82,7 +82,7 @@ class _SippoUserCommunityState extends State<SippoUserCommunity> {
                   _controller.resetStates();
                   _controller.switchSelectedTap(1);
                 },
-                text: "My Connections".tr,
+                text: "title_my_connections".tr,
                 borderRadiusValue: 12,
                 backgroundColor: _controller.selected == 1
                     ? Jobstopcolor.primarycolor

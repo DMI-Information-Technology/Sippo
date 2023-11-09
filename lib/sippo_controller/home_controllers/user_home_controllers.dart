@@ -6,13 +6,12 @@ import 'package:jobspot/JobServices/shared_global_data_service.dart';
 import 'package:jobspot/sippo_controller/ads_controller/ads_controller.dart';
 import 'package:jobspot/sippo_controller/dashboards_controller/user_dashboard_controller.dart';
 import 'package:jobspot/sippo_controller/home_controllers/job_home_view_controller.dart';
-import 'package:jobspot/sippo_data/job_statistics_repo/job_statistics_repo.dart';
+import 'package:jobspot/sippo_custom_widget/find_yor_jop_dashboard_cards.dart';
 import 'package:jobspot/sippo_data/model/job_statistics_model/job_statistics_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/profile_edit_model.dart';
-import 'package:jobspot/utils/states.dart';
-
 import 'package:jobspot/sippo_data/model/specializations_model/specializations_model.dart';
 import 'package:jobspot/sippo_data/specializations/specializations_repo.dart';
+import 'package:jobspot/utils/states.dart';
 
 class UserHomeController extends GetxController {
   static UserHomeController get instance => Get.find();
@@ -48,17 +47,6 @@ class UserHomeController extends GetxController {
     );
   }
 
-  Future<void> fetchJobStatistics() async {
-    final response = await JobStatisticsRepo.fetchLocations();
-    await response?.checkStatusResponse(
-      onSuccess: (data, _) {
-        if (data != null) userHomeState.jobsStatistic = data;
-      },
-      onValidateError: (validateError, _) {},
-      onError: (message, _) {},
-    );
-  }
-
   Future<void> fetchSpecializations() async {
     final response = await SpecializationRepo.fetchSpecializationsResource();
     await response?.checkStatusResponse(
@@ -80,7 +68,8 @@ class UserHomeController extends GetxController {
       if (Get.isRegistered<AdsViewController>())
         AdsViewController.instance.fetchAds(),
       fetchSpecializations(),
-      fetchJobStatistics(),
+      if (Get.isRegistered<JobStatisticBoardController>())
+        JobStatisticBoardController.instance.fetchJobStatistics(),
       if (Get.isRegistered<JobsHomeViewController>())
         JobsHomeViewController.instance.refreshJobs(),
     ]);
@@ -90,10 +79,13 @@ class UserHomeController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    Future.wait([
-      fetchSpecializations(),
-      fetchJobStatistics(),
-    ]);
+    Timer.periodic(const Duration(milliseconds: 700), (timer) {
+      if (Get.isRegistered<JobStatisticBoardController>()) {
+        JobStatisticBoardController.instance.fetchJobStatistics();
+        timer.cancel();
+      }
+    });
+    fetchSpecializations();
   }
 }
 

@@ -8,6 +8,7 @@ import 'package:jobspot/JobGlobalclass/global_storage.dart';
 import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
 import 'package:jobspot/JobServices/fire_base_push_notifications.dart';
 import 'package:jobspot/JobStringtranslation/traslationstring.dart';
+import 'package:jobspot/app_local_language_services/app_local_language_service.dart';
 import 'package:jobspot/sippo_themes/theme.dart';
 import 'package:jobspot/utils/exception_handler_utils.dart';
 
@@ -28,6 +29,7 @@ void main() async {
     Get.put<GlobalStorageService>(GlobalStorageService()),
   );
   await GlobalStorageService.lunchApp();
+  Get.put<LocalLanguageService>(LocalLanguageService());
   if (!kIsWeb) await FirebasePushNotificationService().init();
   SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -44,10 +46,15 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // ScreenUtil.init(context, designSize: Size(360.0, 690.0));
+    print("=====================");
+    print(Get.deviceLocale);
+    print("=====================");
+
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: JobstopMyThemes.lightTheme,
-      fallbackLocale: const Locale('en', 'US'),
+      fallbackLocale: LocalLanguageService.deviceLocal,
+      // textDirection: TextDirection.rtl,
       initialBinding: BindingsBuilder(() {
         Get.put<InternetConnectionService>(InternetConnectionService());
         Get.lazyPut<AuthController>(() => AuthController(), fenix: true);
@@ -56,8 +63,8 @@ class MyApp extends StatelessWidget {
           fenix: true,
         );
       }),
-      translations: Apptranslation(),
-      locale: const Locale('en', 'US'),
+      translations: AppTranslation(),
+      locale: LocalLanguageService.deviceLocal,
       initialRoute:
           kIsWeb ? SippoRoutes.userSignupPage : SippoRoutes.splashScreen,
       // initialRoute: SippoRoutes.identityverification,

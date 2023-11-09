@@ -15,6 +15,7 @@ import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
 
 import 'package:jobspot/sippo_custom_widget/network_bordered_circular_image_widget.dart';
+import 'package:lottie/lottie.dart';
 
 class ShowCommunityCompanyCompaniesList extends StatefulWidget {
   const ShowCommunityCompanyCompaniesList({super.key});
@@ -45,6 +46,12 @@ class _ShowCommunityCompanyCompaniesListState
               _buildErrorFirstLoad(context),
           newPageErrorIndicatorBuilder: (context) =>
               _buildErrorNewLoad(context),
+          firstPageProgressIndicatorBuilder: (context) => Center(
+            child: Lottie.asset(
+              JobstopPngImg.loadingProgress,
+              height: context.height / 6,
+            ),
+          ),
           itemBuilder: (context, item, index) {
             return InkWell(
               onTap: () => _onCompanyCardTapped(item),
@@ -97,7 +104,7 @@ class _ShowCommunityCompanyCompaniesListState
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          "Error",
+          "error".tr,
           style: dmsbold.copyWith(
             color: Jobstopcolor.primarycolor,
             fontSize: FontSize.title2(context),
@@ -105,7 +112,7 @@ class _ShowCommunityCompanyCompaniesListState
         ),
         SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
         Text(
-          _controller.states.message ?? 'something wrong is happened.',
+          _controller.states.message ?? 'something_wrong_happened'.tr,
           style: dmsregular.copyWith(
             fontSize: FontSize.paragraph3(context),
           ),
@@ -120,7 +127,7 @@ class _ShowCommunityCompanyCompaniesListState
               _controller.refreshPage();
               showWrapperController.changeStates(isError: false, message: '');
             },
-            text: 'Try again',
+            text: 'try_again'.tr,
           ),
         )
       ],
@@ -205,7 +212,7 @@ class ConnectionCard extends StatelessWidget {
             width: context.width / 3.5,
             child: CustomButton(
               onTapped: () => {if (onFollowTapped != null) onFollowTapped!()},
-              text: isFollowing ? 'Followed' : 'Follow',
+              text: isFollowing ? 'followed'.tr : 'follow'.tr,
               textColor: isFollowing ? null : Colors.black87,
               backgroundColor: isFollowing ? null : Colors.white,
               borderColor: isFollowing ? null : Colors.grey,

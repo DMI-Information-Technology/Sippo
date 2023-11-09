@@ -28,10 +28,9 @@ class _SippoCompanyEditAddPostState extends State<SippoCompanyEditAddPost> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery
-        .of(context)
-        .size;
-    double height = size.height;
+    final height = MediaQuery
+        .sizeOf(context).height;
+
     final newPostState = _controller.newPostState;
     return WillPopScope(
       onWillPop: () async {
@@ -56,7 +55,7 @@ class _SippoCompanyEditAddPostState extends State<SippoCompanyEditAddPost> {
                   }
                 },
                 child: Text(
-                  "post".tr,
+                  "posted".tr,
                   style: dmsbold.copyWith(
                     fontSize: FontSize.title5(context),
                     color: Jobstopcolor.primarycolor,

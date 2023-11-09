@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/sippo_custom_widget/rounded_border_radius_card_widget.dart';
 
 import '../JobGlobalclass/jobstopcolor.dart';
@@ -48,7 +49,7 @@ class AddInfoProfileCard extends StatelessWidget {
                 Text(
                   title,
                   style: dmsbold.copyWith(
-                      fontSize: 14, color: Jobstopcolor.primarycolor),
+                      fontSize: FontSize.title5(context), color: Jobstopcolor.primarycolor),
                 ),
                 if (!isCompanyView) ...[
                   const Spacer(),

@@ -98,7 +98,7 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
                     ),
                     CustomButton(
                       onTapped: _controller.applyTapped,
-                      text: "Apply Now".tr,
+                      text: "apply_now".tr,
                     ),
                   ][_controller.jobDetailsState.selectedPageView];
                 },
@@ -112,22 +112,11 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
     return Obx(() => Column(
           children: [
             TopJobDetailsHeader(
-              // isConnectionLost: !InternetConnectionService.instance.isConnected,
               coverHeight: context.height / 4.5,
               profileImageSize: context.height / 8,
               backgroundImageColor: Jobstopcolor.white,
               imageUrl: _controller
                   .jobDetailsState.jopDetails.company?.profileImage?.url,
-              // onLeadingTap: () => Get.back(),
-              actions: [
-                IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.more_vert,
-                    color: Colors.white,
-                  ),
-                ),
-              ],
             ),
             SizedBox(height: context.height / CustomStyle.spaceBetween),
             _buildTopJobInfo(context),
@@ -210,7 +199,7 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
   Widget _buildJobDetails(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     double height = size.height;
-    double width = size.width;
+    final job = _controller.jobDetailsState.jopDetails;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -220,7 +209,7 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
         ),
         SizedBox(height: height / 76),
         Text(
-          _controller.jobDetailsState.jopDetails.description ?? '',
+          job.description ?? '',
           style: dmsregular.copyWith(
             fontSize: FontSize.paragraph3(context),
             color: Jobstopcolor.darkgrey,
@@ -239,7 +228,7 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
           height: height / 66,
         ),
         ListTextItem(
-          text: _controller.jobDetailsState.jopDetails.requirements,
+          text: job.requirements,
           startCrossAlignment: true,
         ),
         SizedBox(
@@ -250,107 +239,118 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
           style: dmsbold.copyWith(fontSize: FontSize.title4(context)),
         ),
         Text(
-          _controller.jobDetailsState.jopDetails.company?.city ?? "",
+          job.company?.city ?? "",
           style:
               dmsregular.copyWith(fontSize: 12, color: Jobstopcolor.darkgrey),
         ),
         SizedBox(
-          height: height / 66,
+          height: height / 256,
         ),
-        Container(
-          height: height / 5,
-          width: width / 1,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-          ),
-          child: Image.asset(
-            JobstopPngImg.locationmap,
-            fit: BoxFit.fill,
+        InkWell(
+          onTap: () {
+            final lat = job.latitude;
+            final lon = job.longitude;
+            if (lat != null && lon != null) lunchMapWithLocation(lat, lon);
+          },
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              Icon(
+                Icons.location_on_outlined,
+                color: Jobstopcolor.primarycolor,
+                size: context.fromHeight(CustomStyle.xxl),
+              ),
+              AutoSizeText(
+                job.locationAddress?.name ?? '',
+                style: dmsmedium.copyWith(
+                  color: Jobstopcolor.primarycolor,
+                  decoration: TextDecoration.underline,
+                  decorationColor: Jobstopcolor.primarycolor,
+                ),
+              ),
+            ],
           ),
         ),
         SizedBox(
           height: height / 36,
         ),
         AutoSizeText(
-          "Detailed Information".tr,
+          "title_detailed_information".tr,
           style: dmsbold.copyWith(fontSize: FontSize.title4(context)),
         ),
-        SizedBox(height: height / 46),
-        AutoSizeText(
-          "Specialization",
-          style: dmsbold.copyWith(
-            fontSize: FontSize.title5(context),
-            color: Jobstopcolor.primarycolor,
-          ),
+        SizedBox(
+          height: height / 64,
         ),
-        AutoSizeText(
-          _controller.jobDetailsState.jopDetails.specialization?.name ?? "",
-          style: dmsmedium.copyWith(
-            fontSize: FontSize.title6(context),
-            color: Jobstopcolor.darkgrey,
-          ),
+        TextBoldedLabelItem(
+          label: "Specialization".tr,
+          text: job.specialization?.name ?? "",
         ),
-        SizedBox(height: height / 46),
-        AutoSizeText(
-          'Experience Level',
-          style: dmsbold.copyWith(
-            fontSize: FontSize.title5(context),
-            color: Jobstopcolor.primarycolor,
-          ),
+        TextBoldedLabelItem(
+          label: "experienceLevels".tr,
+          text: job.experienceLevel?.label ?? "",
         ),
-        AutoSizeText(
-          _controller.jobDetailsState.jopDetails.experienceLevel?.label ?? "",
-          style: dmsmedium.copyWith(
-            fontSize: FontSize.title6(context),
-            color: Jobstopcolor.darkgrey,
-          ),
+        TextBoldedLabelItem(
+          label: "employment_type_title".tr,
+          text: job.employmentType ?? "",
         ),
-        SizedBox(height: height / 46),
-        AutoSizeText(
-          "Employment Type",
-          style: dmsbold.copyWith(
-            fontSize: FontSize.title5(context),
-            color: Jobstopcolor.primarycolor,
-          ),
+        TextBoldedLabelItem(
+          label: "title_workplace_type".tr,
+          text: job.workplaceType ?? '',
         ),
-        AutoSizeText(
-          _controller.jobDetailsState.jopDetails.employmentType ?? "",
-          style: dmsmedium.copyWith(
-            fontSize: FontSize.title6(context),
-            color: Jobstopcolor.darkgrey,
-          ),
-        ),
-        SizedBox(height: height / 46),
-        AutoSizeText(
-          "Workplace Type",
-          style: dmsbold.copyWith(
-            fontSize: FontSize.title5(context),
-            color: Jobstopcolor.primarycolor,
-          ),
-        ),
-        AutoSizeText(
-          _controller.jobDetailsState.jopDetails.workplaceType ?? "",
-          style: dmsmedium.copyWith(
-            fontSize: FontSize.title6(context),
-            color: Jobstopcolor.darkgrey,
-          ),
-        ),
-        SizedBox(height: height / 46),
-        AutoSizeText(
-          "Salary",
-          style: dmsbold.copyWith(
-            fontSize: FontSize.title5(context),
-            color: Jobstopcolor.primarycolor,
-          ),
-        ),
-        AutoSizeText(
-          _controller.jobDetailsState.jopDetails.salaryRange.salaryStringFormat,
-          style: dmsmedium.copyWith(
-            fontSize: FontSize.title6(context),
-            color: Jobstopcolor.darkgrey,
-          ),
+        TextBoldedLabelItem(
+          label: "Salary".tr,
+          text: job.salaryRange.salaryStringFormat,
         ),
       ],
+    );
+  }
+}
+
+class TextBoldedLabelItem extends StatelessWidget {
+  const TextBoldedLabelItem({
+    super.key,
+    required this.label,
+    required this.text,
+    this.padding,
+    this.spacing,
+  });
+
+  final String label;
+  final String text;
+  final EdgeInsets? padding;
+  final double? spacing;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: padding ??
+          EdgeInsets.only(
+            bottom: context.fromHeight(CustomStyle.xxxl),
+          ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          AutoSizeText(
+            label,
+            style: dmsbold.copyWith(
+              fontSize: FontSize.title5(context),
+              color: Jobstopcolor.primarycolor,
+            ),
+          ),
+          SizedBox(
+            height: spacing ?? context.fromHeight(CustomStyle.huge3),
+          ),
+          AutoSizeText(
+            text,
+            style: dmsmedium.copyWith(
+              fontSize: FontSize.title6(context),
+              color: Jobstopcolor.darkgrey,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

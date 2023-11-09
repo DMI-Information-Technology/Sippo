@@ -97,7 +97,7 @@ class CustomAlertDialog extends StatelessWidget {
                   shape: customStyles.circularBorderedShapeButton(height / 64),
                 ),
                 child: Text(
-                  confirmBtnTitle ?? "",
+                  confirmBtnTitle ?? 'ok'.tr,
                   style: dmsregular.copyWith(color: Colors.white),
                 ),
               ),
@@ -113,7 +113,7 @@ class CustomAlertDialog extends StatelessWidget {
                   shape: customStyles.circularBorderedShapeButton(height / 64),
                 ),
                 child: Text(
-                  cancelBtnTitle ?? "",
+                  cancelBtnTitle ??  'cancel'.tr,
                   style: dmsregular.copyWith(
                     color: Jobstopcolor.primarycolor,
                   ),

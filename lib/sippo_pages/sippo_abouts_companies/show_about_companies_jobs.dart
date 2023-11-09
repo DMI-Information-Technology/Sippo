@@ -4,6 +4,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:jobspot/JobGlobalclass/global_storage.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
+import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
@@ -14,6 +15,7 @@ import 'package:jobspot/sippo_custom_widget/job_card_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
 import 'package:jobspot/utils/helper.dart';
+import 'package:lottie/lottie.dart';
 
 class ShowAboutCompaniesJobsList extends StatefulWidget {
   const ShowAboutCompaniesJobsList({super.key});
@@ -35,6 +37,12 @@ class _ShowAboutCompaniesJobsListState
         firstPageErrorIndicatorBuilder: (context) =>
             _buildErrorFirstLoad(context),
         newPageErrorIndicatorBuilder: (context) => _buildErrorNewLoad(context),
+        firstPageProgressIndicatorBuilder: (context) => Center(
+            child: Lottie.asset(
+              JobstopPngImg.loadingProgress,
+              height: context.height / 6,
+            ),
+          ),
         itemBuilder: (context, item, index) {
           return InkWell(
             onTap: () {

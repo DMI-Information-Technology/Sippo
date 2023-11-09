@@ -188,7 +188,7 @@ class SingleImageViewWidget extends StatelessWidget {
                 height: context.fromHeight(7.1),
                 alignment: Alignment.center,
                 child: Text(
-                  'Show more',
+                  'show_more'.tr,
                   style: dmsmedium.copyWith(color: Colors.white),
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,

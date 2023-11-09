@@ -41,7 +41,7 @@ class _JobJobSkillsAddEditState extends State<JobSkillsAddEdit> {
               () => Text(
                 !skillsState.isChangeSkills
                     ? "${'skills'.tr}(${skillsState.skillsList.length})"
-                    : "Add skills",
+                    : "label_add_skills".tr,
                 style: dmsbold.copyWith(
                     fontSize: 16, color: Jobstopcolor.primarycolor),
               ),
@@ -53,16 +53,16 @@ class _JobJobSkillsAddEditState extends State<JobSkillsAddEdit> {
                   guaranteedBuilder: (context, data) => InputBorderedField(
                     readOnly: true,
                     height: height / 13.5,
-                    hintText: "search skills",
+                    hintText: "hint_text_search_skills".tr,
                     fontSize: height / 68,
                     prefixIcon: Icon(Icons.search),
                     onTap: () {
                       showSearch(
                         context: context,
                         delegate: MySearchDelegate(
-                          hintText: "search skills",
+                          hintText: "hint_text_search_skills".tr,
                           textFieldStyle: TextStyle(fontSize: height / 58),
-                          pageTitle: "Skills",
+                          pageTitle: "title_skills".tr,
                           suggestions: data,
                           onSelectedSearch: (value) {
                             _controller.pushSkill(value);
@@ -151,7 +151,7 @@ class _JobJobSkillsAddEditState extends State<JobSkillsAddEdit> {
                 skillsState.isChangeSkills = !skillsState.isChangeSkills;
               }
             },
-            text: skillsState.isChangeSkills ? "SAVE" : "CHANGE".tr,
+            text: (skillsState.isChangeSkills ? "save" : "change").tr,
             backgroundColor: Jobstopcolor.primarycolor,
           ),
         ),
@@ -173,8 +173,8 @@ class _JobJobSkillsAddEditState extends State<JobSkillsAddEdit> {
         notchColor: Jobstopcolor.primarycolor,
         children: [
           ConfirmationBottomSheet(
-            title: "Are you sure you want to change what you entered?",
-            description: "Are you sure you want to change what you entered?",
+            title: "title_dialog_save_skill".tr,
+            description: "ask_dialog_confirm_entered_change".tr,
             onConfirm: () {
               Get.back();
               _controller.onSaveSubmitted().then((_) {

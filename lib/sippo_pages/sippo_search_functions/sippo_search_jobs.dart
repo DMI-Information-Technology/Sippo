@@ -15,6 +15,7 @@ import 'package:jobspot/sippo_custom_widget/job_card_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
 import 'package:jobspot/utils/helper.dart';
+import 'package:lottie/lottie.dart';
 
 class SippoJobSearch extends StatefulWidget {
   const SippoJobSearch({Key? key}) : super(key: key);
@@ -51,6 +52,12 @@ class _SippoJobSearchState extends State<SippoJobSearch> {
                       _buildErrorFirstLoad(context),
                   newPageErrorIndicatorBuilder: (context) =>
                       _buildErrorNewLoad(context),
+                  firstPageProgressIndicatorBuilder: (context) => Center(
+                    child: Lottie.asset(
+                      JobstopPngImg.loadingProgress,
+                      height: context.height / 6,
+                    ),
+                  ),
                   itemBuilder: (context, item, index) {
                     return InkWell(
                       onTap: () => SharedGlobalDataService.onJobTap(item),

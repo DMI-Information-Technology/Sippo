@@ -32,7 +32,7 @@ class _EditAddSpecializationCompanyState
         backgroundColor: Jobstopcolor.backgroudHome,
         titleSpacing: 0.0,
         title: Text(
-          'Specialization Company',
+          'label_specialization_company'.tr,
           style: dmsregular.copyWith(
             fontSize: FontSize.title4(context),
           ),
@@ -92,7 +92,7 @@ class _EditAddSpecializationCompanyState
               });
             return Center(
               child: Text(
-                'No specializations is found, Reload the page.',
+                'message_no_specializations_found'.tr,
                 maxLines: 2,
                 textAlign: TextAlign.center,
                 style: dmsbold.copyWith(

@@ -13,7 +13,7 @@ class LoadingOverlay extends StatelessWidget {
       color: Colors.black.withOpacity(0.3),
       child: Lottie.asset(
         JobstopPngImg.loadingProgress,
-        height: context.height / 3,
+        height: context.height / 5,
       ),
     );
   }
