@@ -4,35 +4,35 @@ import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 
 class JobstopMyThemes {
   static final lightTheme = ThemeData(
-    primaryColor: Jobstopcolor.black,
-    primarySwatch: Jobstopcolor.primarycolorSwatch,
+    primaryColor: SippoColor.black,
+    primarySwatch: SippoColor.primarycolorSwatch,
     textTheme: const TextTheme(),
     fontFamily: 'TajawalRegular',
-    scaffoldBackgroundColor: Jobstopcolor.backgroudHome,
+    scaffoldBackgroundColor: SippoColor.backgroudHome,
     appBarTheme: AppBarTheme(
-      iconTheme: const IconThemeData(color: Jobstopcolor.black),
+      iconTheme: const IconThemeData(color: SippoColor.black),
       elevation: 0,
       titleTextStyle: dmsmedium.copyWith(
-        color: Jobstopcolor.black,
+        color: SippoColor.black,
         fontSize: 20,
       ),
-      color: Jobstopcolor.transparent,
+      color: SippoColor.transparent,
     ),
   );
 
   static final darkTheme = ThemeData(
     fontFamily: 'DMSansRegular',
     brightness: Brightness.dark,
-    scaffoldBackgroundColor: Jobstopcolor.black,
+    scaffoldBackgroundColor: SippoColor.black,
     appBarTheme: AppBarTheme(
-      iconTheme: const IconThemeData(color: Jobstopcolor.white),
+      iconTheme: const IconThemeData(color: SippoColor.white),
       centerTitle: true,
       elevation: 0,
       titleTextStyle: dmsmedium.copyWith(
-        color: Jobstopcolor.white,
+        color: SippoColor.white,
         fontSize: 18,
       ),
-      color: Jobstopcolor.transparent,
+      color: SippoColor.transparent,
     ),
   );
 }

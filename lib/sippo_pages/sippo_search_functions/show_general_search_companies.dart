@@ -15,6 +15,7 @@ import 'package:jobspot/sippo_custom_widget/network_bordered_circular_image_widg
 import 'package:jobspot/sippo_custom_widget/rounded_border_radius_card_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
+import 'package:jobspot/sippo_pages/sippo_message_pages/no_items_found_message.dart';
 import 'package:lottie/lottie.dart';
 
 class ShowGeneralSearchCompaniesList extends StatefulWidget {
@@ -46,6 +47,8 @@ class _ShowGeneralSearchCompaniesListState
               _buildErrorNewLoad(context),
           newPageProgressIndicatorBuilder: (context) =>
               _buildNewPageProgress(context),
+          noItemsFoundIndicatorBuilder: (context) =>
+              NoItemsFoundMessageWidget.companies(alignmentFromStart: true),
           firstPageProgressIndicatorBuilder: (context) => Center(
             child: Lottie.asset(
               JobstopPngImg.loadingProgress,
@@ -100,7 +103,7 @@ class _ShowGeneralSearchCompaniesListState
             textAlign: TextAlign.center,
             style: dmsregular.copyWith(
               fontSize: FontSize.paragraph3(context),
-              color: Jobstopcolor.primarycolor,
+              color: SippoColor.primarycolor,
             ),
           ),
           InkWell(
@@ -109,7 +112,7 @@ class _ShowGeneralSearchCompaniesListState
             },
             child: Icon(
               Icons.refresh,
-              color: Jobstopcolor.primarycolor,
+              color: SippoColor.primarycolor,
             ),
           ),
         ],
@@ -128,8 +131,8 @@ class _ShowGeneralSearchCompaniesListState
                     onTapped: () => _controller.onLoadMoreCompaniesSubmitted(),
                     text: 'load_more'.tr,
                     backgroundColor: Colors.transparent,
-                    textColor: Jobstopcolor.primarycolor,
-                    borderColor: Jobstopcolor.primarycolor,
+                    textColor: SippoColor.primarycolor,
+                    borderColor: SippoColor.primarycolor,
                   ),
                 ),
         ));
@@ -143,7 +146,7 @@ class _ShowGeneralSearchCompaniesListState
         Text(
           "error".tr,
           style: dmsbold.copyWith(
-            color: Jobstopcolor.primarycolor,
+            color: SippoColor.primarycolor,
             fontSize: FontSize.title2(context),
           ),
         ),

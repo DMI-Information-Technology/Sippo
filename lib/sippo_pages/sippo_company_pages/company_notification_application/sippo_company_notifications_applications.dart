@@ -93,8 +93,8 @@ class _SippoCompanyNotificationApplicationState
         padding: EdgeInsets.symmetric(
           horizontal: context.fromWidth(CustomStyle.paddingValue),
         ),
-        unselectedLabelColor: Jobstopcolor.grey,
-        labelColor: Jobstopcolor.secondary,
+        unselectedLabelColor: SippoColor.grey,
+        labelColor: SippoColor.secondary,
         controller: _tabController,
         labelStyle: dmsmedium.copyWith(
           fontSize: FontSize.title5(context),
@@ -122,14 +122,14 @@ class _SippoCompanyNotificationApplicationState
                 vertical: kToolbarHeight / CustomStyle.overBy3,
               ),
               child: InkWell(
-                splashColor: Jobstopcolor.transparent,
-                highlightColor: Jobstopcolor.transparent,
+                splashColor: SippoColor.transparent,
+                highlightColor: SippoColor.transparent,
                 onTap: _controller.markAllNotificationsAsRead,
                 child: Text(
                   'read_all'.tr,
                   style: dmsregular.copyWith(
                     fontSize: FontSize.label(context),
-                    color: Jobstopcolor.secondary,
+                    color: SippoColor.secondary,
                   ),
                 ),
               ),

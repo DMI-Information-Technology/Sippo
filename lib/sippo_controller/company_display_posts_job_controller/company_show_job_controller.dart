@@ -4,9 +4,8 @@ import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:jobspot/sippo_controller/company_display_posts_job_controller/company_show_job_post_wrapper_controller.dart';
 import 'package:jobspot/sippo_data/company_repos/company_job_repo.dart';
-import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
-
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
+import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
 import 'package:jobspot/utils/states.dart';
 
 class CompanyShowJobController extends GetxController {
@@ -66,7 +65,7 @@ class CompanyShowJobController extends GetxController {
       refreshPage();
       showWrapperController.changeStates(
         isSuccess: true,
-        message: 'the job status is updated successfully.',
+        message: 'job_status_updated_message'.tr,
       );
     }
   }
@@ -76,8 +75,7 @@ class CompanyShowJobController extends GetxController {
       showWrapperController.changeStates(
         isWarning: true,
         isSuccess: false,
-        message:
-            "sorry your connection is lost, please check your settings before continuing.",
+        message: "connection_lost_message_1".tr,
       );
       return;
     }
@@ -90,8 +88,7 @@ class CompanyShowJobController extends GetxController {
       showWrapperController.changeStates(
         isWarning: true,
         isSuccess: false,
-        message:
-            "sorry your connection is lost, please check your settings before continuing.",
+        message: "connection_lost_message_1".tr,
       );
       return;
     }
@@ -109,7 +106,6 @@ class CompanyShowJobController extends GetxController {
     await fetchJobPages(pageKey);
     showWrapperController.changeStates(isLoading: false);
   }
-
 
   @override
   void onInit() {

@@ -1,20 +1,17 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
-import 'package:jobspot/sippo_controller/AuthenticationController/sippo_auth_controller.dart';
-import 'package:jobspot/sippo_controller/AuthenticationController/sippo_signup_company_controller.dart';
-import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
-
-import 'package:jobspot/utils/helper.dart' as helper;
-import 'package:jobspot/utils/states.dart';
-
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
+import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
 import 'package:jobspot/custom_app_controller/switch_status_controller.dart';
-import 'package:jobspot/sippo_custom_widget/error_messages_dialog_snackbar/error_messages.dart'
-    as messages;
+import 'package:jobspot/sippo_controller/AuthenticationController/sippo_auth_controller.dart';
+import 'package:jobspot/sippo_controller/AuthenticationController/sippo_signup_company_controller.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
+import 'package:jobspot/utils/helper.dart' as helper;
+import 'package:jobspot/utils/states.dart';
+
 import 'firebase_auth_service_controller.dart';
 
 class IdentityVerificationController extends GetxController {
@@ -86,16 +83,16 @@ class IdentityVerificationController extends GetxController {
 
   Future<void> onSubmitSend() async {
     if (!isValidOTP) {
-      messages.invalidOTPSnackbar();
+      // messages.invalidOTPSnackbar();
       return;
     }
     await _firebaseOTP.verifyOTP(otpCode.toString());
     if (firebaseState.isError) {
-      messages.failedVerifyOTPSnackbar(firebaseState.message);
+      // messages.failedVerifyOTPSnackbar(firebaseState.message);
       return;
     }
     if (firebaseState.isSuccess) {
-      messages.successVerifyOTPSnackbar();
+      // messages.successVerifyOTPSnackbar();
       await _authController.companyRegister(
         _signUpCompanyController.companyForm,
         // CompanyModel(
@@ -173,7 +170,7 @@ class IdentityVerificationController extends GetxController {
         title: "Success",
         description:
             "the account has been created successfully want continue to dashboard",
-        confirmBtnColor: Jobstopcolor.primarycolor,
+        confirmBtnColor: SippoColor.primarycolor,
         confirmBtnTitle: "ok".tr,
         onConfirm: () => Get.offAllNamed(SippoRoutes.sippoCompanyDashboard),
       ),

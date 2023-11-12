@@ -129,15 +129,14 @@ class LanguageEditAddController extends GetxController {
     if (!_profileController.netController.isConnected) {
       warningState(
         true,
-        "sorry your connection is lost, "
-        "please check your settings before continuing.",
+        "connection_lost_message_1".tr,
       );
       return;
     }
     _states.value = States(isLoading: true);
     if (newLanguage.id == null) {
       print("Lang.onSavedSubmitted: select language before submission.");
-      warningState(true, "select language before submission.");
+      warningState(true, "select_language_warning".tr);
     } else if (!langProfileList.any((e) => e.id == newLanguage.id)) {
       await addNewLanguage();
     }
@@ -148,7 +147,7 @@ class LanguageEditAddController extends GetxController {
     if (!_profileController.netController.isConnected) {
       warningState(
         true,
-        "sorry your connection is lost, please check your settings before continuing.",
+        "connection_lost_message_1".tr,
       );
       return;
     }

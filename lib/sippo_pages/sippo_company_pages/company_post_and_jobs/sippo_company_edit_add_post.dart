@@ -58,7 +58,7 @@ class _SippoCompanyEditAddPostState extends State<SippoCompanyEditAddPost> {
                   "posted".tr,
                   style: dmsbold.copyWith(
                     fontSize: FontSize.title5(context),
-                    color: Jobstopcolor.primarycolor,
+                    color: SippoColor.primarycolor,
                   ),
                 ),
               ),
@@ -81,7 +81,7 @@ class _SippoCompanyEditAddPostState extends State<SippoCompanyEditAddPost> {
                       .tr}",
                   style: dmsbold.copyWith(
                       fontSize: FontSize.title3(context),
-                      color: Jobstopcolor.primarycolor),
+                      color: SippoColor.primarycolor),
                 ),
                 SizedBox(height: height / 36),
                 _buildCompanyHeaderPage(context),
@@ -112,7 +112,7 @@ class _SippoCompanyEditAddPostState extends State<SippoCompanyEditAddPost> {
                   "post_title".tr,
                   style: dmsbold.copyWith(
                     fontSize: FontSize.label(context),
-                    color: Jobstopcolor.primarycolor,
+                    color: SippoColor.primarycolor,
                   ),
                 ),
                 SizedBox(height: height / 46),
@@ -127,7 +127,7 @@ class _SippoCompanyEditAddPostState extends State<SippoCompanyEditAddPost> {
                   "description".tr,
                   style: dmsbold.copyWith(
                     fontSize: FontSize.label(context),
-                    color: Jobstopcolor.primarycolor,
+                    color: SippoColor.primarycolor,
                   ),
                 ),
                 SizedBox(height: height / 46),
@@ -227,7 +227,7 @@ class _SippoCompanyEditAddPostState extends State<SippoCompanyEditAddPost> {
       children: [
         Icon(
           Icons.camera_alt_rounded,
-          color: Jobstopcolor.primarycolor,
+          color: SippoColor.primarycolor,
           size: context.fromHeight(CustomStyle.s),
         ),
         SizedBox(width: context.fromWidth(CustomStyle.s)),
@@ -236,7 +236,7 @@ class _SippoCompanyEditAddPostState extends State<SippoCompanyEditAddPost> {
           child: Image.asset(
             JobstopPngImg.galleryicon,
             height: context.fromHeight(CustomStyle.l),
-            color: Jobstopcolor.primarycolor,
+            color: SippoColor.primarycolor,
           ),
         ),
       ],
@@ -259,7 +259,7 @@ class _SippoCompanyEditAddPostState extends State<SippoCompanyEditAddPost> {
               _controller.company.name ?? "",
               style: dmsbold.copyWith(
                 fontSize: FontSize.title6(context),
-                color: Jobstopcolor.primarycolor,
+                color: SippoColor.primarycolor,
               ),
             ),
             SizedBox(height: context.fromHeight(CustomStyle.huge2)),
@@ -267,7 +267,7 @@ class _SippoCompanyEditAddPostState extends State<SippoCompanyEditAddPost> {
               _controller.company.city ?? "",
               style: dmsregular.copyWith(
                 fontSize: FontSize.label(context),
-                color: Jobstopcolor.darkgrey,
+                color: SippoColor.darkgrey,
               ),
             ),
           ],

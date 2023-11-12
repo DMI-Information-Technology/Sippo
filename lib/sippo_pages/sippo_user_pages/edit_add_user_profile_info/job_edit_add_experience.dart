@@ -37,11 +37,11 @@ class JobExperiences extends StatelessWidget {
             children: [
               Obx(
                 () => AutoSizeText(
-                  "${controller.isEditing ? "change".tr : "Add".tr} " +
+                  "${controller.isEditing ? "change".tr : "add".tr} " +
                       "work_experience".tr,
                   style: dmsbold.copyWith(
                     fontSize: FontSize.title3(context),
-                    color: Jobstopcolor.primarycolor,
+                    color: SippoColor.primarycolor,
                   ),
                 ),
               ),
@@ -86,7 +86,7 @@ class JobExperiences extends StatelessWidget {
                     "this_is_my_pos".tr,
                     style: dmsregular.copyWith(
                       fontSize: FontSize.paragraph3(context),
-                      color: Jobstopcolor.darkgrey,
+                      color: SippoColor.darkgrey,
                     ),
                   )
                 ],
@@ -111,7 +111,7 @@ class JobExperiences extends StatelessWidget {
       text,
       style: dmsbold.copyWith(
         fontSize: FontSize.label(context),
-        color: Jobstopcolor.primarycolor,
+        color: SippoColor.primarycolor,
       ),
     );
   }
@@ -156,7 +156,7 @@ class JobExperiences extends StatelessWidget {
       hintText: "additional_information".tr,
       hintStyle: dmsregular.copyWith(
         fontSize: FontSize.label(context),
-        color: Jobstopcolor.grey,
+        color: SippoColor.grey,
       ),
       keyboardType: TextInputType.multiline,
       maxLine: 5,
@@ -177,17 +177,17 @@ class JobExperiences extends StatelessWidget {
           width: context.height / 30,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
-            color: Jobstopcolor.white,
+            color: SippoColor.white,
             boxShadow: const [
-              BoxShadow(color: Jobstopcolor.shedo, blurRadius: 5)
+              BoxShadow(color: SippoColor.shedo, blurRadius: 5)
             ],
           ),
           child: Icon(
             Icons.check,
             size: 15,
             color: controller.workExState.isCurrentJob
-                ? Jobstopcolor.primarycolor
-                : Jobstopcolor.transparent,
+                ? SippoColor.primarycolor
+                : SippoColor.transparent,
           ),
         ),
       ),
@@ -216,7 +216,7 @@ class JobExperiences extends StatelessWidget {
             ? const LoadingInputField()
             : const Icon(
                 Icons.date_range_outlined,
-                color: Jobstopcolor.primarycolor,
+                color: SippoColor.primarycolor,
               ),
       ),
       validator: (value) => ValidatingInput.validateEmptyField(value),
@@ -243,7 +243,7 @@ class JobExperiences extends StatelessWidget {
             ? const LoadingInputField()
             : Icon(
                 Icons.date_range_outlined,
-                color: Jobstopcolor.primarycolor,
+                color: SippoColor.primarycolor,
               ),
       ),
       validator: (value) => ValidatingInput.validateEmptyField(value),
@@ -298,8 +298,8 @@ class JobExperiences extends StatelessWidget {
                     onTapped: () {
                       _showRemove();
                     },
-                    text: "REMOVE".tr,
-                    backgroundColor: Jobstopcolor.lightprimary,
+                    text: "remove".tr,
+                    backgroundColor: SippoColor.lightprimary,
                   ),
                 )
               : const SizedBox.shrink(),
@@ -311,8 +311,8 @@ class JobExperiences extends StatelessWidget {
               onTapped: () {
                 _showSave();
               },
-              text: "SAVE".tr,
-              backgroundColor: Jobstopcolor.primarycolor,
+              text: "save".tr,
+              backgroundColor: SippoColor.primarycolor,
             ),
           ),
         ),
@@ -331,11 +331,13 @@ class JobExperiences extends StatelessWidget {
       backgroundColor: Colors.white,
       isScrollControlled: true,
       ContainerBottomSheetWidget(
-        notchColor: Jobstopcolor.primarycolor,
+        notchColor: SippoColor.primarycolor,
         children: [
           ConfirmationBottomSheet(
             title: "title_dialog_save_work_experience".tr,
             description: "ask_dialog_confirm_entered_change".tr,
+            confirmTitle: 'yes'.tr,
+            undoTitle: 'undo'.tr,
             onConfirm: () async {
               if (controller.formKey.currentState?.validate() == true) {
                 await controller.onSaveSubmitted();
@@ -359,11 +361,13 @@ class JobExperiences extends StatelessWidget {
       backgroundColor: Colors.white,
       isScrollControlled: true,
       ContainerBottomSheetWidget(
-        notchColor: Jobstopcolor.primarycolor,
+        notchColor: SippoColor.primarycolor,
         children: [
           ConfirmationBottomSheet(
             title: "title_dialog_remove_work_experience".tr,
             description: "ask_dialog_remove".tr,
+            confirmTitle: 'yes'.tr,
+            undoTitle: 'undo'.tr,
             onConfirm: () async {
               await EditAddWorkExperienceController.instance
                   .onDeleteSubmitted();

@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
-import 'package:jobspot/sippo_controller/user_profile_controller/profile_user_controller.dart';
 import 'package:jobspot/core/Refresh.dart';
 import 'package:jobspot/custom_app_controller/switch_status_controller.dart';
+import 'package:jobspot/sippo_controller/user_profile_controller/profile_user_controller.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/skills_model.dart';
 import 'package:jobspot/sippo_data/user_repos/skills_repo.dart';
 import 'package:jobspot/utils/states.dart';
@@ -74,7 +74,7 @@ class EditAddSkillsController extends GetxController {
 
   void removeSkill(int index) {
     if (skillsState.skillsList.length == 1)
-      return warningState(true, "sorry, you cannot remove all the skills.");
+      return warningState(true, "cannot_remove_all_skills".tr);
     skillsState.removeSkillsListAt(index);
   }
 
@@ -83,7 +83,7 @@ class EditAddSkillsController extends GetxController {
       resetSkillsState();
       return warningState(
         true,
-        "sorry your connection is lost, please check your settings before continuing.",
+        'connection_lost_message_1'.tr,
       );
     }
     final nothingChanged =

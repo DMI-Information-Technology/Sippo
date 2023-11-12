@@ -50,7 +50,7 @@ class _SippoAboutCompaniesState extends State<SippoAboutCompanies> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Jobstopcolor.backgroudHome,
+      backgroundColor: SippoColor.backgroudHome,
       body: RefreshIndicator(
         notificationPredicate: (notification) {
           return _controller.aboutState.selectedTaps != 0;
@@ -145,7 +145,7 @@ class _SippoAboutCompaniesState extends State<SippoAboutCompanies> {
                     },
                     text: steps[i],
                     backgroundColor: _controller.aboutState.selectedTaps == i
-                        ? Jobstopcolor.secondary
+                        ? SippoColor.secondary
                         : Colors.white,
                     textColor: _controller.aboutState.selectedTaps == i
                         ? Colors.white
@@ -207,7 +207,7 @@ class _SippoAboutCompaniesState extends State<SippoAboutCompanies> {
                           : null,
                   backgroundColor:
                       _controller.aboutState.company.isFollowed == true
-                          ? Jobstopcolor.secondary.withOpacity(0.8)
+                          ? SippoColor.secondary.withOpacity(0.8)
                           : Colors.red[100],
                   onTapped: () async {
                     print("hello world");
@@ -236,7 +236,7 @@ class _SippoAboutCompaniesState extends State<SippoAboutCompanies> {
                 _controller.aboutState.company.name ?? "",
                 style: dmsbold.copyWith(
                   fontSize: FontSize.title2(context),
-                  color: Jobstopcolor.primarycolor,
+                  color: SippoColor.primarycolor,
                 ),
                 overflow: TextOverflow.clip,
               )),
@@ -246,9 +246,11 @@ class _SippoAboutCompaniesState extends State<SippoAboutCompanies> {
             print("establishmentDate: ${company.establishmentDate}");
             return TopDescriptionInfoCompanyWidget(
               startText: company.locationCity,
-              endText: calculateElapsedTimeFromStringDate(
-                company.establishmentDate,
-              ),
+              endText: company.establishmentDate != null
+                  ? calculateElapsedTimeFromStringDate(
+                      company.establishmentDate,
+                    )
+                  : null,
             );
           }),
         ],
@@ -294,7 +296,7 @@ class CustomSliverAppBarDelegate extends SliverPersistentHeaderDelegate {
           Container(
             width: context.width,
             height: expandedHeight,
-            color: Jobstopcolor.backgroudHome,
+            color: SippoColor.backgroudHome,
           ),
         Positioned(
           top: 0,
@@ -303,7 +305,7 @@ class CustomSliverAppBarDelegate extends SliverPersistentHeaderDelegate {
             child: Container(
               color: shrinkOffset <= minExtent
                   ? Colors.transparent
-                  : Jobstopcolor.backgroudHome,
+                  : SippoColor.backgroudHome,
               width: context.width,
               height: kToolbarHeight +
                   (shrinkOffset <= minExtent

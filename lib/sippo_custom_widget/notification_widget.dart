@@ -42,7 +42,7 @@ class UserApplicationWidget extends StatelessWidget {
       onTap: onTap,
       child: RoundedBorderRadiusCardWidget(
         paddingType: PaddingType.all,
-        color: isSelected ? Jobstopcolor.primary : Colors.white,
+        color: isSelected ? SippoColor.primary : Colors.white,
         margin: EdgeInsets.symmetric(
           horizontal: context.fromWidth(CustomStyle.s),
         ),
@@ -127,7 +127,7 @@ class UserApplicationWidget extends StatelessWidget {
             application?.job?.title ?? "",
             style: dmsbold.copyWith(
               fontSize: FontSize.title6(context),
-              color: Jobstopcolor.black,
+              color: SippoColor.black,
             ),
           ),
           SizedBox(
@@ -190,7 +190,7 @@ class UserJobApplicationWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return RoundedBorderRadiusCardWidget(
       paddingType: PaddingType.all,
-      color: Jobstopcolor.backgroudHome,
+      color: SippoColor.backgroudHome,
       margin: EdgeInsets.symmetric(
         horizontal: context.fromWidth(CustomStyle.paddingValue),
       ),
@@ -241,7 +241,7 @@ class UserJobApplicationWidget extends StatelessWidget {
                 : null,
             text: "Show CV",
             backgroundColor:
-                cv == null ? Colors.grey : Jobstopcolor.lightprimary,
+                cv == null ? Colors.grey : SippoColor.lightprimary,
             textColor: Colors.white,
           ),
         ),
@@ -258,7 +258,7 @@ class UserJobApplicationWidget extends StatelessWidget {
             application?.job?.title ?? "",
             style: dmsbold.copyWith(
               fontSize: FontSize.title6(context),
-              color: Jobstopcolor.black,
+              color: SippoColor.black,
             ),
           ),
           SizedBox(
@@ -327,7 +327,7 @@ class UserCompanyApplicationWidget extends StatelessWidget {
       margin: EdgeInsets.symmetric(
         horizontal: context.fromWidth(CustomStyle.paddingValue),
       ),
-      color: Jobstopcolor.backgroudHome,
+      color: SippoColor.backgroudHome,
       child: SizedBox(
         width: context.width,
         child: Column(
@@ -353,7 +353,7 @@ class UserCompanyApplicationWidget extends StatelessWidget {
                     : null,
                 text: "Show CV",
                 backgroundColor:
-                    cv == null ? Colors.grey : Jobstopcolor.lightprimary,
+                    cv == null ? Colors.grey : SippoColor.lightprimary,
                 textColor: Colors.white,
               ),
             ),

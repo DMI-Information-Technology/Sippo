@@ -24,7 +24,7 @@ class NotificationCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RoundedBorderRadiusCardWidget(
-      color: notification?.isRead != true ? Jobstopcolor.lightprimary4 : null,
+      color: notification?.isRead != true ? SippoColor.lightprimary4 : null,
       child: ListTile(
         titleAlignment: ListTileTitleAlignment.top,
         horizontalTitleGap: 0.0,

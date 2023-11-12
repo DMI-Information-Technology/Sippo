@@ -101,7 +101,7 @@ class _SippoUserHomeState extends State<SippoUserHome> {
           ),
         ),
       ),
-      backgroundColor: Jobstopcolor.backgroudHome,
+      backgroundColor: SippoColor.backgroudHome,
     );
   }
 
@@ -144,7 +144,7 @@ class _SippoUserHomeState extends State<SippoUserHome> {
                 getTimeOfDay(),
                 style: dmsbold.copyWith(
                   fontSize: FontSize.title3(context),
-                  color: Jobstopcolor.primarycolor,
+                  color: SippoColor.primarycolor,
                 ),
               ),
               SizedBox(
@@ -159,7 +159,7 @@ class _SippoUserHomeState extends State<SippoUserHome> {
                     "${dashboardController.user.name}.",
                     style: dmsbold.copyWith(
                       fontSize: FontSize.title3(context),
-                      color: Jobstopcolor.primarycolor,
+                      color: SippoColor.primarycolor,
                     ),
                   )
                 : const SizedBox.shrink(),
@@ -199,14 +199,14 @@ class _SippoUserHomeState extends State<SippoUserHome> {
                     color: _controller.userHomeState.selectedSpecialization ==
                             special
                         ? Colors.white
-                        : Jobstopcolor.black,
+                        : SippoColor.black,
                     fontSize: FontSize.label(context),
                   ),
                 ),
                 backgroundColor:
                     _controller.userHomeState.selectedSpecialization == special
-                        ? Jobstopcolor.primarycolor
-                        : Jobstopcolor.grey2,
+                        ? SippoColor.primarycolor
+                        : SippoColor.grey2,
                 borderRadius: width / 32,
                 paddingValue: context.fromHeight(CustomStyle.xxxl),
               );
@@ -271,7 +271,7 @@ class _SippoUserHomeState extends State<SippoUserHome> {
                         child: Image.asset(JobstopPngImg.signup),
                       ),
                       size: context.fromHeight(24),
-                      outerBorderColor: Jobstopcolor.backgroudHome,
+                      outerBorderColor: SippoColor.backgroudHome,
                     )),
               ),
             ],

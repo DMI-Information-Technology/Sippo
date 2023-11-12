@@ -31,7 +31,7 @@ class NoResourceScreen extends StatelessWidget {
             title,
             style: dmsbold.copyWith(
                 fontSize: FontSize.title3(context),
-                color: Jobstopcolor.primarycolor),
+                color: SippoColor.primarycolor),
           ),
           SizedBox(
             height: height / 36,
@@ -40,7 +40,7 @@ class NoResourceScreen extends StatelessWidget {
             description,
             style: dmsregular.copyWith(
               fontSize: FontSize.paragraph3(context),
-              color: Jobstopcolor.darkgrey,
+              color: SippoColor.darkgrey,
             ),
             textAlign: TextAlign.center,
           ),

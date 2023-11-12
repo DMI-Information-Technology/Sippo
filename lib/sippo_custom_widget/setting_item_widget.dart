@@ -50,7 +50,7 @@ class SettingItemWidget extends StatelessWidget {
       ),
       trailing: isHavingTrailingIcon ? trailingIcon : null,
       // selected: isSelected,
-      tileColor: isSelected ? Jobstopcolor.primarycolor : null,
+      tileColor: isSelected ? SippoColor.primarycolor : null,
     );
   }
 }

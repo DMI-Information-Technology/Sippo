@@ -89,7 +89,7 @@ class _CheckOTPResetPasswordMessageState
                   TextSpan(
                     text: authController.resetEmail.text,
                     style: dmsbold.copyWith(
-                      color: Jobstopcolor.primarycolor,
+                      color: SippoColor.primarycolor,
                       fontSize: FontSize.title4(context),
                     ),
                   ),
@@ -102,12 +102,12 @@ class _CheckOTPResetPasswordMessageState
             Center(
               child: VerificationCode(
                 textStyle: dmsregular.copyWith(
-                    fontSize: height / 28, color: Jobstopcolor.textColor),
+                    fontSize: height / 28, color: SippoColor.textColor),
                 keyboardType: TextInputType.number,
-                underlineColor: Jobstopcolor.primarycolor,
+                underlineColor: SippoColor.primarycolor,
                 length: 6,
                 fillColor: Colors.grey[200],
-                cursorColor: Jobstopcolor.primarycolor,
+                cursorColor: SippoColor.primarycolor,
                 itemSize: width / 8,
                 digitsOnly: true,
                 fullBorder: true,
@@ -189,7 +189,7 @@ class _CheckOTPResetPasswordMessageState
               seconds.toString(),
               style: dmsbold.copyWith(
                 fontSize: height / 52,
-                color: Jobstopcolor.primarycolor,
+                color: SippoColor.primarycolor,
               ),
             ),
           ],
@@ -216,7 +216,7 @@ class _CheckOTPResetPasswordMessageState
                 "resend",
                 style: dmsbold.copyWith(
                   fontSize: height / 52,
-                  color: Jobstopcolor.primarycolor,
+                  color: SippoColor.primarycolor,
                 ),
               ),
             )

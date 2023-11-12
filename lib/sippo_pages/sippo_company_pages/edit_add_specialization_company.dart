@@ -29,7 +29,7 @@ class _EditAddSpecializationCompanyState
     return LoadingScaffold(
       controller: _controller.loadingOverly,
       appBar: AppBar(
-        backgroundColor: Jobstopcolor.backgroudHome,
+        backgroundColor: SippoColor.backgroudHome,
         titleSpacing: 0.0,
         title: Text(
           'label_specialization_company'.tr,
@@ -96,7 +96,7 @@ class _EditAddSpecializationCompanyState
                 maxLines: 2,
                 textAlign: TextAlign.center,
                 style: dmsbold.copyWith(
-                  color: Jobstopcolor.primarycolor,
+                  color: SippoColor.primarycolor,
                   fontSize: FontSize.title3(context),
                 ),
               ),
@@ -134,7 +134,7 @@ class SelectedSpecializationCardWidget extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(22),
         border: Border.all(
-          color: isSelected ? Jobstopcolor.primarycolor : Colors.black26,
+          color: isSelected ? SippoColor.primarycolor : Colors.black26,
           width: 2.0,
         ),
         color: isSelected ? Colors.blue.withOpacity(0.2) : Colors.white,
@@ -144,13 +144,13 @@ class SelectedSpecializationCardWidget extends StatelessWidget {
           textAlign: TextAlign.start,
           title,
           style: dmsbold.copyWith(
-            color: isSelected ? Jobstopcolor.primarycolor : null,
+            color: isSelected ? SippoColor.primarycolor : null,
             fontSize: FontSize.title5(context),
           ),
         ),
         value: isSelected,
         onChanged: tapToggle,
-        activeColor: Jobstopcolor.primarycolor,
+        activeColor: SippoColor.primarycolor,
       ),
     );
   }

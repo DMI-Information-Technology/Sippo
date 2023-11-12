@@ -25,18 +25,24 @@ class _SippoSearchJobsSpecializationsFilterState
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      body: BodyWidget(
-        paddingContent: EdgeInsets.symmetric(
-          horizontal: context.fromWidth(CustomStyle.paddingValue),
-          vertical: context.fromHeight(CustomStyle.paddingValue),
+    return WillPopScope(
+      onWillPop: () async {
+        _controller.filterSearchState.specializationsSearch = '';
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBar(),
+        body: BodyWidget(
+          paddingContent: EdgeInsets.symmetric(
+            horizontal: context.fromWidth(CustomStyle.paddingValue),
+            vertical: context.fromHeight(CustomStyle.paddingValue),
+          ),
+          paddingTop: EdgeInsets.symmetric(
+            horizontal: context.fromWidth(CustomStyle.paddingValue),
+          ),
+          topScreen: _buildTopSearchBar(context),
+          child: _buildSpecializationsGridView(context),
         ),
-        paddingTop: EdgeInsets.symmetric(
-          horizontal: context.fromWidth(CustomStyle.paddingValue),
-        ),
-        topScreen: _buildTopSearchBar(context),
-        child: _buildSpecializationsGridView(context),
       ),
     );
   }
@@ -64,6 +70,7 @@ class _SippoSearchJobsSpecializationsFilterState
           onTap: () {
             _controller.filterSearchState.specializationsSearchController.text =
                 _controller.filterSearchState.specialization.name ?? '';
+            _controller.filterSearchState.specializationsSearch = '';
             Get.back();
           },
         )
@@ -92,14 +99,13 @@ class _SippoSearchJobsSpecializationsFilterState
             return InkWell(
               onTap: () {
                 _controller.filterSearchState.specialization = data[index];
-
               },
               child: Obx(() {
                 final specialization =
                     _controller.filterSearchState.specialization;
                 return RoundedBorderRadiusCardWidget(
                   color: specialization == data[index]
-                      ? Jobstopcolor.primarycolor
+                      ? SippoColor.primarycolor
                       : Colors.white,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,

@@ -103,7 +103,7 @@ class _EditCompanyProfilePageState extends State<EditCompanyProfilePage> {
                     fontSize: FontSize.label(context),
                     suffixIcon: Icon(
                       Icons.person_outline_outlined,
-                      color: Jobstopcolor.primarycolor,
+                      color: SippoColor.primarycolor,
                     ),
                     // textInputAction: TextInputAction.newline,
                     validator: (value) {
@@ -145,7 +145,7 @@ class _EditCompanyProfilePageState extends State<EditCompanyProfilePage> {
                     fontSize: FontSize.label(context),
                     suffixIcon: Icon(
                       Icons.email_outlined,
-                      color: Jobstopcolor.primarycolor,
+                      color: SippoColor.primarycolor,
                     ),
                     // textInputAction: TextInputAction.newline,
                   ),
@@ -219,7 +219,7 @@ class _EditCompanyProfilePageState extends State<EditCompanyProfilePage> {
                     fontSize: FontSize.label(context),
                     suffixIcon: Icon(
                       Icons.web,
-                      color: Jobstopcolor.primarycolor,
+                      color: SippoColor.primarycolor,
                     ),
                     // textInputAction: TextInputAction.newline,
                   ),
@@ -236,13 +236,13 @@ class _EditCompanyProfilePageState extends State<EditCompanyProfilePage> {
                   ),
                   InputBorderedField(
                     keyboardType: TextInputType.number,
-                    hintText: "enter your employees count",
+                    hintText: "enter_employee_counts".tr,
                     gController: profileEditState.employeesCount,
                     height: context.fromHeight(CustomStyle.inputBorderedSize),
                     fontSize: FontSize.label(context),
                     suffixIcon: Icon(
                       Icons.numbers,
-                      color: Jobstopcolor.primarycolor,
+                      color: SippoColor.primarycolor,
                     ),
                   ),
                   SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
@@ -274,7 +274,7 @@ class _EditCompanyProfilePageState extends State<EditCompanyProfilePage> {
           text: "save".tr,
         ),
       ),
-      backgroundColor: Jobstopcolor.backgroudHome,
+      backgroundColor: SippoColor.backgroudHome,
     );
   }
 
@@ -313,7 +313,7 @@ class _EditCompanyProfilePageState extends State<EditCompanyProfilePage> {
             },
             child: Icon(
               Icons.edit,
-              color: Jobstopcolor.white,
+              color: SippoColor.white,
               size: context.fromHeight(CustomStyle.m),
             ))
       ],
@@ -329,7 +329,7 @@ class _EditCompanyProfilePageState extends State<EditCompanyProfilePage> {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: Jobstopcolor.white,
+        color: SippoColor.white,
       ),
       child: IntlPhoneField(
         controller: gTxtController.controller,
@@ -340,11 +340,11 @@ class _EditCompanyProfilePageState extends State<EditCompanyProfilePage> {
         dropdownIconPosition: IconPosition.trailing,
         dropdownTextStyle: dmsregular.copyWith(
           fontSize: FontSize.label(context),
-          color: Jobstopcolor.grey,
+          color: SippoColor.grey,
         ),
         dropdownIcon: Icon(
           Icons.arrow_drop_down,
-          color: Jobstopcolor.grey,
+          color: SippoColor.grey,
           size: context.fromHeight(CustomStyle.s),
         ),
         style: dmsmedium.copyWith(
@@ -367,7 +367,7 @@ class _EditCompanyProfilePageState extends State<EditCompanyProfilePage> {
           ),
           suffixIcon: Icon(
             Icons.phone_outlined,
-            color: Jobstopcolor.primarycolor,
+            color: SippoColor.primarycolor,
           ),
         ),
         showCursor: true,
@@ -417,7 +417,7 @@ class _EditCompanyProfilePageState extends State<EditCompanyProfilePage> {
       gController: eduState.establishedDate,
       suffixIcon: const Icon(
         Icons.date_range_outlined,
-        color: Jobstopcolor.primarycolor,
+        color: SippoColor.primarycolor,
       ),
     );
   }

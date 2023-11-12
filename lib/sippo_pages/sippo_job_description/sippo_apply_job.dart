@@ -56,7 +56,7 @@ class _SippoApplyJobState extends State<SippoApplyJob> {
               ),
             ),
             backgroundColor: isHeightOverAppBar
-                ? Jobstopcolor.backgroudHome
+                ? SippoColor.backgroudHome
                 : Colors.transparent,
           );
         }),
@@ -128,8 +128,8 @@ class _SippoApplyJobState extends State<SippoApplyJob> {
                   });
                 },
                 text: "find_another_job".tr,
-                backgroundColor: Jobstopcolor.lightprimary,
-                textColor: Jobstopcolor.primarycolor,
+                backgroundColor: SippoColor.lightprimary,
+                textColor: SippoColor.primarycolor,
               ),
               SizedBox(height: height / CustomStyle.xxl),
               CustomButton(
@@ -158,7 +158,7 @@ class _SippoApplyJobState extends State<SippoApplyJob> {
           "upload_cv".tr,
           style: dmsbold.copyWith(
             fontSize: FontSize.title5(context),
-            color: Jobstopcolor.primarycolor,
+            color: SippoColor.primarycolor,
           ),
         ),
         SizedBox(height: context.fromHeight(CustomStyle.huge)),
@@ -166,7 +166,7 @@ class _SippoApplyJobState extends State<SippoApplyJob> {
           "add_cv_desc".tr,
           style: dmsregular.copyWith(
             fontSize: FontSize.paragraph3(context),
-            color: Jobstopcolor.darkgrey,
+            color: SippoColor.darkgrey,
           ),
           overflow: TextOverflow.ellipsis,
         ),
@@ -210,7 +210,7 @@ class _SippoApplyJobState extends State<SippoApplyJob> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         RoundedBorderRadiusCardWidget(
-          color: Jobstopcolor.lightprimary4,
+          color: SippoColor.lightprimary4,
           child: CvCardWidget.fromRemote(
             remoteCv: _controller.applyJobsState.jopDetails.application?.cv,
             createAt:
@@ -224,7 +224,7 @@ class _SippoApplyJobState extends State<SippoApplyJob> {
         SizedBox(height: height / 36),
         Text(
           "you_applied_sent".tr,
-          style: dmsbold.copyWith(fontSize: 16, color: Jobstopcolor.darkgrey),
+          style: dmsbold.copyWith(fontSize: 16, color: SippoColor.darkgrey),
         ),
       ],
     );
@@ -273,7 +273,7 @@ class _SippoApplyJobState extends State<SippoApplyJob> {
                 _controller.applyJobsState.jopDetails.title ?? '',
                 style: dmsbold.copyWith(
                   fontSize: FontSize.title2(context),
-                  color: Jobstopcolor.secondary,
+                  color: SippoColor.secondary,
                 ),
                 overflow: TextOverflow.clip,
               )),

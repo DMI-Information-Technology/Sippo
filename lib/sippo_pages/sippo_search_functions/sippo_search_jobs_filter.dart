@@ -12,6 +12,7 @@ import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/custom_drop_down_button.dart';
 import 'package:jobspot/sippo_custom_widget/title_label_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
+import 'package:jobspot/sippo_pages/sippo_message_pages/min_max_salary_message_text_wiedgt.dart';
 
 class SippoSearchJobsFilter extends StatefulWidget {
   const SippoSearchJobsFilter({Key? key}) : super(key: key);
@@ -96,7 +97,7 @@ class _SippoSearchJobsFilterState extends State<SippoSearchJobsFilter> {
             ),
             _buildWorkPLaceTypeWrap(context),
             SizedBox(height: height / 36),
-            const Divider(color: Jobstopcolor.grey),
+            const Divider(color: SippoColor.grey),
             SizedBox(height: height / 64),
             TitleLabelWidget(
               "Salary".tr,
@@ -171,7 +172,7 @@ class _SippoSearchJobsFilterState extends State<SippoSearchJobsFilter> {
                       ),
                     ),
                     backgroundColor: experienceLvl == data[index]
-                        ? Jobstopcolor.primarycolor
+                        ? SippoColor.primarycolor
                         : null,
                   );
                 }),
@@ -210,7 +211,7 @@ class _SippoSearchJobsFilterState extends State<SippoSearchJobsFilter> {
                       ),
                     ),
                     backgroundColor: employmentType == data[i]
-                        ? Jobstopcolor.primarycolor
+                        ? SippoColor.primarycolor
                         : null,
                   );
                 }),
@@ -232,7 +233,7 @@ class _SippoSearchJobsFilterState extends State<SippoSearchJobsFilter> {
             max: CompanyEditAddJobState.MAX_SALARY_RANGE,
             min: CompanyEditAddJobState.MIN_SALARY_RANGE,
             divisions: CompanyEditAddJobState.DIVISION,
-            activeColor: Jobstopcolor.primarycolor,
+            activeColor: SippoColor.primarycolor,
             labels: RangeLabels(
               _controller.filterSearchState.rangeSalary.start
                   .roundToDouble()
@@ -245,16 +246,7 @@ class _SippoSearchJobsFilterState extends State<SippoSearchJobsFilter> {
           );
         }),
         SizedBox(height: height / 64),
-        Text(
-          '${'accepted_range_salary'.tr}'
-          '${"from".tr} ${CompanyEditAddJobState.MAX_SALARY_RANGE} '
-          '${"to".tr} ${CompanyEditAddJobState.MAX_SALARY_RANGE}',
-          textAlign: TextAlign.start,
-          style: dmsregular.copyWith(
-            fontSize: FontSize.title6(context),
-            color: Jobstopcolor.secondary,
-          ),
-        ),
+        const MinMaxSalaryMessageTextWidget(),
       ],
     );
   }

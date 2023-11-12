@@ -62,13 +62,13 @@ class CompanyEditAddJobController extends GetxController {
       onValidateError: (validateError, _) {
         changeStates(
           isError: true,
-          message: "Please fill the required field before submitting.",
+          message: validateError?.message,
         );
       },
       onError: (message, _) {
         changeStates(
           isError: true,
-          message: "some error occurred i can not tell you about it now.",
+          message: "error_occurred_message".tr,
         );
       },
     );
@@ -87,7 +87,7 @@ class CompanyEditAddJobController extends GetxController {
       );
       return changeStates(
         isWarning: true,
-        message: "nothing is changed in the job.",
+        message: "nothing_changed_job_message".tr,
       );
     }
     final response = await CompanyJobRepo.updateJob(newJobState.form, jobId);
@@ -100,13 +100,13 @@ class CompanyEditAddJobController extends GetxController {
       onValidateError: (validateError, _) {
         changeStates(
           isError: true,
-          message: "Please fill the required field before submitting.",
+          message: validateError?.message,
         );
       },
       onError: (message, _) {
         changeStates(
           isError: true,
-          message: "some error occurred i can not tell you about it now.",
+          message: "error_occurred_message".tr,
         );
       },
     );
@@ -150,8 +150,7 @@ class CompanyEditAddJobController extends GetxController {
     if (!isNetworkConnection) {
       return changeStates(
         isWarning: true,
-        message: "sorry your connection is lost, "
-            "please check your network settings before continuing.",
+        message: "connection_lost_message_1".tr,
       );
     }
     changeStates(isLoading: true);
@@ -186,7 +185,7 @@ class CompanyEditAddJobController extends GetxController {
       localIsEditing ? 'edit_job'.tr : 'new_job'.tr,
       localIsEditing ? 'edit_job_done'.tr : 'job_added_successfully'.tr,
       boxShadows: [boxShadow],
-      backgroundColor: Jobstopcolor.backgroudHome,
+      backgroundColor: SippoColor.backgroudHome,
     );
   }
 

@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:jobspot/core/validate_error.dart';
 
 import '../sippo_excepstions/resource_exception/invalid_response_exception.dart';
@@ -58,8 +59,8 @@ class Resource<T, E> {
               "the response is field: with status type = ${StatusType.INVALID_RESPONSE}");
           print("the response is field: with response error = null");
           throw InvalidResponseException(
-              message:
-                  "something is wrong with the response, please try again");
+            message: 'something_wrong_request_message'.tr,
+          );
       }
     } on InvalidResponseException catch (e) {
       print(e.message);

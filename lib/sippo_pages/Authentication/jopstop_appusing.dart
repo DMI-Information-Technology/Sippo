@@ -37,7 +37,7 @@ class SippoAppUsing extends StatelessWidget {
                   "Choose_App_Using_Page".tr,
                   style: dmsbold.copyWith(
                     fontSize: FontSize.title2(context),
-                    color: Jobstopcolor.primarycolor,
+                    color: SippoColor.primarycolor,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -66,10 +66,10 @@ class SippoAppUsing extends StatelessWidget {
                           child: Obx(
                             () {
                               return JopSelctedUsingAppCard(
-                                color: Jobstopcolor.primarycolor,
+                                color: SippoColor.primarycolor,
                                 isSelected: appUsingController.findEmployee,
                                 image: JobstopPngImg.find_empLogo,
-                                backGroundIconColor: Jobstopcolor.lightprimary,
+                                backGroundIconColor: SippoColor.lightprimary,
                                 title: "find_employees_title".tr,
                                 description: 'find_employees_desc'.tr,
                                 onTapped: () {
@@ -85,10 +85,10 @@ class SippoAppUsing extends StatelessWidget {
                         Expanded(
                           child: Obx(() {
                             return JopSelctedUsingAppCard(
-                              color: Jobstopcolor.secondary,
+                              color: SippoColor.secondary,
                               isSelected: appUsingController.findJop,
                               image: JobstopPngImg.find_jobLog,
-                              backGroundIconColor: Jobstopcolor.lightsecondary,
+                              backGroundIconColor: SippoColor.lightsecondary,
                               title: "find_job_title".tr,
                               description: "find_job_desc".tr,
                               onTapped: () {
@@ -108,10 +108,10 @@ class SippoAppUsing extends StatelessWidget {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _onConfirmButtonClicked,
-        backgroundColor: Jobstopcolor.primarycolor,
+        backgroundColor: SippoColor.primarycolor,
         child: const Icon(
           Icons.arrow_right_alt_sharp,
-          color: Jobstopcolor.white,
+          color: SippoColor.white,
           size: 30,
         ),
       ),
@@ -209,7 +209,7 @@ class JopSelctedUsingAppCard extends StatelessWidget {
               AutoSizeText(
                 title,
                 style: dmsbold.copyWith(
-                  color: Jobstopcolor.black,
+                  color: SippoColor.black,
                   fontSize: FontSize.title3(context),
                 ),
                 textAlign: TextAlign.center,
@@ -222,7 +222,7 @@ class JopSelctedUsingAppCard extends StatelessWidget {
                 child: AutoSizeText(
                   description,
                   style: dmsregular.copyWith(
-                    color: Jobstopcolor.textColor,
+                    color: SippoColor.textColor,
                     fontSize: FontSize.paragraph2(context),
                   ),
                   textAlign: TextAlign.center,

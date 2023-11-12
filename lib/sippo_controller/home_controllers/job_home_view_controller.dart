@@ -64,7 +64,6 @@ class JobsHomeViewController extends GetxController {
           changeJobsStates(
             isError: false,
             isSuccess: true,
-            message: "the job has been fetched successfully.",
           );
           // pagingJobsController.appendLastPage(data.take(3).toList());
         }
@@ -90,6 +89,7 @@ class JobsHomeViewController extends GetxController {
   final _jobsList = <CompanyJobModel>[].obs;
 
   List<CompanyJobModel> get jobsList => _jobsList.toList();
+
   int get jobsListLength => _jobsList.length;
 
   void set jobsList(List<CompanyJobModel> value) {
@@ -102,8 +102,7 @@ class JobsHomeViewController extends GetxController {
         changeJobsStates(
           isError: true,
           isSuccess: false,
-          message: "sorry your connection is lost,"
-              " please check your settings before continuing.",
+          message: "connection_lost_message_1".tr,
         );
       return;
     }

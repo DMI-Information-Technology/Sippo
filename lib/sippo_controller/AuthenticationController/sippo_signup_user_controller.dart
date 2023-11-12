@@ -81,7 +81,7 @@ class SignUpUserController extends GetxController {
         imageAsset: JobstopPngImg.successful1,
         title: "success".tr,
         description: "account_created_successfully".tr,
-        confirmBtnColor: Jobstopcolor.primarycolor,
+        confirmBtnColor: SippoColor.primarycolor,
         confirmBtnTitle: "ok".tr,
         onConfirm: () {
           Get.offAllNamed(SippoRoutes.userDashboard);
@@ -96,7 +96,7 @@ class SignUpUserController extends GetxController {
         imageAsset: JobstopPngImg.error,
         title: "error".tr,
         description: message ?? '',
-        confirmBtnColor: Jobstopcolor.primarycolor,
+        confirmBtnColor: SippoColor.primarycolor,
         confirmBtnTitle: "ok".tr,
         onConfirm: () {
           if (Get.isOverlaysOpen) Get.back();

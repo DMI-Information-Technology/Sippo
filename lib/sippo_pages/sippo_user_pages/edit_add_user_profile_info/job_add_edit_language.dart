@@ -40,7 +40,7 @@ class _LanguageEditAddState extends State<LanguageEditAdd> {
                 "language_kills".tr,
                 style: dmsbold.copyWith(
                   fontSize: height / 42,
-                  color: Jobstopcolor.primarycolor,
+                  color: SippoColor.primarycolor,
                 ),
               ),
               SizedBox(
@@ -49,11 +49,11 @@ class _LanguageEditAddState extends State<LanguageEditAdd> {
               IconButton(
                 icon: CircleAvatar(
                   radius: height / 32,
-                  backgroundColor: Jobstopcolor.lightprimary2,
+                  backgroundColor: SippoColor.lightprimary2,
                   child: Icon(
                     Icons.add,
                     size: height / 32,
-                    color: Jobstopcolor.primarycolor,
+                    color: SippoColor.primarycolor,
                   ),
                 ),
                 onPressed: _addLanguage,
@@ -107,7 +107,7 @@ class _LanguageEditAddState extends State<LanguageEditAdd> {
       backgroundColor: Colors.white,
       isScrollControlled: true,
       ContainerBottomSheetWidget(
-        notchColor: Jobstopcolor.primarycolor,
+        notchColor: SippoColor.primarycolor,
         children: [
           ConfirmationBottomSheet(
             title: "title_dialog_remove_language".tr,

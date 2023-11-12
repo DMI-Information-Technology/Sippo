@@ -133,7 +133,7 @@ class JobStatisticBoardCards extends StatelessWidget {
             width: width / 2.3,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
-              color: Jobstopcolor.lightsky,
+              color: SippoColor.lightsky,
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -149,12 +149,12 @@ class JobStatisticBoardCards extends StatelessWidget {
                 Text(
                   jobStatistics?.remoteJobs?.countString ?? "",
                   style:
-                      dmsbold.copyWith(fontSize: 16, color: Jobstopcolor.black),
+                      dmsbold.copyWith(fontSize: 16, color: SippoColor.black),
                 ),
                 Text(
                   firstCardSubtitle ?? '',
                   style: dmsregular.copyWith(
-                      fontSize: 14, color: Jobstopcolor.black),
+                      fontSize: 14, color: SippoColor.black),
                 ),
               ],
             ),
@@ -166,7 +166,7 @@ class JobStatisticBoardCards extends StatelessWidget {
               onTap: onSecondTap,
               height: height / 9.5,
               width: width / 2.3,
-              color: Jobstopcolor.lightprimary,
+              color: SippoColor.lightprimary,
               title: jobStatistics?.fullTimeJobs?.countString ?? "",
               subtitle: secondCardSubtitle ?? '',
             ),
@@ -177,7 +177,7 @@ class JobStatisticBoardCards extends StatelessWidget {
               onTap: onThirdTap,
               height: height / 9.5,
               width: width / 2.3,
-              color: Jobstopcolor.lightorenge,
+              color: SippoColor.lightorenge,
               title: jobStatistics?.partTimeJobs?.countString ?? "",
               subtitle: thirdCardSubtitle ?? '',
             ),
@@ -222,12 +222,12 @@ class CustomCard extends StatelessWidget {
           children: [
             Text(
               title,
-              style: dmsbold.copyWith(fontSize: 16, color: Jobstopcolor.black),
+              style: dmsbold.copyWith(fontSize: 16, color: SippoColor.black),
             ),
             Text(
               subtitle,
               style:
-                  dmsregular.copyWith(fontSize: 14, color: Jobstopcolor.black),
+                  dmsregular.copyWith(fontSize: 14, color: SippoColor.black),
             ),
           ],
         ),

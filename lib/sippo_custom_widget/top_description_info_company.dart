@@ -50,7 +50,7 @@ class TopDescriptionInfoCompanyWidget extends StatelessWidget {
               this.startText ?? "",
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: dmsmedium.copyWith(color: Jobstopcolor.secondary),
+              style: dmsmedium.copyWith(color: SippoColor.secondary),
             ),
           ),
         if (isTextNotBlank(startText) && isTextNotBlank(middleText))
@@ -66,7 +66,7 @@ class TopDescriptionInfoCompanyWidget extends StatelessWidget {
               middleText ?? "Libya, Tripoli, Ain-zara, El-sedra",
               overflow: TextOverflow.ellipsis,
               maxLines: 2,
-              style: dmsmedium.copyWith(color: Jobstopcolor.secondary),
+              style: dmsmedium.copyWith(color: SippoColor.secondary),
             ),
           )
         else if (isTextNotBlank(startText) && isTextNotBlank(endText))
@@ -84,7 +84,7 @@ class TopDescriptionInfoCompanyWidget extends StatelessWidget {
               endText ?? "99999999 days ago",
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: dmsmedium.copyWith(color: Jobstopcolor.secondary),
+              style: dmsmedium.copyWith(color: SippoColor.secondary),
             ),
           ),
       ],
@@ -113,7 +113,7 @@ class DotWith extends StatelessWidget {
   Widget _buildDotLayout(BuildContext context) {
     return switch (dir) {
       Direction.none => CircleAvatar(
-          backgroundColor: Jobstopcolor.primarycolor,
+          backgroundColor: SippoColor.primarycolor,
           radius: context.fromHeight(CustomStyle.huge2),
         ),
       Direction.start => Row(children: [
@@ -121,13 +121,13 @@ class DotWith extends StatelessWidget {
             width: context.fromWidth(CustomStyle.paddingValue),
           ),
           CircleAvatar(
-            backgroundColor: Jobstopcolor.primarycolor,
+            backgroundColor: SippoColor.primarycolor,
             radius: context.fromHeight(CustomStyle.huge2),
           ),
         ]),
       Direction.end => Row(children: [
           CircleAvatar(
-            backgroundColor: Jobstopcolor.primarycolor,
+            backgroundColor: SippoColor.primarycolor,
             radius: context.fromHeight(CustomStyle.huge2),
           ),
           SizedBox(

@@ -14,6 +14,7 @@ import 'package:jobspot/sippo_custom_widget/custom_body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/job_card_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
+import 'package:jobspot/sippo_pages/sippo_message_pages/no_items_found_message.dart';
 import 'package:jobspot/utils/helper.dart';
 import 'package:lottie/lottie.dart';
 
@@ -52,6 +53,8 @@ class _SippoJobSearchState extends State<SippoJobSearch> {
                       _buildErrorFirstLoad(context),
                   newPageErrorIndicatorBuilder: (context) =>
                       _buildErrorNewLoad(context),
+                  noItemsFoundIndicatorBuilder: (context) =>
+                      NoItemsFoundMessageWidget.jobs(),
                   firstPageProgressIndicatorBuilder: (context) => Center(
                     child: Lottie.asset(
                       JobstopPngImg.loadingProgress,
@@ -107,12 +110,12 @@ class _SippoJobSearchState extends State<SippoJobSearch> {
             textAlign: TextAlign.center,
             style: dmsregular.copyWith(
               fontSize: FontSize.paragraph3(context),
-              color: Jobstopcolor.primarycolor,
+              color: SippoColor.primarycolor,
             ),
           ),
           Icon(
             Icons.refresh,
-            color: Jobstopcolor.primarycolor,
+            color: SippoColor.primarycolor,
           ),
         ],
       ),
@@ -127,7 +130,7 @@ class _SippoJobSearchState extends State<SippoJobSearch> {
         Text(
           "error".tr,
           style: dmsbold.copyWith(
-            color: Jobstopcolor.primarycolor,
+            color: SippoColor.primarycolor,
             fontSize: FontSize.title2(context),
           ),
         ),
@@ -159,7 +162,7 @@ class _SippoJobSearchState extends State<SippoJobSearch> {
       {bool haveToolBar = false}) {
     return SingleChildScrollView(
       child: ColoredBox(
-        color: Jobstopcolor.backgroudHome,
+        color: SippoColor.backgroudHome,
         child: Column(
           children: [
             _buildTopSearchBar(context, haveToolBar: haveToolBar),
@@ -186,7 +189,7 @@ class _SippoJobSearchState extends State<SippoJobSearch> {
               width: context.height / 18,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                color: Jobstopcolor.primarycolor,
+                color: SippoColor.primarycolor,
               ),
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
@@ -215,7 +218,7 @@ class _SippoJobSearchState extends State<SippoJobSearch> {
                         ),
                         backgroundColor:
                             _controller.searchJobsState.employmentType == item
-                                ? Jobstopcolor.primarycolor
+                                ? SippoColor.primarycolor
                                 : Colors.grey[300],
                         paddingValue:
                             context.fromWidth(CustomStyle.paddingValue2),
@@ -228,8 +231,8 @@ class _SippoJobSearchState extends State<SippoJobSearch> {
                             fontSize: 12,
                             color: _controller.searchJobsState.employmentType ==
                                     item
-                                ? Jobstopcolor.white
-                                : Jobstopcolor.primarycolor,
+                                ? SippoColor.white
+                                : SippoColor.primarycolor,
                           ),
                         ),
                       ));
@@ -248,7 +251,7 @@ class _SippoJobSearchState extends State<SippoJobSearch> {
           bottomLeft: Radius.circular(25),
           bottomRight: Radius.circular(25),
         ),
-        color: Jobstopcolor.primarycolor,
+        color: SippoColor.primarycolor,
         // Change this to your desired color
         image: DecorationImage(
           image: AssetImage(JobstopPngImg.backgroundProf),

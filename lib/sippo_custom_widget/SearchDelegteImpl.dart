@@ -98,7 +98,7 @@ class MySearchDelegate extends SearchDelegate {
               pageTitle ?? "",
               style: dmsbold.copyWith(
                 fontSize: height / 48,
-                color: Jobstopcolor.primarycolor,
+                color: SippoColor.primarycolor,
               ),
               textAlign: TextAlign.start,
             ),
@@ -262,7 +262,7 @@ class CustomSearchDelegate<T> extends SearchDelegate {
                 pageTitle ?? "",
                 style: dmsbold.copyWith(
                   fontSize: height / 48,
-                  color: Jobstopcolor.primarycolor,
+                  color: SippoColor.primarycolor,
                 ),
                 textAlign: TextAlign.start,
               ),

@@ -174,16 +174,16 @@ class JobPostingCard extends StatelessWidget {
                         children: [
                           Icon(
                             Icons.location_on_outlined,
-                            color: Jobstopcolor.primarycolor,
+                            color: SippoColor.primarycolor,
                             size: context.fromHeight(CustomStyle.xxl),
                           ),
                           AutoSizeText(
                             jobDetails?.locationAddress?.name ?? '',
                             style: dmsregular.copyWith(
                               fontSize: FontSize.paragraph4(context),
-                              color: Jobstopcolor.primarycolor,
+                              color: SippoColor.primarycolor,
                               decoration: TextDecoration.underline,
-                              decorationColor: Jobstopcolor.primarycolor,
+                              decorationColor: SippoColor.primarycolor,
                             ),
                           ),
                         ],
@@ -217,7 +217,7 @@ class JobPostingCard extends StatelessWidget {
             '${jobDetails?.salaryFrom.toString().shortStringNumberFormat} - ${jobDetails?.salaryTo.toString().shortStringNumberFormat}',
             style: dmsbold.copyWith(
               fontSize: FontSize.title5(context),
-              color: Jobstopcolor.primarycolor, // Use appropriate color
+              color: SippoColor.primarycolor, // Use appropriate color
             ),
           ),
           Text(

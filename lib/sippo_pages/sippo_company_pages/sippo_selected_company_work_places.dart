@@ -131,8 +131,8 @@ class _SippoSelectCompanyWorkPlacesState
               child: CustomButton(
                 onTapped: _showRemove,
                 text: 'remove'.tr,
-                textColor: Jobstopcolor.primarycolor,
-                backgroundColor: Jobstopcolor.lightprimary,
+                textColor: SippoColor.primarycolor,
+                backgroundColor: SippoColor.lightprimary,
               ),
             ),
             SizedBox(width: context.fromWidth(CustomStyle.spaceBetween)),
@@ -158,7 +158,7 @@ class _SippoSelectCompanyWorkPlacesState
       backgroundColor: Colors.white,
       isScrollControlled: true,
       ContainerBottomSheetWidget(
-        notchColor: Jobstopcolor.primarycolor,
+        notchColor: SippoColor.primarycolor,
         children: [
           ConfirmationBottomSheet(
             title: "title_remove_work_place".tr,

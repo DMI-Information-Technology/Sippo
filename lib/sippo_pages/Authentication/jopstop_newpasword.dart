@@ -41,7 +41,7 @@ class _UpdatePasswordAfterVerificationState
                 Get.currentRoute == SippoRoutes.sippoCompanyLogin,
           );
         },
-        confirmBtnColor: Jobstopcolor.primarycolor,
+        confirmBtnColor: SippoColor.primarycolor,
       ),
     ).then((value) => Get.until(
           (route) =>

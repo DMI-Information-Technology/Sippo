@@ -50,7 +50,7 @@ class EditAddProjectsController extends GetxController {
           _profileUserController.profileState.projectsList =
               _profileUserController.profileState.projectsList..add(data);
         }
-        _states.value = states.copyWith(isSuccess: true);
+        _states.value = states.copyWith(isSuccess: true,message: 'project_added_message'.tr);
       },
       onValidateError: (validateError, _) {
         _states.value =
@@ -69,7 +69,7 @@ class EditAddProjectsController extends GetxController {
         "EditAddProjectsController.updateWorkExperience: "
         "nothing change ? = ${newProject == projects.value}",
       );
-      return warningState(true, "nothing is changed in the work experience.");
+      return warningState(true, "nothing_changed_projects".tr);
     }
     // make response
     final response = await UserProjectRepo.updateProjectsById(
@@ -95,7 +95,7 @@ class EditAddProjectsController extends GetxController {
         } else {
           await _profileUserController.fetchAllWorkExperience();
         }
-        successState(true, 'the project updated successfully.');
+        successState(true, 'project_updated_message'.tr);
       },
       onValidateError: (validateError, _) {
         _states.value =
@@ -150,7 +150,7 @@ class EditAddProjectsController extends GetxController {
         _profileUserController.editingId = -1;
         projects.value = UserProjectsModel();
         projectState.clearFields();
-        successState(true, 'the project is deleted successfully.');
+        successState(true, 'project_deleted_message'.tr);
       },
       onValidateError: (validateError, _) {
         _states.value =
@@ -177,7 +177,7 @@ class EditAddProjectsController extends GetxController {
     if (!_profileUserController.netController.isConnected) {
       warningState(
         true,
-        "sorry your connection is lost, please check your settings before continuing.",
+        "connection_lost_message_1".tr,
       );
       return;
     }

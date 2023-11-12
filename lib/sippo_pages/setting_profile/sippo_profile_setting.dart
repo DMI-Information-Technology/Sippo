@@ -10,7 +10,7 @@ import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
-import 'package:jobspot/app_local_language_services/app_local_language_service.dart';
+import 'package:jobspot/JobServices/app_local_language_services/app_local_language_service.dart';
 import 'package:jobspot/custom_app_controller/switch_status_controller.dart';
 import 'package:jobspot/sippo_controller/AuthenticationController/sippo_auth_controller.dart';
 import 'package:jobspot/sippo_custom_widget/confirmation_bottom_sheet.dart';
@@ -70,14 +70,14 @@ class _SippoProfileSettingState extends State<SippoProfileSetting> {
                 'settings'.tr,
                 style: dmsbold.copyWith(
                   fontSize: FontSize.title2(context),
-                  color: Jobstopcolor.primarycolor,
+                  color: SippoColor.primarycolor,
                 ),
               ),
               SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
               SettingItemWidget(
                 contentPadding: context.fromHeight(CustomStyle.paddingValue2),
                 title: 'personal_information'.tr,
-                icon: Icon(Icons.person, color: Jobstopcolor.primarycolor),
+                icon: Icon(Icons.person, color: SippoColor.primarycolor),
                 onTap: () {
                   switch (GlobalStorageService.appUse) {
                     case AppUsingType.user:
@@ -93,7 +93,7 @@ class _SippoProfileSettingState extends State<SippoProfileSetting> {
                 title: "change_password".tr,
                 icon: Icon(
                   Icons.password,
-                  color: Jobstopcolor.primarycolor,
+                  color: SippoColor.primarycolor,
                 ),
                 onTap: () {
                   Get.to(() => const JobUpdatePassword());
@@ -105,7 +105,7 @@ class _SippoProfileSettingState extends State<SippoProfileSetting> {
                 title: "change_language".tr,
                 icon: Icon(
                   Icons.swap_horiz_rounded,
-                  color: Jobstopcolor.primarycolor,
+                  color: SippoColor.primarycolor,
                 ),
                 onTap: () {
                   _showbottomsheet(context);
@@ -117,7 +117,7 @@ class _SippoProfileSettingState extends State<SippoProfileSetting> {
                 title: "Logout".tr,
                 icon: Icon(
                   Icons.logout,
-                  color: Jobstopcolor.primarycolor,
+                  color: SippoColor.primarycolor,
                 ),
                 onTap: () {
                   _showLogoutBottomSheet(context);
@@ -135,7 +135,7 @@ class _SippoProfileSettingState extends State<SippoProfileSetting> {
     Size size = MediaQuery.of(context).size;
     double height = size.height;
     showModalBottomSheet(
-      backgroundColor: Jobstopcolor.white,
+      backgroundColor: SippoColor.white,
       context: context,
       builder: (BuildContext context) {
         return StatefulBuilder(
@@ -157,37 +157,37 @@ class _SippoProfileSettingState extends State<SippoProfileSetting> {
                       'select_view_language'.tr,
                       style: dmsbold.copyWith(
                         fontSize: 18,
-                        color: Jobstopcolor.grey,
+                        color: SippoColor.grey,
                       ),
                     ),
                   ),
                   Container(
                     height: 0.8,
                     width: MediaQuery.of(context).size.width,
-                    color: Jobstopcolor.grey,
+                    color: SippoColor.grey,
                   ),
                   SizedBox(
                     height: context.fromHeight(CustomStyle.xs),
                     child: InkWell(
-                      highlightColor: Jobstopcolor.transparent,
-                      splashColor: Jobstopcolor.transparent,
-                      onTap: () {
+                      highlightColor: SippoColor.transparent,
+                      splashColor: SippoColor.transparent,
+                      onTap: () async {
                         Navigator.pop(context);
-                        LocalLanguageService.changeLocale(
-                          LocalLanguageService.englishLocale,
+
+                        await LocalLanguageService.changeLocale(
+                          LocaleLanguageType.english,
                         );
+                        await GlobalStorageService.changeLanguage(
+                            LocaleLanguageType.english);
                       },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'english_lang'.tr,
-                            style: dmsregular.copyWith(
-                              fontSize: 15,
-                              color: Jobstopcolor.black,
-                            ),
+                      child: Center(
+                        child: Text(
+                          'english_lang'.tr,
+                          style: dmsregular.copyWith(
+                            fontSize: 15,
+                            color: SippoColor.black,
                           ),
-                        ],
+                        ),
                       ),
                     ),
                   ),
@@ -201,12 +201,15 @@ class _SippoProfileSettingState extends State<SippoProfileSetting> {
                   SizedBox(
                     height: context.fromHeight(CustomStyle.xs),
                     child: InkWell(
-                      highlightColor: Jobstopcolor.transparent,
-                      splashColor: Jobstopcolor.transparent,
-                      onTap: ()  {
+                      highlightColor: SippoColor.transparent,
+                      splashColor: SippoColor.transparent,
+                      onTap: () async {
                         Navigator.pop(context);
-                        LocalLanguageService.changeLocale(
-                          LocalLanguageService.arabicLocale,
+                        await LocalLanguageService.changeLocale(
+                          LocaleLanguageType.arabic,
+                        );
+                        await GlobalStorageService.changeLanguage(
+                          LocaleLanguageType.arabic,
                         );
                       },
                       child: Row(
@@ -215,14 +218,14 @@ class _SippoProfileSettingState extends State<SippoProfileSetting> {
                           Text(
                             'arabic_lang'.tr,
                             style: dmsregular.copyWith(
-                                fontSize: 15, color: Jobstopcolor.black),
+                                fontSize: 15, color: SippoColor.black),
                           ),
                         ],
                       ),
                     ),
                   ),
                   ColoredBox(
-                    color: Jobstopcolor.grey,
+                    color: SippoColor.grey,
                     child: SizedBox(
                       height: 0.8,
                       width: MediaQuery.of(context).size.width,
@@ -231,8 +234,8 @@ class _SippoProfileSettingState extends State<SippoProfileSetting> {
                   SizedBox(
                     height: context.fromHeight(CustomStyle.xs),
                     child: InkWell(
-                      highlightColor: Jobstopcolor.transparent,
-                      splashColor: Jobstopcolor.transparent,
+                      highlightColor: SippoColor.transparent,
+                      splashColor: SippoColor.transparent,
                       onTap: () => Navigator.pop(context),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -241,7 +244,7 @@ class _SippoProfileSettingState extends State<SippoProfileSetting> {
                             'cancel'.tr,
                             style: dmsregular.copyWith(
                               fontSize: FontSize.title5(context),
-                              color: Jobstopcolor.black,
+                              color: SippoColor.black,
                             ),
                           ),
                         ],
@@ -267,7 +270,7 @@ class _SippoProfileSettingState extends State<SippoProfileSetting> {
       backgroundColor: Colors.white,
       isScrollControlled: true,
       ContainerBottomSheetWidget(
-        notchColor: Jobstopcolor.primarycolor,
+        notchColor: SippoColor.primarycolor,
         children: [
           ConfirmationBottomSheet(
             title: "Logout".tr,

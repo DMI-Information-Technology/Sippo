@@ -21,9 +21,9 @@ class SippoCompanyLogin extends StatelessWidget {
       MaterialState.focused,
     };
     if (states.any(interactiveStates.contains)) {
-      return Jobstopcolor.grey;
+      return SippoColor.grey;
     }
-    return Jobstopcolor.lightprimary;
+    return SippoColor.lightprimary;
   }
 
   // void _showSuccessAlert() {
@@ -60,7 +60,7 @@ class SippoCompanyLogin extends StatelessWidget {
                       "welcome_back_login_title".tr,
                       style: dmsbold.copyWith(
                         fontSize: height / 30,
-                        color: Jobstopcolor.primarycolor,
+                        color: SippoColor.primarycolor,
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -70,7 +70,7 @@ class SippoCompanyLogin extends StatelessWidget {
                     Text(
                       "lorem ipsum dolor sit amet, consectetur adipiscing elit n elementum",
                       style: dmsregular.copyWith(
-                          color: Jobstopcolor.textColor, fontSize: height / 64),
+                          color: SippoColor.textColor, fontSize: height / 64),
                       textAlign: TextAlign.center,
                     ),
                     SizedBox(
@@ -81,7 +81,7 @@ class SippoCompanyLogin extends StatelessWidget {
                       keyboardType: TextInputType.phone,
                       icon: const Icon(
                         Icons.phone_outlined,
-                        color: Jobstopcolor.primarycolor,
+                        color: SippoColor.primarycolor,
                       ),
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {
@@ -101,7 +101,7 @@ class SippoCompanyLogin extends StatelessWidget {
                       hintText: "Password".tr,
                       icon: const Icon(
                         Icons.lock_outline,
-                        color: Jobstopcolor.primarycolor,
+                        color: SippoColor.primarycolor,
                       ),
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {
@@ -123,9 +123,9 @@ class SippoCompanyLogin extends StatelessWidget {
                           children: [
                             Obx(
                               () => Checkbox(
-                                checkColor: Jobstopcolor.white,
+                                checkColor: SippoColor.white,
                                 side: const BorderSide(
-                                  color: Jobstopcolor.grey,
+                                  color: SippoColor.grey,
                                   width: 1.5,
                                 ),
                                 fillColor: MaterialStateProperty.resolveWith(
@@ -142,7 +142,7 @@ class SippoCompanyLogin extends StatelessWidget {
                               "Remember_me".tr,
                               style: dmsregular.copyWith(
                                 fontSize: height / 64,
-                                color: Jobstopcolor.grey,
+                                color: SippoColor.grey,
                               ),
                             ),
                           ],
@@ -153,7 +153,7 @@ class SippoCompanyLogin extends StatelessWidget {
                             "Forget_Password".tr,
                             style: dmsregular.copyWith(
                               fontSize: height / 75,
-                              color: Jobstopcolor.primarycolor,
+                              color: SippoColor.primarycolor,
                             ),
                             textAlign: TextAlign.end,
                           ),
@@ -165,8 +165,8 @@ class SippoCompanyLogin extends StatelessWidget {
                     ),
                     CustomButton(
                       text: "Login".tr,
-                      backgroundColor: Jobstopcolor.primarycolor,
-                      textColor: Jobstopcolor.white,
+                      backgroundColor: SippoColor.primarycolor,
+                      textColor: SippoColor.white,
                       onTapped: () {
                         controller.onSubmittedLogin();
                       },
@@ -189,7 +189,7 @@ class SippoCompanyLogin extends StatelessWidget {
                           "You_dont_have_an_account_yet".tr,
                           style: dmsregular.copyWith(
                               fontSize: height / 65,
-                              color: Jobstopcolor.textColor),
+                              color: SippoColor.textColor),
                         ),
                         TextButton(
                           onPressed: () {
@@ -200,7 +200,7 @@ class SippoCompanyLogin extends StatelessWidget {
                             "Sign_up".tr,
                             style: dmsregular.copyWith(
                                 fontSize: height / 65,
-                                color: Jobstopcolor.secondary,
+                                color: SippoColor.secondary,
                                 decoration: TextDecoration.underline),
                           ),
                         ),
@@ -221,9 +221,9 @@ class SippoCompanyLogin extends StatelessWidget {
                         Get.offAndToNamed(SippoRoutes.userLoginPage);
                       },
                       text: "User_Login".tr,
-                      backgroundColor: Jobstopcolor.white,
-                      textColor: Jobstopcolor.textColor,
-                      borderColor: Jobstopcolor.grey,
+                      backgroundColor: SippoColor.white,
+                      textColor: SippoColor.textColor,
+                      borderColor: SippoColor.grey,
                     ),
                     SizedBox(
                       height: height / 52,
@@ -231,16 +231,16 @@ class SippoCompanyLogin extends StatelessWidget {
                     CustomButton(
                       onTapped: () {},
                       text: "Guest_login.".tr,
-                      backgroundColor: Jobstopcolor.white,
-                      textColor: Jobstopcolor.textColor,
-                      borderColor: Jobstopcolor.grey,
+                      backgroundColor: SippoColor.white,
+                      textColor: SippoColor.textColor,
+                      borderColor: SippoColor.grey,
                     )
                   ],
                 ),
               ),
             ),
           ),
-          backgroundColor: Jobstopcolor.white,
+          backgroundColor: SippoColor.white,
         ),
         Obx(
           () => controller.authState.isLoading

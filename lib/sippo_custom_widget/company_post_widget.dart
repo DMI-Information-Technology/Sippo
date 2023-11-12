@@ -81,7 +81,7 @@ class PostWidget extends StatelessWidget {
           postTitle,
           style: dmsmedium.copyWith(
             fontSize: FontSize.label(context),
-            color: Jobstopcolor.primarycolor,
+            color: SippoColor.primarycolor,
             // Change to your desired color
             fontWeight: FontWeight.bold,
           ),
@@ -93,16 +93,16 @@ class PostWidget extends StatelessWidget {
             fontSize: FontSize.label(context),
             color: Colors.grey, // Change to your desired color
           ),
-          colorClickableText: Jobstopcolor.primarycolor,
+          colorClickableText: SippoColor.primarycolor,
           trimLines: 3,
           trimMode: TrimMode.Line,
           trimCollapsedText: 'read_more'.tr,
           trimExpandedText: 'hide'.tr,
           lessStyle: dmsmedium.copyWith(
-            color: Jobstopcolor.primarycolor,
+            color: SippoColor.primarycolor,
           ),
           moreStyle: dmsmedium.copyWith(
-            color: Jobstopcolor.primarycolor,
+            color: SippoColor.primarycolor,
           ),
         ),
       ],
@@ -255,16 +255,16 @@ class PostApplicationWidget extends StatelessWidget {
                   fontSize: FontSize.label(context),
                   color: Colors.grey, // Change to your desired color
                 ),
-                colorClickableText: Jobstopcolor.primarycolor,
+                colorClickableText: SippoColor.primarycolor,
                 trimLines: 3,
                 trimMode: TrimMode.Line,
                 trimCollapsedText: 'read_more'.tr,
                 trimExpandedText: 'hide'.tr,
                 lessStyle: dmsmedium.copyWith(
-                  color: Jobstopcolor.primarycolor,
+                  color: SippoColor.primarycolor,
                 ),
                 moreStyle: dmsmedium.copyWith(
-                  color: Jobstopcolor.primarycolor,
+                  color: SippoColor.primarycolor,
                 ),
               ),
             ],
@@ -284,7 +284,7 @@ class PostApplicationWidget extends StatelessWidget {
             imageUrl: application?.customer?.profileImage?.url ?? '',
             errorWidget: (___, __, _) => const CircleAvatar(),
             size: context.fromHeight(24),
-            outerBorderColor: Jobstopcolor.backgroudHome,
+            outerBorderColor: SippoColor.backgroudHome,
           ),
         ),
         SizedBox(

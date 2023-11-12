@@ -43,7 +43,7 @@ class _SippoUserAboutState extends State<SippoUserAbout> {
                 "label_about_me".tr,
                 style: dmsbold.copyWith(
                   fontSize: 16,
-                  color: Jobstopcolor.primarycolor,
+                  color: SippoColor.primarycolor,
                 ),
               ),
               SizedBox(height: height / CustomStyle.verticalSpaceBetween),

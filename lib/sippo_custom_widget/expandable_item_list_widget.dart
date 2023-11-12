@@ -66,7 +66,7 @@ class ExpandableItemList extends StatelessWidget {
                 ? shrinkTitle ?? 'show_less'.tr
                 : expandTitle ?? 'show_more'.tr,
             style: dmsregular.copyWith(
-              color: titleExpandColor ?? Jobstopcolor.primarycolor,
+              color: titleExpandColor ?? SippoColor.primarycolor,
             ),
           ),
         ),

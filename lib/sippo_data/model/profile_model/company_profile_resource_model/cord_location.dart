@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class CoordLocation {
@@ -6,7 +7,13 @@ class CoordLocation {
 
   double? get dLatitude {
     try {
-      return double.parse(latitude ?? '0');
+      final lat = latitude;
+
+      if (lat == null) throw Exception('null latitude value');
+      print(lat.isNum);
+      if (!lat.isNum)
+        throw Exception('the latitude value must be a number only');
+      return double.parse(lat);
     } catch (e, s) {
       print(s);
       return null;
@@ -15,7 +22,11 @@ class CoordLocation {
 
   double? get dLongitude {
     try {
-      return double.parse(longitude ?? "0");
+      final lng = longitude;
+      if (lng == null) throw Exception('null longitude value');
+      if (!lng.isNum)
+        throw Exception('the longitude value must be a number only');
+      return double.parse(lng);
     } catch (e, s) {
       print(s);
       return null;

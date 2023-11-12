@@ -143,12 +143,12 @@ class JobCompanyDetailsState {
   int get selectedPageView => _selectedPageView.toInt();
 
   Color changeDescriptionButtonColor() => selectedPageView == 0
-      ? Jobstopcolor.primarycolor
-      : Jobstopcolor.lightprimary;
+      ? SippoColor.primarycolor
+      : SippoColor.lightprimary;
 
   Color changeCompanyButtonColor() => selectedPageView == 1
-      ? Jobstopcolor.primarycolor
-      : Jobstopcolor.lightprimary;
+      ? SippoColor.primarycolor
+      : SippoColor.lightprimary;
 
   void set selectedPageView(int value) {
     _selectedPageView.value = value;

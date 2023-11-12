@@ -54,7 +54,7 @@ class EditAddEducationController extends GetxController {
         } else {
           await _profileUserController.fetchAllEducation();
         }
-        successState(true, 'new education is added successfully.');
+        successState(true, 'education_added_message'.tr);
       },
       onValidateError: (validateError, _) {
         _states.value =
@@ -73,7 +73,7 @@ class EditAddEducationController extends GetxController {
         "EditAddEducationController.updateEducationById: "
         "nothing change ? = ${newEdu == _education.value}",
       );
-      return warningState(true, "nothing is changed in the education.");
+      return warningState(true, "nothing_changed_education".tr);
     }
     final response = await EducationRepo.updateEducationById(
       eduState.form,
@@ -97,7 +97,7 @@ class EditAddEducationController extends GetxController {
         } else {
           await _profileUserController.fetchAllEducation();
         }
-        successState(true, 'the education updated successfully.');
+        successState(true, 'education_updated_message'.tr);
       },
       onValidateError: (validateError, _) {
         _states.value =
@@ -152,7 +152,7 @@ class EditAddEducationController extends GetxController {
         _profileUserController.editingId = -1;
         _education.value = EducationModel();
         eduState.clearFields();
-        successState(true, 'the education is deleted successfully.');
+        successState(true, 'education_deleted_message'.tr);
       },
       onValidateError: (validateError, _) {
         _states.value =
@@ -168,7 +168,7 @@ class EditAddEducationController extends GetxController {
     if (!_profileUserController.netController.isConnected) {
       warningState(
         true,
-        "sorry your connection is lost, please check your settings before continuing.",
+        "connection_lost_message_1".tr,
       );
       return;
     }

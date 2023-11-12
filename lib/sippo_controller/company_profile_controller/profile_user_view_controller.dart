@@ -101,22 +101,20 @@ class ProfileUserViewController extends GetxController {
     super.onInit();
   }
 
-  final loadingOverlayController = SwitchStatusController();
+  final loadingOverlay = SwitchStatusController();
 
   void openFile(String fileUrl, [String? size]) async {
     if (netController.isNotConnected) return;
     await StoragePermissionsService.openFile(
       fileUrl,
       size: size,
-      fn: (value) {
-        loadingOverlayController.status = value;
-      },
+      fn: (status) => loadingOverlay.status = status,
     );
   }
 
   @override
   void onClose() {
-    loadingOverlayController.dispose();
+    loadingOverlay.dispose();
     // _connectionSubscription?.cancel();
     super.onClose();
   }

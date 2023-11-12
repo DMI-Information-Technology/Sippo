@@ -47,7 +47,7 @@ class EditAddWorkExperienceController extends GetxController {
           _profileUserController.profileState.workExList =
               _profileUserController.profileState.workExList..add(data);
         }
-        successState(true, 'new work experience is added successfully.');
+        successState(true, 'work_experience_added'.tr);
       },
       onValidateError: (validateError, _) {
         _states.value =
@@ -66,7 +66,7 @@ class EditAddWorkExperienceController extends GetxController {
         "EditAddWorkExController.updateWorkExperience: "
         "nothing change ? = ${newWorkEx == _workExperience.value}",
       );
-      return warningState(true, "nothing is changed in the work experience.");
+      return warningState(true, "nothing_changed_work_experience".tr);
     }
     // make response
     final response = await WorkExperiencesRepo.updateWorkExperiencesById(
@@ -94,7 +94,7 @@ class EditAddWorkExperienceController extends GetxController {
         } else {
           await _profileUserController.fetchAllWorkExperience();
         }
-        successState(true, 'the work experience updated successfully.');
+        successState(true, 'work_experience_updated'.tr);
       },
       onValidateError: (validateError, _) {
         _states.value =
@@ -149,7 +149,7 @@ class EditAddWorkExperienceController extends GetxController {
         _profileUserController.editingId = -1;
         _workExperience.value = WorkExperiencesModel();
         workExState.clearFields();
-        successState(true, 'the work experience is deleted successfully.');
+        successState(true, 'work_experience_deleted'.tr);
       },
       onValidateError: (validateError, _) {
         _states.value =
@@ -179,7 +179,7 @@ class EditAddWorkExperienceController extends GetxController {
     if (!_profileUserController.netController.isConnected) {
       warningState(
         true,
-        "sorry your connection is lost, please check your settings before continuing.",
+        "connection_lost_message_1".tr,
       );
       return;
     }

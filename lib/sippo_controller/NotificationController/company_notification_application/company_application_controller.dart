@@ -83,12 +83,12 @@ class CompanyApplicationController extends GetxController {
       onValidateError: (validateError, _) {},
       onError: (message, _) {
         Get.snackbar(
-          'Warning',
+          'warning_title'.tr,
           message.toString(),
-          backgroundColor: Jobstopcolor.backgroudHome,
+          backgroundColor: SippoColor.backgroudHome,
           mainButton: TextButton(
             onPressed: () {},
-            child: Text('OK'),
+            child: Text('ok'.tr),
           ),
           boxShadows: [boxShadow],
         );
@@ -108,7 +108,7 @@ class CompanyApplicationController extends GetxController {
         isWarning: true,
         isSuccess: false,
         message:
-            "sorry your connection is lost, please check your settings before continuing.",
+            "connection_lost_message_1".tr,
       );
       return;
     }

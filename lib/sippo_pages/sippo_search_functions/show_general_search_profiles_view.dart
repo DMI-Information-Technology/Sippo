@@ -14,6 +14,7 @@ import 'package:jobspot/sippo_custom_widget/network_bordered_circular_image_widg
 import 'package:jobspot/sippo_custom_widget/rounded_border_radius_card_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_user_profile_view_model.dart';
+import 'package:jobspot/sippo_pages/sippo_message_pages/no_items_found_message.dart';
 import 'package:lottie/lottie.dart';
 
 import '../../sippo_custom_widget/custom_drop_down_button.dart';
@@ -47,7 +48,7 @@ class _ShowGeneralSearchProfilesViewListState
               ),
               child: CustomDropdownButton(
                 underLineBorder: true,
-                textHint: 'Select your location place.',
+                textHint: 'select_location_address'.tr,
                 labelList: location.locationsAddressNameList,
                 values: location.locationsAddressList,
                 fillColor: Colors.white,
@@ -75,9 +76,10 @@ class _ShowGeneralSearchProfilesViewListState
                     _buildErrorFirstLoad(context),
                 newPageErrorIndicatorBuilder: (context) =>
                     _buildErrorNewLoad(context),
-                newPageProgressIndicatorBuilder: (context) {
-                  return _buildNewPageProgress(context);
-                },
+                noItemsFoundIndicatorBuilder: (context) =>
+                    NoItemsFoundMessageWidget.users(alignmentFromStart:true ),
+                newPageProgressIndicatorBuilder: (context)
+                => _buildNewPageProgress(context),
                 firstPageProgressIndicatorBuilder: (context) => Center(
                   child: Lottie.asset(
                     JobstopPngImg.loadingProgress,
@@ -133,10 +135,10 @@ class _ShowGeneralSearchProfilesViewListState
                   child: CustomButton(
                     onTapped: () =>
                         _controller.onLoadMoreProfilesViewSubmitted(),
-                    text: 'Load More...',
+                    text: '${'load_more'.tr}...',
                     backgroundColor: Colors.transparent,
-                    textColor: Jobstopcolor.primarycolor,
-                    borderColor: Jobstopcolor.primarycolor,
+                    textColor: SippoColor.primarycolor,
+                    borderColor: SippoColor.primarycolor,
                   ),
                 ),
         ));
@@ -154,7 +156,7 @@ class _ShowGeneralSearchProfilesViewListState
             textAlign: TextAlign.center,
             style: dmsregular.copyWith(
               fontSize: FontSize.paragraph3(context),
-              color: Jobstopcolor.primarycolor,
+              color: SippoColor.primarycolor,
             ),
           ),
           InkWell(
@@ -163,7 +165,7 @@ class _ShowGeneralSearchProfilesViewListState
             },
             child: Icon(
               Icons.refresh,
-              color: Jobstopcolor.primarycolor,
+              color: SippoColor.primarycolor,
             ),
           ),
         ],
@@ -177,16 +179,16 @@ class _ShowGeneralSearchProfilesViewListState
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          "Error",
+          "error".tr,
           style: dmsbold.copyWith(
-            color: Jobstopcolor.primarycolor,
+            color: SippoColor.primarycolor,
             fontSize: FontSize.title2(context),
           ),
         ),
         SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
         Text(
           _controller.states.message ??
-              'Something wrong is happened.',
+              'something_wrong_happened'.tr,
           style: dmsregular.copyWith(
             fontSize: FontSize.paragraph3(context),
           ),
@@ -200,7 +202,7 @@ class _ShowGeneralSearchProfilesViewListState
             onTapped: () {
               _controller.retryLastFailedRequest();
             },
-            text: 'Try again',
+            text: 'try_again'.tr,
           ),
         )
       ],

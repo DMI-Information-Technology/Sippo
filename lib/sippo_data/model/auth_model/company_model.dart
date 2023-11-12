@@ -3,6 +3,7 @@ import '../locations_model/location_address_model.dart';
 class CompanyModel {
   final String? name;
   final String? phone;
+  final String? email;
   final String? password;
   final double? longitude;
   final double? latitude;
@@ -21,6 +22,7 @@ class CompanyModel {
     this.specializations,
     this.passwordConfirmation,
     this.fcmToken,
+    this.email,
   });
 
   Map<String, dynamic> toJson() {
@@ -28,6 +30,7 @@ class CompanyModel {
       "name": name,
       "phone": phone,
       "password": password,
+      "email": email,
       "longitude": longitude,
       "latitude": latitude,
       'location_id': locationAddress?.id,
@@ -48,6 +51,6 @@ class CompanyModel {
 
   @override
   String toString() {
-    return 'CompanyModel{name: $name, phone: $phone, password: $password, fcmToken: $fcmToken, locationAddress: $locationAddress, longitude: $longitude, latitude: $latitude, specializations: $specializations, passwordConfirmation: $passwordConfirmation}';
+    return 'CompanyModel{name: $name, phone: $phone, email: $email, password: $password, fcmToken: $fcmToken, locationAddress: $locationAddress, longitude: $longitude, latitude: $latitude, specializations: $specializations, passwordConfirmation: $passwordConfirmation}';
   }
 }

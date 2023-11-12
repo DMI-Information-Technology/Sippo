@@ -45,11 +45,11 @@ class _SippoUserDashboardState extends State<SippoUserDashboard> {
       () => BottomNavigationBar(
         currentIndex: _controller.selectedItemIndex,
         onTap: (value) => _controller.selectedItemIndex = value,
-        backgroundColor: Jobstopcolor.transparent,
+        backgroundColor: SippoColor.transparent,
         type: BottomNavigationBarType.fixed,
         showSelectedLabels: false,
         showUnselectedLabels: false,
-        fixedColor: Jobstopcolor.grey,
+        fixedColor: SippoColor.grey,
         elevation: 0,
         items: assets
             .map((asset) => BottomNavigationBarItem(
@@ -61,7 +61,7 @@ class _SippoUserDashboardState extends State<SippoUserDashboard> {
                   activeIcon: Image.asset(
                     asset,
                     height: context.fromHeight(CustomStyle.l),
-                    color: Jobstopcolor.primarycolor,
+                    color: SippoColor.primarycolor,
                   ),
                   label: '',
                 ))
@@ -88,11 +88,11 @@ class _SippoUserDashboardState extends State<SippoUserDashboard> {
         floatingActionButton: FloatingActionButton(
           mini: true,
           onPressed: () {},
-          backgroundColor: Jobstopcolor.primarycolor,
+          backgroundColor: SippoColor.primarycolor,
           child: const Icon(
             Icons.add,
             size: 20,
-            color: Jobstopcolor.white,
+            color: SippoColor.white,
           ),
         ),
       ),

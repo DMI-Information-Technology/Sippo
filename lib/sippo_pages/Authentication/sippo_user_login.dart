@@ -31,9 +31,9 @@ class _SippoUserLoginState extends State<SippoUserLogin> {
       MaterialState.focused,
     };
     if (states.any(interactiveStates.contains)) {
-      return Jobstopcolor.grey;
+      return SippoColor.grey;
     }
-    return Jobstopcolor.lightprimary;
+    return SippoColor.lightprimary;
   }
 
   final _controller = UserLoginController.instance;
@@ -60,7 +60,7 @@ class _SippoUserLoginState extends State<SippoUserLogin> {
                       "welcome_back_login_title".tr,
                       style: dmsbold.copyWith(
                         fontSize: FontSize.title2(context),
-                        color: Jobstopcolor.primarycolor,
+                        color: SippoColor.primarycolor,
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -68,7 +68,7 @@ class _SippoUserLoginState extends State<SippoUserLogin> {
                     AutoSizeText(
                       "lorem ipsum dolor sit amet, consectetur adipiscing elit n elementum",
                       style: dmsregular.copyWith(
-                        color: Jobstopcolor.textColor,
+                        color: SippoColor.textColor,
                         fontSize: FontSize.paragraph3(context),
                       ),
                       textAlign: TextAlign.center,
@@ -83,7 +83,7 @@ class _SippoUserLoginState extends State<SippoUserLogin> {
                         keyboardType: TextInputType.phone,
                         icon: const Icon(
                           Icons.phone_outlined,
-                          color: Jobstopcolor.primarycolor,
+                          color: SippoColor.primarycolor,
                         ),
                         validator: (value) {
                           if (value == null || value.trim().isEmpty) {
@@ -103,7 +103,7 @@ class _SippoUserLoginState extends State<SippoUserLogin> {
                       hintText: "Password".tr,
                       icon: const Icon(
                         Icons.lock_outline,
-                        color: Jobstopcolor.primarycolor,
+                        color: SippoColor.primarycolor,
                       ),
                       validator: (value) {
                         if (value == null || value.trim().isEmpty) {
@@ -125,9 +125,9 @@ class _SippoUserLoginState extends State<SippoUserLogin> {
                           children: [
                             Obx(
                               () => Checkbox(
-                                checkColor: Jobstopcolor.white,
+                                checkColor: SippoColor.white,
                                 side: const BorderSide(
-                                  color: Jobstopcolor.grey,
+                                  color: SippoColor.grey,
                                   width: 1.5,
                                 ),
                                 fillColor: MaterialStateProperty.resolveWith(
@@ -145,7 +145,7 @@ class _SippoUserLoginState extends State<SippoUserLogin> {
                               style: dmsregular.copyWith(
                                 fontSize: FontSize.label(context),
                                 // fontSize: 12.sp,
-                                color: Jobstopcolor.grey,
+                                color: SippoColor.grey,
                               ),
                             ),
                           ],
@@ -174,7 +174,7 @@ class _SippoUserLoginState extends State<SippoUserLogin> {
                             style: dmsregular.copyWith(
                                 fontSize: FontSize.label(context),
                                 // fontSize: 12.sp,
-                                color: Jobstopcolor.primarycolor),
+                                color: SippoColor.primarycolor),
                             textAlign: TextAlign.end,
                           ),
                         ),
@@ -185,8 +185,8 @@ class _SippoUserLoginState extends State<SippoUserLogin> {
                     ),
                     CustomButton(
                       text: "Login".tr,
-                      backgroundColor: Jobstopcolor.primarycolor,
-                      textColor: Jobstopcolor.white,
+                      backgroundColor: SippoColor.primarycolor,
+                      textColor: SippoColor.white,
                       onTapped: ()  {
                         _controller.onSubmittedLogin();
                       },
@@ -214,7 +214,7 @@ class _SippoUserLoginState extends State<SippoUserLogin> {
                           "You_dont_have_an_account_yet".tr,
                           style: dmsregular.copyWith(
                               fontSize: FontSize.title6(context),
-                              color: Jobstopcolor.textColor),
+                              color: SippoColor.textColor),
                         ),
                         TextButton(
                           onPressed: () {
@@ -224,7 +224,7 @@ class _SippoUserLoginState extends State<SippoUserLogin> {
                             "Sign_up".tr,
                             style: dmsregular.copyWith(
                                 fontSize: height / 65,
-                                color: Jobstopcolor.secondary,
+                                color: SippoColor.secondary,
                                 decoration: TextDecoration.underline),
                           ),
                         ),
@@ -243,9 +243,9 @@ class _SippoUserLoginState extends State<SippoUserLogin> {
                         Get.offAndToNamed(SippoRoutes.sippoCompanyLogin);
                       },
                       text: "Company_Login".tr,
-                      backgroundColor: Jobstopcolor.white,
-                      textColor: Jobstopcolor.textColor,
-                      borderColor: Jobstopcolor.grey,
+                      backgroundColor: SippoColor.white,
+                      textColor: SippoColor.textColor,
+                      borderColor: SippoColor.grey,
                     ),
                     SizedBox(
                       height: height / 52,
@@ -256,16 +256,16 @@ class _SippoUserLoginState extends State<SippoUserLogin> {
                         Get.offAllNamed(SippoRoutes.userDashboard);
                       },
                       text: "Guest_login.".tr,
-                      backgroundColor: Jobstopcolor.white,
-                      textColor: Jobstopcolor.textColor,
-                      borderColor: Jobstopcolor.grey,
+                      backgroundColor: SippoColor.white,
+                      textColor: SippoColor.textColor,
+                      borderColor: SippoColor.grey,
                     )
                   ],
                 ),
               ),
             ),
           ),
-          backgroundColor: Jobstopcolor.white,
+          backgroundColor: SippoColor.white,
         ),
         Obx(
           () => _controller.authState.isLoading

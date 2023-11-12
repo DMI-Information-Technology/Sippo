@@ -33,7 +33,7 @@ class AdsViewController extends GetxController {
       onValidateError: (validateError, _) {
         states = states.copyWith(
           isError: true,
-          message: 'Something wrong happened.',
+          message: 'something_wrong_happened'.tr,
         );
       },
       onError: (message, _) {

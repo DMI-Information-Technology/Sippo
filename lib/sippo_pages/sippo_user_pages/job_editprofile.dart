@@ -92,7 +92,7 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
                     fontSize: FontSize.label(context),
                     suffixIcon: Icon(
                       Icons.person_outline_outlined,
-                      color: Jobstopcolor.primarycolor,
+                      color: SippoColor.primarycolor,
                     ),
                     // textInputAction: TextInputAction.newline,
                     validator: (value) {
@@ -134,7 +134,7 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
                     fontSize: FontSize.label(context),
                     suffixIcon: Icon(
                       Icons.email_outlined,
-                      color: Jobstopcolor.primarycolor,
+                      color: SippoColor.primarycolor,
                     ),
                     // textInputAction: TextInputAction.newline,
                   ),
@@ -211,7 +211,7 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
                     fontSize: FontSize.label(context),
                     suffixIcon: Icon(
                       Icons.arrow_drop_down_sharp,
-                      color: Jobstopcolor.primarycolor,
+                      color: SippoColor.primarycolor,
                     ),
                     onTap: () {
                       Get.dialog(
@@ -274,7 +274,7 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
             },
             text: "save".tr),
       ),
-      backgroundColor: Jobstopcolor.backgroudHome,
+      backgroundColor: SippoColor.backgroudHome,
     );
   }
 
@@ -313,7 +313,7 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
             },
             child: Icon(
               Icons.edit,
-              color: Jobstopcolor.white,
+              color: SippoColor.white,
               size: context.fromHeight(CustomStyle.m),
             ))
       ],
@@ -329,7 +329,7 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: Jobstopcolor.white,
+        color: SippoColor.white,
       ),
       child: IntlPhoneField(
         controller: gTxtController.controller,
@@ -340,11 +340,11 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
         dropdownIconPosition: IconPosition.trailing,
         dropdownTextStyle: dmsregular.copyWith(
           fontSize: FontSize.label(context),
-          color: Jobstopcolor.grey,
+          color: SippoColor.grey,
         ),
         dropdownIcon: Icon(
           Icons.arrow_drop_down,
-          color: Jobstopcolor.grey,
+          color: SippoColor.grey,
           size: context.fromHeight(CustomStyle.s),
         ),
         style: dmsmedium.copyWith(
@@ -367,7 +367,7 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
           ),
           suffixIcon: Icon(
             Icons.phone_outlined,
-            color: Jobstopcolor.primarycolor,
+            color: SippoColor.primarycolor,
           ),
         ),
         showCursor: true,

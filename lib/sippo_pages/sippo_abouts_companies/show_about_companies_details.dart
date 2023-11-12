@@ -127,7 +127,7 @@ class ShowAboutCompaniesDetails extends StatelessWidget {
                 text,
                 style: dmsregular.copyWith(
                   fontSize: FontSize.title6(context),
-                  color: Jobstopcolor.darkgrey,
+                  color: SippoColor.darkgrey,
                 ),
                 maxLines: 15,
                 overflow: TextOverflow.ellipsis,

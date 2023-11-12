@@ -49,7 +49,7 @@ class _SippoAboutCompanyState extends State<SippoAboutCompany> {
                 "about_us".tr,
                 style: dmsbold.copyWith(
                   fontSize: 16,
-                  color: Jobstopcolor.primarycolor,
+                  color: SippoColor.primarycolor,
                 ),
               ),
               SizedBox(height: height / CustomStyle.verticalSpaceBetween),

@@ -16,6 +16,7 @@ import 'package:jobspot/sippo_custom_widget/setting_item_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_data/model/notification/notification_model.dart';
 import 'package:jobspot/sippo_data/model/notification/notifications_types.dart';
+import 'package:jobspot/sippo_pages/sippo_message_pages/no_items_found_message.dart';
 import 'package:lottie/lottie.dart';
 
 class SippoUserNotification extends StatefulWidget {
@@ -43,6 +44,8 @@ class _SippoUserNotificationState extends State<SippoUserNotification> {
               _buildErrorFirstLoad(context),
           newPageErrorIndicatorBuilder: (context) =>
               _buildErrorNewLoad(context),
+          noItemsFoundIndicatorBuilder: (context) =>
+              NoItemsFoundMessageWidget.notification(),
           firstPageProgressIndicatorBuilder: (context) => Center(
             child: Lottie.asset(
               JobstopPngImg.loadingProgress,
@@ -85,12 +88,12 @@ class _SippoUserNotificationState extends State<SippoUserNotification> {
             textAlign: TextAlign.center,
             style: dmsregular.copyWith(
               fontSize: FontSize.paragraph3(context),
-              color: Jobstopcolor.primarycolor,
+              color: SippoColor.primarycolor,
             ),
           ),
           Icon(
             Icons.refresh,
-            color: Jobstopcolor.primarycolor,
+            color: SippoColor.primarycolor,
           ),
         ],
       ),
@@ -108,7 +111,7 @@ class _SippoUserNotificationState extends State<SippoUserNotification> {
         Text(
           "error".tr,
           style: dmsbold.copyWith(
-            color: Jobstopcolor.primarycolor,
+            color: SippoColor.primarycolor,
             fontSize: FontSize.title2(context),
           ),
         ),
@@ -268,7 +271,7 @@ class NotificationCardWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RoundedBorderRadiusCardWidget(
-      color: notification?.isRead != true ? Jobstopcolor.lightprimary4 : null,
+      color: notification?.isRead != true ? SippoColor.lightprimary4 : null,
       child: ListTile(
         titleAlignment: ListTileTitleAlignment.top,
         horizontalTitleGap: 0.0,

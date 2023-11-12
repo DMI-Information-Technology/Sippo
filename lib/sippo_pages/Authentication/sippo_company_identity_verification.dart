@@ -73,7 +73,7 @@ class SippoCompanyIdentityVerification extends StatelessWidget {
       () => PhoneResetPasswordCard(
         phoneNumber: controller.phoneNumber,
         description: '${'message_send_secret_code'.tr} ${controller.initTimer}',
-        borderColor: Jobstopcolor.primarycolor,
+        borderColor: SippoColor.primarycolor,
       ),
     );
   }
@@ -107,7 +107,7 @@ class SippoCompanyIdentityVerification extends StatelessWidget {
         style: dmsbold.copyWith(fontSize: height / 52),
         textAlign: TextAlign.start,
       ),
-      backgroundColor: Jobstopcolor.backgroudHome,
+      backgroundColor: SippoColor.backgroudHome,
     );
   }
 }

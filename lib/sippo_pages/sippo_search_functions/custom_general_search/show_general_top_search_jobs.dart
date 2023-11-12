@@ -91,8 +91,8 @@ class _ShowGeneralTopSearchJobsListState
                     },
                     text: '${'load_more'.tr}...',
                     backgroundColor: Colors.transparent,
-                    textColor: Jobstopcolor.primarycolor,
-                    borderColor: Jobstopcolor.primarycolor,
+                    textColor: SippoColor.primarycolor,
+                    borderColor: SippoColor.primarycolor,
                   ),
                 ),
         ));
@@ -110,12 +110,12 @@ class _ShowGeneralTopSearchJobsListState
             textAlign: TextAlign.center,
             style: dmsregular.copyWith(
               fontSize: FontSize.paragraph3(context),
-              color: Jobstopcolor.primarycolor,
+              color: SippoColor.primarycolor,
             ),
           ),
           Icon(
             Icons.refresh,
-            color: Jobstopcolor.primarycolor,
+            color: SippoColor.primarycolor,
           ),
         ],
       ),
@@ -130,13 +130,13 @@ class _ShowGeneralTopSearchJobsListState
         Text(
           'error'.tr,
           style: dmsbold.copyWith(
-            color: Jobstopcolor.primarycolor,
+            color: SippoColor.primarycolor,
             fontSize: FontSize.title2(context),
           ),
         ),
         SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
         Text(
-          _controller.states.message ?? 'something_wrong_happened.'.tr,
+          _controller.states.message ?? 'something_wrong_happened'.tr,
           style: dmsregular.copyWith(
             fontSize: FontSize.paragraph3(context),
           ),

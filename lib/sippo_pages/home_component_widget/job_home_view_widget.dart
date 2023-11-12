@@ -8,6 +8,7 @@ import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
+import 'package:jobspot/JobServices/app_local_language_services/app_local_language_service.dart';
 import 'package:jobspot/JobServices/shared_global_data_service.dart';
 import 'package:jobspot/sippo_controller/home_controllers/job_home_view_controller.dart';
 import 'package:jobspot/sippo_custom_widget/job_home_card_widget.dart';
@@ -25,8 +26,6 @@ class JobHomeViewWidget extends StatefulWidget {
 
 class _JobHomeViewWidgetState extends State<JobHomeViewWidget> {
   final _controller = Get.put(JobsHomeViewController());
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +55,7 @@ class _JobHomeViewWidgetState extends State<JobHomeViewWidget> {
                 'No Jobs Found',
                 textAlign: TextAlign.center,
                 style: dmsbold.copyWith(
-                  color: Jobstopcolor.primarycolor,
+                  color: SippoColor.primarycolor,
                   fontSize: FontSize.title4(context),
                 ),
               ),
@@ -80,6 +79,8 @@ class _JobHomeViewWidgetState extends State<JobHomeViewWidget> {
                 fontSize: FontSize.paragraph3(context),
               ),
               textAlign: TextAlign.center,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
             ),
             SizedBox(height: context.fromHeight(CustomStyle.huge)),
             SizedBox(
@@ -168,11 +169,20 @@ class _JobHomeViewWidgetState extends State<JobHomeViewWidget> {
                         padding: EdgeInsets.all(
                           context.fromWidth(CustomStyle.xxl),
                         ),
-                        child: Icon(
-                          Icons.arrow_circle_right_rounded,
-                          color: Jobstopcolor.secondary,
-                          size: context.fromHeight(12),
-                        ),
+                        child: Obx(() {
+                          final iconDir =
+                              switch (GlobalStorageService.savedLanguage) {
+                            LocaleLanguageType.arabic =>
+                              Icons.arrow_circle_left_rounded,
+                            LocaleLanguageType.english =>
+                              Icons.arrow_circle_right_rounded,
+                          };
+                          return Icon(
+                            iconDir,
+                            color: SippoColor.secondary,
+                            size: context.fromHeight(12),
+                          );
+                        }),
                       ),
                     )
                   : const SizedBox.shrink();

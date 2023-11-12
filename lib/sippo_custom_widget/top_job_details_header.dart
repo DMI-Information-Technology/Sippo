@@ -67,7 +67,7 @@ class TopJobDetailsHeader extends StatelessWidget {
         borderRadius: BorderRadiusDirectional.vertical(
           bottom: Radius.circular(context.height / 45),
         ),
-        color: Jobstopcolor.red,
+        color: SippoColor.red,
         image: DecorationImage(
           image: AssetImage(
             JobstopPngImg.backgroundProf,
@@ -80,9 +80,9 @@ class TopJobDetailsHeader extends StatelessWidget {
 
   Widget _buildProfileImage(BuildContext context) {
     return NetworkBorderedCircularImage(
-      outerBorderColor: Jobstopcolor.backgroudHome,
-      innerBorderColor: Jobstopcolor.primarycolor,
-      backgroundColor: Jobstopcolor.white,
+      outerBorderColor: SippoColor.backgroudHome,
+      innerBorderColor: SippoColor.primarycolor,
+      backgroundColor: SippoColor.white,
       size: profileImageSize,
       imageUrl: imageUrl ?? "",
       errorWidget: (context, url, error) => CircleAvatar(),

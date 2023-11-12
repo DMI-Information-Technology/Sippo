@@ -47,7 +47,7 @@ class _SippoSplashState extends State<SippoSplash> {
     return AnimatedSplashScreen.withScreenRouteFunction(
       curve: Curves.easeIn,
       splashTransition: SplashTransition.sizeTransition,
-      backgroundColor: Jobstopcolor.secondary,
+      backgroundColor: SippoColor.secondary,
       splash: Image.asset(
         JobstopPngImg.splashlogo,
         fit: BoxFit.fitHeight,

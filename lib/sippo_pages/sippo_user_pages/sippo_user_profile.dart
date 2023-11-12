@@ -93,7 +93,7 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
               ),
             ],
             backgroundColor: isHeightOverAppBar
-                ? Jobstopcolor.backgroudHome
+                ? SippoColor.backgroudHome
                 : Colors.transparent,
           );
         }),
@@ -142,6 +142,8 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
           data: profileMessages,
           guaranteedBuilder: (context, data) {
             return ProfileCompletionWidget(
+              title: 'functional_information'.tr,
+              description: 'functional_information_desc'.tr,
               controller: _controller.profileCompletionController,
               profile: profileMessages,
               onTap: (messages) {},
@@ -166,14 +168,14 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
           leading: Image.asset(
             JobstopPngImg.resume,
             height: context.fromHeight(CustomStyle.l),
-            color: Jobstopcolor.primarycolor,
+            color: SippoColor.primarycolor,
             colorBlendMode: BlendMode.srcIn,
           ),
           iconAction: _controller.user.cv != null
               ? Icon(
                   Icons.mode_edit_outline_outlined,
                   size: context.fromHeight(CustomStyle.l),
-                  color: Jobstopcolor.primarycolor,
+                  color: SippoColor.primarycolor,
                 )
               : null,
           onAddClicked: () async {
@@ -219,7 +221,7 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
         leading: Image.asset(
           JobstopPngImg.appreciation,
           height: context.fromHeight(CustomStyle.l),
-          color: Jobstopcolor.primarycolor,
+          color: SippoColor.primarycolor,
           colorBlendMode: BlendMode.srcIn,
         ),
         profileInfo: [
@@ -272,14 +274,14 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
         leading: Image.asset(
           JobstopPngImg.language,
           height: context.fromHeight(CustomStyle.l),
-          color: Jobstopcolor.primarycolor,
+          color: SippoColor.primarycolor,
           colorBlendMode: BlendMode.srcIn,
         ),
         iconAction: _controller.profileState.languages.isNotEmpty
             ? Icon(
                 Icons.mode_edit_outline_outlined,
                 size: context.fromHeight(CustomStyle.l),
-                color: Jobstopcolor.primarycolor,
+                color: SippoColor.primarycolor,
               )
             : null,
         profileInfo: [
@@ -325,14 +327,14 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
         leading: Image.asset(
           JobstopPngImg.skil,
           height: context.fromHeight(CustomStyle.l),
-          color: Jobstopcolor.primarycolor,
+          color: SippoColor.primarycolor,
           colorBlendMode: BlendMode.srcIn,
         ),
         iconAction: _controller.profileState.skillsList.isNotEmpty
             ? Icon(
                 Icons.mode_edit_outline_outlined,
                 size: context.fromHeight(CustomStyle.l),
-                color: Jobstopcolor.primarycolor,
+                color: SippoColor.primarycolor,
               )
             : null,
         profileInfo: [
@@ -368,7 +370,7 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
           leading: Image.asset(
             JobstopPngImg.education,
             height: context.fromHeight(CustomStyle.spaceBetween),
-            color: Jobstopcolor.primarycolor,
+            color: SippoColor.primarycolor,
             colorBlendMode: BlendMode.srcIn,
           ),
           onAddClicked: () {
@@ -413,7 +415,7 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
         leading: Image.asset(
           JobstopPngImg.bag,
           height: context.fromHeight(CustomStyle.l),
-          color: Jobstopcolor.primarycolor,
+          color: SippoColor.primarycolor,
           colorBlendMode: BlendMode.srcIn,
         ),
         onAddClicked: () {
@@ -459,14 +461,14 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
         leading: Image.asset(
           JobstopPngImg.aboutme,
           height: context.fromHeight(CustomStyle.l),
-          color: Jobstopcolor.primarycolor,
+          color: SippoColor.primarycolor,
           colorBlendMode: BlendMode.srcIn,
         ),
         iconAction: _controller.profileState.aboutMeText.isNotEmpty
             ? Icon(
                 Icons.mode_edit_outline_outlined,
                 size: context.fromHeight(CustomStyle.l),
-                color: Jobstopcolor.primarycolor,
+                color: SippoColor.primarycolor,
               )
             : null,
         onAddClicked: () {
@@ -478,9 +480,9 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
                   _controller.profileState.aboutMeText,
                   style: dmsregular.copyWith(
                     fontSize: context.fromHeight(CustomStyle.xxxl),
-                    color: Jobstopcolor.textColor,
+                    color: SippoColor.textColor,
                   ),
-                  colorClickableText: Jobstopcolor.primarycolor,
+                  colorClickableText: SippoColor.primarycolor,
                   trimLines: 2,
                   trimMode: TrimMode.Line,
                   trimCollapsedText: 'show_more'.tr,
@@ -497,11 +499,11 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
     String value,
   ) {
     return Chip(
-      backgroundColor: Jobstopcolor.grey2,
+      backgroundColor: SippoColor.grey2,
       label: Text(
         value,
         style: dmsregular.copyWith(
-          color: Jobstopcolor.textColor,
+          color: SippoColor.textColor,
         ),
       ),
     );
@@ -522,7 +524,7 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
       title: Text(
         title ?? "",
         style: dmsbold.copyWith(
-          color: Jobstopcolor.primarycolor,
+          color: SippoColor.primarycolor,
         ),
         overflow: TextOverflow.ellipsis,
       ),
@@ -534,7 +536,7 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
             Text(
               from,
               style: dmsregular.copyWith(
-                color: Jobstopcolor.darkgrey,
+                color: SippoColor.darkgrey,
               ),
             ),
             SizedBox(
@@ -543,7 +545,7 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
           ],
           Text(
             periodic ?? "",
-            style: dmsregular.copyWith(color: Jobstopcolor.darkgrey),
+            style: dmsregular.copyWith(color: SippoColor.darkgrey),
           ),
         ],
       ),
@@ -552,7 +554,7 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
         child: Image.asset(
           JobstopPngImg.edit,
           height: context.fromHeight(CustomStyle.l),
-          color: Jobstopcolor.primarycolor,
+          color: SippoColor.primarycolor,
           colorBlendMode: BlendMode.srcIn,
         ),
       ),

@@ -13,6 +13,7 @@ import 'package:jobspot/sippo_controller/sippo_search_controller/genral_search_j
 import 'package:jobspot/sippo_custom_widget/job_card_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
+import 'package:jobspot/sippo_pages/sippo_message_pages/no_items_found_message.dart';
 import 'package:jobspot/utils/app_use.dart';
 import 'package:jobspot/utils/helper.dart';
 import 'package:lottie/lottie.dart';
@@ -47,6 +48,8 @@ class _ShowGeneralSearchJobsListState extends State<ShowGeneralSearchJobsList> {
               _buildErrorNewLoad(context),
           newPageProgressIndicatorBuilder: (context) =>
               _buildNewPageProgress(context),
+          noItemsFoundIndicatorBuilder: (context) =>
+              NoItemsFoundMessageWidget.jobs(alignmentFromStart: true),
           firstPageProgressIndicatorBuilder: (context) => Center(
             child: Lottie.asset(
               JobstopPngImg.loadingProgress,
@@ -99,10 +102,10 @@ class _ShowGeneralSearchJobsListState extends State<ShowGeneralSearchJobsList> {
                   width: context.width / 2,
                   child: CustomButton(
                     onTapped: () => _controller.onLoadMoreJobsSubmitted(),
-                    text: 'Load More...',
+                    text: '${'load_more'.tr}...',
                     backgroundColor: Colors.transparent,
-                    textColor: Jobstopcolor.primarycolor,
-                    borderColor: Jobstopcolor.primarycolor,
+                    textColor: SippoColor.primarycolor,
+                    borderColor: SippoColor.primarycolor,
                   ),
                 ),
         ));
@@ -120,12 +123,12 @@ class _ShowGeneralSearchJobsListState extends State<ShowGeneralSearchJobsList> {
             textAlign: TextAlign.center,
             style: dmsregular.copyWith(
               fontSize: FontSize.paragraph3(context),
-              color: Jobstopcolor.primarycolor,
+              color: SippoColor.primarycolor,
             ),
           ),
           Icon(
             Icons.refresh,
-            color: Jobstopcolor.primarycolor,
+            color: SippoColor.primarycolor,
           ),
         ],
       ),
@@ -138,15 +141,15 @@ class _ShowGeneralSearchJobsListState extends State<ShowGeneralSearchJobsList> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          "Error",
+          "error".tr,
           style: dmsbold.copyWith(
-            color: Jobstopcolor.primarycolor,
+            color: SippoColor.primarycolor,
             fontSize: FontSize.title2(context),
           ),
         ),
         SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
         Text(
-          _controller.states.message ?? 'Something wrong is happened.',
+          _controller.states.message ?? 'something_wrong_happened'.tr,
           style: dmsregular.copyWith(
             fontSize: FontSize.paragraph3(context),
           ),
@@ -160,7 +163,7 @@ class _ShowGeneralSearchJobsListState extends State<ShowGeneralSearchJobsList> {
             onTapped: () {
               _controller.retryLastFailedRequest();
             },
-            text: 'Try again',
+            text: 'try_again'.tr,
           ),
         )
       ],

@@ -30,10 +30,10 @@ class CustomAlertDialog extends StatelessWidget {
     required this.title,
     this.description,
     this.confirmBtnTitle,
-    this.confirmBtnColor = Jobstopcolor.primarycolor,
+    this.confirmBtnColor = SippoColor.primarycolor,
     this.onConfirm,
     this.cancelBtnTitle,
-    this.cancelBtnColor = Jobstopcolor.lightprimary,
+    this.cancelBtnColor = SippoColor.lightprimary,
     this.onCancel,
   }) : _vertical = false;
 
@@ -43,10 +43,10 @@ class CustomAlertDialog extends StatelessWidget {
     required this.title,
     this.description,
     this.confirmBtnTitle,
-    this.confirmBtnColor = Jobstopcolor.primarycolor,
+    this.confirmBtnColor = SippoColor.primarycolor,
     this.onConfirm,
     this.cancelBtnTitle,
-    this.cancelBtnColor = Jobstopcolor.lightprimary,
+    this.cancelBtnColor = SippoColor.lightprimary,
     this.onCancel,
   }) : _vertical = true;
 
@@ -113,9 +113,9 @@ class CustomAlertDialog extends StatelessWidget {
                   shape: customStyles.circularBorderedShapeButton(height / 64),
                 ),
                 child: Text(
-                  cancelBtnTitle ??  'cancel'.tr,
+                  cancelBtnTitle ?? 'cancel'.tr,
                   style: dmsregular.copyWith(
-                    color: Jobstopcolor.primarycolor,
+                    color: SippoColor.primarycolor,
                   ),
                 ),
               ),
@@ -151,7 +151,7 @@ class CustomAlertDialog extends StatelessWidget {
               title,
               style: dmsbold.copyWith(
                 fontSize: FontSize.title3(context),
-                color: Jobstopcolor.primarycolor,
+                color: SippoColor.primarycolor,
               ),
               textAlign: TextAlign.center,
             ),
@@ -162,7 +162,7 @@ class CustomAlertDialog extends StatelessWidget {
                   AutoSizeText(
                     description ?? "",
                     style: dmsregular.copyWith(
-                      color: Jobstopcolor.textColor,
+                      color: SippoColor.textColor,
                       fontSize: FontSize.paragraph2(
                         context,
                       ),
@@ -208,11 +208,13 @@ class InputField extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextFormField(
       controller: controller,
+      textAlignVertical: TextAlignVertical.bottom,
       style: dmsregular.copyWith(
         fontSize: context.height / 59,
-        color: Jobstopcolor.primarycolor,
+        color: SippoColor.primarycolor,
       ),
-      cursorColor: Jobstopcolor.grey,
+      cursorColor: SippoColor.grey,
+      maxLines: 1,
       initialValue: initialValue,
       decoration: InputDecoration(
         prefixIcon: icon,
@@ -220,7 +222,7 @@ class InputField extends StatelessWidget {
         hintText: hintText,
         hintStyle: dmsregular.copyWith(
           fontSize: context.height / 59,
-          color: Jobstopcolor.grey,
+          color: SippoColor.grey,
         ),
         border: UnderlineInputBorder(
           borderRadius: BorderRadius.circular(25),
@@ -274,11 +276,12 @@ class _PasswordInputFieldState extends State<PasswordInputField> {
     double height = size.height;
     return TextFormField(
       controller: widget.controller,
+      textAlignVertical: TextAlignVertical.bottom,
       style: dmsregular.copyWith(
         fontSize: height / 59,
-        color: Jobstopcolor.primarycolor,
+        color: SippoColor.primarycolor,
       ),
-      cursorColor: Jobstopcolor.grey,
+      cursorColor: SippoColor.grey,
       decoration: InputDecoration(
         prefixIcon: widget.icon,
         suffixIcon: IconButton(
@@ -287,12 +290,12 @@ class _PasswordInputFieldState extends State<PasswordInputField> {
           ),
           onPressed: _togglePasswordStatus,
           color: widget.suffixIconColor != null
-              ? widget.suffixIconColor ?? Jobstopcolor.primarycolor
+              ? widget.suffixIconColor ?? SippoColor.primarycolor
               : null,
         ),
         hintText: widget.hintText,
-        hintStyle: dmsregular.copyWith(
-            fontSize: height / 59, color: Jobstopcolor.grey),
+        hintStyle:
+            dmsregular.copyWith(fontSize: height / 59, color: SippoColor.grey),
         border: UnderlineInputBorder(
           borderRadius: BorderRadius.circular(5),
         ),
@@ -333,8 +336,8 @@ class CustomButton2 extends StatelessWidget {
     double height = size.height;
     double width = size.width;
     return InkWell(
-      highlightColor: Jobstopcolor.transparent,
-      splashColor: Jobstopcolor.transparent,
+      highlightColor: SippoColor.transparent,
+      splashColor: SippoColor.transparent,
       onTap: onTapped,
       child: Center(
         child: Container(
@@ -342,9 +345,9 @@ class CustomButton2 extends StatelessWidget {
           width: width / 1.1,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(50),
-            color: backgroundColor ?? Jobstopcolor.primarycolor,
+            color: backgroundColor ?? SippoColor.primarycolor,
             border: borderColor != null
-                ? Border.all(width: 1, color: borderColor ?? Jobstopcolor.white)
+                ? Border.all(width: 1, color: borderColor ?? SippoColor.white)
                 : null,
           ),
           child: Row(
@@ -359,7 +362,7 @@ class CustomButton2 extends StatelessWidget {
                 text,
                 style: dmsbold.copyWith(
                   fontSize: fontSize ?? FontSize.title6(context),
-                  color: textColor ?? Jobstopcolor.white,
+                  color: textColor ?? SippoColor.white,
                 ),
               ),
             ],
@@ -430,7 +433,7 @@ class CustomButton extends StatelessWidget {
                 text,
                 style: dmsbold.copyWith(
                   fontSize: fontSize ?? FontSize.title6(context),
-                  color: textColor ?? Jobstopcolor.white,
+                  color: textColor ?? SippoColor.white,
                 ),
               ),
             ),
@@ -464,7 +467,7 @@ class SeparatorLine extends StatelessWidget {
         const SizedBox(width: 10),
         Text(
           text ?? 'or'.tr,
-          style: dmsregular.copyWith(color: Jobstopcolor.textColor),
+          style: dmsregular.copyWith(color: SippoColor.textColor),
         ),
         const SizedBox(width: 10),
         Expanded(
@@ -512,13 +515,13 @@ class PhoneResetPasswordCard extends StatelessWidget {
           height: height / 15,
           decoration: const BoxDecoration(
             shape: BoxShape.circle,
-            color: Jobstopcolor.lightsecondary,
+            color: SippoColor.lightsecondary,
           ),
           child: CircleAvatar(
             backgroundColor: Colors.transparent,
             child: Icon(
               Icons.message,
-              color: Jobstopcolor.primarycolor,
+              color: SippoColor.primarycolor,
               size: height / 25,
             ),
           ),
@@ -532,7 +535,7 @@ class PhoneResetPasswordCard extends StatelessWidget {
         subtitle: Text(
           description,
           style: dmsbold.copyWith(
-              fontSize: height / 72, color: Jobstopcolor.textColor),
+              fontSize: height / 72, color: SippoColor.textColor),
         ),
       ),
     );
@@ -546,7 +549,7 @@ class CustomChip extends StatelessWidget {
     this.width,
     this.borderRadius = 0,
     this.onTap,
-    this.backgroundColor = Jobstopcolor.greyyy,
+    this.backgroundColor = SippoColor.greyyy,
     this.paddingValue,
     this.margin,
     required this.child,
@@ -661,7 +664,7 @@ class InputBorderedField extends StatelessWidget {
         controller: gController?.controller ?? controller,
         style: dmsregular.copyWith(
             fontSize: fontSize, color: fontColor ?? Colors.black87),
-        cursorColor: Jobstopcolor.grey,
+        cursorColor: SippoColor.grey,
         textAlignVertical: TextAlignVertical.center,
         decoration: InputDecoration(
           counterStyle: TextStyle(height: 0.0),
@@ -681,7 +684,7 @@ class InputBorderedField extends StatelessWidget {
             borderRadius: BorderRadius.circular(borderRadiusValue ?? 15),
             borderSide: BorderSide.none,
           ),
-          fillColor: fillColor ?? Jobstopcolor.white,
+          fillColor: fillColor ?? SippoColor.white,
           suffixIcon: suffixIcon,
           prefixIcon: prefixIcon,
           prefixIconColor: prefixIconColor,
@@ -788,7 +791,7 @@ class _PasswordInputBorderedFieldState
               style: dmsregular.copyWith(
                   fontSize: widget.fontSize,
                   color: widget.fontColor ?? Colors.black87),
-              cursorColor: Jobstopcolor.grey,
+              cursorColor: SippoColor.grey,
               textAlignVertical: TextAlignVertical.center,
               decoration: InputDecoration(
                 counterStyle: TextStyle(height: 0.0),
@@ -809,7 +812,7 @@ class _PasswordInputBorderedFieldState
                       BorderRadius.circular(widget.borderRadiusValue ?? 15),
                   borderSide: BorderSide.none,
                 ),
-                fillColor: widget.fillColor ?? Jobstopcolor.white,
+                fillColor: widget.fillColor ?? SippoColor.white,
                 suffixIcon: InkWell(
                   onTap: () {
                     _obscureController.status = !_obscureController.status;
@@ -900,7 +903,7 @@ class FilterButtonWidget extends StatelessWidget {
         width: context.height / 18,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: color ?? Jobstopcolor.primarycolor,
+          color: color ?? SippoColor.primarycolor,
         ),
         child: Padding(
           padding: const EdgeInsets.all(12.0),

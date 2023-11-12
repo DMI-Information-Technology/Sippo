@@ -67,7 +67,7 @@ class ApplyJobsController extends GetxController {
         isWarning: true,
         isError: false,
         isSuccess: false,
-        message: "Some required field is empty please check it.",
+        message: "required_field_empty".tr,
       );
     }
     final application = UserSendApplicationModel(
@@ -88,13 +88,13 @@ class ApplyJobsController extends GetxController {
         }
         changeStates(
           isSuccess: true,
-          message: 'The application is sent successfully.',
+          message: 'application_sent_message'.tr,
         );
       },
       onValidateError: (validateError, _) {
         changeStates(
           isError: true,
-          message: "some error occurred during the application submission.",
+          message: validateError?.message,
         );
       },
       onError: (message, _) {
@@ -143,8 +143,7 @@ class ApplyJobsController extends GetxController {
         isWarning: true,
         isError: false,
         isSuccess: false,
-        message: "The connection is lost. Please"
-            " reconnect to network and try again.",
+        message: "connection_lost_message_1".tr,
       );
     }
     if (requestedJobDetails?.id == -1) return;

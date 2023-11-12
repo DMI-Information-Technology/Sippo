@@ -56,13 +56,13 @@ class CustomDropdownButton<T> extends StatelessWidget {
             horizontal: hPaddingValue ?? 0.0,
           ),
           filled: true,
-          fillColor: fillColor ?? Jobstopcolor.backgroudHome,
+          fillColor: fillColor ?? SippoColor.backgroudHome,
           enabledBorder: underLineBorder
               ? UnderlineInputBorder(
                   borderRadius:
                       BorderRadius.circular(context.fromWidth(CustomStyle.s)),
                   borderSide: BorderSide(
-                    color: Jobstopcolor.grey[400] ?? Colors.grey,
+                    color: SippoColor.grey[400] ?? Colors.grey,
                     width: 3,
                   ),
                 )
@@ -72,7 +72,7 @@ class CustomDropdownButton<T> extends StatelessWidget {
                   borderRadius:
                       BorderRadius.circular(context.fromWidth(CustomStyle.s)),
                   borderSide: BorderSide(
-                    color: Jobstopcolor.primarycolor,
+                    color: SippoColor.primarycolor,
                     width: 3,
                   ),
                 )

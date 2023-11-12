@@ -43,23 +43,23 @@ class _JobEducationAddEditState extends State<JobEducationAddEdit> {
             children: [
               Obx(
                 () => AutoSizeText(
-                  "${_controller.isEditing ? "change".tr : "Add".tr} Education",
+                  "${_controller.isEditing ? "change".tr : "add".tr} ${'education'.tr}",
                   style: dmsbold.copyWith(
                       fontSize: FontSize.title3(context),
-                      color: Jobstopcolor.primarycolor),
+                      color: SippoColor.primarycolor),
                 ),
               ),
               SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
               _buildWarningMessage(),
-              _buildLabelText(context, "Level of education"),
+              _buildLabelText(context, "title_level_education".tr),
               SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
               _buildLevelInput(context),
               SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
-              _buildLabelText(context, "Institution name"),
+              _buildLabelText(context, "title_institution_name".tr),
               SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
               _buildInstitutionInput(context),
               SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-              _buildLabelText(context, "Field of study"),
+              _buildLabelText(context, "title_field_study".tr),
               SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
               _buildFieldStudyInput(context),
               SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
@@ -69,7 +69,7 @@ class _JobEducationAddEditState extends State<JobEducationAddEdit> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _buildLabelText(context, "Start date"),
+                      _buildLabelText(context, "start_date".tr),
                       SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
                       _buildStartDateInput(context),
                     ],
@@ -77,7 +77,7 @@ class _JobEducationAddEditState extends State<JobEducationAddEdit> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _buildLabelText(context, "End date"),
+                      _buildLabelText(context, "end_date".tr),
                       SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
                       _buildEndDateInput(context),
                     ],
@@ -87,7 +87,7 @@ class _JobEducationAddEditState extends State<JobEducationAddEdit> {
               SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
               _buildIsCurrentCheckBox(context),
               SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
-              _buildLabelText(context, "Description"),
+              _buildLabelText(context, "description".tr),
               SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
               _buildDescriptionInput(context),
               SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
@@ -113,9 +113,9 @@ class _JobEducationAddEditState extends State<JobEducationAddEdit> {
             width: context.height / 30,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
-              color: Jobstopcolor.white,
+              color: SippoColor.white,
               boxShadow: const [
-                BoxShadow(color: Jobstopcolor.shedo, blurRadius: 5)
+                BoxShadow(color: SippoColor.shedo, blurRadius: 5)
               ],
             ),
             child: Obx(
@@ -123,8 +123,8 @@ class _JobEducationAddEditState extends State<JobEducationAddEdit> {
                 Icons.check,
                 size: 15,
                 color: eduState.isCurrent
-                    ? Jobstopcolor.primarycolor
-                    : Jobstopcolor.transparent,
+                    ? SippoColor.primarycolor
+                    : SippoColor.transparent,
               ),
             ),
           ),
@@ -133,10 +133,10 @@ class _JobEducationAddEditState extends State<JobEducationAddEdit> {
           width: context.fromWidth(CustomStyle.xs),
         ),
         AutoSizeText(
-          "This is my education now",
+          "my_education_now_label".tr,
           style: dmsregular.copyWith(
             fontSize: FontSize.paragraph3(context),
-            color: Jobstopcolor.darkgrey,
+            color: SippoColor.darkgrey,
           ),
         )
       ],
@@ -163,7 +163,7 @@ class _JobEducationAddEditState extends State<JobEducationAddEdit> {
       controller: eduState.endDate.controller,
       suffixIcon: const Icon(
         Icons.date_range_outlined,
-        color: Jobstopcolor.primarycolor,
+        color: SippoColor.primarycolor,
       ),
     );
   }
@@ -185,7 +185,7 @@ class _JobEducationAddEditState extends State<JobEducationAddEdit> {
       gController: eduState.startDate,
       suffixIcon: const Icon(
         Icons.date_range_outlined,
-        color: Jobstopcolor.primarycolor,
+        color: SippoColor.primarycolor,
       ),
     );
   }
@@ -284,7 +284,7 @@ class _JobEducationAddEditState extends State<JobEducationAddEdit> {
       fontSize: FontSize.paragraph3(context),
       hintStyle: dmsregular.copyWith(
         fontSize: FontSize.label(context),
-        color: Jobstopcolor.grey,
+        color: SippoColor.grey,
       ),
       keyboardType: TextInputType.multiline,
       maxLine: 5,
@@ -298,7 +298,7 @@ class _JobEducationAddEditState extends State<JobEducationAddEdit> {
       text,
       style: dmsbold.copyWith(
         fontSize: FontSize.label(context),
-        color: Jobstopcolor.primarycolor,
+        color: SippoColor.primarycolor,
       ),
     );
   }
@@ -329,8 +329,8 @@ class _JobEducationAddEditState extends State<JobEducationAddEdit> {
               onTapped: () {
                 _showRemove();
               },
-              text: "REMOVE".tr,
-              backgroundColor: Jobstopcolor.lightprimary,
+              text: "remove".tr,
+              backgroundColor: SippoColor.lightprimary,
             ),
           ),
         SizedBox(
@@ -339,8 +339,8 @@ class _JobEducationAddEditState extends State<JobEducationAddEdit> {
             onTapped: () {
               _showSaveBottomSheet();
             },
-            text: "SAVE".tr,
-            backgroundColor: Jobstopcolor.primarycolor,
+            text: "save".tr,
+            backgroundColor: SippoColor.primarycolor,
           ),
         ),
       ],
@@ -357,11 +357,13 @@ class _JobEducationAddEditState extends State<JobEducationAddEdit> {
       backgroundColor: Colors.white,
       isScrollControlled: true,
       ContainerBottomSheetWidget(
-        notchColor: Jobstopcolor.primarycolor,
+        notchColor: SippoColor.primarycolor,
         children: [
           ConfirmationBottomSheet(
             title: "title_dialog_save_new_education".tr,
             description: "ask_dialog_confirm_entered_change".tr,
+            confirmTitle: 'yes'.tr,
+            undoTitle: 'undo'.tr,
             onConfirm: () async {
               Get.back();
               if (_controller.formKey.currentState?.validate() == true) {
@@ -392,11 +394,13 @@ class _JobEducationAddEditState extends State<JobEducationAddEdit> {
       backgroundColor: Colors.white,
       isScrollControlled: true,
       ContainerBottomSheetWidget(
-        notchColor: Jobstopcolor.primarycolor,
+        notchColor: SippoColor.primarycolor,
         children: [
           ConfirmationBottomSheet(
             title: "title_dialog_remove_education".tr,
             description: "ask_dialog_remove".tr,
+            confirmTitle: 'yes'.tr,
+            undoTitle: 'undo'.tr,
             onConfirm: () async {
               Get.back();
               await _controller.onDeleteSubmitted();

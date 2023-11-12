@@ -139,7 +139,7 @@ class _CustomBodyWidgetState extends State<CustomBodyWidget> {
             automaticallyImplyLeading: widget.automaticallyImplyLeading,
             leading: _inLeading(),
             backgroundColor: widget.pinnedAppBar
-                ? Jobstopcolor.backgroudHome
+                ? SippoColor.backgroudHome
                 : Colors.transparent,
             pinned: widget.pinnedAppBar,
             actions: widget.actions,

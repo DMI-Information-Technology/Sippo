@@ -48,7 +48,7 @@ class ListTextItem extends StatelessWidget {
                 FontSize.paragraph3(
                   context,
                 ),
-            color: Jobstopcolor.darkgrey,
+            color: SippoColor.darkgrey,
           ),
           maxLines: 5,
           overflow: TextOverflow.ellipsis,
@@ -68,7 +68,7 @@ class ListTextItem extends StatelessWidget {
       child: Image.asset(
         JobstopPngImg.dot,
         height: height / 120,
-        color: Jobstopcolor.primarycolor,
+        color: SippoColor.primarycolor,
       ),
     );
   }

@@ -141,7 +141,7 @@ class _CompanySignUpSpecializationsState
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(22),
         border: Border.all(
-          color: isSelected ? Jobstopcolor.primarycolor : Colors.black26,
+          color: isSelected ? SippoColor.primarycolor : Colors.black26,
           width: 2.0,
         ),
         color: isSelected ? Colors.blue.withOpacity(0.2) : Colors.white,
@@ -151,7 +151,7 @@ class _CompanySignUpSpecializationsState
           textAlign: TextAlign.start,
           title,
           style: dmsbold.copyWith(
-            color: isSelected ? Jobstopcolor.primarycolor : null,
+            color: isSelected ? SippoColor.primarycolor : null,
             fontSize: FontSize.title5(context),
           ),
         ),
@@ -159,7 +159,7 @@ class _CompanySignUpSpecializationsState
         onChanged: (value) {
           _controller.toggleSpecial(index);
         },
-        activeColor: Jobstopcolor.primarycolor,
+        activeColor: SippoColor.primarycolor,
       ),
     );
   }

@@ -84,7 +84,7 @@ class FirebaseAuthServiceController extends GetxController {
           Get.snackbar(
             "Send OTP",
             "the code is sent",
-            backgroundColor: Jobstopcolor.lightprimary2,
+            backgroundColor: SippoColor.lightprimary2,
             colorText: Colors.black87,
           );
           this.verificationId = verificationId.trim();

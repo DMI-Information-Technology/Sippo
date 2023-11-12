@@ -44,7 +44,7 @@ class _LanguageUserAddState extends State<LanguageUserAdd> {
                 "add_language".tr,
                 style: dmsbold.copyWith(
                   fontSize: FontSize.title3(context),
-                  color: Jobstopcolor.primarycolor,
+                  color: SippoColor.primarycolor,
                 ),
                 textAlign: TextAlign.start,
               ),
@@ -57,7 +57,7 @@ class _LanguageUserAddState extends State<LanguageUserAdd> {
             Container(
               padding: EdgeInsets.all(context.fromHeight(CustomStyle.xl)),
               decoration: BoxDecoration(
-                color: Jobstopcolor.white,
+                color: SippoColor.white,
                 borderRadius: BorderRadius.circular(height / 32),
               ),
               child: Column(
@@ -65,7 +65,7 @@ class _LanguageUserAddState extends State<LanguageUserAdd> {
                 children: [
                   _buildNewLanguage(),
                   Divider(
-                    color: Jobstopcolor.black,
+                    color: SippoColor.black,
                     height: height / 28,
                   ),
                   ListTile(
@@ -88,7 +88,7 @@ class _LanguageUserAddState extends State<LanguageUserAdd> {
             Container(
               padding: EdgeInsets.all(context.fromHeight(CustomStyle.xl)),
               decoration: BoxDecoration(
-                  color: Jobstopcolor.white,
+                  color: SippoColor.white,
                   borderRadius: BorderRadius.circular(height / 32)),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -156,7 +156,7 @@ class _LanguageUserAddState extends State<LanguageUserAdd> {
                 child: Image.asset(
                   JobstopPngImg.language,
                   height: height / 18,
-                  color: Jobstopcolor.primarycolor,
+                  color: SippoColor.primarycolor,
                 ),
               ),
               SizedBox(width: width / 25),
@@ -200,7 +200,7 @@ class _LanguageUserAddState extends State<LanguageUserAdd> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(height / 32),
             ),
-            tileColor: Jobstopcolor.white,
+            tileColor: SippoColor.white,
             title: Text(
               lang?.name ?? "",
               style: dmsregular.copyWith(fontSize: height / 38),

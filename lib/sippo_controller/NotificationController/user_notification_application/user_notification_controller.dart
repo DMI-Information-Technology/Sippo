@@ -114,7 +114,7 @@ class UserNotificationController extends GetxController {
         isWarning: true,
         isSuccess: false,
         message:
-            "sorry your connection is lost, please check your settings before continuing.",
+            "connection_lost_message_1".tr,
       );
       return;
     }

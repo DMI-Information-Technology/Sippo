@@ -40,10 +40,10 @@ class _JobJobSkillsAddEditState extends State<JobSkillsAddEdit> {
             Obx(
               () => Text(
                 !skillsState.isChangeSkills
-                    ? "${'skills'.tr}(${skillsState.skillsList.length})"
+                    ? "${'title_skills'.tr}(${skillsState.skillsList.length})"
                     : "label_add_skills".tr,
                 style: dmsbold.copyWith(
-                    fontSize: 16, color: Jobstopcolor.primarycolor),
+                    fontSize: 16, color: SippoColor.primarycolor),
               ),
             ),
             SizedBox(height: height / 36),
@@ -120,7 +120,7 @@ class _JobJobSkillsAddEditState extends State<JobSkillsAddEdit> {
                     ),
                   ),
                   backgroundColor: skillsState.selectedChip == i
-                      ? Jobstopcolor.primarycolor
+                      ? SippoColor.primarycolor
                       : null,
                   deleteIcon: Icon(
                     Icons.cancel_outlined,
@@ -152,7 +152,7 @@ class _JobJobSkillsAddEditState extends State<JobSkillsAddEdit> {
               }
             },
             text: (skillsState.isChangeSkills ? "save" : "change").tr,
-            backgroundColor: Jobstopcolor.primarycolor,
+            backgroundColor: SippoColor.primarycolor,
           ),
         ),
       ],
@@ -170,7 +170,7 @@ class _JobJobSkillsAddEditState extends State<JobSkillsAddEdit> {
       backgroundColor: Colors.white,
       isScrollControlled: true,
       ContainerBottomSheetWidget(
-        notchColor: Jobstopcolor.primarycolor,
+        notchColor: SippoColor.primarycolor,
         children: [
           ConfirmationBottomSheet(
             title: "title_dialog_save_skill".tr,

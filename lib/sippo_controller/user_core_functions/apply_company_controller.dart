@@ -4,10 +4,9 @@ import 'package:get/get.dart';
 import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
 import 'package:jobspot/JobServices/shared_global_data_service.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
+import 'package:jobspot/sippo_data/model/custom_file_model/custom_file_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/user_job_application_model.dart';
 import 'package:jobspot/sippo_data/user_repos/user_companies_abouts_repo.dart';
-
-import 'package:jobspot/sippo_data/model/custom_file_model/custom_file_model.dart';
 import 'package:jobspot/utils/file_picker_service.dart';
 import 'package:jobspot/utils/states.dart';
 
@@ -63,7 +62,7 @@ class ApplyCompanyController extends GetxController {
         isWarning: true,
         isError: false,
         isSuccess: false,
-        message: "Some required field is empty please check it.",
+        message: "required_field_empty".tr,
       );
     }
     final application = UserSendApplicationModel(
@@ -81,13 +80,13 @@ class ApplyCompanyController extends GetxController {
         }
         changeStates(
           isSuccess: true,
-          message: 'The application is sent successfully.',
+          message: 'application_sent_message'.tr,
         );
       },
       onValidateError: (validateError, _) {
         changeStates(
           isError: true,
-          message: "some error occurred during the application submission.",
+          message: validateError?.message,
         );
       },
       onError: (message, _) {
@@ -135,8 +134,7 @@ class ApplyCompanyController extends GetxController {
         isWarning: true,
         isError: false,
         isSuccess: false,
-        message: "The connection is lost. Please"
-            " reconnect to network and try again.",
+        message: "connection_lost_message_1".tr,
       );
     }
     if (companyId == -1) return;

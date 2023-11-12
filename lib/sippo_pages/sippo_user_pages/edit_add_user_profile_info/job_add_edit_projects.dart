@@ -59,10 +59,10 @@ class _SippoProjectsAddEditState extends State<SippoProjectsAddEdit> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             AutoSizeText(
-              "${_controller.isEditing ? "edit".tr : "edd".tr} ${"projects".tr}",
+              "${_controller.isEditing ? "edit".tr : "add".tr} ${"projects".tr}",
               style: dmsbold.copyWith(
                   fontSize: FontSize.title3(context),
-                  color: Jobstopcolor.primarycolor),
+                  color: SippoColor.primarycolor),
             ),
             SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
             Obx(() => CardNotifyMessage.warning(
@@ -73,7 +73,7 @@ class _SippoProjectsAddEditState extends State<SippoProjectsAddEdit> {
               "name".tr,
               style: dmsbold.copyWith(
                   fontSize: FontSize.label(context),
-                  color: Jobstopcolor.primarycolor),
+                  color: SippoColor.primarycolor),
             ),
             SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
             Form(
@@ -102,8 +102,8 @@ class _SippoProjectsAddEditState extends State<SippoProjectsAddEdit> {
                       style: dmsbold.copyWith(
                           fontSize: FontSize.label(context),
                           color: themedata.isdark
-                              ? Jobstopcolor.white
-                              : Jobstopcolor.primarycolor),
+                              ? SippoColor.white
+                              : SippoColor.primarycolor),
                     ),
                     SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
                     InputBorderedField(
@@ -114,7 +114,7 @@ class _SippoProjectsAddEditState extends State<SippoProjectsAddEdit> {
                       hintText: "additional_information".tr,
                       hintStyle: dmsregular.copyWith(
                         fontSize: FontSize.label(context),
-                        color: Jobstopcolor.grey,
+                        color: SippoColor.grey,
                       ),
                       keyboardType: TextInputType.multiline,
                       maxLine: 5,
@@ -135,7 +135,7 @@ class _SippoProjectsAddEditState extends State<SippoProjectsAddEdit> {
       text,
       style: dmsbold.copyWith(
         fontSize: FontSize.label(context),
-        color: Jobstopcolor.primarycolor,
+        color: SippoColor.primarycolor,
       ),
     );
   }
@@ -152,7 +152,7 @@ class _SippoProjectsAddEditState extends State<SippoProjectsAddEdit> {
             child: CustomButton(
               onTapped: () => _showRemove(context),
               text: "REMOVE".tr,
-              backgroundColor: Jobstopcolor.lightprimary,
+              backgroundColor: SippoColor.lightprimary,
             ),
           ),
         SizedBox(
@@ -160,7 +160,7 @@ class _SippoProjectsAddEditState extends State<SippoProjectsAddEdit> {
           child: CustomButton(
             onTapped: () => _showSave(context),
             text: "SAVE".tr,
-            backgroundColor: Jobstopcolor.primarycolor,
+            backgroundColor: SippoColor.primarycolor,
           ),
         ),
       ],
@@ -186,7 +186,7 @@ class _SippoProjectsAddEditState extends State<SippoProjectsAddEdit> {
       controller: projectState.date.controller,
       suffixIcon: const Icon(
         Icons.date_range_outlined,
-        color: Jobstopcolor.primarycolor,
+        color: SippoColor.primarycolor,
       ),
     );
   }
@@ -202,11 +202,12 @@ class _SippoProjectsAddEditState extends State<SippoProjectsAddEdit> {
       backgroundColor: Colors.white,
       isScrollControlled: true,
       ContainerBottomSheetWidget(
-        notchColor: Jobstopcolor.primarycolor,
+        notchColor: SippoColor.primarycolor,
         children: [
           ConfirmationBottomSheet(
             title: "title_dialog_save_new_project".tr,
             description: "ask_dialog_confirm_entered_change".tr,
+
             onConfirm: () async {
               Navigator.pop(context);
               if (_controller.formKey.currentState?.validate() == true) {
@@ -237,7 +238,7 @@ class _SippoProjectsAddEditState extends State<SippoProjectsAddEdit> {
       backgroundColor: Colors.white,
       isScrollControlled: true,
       ContainerBottomSheetWidget(
-        notchColor: Jobstopcolor.primarycolor,
+        notchColor: SippoColor.primarycolor,
         children: [
           ConfirmationBottomSheet(
             title: "title_dialog_remove_project".tr,

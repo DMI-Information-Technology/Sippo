@@ -6,9 +6,9 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:jobspot/JobGlobalclass/global_storage.dart';
 import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
+import 'package:jobspot/JobServices/app_local_language_services/app_local_language_service.dart';
 import 'package:jobspot/JobServices/fire_base_push_notifications.dart';
 import 'package:jobspot/JobStringtranslation/traslationstring.dart';
-import 'package:jobspot/app_local_language_services/app_local_language_service.dart';
 import 'package:jobspot/sippo_themes/theme.dart';
 import 'package:jobspot/utils/exception_handler_utils.dart';
 
@@ -46,14 +46,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // ScreenUtil.init(context, designSize: Size(360.0, 690.0));
-    print("=====================");
-    print(Get.deviceLocale);
-    print("=====================");
-
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: JobstopMyThemes.lightTheme,
-      fallbackLocale: LocalLanguageService.deviceLocal,
+      fallbackLocale: GlobalStorageService.savedLanguage.languageLocale,
       // textDirection: TextDirection.rtl,
       initialBinding: BindingsBuilder(() {
         Get.put<InternetConnectionService>(InternetConnectionService());
@@ -64,7 +60,7 @@ class MyApp extends StatelessWidget {
         );
       }),
       translations: AppTranslation(),
-      locale: LocalLanguageService.deviceLocal,
+      locale: GlobalStorageService.savedLanguage.languageLocale,
       initialRoute:
           kIsWeb ? SippoRoutes.userSignupPage : SippoRoutes.splashScreen,
       // initialRoute: SippoRoutes.identityverification,

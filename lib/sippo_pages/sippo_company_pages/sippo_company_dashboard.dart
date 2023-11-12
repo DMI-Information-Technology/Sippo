@@ -46,11 +46,11 @@ class _SippoCompanyDashboardState extends State<SippoCompanyDashboard> {
     return Obx(() => BottomNavigationBar(
           currentIndex: _controller.selectedItemIndex,
           onTap: _onTap,
-          backgroundColor: Jobstopcolor.transparent,
+          backgroundColor: SippoColor.transparent,
           type: BottomNavigationBarType.fixed,
           showSelectedLabels: false,
           showUnselectedLabels: false,
-          fixedColor: Jobstopcolor.grey,
+          fixedColor: SippoColor.grey,
           elevation: 0,
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
@@ -62,7 +62,7 @@ class _SippoCompanyDashboardState extends State<SippoCompanyDashboard> {
               activeIcon: Image.asset(
                 JobstopPngImg.home,
                 height: context.height / 36,
-                color: Jobstopcolor.primarycolor,
+                color: SippoColor.primarycolor,
               ),
               label: '',
             ),
@@ -75,7 +75,7 @@ class _SippoCompanyDashboardState extends State<SippoCompanyDashboard> {
               activeIcon: Image.asset(
                 JobstopPngImg.posting,
                 height: context.height / 36,
-                color: Jobstopcolor.primarycolor,
+                color: SippoColor.primarycolor,
               ),
               label: "",
             ),
@@ -86,8 +86,7 @@ class _SippoCompanyDashboardState extends State<SippoCompanyDashboard> {
                 color: Colors.grey,
               ),
               activeIcon: Image.asset(JobstopPngImg.message,
-                  height: context.height / 36,
-                  color: Jobstopcolor.primarycolor),
+                  height: context.height / 36, color: SippoColor.primarycolor),
               label: "",
             ),
           ],
@@ -100,18 +99,27 @@ class _SippoCompanyDashboardState extends State<SippoCompanyDashboard> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: _bottomTabBar(context),
-      body: Obx(() => _pages[_controller.selectedItemIndex]),
-      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
-      floatingActionButton: FloatingActionButton(
-        mini: true,
-        onPressed: _chooseAddNewBottomSheet,
-        backgroundColor: Jobstopcolor.primarycolor,
-        child: const Icon(
-          Icons.add,
-          size: 20,
-          color: Jobstopcolor.white,
+    return WillPopScope(
+      onWillPop: () async {
+        if (_controller.selectedItemIndex != 0) {
+          _controller.selectedItemIndex = 0;
+          return false;
+        }
+        return true;
+      },
+      child: Scaffold(
+        bottomNavigationBar: _bottomTabBar(context),
+        body: Obx(() => _pages[_controller.selectedItemIndex]),
+        floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
+        floatingActionButton: FloatingActionButton(
+          mini: true,
+          onPressed: _chooseAddNewBottomSheet,
+          backgroundColor: SippoColor.primarycolor,
+          child: const Icon(
+            Icons.add,
+            size: 20,
+            color: SippoColor.white,
+          ),
         ),
       ),
     );
@@ -127,12 +135,11 @@ class _SippoCompanyDashboardState extends State<SippoCompanyDashboard> {
       backgroundColor: Colors.white,
       isScrollControlled: true,
       ContainerBottomSheetWidget(
-        notchColor: Jobstopcolor.primarycolor,
+        notchColor: SippoColor.primarycolor,
         children: [
           ConfirmationBottomSheet(
             title: "ask_type_company_post".tr,
-            description:
-                "desc_ask_type_company_post".tr,
+            description: "desc_ask_type_company_post".tr,
             confirmTitle: "post".tr,
             onConfirm: () async {
               Get.back();

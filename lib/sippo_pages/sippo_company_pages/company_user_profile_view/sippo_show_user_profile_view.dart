@@ -48,7 +48,7 @@ class _SippoCompanyUserProfileViewState
   Widget build(BuildContext context) {
     return LoadingScaffold(
       extendBodyBehindAppBar: true,
-      controller: _controller.loadingOverlayController,
+      controller: _controller.loadingOverlay,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(kToolbarHeight),
         child: Obx(() {
@@ -73,7 +73,7 @@ class _SippoCompanyUserProfileViewState
             ),
 
             backgroundColor: isHeightOverAppBar
-                ? Jobstopcolor.backgroudHome
+                ? SippoColor.backgroudHome
                 : Colors.transparent,
           );
         }),
@@ -128,7 +128,7 @@ class _SippoCompanyUserProfileViewState
           leading: Image.asset(
             JobstopPngImg.resume,
             height: context.fromHeight(CustomStyle.l),
-            color: Jobstopcolor.primarycolor,
+            color: SippoColor.primarycolor,
             colorBlendMode: BlendMode.srcIn,
           ),
           hasNotInfoProfile:
@@ -160,7 +160,7 @@ class _SippoCompanyUserProfileViewState
         leading: Image.asset(
           JobstopPngImg.appreciation,
           height: context.fromHeight(CustomStyle.l),
-          color: Jobstopcolor.primarycolor,
+          color: SippoColor.primarycolor,
           colorBlendMode: BlendMode.srcIn,
         ),
         profileInfo: [
@@ -199,7 +199,7 @@ class _SippoCompanyUserProfileViewState
         leading: Image.asset(
           JobstopPngImg.language,
           height: context.fromHeight(CustomStyle.l),
-          color: Jobstopcolor.primarycolor,
+          color: SippoColor.primarycolor,
           colorBlendMode: BlendMode.srcIn,
         ),
         profileInfo: [
@@ -236,7 +236,7 @@ class _SippoCompanyUserProfileViewState
         leading: Image.asset(
           JobstopPngImg.skil,
           height: context.fromHeight(CustomStyle.l),
-          color: Jobstopcolor.primarycolor,
+          color: SippoColor.primarycolor,
           colorBlendMode: BlendMode.srcIn,
         ),
         profileInfo: [
@@ -267,7 +267,7 @@ class _SippoCompanyUserProfileViewState
           leading: Image.asset(
             JobstopPngImg.education,
             height: context.fromHeight(CustomStyle.spaceBetween),
-            color: Jobstopcolor.primarycolor,
+            color: SippoColor.primarycolor,
             colorBlendMode: BlendMode.srcIn,
           ),
           profileInfo: [
@@ -303,7 +303,7 @@ class _SippoCompanyUserProfileViewState
         leading: Image.asset(
           JobstopPngImg.bag,
           height: context.fromHeight(CustomStyle.l),
-          color: Jobstopcolor.primarycolor,
+          color: SippoColor.primarycolor,
           colorBlendMode: BlendMode.srcIn,
         ),
         alignmentFromStart: true,
@@ -341,7 +341,7 @@ class _SippoCompanyUserProfileViewState
         leading: Image.asset(
           JobstopPngImg.aboutme,
           height: context.fromHeight(CustomStyle.l),
-          color: Jobstopcolor.primarycolor,
+          color: SippoColor.primarycolor,
           colorBlendMode: BlendMode.srcIn,
         ),
         profileInfo: [
@@ -350,9 +350,9 @@ class _SippoCompanyUserProfileViewState
                   _controller.profileState.aboutMeText,
                   style: dmsregular.copyWith(
                     fontSize: context.fromHeight(CustomStyle.xxxl),
-                    color: Jobstopcolor.textColor,
+                    color: SippoColor.textColor,
                   ),
-                  colorClickableText: Jobstopcolor.primarycolor,
+                  colorClickableText: SippoColor.primarycolor,
                   trimLines: 2,
                   trimMode: TrimMode.Line,
                   trimCollapsedText: 'show_more'.tr,
@@ -369,11 +369,11 @@ class _SippoCompanyUserProfileViewState
     String value,
   ) {
     return Chip(
-      backgroundColor: Jobstopcolor.grey2,
+      backgroundColor: SippoColor.grey2,
       label: Text(
         value,
         style: dmsregular.copyWith(
-          color: Jobstopcolor.textColor,
+          color: SippoColor.textColor,
         ),
       ),
     );
@@ -392,7 +392,7 @@ class _SippoCompanyUserProfileViewState
           title ?? "",
           style: dmsbold.copyWith(
             fontSize: FontSize.title6(context),
-            color: Jobstopcolor.primarycolor,
+            color: SippoColor.primarycolor,
           ),
           overflow: TextOverflow.ellipsis,
         ),
@@ -403,7 +403,7 @@ class _SippoCompanyUserProfileViewState
       Text(
         from ?? "",
         style: dmsregular.copyWith(
-            fontSize: FontSize.label(context), color: Jobstopcolor.darkgrey),
+            fontSize: FontSize.label(context), color: SippoColor.darkgrey),
       ),
       SizedBox(
         height: context.fromHeight(CustomStyle.huge2),
@@ -411,7 +411,7 @@ class _SippoCompanyUserProfileViewState
       Text(
         periodic ?? "",
         style: dmsregular.copyWith(
-            fontSize: FontSize.label(context), color: Jobstopcolor.darkgrey),
+            fontSize: FontSize.label(context), color: SippoColor.darkgrey),
       ),
     ]);
   }

@@ -164,9 +164,9 @@ class JobHomeCard extends StatelessWidget {
               result,
               style: dmsregular.copyWith(
                 fontSize: FontSize.paragraph3(context),
-                color: Jobstopcolor.primarycolor,
+                color: SippoColor.primarycolor,
                 decoration: TextDecoration.underline,
-                decorationColor: Jobstopcolor.primarycolor,
+                decorationColor: SippoColor.primarycolor,
               ),
               overflow: TextOverflow.ellipsis,
             );
@@ -233,7 +233,7 @@ class JobHomeCard extends StatelessWidget {
                                 fontSize: FontSize.label(context),
                               ),
                             ),
-                            backgroundColor: Jobstopcolor.greyyy2,
+                            backgroundColor: SippoColor.greyyy2,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8),
                             ),

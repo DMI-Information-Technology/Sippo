@@ -19,7 +19,7 @@ class LanguageCardInfoView extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(height / 52),
       decoration: BoxDecoration(
-          color: Jobstopcolor.white,
+          color: SippoColor.white,
           borderRadius: BorderRadius.circular(height / 32)),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -33,7 +33,7 @@ class LanguageCardInfoView extends StatelessWidget {
                 image: DecorationImage(
                   colorFilter: lang?.countryFlag == null
                       ? ColorFilter.mode(
-                          Jobstopcolor.primarycolor,
+                          SippoColor.primarycolor,
                           BlendMode.srcIn,
                         )
                       : null,

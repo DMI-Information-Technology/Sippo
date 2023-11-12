@@ -10,9 +10,9 @@ import '../widgets.dart';
 void showNoConnectionSnackbar() {
   Get.snackbar(
     icon: Icon(Icons.signal_wifi_statusbar_connected_no_internet_4_rounded),
-    'No Connection',
-    'Your connection is lost, please check your connection and try again',
-    backgroundColor: Jobstopcolor.backgroudHome,
+    'no_connection_title'.tr,
+    'no_connection_message'.tr,
+    backgroundColor: SippoColor.backgroudHome,
     boxShadows: [boxShadow],
   );
 }
@@ -21,10 +21,10 @@ void showNotSubscriptionAlert(phoneNumber) {
   Get.dialog(
     CustomAlertDialog.verticalButtons(
       imageAsset: JobstopPngImg.noSubs,
-      title: 'Not Subscribed',
+      title: 'not_subscribed'.tr,
       description:
-          "Subscribing to our platform will give you access to this user information and many other benefits",
-      confirmBtnTitle: 'Contact With us on WhatsApp',
+          "subscribe_platform_message".tr,
+      confirmBtnTitle: 'contact_whatsApp'.tr,
       onConfirm: () {
         final context = Get.overlayContext;
         if (context != null) {
@@ -60,9 +60,9 @@ void showNoConnectionDialog() {
   Get.dialog(
     CustomAlertDialog(
       imageAsset: JobstopPngImg.noconnection,
-      title: 'Connection lost',
+      title: 'contact_lost_title'.tr,
       description:
-          'connection lost, please check your network settings and try again',
+          'contact_lost_message'.tr,
       onConfirm: () {
         final context = Get.overlayContext;
         if (context != null) {
@@ -80,26 +80,5 @@ void showNoConnectionDialog() {
   );
 }
 
-void invalidOTPSnackbar([String? message]) {
-  Get.snackbar(
-    "Invalid OTP",
-    "Pleas enter the otp code with length 6 number",
-    backgroundColor: Colors.redAccent,
-  );
-}
 
-void failedVerifyOTPSnackbar([String? message]) {
-  Get.snackbar(
-    "Failed verify OTP",
-    message ?? 'no message.',
-    backgroundColor: Colors.redAccent,
-  );
-}
 
-void successVerifyOTPSnackbar([String? message]) {
-  Get.snackbar(
-    "Success verify OTP",
-    "the OTP verifying successfully.",
-    backgroundColor: Colors.greenAccent,
-  );
-}

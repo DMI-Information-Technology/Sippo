@@ -15,6 +15,7 @@ class SignUpCompanyController extends GetxController {
   final GlobalKey<FormState> formKey = GlobalKey();
   final authController = AuthController.instance;
   final _fullname = "".obs;
+  final _email = "".obs;
   final _phoneNumber = "".obs;
   final _password = "".obs;
   final _confirmPassword = "".obs;
@@ -26,14 +27,11 @@ class SignUpCompanyController extends GetxController {
   CompanyModel get companyForm => CompanyModel(
         name: fullname,
         phone: phoneNumber,
+        email: email,
         password: password,
         passwordConfirmation: confirmPassword,
-        longitude: double.parse(
-          cordLocation.longitude ?? "0",
-        ),
-        latitude: double.parse(
-          cordLocation.latitude ?? "0",
-        ),
+        longitude: cordLocation.dLongitude,
+        latitude: cordLocation.dLatitude,
         specializations: selectedIdSpecializations,
         locationAddress: companyAddress,
         fcmToken: GlobalStorageService.fcmToken,
@@ -54,6 +52,8 @@ class SignUpCompanyController extends GetxController {
   bool get confirmOnPolicy => _confirmOnPolicy.isTrue;
 
   String get fullname => _fullname.toString();
+
+  String get email => _email.toString();
 
   String get confirmPassword => _confirmPassword.toString();
 
@@ -85,6 +85,10 @@ class SignUpCompanyController extends GetxController {
 
   void set fullname(String value) {
     _fullname.value = value;
+  }
+
+  void set email(String value) {
+    _email.value = value;
   }
 
   void set phoneNumber(String value) {
@@ -129,7 +133,7 @@ class SignUpCompanyController extends GetxController {
     );
   }
 
-  Future<void> onSubmitSignup() async {
+  void onSubmitSignup() {
     if (formKey.currentState!.validate()) {
       Get.toNamed(SippoRoutes.companySignupSpecializations);
     }

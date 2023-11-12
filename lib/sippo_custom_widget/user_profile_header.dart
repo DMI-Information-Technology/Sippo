@@ -39,7 +39,7 @@ class UserProfileHeaderWidget extends StatelessWidget {
           bottomLeft: Radius.circular(25),
           bottomRight: Radius.circular(25),
         ),
-        color: Jobstopcolor.primarycolor, // Change this to your desired color
+        color: SippoColor.primarycolor, // Change this to your desired color
         image: DecorationImage(
           image: AssetImage(JobstopPngImg.backgroundProf),
           fit: BoxFit.cover,
@@ -154,7 +154,7 @@ class UserProfileHeaderWidget extends StatelessWidget {
       profileInfo.name ?? "",
       style: dmsmedium.copyWith(
         fontSize: FontSize.title5(context),
-        color: Jobstopcolor.white,
+        color: SippoColor.white,
       ),
     );
   }
@@ -164,7 +164,7 @@ class UserProfileHeaderWidget extends StatelessWidget {
       profileInfo.locationCity ?? "",
       style: dmsregular.copyWith(
         fontSize: FontSize.label(context),
-        color: Jobstopcolor.white,
+        color: SippoColor.white,
       ),
     );
   }
@@ -174,7 +174,7 @@ class UserProfileHeaderWidget extends StatelessWidget {
       profileInfo.email ?? "",
       style: dmsregular.copyWith(
         fontSize: FontSize.label(context),
-        color: Jobstopcolor.white,
+        color: SippoColor.white,
       ),
     );
   }
@@ -189,7 +189,7 @@ class UserProfileHeaderWidget extends StatelessWidget {
                   primaryPhone,
                   style: dmsregular.copyWith(
                     fontSize: FontSize.label(context),
-                    color: Jobstopcolor.white,
+                    color: SippoColor.white,
                   ),
                 ),
               if (secondaryPhone != null &&
@@ -199,7 +199,7 @@ class UserProfileHeaderWidget extends StatelessWidget {
                   secondaryPhone,
                   style: dmsregular.copyWith(
                     fontSize: FontSize.label(context),
-                    color: Jobstopcolor.white,
+                    color: SippoColor.white,
                   ),
                 ),
               ]
@@ -220,14 +220,14 @@ class UserProfileHeaderWidget extends StatelessWidget {
                 "edit_profile".tr,
                 style: dmsregular.copyWith(
                   fontSize: FontSize.label(context),
-                  color: Jobstopcolor.white,
+                  color: SippoColor.white,
                 ),
               ),
               Image.asset(
                 JobstopPngImg.edit,
                 // Change this to your edit image path
                 height: context.fromHeight(CustomStyle.l),
-                color: Jobstopcolor.white,
+                color: SippoColor.white,
               ),
             ],
           ),

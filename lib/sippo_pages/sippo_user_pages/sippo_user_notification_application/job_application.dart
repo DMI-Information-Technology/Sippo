@@ -151,7 +151,7 @@ class JobApplication extends StatelessWidget {
             SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
             Card(
               margin: EdgeInsets.zero,
-              color: Jobstopcolor.lightprimary2,
+              color: SippoColor.lightprimary2,
               child: Padding(
                 padding: EdgeInsets.all(context.fromWidth(CustomStyle.m)),
                 child: CvCardWidget.fromRemote(

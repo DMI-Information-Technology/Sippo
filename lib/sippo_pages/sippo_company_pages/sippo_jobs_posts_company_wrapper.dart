@@ -73,11 +73,11 @@ class _SippoJobsPostsCompanyWrapperState
                 },
                 text: "posts".tr,
                 backgroundColor: _controller.selected == 0
-                    ? Jobstopcolor.primarycolor
-                    : Jobstopcolor.lightprimary,
+                    ? SippoColor.primarycolor
+                    : SippoColor.lightprimary,
                 textColor: _controller.selected == 0
-                    ? Jobstopcolor.white
-                    : Jobstopcolor.primarycolor,
+                    ? SippoColor.white
+                    : SippoColor.primarycolor,
               ),
             )),
         Obx(() => SizedBox(
@@ -90,11 +90,11 @@ class _SippoJobsPostsCompanyWrapperState
                 },
                 text: "jobs".tr,
                 backgroundColor: _controller.selected == 1
-                    ? Jobstopcolor.primarycolor
-                    : Jobstopcolor.lightprimary,
+                    ? SippoColor.primarycolor
+                    : SippoColor.lightprimary,
                 textColor: _controller.selected == 1
-                    ? Jobstopcolor.white
-                    : Jobstopcolor.primarycolor,
+                    ? SippoColor.white
+                    : SippoColor.primarycolor,
               ),
             )),
       ],

@@ -31,7 +31,7 @@ class AppUsingController extends GetxController {
       Get.dialog(
         CustomAlertDialog(
           imageAsset: JobstopPngImg.appuse,
-          title: "Chooce how you would to use the app",
+          title: "select_find_dialog".tr,
           confirmBtnTitle: "ok".tr,
           onConfirm: () {
             Get.back();

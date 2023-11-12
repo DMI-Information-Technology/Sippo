@@ -66,6 +66,7 @@ class SelectedCompanyWorkPlaceController extends GetxController {
   Future<void> addNewWorkPlace() async {
     print(workPlace);
     final response = await CompanyLocationsRepo.addNewWorkPlace(workPlace);
+    _states.value = States();
     response?.checkStatusResponse(
       onSuccess: (data, _) {
         if (data != null) {
@@ -73,14 +74,22 @@ class SelectedCompanyWorkPlaceController extends GetxController {
           CompanyDashBoardController.instance.company = company.copyWith(
             locations: company.locations?.toList()?..add(data),
           );
-          changeStates(
-            isSuccess: true,
-            message: 'The Work Place has been added successfully.',
-          );
+          Get.dialog(
+            CustomAlertDialog(
+              title: 'label_work_places'.tr,
+              description: 'work_place_added_message'.tr,
+              confirmBtnTitle: 'ok'.tr,
+              onConfirm: () => {if (Get.isOverlaysOpen) Get.back()},
+            ),
+          ).then((_) => Get.back());
         }
       },
-      onValidateError: (validateError, _) {},
-      onError: (message, _) {},
+      onValidateError: (validateError, _) {
+        _states.value = States(isError: true, message: validateError?.message);
+      },
+      onError: (message, _) {
+        _states.value = States(isError: true, message: message);
+      },
     );
     // write the code for add the new the address location work place here;.
   }
@@ -90,7 +99,7 @@ class SelectedCompanyWorkPlaceController extends GetxController {
     if (newWorkPlace.isEqualToContentOf(editLocation)) {
       return changeStates(
         isWarning: true,
-        message: 'nothing changed in the location work place.',
+        message: 'nothing_changed_work_place_message'.tr,
       );
     }
     print(workPlace);
@@ -98,13 +107,14 @@ class SelectedCompanyWorkPlaceController extends GetxController {
       workPlace,
       editLocation?.id,
     );
+    _states.value = States();
     response?.checkStatusResponse(
       onSuccess: (data, _) {
         CompanyDashBoardController.instance.refreshUserProfileInfo();
         Get.dialog(
           CustomAlertDialog(
-            title: 'Work Place',
-            description: 'Work Place has been updated successfully',
+            title: 'label_work_places'.tr,
+            description: 'work_place_updated_message'.tr,
             confirmBtnTitle: 'ok'.tr,
             onConfirm: () => {if (Get.isOverlaysOpen) Get.back()},
           ),
@@ -175,7 +185,6 @@ class SelectedCompanyWorkPlaceController extends GetxController {
     } else {
       await addNewWorkPlace();
     }
-    changeStates(isLoading: false);
   }
 
   @override

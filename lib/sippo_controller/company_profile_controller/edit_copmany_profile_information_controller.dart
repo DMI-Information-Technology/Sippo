@@ -60,7 +60,7 @@ class EditCompanyProfileInfoController extends GetxController {
     print(profileController.company);
     print("is equals ${newProfileInfo == profileController.company}");
     if (newProfileInfo == profileController.company) {
-      return warningState(true, "Nothing is Changed in Profile Information.");
+      return warningState(true, "nothing_changed_profile_info".tr);
     }
     final response = await EditCompanyProfileInfoRepo.updateCompanyProfile(
       newProfileInfo,
@@ -71,7 +71,7 @@ class EditCompanyProfileInfoController extends GetxController {
           await profileController.dashboard.refreshUserProfileInfo();
           profileEditState.setAll(companyDetails);
         }
-        successState(true, 'company Profile is updated successfully.');
+        successState(true, 'company_profile_updated'.tr);
       },
       onValidateError: (validateError, _) {
         states =
@@ -87,7 +87,7 @@ class EditCompanyProfileInfoController extends GetxController {
     if (profileController.netController.isNotConnected) {
       return warningState(
         true,
-        "sorry your connection is lost, please check your settings before continuing.",
+        "connection_lost_message_1".tr,
       );
     }
 
@@ -100,7 +100,7 @@ class EditCompanyProfileInfoController extends GetxController {
     if (profileController.netController.isNotConnected) {
       return warningState(
         true,
-        "sorry your connection is lost, please check your settings before continuing.",
+        "connection_lost_message_1".tr,
       );
     }
     _states.value = States(isLoading: true);

@@ -40,11 +40,15 @@ class ProfileCompletionWidget<T> extends StatelessWidget {
     required this.controller,
     this.profile,
     this.onTap,
+    this.title,
+    this.description,
   });
 
   final Function(Map<String, String> profile)? onTap;
   final Map<String, String>? profile;
   final ProfileCompletionController controller;
+  final String? title;
+  final String? description;
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +80,7 @@ class ProfileCompletionWidget<T> extends StatelessWidget {
                 children: [
                   Text(
                     textAlign: TextAlign.start,
-                    "Functional Information",
+                    title ?? '',
                     style: dmsbold.copyWith(
                       fontSize: FontSize.title4(context),
                       color: Colors.white,
@@ -89,7 +93,7 @@ class ProfileCompletionWidget<T> extends StatelessWidget {
                   ),
                   Text(
                     textAlign: TextAlign.start,
-                    "You can get a job opportunity faster and better if you complete your profile information.",
+                    description??'',
                     style: dmsregular.copyWith(
                       fontSize: FontSize.paragraph2(context),
                       color: Colors.white,
@@ -126,7 +130,7 @@ class ProfileCompletionWidget<T> extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                'Profile Completion',
+                'profile_completion_title'.tr,
                 style: dmsbold.copyWith(
                   fontSize: FontSize.title3(context),
                 ),
@@ -147,7 +151,7 @@ class ProfileCompletionWidget<T> extends StatelessWidget {
                 height: context.height / 21,
                 child: CustomButton(
                   onTapped: () => Navigator.of(context).pop(),
-                  text: "Ok",
+                  text: "ok".tr,
                 ),
               ),
             ],

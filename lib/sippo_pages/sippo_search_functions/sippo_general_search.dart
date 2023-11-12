@@ -124,8 +124,8 @@ class _SippoGeneralSearchState extends State<SippoGeneralSearch>
       onTap: (value) {
         _controller.generalSearchState.tabsIndex = value;
       },
-      unselectedLabelColor: Jobstopcolor.grey,
-      labelColor: Jobstopcolor.primarycolor,
+      unselectedLabelColor: SippoColor.grey,
+      labelColor: SippoColor.primarycolor,
       labelStyle: dmsmedium.copyWith(
         fontSize: FontSize.title5(context),
       ),
@@ -153,7 +153,7 @@ class _SippoGeneralSearchState extends State<SippoGeneralSearch>
             },
             icon: Icon(
               Icons.filter_alt_outlined,
-              color: Jobstopcolor.primarycolor,
+              color: SippoColor.primarycolor,
             ),
           )
         : SizedBox(
@@ -175,7 +175,7 @@ class _SippoGeneralSearchState extends State<SippoGeneralSearch>
             },
             child: Icon(
               Icons.search_rounded,
-              color: Jobstopcolor.primarycolor,
+              color: SippoColor.primarycolor,
             ),
           );
   }

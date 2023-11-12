@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class Jobstopcolor {
+class SippoColor {
   // static const primarycolor = Color(0xff130160);
   static const primarycolor = Color(0xff8D2496);
   static const primarycolorSwatch = MaterialColor(
@@ -25,12 +25,7 @@ class Jobstopcolor {
   static const lightprimary4 = Color(0xffe7c9f3);
   static const lightsecondary = Color(0xffa9e7f2);
   static const primary = Color(0xffe7e6fb);
-  static const purpal = Color(0xff7551FF);
-  static const sky = Color(0xff4ED6FC);
-  static const perrot = Color(0xff56CD54);
   static const lightsky = Color(0xffAFECFE);
-  static const orenge = Color(0xffFF9228);
-  static const lightpink = Color(0xffffe5e5);
   static const red = Color(0xffFF4D46);
   static const grey = Colors.grey;
   static var grey2 = Colors.grey[300];

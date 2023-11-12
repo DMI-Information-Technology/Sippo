@@ -14,6 +14,7 @@ import 'package:jobspot/sippo_controller/user_community_controller/show_about_co
 import 'package:jobspot/sippo_custom_widget/job_card_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
+import 'package:jobspot/sippo_pages/sippo_message_pages/no_items_found_message.dart';
 import 'package:jobspot/utils/helper.dart';
 import 'package:lottie/lottie.dart';
 
@@ -37,12 +38,14 @@ class _ShowAboutCompaniesJobsListState
         firstPageErrorIndicatorBuilder: (context) =>
             _buildErrorFirstLoad(context),
         newPageErrorIndicatorBuilder: (context) => _buildErrorNewLoad(context),
+        noItemsFoundIndicatorBuilder: (context) =>
+            NoItemsFoundMessageWidget.jobs(alignmentFromStart: true),
         firstPageProgressIndicatorBuilder: (context) => Center(
-            child: Lottie.asset(
-              JobstopPngImg.loadingProgress,
-              height: context.height / 6,
-            ),
+          child: Lottie.asset(
+            JobstopPngImg.loadingProgress,
+            height: context.height / 6,
           ),
+        ),
         itemBuilder: (context, item, index) {
           return InkWell(
             onTap: () {
@@ -87,12 +90,12 @@ class _ShowAboutCompaniesJobsListState
             textAlign: TextAlign.center,
             style: dmsregular.copyWith(
               fontSize: FontSize.paragraph3(context),
-              color: Jobstopcolor.primarycolor,
+              color: SippoColor.primarycolor,
             ),
           ),
           Icon(
             Icons.refresh,
-            color: Jobstopcolor.primarycolor,
+            color: SippoColor.primarycolor,
           ),
         ],
       ),
@@ -107,7 +110,7 @@ class _ShowAboutCompaniesJobsListState
         Text(
           "error".tr,
           style: dmsbold.copyWith(
-            color: Jobstopcolor.primarycolor,
+            color: SippoColor.primarycolor,
             fontSize: FontSize.title2(context),
           ),
         ),

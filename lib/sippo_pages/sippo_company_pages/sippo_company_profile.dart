@@ -95,7 +95,7 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
               ),
             ],
             backgroundColor: isHeightOverAppBar
-                ? Jobstopcolor.backgroudHome
+                ? SippoColor.backgroudHome
                 : Colors.transparent,
           );
         }),
@@ -155,6 +155,8 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
           data: profileMessages,
           guaranteedBuilder: (context, data) {
             return ProfileCompletionWidget(
+              title: 'profile_completion_title'.tr,
+              description: 'profile_completion_company_desc'.tr,
               controller: _controller.profileCompletionController,
               profile: data,
             );
@@ -173,14 +175,14 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
           leading: Image.asset(
             JobstopPngImg.aboutme,
             height: context.fromHeight(CustomStyle.l),
-            color: Jobstopcolor.primarycolor,
+            color: SippoColor.primarycolor,
             colorBlendMode: BlendMode.srcIn,
           ),
           iconAction: _controller.company.establishmentDate != null
               ? Icon(
                   Icons.mode_edit_outline_outlined,
                   size: context.fromHeight(CustomStyle.l),
-                  color: Jobstopcolor.primarycolor,
+                  color: SippoColor.primarycolor,
                 )
               : null,
           onAddClicked: () {
@@ -204,14 +206,14 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
           leading: Image.asset(
             JobstopPngImg.aboutme,
             height: context.fromHeight(CustomStyle.l),
-            color: Jobstopcolor.primarycolor,
+            color: SippoColor.primarycolor,
             colorBlendMode: BlendMode.srcIn,
           ),
           iconAction: _controller.company.employeesCount != null
               ? Icon(
                   Icons.mode_edit_outline_outlined,
                   size: context.fromHeight(CustomStyle.l),
-                  color: Jobstopcolor.primarycolor,
+                  color: SippoColor.primarycolor,
                 )
               : null,
           alignmentFromStart: true,
@@ -250,14 +252,14 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
           leading: Image.asset(
             JobstopPngImg.aboutme,
             height: context.fromHeight(CustomStyle.l),
-            color: Jobstopcolor.primarycolor,
+            color: SippoColor.primarycolor,
             colorBlendMode: BlendMode.srcIn,
           ),
           iconAction: _controller.company.specializations?.isNotEmpty == true
               ? Icon(
                   Icons.mode_edit_outline_outlined,
                   size: context.fromHeight(CustomStyle.l),
-                  color: Jobstopcolor.primarycolor,
+                  color: SippoColor.primarycolor,
                 )
               : null,
           alignmentFromStart: true,
@@ -296,7 +298,7 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
           leading: Image.asset(
             JobstopPngImg.aboutme,
             height: context.fromHeight(CustomStyle.l),
-            color: Jobstopcolor.primarycolor,
+            color: SippoColor.primarycolor,
             colorBlendMode: BlendMode.srcIn,
           ),
           onAddClicked: () {
@@ -307,7 +309,7 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
               ? Icon(
                   Icons.mode_edit_outline_outlined,
                   size: context.fromHeight(CustomStyle.l),
-                  color: Jobstopcolor.primarycolor,
+                  color: SippoColor.primarycolor,
                 )
               : null,
           profileInfo: [
@@ -316,9 +318,9 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
               child: AutoSizeText(
                 _controller.company.website.toString(),
                 style: dmsregular.copyWith(
-                  color: Jobstopcolor.primarycolor,
+                  color: SippoColor.primarycolor,
                   decoration: TextDecoration.underline,
-                  decorationColor: Jobstopcolor.primarycolor,
+                  decorationColor: SippoColor.primarycolor,
                 ),
               ),
             )
@@ -337,7 +339,7 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
         leading: Image.asset(
           JobstopPngImg.aboutme,
           height: context.fromHeight(CustomStyle.l),
-          color: Jobstopcolor.primarycolor,
+          color: SippoColor.primarycolor,
           colorBlendMode: BlendMode.srcIn,
         ),
         onAddClicked: () {
@@ -360,7 +362,7 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
                 title: AutoSizeText(
                   item?.locationAddress?.name ?? '',
                   style: dmsregular.copyWith(
-                    color: Jobstopcolor.primarycolor,
+                    color: SippoColor.primarycolor,
                   ),
                 ),
                 trailing: IconButton(
@@ -371,7 +373,7 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
                     },
                     icon: Icon(
                       Icons.mode_edit_outline_outlined,
-                      color: Jobstopcolor.primarycolor,
+                      color: SippoColor.primarycolor,
                     )),
               );
             },
@@ -392,14 +394,14 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
           leading: Image.asset(
             JobstopPngImg.companysignup,
             height: context.fromHeight(CustomStyle.l),
-            color: Jobstopcolor.primarycolor,
+            color: SippoColor.primarycolor,
             colorBlendMode: BlendMode.srcIn,
           ),
           iconAction: _controller.company.bio != null
               ? Icon(
                   Icons.mode_edit_outline_outlined,
                   size: context.fromHeight(CustomStyle.l),
-                  color: Jobstopcolor.primarycolor,
+                  color: SippoColor.primarycolor,
                 )
               : null,
           onAddClicked: () {
@@ -424,19 +426,19 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
         horizontalTitleGap: 0.0,
         leading: Icon(
           Icons.image,
-          color: Jobstopcolor.primarycolor,
+          color: SippoColor.primarycolor,
           size: context.fromHeight(CustomStyle.l),
         ),
         title: Text(
           'label_album_images'.tr,
           style: dmsbold.copyWith(
-            color: Jobstopcolor.primarycolor,
+            color: SippoColor.primarycolor,
             fontSize: 14,
           ),
         ),
         trailing: Icon(
           Icons.arrow_forward_ios_sharp,
-          color: Jobstopcolor.primarycolor,
+          color: SippoColor.primarycolor,
         ),
         onTap: () {
           _showUploadGalleryImagesScreen();
@@ -461,11 +463,11 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
     String value,
   ) {
     return Chip(
-      backgroundColor: Jobstopcolor.grey2,
+      backgroundColor: SippoColor.grey2,
       label: Text(
         value,
         style: dmsregular.copyWith(
-          color: Jobstopcolor.textColor,
+          color: SippoColor.textColor,
         ),
       ),
     );

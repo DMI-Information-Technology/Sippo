@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:jobspot/JobServices/app_local_language_services/app_local_language_service.dart';
 import 'package:jobspot/utils/app_use.dart';
 
 import 'jobstopprefname.dart' as global;
@@ -16,12 +17,27 @@ class GlobalStorageService extends GetxService {
 
   static GlobalStorageService get instance => Get.find();
   static const firstAppLunchTimeKey = "firstapplunchtime";
-
+  static const savedLanguagesKey = "saved_languages";
   bool _isLogged = false;
   String? _tokenLogged = "";
   var _isAppLunchFirstTime = true;
   int _appUse = 0;
   String _fcmToken = "";
+  final _savedLanguage = LocaleLanguageType.english.obs;
+
+  static void set savedLanguage(LocaleLanguageType value) {
+    instance._savedLanguage.value = value;
+  }
+
+  static LocaleLanguageType get savedLanguage {
+    return instance._savedLanguage.value;
+  }
+
+  static Future<void> changeLanguage(LocaleLanguageType value) async {
+    final storage = GetStorage();
+    await storage.write(savedLanguagesKey, value.langCode);
+    (_instance ?? instance)._savedLanguage.value = value;
+  }
 
   static bool get isLogged => (_instance ?? instance)._isLogged;
 
@@ -103,6 +119,10 @@ class GlobalStorageService extends GetxService {
 
   static Future<void> lunchApp() async {
     final storage = GetStorage();
+    final langCode = await storage.read<String?>(savedLanguagesKey);
+    savedLanguage = langCode != null
+        ? LocaleLanguageType.fromCode(langCode)
+        : LocalLanguageService.deviceLocaleType;
     final check = await isAppOpenBefore(storage);
     if (!check) {
       await appIsLunched(storage);

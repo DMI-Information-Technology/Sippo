@@ -63,8 +63,8 @@ class CompanyLoginController extends GetxController {
     Get.dialog(CustomAlertDialog(
       imageAsset: JobstopPngImg.successful1,
       title: "success".tr,
-      description: "You Login successfully".tr,
-      confirmBtnColor: Jobstopcolor.primarycolor,
+      description: "login_success".tr,
+      confirmBtnColor: SippoColor.primarycolor,
       onConfirm: () => Get.offAllNamed(SippoRoutes.sippoCompanyDashboard),
     )).then((value) => Get.offAllNamed(SippoRoutes.sippoCompanyDashboard));
   }

@@ -56,7 +56,7 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
               ),
             ),
             backgroundColor: isHeightOverAppBar
-                ? Jobstopcolor.backgroudHome
+                ? SippoColor.backgroudHome
                 : Colors.transparent,
           );
         }),
@@ -114,7 +114,7 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
             TopJobDetailsHeader(
               coverHeight: context.height / 4.5,
               profileImageSize: context.height / 8,
-              backgroundImageColor: Jobstopcolor.white,
+              backgroundImageColor: SippoColor.white,
               imageUrl: _controller
                   .jobDetailsState.jopDetails.company?.profileImage?.url,
             ),
@@ -136,7 +136,7 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
                 _controller.jobDetailsState.jopDetails.title ?? '',
                 style: dmsbold.copyWith(
                   fontSize: FontSize.title2(context),
-                  color: Jobstopcolor.secondary,
+                  color: SippoColor.secondary,
                 ),
                 overflow: TextOverflow.clip,
               )),
@@ -212,7 +212,7 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
           job.description ?? '',
           style: dmsregular.copyWith(
             fontSize: FontSize.paragraph3(context),
-            color: Jobstopcolor.darkgrey,
+            color: SippoColor.darkgrey,
           ),
           maxLines: 5,
           overflow: TextOverflow.ellipsis,
@@ -241,7 +241,7 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
         Text(
           job.company?.city ?? "",
           style:
-              dmsregular.copyWith(fontSize: 12, color: Jobstopcolor.darkgrey),
+              dmsregular.copyWith(fontSize: 12, color: SippoColor.darkgrey),
         ),
         SizedBox(
           height: height / 256,
@@ -258,15 +258,15 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
             children: [
               Icon(
                 Icons.location_on_outlined,
-                color: Jobstopcolor.primarycolor,
+                color: SippoColor.primarycolor,
                 size: context.fromHeight(CustomStyle.xxl),
               ),
               AutoSizeText(
                 job.locationAddress?.name ?? '',
                 style: dmsmedium.copyWith(
-                  color: Jobstopcolor.primarycolor,
+                  color: SippoColor.primarycolor,
                   decoration: TextDecoration.underline,
-                  decorationColor: Jobstopcolor.primarycolor,
+                  decorationColor: SippoColor.primarycolor,
                 ),
               ),
             ],
@@ -336,7 +336,7 @@ class TextBoldedLabelItem extends StatelessWidget {
             label,
             style: dmsbold.copyWith(
               fontSize: FontSize.title5(context),
-              color: Jobstopcolor.primarycolor,
+              color: SippoColor.primarycolor,
             ),
           ),
           SizedBox(
@@ -346,7 +346,7 @@ class TextBoldedLabelItem extends StatelessWidget {
             text,
             style: dmsmedium.copyWith(
               fontSize: FontSize.title6(context),
-              color: Jobstopcolor.darkgrey,
+              color: SippoColor.darkgrey,
             ),
           ),
         ],
@@ -383,7 +383,7 @@ class BottomCompanyDetailsButtons extends StatelessWidget {
             ),
             child: Icon(
               isSaved ? Icons.bookmark_rounded : Icons.bookmark_border_rounded,
-              color: isSaved ? Colors.yellow : Jobstopcolor.secondary,
+              color: isSaved ? Colors.yellow : SippoColor.secondary,
               size: height / 21,
             ),
           ),

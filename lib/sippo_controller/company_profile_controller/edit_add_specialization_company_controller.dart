@@ -107,7 +107,7 @@ class EditAddSpecializationCompanyController extends GetxController {
       _modifyStates(
         States(
           isError: true,
-          message: 'You have pick one specialization at least and maximum 3.',
+          message: 'pick_specialization_message'.tr,
         ),
       );
       return;
@@ -116,7 +116,7 @@ class EditAddSpecializationCompanyController extends GetxController {
       _modifyStates(
         States(
           isWarning: true,
-          message: 'Nothing is Changed in Specializations.',
+          message: 'nothing_changed_specializations'.tr,
         ),
       );
       return;
@@ -140,8 +140,8 @@ class EditAddSpecializationCompanyController extends GetxController {
         }
         Get.dialog(
           CustomAlertDialog(
-            title: 'Specializations Company',
-            description: 'Specializations is Added Successfully.',
+            title: 'specializations_company_title'.tr,
+            description: 'specializations_added'.tr,
             confirmBtnTitle: 'ok'.tr,
             onConfirm: () => {if (Get.isOverlaysOpen) Get.back()},
           ),

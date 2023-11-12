@@ -41,7 +41,7 @@ class SippoCompanySignup extends StatelessWidget {
                   "Create_an_Account".tr,
                   style: dmsbold.copyWith(
                     fontSize: height / 30,
-                    color: Jobstopcolor.primarycolor,
+                    color: SippoColor.primarycolor,
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -54,17 +54,30 @@ class SippoCompanySignup extends StatelessWidget {
                   keyboardType: TextInputType.text,
                   icon: const Icon(
                     Icons.person_outlined,
-                    color: Jobstopcolor.primarycolor,
+                    color: SippoColor.primarycolor,
                   ),
                   validator: (value) {
                     if (value == null || value.trim().isEmpty) {
                       return "fullname_is_req".tr;
                     }
                     if (!ValidatingInput.validateFullName(value)) {
-                      return "invalid full name";
+                      return "invalid_full_name".tr;
                     }
                     return null;
                   },
+                ),
+                SizedBox(
+                  height: height / 46,
+                ),
+                InputField(
+                  onChangedText: (value) => controller.email = value.trim(),
+                  hintText: "Email".tr,
+                  keyboardType: TextInputType.text,
+                  icon: const Icon(
+                    Icons.email_outlined,
+                    color: SippoColor.primarycolor,
+                  ),
+                  validator: ValidatingInput.validateEmail,
                 ),
                 SizedBox(
                   height: height / 46,
@@ -78,14 +91,14 @@ class SippoCompanySignup extends StatelessWidget {
                   keyboardType: TextInputType.phone,
                   icon: const Icon(
                     Icons.phone_outlined,
-                    color: Jobstopcolor.primarycolor,
+                    color: SippoColor.primarycolor,
                   ),
                   validator: (value) {
                     if (value == null || value.trim().isEmpty) {
                       return "phonenumber_is_req".tr;
                     }
                     if (!ValidatingInput.validatePhoneNumber(value)) {
-                      return "invalid phone number";
+                      return "invalid_phone_number".tr;
                     }
                     return null;
                   },
@@ -99,7 +112,7 @@ class SippoCompanySignup extends StatelessWidget {
                   hintText: "Password".tr,
                   icon: const Icon(
                     Icons.lock_outline,
-                    color: Jobstopcolor.primarycolor,
+                    color: SippoColor.primarycolor,
                   ),
                   validator: ValidatingInput.validatePassword,
                 ),
@@ -112,14 +125,14 @@ class SippoCompanySignup extends StatelessWidget {
                   hintText: "Confirm_Password".tr,
                   icon: const Icon(
                     Icons.lock_outline,
-                    color: Jobstopcolor.primarycolor,
+                    color: SippoColor.primarycolor,
                   ),
                   validator: (value) {
                     if (value == null || value.trim().isEmpty) {
                       return "confpasword_is_req".tr;
                     }
                     if (value != controller.password) {
-                      return "the confirm password is not matches the password";
+                      return "confirm_password_not_matches".tr;
                     }
                     return null;
                   },
@@ -129,9 +142,9 @@ class SippoCompanySignup extends StatelessWidget {
                 ),
                 CustomButton(
                   text: "Sign_up".tr,
-                  backgroundColor: Jobstopcolor.primarycolor,
-                  textColor: Jobstopcolor.white,
-                  onTapped: ()  => controller.onSubmitSignup(),
+                  backgroundColor: SippoColor.primarycolor,
+                  textColor: SippoColor.white,
+                  onTapped: () => controller.onSubmitSignup(),
                 ),
                 SizedBox(
                   height: height / 40,
@@ -143,7 +156,7 @@ class SippoCompanySignup extends StatelessWidget {
                       "You_have_an_account".tr,
                       style: dmsregular.copyWith(
                         fontSize: height / 62,
-                        color: Jobstopcolor.textColor,
+                        color: SippoColor.textColor,
                       ),
                     ),
                     TextButton(
@@ -155,7 +168,7 @@ class SippoCompanySignup extends StatelessWidget {
                         "Login".tr,
                         style: dmsregular.copyWith(
                           fontSize: height / 62,
-                          color: Jobstopcolor.secondary,
+                          color: SippoColor.secondary,
                           decoration: TextDecoration.underline,
                         ),
                       ),
@@ -177,24 +190,24 @@ class SippoCompanySignup extends StatelessWidget {
                     Get.offAndToNamed(SippoRoutes.userSignupPage);
                   },
                   text: "user_signup".tr,
-                  backgroundColor: Jobstopcolor.white,
-                  textColor: Jobstopcolor.textColor,
-                  borderColor: Jobstopcolor.grey,
+                  backgroundColor: SippoColor.white,
+                  textColor: SippoColor.textColor,
+                  borderColor: SippoColor.grey,
                 ),
                 SizedBox(height: height / 52),
                 CustomButton(
                   onTapped: () {},
                   text: "Guest_login.".tr,
-                  backgroundColor: Jobstopcolor.white,
-                  textColor: Jobstopcolor.textColor,
-                  borderColor: Jobstopcolor.grey,
+                  backgroundColor: SippoColor.white,
+                  textColor: SippoColor.textColor,
+                  borderColor: SippoColor.grey,
                 )
               ],
             ),
           ),
         ),
       ),
-      backgroundColor: Jobstopcolor.white,
+      backgroundColor: SippoColor.white,
     );
   }
 }

@@ -14,6 +14,7 @@ import 'package:jobspot/sippo_custom_widget/custom_drop_down_button.dart';
 import 'package:jobspot/sippo_custom_widget/rounded_border_radius_card_widget.dart';
 import 'package:jobspot/sippo_custom_widget/success_message_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
+import 'package:jobspot/sippo_pages/sippo_message_pages/min_max_salary_message_text_wiedgt.dart';
 
 class SippoCompanyEditAddJobs extends StatefulWidget {
   const SippoCompanyEditAddJobs({Key? key}) : super(key: key);
@@ -53,7 +54,7 @@ class _SippoCompanyEditAddJobsState extends State<SippoCompanyEditAddJobs> {
               (_controller.isEditing ? "edit_job" : "add_a_job").tr,
               style: dmsbold.copyWith(
                 fontSize: FontSize.title3(context),
-                color: Jobstopcolor.primarycolor,
+                color: SippoColor.primarycolor,
               ),
             ),
             _buildLoadingProgress(context),
@@ -120,7 +121,7 @@ class _SippoCompanyEditAddJobsState extends State<SippoCompanyEditAddJobs> {
               "posted".tr,
               style: dmsbold.copyWith(
                 fontSize: FontSize.title5(context),
-                color: Jobstopcolor.primarycolor,
+                color: SippoColor.primarycolor,
               ),
             ),
           ),
@@ -173,7 +174,7 @@ class _SippoCompanyEditAddJobsState extends State<SippoCompanyEditAddJobs> {
                 children: [
                   Expanded(
                     child: InputBorderedField(
-                      fontColor: Jobstopcolor.primarycolor,
+                      fontColor: SippoColor.primarycolor,
                       maxLength: 7,
                       controller: jobState.salaryFrom,
                       fillColor: Colors.grey[300],
@@ -184,7 +185,7 @@ class _SippoCompanyEditAddJobsState extends State<SippoCompanyEditAddJobs> {
                   SizedBox(width: context.fromWidth(CustomStyle.spaceBetween)),
                   Expanded(
                     child: InputBorderedField(
-                      fontColor: Jobstopcolor.primarycolor,
+                      fontColor: SippoColor.primarycolor,
                       maxLength: 7,
                       controller: jobState.salaryTo,
                       fillColor: Colors.grey[300],
@@ -195,15 +196,7 @@ class _SippoCompanyEditAddJobsState extends State<SippoCompanyEditAddJobs> {
                 ],
               ),
               SizedBox(height: context.fromHeight(CustomStyle.huge)),
-              Text(
-                '${'range_salary_message'.tr} '
-                '${'from'.tr} ${CompanyEditAddJobState.MIN_SALARY_RANGE} '
-                '${"to".tr} ${CompanyEditAddJobState.MAX_SALARY_RANGE}',
-                textAlign: TextAlign.start,
-                style: dmsregular.copyWith(
-                    fontSize: FontSize.label(context),
-                    color: Jobstopcolor.black),
-              ),
+              const MinMaxSalaryMessageTextWidget(),
             ],
           ),
           subTitle: jobState.salaryForamat,
@@ -232,7 +225,7 @@ class _SippoCompanyEditAddJobsState extends State<SippoCompanyEditAddJobs> {
               verticalPaddingValue: context.fromWidth(CustomStyle.paddingValue),
               maxLine: 5,
               initialValue: jobState.description,
-              fillColor: Jobstopcolor.backgroudHome,
+              fillColor: SippoColor.backgroudHome,
               onTextChanged: (value) => jobState.description = value,
             ),
             onCloseTap: () {
@@ -342,7 +335,7 @@ class _SippoCompanyEditAddJobsState extends State<SippoCompanyEditAddJobs> {
               verticalPaddingValue: context.fromWidth(CustomStyle.paddingValue),
               maxLine: 2,
               initialValue: jobState.requirements,
-              fillColor: Jobstopcolor.backgroudHome,
+              fillColor: SippoColor.backgroudHome,
               onTextChanged: (value) => jobState.requirements = value,
             ),
             onCloseTap: () {
@@ -365,7 +358,7 @@ class _SippoCompanyEditAddJobsState extends State<SippoCompanyEditAddJobs> {
           editorWidget: InputCloser(
             child: InputBorderedField(
               initialValue: jobState.position,
-              fillColor: Jobstopcolor.backgroudHome,
+              fillColor: SippoColor.backgroudHome,
               onTextChanged: (value) => jobState.position = value,
             ),
             onCloseTap: () {
@@ -396,13 +389,13 @@ class _SippoCompanyEditAddJobsState extends State<SippoCompanyEditAddJobs> {
           Text(
             "choose_type_workplace".tr,
             style: dmsbold.copyWith(
-                fontSize: 16, color: Jobstopcolor.primarycolor),
+                fontSize: 16, color: SippoColor.primarycolor),
           ),
           SizedBox(height: height / CustomStyle.xxxl),
           Text(
             "decide_choose_type_place_desc".tr,
             style:
-                dmsregular.copyWith(fontSize: 12, color: Jobstopcolor.darkgrey),
+                dmsregular.copyWith(fontSize: 12, color: SippoColor.darkgrey),
             textAlign: TextAlign.center,
           ),
           SizedBox(height: height / CustomStyle.spaceBetween),
@@ -453,7 +446,7 @@ class _SippoCompanyEditAddJobsState extends State<SippoCompanyEditAddJobs> {
               "choose_job_type_title".tr,
               style: dmsbold.copyWith(
                 fontSize: FontSize.title4(context),
-                color: Jobstopcolor.primarycolor,
+                color: SippoColor.primarycolor,
               ),
             ),
             SizedBox(height: height / CustomStyle.xxxl),
@@ -461,7 +454,7 @@ class _SippoCompanyEditAddJobsState extends State<SippoCompanyEditAddJobs> {
               "choose_job_type_desc".tr,
               style: dmsregular.copyWith(
                 fontSize: FontSize.label(context),
-                color: Jobstopcolor.darkgrey,
+                color: SippoColor.darkgrey,
               ),
               textAlign: TextAlign.center,
             ),
@@ -514,7 +507,7 @@ class _SippoCompanyEditAddJobsState extends State<SippoCompanyEditAddJobs> {
               "choose_level_experience".tr,
               style: dmsbold.copyWith(
                 fontSize: FontSize.title4(context),
-                color: Jobstopcolor.primarycolor,
+                color: SippoColor.primarycolor,
               ),
             ),
             SizedBox(height: height / CustomStyle.xxxl),
@@ -522,7 +515,7 @@ class _SippoCompanyEditAddJobsState extends State<SippoCompanyEditAddJobs> {
               "choose_level_experience_desc".tr,
               style: dmsregular.copyWith(
                 fontSize: FontSize.label(context),
-                color: Jobstopcolor.darkgrey,
+                color: SippoColor.darkgrey,
               ),
               textAlign: TextAlign.center,
             ),
@@ -641,7 +634,7 @@ class _AddJobOptionsCardState extends State<AddJobOptionsCard> {
         contentPadding: EdgeInsets.zero,
         title: Text(
           widget.title,
-          style: dmsmedium.copyWith(color: Jobstopcolor.primarycolor),
+          style: dmsmedium.copyWith(color: SippoColor.primarycolor),
         ),
         subtitle: _buildEditorWidget(),
         trailing:
@@ -657,15 +650,15 @@ class _AddJobOptionsCardState extends State<AddJobOptionsCard> {
               (widget.subTitle != null && widget.subTitle!.isEmpty)
           ? CircleAvatar(
               radius: 12,
-              backgroundColor: Jobstopcolor.lightprimary3,
+              backgroundColor: SippoColor.lightprimary3,
               child: Icon(
                 Icons.add,
                 size: context.fromHeight(CustomStyle.xl),
-                color: Jobstopcolor.primarycolor,
+                color: SippoColor.primarycolor,
               ))
           : Image.asset(
               JobstopPngImg.edit,
-              color: Jobstopcolor.primarycolor,
+              color: SippoColor.primarycolor,
               height: context.fromHeight(CustomStyle.l),
               width: context.fromHeight(CustomStyle.l),
             ),

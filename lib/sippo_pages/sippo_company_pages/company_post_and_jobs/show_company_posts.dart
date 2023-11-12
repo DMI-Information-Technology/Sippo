@@ -13,6 +13,7 @@ import 'package:jobspot/sippo_custom_widget/container_bottom_sheet_widget.dart';
 import 'package:jobspot/sippo_custom_widget/setting_item_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_post_model.dart';
+import 'package:jobspot/sippo_pages/sippo_message_pages/no_items_found_message.dart';
 import 'package:jobspot/utils/helper.dart';
 
 class ShowCompanyPostsList extends StatefulWidget {
@@ -36,11 +37,13 @@ class _ShowCompanyPostsListState extends State<ShowCompanyPostsList> {
               _buildErrorFirstLoad(context),
           newPageErrorIndicatorBuilder: (context) =>
               _buildErrorNewLoad(context),
+          noItemsFoundIndicatorBuilder: (context) =>
+              NoItemsFoundMessageWidget.posts(),
           itemBuilder: (context, item, index) {
             return Obx(
               () => PostWidget(
                 authorName: _controller.company.name ?? '',
-                imageProfileUrl:_controller.company.profileImage?.url,
+                imageProfileUrl: _controller.company.profileImage?.url,
                 timeAgo: calculateElapsedTimeFromStringDate(
                       item.createdAt,
                     ) ??
@@ -79,12 +82,12 @@ class _ShowCompanyPostsListState extends State<ShowCompanyPostsList> {
             textAlign: TextAlign.center,
             style: dmsregular.copyWith(
               fontSize: FontSize.paragraph3(context),
-              color: Jobstopcolor.primarycolor,
+              color: SippoColor.primarycolor,
             ),
           ),
           Icon(
             Icons.refresh,
-            color: Jobstopcolor.primarycolor,
+            color: SippoColor.primarycolor,
           ),
         ],
       ),
@@ -101,7 +104,7 @@ class _ShowCompanyPostsListState extends State<ShowCompanyPostsList> {
         Text(
           "error".tr,
           style: dmsbold.copyWith(
-            color: Jobstopcolor.primarycolor,
+            color: SippoColor.primarycolor,
             fontSize: FontSize.title2(context),
           ),
         ),

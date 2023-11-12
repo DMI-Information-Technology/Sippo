@@ -16,6 +16,7 @@ import 'package:jobspot/sippo_custom_widget/setting_item_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_data/model/application_model/application_job_company_model.dart';
 import 'package:jobspot/sippo_data/model/notification/job_application_model.dart';
+import 'package:jobspot/sippo_pages/sippo_message_pages/no_items_found_message.dart';
 import 'package:lottie/lottie.dart';
 
 class SippoCompanyApplication extends StatefulWidget {
@@ -44,6 +45,8 @@ class _SippoCompanyApplicationState extends State<SippoCompanyApplication> {
               _buildErrorFirstLoad(context),
           newPageErrorIndicatorBuilder: (context) =>
               _buildErrorNewLoad(context),
+          noItemsFoundIndicatorBuilder: (context) =>
+              NoItemsFoundMessageWidget.application(),
           firstPageProgressIndicatorBuilder: (context) => Center(
             child: Lottie.asset(
               JobstopPngImg.loadingProgress,
@@ -107,12 +110,12 @@ class _SippoCompanyApplicationState extends State<SippoCompanyApplication> {
             textAlign: TextAlign.center,
             style: dmsregular.copyWith(
               fontSize: FontSize.paragraph3(context),
-              color: Jobstopcolor.primarycolor,
+              color: SippoColor.primarycolor,
             ),
           ),
           Icon(
             Icons.refresh,
-            color: Jobstopcolor.primarycolor,
+            color: SippoColor.primarycolor,
           ),
         ],
       ),
@@ -130,7 +133,7 @@ class _SippoCompanyApplicationState extends State<SippoCompanyApplication> {
         Text(
           "error".tr,
           style: dmsbold.copyWith(
-            color: Jobstopcolor.primarycolor,
+            color: SippoColor.primarycolor,
             fontSize: FontSize.title2(context),
           ),
         ),
@@ -188,7 +191,7 @@ class _SippoCompanyApplicationState extends State<SippoCompanyApplication> {
                   Get.snackbar(
                     'application_status'.tr,
                     'application_status_desc_dialog'.tr,
-                    backgroundColor: Jobstopcolor.backgroudHome,
+                    backgroundColor: SippoColor.backgroudHome,
                     boxShadows: [boxShadow],
                   );
                 }

@@ -37,7 +37,7 @@ class _SippoUploadCVState extends State<SippoUploadCV> {
                 "label_add_cv".tr,
                 style: dmsbold.copyWith(
                   fontSize: FontSize.title3(context),
-                  color: Jobstopcolor.primarycolor,
+                  color: SippoColor.primarycolor,
                 ),
               ),
               SizedBox(
@@ -70,7 +70,7 @@ class _SippoUploadCVState extends State<SippoUploadCV> {
           ),
         ),
       ),
-      backgroundColor: Jobstopcolor.backgroudHome,
+      backgroundColor: SippoColor.backgroudHome,
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           await _controller.uploadCvFile();

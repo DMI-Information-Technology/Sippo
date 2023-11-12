@@ -52,7 +52,8 @@ class EditProfileInfoController extends GetxController {
           _profileController.dashboard.user = data;
 
           profileEditState.setAll(userDetails);
-          successState(true, 'Profile is updated successfully.');
+          successState(true, 'profile_updated'.tr);
+
         }
       },
       onValidateError: (validateError, _) {},
@@ -79,7 +80,7 @@ class EditProfileInfoController extends GetxController {
         if (data != null && locationAddress != null) {
           _profileController.dashboard.user = data;
           profileEditState.selectedLocationAddress = locationAddress;
-          successState(true, 'Profile is updated successfully.');
+          successState(true, 'profile_updated'.tr);
         }
       },
       onValidateError: (validateError, _) {},
@@ -129,7 +130,7 @@ class EditProfileInfoController extends GetxController {
     if (!_profileController.netController.isConnected) {
       return warningState(
         true,
-        "sorry your connection is lost, please check your settings before continuing.",
+        "connection_lost_message_1".tr,
       );
     }
     _states.value = States(isLoading: true);
@@ -145,7 +146,7 @@ class EditProfileInfoController extends GetxController {
     if (_profileController.netController.isNotConnected) {
       return warningState(
         true,
-        "sorry your connection is lost, please check your settings before continuing.",
+        "connection_lost_message_1".tr,
       );
     }
     _states.value = States(isLoading: true);

@@ -85,8 +85,8 @@ class _SippoOnboardingState extends State<SippoOnboarding>
                     controller: _pageController,
                     count: onBoardPagesSlides.length,
                     effect: const ColorTransitionEffect(
-                      activeDotColor: Jobstopcolor.secondary,
-                      dotColor: Jobstopcolor.white,
+                      activeDotColor: SippoColor.secondary,
+                      dotColor: SippoColor.white,
                     ),
                   ),
                 
@@ -105,10 +105,10 @@ class _SippoOnboardingState extends State<SippoOnboarding>
                 Get.toNamed(SippoRoutes.appUsingPage);
                 return;
               },
-              backgroundColor: Jobstopcolor.primarycolor,
+              backgroundColor: SippoColor.primarycolor,
               child: const Icon(
                 Icons.arrow_right_alt_sharp,
-                color: Jobstopcolor.white,
+                color: SippoColor.white,
                 size: 30,
               ),
             )
@@ -166,7 +166,7 @@ class OnBoardSlides extends StatelessWidget {
                         title,
                         style: dmsbold.copyWith(
                           fontSize: FontSize.title(context),
-                          color: Jobstopcolor.primarycolor,
+                          color: SippoColor.primarycolor,
                         ),
                         maxLines: 2,
                         textAlign: TextAlign.center,
@@ -179,7 +179,7 @@ class OnBoardSlides extends StatelessWidget {
                 description,
                 style: dmsregular.copyWith(
                   fontSize: FontSize.paragraph(context),
-                  color: Jobstopcolor.textColor,
+                  color: SippoColor.textColor,
                 ),
                 maxLines: 3,
                 textAlign: TextAlign.center,

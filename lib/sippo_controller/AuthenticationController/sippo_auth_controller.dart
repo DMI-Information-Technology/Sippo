@@ -124,7 +124,7 @@ class AuthController extends GetxController {
       _states.value = states.copyWith(
         isSuccess: false,
         isError: true,
-        message: "something wrong happened, log out is not possible",
+        message: "something_wrong_happened_logout".tr,
       );
       return false;
     }
@@ -245,12 +245,12 @@ class AuthController extends GetxController {
         if (isValid == true) {
           _states.value = States(
             isSuccess: true,
-            message: 'OTP and Email is valid',
+            message: 'otp_email_valid_message'.tr,
           );
         } else if (isValid == false) {
           _states.value = States(
             isError: true,
-            message: 'OTP and Email is not valid',
+            message: 'otp_email_not_valid_message'.tr,
           );
         }
       },

@@ -67,11 +67,11 @@ class _SippoUserCommunityState extends State<SippoUserCommunity> {
                 text: "posts".tr,
                 borderRadiusValue: 12,
                 backgroundColor: _controller.selected == 0
-                    ? Jobstopcolor.primarycolor
-                    : Jobstopcolor.lightprimary,
+                    ? SippoColor.primarycolor
+                    : SippoColor.lightprimary,
                 textColor: _controller.selected == 0
-                    ? Jobstopcolor.white
-                    : Jobstopcolor.white,
+                    ? SippoColor.white
+                    : SippoColor.white,
               ),
             )),
         Obx(() => SizedBox(
@@ -85,11 +85,11 @@ class _SippoUserCommunityState extends State<SippoUserCommunity> {
                 text: "title_my_connections".tr,
                 borderRadiusValue: 12,
                 backgroundColor: _controller.selected == 1
-                    ? Jobstopcolor.primarycolor
-                    : Jobstopcolor.lightprimary,
+                    ? SippoColor.primarycolor
+                    : SippoColor.lightprimary,
                 textColor: _controller.selected == 1
-                    ? Jobstopcolor.white
-                    : Jobstopcolor.white,
+                    ? SippoColor.white
+                    : SippoColor.white,
               ),
             )),
       ],

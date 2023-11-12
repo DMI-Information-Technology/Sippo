@@ -51,6 +51,7 @@ class AppTranslation extends Translations {
           'Position': "Position",
           'Qualification': "Qualification",
           'hint_text_enter_email"': "enter your email",
+          'invalid_full_name"': "invalid full name",
           'Experience': "Experience",
           'Job_Type': "Job Type",
           'Specialization': "Specialization",
@@ -322,7 +323,7 @@ class AppTranslation extends Translations {
           'work_place': "Work Place",
           'invented_date': "Invented Date",
           'try_again': "Try again",
-          'something_wrong_happened.': "Something wrong is happened.",
+          'something_wrong_happened': "Something wrong is happened.",
           'follow': "Follow",
           'followed': "Followed",
           'application_status': "Application Status",
@@ -349,7 +350,6 @@ class AppTranslation extends Translations {
           'Specializations': "Specializations",
           'k': "k",
           'error': "Error",
-          'something_wrong_happened': "something wrong is happened.",
           'upload_company_images': "Company Images",
           'gallery_company_images': "Gallery Company Images",
           'upload_images': "Upload Images",
@@ -433,6 +433,92 @@ class AppTranslation extends Translations {
           'message_no_images_uploaded':
               'No new images found. Please pick some images and continue',
           'continue': 'Continue',
+          //
+          'something_wrong_happened_logout':
+              'something wrong happened, log out is not possible',
+          'otp_email_valid_message': 'OTP and Email is valid',
+          'otp_email_not_valid_message': 'OTP or Email is not valid',
+          'job_status_updated_message': 'Job status is updated.',
+          'connection_lost_message_1':
+              'sorry your connection is lost, please check your settings before continuing.',
+          'error_occurred_message': 'some error occurred. Try again later',
+          'nothing_changed_job_message': 'Nothing is changed in the job',
+          'new_post_added_message': 'new post is added',
+          'post_updated_message': 'the post updated successfully.',
+          'remove_old_image_message':
+              "you must remove the old image from the post before upload new one.",
+          'pick_specialization_message':
+              'You have pick one specialization at least and maximum 3.',
+          'nothing_changed_specializations':
+              'Nothing is Changed in Specializations.',
+          'specializations_company_title': 'Specializations Company',
+          'specializations_added ': 'Specializations is Added ',
+          'nothing_changed_profile_info':
+              'Nothing is Changed in Profile Information.',
+          'company_profile_updated': 'company Profile is updated',
+          'work_place_added_message': 'The Work Place is added',
+          'work_place_updated_message': 'The Work Place is updated',
+          'nothing_changed_work_place_message':
+              'Nothing changed in the location work place.',
+          'warning_title': 'Warning',
+          'required_field_empty':
+              'Some required field is empty please check it',
+          'application_sent_message': 'The application is sent.',
+          'my_education_now_label': 'This is my education now',
+          'education_deleted_message': 'the education is deleted',
+          'education_updated_message': 'the education is updated',
+          'nothing_changed_education': 'Nothing is changed in the education.',
+          'education_added_message': 'new education is added',
+          'nothing_changed_projects':
+              'Nothing is changed in the work experience.',
+          'project_updated_message': 'the project is updated.',
+          'project_added_message': 'the project is added.',
+          'project_deleted_message': 'the project is deleted.',
+          'cannot_remove_all_skills':
+              'sorry, you cannot remove all the skills.',
+          //
+          'work_experience_added': 'new work experience is added',
+          'work_experience_updated': 'the work experience is updated',
+          'work_experience_deleted': 'the work experience is deleted',
+          'nothing_changed_work_experience':
+              'Nothing is changed in the work experience.',
+          'profile_updated': 'Profile is updated',
+          'select_language_warning': 'select language before submission.',
+          //
+          'no_connection_title': 'No Connection',
+          'no_connection_message':
+              'Your connection is lost, please check your connection and try again',
+          'not_subscribed': 'Not Subscribed',
+          'subscribe_platform_message':
+              'Subscribing to our platform will give you access to this user information and many other benefitsSubscribing to our platform will give you access to this user information and many other benefits',
+          'contact_whatsApp': 'Contact With us on WhatsApp',
+          'contact_lost_title': 'Connection lost',
+          'contact_lost_message':
+              'connection lost, please check your network settings and try again',
+          'invalid_OTP': 'Invalid OTP',
+          'invalid_OTP_message':
+              'Pleas enter the otp code with length 6 number',
+          'failed_verify_OTP': 'Failed verify OTP',
+          'invalid_phone_number': 'invalid phone number',
+          'confirm_password_not_matches':
+              'the confirm password is not matches the password',
+          'something_wrong_request_message':
+              'An error occurred while connecting to the server. Please check your internet connection or try again later.',
+          'functional_information': 'Functional Information',
+          'functional_information_desc':
+              'You can get a job opportunity faster and better if you complete your profile information.',
+          'profile_completion_title': 'Profile Completion',
+          'profile_completion_company_desc':'Please complete your company account information to attract the most job applicants.',
+          'reload_page_message': 'Reload the page or try again later.',
+          'no_items_found_title':'No items found',
+          'no_posts_found_title':'No posts found',
+          'no_jobs_found_title':'No jobs found',
+          'no_users_found_title':'No users found',
+          'no_companies_found_title':'No companies found',
+          'no_application_found_title':'No Application found',
+          'no_notification_found_title':'No Notification found',
+
+
         },
         'ar_AB': {
           "Email": "البريد الإلكتروني",
@@ -745,7 +831,6 @@ class AppTranslation extends Translations {
           "work_place": "مكان العمل",
           "invented_date": "التاريخ المستحدث",
           "try_again": "حاول مرة أخرى",
-          "something_wrong_happened.": "حدث خطأ ما.",
           "follow": "متابعة",
           "followed": "متابع",
           "application_status": "حالة الطلب",
@@ -770,7 +855,6 @@ class AppTranslation extends Translations {
           "Specializations": "التخصصات",
           "k": "ألف",
           "error": "خطأ",
-          "something_wrong_happened": "حدث خطأ ما.",
           "upload_company_images": "صور الشركة",
           "gallery_company_images": "معرض صور الشركة",
           "upload_images": "رفع الصور",
@@ -856,7 +940,87 @@ class AppTranslation extends Translations {
           'message_no_images_uploaded':
               'لا يوجد صور للرفع، اختر صور من المعرض لرفعها',
           'continue': 'استمرار',
-          'albums': 'البوم'
+          'albums': 'البوم',
+          "something_wrong_happened": "حدث خطأ ما.",
+          "something_wrong_happened_logout":
+              "حدث خطأ ما، تسجيل الخروج غير ممكن.",
+          "otp_email_valid_message":
+              "رمز التحقق مرة واحدة والبريد الإلكتروني صالحان.",
+          "otp_email_not_valid_message":
+              "رمز التحقق مرة واحدة أو البريد الإلكتروني غير صالح.",
+          "job_status_updated_message": "تم تحديث حالة الوظيفة.",
+          "connection_lost_message_1":
+              "عذرًا، انقطع الاتصال بك، يرجى التحقق من إعداداتك قبل المتابعة.",
+          "error_occurred_message": "حدث خطأ ما. حاول مرة أخرى لاحقًا.",
+          "nothing_changed_job_message": "لم يتغير شيء في الوظيفة.",
+          "new_post_added_message": "تمت إضافة منشور جديد.",
+          "post_updated_message": "تم تحديث المنشور بنجاح.",
+          "remove_old_image_message":
+              "يجب إزالة الصورة القديمة من المنشور قبل تحميل صورة جديدة.",
+          "pick_specialization_message":
+              "يجب اختيار تخصص واحد على الأقل وثلاثة تخصصات كحد أقصى.",
+          "nothing_changed_specializations": "لم يتغير شيء في التخصصات.",
+          "specializations_company_title": "تخصصات الشركة",
+          "specializations_added": "تمت إضافة التخصصات",
+          "nothing_changed_profile_info":
+              "لم يتغير شيء في معلومات الملف الشخصي.",
+          "company_profile_updated": "تم تحديث ملف الشركة الشخصي",
+          "work_place_added_message": "تمت إضافة مكان العمل",
+          "work_place_updated_message": "تم تحديث مكان العمل",
+          "nothing_changed_work_place_message": "لم يتغير شيء في مكان العمل.",
+          "warning_title": "تحذير",
+          "required_field_empty":
+              "بعض الحقول المطلوبة فارغة، يرجى التحقق منها.",
+          "application_sent_message": "تم إرسال الطلب.",
+          "my_education_now_label": "هذا هو تعليمي الآن",
+          "education_deleted_message": "تم حذف التعليم",
+          "education_updated_message": "تم تحديث التعليم",
+          "nothing_changed_education": "لم يتغير شيء في التعليم.",
+          "education_added_message": "تمت إضافة تعليم جديد",
+          "nothing_changed_projects": "لم يتغير شيء في الخبرة العملية.",
+          "project_updated_message": "تم تحديث المشروع.",
+          "project_added_message": "تمت إضافة المشروع.",
+          "project_deleted_message": "تم حذف المشروع.",
+          'cannot_remove_all_skills': 'لا يمكنك حذف كل المهارات',
+          "work_experience_added": "تمت إضافة خبرة عمل جديدة.",
+          "work_experience_updated": "تم تحديث خبرة العمل.",
+          "work_experience_deleted": "تم حذف خبرة العمل.",
+          "nothing_changed_work_experience": "لم يتغير شيء في خبرة العمل.",
+          "profile_updated": "تم تحديث الملف الشخصي.",
+          "select_language_warning": "اختر اللغة قبل الحفظ.",
+          "no_connection_title": "لا يوجد اتصال",
+          "no_connection_message":
+              "انقطع الاتصال بك، يرجى التحقق من اتصالك وإعادة المحاولة",
+          "not_subscribed": "غير مشترك",
+          "subscribe_platform_message":
+              "ستمنحك الاشتراك في منصتنا حق الوصول إلى معلومات هذا المستخدم والعديد من المزايا الأخرى",
+          "contact_whatsApp": "اتصل بنا على واتساب",
+          "contact_lost_title": "انقطاع الاتصال",
+          "contact_lost_message":
+              "انقطع الاتصال، يرجى التحقق من إعدادات الشبكة وإعادة المحاولة",
+          "invalid_OTP": "رمز التحقق خاطئ",
+          "invalid_OTP_message": "الرجاء إدخال رمز التحقق المؤلف من 6 أرقام",
+          "failed_verify_OTP": "فشل التحقق من رمز التحقق",
+          'something_wrong_request_message':
+              'حدث خطأ أثناء الاتصال بالخادم. يرجى التحقق من اتصالك بالإنترنت أو إعادة المحاولة لاحقًا.',
+          'invalid_full_name"': "الاسم غير صالح.",
+          'invalid_phone_number': 'رقم الهاتف غير صالح',
+          'confirm_password_not_matches':
+              'كلمة سر التأكيد غير مطابقة للكلمة السر المدخلة',
+          'functional_information': 'المعلومات الوظيفية',
+          'functional_information_desc':
+              'يمكنك الحصول على فرص عمل بطريقة اسرع وافضل في حال اكملت معلومات حسابك',
+          'profile_completion_title': 'أكمال الحساب',
+          'profile_completion_company_desc':'الرجاء تكملة معلومات حساب الشركة للحصول على أكبر عدد ممكن من طلبات التوظيف',
+          'no_items_found_title':'لم يتم العثور على العناصر',
+          'no_posts_found_title':'لم يتم العثور على مشاركات للعرض',
+          'no_jobs_found_title':'لم يتم العثور على وظائف للعرض',
+          'no_users_found_title':'لم يتم العثور على مستخدمين للعرض',
+          'no_companies_found_title':'لم يتم العثور على شركات للعرض',
+          'no_application_found_title':'لم يتم العثور على طلبات تقديم للعرض',
+          'reload_page_message': 'قم بأعادة تحميل الصفحة او اعد المحاولة لاحقا',
+          'no_notification_found_title':'لم يتم العثور على اشعارات للعرض',
+
         }
       };
 }

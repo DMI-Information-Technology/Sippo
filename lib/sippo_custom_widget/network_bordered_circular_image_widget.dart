@@ -55,6 +55,7 @@ class NetworkBorderedCircularImage extends StatelessWidget {
             height: size,
             errorWidget: errorWidget,
             placeholder: placeholder,
+            fit: BoxFit.cover,
           ),
         ),
       ),

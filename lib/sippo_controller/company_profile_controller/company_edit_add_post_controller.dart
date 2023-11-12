@@ -45,7 +45,7 @@ class CompanyEditAddPostController extends GetxController {
     await response?.checkStatusResponse(
       onSuccess: (data, _) async {
         popOut();
-        successState(true, 'new post is added successfully.');
+        successState(true, 'new_post_added_message'.tr);
       },
       onValidateError: (validateError, _) {
         errorState(true, validateError?.message);
@@ -77,7 +77,7 @@ class CompanyEditAddPostController extends GetxController {
           newPostState.isUpdated = true;
           popOut();
         }
-        successState(true, 'the post updated successfully.');
+        successState(true, 'post_updated_message'.tr);
       },
       onValidateError: (validateError, _) {
         errorState(true, validateError?.message);
@@ -118,7 +118,7 @@ class CompanyEditAddPostController extends GetxController {
     if (!isNetworkConnection) {
       return warningState(
         true,
-        "sorry your connection is lost, please check your settings before continuing.",
+        "connection_lost_message_1".tr,
       );
     }
     _states.value = States(isLoading: true);
@@ -136,7 +136,7 @@ class CompanyEditAddPostController extends GetxController {
       localIsEditing ? 'edit_post'.tr : 'new_post'.tr,
       localIsEditing ? 'edit_post_done'.tr : 'post_added_successfully'.tr,
       boxShadows: [boxShadow],
-      backgroundColor: Jobstopcolor.backgroudHome,
+      backgroundColor: SippoColor.backgroudHome,
     );
   }
 
@@ -158,8 +158,7 @@ class CompanyEditAddPostController extends GetxController {
     if (newPostState.imageUrl.url != null) {
       _states.value = states.copyWith(
         isError: true,
-        message: "you must remove the old image"
-            " from the post before upload new one.",
+        message: 'remove_old_image_message'.tr,
       );
       return;
     }

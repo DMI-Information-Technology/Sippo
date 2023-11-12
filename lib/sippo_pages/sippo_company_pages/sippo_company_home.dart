@@ -8,6 +8,7 @@ import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
+import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
 import 'package:jobspot/sippo_controller/dashboards_controller/company_dashboard_controller.dart';
 import 'package:jobspot/sippo_controller/home_controllers/company_home_controller.dart';
 import 'package:jobspot/sippo_controller/home_controllers/job_home_view_controller.dart';
@@ -86,7 +87,7 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
           ),
         ),
       ),
-      backgroundColor: Jobstopcolor.backgroudHome,
+      backgroundColor: SippoColor.backgroudHome,
     );
   }
 
@@ -127,15 +128,15 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
                         _controller.companyHomeState.selectedSpecialization ==
                                 special
                             ? Colors.white
-                            : Jobstopcolor.black,
+                            : SippoColor.black,
                     fontSize: FontSize.label(context),
                   ),
                 ),
                 backgroundColor:
                     _controller.companyHomeState.selectedSpecialization ==
                             special
-                        ? Jobstopcolor.primarycolor
-                        : Jobstopcolor.grey2,
+                        ? SippoColor.primarycolor
+                        : SippoColor.grey2,
                 borderRadius: width / 32,
                 paddingValue: context.fromHeight(CustomStyle.xxxl),
               );
@@ -171,9 +172,11 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
               SizedBox(
                 width: width / 52,
               ),
-
               InkWell(
-                onTap: () => Get.toNamed(SippoRoutes.sippocompanyprofile),
+                onTap: () {
+                  if (InternetConnectionService.instance.isNotConnected) return;
+                  Get.toNamed(SippoRoutes.sippocompanyprofile);
+                },
                 child: Obx(() => NetworkBorderedCircularImage(
                       imageUrl:
                           dashboardController.company.profileImage?.url ?? '',
@@ -186,7 +189,7 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
                         child: Image.asset(JobstopPngImg.companysignup),
                       ),
                       size: context.fromHeight(24),
-                      outerBorderColor: Jobstopcolor.backgroudHome,
+                      outerBorderColor: SippoColor.backgroudHome,
                     )),
               ),
             ],
@@ -210,7 +213,7 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
             "hello".tr,
             style: dmsbold.copyWith(
               fontSize: FontSize.title3(context),
-              color: Jobstopcolor.primarycolor,
+              color: SippoColor.primarycolor,
             ),
           ),
           Obx(
@@ -219,7 +222,7 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
                     "${dashboardController.company.name}",
                     style: dmsbold.copyWith(
                       fontSize: FontSize.title3(context),
-                      color: Jobstopcolor.primarycolor,
+                      color: SippoColor.primarycolor,
                     ),
                   )
                 : const SizedBox.shrink(),

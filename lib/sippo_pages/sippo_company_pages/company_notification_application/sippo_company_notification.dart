@@ -16,6 +16,7 @@ import 'package:jobspot/sippo_data/model/notification/notification_model.dart';
 import 'package:jobspot/sippo_data/model/notification/notifications_types.dart';
 
 import 'package:jobspot/sippo_custom_widget/notification_card_widget.dart';
+import 'package:jobspot/sippo_pages/sippo_message_pages/no_items_found_message.dart';
 import 'package:lottie/lottie.dart';
 
 class SippoCompanyNotification extends StatefulWidget {
@@ -44,6 +45,8 @@ class _SippoCompanyNotificationState extends State<SippoCompanyNotification> {
               _buildErrorFirstLoad(context),
           newPageErrorIndicatorBuilder: (context) =>
               _buildErrorNewLoad(context),
+          noItemsFoundIndicatorBuilder: (context) =>
+              NoItemsFoundMessageWidget.notification(),
           firstPageProgressIndicatorBuilder: (context) => Center(
             child: Lottie.asset(
               JobstopPngImg.loadingProgress,
@@ -86,12 +89,12 @@ class _SippoCompanyNotificationState extends State<SippoCompanyNotification> {
             textAlign: TextAlign.center,
             style: dmsregular.copyWith(
               fontSize: FontSize.paragraph3(context),
-              color: Jobstopcolor.primarycolor,
+              color: SippoColor.primarycolor,
             ),
           ),
           Icon(
             Icons.refresh,
-            color: Jobstopcolor.primarycolor,
+            color: SippoColor.primarycolor,
           ),
         ],
       ),
@@ -109,7 +112,7 @@ class _SippoCompanyNotificationState extends State<SippoCompanyNotification> {
         Text(
           "error".tr,
           style: dmsbold.copyWith(
-            color: Jobstopcolor.primarycolor,
+            color: SippoColor.primarycolor,
             fontSize: FontSize.title2(context),
           ),
         ),

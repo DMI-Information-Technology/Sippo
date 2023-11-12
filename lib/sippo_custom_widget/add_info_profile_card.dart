@@ -49,18 +49,18 @@ class AddInfoProfileCard extends StatelessWidget {
                 Text(
                   title,
                   style: dmsbold.copyWith(
-                      fontSize: FontSize.title5(context), color: Jobstopcolor.primarycolor),
+                      fontSize: FontSize.title5(context), color: SippoColor.primarycolor),
                 ),
                 if (!isCompanyView) ...[
                   const Spacer(),
                   iconAction ??
                       CircleAvatar(
                         radius: 10,
-                        backgroundColor: Jobstopcolor.lightprimary2,
+                        backgroundColor: SippoColor.lightprimary2,
                         child: Icon(
                           Icons.add,
                           size: 15,
-                          color: Jobstopcolor.primarycolor,
+                          color: SippoColor.primarycolor,
                         ),
                       )
                 ]
@@ -74,7 +74,7 @@ class AddInfoProfileCard extends StatelessWidget {
               height: height / 100,
             ),
             const Divider(
-              color: Jobstopcolor.grey,
+              color: SippoColor.grey,
             ),
             ...profileInfo!
           ]

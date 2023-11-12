@@ -72,7 +72,7 @@ class _SippoUserSavedJobState extends State<SippoUserSavedJob> {
                 "Delete all",
                 style: dmsregular.copyWith(
                   fontSize: FontSize.label(context),
-                  color: Jobstopcolor.secondary,
+                  color: SippoColor.secondary,
                 ),
               ),
             ),
@@ -171,7 +171,7 @@ class _SippoUserSavedJobState extends State<SippoUserSavedJob> {
                 JobstopPngImg.deleted,
                 color: _controller.savedJobState.selectedOption == 1
                     ? Colors.white
-                    : Jobstopcolor.primarycolor,
+                    : SippoColor.primarycolor,
                 height: context.height / 32,
               ),
               onTap: () {
@@ -193,7 +193,7 @@ class _SippoUserSavedJobState extends State<SippoUserSavedJob> {
                 JobstopPngImg.applay,
                 color: _controller.savedJobState.selectedOption == 2
                     ? Colors.white
-                    : Jobstopcolor.primarycolor,
+                    : SippoColor.primarycolor,
                 height: context.height / 32,
               ),
               onTap: () async {
@@ -230,12 +230,12 @@ class _SippoUserSavedJobState extends State<SippoUserSavedJob> {
             textAlign: TextAlign.center,
             style: dmsregular.copyWith(
               fontSize: FontSize.paragraph3(context),
-              color: Jobstopcolor.primarycolor,
+              color: SippoColor.primarycolor,
             ),
           ),
           Icon(
             Icons.refresh,
-            color: Jobstopcolor.primarycolor,
+            color: SippoColor.primarycolor,
           ),
         ],
       ),
@@ -250,7 +250,7 @@ class _SippoUserSavedJobState extends State<SippoUserSavedJob> {
         Text(
           "error".tr,
           style: dmsbold.copyWith(
-            color: Jobstopcolor.primarycolor,
+            color: SippoColor.primarycolor,
             fontSize: FontSize.title2(context),
           ),
         ),

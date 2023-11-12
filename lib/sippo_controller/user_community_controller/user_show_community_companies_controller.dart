@@ -82,8 +82,7 @@ class UserShowCommunityCompaniesController extends GetxController {
       communityController.changeStates(
         isWarning: true,
         isSuccess: false,
-        message: "sorry your connection is lost,"
-            " please check your settings before continuing.",
+        message: "connection_lost_message_1".tr,
       );
       return;
     }
@@ -98,8 +97,7 @@ class UserShowCommunityCompaniesController extends GetxController {
       communityController.changeStates(
         isWarning: true,
         isSuccess: false,
-        message: "sorry your connection is lost,"
-            " please check your settings before continuing.",
+        message: "connection_lost_message_1".tr,
       );
       return;
     }

@@ -36,28 +36,28 @@ class ConfirmationBottomSheet extends StatelessWidget {
             title,
             style: dmsbold.copyWith(
               fontSize: 16,
-              color: Jobstopcolor.primarycolor,
+              color: SippoColor.primarycolor,
             ),
           ),
           SizedBox(height: height / 100),
           Text(
             description,
             style:
-                dmsregular.copyWith(fontSize: 12, color: Jobstopcolor.darkgrey),
+                dmsregular.copyWith(fontSize: 12, color: SippoColor.darkgrey),
             textAlign: TextAlign.center,
           ),
           SizedBox(height: height / 26),
           CustomButton(
             onTapped: onConfirm,
-            text: confirmTitle ?? "Continue Filling".tr,
+            text: confirmTitle ?? "yes".tr,
           ),
           SizedBox(
             height: height / 56,
           ),
           CustomButton(
             onTapped: onUndo,
-            text: undoTitle ?? "Undo Changes",
-            backgroundColor: Jobstopcolor.lightprimary,
+            text: undoTitle ?? "undo".tr,
+            backgroundColor: SippoColor.lightprimary,
           ),
         ],
       ),

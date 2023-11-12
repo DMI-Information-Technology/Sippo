@@ -56,7 +56,7 @@ class CvCardWidget extends StatelessWidget {
                   (_fileCv?.name ?? _remoteCv?.name) ?? "",
                   style: dmsregular.copyWith(
                     fontSize: FontSize.title6(context),
-                    color: Jobstopcolor.primarycolor,
+                    color: SippoColor.primarycolor,
                   ),
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -76,7 +76,7 @@ class CvCardWidget extends StatelessWidget {
             Image.asset(
               JobstopPngImg.deleted,
               height: height / 36,
-              color: Jobstopcolor.red,
+              color: SippoColor.red,
             ),
           ]
         ],
@@ -91,7 +91,7 @@ class CvCardWidget extends StatelessWidget {
             ? JobstopPngImg.galleryicon
             : JobstopPngImg.pdf,
         color: _remoteCv?.mimeType?.contains('image') == true
-            ? Jobstopcolor.primarycolor
+            ? SippoColor.primarycolor
             : null,
         height: context.height / 21,
         width: context.height / 21,
@@ -99,7 +99,7 @@ class CvCardWidget extends StatelessWidget {
     }
     return Image.asset(
       _fileCv?.type == 'image' ? JobstopPngImg.galleryicon : JobstopPngImg.pdf,
-      color: _fileCv?.type == 'image' ? Jobstopcolor.primarycolor : null,
+      color: _fileCv?.type == 'image' ? SippoColor.primarycolor : null,
       height: context.height / 21,
       width: context.height / 21,
     );

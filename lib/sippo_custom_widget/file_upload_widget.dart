@@ -76,7 +76,7 @@ class FileUploadWidget extends StatelessWidget {
         width: double.infinity,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
-          color: isUploaded ? Jobstopcolor.lightprimary3 : null,
+          color: isUploaded ? SippoColor.lightprimary3 : null,
         ),
         child: CustomPaint(
           painter: DottedBorderPainter(),

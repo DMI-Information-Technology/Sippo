@@ -43,7 +43,7 @@ class _SippoApplyCompanyState extends State<SippoApplyCompany> {
   Widget build(BuildContext context) {
     return LoadingScaffold(
       appBar: AppBar(
-        backgroundColor: Jobstopcolor.backgroudHome,
+        backgroundColor: SippoColor.backgroudHome,
       ),
       extendBodyBehindAppBar: true,
       controller: loadingController,
@@ -125,8 +125,8 @@ class _SippoApplyCompanyState extends State<SippoApplyCompany> {
               CustomButton(
                 onTapped: () {},
                 text: "find_another_job".tr,
-                backgroundColor: Jobstopcolor.lightprimary,
-                textColor: Jobstopcolor.primarycolor,
+                backgroundColor: SippoColor.lightprimary,
+                textColor: SippoColor.primarycolor,
               ),
               SizedBox(height: height / CustomStyle.xxl),
               CustomButton(
@@ -158,7 +158,7 @@ class _SippoApplyCompanyState extends State<SippoApplyCompany> {
           "upload_cv".tr,
           style: dmsbold.copyWith(
             fontSize: FontSize.title5(context),
-            color: Jobstopcolor.primarycolor,
+            color: SippoColor.primarycolor,
           ),
         ),
         SizedBox(height: context.fromHeight(CustomStyle.huge)),
@@ -166,7 +166,7 @@ class _SippoApplyCompanyState extends State<SippoApplyCompany> {
           "add_cv_desc".tr,
           style: dmsregular.copyWith(
             fontSize: FontSize.paragraph3(context),
-            color: Jobstopcolor.darkgrey,
+            color: SippoColor.darkgrey,
           ),
           overflow: TextOverflow.ellipsis,
         ),
@@ -219,7 +219,7 @@ class _SippoApplyCompanyState extends State<SippoApplyCompany> {
         SizedBox(height: height / 36),
         Text(
           "you_applied_sent".tr,
-          style: dmsbold.copyWith(fontSize: 16, color: Jobstopcolor.darkgrey),
+          style: dmsbold.copyWith(fontSize: 16, color: SippoColor.darkgrey),
         ),
       ],
     );
@@ -268,7 +268,7 @@ class _SippoApplyCompanyState extends State<SippoApplyCompany> {
                 _controller.applyCompanyState.company.name ?? '',
                 style: dmsbold.copyWith(
                   fontSize: FontSize.title2(context),
-                  color: Jobstopcolor.primarycolor,
+                  color: SippoColor.primarycolor,
                 ),
                 overflow: TextOverflow.clip,
               )),
@@ -302,7 +302,7 @@ class _SippoApplyCompanyState extends State<SippoApplyCompany> {
                   label,
                   style: dmsregular.copyWith(
                     fontSize: FontSize.title5(context),
-                    color: Jobstopcolor.primarycolor,
+                    color: SippoColor.primarycolor,
                   ),
                   overflow: TextOverflow.clip,
                 ),
@@ -312,7 +312,7 @@ class _SippoApplyCompanyState extends State<SippoApplyCompany> {
                     content,
                     style: dmsmedium.copyWith(
                       fontSize: FontSize.title5(context),
-                      color: Jobstopcolor.primarycolor,
+                      color: SippoColor.primarycolor,
                     ),
                     overflow: TextOverflow.ellipsis,
                   ),

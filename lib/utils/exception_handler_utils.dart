@@ -34,7 +34,7 @@ class ExceptionHandlerUtils {
       icon: Icon(Icons.signal_wifi_statusbar_connected_no_internet_4_rounded),
       'Network connection',
       'The network connection is unstable. Please checked and try again.',
-      backgroundColor: Jobstopcolor.backgroudHome,
+      backgroundColor: SippoColor.backgroudHome,
       boxShadows: [boxShadow],
     );
     socketExceptionCounter++;

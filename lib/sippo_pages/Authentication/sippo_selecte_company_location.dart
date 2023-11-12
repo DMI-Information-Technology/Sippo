@@ -142,7 +142,7 @@ class _SippoLocationCompanySelectorState
                   onChanged: (value) {
                     _signUpCompanyController.toggleConfirmPolicy();
                   },
-                  activeColor: Jobstopcolor.primarycolor,
+                  activeColor: SippoColor.primarycolor,
                 ),
               ),
             ],
@@ -189,7 +189,8 @@ class _SippoLocationCompanySelectorState
       }
       if (_signUpCompanyController.authController.states.isError) {
         _showRegisterErrorAlert(
-            _signUpCompanyController.authController.states.message);
+          _signUpCompanyController.authController.states.message,
+        );
         _signUpCompanyController.authController.resetStates();
       }
     } else {
@@ -202,13 +203,12 @@ class _SippoLocationCompanySelectorState
       CustomAlertDialog(
         imageAsset: JobstopPngImg.successful1,
         title: "success".tr,
-        description:
-            "message_success_account_created".tr,
-        confirmBtnColor: Jobstopcolor.primarycolor,
+        description: "message_success_account_created".tr,
+        confirmBtnColor: SippoColor.primarycolor,
         confirmBtnTitle: "ok".tr,
-        onConfirm: () => Get.offAllNamed(SippoRoutes.sippoCompanyDashboard),
+        onConfirm: () => Get.offAllNamed(SippoRoutes.sippoCompanyLogin),
       ),
-    ).then((value) => Get.offAllNamed(SippoRoutes.sippoCompanyDashboard));
+    ).then((value) => Get.offAllNamed(SippoRoutes.sippoCompanyLogin));
   }
 
   void _showBadConfirmDialog() {
@@ -232,7 +232,7 @@ class _SippoLocationCompanySelectorState
           "bad_connection_get_address_msg".tr,
           style: dmsregular.copyWith(
             fontSize: height / 59,
-            color: Jobstopcolor.red,
+            color: SippoColor.red,
           ),
         ),
         SizedBox(
@@ -266,7 +266,7 @@ class _SippoLocationCompanySelectorState
         imageAsset: JobstopPngImg.error,
         title: "error".tr,
         description: message ?? '',
-        confirmBtnColor: Jobstopcolor.primarycolor,
+        confirmBtnColor: SippoColor.primarycolor,
         confirmBtnTitle: "ok".tr,
         onConfirm: () {
           if (Get.isOverlaysOpen) Get.back();
