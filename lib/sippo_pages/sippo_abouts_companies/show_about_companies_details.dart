@@ -8,9 +8,8 @@ import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/sippo_custom_widget/gallery_image_widget_components.dart';
+import 'package:jobspot/sippo_custom_widget/gallry_image_uploader_widget_view.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
-
-import '../../sippo_custom_widget/gallry_image_uploader_widget_view.dart';
 
 class ShowAboutCompaniesDetails extends StatelessWidget {
   const ShowAboutCompaniesDetails({super.key, this.company})
@@ -23,6 +22,7 @@ class ShowAboutCompaniesDetails extends StatelessWidget {
     print(company?.images);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         _buildTextDetailsWidgets(
           context,
@@ -68,40 +68,43 @@ class ShowAboutCompaniesDetails extends StatelessWidget {
           "Specialization".tr,
           company?.specializations?.map((e) => e.name).join(", ") ?? "",
         ),
-        Text(
-          "Company_Gallery".tr,
-          style: dmsbold.copyWith(fontSize: 14),
-        ),
-        SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
-        SizedBox(
-          height: context.fromHeight(7.1),
-          child: ListView.separated(
-            itemCount: company?.images?.take(3).length ?? 0,
-            scrollDirection: Axis.horizontal,
-            itemBuilder: (context, index) {
-              final length = company?.images?.length ?? 0;
-              final images = company?.images;
-              final isShowMoreImages = index == 2 && length > 3;
-              return SingleImageViewWidget.fromNetwork(
-                url: images?[index].url,
-                isShowMoreImage: isShowMoreImages,
-                onTap: isShowMoreImages
-                    ? () {
-                        Get.to(
-                          () => GalleryImageScreenView.visitor(
-                            title: '${company?.name} ${'albums'.tr}',
-                            imagesResource: images,
-                          ),
-                        );
-                      }
-                    : null,
-              );
-            },
-            separatorBuilder: (context, index) => SizedBox(
-              width: context.fromWidth(CustomStyle.spaceBetween),
+        if (company?.images?.isNotEmpty == true) ...[
+          Text(
+            "Company_Gallery".tr,
+            style: dmsbold.copyWith(fontSize: 14),
+          ),
+          SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
+          SizedBox(
+            height: context.fromHeight(7.1),
+            child: ListView.separated(
+              itemCount: company?.images?.take(4).length ?? 0,
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, index) {
+                final length = company?.images?.length ?? 0;
+                final images = company?.images;
+                final isShowMoreImages = index == 3 && length > 4;
+                return SingleImageViewWidget.fromNetwork(
+                  url: images?[index].url,
+                  isShowMoreImage: isShowMoreImages,
+                  onTap: isShowMoreImages
+                      ? () {
+                          Get.to(
+                            () => GalleryImageScreenView.visitor(
+                              title: '${company?.name} ${'albums'.tr}',
+                              imagesResource: images,
+                            ),
+                          );
+                        }
+                      : null,
+                );
+              },
+              separatorBuilder: (context, index) => SizedBox(
+                width: context.fromWidth(CustomStyle.spaceBetween),
+              ),
             ),
           ),
-        ),
+        ] else
+          const SizedBox.shrink(),
         SizedBox(
           height: context.height / 64,
         ),
@@ -117,6 +120,7 @@ class ShowAboutCompaniesDetails extends StatelessWidget {
     return text.trim().isNotEmpty
         ? Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               AutoSizeText(
                 title,

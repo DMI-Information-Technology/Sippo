@@ -10,12 +10,11 @@ import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/JobServices/shared_global_data_service.dart';
 import 'package:jobspot/sippo_controller/NotificationController/company_notification_application/company_notification_controller.dart';
 import 'package:jobspot/sippo_custom_widget/container_bottom_sheet_widget.dart';
+import 'package:jobspot/sippo_custom_widget/notification_card_widget.dart';
 import 'package:jobspot/sippo_custom_widget/setting_item_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_data/model/notification/notification_model.dart';
 import 'package:jobspot/sippo_data/model/notification/notifications_types.dart';
-
-import 'package:jobspot/sippo_custom_widget/notification_card_widget.dart';
 import 'package:jobspot/sippo_pages/sippo_message_pages/no_items_found_message.dart';
 import 'package:lottie/lottie.dart';
 
@@ -173,37 +172,36 @@ class _SippoCompanyNotificationState extends State<SippoCompanyNotification> {
               contentPadding: context.fromWidth(CustomStyle.xs),
               // isSelected: _controller.isMatchOptionOfIndex(0),
             ),
-            SettingItemWidget(
-              title: 'turn_off_notification'.tr,
-              icon: Icon(
-                Icons.notifications_off_outlined,
-                // color: _controller.isMatchOptionOfIndex(1) ? Colors.white : null,
-              ),
-              onTap: () {
-                // _controller.selectedBottomOption = 1;
-                Get.back();
-              },
-              isHavingTrailingIcon: false,
-              isBordered: false,
-              contentPadding: context.fromWidth(CustomStyle.xs),
-              // isSelected: _controller.isMatchOptionOfIndex(1),
-            ),
-            SettingItemWidget(
-              title: 'setting'.tr,
-              icon: Icon(
-                Icons.settings_rounded,
-                // color: _controller.isMatchOptionOfIndex(2) ? Colors.white : null,
-              ),
-              onTap: () {
-                // _controller.selectedBottomOption = 2;
-                print("open setting notification");
-              },
-              isHavingTrailingIcon: false,
-              isBordered: false,
-              contentPadding: context.fromWidth(CustomStyle.xs),
-              // isSelected: _controller.isMatchOptionOfIndex(2),
-            ),
-            SizedBox(height: context.fromHeight(CustomStyle.spaceBetween))
+            // SettingItemWidget(
+            //   title: 'turn_off_notification'.tr,
+            //   icon: Icon(
+            //     Icons.notifications_off_outlined,
+            //     // color: _controller.isMatchOptionOfIndex(1) ? Colors.white : null,
+            //   ),
+            //   onTap: () {
+            //     // _controller.selectedBottomOption = 1;
+            //     Get.back();
+            //   },
+            //   isHavingTrailingIcon: false,
+            //   isBordered: false,
+            //   contentPadding: context.fromWidth(CustomStyle.xs),
+            //   // isSelected: _controller.isMatchOptionOfIndex(1),
+            // ),
+            // SettingItemWidget(
+            //   title: 'settings'.tr,
+            //   icon: Icon(
+            //     Icons.settings_rounded,
+            //     // color: _controller.isMatchOptionOfIndex(2) ? Colors.white : null,
+            //   ),
+            //   onTap: () {
+            //
+            //     print("open setting notification");
+            //   },
+            //   isHavingTrailingIcon: false,
+            //   isBordered: false,
+            //   contentPadding: context.fromWidth(CustomStyle.xs),
+            //   // isSelected: _controller.isMatchOptionOfIndex(2),
+            // ),
           ],
         ),
       ),

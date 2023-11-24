@@ -105,13 +105,22 @@ class _SippoSelectCompanyWorkPlacesState
                 controller: _controller.googleMapViewController,
                 onMapLocationMarked: (_) => _,
               ),
-              ListTile(
-                title: _locationAddressNameTextBuilder(context),
-                subtitle: ListenableBuilder(
-                  listenable: _controller.googleMapViewController,
-                  builder: _coordinatesTextBuilder,
+              Padding(
+                padding: EdgeInsets.symmetric(
+                  vertical: context.fromHeight(CustomStyle.spaceBetween),
                 ),
-                trailing: _isHqCheckBoxBuilder(context),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    _locationAddressNameTextBuilder(context),
+                    ListenableBuilder(
+                      listenable: _controller.googleMapViewController,
+                      builder: _coordinatesTextBuilder,
+                    ),
+                    _isHqCheckBoxBuilder(context),
+                  ],
+                ),
               ),
             ],
           ),
@@ -187,7 +196,13 @@ class _SippoSelectCompanyWorkPlacesState
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text('is HQ', style: dmsmedium),
+        Text(
+          "${'is_hq_label'.tr}",
+          style: dmsmedium,
+          maxLines: 2,
+          textAlign: TextAlign.center,
+          overflow: TextOverflow.ellipsis,
+        ),
         Obx(() => Checkbox(
               value: _controller.selectedWorkPlaceState.isHq,
               onChanged: (value) =>
@@ -204,7 +219,9 @@ class _SippoSelectCompanyWorkPlacesState
       return addressName.isNotEmpty
           ? Text(
               addressName,
-              style: dmsmedium,
+              style: dmsmedium.copyWith(fontSize: FontSize.title4(context)),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
             )
           : const SizedBox.shrink();
     });
@@ -219,7 +236,10 @@ class _SippoSelectCompanyWorkPlacesState
           ? Text(
               "${markerPlace.position.latitude.toStringAsFixed(7)},"
               " ${markerPlace.position.longitude.toStringAsFixed(7)}",
-              style: dmsregular,
+              style:
+                  dmsregular.copyWith(fontSize: FontSize.paragraph2(context)),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
             )
           : const SizedBox.shrink();
     });

@@ -40,6 +40,7 @@ class NavigationAppRoute {
           SippoRoutes.sippoCompanyDashboard,
           arguments: {selectedNavIndex: 2},
         );
+      case AppUsingType.guest:
     }
   }
 }

@@ -21,6 +21,7 @@ class ImageProfileRepo {
         switch (GlobalStorageService.appUse) {
           AppUsingType.company => endpoints.companyChangeCompanyProfile,
           AppUsingType.user => endpoints.userChangeCompanyProfile,
+          AppUsingType.guest => '',
         },
         fields: {'_method': "PUT"},
         multipartFile: profileImage.toMultipartFile(),

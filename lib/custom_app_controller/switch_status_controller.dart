@@ -19,6 +19,7 @@ class SwitchStatusController with ChangeNotifier {
   }
 
   set status(bool value) {
+    if (value == _status) return;
     _status = value;
     notifyListeners();
   }

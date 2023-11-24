@@ -309,6 +309,7 @@ class AuthRepo {
           switch (GlobalStorageService.appUse) {
             AppUsingType.user => endpoints.changePasswordUserEndpoint,
             AppUsingType.company => endpoints.changePasswordCompanyEndpoint,
+            AppUsingType.guest => '',
           },
           data: password.toJson());
 

@@ -9,17 +9,17 @@ import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/sippo_controller/user_profile_controller/edit_profile_information_controller.dart';
 import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
+import 'package:jobspot/sippo_custom_widget/custom_drop_down_button.dart';
 import 'package:jobspot/sippo_custom_widget/gender_picker_widget.dart';
 import 'package:jobspot/sippo_custom_widget/loading_view_widgets/loading_scaffold.dart';
+import 'package:jobspot/sippo_custom_widget/network_bordered_circular_image_widget.dart';
 import 'package:jobspot/sippo_custom_widget/save_image_profle_page_widget.dart';
 import 'package:jobspot/sippo_custom_widget/success_message_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/utils/getx_text_editing_controller.dart';
 import 'package:jobspot/utils/image_picker_service.dart';
+import 'package:jobspot/utils/states.dart';
 import 'package:jobspot/utils/validating_input.dart';
-
-import 'package:jobspot/sippo_custom_widget/custom_drop_down_button.dart';
-import 'package:jobspot/sippo_custom_widget/network_bordered_circular_image_widget.dart';
 
 class EditUserProfilePage extends StatefulWidget {
   const EditUserProfilePage({Key? key}) : super(key: key);
@@ -55,21 +55,21 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
               _buildUploaderImageProfile(context),
               SizedBox(height: context.fromHeight(CustomStyle.s)),
               Obx(() => ConditionalWidget(
-                    _controller.states.isSuccess,
-                    data: _controller.states,
-                    guaranteedBuilder: (context, data) =>
-                        CardNotifyMessage.success(
-                      state: data,
-                      onCancelTap: () => _controller.successState(false),
-                    ),
-                  )),
-              Obx(() => ConditionalWidget(
                     _controller.states.isWarning,
                     data: _controller.states,
                     guaranteedBuilder: (context, data) =>
                         CardNotifyMessage.warning(
                       state: data,
-                      onCancelTap: () => _controller.warningState(false),
+                      onCancelTap: () => _controller.states = States(),
+                    ),
+                  )),
+              Obx(() => ConditionalWidget(
+                    _controller.states.isError,
+                    data: _controller.states,
+                    guaranteedBuilder: (context, data) =>
+                        CardNotifyMessage.error(
+                      state: data,
+                      onCancelTap: () => _controller.states = States(),
                     ),
                   )),
               Column(
@@ -128,7 +128,7 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
                   ),
                   InputBorderedField(
                     keyboardType: TextInputType.emailAddress,
-                    hintText: "hint_text_enter_email".tr,
+                    hintText: 'hint_text_enter_email'.tr,
                     gController: profileEditState.email,
                     height: context.fromHeight(CustomStyle.inputBorderedSize),
                     fontSize: FontSize.label(context),
@@ -267,9 +267,12 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
           context.fromWidth(CustomStyle.paddingValue),
         ),
         bottomScreen: CustomButton(
-            onTapped: () async {
+            onTapped: () {
               if (_controller.formKey.currentState?.validate() == true) {
-                await _controller.onSaveSubmitted();
+                _controller.onSaveSubmitted().then((_) {
+                  if (_controller.states.isSuccess ||
+                      _controller.locationStates.isSuccess) Get.back();
+                });
               }
             },
             text: "save".tr),

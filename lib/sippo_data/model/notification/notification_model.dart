@@ -19,6 +19,9 @@ interface class NotificationsTypesConverter {
 
   NotificationApplicationReceivedModel asNotificationApplicationReceived() =>
       throw UnimplementedError();
+
+  NotificationApplicationSubscriptionModel
+      asNotificationApplicationSubscription() => throw UnimplementedError();
 }
 
 abstract class BaseNotificationModel implements NotificationsTypesConverter {
@@ -96,6 +99,12 @@ abstract class BaseNotificationModel implements NotificationsTypesConverter {
     return this as NotificationApplicationReceivedModel;
   }
 
+  @override
+  NotificationApplicationSubscriptionModel
+      asNotificationApplicationSubscription() {
+    return this as NotificationApplicationSubscriptionModel;
+  }
+
   static BaseNotificationModel? fromNotificationsJson(
     Map<String, dynamic>? json,
   ) {
@@ -110,8 +119,12 @@ abstract class BaseNotificationModel implements NotificationsTypesConverter {
       NotificationTypes.newApplicationReceived =>
         NotificationApplicationReceivedModel.fromJson(json),
       NotificationTypes.newFollower => NotificationFollowerModel.fromJson(json),
-      NotificationTypes.subscriptionWillEnd => null,
-      NotificationTypes.subscriptionEnded => null,
+      NotificationTypes.subscriptionWillEnd =>
+        NotificationApplicationSubscriptionModel.fromJson(json),
+      NotificationTypes.subscriptionEnded =>
+        NotificationApplicationSubscriptionModel.fromJson(
+          json,
+        ),
       _ => null,
     };
   }
@@ -127,11 +140,15 @@ abstract class BaseNotificationModel implements NotificationsTypesConverter {
         asNotificationApplicationReceived().copyWithSetIsRead(isRead),
       NotificationTypes.newFollower =>
         asNotificationFollower().copyWithSetIsRead(isRead),
-      NotificationTypes.subscriptionWillEnd => null,
-      NotificationTypes.subscriptionEnded => null,
+      NotificationTypes.subscriptionWillEnd =>
+        asNotificationApplicationSubscription().copyWithSetIsRead(isRead),
+      NotificationTypes.subscriptionEnded =>
+        asNotificationApplicationSubscription().copyWithSetIsRead(isRead),
       _ => null,
     };
   }
+
+//
 }
 
 class NewPostNotificationModel extends BaseNotificationModel {
@@ -503,5 +520,54 @@ class NotificationApplicationReceivedDataModel {
   @override
   String toString() {
     return 'NotificationFollowerDataModel{customerId: $customer}';
+  }
+}
+
+class NotificationApplicationSubscriptionModel extends BaseNotificationModel {
+  const NotificationApplicationSubscriptionModel({
+    super.id,
+    super.title,
+    super.body,
+    super.date,
+    super.isRead,
+    super.type,
+  });
+
+  Map<String, dynamic> toJson() {
+    return super.toJson();
+  }
+
+  factory NotificationApplicationSubscriptionModel.fromJson(
+      Map<String, dynamic>? json) {
+    return NotificationApplicationSubscriptionModel(
+      id: json?["id"],
+      type: json?["type"],
+      body: json?["body"],
+      title: json?["title"],
+      isRead: json?["is_read"],
+      date: json?["date"],
+    );
+  }
+
+  NotificationApplicationSubscriptionModel copyWith({
+    String? id,
+    String? type,
+    String? body,
+    String? title,
+    bool? isRead,
+    String? date,
+  }) {
+    return NotificationApplicationSubscriptionModel(
+      id: id ?? super.id,
+      type: type ?? super.type,
+      body: body ?? super.body,
+      title: title ?? super.title,
+      isRead: isRead ?? super.isRead,
+      date: date ?? super.date,
+    );
+  }
+
+  NotificationApplicationSubscriptionModel copyWithSetIsRead(bool isRead) {
+    return this.copyWith(isRead: isRead);
   }
 }

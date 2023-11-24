@@ -31,6 +31,19 @@ class _SippoJobSearchState extends State<SippoJobSearch> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      extendBodyBehindAppBar: true,
+      appBar: AppBar(
+        toolbarHeight: 0.0,
+        backgroundColor: Colors.transparent,
+        notificationPredicate: (notification) {
+          if (notification.metrics.pixels > kToolbarHeight) {
+            _controller.searchJobsState.isHeightOverAppBar = true;
+          } else {
+            _controller.searchJobsState.isHeightOverAppBar = false;
+          }
+          return false;
+        },
+      ),
       body: RefreshIndicator(
         onRefresh: () async {
           _controller.searchJobsState.clearQuerySearch();
@@ -41,6 +54,17 @@ class _SippoJobSearchState extends State<SippoJobSearch> {
           automaticallyImplyLeading: true,
           expandedAppBarHeight: context.fromHeight(4.5),
           expandedAppBar: _buildScrollableTopAppBar(context, haveToolBar: true),
+          leading: Obx(() {
+            final isHeightOverAppBar =
+                _controller.searchJobsState.isHeightOverAppBar;
+            return IconButton(
+              onPressed: () => Get.back(),
+              icon: Icon(
+                Icons.arrow_back_rounded,
+                color: isHeightOverAppBar ? Colors.black : Colors.white,
+              ),
+            );
+          }),
           children: [
             SliverPadding(
               padding: EdgeInsets.symmetric(
@@ -67,15 +91,17 @@ class _SippoJobSearchState extends State<SippoJobSearch> {
                       child: JobPostingCard(
                         jobDetails: item,
                         isActive: item.isActive,
-                        timeAgo:
-                            calculateElapsedTimeFromStringDate(item.createdAt),
+                        timeAgo: item.createdAt != null
+                            ? calculateElapsedTimeFromStringDate(item.createdAt)
+                            : null,
                         isEditable: false,
                         isSaved: item.isSaved == true,
-                        onImageCompanyTap: () {
-                          SharedGlobalDataService.onCompanyTap(item.company);
-                        },
-                        onAddressTextTap: (location) async {
-                          await lunchMapWithLocation(
+                        onImageCompanyTap: () =>
+                            SharedGlobalDataService.onCompanyTap(
+                          item.company,
+                        ),
+                        onAddressTextTap: (location) {
+                          lunchMapWithLocation(
                             location?.dLatitude,
                             location?.dLongitude,
                           );

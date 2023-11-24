@@ -10,6 +10,9 @@ import 'user_notification_application_controller.dart';
 
 class UserNotificationController extends GetxController {
   static UserNotificationController get instance => Get.find();
+  final _isNotificationsEmpty = true.obs;
+
+  bool get isNotificationsEmpty => _isNotificationsEmpty.isTrue;
   final pagingController =
       PagingController<int, BaseNotificationModel?>(firstPageKey: 0);
   final notificationApplicationController =
@@ -18,30 +21,29 @@ class UserNotificationController extends GetxController {
 
   States get states => notificationApplicationController.states;
 
-  void notificationReadMarker(int notificationIndex) {
+  void notificationReadMarker(int notificationIndex, bool isRead) {
     pagingController.itemList = Refresher.changePropertyItemState(
       pagingController.itemList,
       notificationIndex,
-      newItemChanger: (item) => item?.copyWithSetIsRead(true),
+      newItemChanger: (item) => item?.copyWithSetIsRead(isRead),
     );
   }
+
+  final isReading = false.obs;
 
   Future<void> markedNotificationAsRead(
     int notificationIndex,
     String? notificationId,
   ) async {
     if (notificationId == null) return;
+    notificationReadMarker(notificationIndex, true);
+    isReading.value = true;
     final response = await NotificationRepo.markedNotificationAsRead(
       notificationId,
     );
+    isReading.value = false;
     await response?.checkStatusResponse(
-      onSuccess: (data, _) {
-        if (data != null) {
-          notificationReadMarker(notificationIndex);
-        }
-      },
-      onValidateError: (validateError, _) {},
-      onError: (message, _) {},
+      onError: (message, _) => notificationReadMarker(notificationIndex, false),
     );
   }
 
@@ -58,6 +60,7 @@ class UserNotificationController extends GetxController {
   }
 
   Future<void> removedNotification(int index, String? notificationId) async {
+    if (isReading.isTrue) return;
     final temp = pagingController.itemList?.toList();
     if (temp == null) return;
     final item = temp[index];
@@ -89,9 +92,13 @@ class UserNotificationController extends GetxController {
           pagingController.appendPage(data?.data ?? [], nextKey);
           userNotificationState.incrementPageNumber();
         }
+        _isNotificationsEmpty.value = false;
       },
-      onValidateError: (validateError, _) {},
+      onValidateError: (validateError, _) {
+        _isNotificationsEmpty.value = true;
+      },
       onError: (message, _) {
+        _isNotificationsEmpty.value = true;
         pagingController.error = true;
 
         notificationApplicationController.changeStates(
@@ -113,8 +120,7 @@ class UserNotificationController extends GetxController {
       notificationApplicationController.changeStates(
         isWarning: true,
         isSuccess: false,
-        message:
-            "connection_lost_message_1".tr,
+        message: "connection_lost_message_1".tr,
       );
       return;
     }
@@ -125,14 +131,21 @@ class UserNotificationController extends GetxController {
 
   void retryLastFieldRequest() => pagingController.retryLastFailedRequest();
 
+  void pagingControllerListener() {
+    notificationApplicationController.showNotificationReadAllButton.status =
+        pagingController.itemList?.isNotEmpty == true;
+  }
+
   @override
   void onInit() {
     super.onInit();
+    pagingController.addListener(pagingControllerListener);
     pagingController.addPageRequestListener(_pageRequester);
   }
 
   @override
   void onClose() {
+    pagingController.removeListener(pagingControllerListener);
     pagingController.dispose();
     super.onClose();
   }

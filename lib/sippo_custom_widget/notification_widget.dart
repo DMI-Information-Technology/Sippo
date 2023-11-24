@@ -1,9 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/sippo_custom_widget/rounded_border_radius_card_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
+import 'package:jobspot/sippo_data/model/application_model/application_job_company_model.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
 import 'package:jobspot/sippo_data/model/notification/job_application_model.dart';
 import 'package:jobspot/utils/helper.dart';
@@ -12,7 +14,6 @@ import '../JobGlobalclass/jobstopcolor.dart';
 import '../JobGlobalclass/jobstopfontstyle.dart';
 import '../JobGlobalclass/sippo_customstyle.dart';
 import '../JobGlobalclass/text_font_size.dart';
-import 'package:jobspot/sippo_data/model/application_model/application_job_company_model.dart';
 import '../sippo_data/model/profile_model/profile_resource_model/cv_file_model.dart';
 import 'job_application_chip_widget.dart';
 import 'network_bordered_circular_image_widget.dart';
@@ -43,9 +44,6 @@ class UserApplicationWidget extends StatelessWidget {
       child: RoundedBorderRadiusCardWidget(
         paddingType: PaddingType.all,
         color: isSelected ? SippoColor.primary : Colors.white,
-        margin: EdgeInsets.symmetric(
-          horizontal: context.fromWidth(CustomStyle.s),
-        ),
         child: Column(
           children: [
             Row(
@@ -58,7 +56,7 @@ class UserApplicationWidget extends StatelessWidget {
                   outerBorderColor: Colors.grey[200],
                   outerBorderWidth: context.fromWidth(CustomStyle.huge2),
                   errorWidget: (context, url, error) {
-                    return const CircleAvatar();
+                    return Image.asset(JobstopPngImg.companysignup);
                   },
                 ),
                 SizedBox(
@@ -86,35 +84,39 @@ class UserApplicationWidget extends StatelessWidget {
   }
 
   Widget _buildDeleteButtonAndArrivalTimeRow(BuildContext context) {
-    return Row(
-      children: [
-        SizedBox(width: context.fromHeight(CustomStyle.s)),
-        Text(
-          application?.createdAt != null
-              ? calculateElapsedTimeFromStringDate(
-                    application?.createdAt ?? '',
-                  ) ??
-                  ''
-              : "",
-          style: TextStyle(
-            fontSize: FontSize.label(context),
-            color: Colors.grey,
-          ),
-        ),
-        if (onDeletePressed != null) ...[
-          Spacer(),
-          TextButton(
-            onPressed: onDeletePressed,
-            child: Text(
-              'delete'.tr,
-              style: TextStyle(
-                fontSize: FontSize.title6(context),
-                color: Colors.red,
-              ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          SizedBox(width: context.fromHeight(CustomStyle.xl)),
+          Text(
+            application?.createdAt != null
+                ? calculateElapsedTimeFromStringDate(
+                      application?.createdAt ?? '',
+                    ) ??
+                    ''
+                : "",
+            style: TextStyle(
+              fontSize: FontSize.label(context),
+              color: Colors.grey,
             ),
-          )
+          ),
+          if (onDeletePressed != null) ...[
+            Spacer(),
+            TextButton(
+              onPressed: onDeletePressed,
+              child: Text(
+                'delete'.tr,
+                style: TextStyle(
+                  fontSize: FontSize.title6(context),
+                  color: Colors.red,
+                ),
+              ),
+            )
+          ],
         ],
-      ],
+      ),
     );
   }
 
@@ -124,24 +126,26 @@ class UserApplicationWidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           AutoSizeText(
-            application?.job?.title ?? "",
+            application?.job?.title ?? application?.company?.name ?? "",
             style: dmsbold.copyWith(
               fontSize: FontSize.title6(context),
               color: SippoColor.black,
             ),
           ),
-          SizedBox(
-            height: context.fromHeight(CustomStyle.huge2),
-          ),
-          AutoSizeText(
-            company?.name ?? "",
-            style: TextStyle(
-              fontSize: FontSize.paragraph4(context),
-              color: Colors.grey,
+          if (application?.job?.title != null) ...[
+            SizedBox(
+              height: context.fromHeight(CustomStyle.huge2),
             ),
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-          ),
+            AutoSizeText(
+              company?.name ?? "",
+              style: TextStyle(
+                fontSize: FontSize.paragraph4(context),
+                color: Colors.grey,
+              ),
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+            ),
+          ],
           if (application?.status != null) ...[
             SizedBox(
               height: context.fromHeight(CustomStyle.huge2),
@@ -174,7 +178,7 @@ class UserApplicationWidget extends StatelessWidget {
 }
 
 class UserJobApplicationWidget extends StatelessWidget {
-  final void Function(String cvUrl,[String? size])? onShowCvTap;
+  final void Function(String? cvUrl, [String? size])? onShowCvTap;
   final CompanyDetailsModel? company;
   final ApplicationCompanyModel? application;
   final bool isSubscribed;
@@ -231,17 +235,15 @@ class UserJobApplicationWidget extends StatelessWidget {
           width: context.width / 3,
           height: context.height / 21,
           child: CustomButton(
-            onTapped: onShowCvTap != null && cv != null
-                ? () {
-                    final cvUrl = cv.url;
-                    if (cvUrl != null) {
-                      onShowCvTap!(cvUrl,cv.size);
-                    }
-                  }
-                : null,
-            text: "Show CV",
-            backgroundColor:
-                cv == null ? Colors.grey : SippoColor.lightprimary,
+            onTapped: () {
+              final cvUrl = cv?.url;
+              print(application);
+              onShowCvTap?.call(cvUrl, cv?.size);
+            },
+            maxLine: 2,
+            textPadding: const EdgeInsets.symmetric(vertical: 12),
+            text: "show_cv".tr,
+            backgroundColor: cv == null ? Colors.grey : SippoColor.lightprimary,
             textColor: Colors.white,
           ),
         ),
@@ -314,7 +316,7 @@ class UserCompanyApplicationWidget extends StatelessWidget {
     this.isSubscribed = false,
   });
 
-  final void Function(String cvUrl,[String? size])? onShowCvTap;
+  final void Function(String cvUrl, [String? size])? onShowCvTap;
   final CompanyDetailsModel? company;
   final String? applicationStatus;
   final CvModel? cv;
@@ -341,17 +343,17 @@ class UserCompanyApplicationWidget extends StatelessWidget {
             SizedBox(height: context.fromHeight(CustomStyle.huge2)),
             SizedBox(
               width: context.width / 3,
-              height: context.height / 21,
               child: CustomButton(
-                onTapped: onShowCvTap != null && myCv != null
-                    ? () {
-                        final cvUrl = myCv.url;
-                        if (cvUrl != null) {
-                          onShowCvTap!(cvUrl,myCv.size);
-                        }
-                      }
-                    : null,
-                text: "Show CV",
+                fitHeight: true,
+                onTapped: () {
+                  final cvUrl = myCv?.url;
+                  if (cvUrl != null) {
+                    onShowCvTap?.call(cvUrl, myCv?.size);
+                  }
+                },
+                maxLine: 2,
+                textPadding: const EdgeInsets.symmetric(vertical: 12),
+                text: "show_cv".tr,
                 backgroundColor:
                     cv == null ? Colors.grey : SippoColor.lightprimary,
                 textColor: Colors.white,

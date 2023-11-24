@@ -28,8 +28,7 @@ class _SippoCompanyEditAddPostState extends State<SippoCompanyEditAddPost> {
 
   @override
   Widget build(BuildContext context) {
-    final height = MediaQuery
-        .sizeOf(context).height;
+    final height = MediaQuery.sizeOf(context).height;
 
     final newPostState = _controller.newPostState;
     return WillPopScope(
@@ -69,16 +68,15 @@ class _SippoCompanyEditAddPostState extends State<SippoCompanyEditAddPost> {
           isScrollable: true,
           paddingContent: EdgeInsets.symmetric(
               horizontal: context.fromWidth(
-                CustomStyle.paddingValue,
-              )),
+            CustomStyle.paddingValue,
+          )),
           child: Form(
             key: _controller.formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "${_controller.isEditing ? "edit".tr : "add".tr} ${'post'
-                      .tr}",
+                  "${_controller.isEditing ? "edit".tr : "add".tr} ${'post'.tr}",
                   style: dmsbold.copyWith(
                       fontSize: FontSize.title3(context),
                       color: SippoColor.primarycolor),
@@ -87,26 +85,22 @@ class _SippoCompanyEditAddPostState extends State<SippoCompanyEditAddPost> {
                 _buildCompanyHeaderPage(context),
                 _buildLoadingProgress(context),
                 SizedBox(height: height / 36),
-                Obx(() =>
-                    ConditionalWidget(
+                Obx(() => ConditionalWidget(
                       _controller.states.isError,
                       data: _controller.states,
-                      guaranteedBuilder: (_, data) =>
-                          CardNotifyMessage.error(
-                            state: data,
-                            onCancelTap: () =>
-                                _controller.errorState(false, ''),
-                          ),
+                      guaranteedBuilder: (_, data) => CardNotifyMessage.error(
+                        state: data,
+                        onCancelTap: () => _controller.errorState(false, ''),
+                      ),
                     )),
-                Obx(() =>
-                    ConditionalWidget(
+                Obx(() => ConditionalWidget(
                       _controller.states.isWarning,
                       data: _controller.states,
                       guaranteedBuilder: (context, data) =>
                           CardNotifyMessage.warning(
-                            state: data,
-                            onCancelTap: () => _controller.warningState(false),
-                          ),
+                        state: data,
+                        onCancelTap: () => _controller.warningState(false),
+                      ),
                     )),
                 Text(
                   "post_title".tr,
@@ -146,7 +140,7 @@ class _SippoCompanyEditAddPostState extends State<SippoCompanyEditAddPost> {
             ),
           ),
           paddingBottom: EdgeInsets.symmetric(
-              horizontal: context.fromWidth(CustomStyle.s),
+              horizontal: context.fromWidth(CustomStyle.xs),
               vertical: context.fromHeight(CustomStyle.xl)),
           bottomScreen: _buildControlBottomBar(context),
         ),
@@ -155,20 +149,9 @@ class _SippoCompanyEditAddPostState extends State<SippoCompanyEditAddPost> {
   }
 
   Widget _buildLoadingProgress(BuildContext context) {
-    double height = MediaQuery
-        .sizeOf(context)
-        .height;
-    return Obx(() =>
-        ConditionalWidget(
-          _controller.states.isLoading,
-          guaranteedBuilder: (__, _) =>
-              Column(
-                children: [
-                  SizedBox(height: height / 36),
-                  const Center(child: CircularProgressIndicator()),
-                ],
-              ),
-        ));
+    return Obx(
+      () => ConditionalWidget(false, isLoading: _controller.states.isLoading),
+    );
   }
 
   Widget _buildUploadImageView(BuildContext _context) {
@@ -177,19 +160,18 @@ class _SippoCompanyEditAddPostState extends State<SippoCompanyEditAddPost> {
       return ConditionalWidget(
         image != null,
         data: image,
-        guaranteedBuilder: (context, data) =>
-        data != null
+        guaranteedBuilder: (context, data) => data != null
             ? Stack(
-          children: [
-            Image.file(data, fit: BoxFit.fill),
-            CloseCornerButton(
-              onTap: () {
-                _controller.newPostState.clearLoadedImage();
-              },
-              paddingValue: _context.fromWidth(CustomStyle.xxxl),
-            ),
-          ],
-        )
+                children: [
+                  Image.file(data, fit: BoxFit.fill),
+                  CloseCornerButton(
+                    onTap: () {
+                      _controller.newPostState.clearLoadedImage();
+                    },
+                    paddingValue: _context.fromWidth(CustomStyle.xxxl),
+                  ),
+                ],
+              )
             : null,
       );
     });
@@ -201,41 +183,36 @@ class _SippoCompanyEditAddPostState extends State<SippoCompanyEditAddPost> {
       return ConditionalWidget(
         image != null,
         data: image,
-        guaranteedBuilder: (_, data) =>
-        data != null
+        guaranteedBuilder: (_, data) => data != null
             ? Stack(
-          children: [
-            CachedNetworkImage(imageUrl: data),
-            CloseCornerButton(
-              icon: Icons.delete,
-              backgroundColor: Colors.black.withOpacity(0.7),
-              iconColor: Colors.redAccent,
-              onTap: () {
-                _controller.newPostState.deleteUrlImage();
-              },
-              paddingValue: _context.fromWidth(CustomStyle.xxxl),
-            ),
-          ],
-        )
+                children: [
+                  CachedNetworkImage(imageUrl: data),
+                  CloseCornerButton(
+                    icon: Icons.delete,
+                    backgroundColor: Colors.black.withOpacity(0.7),
+                    iconColor: Colors.redAccent,
+                    onTap: () {
+                      _controller.newPostState.deleteUrlImage();
+                    },
+                    paddingValue: _context.fromWidth(CustomStyle.xxxl),
+                  ),
+                ],
+              )
             : null,
       );
     });
   }
 
-  Row _buildControlBottomBar(BuildContext context) {
+  Widget _buildControlBottomBar(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Icon(
-          Icons.camera_alt_rounded,
-          color: SippoColor.primarycolor,
-          size: context.fromHeight(CustomStyle.s),
-        ),
-        SizedBox(width: context.fromWidth(CustomStyle.s)),
         InkWell(
           onTap: () => _controller.uploadImage(),
           child: Image.asset(
             JobstopPngImg.galleryicon,
-            height: context.fromHeight(CustomStyle.l),
+            height: context.fromHeight(CustomStyle.m),
             color: SippoColor.primarycolor,
           ),
         ),

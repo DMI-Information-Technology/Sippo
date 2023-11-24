@@ -9,6 +9,7 @@ import 'package:jobspot/sippo_custom_widget/rounded_border_radius_card_widget.da
 import 'package:jobspot/sippo_data/model/application_model/application_job_company_model.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
 import 'package:jobspot/utils/helper.dart';
+import 'package:lottie/lottie.dart';
 import 'package:readmore/readmore.dart';
 
 import '../JobGlobalclass/jobstopcolor.dart';
@@ -170,9 +171,11 @@ class PostWidget extends StatelessWidget {
     return imageUrl != null
         ? CachedNetworkImage(
             width: context.width,
-            progressIndicatorBuilder: (___, __, _) => const Align(
-              alignment: Alignment.center,
-              child: CircularProgressIndicator(),
+            progressIndicatorBuilder: (___, __, _) => Center(
+              child: Lottie.asset(
+                JobstopPngImg.loadingProgress,
+                height: context.fromHeight(6),
+              ),
             ),
             imageUrl: imageUrl!,
             errorWidget: (___, __, _) => const SizedBox.shrink(),
@@ -198,7 +201,7 @@ class PostApplicationWidget extends StatelessWidget {
   final CompanyDetailsModel? company;
   final VoidCallback? onActionButtonPresses;
   final VoidCallback? onProfileImageTap;
-  final void Function(String cvUrl,[String? size])? onShowCvTap;
+  final void Function(String? cvUrl, [String? size])? onShowCvTap;
   final bool isSubscribed;
 
   const PostApplicationWidget({

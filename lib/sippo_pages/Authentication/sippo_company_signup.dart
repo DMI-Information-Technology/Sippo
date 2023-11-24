@@ -194,14 +194,6 @@ class SippoCompanySignup extends StatelessWidget {
                   textColor: SippoColor.textColor,
                   borderColor: SippoColor.grey,
                 ),
-                SizedBox(height: height / 52),
-                CustomButton(
-                  onTapped: () {},
-                  text: "Guest_login.".tr,
-                  backgroundColor: SippoColor.white,
-                  textColor: SippoColor.textColor,
-                  borderColor: SippoColor.grey,
-                )
               ],
             ),
           ),

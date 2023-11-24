@@ -9,8 +9,8 @@ import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
-import 'package:jobspot/sippo_controller/user_core_functions/apply_company_controller.dart';
 import 'package:jobspot/custom_app_controller/switch_status_controller.dart';
+import 'package:jobspot/sippo_controller/user_core_functions/apply_company_controller.dart';
 import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
 import 'package:jobspot/sippo_custom_widget/error_messages_dialog_snackbar/network_connnection_lost_widget.dart';
@@ -20,6 +20,7 @@ import 'package:jobspot/sippo_custom_widget/resume_card_widget.dart';
 import 'package:jobspot/sippo_custom_widget/success_message_widget.dart';
 import 'package:jobspot/sippo_custom_widget/top_job_details_header.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
+import 'package:jobspot/utils/validating_input.dart';
 
 class SippoApplyCompany extends StatefulWidget {
   const SippoApplyCompany({Key? key}) : super(key: key);
@@ -195,12 +196,15 @@ class _SippoApplyCompanyState extends State<SippoApplyCompany> {
         ),
         SizedBox(height: context.fromHeight(CustomStyle.xxl)),
         InputBorderedField(
+          maxLength: 256,
+          showCounter: true,
           controller: _controller.applyCompanyState.description,
           hintText: "company_apply_desc".tr,
           maxLine: 5,
           verticalPaddingValue: context.fromWidth(
             CustomStyle.paddingValue,
           ),
+          validator: ValidatingInput.validateDescription,
         )
       ],
     );

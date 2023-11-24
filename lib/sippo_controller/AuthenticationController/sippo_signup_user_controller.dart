@@ -79,7 +79,7 @@ class SignUpUserController extends GetxController {
     Get.dialog(
       CustomAlertDialog(
         imageAsset: JobstopPngImg.successful1,
-        title: "success".tr,
+        title: "Success".tr,
         description: "account_created_successfully".tr,
         confirmBtnColor: SippoColor.primarycolor,
         confirmBtnTitle: "ok".tr,

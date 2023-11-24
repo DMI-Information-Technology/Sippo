@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/sippo_custom_widget/rounded_border_radius_card_widget.dart';
 
@@ -60,7 +61,7 @@ class NotificationCardWidget extends StatelessWidget {
           size: context.fromHeight(18),
           outerBorderColor: Colors.transparent,
           outerBorderWidth: context.fromWidth(CustomStyle.huge),
-          errorWidget: (_, __, ___) => const CircleAvatar(),
+          errorWidget: (_, __, ___) => Image.asset(JobstopPngImg.sippoLogo),
         ),
         trailing: InkWell(
           onTap: onActionTap,

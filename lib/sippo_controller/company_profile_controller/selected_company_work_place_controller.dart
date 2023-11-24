@@ -70,10 +70,20 @@ class SelectedCompanyWorkPlaceController extends GetxController {
     response?.checkStatusResponse(
       onSuccess: (data, _) {
         if (data != null) {
-          final company = CompanyDashBoardController.instance.company;
-          CompanyDashBoardController.instance.company = company.copyWith(
-            locations: company.locations?.toList()?..add(data),
+          final locData = data.copyWith(
+            locationAddress:
+                this.selectedWorkPlaceState.selectedLocationAddress,
           );
+          print('=========================================');
+          print(locData);
+          print('=========================================');
+          final company = CompanyDashBoardController.instance.company;
+          if (locData.locationAddress != null)
+            CompanyDashBoardController.instance.company = company.copyWith(
+              locations: company.locations?..add(locData),
+            );
+          else
+            CompanyDashBoardController.instance.refreshUserProfileInfo();
           Get.dialog(
             CustomAlertDialog(
               title: 'label_work_places'.tr,
@@ -142,8 +152,8 @@ class SelectedCompanyWorkPlaceController extends GetxController {
         CompanyDashBoardController.instance.refreshUserProfileInfo();
         Get.dialog(
           CustomAlertDialog(
-            title: 'Work Place',
-            description: 'Work Place has been deleted successfully',
+            title: 'deleted_work_place_title'.tr,
+            description: 'deleted_work_place_message'.tr,
             confirmBtnTitle: 'ok'.tr,
             onConfirm: () => {if (Get.isOverlaysOpen) Get.back()},
           ),
@@ -168,15 +178,13 @@ class SelectedCompanyWorkPlaceController extends GetxController {
     if (!googleMapViewController.markerAsCoordLocation.validateCords()) {
       return changeStates(
         isWarning: true,
-        message: 'Please place an mark location in the map for '
-            'the new location of work place.',
+        message: 'mark_location_to_save_alert'.tr,
       );
     }
     if (selectedWorkPlaceState.selectedLocationAddress.id == null) {
       return changeStates(
         isWarning: true,
-        message: 'Please select the address for'
-            ' the new location of work place.',
+        message: 'select_address_to_save_alert'.tr,
       );
     }
     _states.value = States(isLoading: true);

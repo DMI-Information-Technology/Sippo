@@ -9,6 +9,7 @@ class ProfileCompletionManager {
       switch (GlobalStorageService.appUse) {
         AppUsingType.user => TOTAL_USER_COMPLETION,
         AppUsingType.company => TOTAL_COMPANY_COMPLETION,
+        AppUsingType.guest => 0.0,
       };
 
   static double calculateCompletionPercentage(

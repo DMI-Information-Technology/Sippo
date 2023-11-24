@@ -220,13 +220,7 @@ class JobPostingCard extends StatelessWidget {
               color: SippoColor.primarycolor, // Use appropriate color
             ),
           ),
-          Text(
-            '/Yr',
-            style: dmsregular.copyWith(
-              fontSize: FontSize.label(context),
-              color: Colors.grey,
-            ),
-          ),
+
         ],
       ),
     );

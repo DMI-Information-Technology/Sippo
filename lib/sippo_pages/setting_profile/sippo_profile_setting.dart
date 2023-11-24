@@ -84,6 +84,7 @@ class _SippoProfileSettingState extends State<SippoProfileSetting> {
                       Get.toNamed(SippoRoutes.editUserProfile);
                     case AppUsingType.company:
                       Get.toNamed(SippoRoutes.editCompanyProfile);
+                    case AppUsingType.guest:
                   }
                 },
               ),
@@ -290,11 +291,14 @@ class _SippoProfileSettingState extends State<SippoProfileSetting> {
                   authController.resetStates();
                 } else if (authController.states.isSuccess) {
                   authController.resetStates();
-                  switch (GlobalStorageService.appUse) {
+                  final appUse = GlobalStorageService.appUse;
+                  authController.logoutDone();
+                  switch (appUse) {
                     case AppUsingType.user:
                       Get.offAllNamed(SippoRoutes.userLoginPage);
                     case AppUsingType.company:
                       Get.offAllNamed(SippoRoutes.sippoCompanyLogin);
+                    case AppUsingType.guest:
                   }
                 }
               });

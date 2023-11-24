@@ -1,1 +1,1 @@
-enum AppUsingType { user, company }
+enum AppUsingType { user, company ,guest}

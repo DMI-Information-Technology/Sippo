@@ -61,15 +61,15 @@ class ApplyJobsController extends GetxController {
   }
 
   Future<void> sendApplicationJob(int? id) async {
-    if (applyJobsState.cvJobApply.isFileNull ||
-        applyJobsState.description.text.trim().isEmpty) {
-      return changeStates(
-        isWarning: true,
-        isError: false,
-        isSuccess: false,
-        message: "required_field_empty".tr,
-      );
-    }
+    // if (applyJobsState.cvJobApply.isFileNull ||
+    //     applyJobsState.description.text.trim().isEmpty) {
+    //   return changeStates(
+    //     isWarning: true,
+    //     isError: false,
+    //     isSuccess: false,
+    //     message: "required_field_empty".tr,
+    //   );
+    // }
     final application = UserSendApplicationModel(
       cv: applyJobsState.cvJobApply,
       description: applyJobsState.description.text,
@@ -115,6 +115,7 @@ class ApplyJobsController extends GetxController {
       applyJobsState.jopDetails =
           await getJobById(jobId) ?? applyJobsState.jopDetails;
     }
+    print(applyJobsState.jopDetails.application);
     _states.value = States(isLoading: false);
   }
 

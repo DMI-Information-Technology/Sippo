@@ -21,6 +21,7 @@ class SippoUserAbout extends StatefulWidget {
 class _SippoUserAboutState extends State<SippoUserAbout> {
   final _formKey = GlobalKey<FormState>();
   final _controller = Get.put(EditProfileInfoController());
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.sizeOf(context);
@@ -48,6 +49,8 @@ class _SippoUserAboutState extends State<SippoUserAbout> {
               ),
               SizedBox(height: height / CustomStyle.verticalSpaceBetween),
               InputBorderedField(
+                maxLength: 256,
+                showCounter: true,
                 gController: _controller.profileEditState.bio,
                 verticalPaddingValue: context.fromHeight(
                   CustomStyle.paddingValue,
@@ -69,7 +72,9 @@ class _SippoUserAboutState extends State<SippoUserAbout> {
             onTapped: () {
               if (_formKey.currentState == null) return;
               if (_formKey.currentState!.validate()) {
-                _controller.onSaveSubmitted();
+                _controller.onSaveSubmitted().then((_) {
+                  Get.back();
+                });
               }
             },
             text: "save".tr,

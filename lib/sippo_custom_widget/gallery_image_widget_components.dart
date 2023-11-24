@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
+import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 
 import '../JobGlobalclass/sippo_customstyle.dart';
@@ -51,20 +52,9 @@ class GalleryImagesViewWidget extends StatelessWidget {
   }
 }
 
-enum ImageProviderType { memory, assets, network }
+enum ImageProviderType { memory, network }
 
 class SingleImageViewWidget extends StatelessWidget {
-  const SingleImageViewWidget({
-    super.key,
-    required String? assets,
-    this.onActionTap,
-    this.onTap,
-    this.isShowMoreImage = false,
-  })  : this._assets = assets,
-        this._url = null,
-        this._bytes = null,
-        this.imageProviderType = ImageProviderType.assets;
-
   const SingleImageViewWidget.fromNetwork({
     super.key,
     required String? url,
@@ -72,7 +62,7 @@ class SingleImageViewWidget extends StatelessWidget {
     this.onTap,
     this.isShowMoreImage = false,
   })  : this._url = url,
-        this._assets = null,
+        // this._assets = null,
         this._bytes = null,
         this.imageProviderType = ImageProviderType.network;
 
@@ -83,12 +73,12 @@ class SingleImageViewWidget extends StatelessWidget {
     this.onTap,
     this.isShowMoreImage = false,
   })  : this._url = null,
-        this._assets = null,
+        // this._assets = null,
         this._bytes = bytes,
         this.imageProviderType = ImageProviderType.memory;
 
   final VoidCallback? onActionTap;
-  final String? _assets;
+  // final String? _assets;
   final String? _url;
   final Uint8List? _bytes;
   final ImageProviderType imageProviderType;
@@ -97,11 +87,12 @@ class SingleImageViewWidget extends StatelessWidget {
   static const imageTag = 'default_image_tag';
 
   ImageProvider _buildImageProvider() {
-    return switch (imageProviderType) {
-      ImageProviderType.memory => MemoryImage(_bytes!),
-      ImageProviderType.assets => AssetImage(_assets!) as ImageProvider,
-      ImageProviderType.network => CachedNetworkImageProvider(_url!),
-    };
+    if (ImageProviderType.memory == imageProviderType) {
+      return MemoryImage(_bytes!);
+    } else if (ImageProviderType.network == imageProviderType) {
+      return CachedNetworkImageProvider(_url!);
+    }
+    return AssetImage(JobstopPngImg.signup);
   }
 
   void showOpenImageView() {
@@ -113,13 +104,6 @@ class SingleImageViewWidget extends StatelessWidget {
             bytes: _bytes,
           ),
         );
-      case ImageProviderType.assets:
-        Get.to(
-          () => OpenImageView(
-            heroTag: imageTag,
-            assets: _assets,
-          ),
-        );
       case ImageProviderType.network:
         Get.to(
           () => OpenImageView.fromNetwork(
@@ -129,8 +113,6 @@ class SingleImageViewWidget extends StatelessWidget {
         );
     }
   }
-
-  bool get isAsset => imageProviderType == ImageProviderType.assets;
 
   @override
   Widget build(BuildContext context) {
@@ -148,9 +130,7 @@ class SingleImageViewWidget extends StatelessWidget {
                 ),
                 borderRadius: BorderRadius.circular(21),
                 image: DecorationImage(
-                  image: isAsset
-                      ? _buildImageProvider() as AssetImage
-                      : _buildImageProvider(),
+                  image: _buildImageProvider(),
                   fit: BoxFit.cover,
                 ),
               ),

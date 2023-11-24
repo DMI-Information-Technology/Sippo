@@ -26,6 +26,23 @@ class JobHomeViewWidget extends StatefulWidget {
 
 class _JobHomeViewWidgetState extends State<JobHomeViewWidget> {
   final _controller = Get.put(JobsHomeViewController());
+  final moreArrow = InkWell(
+    onTap: () => Get.toNamed(SippoRoutes.sippoJobFilterSearch),
+    child: Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Obx(() {
+        final iconDir = switch (GlobalStorageService.savedLanguage) {
+          LocaleLanguageType.arabic => Icons.arrow_circle_left_rounded,
+          LocaleLanguageType.english => Icons.arrow_circle_right_rounded,
+        };
+        return Icon(
+          iconDir,
+          color: SippoColor.secondary,
+          size: 75,
+        );
+      }),
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -40,8 +57,6 @@ class _JobHomeViewWidgetState extends State<JobHomeViewWidget> {
                 return _buildFieldJobsMessage(context, states);
               if (states.isSuccess && _controller.jobsListLength > 0)
                 return _buildJobsCards(context);
-              if (states.isLoading && _controller.jobsList.isNotEmpty)
-                return _buildJobsCards(context);
               else if (states.isLoading)
                 return Center(
                   child: Lottie.asset(
@@ -52,7 +67,7 @@ class _JobHomeViewWidgetState extends State<JobHomeViewWidget> {
             }
             return Center(
               child: Text(
-                'No Jobs Found',
+                'no_jobs_found_title'.tr,
                 textAlign: TextAlign.center,
                 style: dmsbold.copyWith(
                   color: SippoColor.primarycolor,
@@ -85,7 +100,7 @@ class _JobHomeViewWidgetState extends State<JobHomeViewWidget> {
             SizedBox(height: context.fromHeight(CustomStyle.huge)),
             SizedBox(
               width: context.fromWidth(CustomStyle.overBy3),
-              height: context.fromHeight(12),
+              height: context.fromHeight(14),
               child: CustomButton(
                 onTapped: () {
                   _controller.refreshJobs();
@@ -115,9 +130,7 @@ class _JobHomeViewWidgetState extends State<JobHomeViewWidget> {
                 final item = jobList[index];
                 return JobHomeCard(
                   padding: EdgeInsets.only(
-                    right: index == jobList.length - 1
-                        ? 0.0
-                        : context.fromWidth(CustomStyle.paddingValue),
+                    right: context.fromWidth(CustomStyle.paddingValue),
                   ),
                   width: context.width / 1.3,
                   jobDetailsPost: item,
@@ -162,29 +175,7 @@ class _JobHomeViewWidgetState extends State<JobHomeViewWidget> {
             }),
             Obx(() {
               return _controller.jobsListLength > 0
-                  ? InkWell(
-                      onTap: () =>
-                          Get.toNamed(SippoRoutes.sippoJobFilterSearch),
-                      child: Padding(
-                        padding: EdgeInsets.all(
-                          context.fromWidth(CustomStyle.xxl),
-                        ),
-                        child: Obx(() {
-                          final iconDir =
-                              switch (GlobalStorageService.savedLanguage) {
-                            LocaleLanguageType.arabic =>
-                              Icons.arrow_circle_left_rounded,
-                            LocaleLanguageType.english =>
-                              Icons.arrow_circle_right_rounded,
-                          };
-                          return Icon(
-                            iconDir,
-                            color: SippoColor.secondary,
-                            size: context.fromHeight(12),
-                          );
-                        }),
-                      ),
-                    )
+                  ? moreArrow
                   : const SizedBox.shrink();
             })
           ],

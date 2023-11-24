@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 import 'package:jobspot/sippo_custom_widget/error_messages_dialog_snackbar/error_messages.dart'
     as errorMessage;
 
@@ -10,6 +11,22 @@ class InternetConnectionService extends GetxService {
   late StreamController<bool> _connectionStreamController;
 
   // StreamController<bool>.broadcast();
+  static Future<double> getSignalStrength() async {
+    final stopwatch = Stopwatch();
+    stopwatch.start();
+    try {
+      await http.get(Uri.parse('https://www.google.com'));
+    } catch (e, s) {
+      print(e);
+      print(s);
+      stopwatch.stop();
+      return 0.0;
+    }
+    stopwatch.stop();
+    final time = stopwatch.elapsedMilliseconds;
+    final signalStrength = (time / 1000) * 1.0;
+    return signalStrength;
+  }
 
   Stream<bool> get isConnectedStream => _connectionStreamController.stream;
 
@@ -42,6 +59,7 @@ class InternetConnectionService extends GetxService {
   @override
   void onInit() {
     super.onInit();
+    (() async {})();
     _connectionStreamController = StreamController<bool>.broadcast();
     checkInternetConnection();
     Connectivity().onConnectivityChanged.listen(_updateConnectionStatus);

@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
-import 'package:jobspot/sippo_controller/user_profile_controller/profile_user_controller.dart';
 import 'package:jobspot/core/Refresh.dart';
 import 'package:jobspot/custom_app_controller/switch_status_controller.dart';
+import 'package:jobspot/sippo_controller/user_profile_controller/profile_user_controller.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/language_model.dart';
 import 'package:jobspot/sippo_data/user_repos/language_repo.dart';
 import 'package:jobspot/utils/states.dart';
@@ -137,7 +137,9 @@ class LanguageEditAddController extends GetxController {
     if (newLanguage.id == null) {
       print("Lang.onSavedSubmitted: select language before submission.");
       warningState(true, "select_language_warning".tr);
-    } else if (!langProfileList.any((e) => e.id == newLanguage.id)) {
+    } else if (langProfileList.any((e) => e.id == newLanguage.id)) {
+      warningState(true, "language_added_before".tr);
+    } else {
       await addNewLanguage();
     }
     _states.value = states.copyWith(isLoading: false);

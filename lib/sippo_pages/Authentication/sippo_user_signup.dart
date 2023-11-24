@@ -5,11 +5,10 @@ import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/sippo_controller/AuthenticationController/sippo_signup_user_controller.dart';
+import 'package:jobspot/sippo_custom_widget/custom_drop_down_button.dart';
 import 'package:jobspot/sippo_custom_widget/loading_view_widgets/overly_loading.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/utils/validating_input.dart';
-
-import 'package:jobspot/sippo_custom_widget/custom_drop_down_button.dart';
 
 class SippoUserSignup extends StatelessWidget {
   const SippoUserSignup({Key? key}) : super(key: key);
@@ -75,6 +74,7 @@ class SippoUserSignup extends StatelessWidget {
                     InputField(
                       // controller: phoneNum,
                       hintText: "phone_number".tr,
+                      maxLength: 10,
                       keyboardType: TextInputType.phone,
                       icon: const Icon(
                         Icons.phone_outlined,
@@ -147,7 +147,7 @@ class SippoUserSignup extends StatelessWidget {
                           ),
                           hintTextColor: Colors.grey[500],
                           underLineBorder: true,
-                          textHint: 'Select your location place.',
+                          textHint: 'select_location'.tr,
                           labelList: location.locationsAddressNameList,
                           values: location.locationsAddressList,
                           fillColor: Colors.white,
@@ -217,7 +217,10 @@ class SippoUserSignup extends StatelessWidget {
                     ),
                     SizedBox(height: height / 52),
                     CustomButton(
-                      onTapped: () {},
+                      onTapped: () {
+                        controller.authController.resetStates();
+                        Get.offAllNamed(SippoRoutes.sippoGuest);
+                      },
                       text: "Guest_login.".tr,
                       backgroundColor: SippoColor.white,
                       textColor: SippoColor.textColor,

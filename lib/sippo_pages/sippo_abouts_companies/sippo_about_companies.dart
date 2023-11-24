@@ -91,9 +91,8 @@ class _SippoAboutCompaniesState extends State<SippoAboutCompanies> {
           ],
         ),
       ),
-      bottomNavigationBar: GlobalStorageService.appUse == AppUsingType.user
-          ? _buildApplyBottomButton(context)
-          : null,
+      bottomNavigationBar:
+          GlobalStorageService.isUser ? _buildApplyBottomButton(context) : null,
     );
   }
 
@@ -108,7 +107,7 @@ class _SippoAboutCompaniesState extends State<SippoAboutCompanies> {
               onTapped: () {
                 Get.toNamed(SippoRoutes.sippoUserApplyCompany);
               },
-              text: "apply".tr,
+              text: "title_apply".tr,
             ),
           ),
         ));

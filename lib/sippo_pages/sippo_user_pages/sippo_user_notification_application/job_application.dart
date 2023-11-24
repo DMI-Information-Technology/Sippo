@@ -9,8 +9,10 @@ import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/sippo_controller/NotificationController/user_notification_application/user_application_controller.dart';
+import 'package:jobspot/sippo_custom_widget/loading_view_widgets/loading_scaffold.dart';
 import 'package:jobspot/sippo_custom_widget/network_bordered_circular_image_widget.dart';
 import 'package:jobspot/sippo_custom_widget/resume_card_widget.dart';
+import 'package:jobspot/sippo_custom_widget/rounded_border_radius_card_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 
 class JobApplication extends StatelessWidget {
@@ -19,7 +21,10 @@ class JobApplication extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double width = context.width;
-    return Scaffold(
+    final applicationController = UserApplicationController.instance;
+
+    return LoadingScaffold(
+      controller: applicationController.loadingController,
       appBar: AppBar(),
       body: SingleChildScrollView(
         child: Padding(
@@ -42,6 +47,9 @@ class JobApplication extends StatelessWidget {
                 width: width / 1.5,
                 child: CustomButton(
                   onTapped: () {
+                    Get.until((route) {
+                      return Get.currentRoute == SippoRoutes.userDashboard;
+                    });
                     Get.toNamed(SippoRoutes.sippoJobFilterSearch);
                   },
                   text: "hint_text_apply_more_jobs".tr,
@@ -83,7 +91,8 @@ class JobApplication extends StatelessWidget {
               imageUrl: applicationController.userApplicationState.application
                       .company?.profileImage?.url ??
                   '',
-              errorWidget: (context, url, error) => CircleAvatar(),
+              errorWidget: (___, __, _) => Image.asset(JobstopPngImg.signup),
+              placeholder: (__, _) => Image.asset(JobstopPngImg.signup),
               outerBorderColor: Colors.grey[300],
               size: context.fromHeight(CustomStyle.xs),
             ),
@@ -149,16 +158,31 @@ class JobApplication extends StatelessWidget {
             ),
             _buildDetailRow(context, "label_cv_resume".tr),
             SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-            Card(
-              margin: EdgeInsets.zero,
-              color: SippoColor.lightprimary2,
-              child: Padding(
-                padding: EdgeInsets.all(context.fromWidth(CustomStyle.m)),
-                child: CvCardWidget.fromRemote(
-                  remoteCv:
-                      applicationController.userApplicationState.application.cv,
-                ),
-              ),
+            Obx(
+              () {
+                final cv =
+                    applicationController.userApplicationState.application.cv;
+                return cv != null
+                    ? InkWell(
+                        onTap: () {
+                          applicationController.openFile(cv.url, cv.size);
+                        },
+                        child: RoundedBorderRadiusCardWidget(
+                          margin: EdgeInsets.zero,
+                          padding: EdgeInsets.zero,
+                          color: SippoColor.lightprimary3,
+                          child: Padding(
+                            padding: EdgeInsets.all(
+                              context.fromWidth(CustomStyle.m),
+                            ),
+                            child: CvCardWidget.fromRemote(
+                              remoteCv: cv,
+                            ),
+                          ),
+                        ),
+                      )
+                    : const SizedBox.shrink();
+              },
             ),
           ],
         ),

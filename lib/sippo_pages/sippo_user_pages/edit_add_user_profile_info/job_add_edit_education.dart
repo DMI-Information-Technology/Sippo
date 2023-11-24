@@ -197,6 +197,7 @@ class _JobEducationAddEditState extends State<JobEducationAddEdit> {
       fontSize: FontSize.label(context),
       gController: eduState.fieldStudy,
       readOnly: true,
+      maxLength: 70,
       onTap: () {
         showSearch(
           context: context,
@@ -224,6 +225,7 @@ class _JobEducationAddEditState extends State<JobEducationAddEdit> {
       height: context.fromHeight(CustomStyle.inputBorderedSize),
       fontSize: FontSize.label(context),
       gController: eduState.institution,
+      maxLength: 70,
       readOnly: true,
       onTap: () {
         showSearch(
@@ -250,6 +252,7 @@ class _JobEducationAddEditState extends State<JobEducationAddEdit> {
     final eduState = _controller.eduState;
     return InputBorderedField(
       readOnly: true,
+      maxLength: 70,
       height: context.fromHeight(CustomStyle.inputBorderedSize),
       fontSize: FontSize.label(context),
       gController: eduState.level,
@@ -278,6 +281,8 @@ class _JobEducationAddEditState extends State<JobEducationAddEdit> {
 
     return InputBorderedField(
       textInputAction: TextInputAction.newline,
+      maxLength: 256,
+      showCounter: true,
       gController: eduState.description,
       height: context.height / 7,
       hintText: "hint_text_write_information".tr,

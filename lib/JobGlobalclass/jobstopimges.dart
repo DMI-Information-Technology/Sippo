@@ -3,10 +3,14 @@ class JobstopPngImg {
       "Assets/jobstop_assets/jobpngimg/splashlogo.png";
   static const String loadingProgress =
       "Assets/jobstop_assets/json_animation/loadingProgress.json";
+  static const String loadingApp =
+      "Assets/jobstop_assets/json_animation/loadingApp.json";
   static const String onboarding =
       "Assets/jobstop_assets/json_animation/onBoarding1.json";
   static const String google = "Assets/jobstop_assets/jobpngimg/google.png";
   static const String forget = "Assets/jobstop_assets/jobpngimg/forget.png";
+  static const String sippoLogo =
+      "Assets/jobstop_assets/jobpngimg/sippoLogo.png";
   static const String done = "Assets/jobstop_assets/jobpngimg/done.png";
   static const String emailV = "Assets/jobstop_assets/jobpngimg/emailV.png";
   static const String noSubs = "Assets/jobstop_assets/jobpngimg/noSubs.png";
@@ -164,4 +168,3 @@ class JobstopPngImg {
 class JobstopSvgImg {
   static String swap = "Assets/jobstop_assets/jovsvgimg/swap.svg";
 }
-

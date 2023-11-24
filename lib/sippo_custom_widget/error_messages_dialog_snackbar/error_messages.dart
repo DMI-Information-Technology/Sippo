@@ -22,8 +22,7 @@ void showNotSubscriptionAlert(phoneNumber) {
     CustomAlertDialog.verticalButtons(
       imageAsset: JobstopPngImg.noSubs,
       title: 'not_subscribed'.tr,
-      description:
-          "subscribe_platform_message".tr,
+      description: "subscribe_platform_message".tr,
       confirmBtnTitle: 'contact_whatsApp'.tr,
       onConfirm: () {
         final context = Get.overlayContext;
@@ -61,8 +60,7 @@ void showNoConnectionDialog() {
     CustomAlertDialog(
       imageAsset: JobstopPngImg.noconnection,
       title: 'contact_lost_title'.tr,
-      description:
-          'contact_lost_message'.tr,
+      description: 'contact_lost_message'.tr,
       onConfirm: () {
         final context = Get.overlayContext;
         if (context != null) {
@@ -80,5 +78,12 @@ void showNoConnectionDialog() {
   );
 }
 
-
-
+void showCustomSnackBar(String title, String description, {Widget? icon}) {
+  Get.snackbar(
+    icon: icon,
+    title,
+    description,
+    backgroundColor: SippoColor.backgroudHome,
+    boxShadows: [boxShadow],
+  );
+}

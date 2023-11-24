@@ -2,12 +2,10 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
-
-import 'package:jobspot/utils/states.dart';
-
 import 'package:jobspot/sippo_data/model/specializations_model/specializations_model.dart';
 import 'package:jobspot/sippo_data/specializations/specializations_repo.dart';
 import 'package:jobspot/sippo_excepstions/specialization_exception/specialization_exception.dart';
+import 'package:jobspot/utils/states.dart';
 
 class SpecializationCompanyController extends GetxController {
   final _netController = InternetConnectionService.instance;
@@ -21,7 +19,7 @@ class SpecializationCompanyController extends GetxController {
 
   States get states => _states.value;
 
-  StreamSubscription<bool>? _connectionSubscription;
+  // StreamSubscription<bool>? _connectionSubscription;
 
   void set loadingStates(bool value) {
     _states.value = _states.value.copyWith(isLoading: value);
@@ -38,16 +36,16 @@ class SpecializationCompanyController extends GetxController {
     );
   }
 
-  void _startListeningToConnection() async {
-    _connectionSubscription = _netController.isConnectedStream.listen(
-      (isConnected) async {
-        if (isConnected) {
-          await fetchSpecializations();
-        }
-      },
-    );
-    await fetchSpecializations();
-  }
+  // void _startListeningToConnection() async {
+  //   // _connectionSubscription = _netController.isConnectedStream.listen(
+  //   //   (isConnected) async {
+  //   //     if (isConnected) {
+  //   //       await fetchSpecializations();
+  //   //     }
+  //   //   },
+  //   // );
+  //   await fetchSpecializations();
+  // }
 
   final _companySpecializations = [
     SpecializationModel(id: 12, name: 'Item 2'),
@@ -94,39 +92,38 @@ class SpecializationCompanyController extends GetxController {
 
   @override
   void onInit() {
-    _startListeningToConnection();
+    // _startListeningToConnection();
+    fetchSpecializations();
     super.onInit();
   }
 
   Future<void> fetchSpecializations() async {
     try {
-      loadingStates = true;
-      successStates = false;
-      errorStates(false);
+      if (!this.isNetworkConnected) return;
+      if (states.isLoading) return;
+      _states.value = States(isLoading: true);
       final List<SpecializationModel>? fetchedSpecializations =
           await SpecializationRepo.fetchSpecializations();
       print(fetchedSpecializations);
-
+      _states.value = States();
       if (fetchedSpecializations != null && fetchedSpecializations.isNotEmpty) {
         _companySpecializations.value = fetchedSpecializations;
-        successStates = true;
+        _states.value = States(isSuccess: true);
       } else {
         throw FailedFetchingSpecializationException();
       }
     } on FailedFetchingSpecializationException catch (e) {
       print(e);
-      errorStates(true, e.toString());
+      _states.value = States(isError: true, message: e.toString());
     } catch (e) {
       print(e);
-      errorStates(true, e.toString());
-    } finally {
-      loadingStates = false;
+      _states.value = States(isError: true, message: e.toString());
     }
   }
 
   @override
   void onClose() {
-    _connectionSubscription?.cancel();
+    // _connectionSubscription?.cancel();
     super.onClose();
   }
 }

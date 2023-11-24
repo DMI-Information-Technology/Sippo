@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
+import 'package:lottie/lottie.dart';
 
 class ConditionalWidget<T> extends StatelessWidget {
   const ConditionalWidget(
@@ -30,10 +32,10 @@ class ConditionalWidget<T> extends StatelessWidget {
   final bool condition;
   final bool isLoading;
   static const empty = const SizedBox.shrink();
-  static const circularIndicatorProgress =
-      const Center(child: CircularProgressIndicator());
 
   Widget _buildCases(BuildContext context) {
+    final circularIndicatorProgress =
+        Center(child: Lottie.asset(JobstopPngImg.loadingProgress, height: 75));
     late final bool result;
     if (predict != null) {
       result = predict!(data);

@@ -7,9 +7,9 @@ import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/sippo_controller/NotificationController/user_notification_application/user_notification_application_controller.dart';
+import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_pages/sippo_message_pages/no_resource_screen.dart';
 
-import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'sippo_user_application.dart';
 import 'sippo_user_notification.dart';
 
@@ -28,7 +28,7 @@ class _SippoUserNotificationApplicationState
   late final TabController _tabController;
   final RestorableInt tabIndex = RestorableInt(0);
 
-  final nonResource =  NoResourceScreen(
+  final nonResource = NoResourceScreen(
     title: 'title_no_notification_found'.tr,
     description: 'description_no_notification_found'.tr,
     image: JobstopPngImg.notificationimg,
@@ -113,38 +113,45 @@ class _SippoUserNotificationApplicationState
       ),
       actions: [
         ListenableBuilder(
-          listenable: _tabController,
-          builder: (context, _) => _tabController.index == 0
-              ? Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: context.fromWidth(CustomStyle.xs),
-                    vertical: kToolbarHeight / CustomStyle.overBy3,
+          listenable: _notifiController.showNotificationReadAllButton,
+          builder: (context, outerChild) {
+            return _notifiController.hasNotificationsToRead
+                ? outerChild!
+                : const SizedBox.shrink();
+          },
+          child: ListenableBuilder(
+            listenable: _tabController,
+            builder: (context, innerChild) => _tabController.index == 0
+                ? innerChild!
+                : const SizedBox.shrink(),
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: context.fromWidth(CustomStyle.xs),
+                vertical: kToolbarHeight / CustomStyle.overBy3,
+              ),
+              child: InkWell(
+                splashColor: SippoColor.transparent,
+                highlightColor: SippoColor.transparent,
+                onTap: () => _onReadAllNotificationsConfirmation(context),
+                child: Text(
+                  'read_all'.tr,
+                  style: dmsregular.copyWith(
+                    fontSize: FontSize.label(context),
+                    color: SippoColor.secondary,
                   ),
-                  child: InkWell(
-                      splashColor: SippoColor.transparent,
-                      highlightColor: SippoColor.transparent,
-                      // onTap: () => Get.to(() => const AllNotification()),
-                      onTap: () {
-                        _onReadAllNotificationsConfirmation(context);
-                      },
-                      child: Text(
-                        'read_all'.tr,
-                        style: dmsregular.copyWith(
-                          fontSize: FontSize.label(context),
-                          color: SippoColor.secondary,
-                        ),
-                      )),
-                )
-              : const SizedBox.shrink(),
-        )
+                ),
+              ),
+            ),
+          ),
+        ),
       ],
     );
   }
 
   void _onReadAllNotificationsConfirmation(BuildContext context) {
     Get.dialog(CustomAlertDialog(
-      title: 'title_confirm_delete_notification'.tr,
-      description: 'ask_delete_notification'.tr,
+      title: 'title_confirm_read_all_notification'.tr,
+      description: 'ask_read_all_notification'.tr,
       onConfirm: () {
         Get.back();
         _notifiController.markAllNotificationsAsRead();

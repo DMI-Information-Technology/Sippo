@@ -156,6 +156,7 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
 
   Widget _buildUserProfileHeader() {
     return Obx(() => UserProfileHeaderWidget(
+          gender: _controller.user.gender,
           profileInfo: _controller.user,
           onEditProfilePressed: () => Get.toNamed(SippoRoutes.editUserProfile),
           profileImage: _controller.user.profileImage?.url ?? "",
@@ -198,8 +199,10 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
             remoteCv: _controller.user.cv,
             onCvTapped: () async {
               _controller.loadingOverlayController.start();
-              await _controller.openFile(_controller.user.cv?.url);
-              _controller.loadingOverlayController.pause();
+              await _controller.openFile(
+                _controller.user.cv?.url,
+                size: _controller.user.cv?.size,
+              );
             },
           );
         },

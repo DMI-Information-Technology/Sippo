@@ -26,6 +26,8 @@ class SharedGlobalDataService extends GetxService {
     Map<String, dynamic>? args,
   }) async {
     final localInstance = instance;
+    print(item?.id);
+    print(item?.title);
     final id = item?.id;
     if (id == null) return;
     localInstance.jobGlobalState.args = args;

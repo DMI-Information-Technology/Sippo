@@ -11,6 +11,8 @@ class AppTranslation extends Translations {
           'Forget_Password': "Forget Password?",
           'Forget_Password_Title': "Forget Password",
           'Login': "Login",
+          'guest_action': "You Are Not Logged In",
+          'guest_action_message': "Please login to continue",
           'or': "or",
           'You_dont_have_an_account_yet': "You don't have an account yet?",
           'You_have_an_account': "You have an account?",
@@ -59,6 +61,8 @@ class AppTranslation extends Translations {
           'About_Company': "About Company",
           'Website': "Website",
           'enter_website': "enter your website",
+          'no_special_fetched':
+              "load specializations is failed. Please reload the page or try again later",
           'Industry': "Industry",
           'Employee_size': "Employee size",
           'Head_office': "Head office",
@@ -91,7 +95,7 @@ class AppTranslation extends Translations {
           'rtl': "RTL",
           'ltr': "LTR",
           'select_view_language': "Select Application Language View",
-          'chooce_specialization': "Chooce Specialization",
+          'chooce_specialization': "Choose Specialization",
           'select_one_three_maximum_special':
               "Please select one or three in maximum specialization.",
           'Choose_App_Using_Page':
@@ -200,8 +204,11 @@ class AppTranslation extends Translations {
           'description_no_notification_found':
               "You have no notifications at this time\nthank you",
           'title_confirm_delete_notification': "Delete Notification",
+          'title_confirm_read_all_notification': "Read All Notification",
           'ask_delete_notification':
               "Are you sure you want to delete this notification?",
+          'ask_read_all_notification':
+              "Are you sure you want to read all notifications?",
           'option_delete_notification': "Remove this notification",
           'option_turn_off_notification': "Turn off Notification",
           'app_accepted': "Application accepted",
@@ -422,6 +429,14 @@ class AppTranslation extends Translations {
           'message_no_ds_found_reload': 'No ads found, Reload the Page',
           'english_lang': 'English',
           'arabic_lang': 'Arabic',
+          'remove': 'Remove',
+          'deleted_work_place_message': 'Work Place has been deleted.',
+          'deleted_work_place_title': 'Work Place',
+          'mark_location_to_save_alert':
+              'Please place an mark location in the map for the new location of work place.',
+          'select_address_to_save_alert':
+              'Please select the address for the new location of work place',
+
           'title_update_profile_image': 'Update Profile Image',
           'message_new_profile_image': 'The New Profile Image',
           'update': 'Update',
@@ -486,6 +501,9 @@ class AppTranslation extends Translations {
           'select_language_warning': 'select language before submission.',
           //
           'no_connection_title': 'No Connection',
+          "no_cv_title": "No CV found",
+          "no_cv_message": "The application does not include a CV.",
+
           'no_connection_message':
               'Your connection is lost, please check your connection and try again',
           'not_subscribed': 'Not Subscribed',
@@ -508,17 +526,29 @@ class AppTranslation extends Translations {
           'functional_information_desc':
               'You can get a job opportunity faster and better if you complete your profile information.',
           'profile_completion_title': 'Profile Completion',
-          'profile_completion_company_desc':'Please complete your company account information to attract the most job applicants.',
+          'profile_completion_company_desc':
+              'Please complete your company account information to attract the most job applicants.',
           'reload_page_message': 'Reload the page or try again later.',
-          'no_items_found_title':'No items found',
-          'no_posts_found_title':'No posts found',
-          'no_jobs_found_title':'No jobs found',
-          'no_users_found_title':'No users found',
-          'no_companies_found_title':'No companies found',
-          'no_application_found_title':'No Application found',
-          'no_notification_found_title':'No Notification found',
-
-
+          'no_items_found_title': 'No items found',
+          'saved_job_empty_message': "You don't have any jobs saved",
+          'select_location': "Select your location place.",
+          'no_posts_found_title': 'No posts found',
+          'no_jobs_found_title': 'No jobs found',
+          'no_users_found_title': 'No users found',
+          'no_companies_found_title': 'No companies found',
+          'no_application_found_title': 'No Application found',
+          'no_notification_found_title': 'No Notification found',
+          'language_added_before': 'Language is added before',
+          'saved_job_empty': 'Saved Job List is Empty',
+          'show_cv': 'Show CV',
+          'is_hq_label': 'is HQ',
+          'confirm_delete_saved_jobs_message':
+              "are you sure you want remove all saved jobs?",
+          'welcome_back_user_message':
+              "Welcome back again, please login to your account to find new jobs",
+          'delete_all': "Delete all",
+          'welcome_back_company_message':
+              "Welcome back again, please login to your company account for sharing new jobs"
         },
         'ar_AB': {
           "Email": "البريد الإلكتروني",
@@ -535,12 +565,12 @@ class AppTranslation extends Translations {
           "Sign_in": "تسجيل الدخول",
           "job_added_successfully": "تمت إضافة الوظيفة بنجاح",
           "label_done": "تم",
-          "edit_job_done": "تمت تحرير الوظيفة",
-          "edit_job": "تحرير الوظيفة",
+          "edit_job_done": "تم تعديل الوظيفة",
+          "edit_job": "تعديل الوظيفة",
           "new_job": "وظيفة جديدة",
           "post_added_successfully": "تمت إضافة المقالة بنجاح",
-          "edit_post_done": "تمت تحرير المقالة",
-          "edit_Post": "تحرير المقالة",
+          "edit_post_done": "تم تعديل المقالة",
+          "edit_Post": "تعديل المقالة",
           "new_post": "مقال جديد",
           "title_skills": "المهارات",
           "phone_number": "رقم الهاتف",
@@ -702,8 +732,9 @@ class AppTranslation extends Translations {
           "hide": "اخفاء",
           "turn_off_notifi": "إيقاف تشغيل الإشعارات",
           "check_details": "التحقق من التفاصيل",
-          "Edit_profile": "تحرير الملف الشخصي",
+          "Edit_profile": "تعديل الملف الشخصي",
           "delete": "حذف",
+          "no_cv_title": "لا يوجد سيرة ذاتية",
           "label_about_me": "عني",
           "hint_text_enter_name": "أدخل اسمك",
           "label_name": "الاسم",
@@ -714,12 +745,14 @@ class AppTranslation extends Translations {
           "title_confirm_delete_notification": "حذف الإشعار",
           "ask_delete_notification":
               "هل أنت متأكد من أنك تريد حذف هذا الإشعار؟",
+          "ask_read_all_notification":
+              "هل أنت متأكد من أنك تريد تحديد كل الاشعارات كمقروءة؟",
           "option_delete_notification": "إزالة هذا الإشعار",
           "option_turn_off_notification": "إيقاف تشغيل الإشعارات",
           "app_accepted": "تم قبول الطلب",
           "app_rejected": "تم رفض الطلب",
           "app_sent": "تم إرسال الطلب",
-          "title_your_application": "طلبك",
+          "title_your_application": "طلب تقديمك",
           "hint_text_apply_more_jobs": "التقدم إلى المزيد من الوظائف",
           "label_job_details": "تفاصيل الوظيفة",
           "label_application_details": "تفاصيل الطلب",
@@ -788,6 +821,7 @@ class AppTranslation extends Translations {
           "save": "حفظ",
           "email_reset_password_hint_text":
               "أدخل عنوان بريدك الإلكتروني لإعادة تعيين كلمة المرور هنا.",
+          "no_cv_message": "لا يوجد سيرة ذاتية مضمنة مع الطلب.",
           "add_language": "إضافة لغة",
           "first_language": "اللغة الأم",
           "talking": "تكلم",
@@ -881,8 +915,8 @@ class AppTranslation extends Translations {
           "find_job_title": "البحث عن وظيفة",
           "find_job_desc": "أريد البحث عن وظيفة.",
           "select_find_dialog": "اختر كيف تريد استخدام التطبيق",
-          "apply_now": "تطبيق الآن",
-          "title_apply": "تطبيق",
+          "apply_now": "قدم الأن",
+          "title_apply": "قدم طلب توظيف",
           "back_to_home": "العودة إلى الصفحة الرئيسية",
           "find_another_job": "البحث عن وظيفة أخرى",
           "title_workplace_type": "نوع مكان العمل",
@@ -990,7 +1024,7 @@ class AppTranslation extends Translations {
           "select_language_warning": "اختر اللغة قبل الحفظ.",
           "no_connection_title": "لا يوجد اتصال",
           "no_connection_message":
-              "انقطع الاتصال بك، يرجى التحقق من اتصالك وإعادة المحاولة",
+              "انقطع الاتصال الانترنت، يرجى التحقق من اتصالك وإعادة المحاولة",
           "not_subscribed": "غير مشترك",
           "subscribe_platform_message":
               "ستمنحك الاشتراك في منصتنا حق الوصول إلى معلومات هذا المستخدم والعديد من المزايا الأخرى",
@@ -1011,16 +1045,41 @@ class AppTranslation extends Translations {
           'functional_information_desc':
               'يمكنك الحصول على فرص عمل بطريقة اسرع وافضل في حال اكملت معلومات حسابك',
           'profile_completion_title': 'أكمال الحساب',
-          'profile_completion_company_desc':'الرجاء تكملة معلومات حساب الشركة للحصول على أكبر عدد ممكن من طلبات التوظيف',
-          'no_items_found_title':'لم يتم العثور على العناصر',
-          'no_posts_found_title':'لم يتم العثور على مشاركات للعرض',
-          'no_jobs_found_title':'لم يتم العثور على وظائف للعرض',
-          'no_users_found_title':'لم يتم العثور على مستخدمين للعرض',
-          'no_companies_found_title':'لم يتم العثور على شركات للعرض',
-          'no_application_found_title':'لم يتم العثور على طلبات تقديم للعرض',
+          'profile_completion_company_desc':
+              'الرجاء تكملة معلومات حساب الشركة للحصول على أكبر عدد ممكن من طلبات التوظيف',
+          'no_items_found_title': 'لم يتم العثور على العناصر',
+          'no_posts_found_title': 'لم يتم العثور على مشاركات للعرض',
+          'no_jobs_found_title': 'لم يتم العثور على وظائف للعرض',
+          'no_users_found_title': 'لم يتم العثور على مستخدمين للعرض',
+          'no_companies_found_title': 'لم يتم العثور على شركات للعرض',
+          'no_application_found_title': 'لم يتم العثور على طلبات تقديم للعرض',
           'reload_page_message': 'قم بأعادة تحميل الصفحة او اعد المحاولة لاحقا',
-          'no_notification_found_title':'لم يتم العثور على اشعارات للعرض',
-
+          'no_notification_found_title': 'لم يتم العثور على اشعارات للعرض',
+          'language_added_before': 'هذه اللغة موجودة مسبقا.',
+          'show_cv': 'السيرة الذاتية',
+          'title_confirm_read_all_notification': "قراءة كل الاشعارات",
+          'no_special_fetched':
+              "فشل تحميل التخصصات، الرجاء اعادة تحميل الصفحة او اعد المحاولة لاحقا",
+          'is_hq_label': 'مقر العمل الرئيسي',
+          'remove': 'ازالة',
+          'deleted_work_place_message': 'تم حذف مكان العمل.',
+          'deleted_work_place_title': 'مكان العمل',
+          'mark_location_to_save_alert':
+              'رجاء حدد احداثيات موقع العمل الجديد في الخريطة',
+          'select_address_to_save_alert':
+              'رجاء اختر موقع عمل الشركة من قائمة المدن',
+          'welcome_back_company_message':
+              "مرحبا بعودتك مجددا، سجل دخولك لشركتك وقم بمشاركة فرص عمل جديدة",
+          'welcome_back_user_message':
+              "مرحبا بعودتك مجددا، سجل دخول حسابك وقم بالبحث عن فرص عمل جديدة",
+          'delete_all': "حذف الكل",
+          'confirm_delete_saved_jobs_message':
+              'هل انت متأكد انك تريد حذف كل وظائفك المحفوظة؟',
+          'saved_job_empty': 'قائمة الوظائف المحفوظة فارغة',
+          'saved_job_empty_message': "ليس لديك اي وظائف محفوظة",
+          'guest_action': "لست مسجل دخولك",
+          'guest_action_message': "رجاء سجل دخولك اولا لإكمال هذه العملية",
+          'select_location': 'اختر موقعك',
         }
       };
 }

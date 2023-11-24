@@ -56,7 +56,6 @@ class _SippoUserApplicationState extends State<SippoUserApplication> {
               company: item.company,
               application: item,
               onTap: () {},
-              onDeletePressed: () {},
               onPopupNotificationButtonTapped: () {
                 _openBottomApplicationSheetOption(
                   context,
@@ -89,7 +88,7 @@ class _SippoUserApplicationState extends State<SippoUserApplication> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            '${_controller.states.message}',
+            '${_controller.notStates.message}',
             textAlign: TextAlign.center,
             style: dmsregular.copyWith(
               fontSize: FontSize.paragraph3(context),
@@ -122,7 +121,7 @@ class _SippoUserApplicationState extends State<SippoUserApplication> {
         ),
         SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
         Text(
-          _controller.states.message ?? 'something_wrong_happened'.tr,
+          _controller.notStates.message ?? 'something_wrong_happened'.tr,
           style: dmsregular.copyWith(
             fontSize: FontSize.paragraph3(context),
           ),
@@ -166,10 +165,10 @@ class _SippoUserApplicationState extends State<SippoUserApplication> {
               title: "delete".tr,
               icon: Icon(
                 Icons.delete_forever_outlined,
-                // color:
-                // _controller.isMatchOptionOfIndex(0) ? Colors.white : null,
               ),
               onTap: () {
+                Get.back();
+                _controller.removeApplication(applicationId);
                 // _controller.selectedBottomOption = 0;
                 print("delete notification with id: $applicationId");
               },
@@ -186,8 +185,9 @@ class _SippoUserApplicationState extends State<SippoUserApplication> {
               ),
               onTap: () {
                 // _controller.selectedBottomOption = 1;
-
                 Get.back();
+                if (application.job == null) return;
+
                 _controller.userApplicationState.application = application;
                 Get.to(() => const JobApplication())?.then((_) {
                   _controller.userApplicationState.application =
@@ -199,22 +199,21 @@ class _SippoUserApplicationState extends State<SippoUserApplication> {
               contentPadding: context.fromWidth(CustomStyle.xs),
               // isSelected: _controller.isMatchOptionOfIndex(1),
             ),
-            SettingItemWidget(
-              title: 'setting'.tr,
-              icon: Icon(
-                Icons.settings_rounded,
-                // color: _controller.isMatchOptionOfIndex(2) ? Colors.white : null,
-              ),
-              onTap: () {
-                // _controller.selectedBottomOption = 2;
-                print("open setting notification");
-              },
-              isHavingTrailingIcon: false,
-              isBordered: false,
-              contentPadding: context.fromWidth(CustomStyle.xs),
-              // isSelected: _controller.isMatchOptionOfIndex(2),
-            ),
-            SizedBox(height: context.fromHeight(CustomStyle.spaceBetween))
+            // SettingItemWidget(
+            //   title: 'settings'.tr,
+            //   icon: Icon(
+            //     Icons.settings_rounded,
+            //     // color: _controller.isMatchOptionOfIndex(2) ? Colors.white : null,
+            //   ),
+            //   onTap: () {
+            //     // _controller.selectedBottomOption = 2;
+            //     print("open setting notification");
+            //   },
+            //   isHavingTrailingIcon: false,
+            //   isBordered: false,
+            //   contentPadding: context.fromWidth(CustomStyle.xs),
+            //   // isSelected: _controller.isMatchOptionOfIndex(2),
+            // ),
           ],
         ),
       ),

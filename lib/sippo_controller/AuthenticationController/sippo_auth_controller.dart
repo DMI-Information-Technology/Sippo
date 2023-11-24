@@ -58,9 +58,8 @@ class AuthController extends GetxController {
     super.onInit();
   }
 
-  Future<void> logout() async {
-    if (await userLogout())
-      await GlobalStorageService.removeSavedToken(GetStorage());
+  Future<void> logoutDone() async {
+    await GlobalStorageService.removeSavedToken(GetStorage());
   }
 
   void set loadingState(bool value) {
@@ -113,8 +112,8 @@ class AuthController extends GetxController {
     // await GlobalStorage.saveLoggedUser(response?.data?.model?.toJson());
   }
 
-  Future<bool> userLogout() async {
-    if (_netController.isConnectionLostWithDialog()) return false;
+  Future<void> logout() async {
+    if (_netController.isConnectionLostWithDialog()) return;
     _states.value = States(isLoading: true);
     final response = await AuthRepo.userLogout();
     _states.value = States(isLoading: false);
@@ -126,13 +125,11 @@ class AuthController extends GetxController {
         isError: true,
         message: "something_wrong_happened_logout".tr,
       );
-      return false;
     }
     print("AuthController.userLogout success: $response");
     _states.value = states.copyWith(
       isSuccess: true,
     );
-    return true;
     // await GlobalStorage.saveLoggedUser(response?.data?.model?.toJson());
   }
 
@@ -142,7 +139,7 @@ class AuthController extends GetxController {
     loadingState = true;
     final response = await AuthRepo.companyRegister(company);
     loadingState = false;
-    await checkAuthResponseState(response, AppUsingType.company);
+    await checkAuthResponseState(response, AppUsingType.guest);
   }
 
   Future<void> companyLogin(CompanyModel company) async {
@@ -160,11 +157,12 @@ class AuthController extends GetxController {
   ) async {
     switch (response?.type) {
       case RegisterTypeResponse.success:
-        await GlobalStorageService.saveToken(
-          GetStorage(),
-          response?.data?.token,
-          appUse.index,
-        );
+        if (appUse != AppUsingType.guest)
+          await GlobalStorageService.saveToken(
+            GetStorage(),
+            response?.data?.token,
+            appUse.index,
+          );
         print(
           "from checkAuthResponseState on success: ${response?.data?.token}",
         );

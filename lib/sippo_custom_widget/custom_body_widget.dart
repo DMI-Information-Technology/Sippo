@@ -17,6 +17,7 @@ class CustomBodyWidget extends StatefulWidget {
     this.leading,
     this.actions,
     this.pinnedAppBar = false,
+    this.notificationPredicate,
   })  : this.children = const [],
         this.itemCount = 0,
         this.itemBuilder = null,
@@ -33,6 +34,7 @@ class CustomBodyWidget extends StatefulWidget {
     this.leading,
     this.actions,
     this.pinnedAppBar = false,
+    this.notificationPredicate,
   })  : this.contentPadding = null,
         this.itemCount = 0,
         this.itemBuilder = null,
@@ -53,6 +55,7 @@ class CustomBodyWidget extends StatefulWidget {
     this.separatedBuilder,
     this.actions,
     this.pinnedAppBar = false,
+    this.notificationPredicate,
   })  : this.child = null,
         this.children = const [];
 
@@ -70,6 +73,7 @@ class CustomBodyWidget extends StatefulWidget {
   final Widget? leading;
   final List<Widget>? actions;
   final bool pinnedAppBar;
+  final bool Function(ScrollNotification)? notificationPredicate;
 
   @override
   State<CustomBodyWidget> createState() => _CustomBodyWidgetState();

@@ -12,9 +12,10 @@ class LoadingScaffold extends StatelessWidget {
     this.backgroundColor,
     this.extendBodyBehindAppBar = false,
     this.canPopOnLoading = true,
-
+    this.floatingActionButton,
   });
 
+  final FloatingActionButton? floatingActionButton;
   final PreferredSizeWidget? appBar;
   final Widget? body;
   final Color? backgroundColor;
@@ -37,6 +38,7 @@ class LoadingScaffold extends StatelessWidget {
         alignment: AlignmentDirectional.centerStart,
         children: [
           Scaffold(
+            floatingActionButton: floatingActionButton,
             extendBodyBehindAppBar: extendBodyBehindAppBar,
             appBar: appBar,
             body: body,

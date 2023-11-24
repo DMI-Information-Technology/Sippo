@@ -61,11 +61,13 @@ class JobHomeCard extends StatelessWidget {
               children: [
                 _buildJobCardHeader(context),
                 SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-                AutoSizeText(
-                  '${jobDetailsPost?.salaryFrom?.toString().shortStringNumberFormat} -'
-                  ' ${jobDetailsPost?.salaryTo?.toString().shortStringNumberFormat} LYD/Mo',
-                  style: dmsmedium.copyWith(
-                    fontSize: FontSize.title6(context),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 8.0),
+                  child: AutoSizeText(
+                    '${jobDetailsPost?.salaryFrom?.toString().shortStringNumberFormat} -'
+                    ' ${jobDetailsPost?.salaryTo?.toString().shortStringNumberFormat}',
+                    style:
+                        dmsmedium.copyWith(fontSize: FontSize.title6(context)),
                   ),
                 ),
                 SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
@@ -103,7 +105,7 @@ class JobHomeCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               AutoSizeText(
-                jobDetailsPost?.title ?? 'unknown',
+                jobDetailsPost?.title ?? '',
                 style: dmsbold.copyWith(
                   fontSize: FontSize.title5(context),
                   fontWeight: FontWeight.bold,
@@ -111,7 +113,7 @@ class JobHomeCard extends StatelessWidget {
                 ),
               ),
               AutoSizeText(
-                jobDetailsPost?.company?.name ?? "unknown",
+                jobDetailsPost?.company?.name ?? "",
                 style: dmsregular.copyWith(
                   fontSize: FontSize.paragraph3(context),
                   color: Colors.grey,
@@ -228,7 +230,7 @@ class JobHomeCard extends StatelessWidget {
                           ),
                           child: Chip(
                             label: AutoSizeText(
-                              chipText ?? 'unknown',
+                              chipText ?? '',
                               style: dmsregular.copyWith(
                                 fontSize: FontSize.label(context),
                               ),

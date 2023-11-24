@@ -67,7 +67,7 @@ class CustomAlertDialog extends StatelessWidget {
                   onConfirm?.call();
                 },
                 text: confirmBtnTitle ?? 'ok'.tr,
-                textColor: cancelBtnColor,
+                textColor: Colors.white,
                 backgroundColor: confirmBtnColor,
               ),
             if (onCancel != null)
@@ -192,6 +192,7 @@ class InputField extends StatelessWidget {
     this.onChangedText,
     this.onSubmitted,
     this.validator,
+    this.maxLength,
   });
 
   final Widget? suffixIcon;
@@ -203,6 +204,7 @@ class InputField extends StatelessWidget {
   final void Function(String value)? onChangedText;
   final void Function(String value)? onSubmitted;
   final String? Function(String? value)? validator;
+  final int? maxLength;
 
   @override
   Widget build(BuildContext context) {
@@ -217,6 +219,7 @@ class InputField extends StatelessWidget {
       maxLines: 1,
       initialValue: initialValue,
       decoration: InputDecoration(
+        counterText: "",
         prefixIcon: icon,
         suffixIcon: suffixIcon,
         hintText: hintText,
@@ -235,6 +238,7 @@ class InputField extends StatelessWidget {
       onChanged: onChangedText,
       onFieldSubmitted: onSubmitted,
       validator: validator,
+      maxLength: maxLength ?? 40,
     );
   }
 }
@@ -387,6 +391,7 @@ class CustomButton extends StatelessWidget {
     this.borderRadiusValue,
     this.fitHeight = false,
     this.textPadding = EdgeInsets.zero,
+    this.maxLine,
   });
 
   final EdgeInsets textPadding;
@@ -401,6 +406,7 @@ class CustomButton extends StatelessWidget {
   final double? fontSize;
   final double? borderRadiusValue;
   final bool fitHeight;
+  final int? maxLine;
 
   @override
   Widget build(BuildContext context) {
@@ -427,13 +433,17 @@ class CustomButton extends StatelessWidget {
               leadingIcon ?? const SizedBox.shrink(),
               SizedBox(width: context.width / 46),
             ],
-            Padding(
-              padding: textPadding,
-              child: Text(
-                text,
-                style: dmsbold.copyWith(
-                  fontSize: fontSize ?? FontSize.title6(context),
-                  color: textColor ?? SippoColor.white,
+            Expanded(
+              child: Padding(
+                padding: textPadding,
+                child: Text(
+                  text,
+                  style: dmsbold.copyWith(
+                    fontSize: fontSize ?? FontSize.title6(context),
+                    color: textColor ?? SippoColor.white,
+                  ),
+                  maxLines: maxLine,
+                  textAlign: TextAlign.center,
                 ),
               ),
             ),
@@ -586,37 +596,38 @@ class CustomChip extends StatelessWidget {
 }
 
 class InputBorderedField extends StatelessWidget {
-  const InputBorderedField({
-    super.key,
-    this.height,
-    this.width,
-    this.hintText,
-    this.hintStyle,
-    this.keyboardType,
-    this.maxLine = 1,
-    this.fontSize,
-    this.onTap,
-    this.onTextChanged,
-    this.suffixIcon,
-    this.prefixIcon,
-    this.readOnly = false,
-    this.controller,
-    this.initialValue,
-    this.validator,
-    this.textInputAction = TextInputAction.done,
-    this.onFieldSubmitted,
-    this.onTapOutside,
-    this.borderRadiusValue,
-    this.verticalPaddingValue,
-    this.gController,
-    this.fillColor,
-    this.maxLength,
-    this.focusNode,
-    this.fontColor,
-    this.prefixIconColor,
+  const InputBorderedField(
+      {super.key,
+      this.height,
+      this.width,
+      this.hintText,
+      this.hintStyle,
+      this.keyboardType,
+      this.maxLine = 1,
+      this.fontSize,
+      this.onTap,
+      this.onTextChanged,
+      this.suffixIcon,
+      this.prefixIcon,
+      this.readOnly = false,
+      this.controller,
+      this.initialValue,
+      this.validator,
+      this.textInputAction = TextInputAction.done,
+      this.onFieldSubmitted,
+      this.onTapOutside,
+      this.borderRadiusValue,
+      this.verticalPaddingValue,
+      this.gController,
+      this.fillColor,
+      this.maxLength,
+      this.focusNode,
+      this.fontColor,
+      this.prefixIconColor,
+      this.showCounter = false
 
-    // this.isLoading = false,
-  });
+      // this.isLoading = false,
+      });
 
   final Color? fontColor;
   final double? verticalPaddingValue;
@@ -641,6 +652,7 @@ class InputBorderedField extends StatelessWidget {
   final TextInputAction? textInputAction;
   final double? borderRadiusValue;
   final Color? fillColor;
+  final bool showCounter;
   final int? maxLength;
   final FocusNode? focusNode;
   final Color? prefixIconColor;
@@ -668,7 +680,7 @@ class InputBorderedField extends StatelessWidget {
         textAlignVertical: TextAlignVertical.center,
         decoration: InputDecoration(
           counterStyle: TextStyle(height: 0.0),
-          counterText: '',
+          counterText: showCounter ? null : '',
           contentPadding: EdgeInsets.symmetric(
             vertical: verticalPaddingValue ?? 0.0,
             horizontal: context.fromWidth(CustomStyle.paddingValue),
@@ -766,7 +778,7 @@ class PasswordInputBorderedField extends StatefulWidget {
 
 class _PasswordInputBorderedFieldState
     extends State<PasswordInputBorderedField> {
-  final _obscureController = SwitchStatusController();
+  final _obscureController = SwitchStatusController(status: true);
 
   // final bool isLoading;
   @override

@@ -68,4 +68,20 @@ class WorkLocationModel {
       locationAddress.hashCode ^
       cordLocation.hashCode ^
       isHQ.hashCode;
+
+  WorkLocationModel copyWith({
+    int? id,
+    int? userId,
+    CoordLocation? cordLocation,
+    LocationAddress? locationAddress,
+    bool? isHQ,
+  }) {
+    return WorkLocationModel(
+      id: id ?? this.id,
+      userId: userId ?? this.userId,
+      cordLocation: cordLocation ?? this.cordLocation,
+      locationAddress: locationAddress ?? this.locationAddress,
+      isHQ: isHQ ?? this.isHQ,
+    );
+  }
 }

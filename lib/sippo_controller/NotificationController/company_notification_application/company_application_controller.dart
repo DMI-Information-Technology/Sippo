@@ -10,8 +10,8 @@ import 'package:jobspot/sippo_data/model/application_model/application_change_st
 import 'package:jobspot/sippo_data/model/application_model/application_job_company_model.dart';
 import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
 import 'package:jobspot/sippo_data/model/notification/job_application_model.dart';
+import 'package:jobspot/utils/file_downloader_service.dart';
 import 'package:jobspot/utils/states.dart';
-import 'package:jobspot/utils/storage_permission_service.dart';
 
 class CompanyApplicationController extends GetxController {
   final pagingController =
@@ -107,8 +107,7 @@ class CompanyApplicationController extends GetxController {
       notificationApplicationController.changeStates(
         isWarning: true,
         isSuccess: false,
-        message:
-            "connection_lost_message_1".tr,
+        message: "connection_lost_message_1".tr,
       );
       return;
     }
@@ -151,7 +150,7 @@ class CompanyApplicationController extends GetxController {
 
   void openFile(String fileUrl, [String? size]) async {
     if (!notificationApplicationController.isNetworkConnected) return;
-    await StoragePermissionsService.openFile(
+    await FileDownloader.openFile(
       fileUrl,
       size: size,
       fn: (value) {

@@ -20,16 +20,19 @@ class UserProfileHeaderWidget extends StatelessWidget {
   final bool showConnectionLostBar;
   final bool isCompanyView;
   final bool hasDrawer;
+  final String? gender;
 
-  UserProfileHeaderWidget(
-      {super.key,
-      required this.profileInfo,
-      this.onSettingsPressed,
-      this.onEditProfilePressed,
-      required this.profileImage,
-      this.showConnectionLostBar = false,
-      this.isCompanyView = false,
-      this.hasDrawer = false});
+  UserProfileHeaderWidget({
+    super.key,
+    required this.profileInfo,
+    this.onSettingsPressed,
+    this.onEditProfilePressed,
+    required this.profileImage,
+    this.gender,
+    this.showConnectionLostBar = false,
+    this.isCompanyView = false,
+    this.hasDrawer = false,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +74,7 @@ class UserProfileHeaderWidget extends StatelessWidget {
                   ],
                   if (profileInfo.locationCity != null &&
                       profileInfo.locationCity!.trim().isNotEmpty) ...[
-                    _buildLocationText(context),
+                    _buildPersonalDetailsRowText(context),
                     SizedBox(height: context.fromHeight(CustomStyle.huge2)),
                   ],
                   _buildPhoneNumberLabels(
@@ -103,6 +106,7 @@ class UserProfileHeaderWidget extends StatelessWidget {
               backgroundColor: Colors.white,
               child: switch (GlobalStorageService.appUse) {
                 AppUsingType.user => Image.asset(JobstopPngImg.signup),
+                AppUsingType.guest => Image.asset(JobstopPngImg.signup),
                 AppUsingType.company =>
                   Image.asset(JobstopPngImg.companysignup),
               },
@@ -113,6 +117,7 @@ class UserProfileHeaderWidget extends StatelessWidget {
               backgroundColor: Colors.white,
               child: switch (GlobalStorageService.appUse) {
                 AppUsingType.user => Image.asset(JobstopPngImg.signup),
+                AppUsingType.guest => Image.asset(JobstopPngImg.signup),
                 AppUsingType.company =>
                   Image.asset(JobstopPngImg.companysignup),
               },
@@ -159,13 +164,28 @@ class UserProfileHeaderWidget extends StatelessWidget {
     );
   }
 
-  Widget _buildLocationText(BuildContext context) {
-    return Text(
-      profileInfo.locationCity ?? "",
-      style: dmsregular.copyWith(
-        fontSize: FontSize.label(context),
-        color: SippoColor.white,
-      ),
+  Widget _buildPersonalDetailsRowText(BuildContext context) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Text(
+          profileInfo.locationCity ?? "",
+          style: dmsregular.copyWith(
+            fontSize: FontSize.label(context),
+            color: SippoColor.white,
+          ),
+        ),
+        SizedBox(width: context.fromWidth(CustomStyle.spaceBetween)),
+        if (gender != null && gender?.trim().isNotEmpty == true)
+          Text(
+            gender ?? "",
+            style: dmsregular.copyWith(
+              fontSize: FontSize.label(context),
+              color: SippoColor.white,
+            ),
+          ),
+      ],
     );
   }
 

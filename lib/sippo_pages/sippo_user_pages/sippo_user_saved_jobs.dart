@@ -57,8 +57,8 @@ class _SippoUserSavedJobState extends State<SippoUserSavedJob> {
             child: InkWell(
               onTap: () {
                 Get.dialog(CustomAlertDialog(
-                  title: "Remove All Saved Jobs",
-                  description: 'are you sure you want remove all saved jobs?',
+                  title: "delete_all".tr,
+                  description: 'confirm_delete_saved_jobs_message'.tr,
                   onConfirm: () {
                     if (Get.isOverlaysOpen) Get.back();
                     _controller.removeAllJobs();
@@ -69,7 +69,7 @@ class _SippoUserSavedJobState extends State<SippoUserSavedJob> {
                 ));
               },
               child: AutoSizeText(
-                "Delete all",
+                "delete_all".tr,
                 style: dmsregular.copyWith(
                   fontSize: FontSize.label(context),
                   color: SippoColor.secondary,
@@ -89,9 +89,8 @@ class _SippoUserSavedJobState extends State<SippoUserSavedJob> {
 
   Widget _buildNoResourceMessage(BuildContext context) {
     return NoResourceScreen(
-      title: 'Saved Job List is Empty',
-      description:
-          "You don't have any jobs saved, please\nfind it in search to save jobs",
+      title: 'saved_job_empty'.tr,
+      description: 'saved_job_empty_message'.tr,
       image: JobstopPngImg.nosavejob,
     );
   }

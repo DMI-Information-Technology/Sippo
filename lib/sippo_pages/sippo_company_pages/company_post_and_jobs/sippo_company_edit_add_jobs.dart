@@ -388,8 +388,8 @@ class _SippoCompanyEditAddJobsState extends State<SippoCompanyEditAddJobs> {
           SizedBox(height: height / CustomStyle.spaceBetween),
           Text(
             "choose_type_workplace".tr,
-            style: dmsbold.copyWith(
-                fontSize: 16, color: SippoColor.primarycolor),
+            style:
+                dmsbold.copyWith(fontSize: 16, color: SippoColor.primarycolor),
           ),
           SizedBox(height: height / CustomStyle.xxxl),
           Text(
@@ -550,16 +550,9 @@ class _SippoCompanyEditAddJobsState extends State<SippoCompanyEditAddJobs> {
   }
 
   Widget _buildLoadingProgress(BuildContext context) {
-    double height = MediaQuery.sizeOf(context).height;
-    return Obx(() => ConditionalWidget(
-          _controller.states.isLoading,
-          guaranteedBuilder: (__, _) => Column(
-            children: [
-              SizedBox(height: height / 36),
-              const Center(child: CircularProgressIndicator()),
-            ],
-          ),
-        ));
+    return Obx(
+      () => ConditionalWidget(false, isLoading: _controller.states.isLoading),
+    );
   }
 }
 

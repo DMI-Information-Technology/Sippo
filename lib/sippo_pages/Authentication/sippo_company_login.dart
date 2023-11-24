@@ -68,7 +68,7 @@ class SippoCompanyLogin extends StatelessWidget {
                       height: height / 64,
                     ),
                     Text(
-                      "lorem ipsum dolor sit amet, consectetur adipiscing elit n elementum",
+                      "welcome_back_company_message".tr,
                       style: dmsregular.copyWith(
                           color: SippoColor.textColor, fontSize: height / 64),
                       textAlign: TextAlign.center,
@@ -199,22 +199,17 @@ class SippoCompanyLogin extends StatelessWidget {
                           child: Text(
                             "Sign_up".tr,
                             style: dmsregular.copyWith(
-                                fontSize: height / 65,
-                                color: SippoColor.secondary,
-                                decoration: TextDecoration.underline),
+                              fontSize: height / 65,
+                              color: SippoColor.secondary,
+                              decoration: TextDecoration.underline,
+                            ),
                           ),
                         ),
                       ],
                     ),
-                    SizedBox(
-                      height: height / 35,
-                    ),
-                    const SeparatorLine(
-                      text: 'or',
-                    ),
-                    SizedBox(
-                      height: height / 35,
-                    ),
+                    SizedBox(height: height / 35),
+                    SeparatorLine(text: 'or'.tr),
+                    SizedBox(height: height / 35),
                     CustomButton(
                       onTapped: () {
                         controller.authController.resetStates();
@@ -225,16 +220,6 @@ class SippoCompanyLogin extends StatelessWidget {
                       textColor: SippoColor.textColor,
                       borderColor: SippoColor.grey,
                     ),
-                    SizedBox(
-                      height: height / 52,
-                    ),
-                    CustomButton(
-                      onTapped: () {},
-                      text: "Guest_login.".tr,
-                      backgroundColor: SippoColor.white,
-                      textColor: SippoColor.textColor,
-                      borderColor: SippoColor.grey,
-                    )
                   ],
                 ),
               ),
@@ -253,7 +238,7 @@ class SippoCompanyLogin extends StatelessWidget {
 
   void _onPressedForgetPassword() {
     final controller = CompanyLoginController.instance;
-Get.deviceLocale;
+    Get.deviceLocale;
     if (controller.phoneNumber.isNotEmpty) {
       Get.toNamed(
         SippoRoutes.forgetPassword,

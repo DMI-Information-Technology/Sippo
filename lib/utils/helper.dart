@@ -100,7 +100,7 @@ void openWhatsapp(String phoneNumber){
 
   }
 }
-int convertStringFileSize(String? fileSizeStr) {
+int convertStringFileSizeToNumber(String? fileSizeStr) {
   try {
     if(fileSizeStr == null) throw Exception('fileSizeStr is null');
     // Remove the file size unit from the string.

@@ -30,11 +30,10 @@ class Resource<T, E> {
         this.validateError = null;
 
   Future<void> checkStatusResponse({
-    required void Function(T? data, StatusType statusType) onSuccess,
-    required void Function(
-            ValidateError<E?>? validateError, StatusType statusType)
+    void Function(T? data, StatusType statusType)? onSuccess,
+    void Function(ValidateError<E?>? validateError, StatusType statusType)?
         onValidateError,
-    required void Function(String? message, StatusType statusType) onError,
+    void Function(String? message, StatusType statusType)? onError,
     void Function(dynamic argument)? onDone,
   }) async {
     try {
@@ -42,17 +41,17 @@ class Resource<T, E> {
         case StatusType.SUCCESS:
           print("the response is success: with status type = $type");
           print("the response is success: with response data = $data");
-          onSuccess(data, StatusType.SUCCESS);
+          onSuccess?.call(data, StatusType.SUCCESS);
           break;
         case StatusType.VALIDATE_ERROR:
           print("the response is field: with status type = $type");
           print("the response is field: with response error = $validateError");
-          onValidateError(validateError, StatusType.ERROR);
+          onValidateError?.call(validateError, StatusType.ERROR);
           break;
         case StatusType.ERROR:
           print("the response is field: with status type = $type");
           print("the response is field: with response error = $errorMessage");
-          onError(errorMessage, StatusType.ERROR);
+          onError?.call(errorMessage, StatusType.ERROR);
           break;
         default:
           print(
@@ -64,7 +63,7 @@ class Resource<T, E> {
       }
     } on InvalidResponseException catch (e) {
       print(e.message);
-      onError(e.message, StatusType.INVALID_RESPONSE);
+      onError?.call(e.message, StatusType.INVALID_RESPONSE);
     } finally {
       if (onDone != null) onDone(null);
     }

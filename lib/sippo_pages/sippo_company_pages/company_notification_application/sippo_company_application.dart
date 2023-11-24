@@ -75,11 +75,15 @@ class _SippoCompanyApplicationState extends State<SippoCompanyApplication> {
                   );
                 },
                 onShowCvTap: (cvUrl, [size]) {
+                  print(_controller.company.isNotSubscribed);
                   if (_controller.company.isNotSubscribed) {
                     showNotSubscriptionAlert('');
                     return;
                   }
-                  _controller.openFile(cvUrl, size);
+                  if (cvUrl != null)
+                    _controller.openFile(cvUrl, size);
+                  else
+                    showCustomSnackBar('no_cv_title'.tr, 'no_cv_message'.tr);
                 });
           },
         ),

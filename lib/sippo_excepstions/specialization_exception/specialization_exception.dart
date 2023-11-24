@@ -1,13 +1,14 @@
+import 'package:get/get.dart';
 
 class FailedFetchingSpecializationException implements Exception {
-  final String message;
+  late final String message;
 
   FailedFetchingSpecializationException([
-    String message = "failed on fetching specialization data from the server.",
-  ]) : this.message = message;
+    String? message,
+  ]) {
+    this.message = message ?? "no_special_fetched".tr;
+  }
 
   @override
-  String toString() {
-    return message;
-  }
+  String toString() => message;
 }

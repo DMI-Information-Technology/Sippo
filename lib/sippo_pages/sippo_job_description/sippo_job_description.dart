@@ -71,6 +71,8 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
         ),
         topScreen: _buildTopJobDetailsHeader(context),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildButtonTaps(context),
             SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
@@ -240,8 +242,7 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
         ),
         Text(
           job.company?.city ?? "",
-          style:
-              dmsregular.copyWith(fontSize: 12, color: SippoColor.darkgrey),
+          style: dmsregular.copyWith(fontSize: 12, color: SippoColor.darkgrey),
         ),
         SizedBox(
           height: height / 256,

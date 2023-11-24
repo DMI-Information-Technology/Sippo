@@ -78,13 +78,13 @@ class _SippoLocationCompanySelectorState
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                "Address City".tr,
+                "City".tr,
                 style: dmsbold.copyWith(fontSize: FontSize.title5(context)),
               ),
               InkWell(
                 onTap: loadLocationAddressOnTap,
                 child: Obx(() => CustomDropdownButton(
-                      textHint: 'Select Company Work Place',
+                      textHint: 'select_company_work_place'.tr,
                       labelList:
                           _signUpCompanyController.locationsAddressNameList,
                       values: _signUpCompanyController.locationsAddressList,
@@ -152,7 +152,7 @@ class _SippoLocationCompanySelectorState
           ),
           bottomScreen: CustomButton(
             onTapped: _onSubmitConfirm,
-            text: "confirm".tr,
+            text: "Confirm".tr,
           ),
         ),
       ),
@@ -177,8 +177,14 @@ class _SippoLocationCompanySelectorState
   }
 
   void _onSubmitConfirm() async {
-    if (_signUpCompanyController.confirmOnPolicy &&
-        _signUpCompanyController.companyAddress.id != null &&
+    if (!_signUpCompanyController.confirmOnPolicy) {
+      _showBadConfirmDialog();
+      return;
+    }
+
+    _signUpCompanyController.cordLocation =
+        googleMapViewController.markerAsCoordLocation;
+    if (_signUpCompanyController.companyAddress.id != null &&
         _signUpCompanyController.cordLocation.validateCords()) {
       await _signUpCompanyController.authController.companyRegister(
         _signUpCompanyController.companyForm,
@@ -193,8 +199,6 @@ class _SippoLocationCompanySelectorState
         );
         _signUpCompanyController.authController.resetStates();
       }
-    } else {
-      _showBadConfirmDialog();
     }
   }
 
@@ -202,7 +206,7 @@ class _SippoLocationCompanySelectorState
     Get.dialog(
       CustomAlertDialog(
         imageAsset: JobstopPngImg.successful1,
-        title: "success".tr,
+        title: "Success".tr,
         description: "message_success_account_created".tr,
         confirmBtnColor: SippoColor.primarycolor,
         confirmBtnTitle: "ok".tr,

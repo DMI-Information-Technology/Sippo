@@ -13,8 +13,8 @@ import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/pr
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/user_projects_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/work_experiences_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_widget_model/jobstop_resume_file_info.dart';
+import 'package:jobspot/utils/file_downloader_service.dart';
 import 'package:jobspot/utils/states.dart';
-import 'package:jobspot/utils/storage_permission_service.dart';
 
 class ProfileUserViewController extends GetxController {
   final netController = InternetConnectionService.instance;
@@ -105,7 +105,7 @@ class ProfileUserViewController extends GetxController {
 
   void openFile(String fileUrl, [String? size]) async {
     if (netController.isNotConnected) return;
-    await StoragePermissionsService.openFile(
+    await FileDownloader.openFile(
       fileUrl,
       size: size,
       fn: (status) => loadingOverlay.status = status,

@@ -329,9 +329,9 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
   }
 
   Widget _buildWorkPlacesCompany(BuildContext context) {
-    final profileState = _controller.profileState;
-
+    print(_controller.company.locations?.map((e) => e.locationAddress?.name).toList());
     return Obx(() {
+      final profileState = _controller.profileState;
       return AddInfoProfileCard(
         title: 'label_work_places'.tr,
         hasNotInfoProfile: _controller.company.locations?.isEmpty == true ||

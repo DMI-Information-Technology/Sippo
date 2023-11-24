@@ -9,6 +9,7 @@ import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/sippo_controller/user_profile_controller/upload_cv_controller.dart';
 import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
 import 'package:jobspot/sippo_custom_widget/file_upload_widget.dart';
+import 'package:jobspot/sippo_custom_widget/loading_view_widgets/loading_scaffold.dart';
 import 'package:jobspot/sippo_custom_widget/resume_card_widget.dart';
 
 class SippoUploadCV extends StatefulWidget {
@@ -23,7 +24,8 @@ class _SippoUploadCVState extends State<SippoUploadCV> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return LoadingScaffold(
+      controller: _controller.loadingController,
       appBar: AppBar(),
       body: SingleChildScrollView(
         child: Padding(
@@ -73,7 +75,9 @@ class _SippoUploadCVState extends State<SippoUploadCV> {
       backgroundColor: SippoColor.backgroudHome,
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          await _controller.uploadCvFile();
+          _controller.uploadCvFile().then((value) {
+            Get.back();
+          });
         },
         child: Icon(Icons.save),
       ),

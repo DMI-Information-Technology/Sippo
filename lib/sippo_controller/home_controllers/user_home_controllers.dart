@@ -64,7 +64,83 @@ class UserHomeController extends GetxController {
     if (states.isLoading) return;
     changeStates(isLoading: true);
     await Future.wait([
+
       dashboardController.userInformationRefresh(),
+      if (Get.isRegistered<AdsViewController>())
+        AdsViewController.instance.fetchAds(),
+      fetchSpecializations(),
+      if (Get.isRegistered<JobStatisticBoardController>())
+        JobStatisticBoardController.instance.fetchJobStatistics(),
+      if (Get.isRegistered<JobsHomeViewController>())
+        JobsHomeViewController.instance.refreshJobs(),
+    ]);
+    changeStates(isLoading: false);
+  }
+
+  @override
+  void onInit() {
+    super.onInit();
+    Timer.periodic(const Duration(milliseconds: 700), (timer) {
+      if (Get.isRegistered<JobStatisticBoardController>()) {
+        JobStatisticBoardController.instance.fetchJobStatistics();
+        timer.cancel();
+      }
+    });
+    fetchSpecializations();
+  }
+}
+
+class GuestHomeController extends GetxController {
+  static GuestHomeController get instance => Get.find();
+  final dashboardController = GuestDashBoardController.instance;
+  final sharedDataService = SharedGlobalDataService.instance;
+
+  final userHomeState = UserHomePageState();
+
+
+
+  bool get isNetworkConnected => InternetConnectionService.instance.isConnected;
+  final _states = States().obs;
+
+  States get states => _states.value;
+
+  void resetStates() => _states.value = States();
+
+  void changeStates({
+    bool? isLoading,
+    bool? isSuccess,
+    bool? isError,
+    bool? isWarning,
+    String? message,
+    String? error,
+  }) {
+    _states.value = states.copyWith(
+      isLoading: isLoading,
+      isSuccess: isLoading == true ? false : isSuccess,
+      isError: isLoading == true ? false : isError,
+      message: message,
+      isWarning: isLoading == true ? false : isWarning,
+      error: error,
+    );
+  }
+
+  Future<void> fetchSpecializations() async {
+    final response = await SpecializationRepo.fetchSpecializationsResource();
+    await response?.checkStatusResponse(
+      onSuccess: (data, _) {
+        if (data != null)
+          userHomeState.specializationList = data.take(10).toList();
+      },
+      onValidateError: (validateError, _) {},
+      onError: (message, _) {},
+    );
+  }
+
+  void refreshPage() async {
+    if (!isNetworkConnected) return;
+    if (states.isLoading) return;
+    changeStates(isLoading: true);
+    await Future.wait([
       if (Get.isRegistered<AdsViewController>())
         AdsViewController.instance.fetchAds(),
       fetchSpecializations(),

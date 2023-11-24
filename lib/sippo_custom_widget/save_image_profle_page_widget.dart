@@ -65,9 +65,10 @@ class SaveImageProfilePageView extends StatelessWidget {
         ),
         bottomScreen: CustomButton(
           onTapped: () async {
-            onUpdateTapped(loadingUpdateImageController);
+            final nav = Navigator.of(context);
+            await onUpdateTapped(loadingUpdateImageController);
             loadingUpdateImageController.dispose();
-            Navigator.of(context).pop();
+            nav.pop();
           },
           text: "update".tr,
         ),

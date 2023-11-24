@@ -206,13 +206,16 @@ class JopSelctedUsingAppCard extends StatelessWidget {
               SizedBox(
                 height: height / 32,
               ),
-              AutoSizeText(
-                title,
-                style: dmsbold.copyWith(
-                  color: SippoColor.black,
-                  fontSize: FontSize.title3(context),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: AutoSizeText(
+                  title,
+                  style: dmsbold.copyWith(
+                    color: SippoColor.black,
+                    fontSize: FontSize.title3(context),
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
               ),
               SizedBox(
                 height: height / 128,

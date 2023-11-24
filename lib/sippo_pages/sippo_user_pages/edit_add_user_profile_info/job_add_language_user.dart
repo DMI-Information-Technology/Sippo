@@ -23,6 +23,7 @@ class LanguageUserAdd extends StatefulWidget {
 
 class _LanguageUserAddState extends State<LanguageUserAdd> {
   final _controller = LanguageEditAddController.instance;
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -97,7 +98,8 @@ class _LanguageUserAddState extends State<LanguageUserAdd> {
                     title: _buildTitleText(context, "Level".tr),
                     subtitle: Obx(
                       () => Text(
-                        _controller.newLanguage.level ?? "hint_text_no_level".tr,
+                        _controller.newLanguage.level ??
+                            "hint_text_no_level".tr,
                       ),
                     ),
                     onTap: () {
@@ -254,63 +256,56 @@ class _LanguageSkillLevelDialogState extends State<LanguageSkillLevelDialog> {
     Size size = MediaQuery.of(context).size;
     double width = size.width;
     // double height = size.height;
-    final double _dPadding = width / 16;
 
-    return AlertDialog(
-      actionsPadding: EdgeInsets.only(
-        left: _dPadding,
-        right: _dPadding,
-        bottom: _dPadding,
-      ),
-      titlePadding:
-          EdgeInsets.only(left: _dPadding, right: _dPadding, top: _dPadding),
+    return Dialog(
       shape: ContinuousRectangleBorder(
         borderRadius: BorderRadius.circular(width / 25),
       ),
-      title: AutoSizeText(
-        'select_language_skill_Level'.tr,
-        style: dmsbold.copyWith(
-          fontSize: FontSize.title4(context),
+      child: Padding(
+        padding: const EdgeInsets.all(26),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            AutoSizeText(
+              'select_language_skill_Level'.tr,
+              style: dmsbold.copyWith(
+                fontSize: FontSize.title4(context),
+              ),
+            ),
+            ListTile(
+              title: Text("Beginner"),
+              trailing: Radio(
+                value: "beginner".tr,
+                groupValue: widget.levelSelect,
+                onChanged: (value) => widget.onLevelChange(value),
+              ),
+            ),
+            ListTile(
+              title: Text("intermediate".tr),
+              trailing: Radio(
+                value: "Intermediate",
+                groupValue: widget.levelSelect,
+                onChanged: (value) => widget.onLevelChange(value),
+              ),
+            ),
+            ListTile(
+              title: Text("advanced".tr),
+              trailing: Radio(
+                value: "Advanced",
+                groupValue: widget.levelSelect,
+                onChanged: (value) => widget.onLevelChange(value),
+              ),
+            ),
+            CustomButton(
+                text: "label_done".tr,
+                onTapped: () {
+                  if (widget.onSkillLevelDone != null)
+                    widget.onSkillLevelDone!(widget.levelSelect);
+                  Get.back();
+                })
+          ],
         ),
       ),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          ListTile(
-            title: Text("Beginner"),
-            trailing: Radio(
-              value: "beginner".tr,
-              groupValue: widget.levelSelect,
-              onChanged: (value) => widget.onLevelChange(value),
-            ),
-          ),
-          ListTile(
-            title: Text("intermediate".tr),
-            trailing: Radio(
-              value: "Intermediate",
-              groupValue: widget.levelSelect,
-              onChanged: (value) => widget.onLevelChange(value),
-            ),
-          ),
-          ListTile(
-            title: Text("advanced".tr),
-            trailing: Radio(
-              value: "Advanced",
-              groupValue: widget.levelSelect,
-              onChanged: (value) => widget.onLevelChange(value),
-            ),
-          ),
-        ],
-      ),
-      actions: [
-        CustomButton(
-            text: "label_done".tr,
-            onTapped: () {
-              if (widget.onSkillLevelDone != null)
-                widget.onSkillLevelDone!(widget.levelSelect);
-              Get.back();
-            })
-      ],
     );
   }
 }

@@ -66,11 +66,12 @@ class EditCompanyProfileInfoController extends GetxController {
       newProfileInfo,
     );
     await response.checkStatusResponse(
-      onSuccess: (data, _) async {
+      onSuccess: (data, _) {
         if (data != null) {
-          await profileController.dashboard.refreshUserProfileInfo();
+          profileController.dashboard.refreshUserProfileInfo();
           profileEditState.setAll(companyDetails);
         }
+
         successState(true, 'company_profile_updated'.tr);
       },
       onValidateError: (validateError, _) {
@@ -186,7 +187,7 @@ class ProfileCompanyEditState {
       email: email.text.isBlank == true ? null : email.text,
       secondaryPhone:
           secondaryPhone.text.isBlank == true ? null : secondaryPhone.text,
-      website: website.text.isBlank == true ? null : website.text,
+      website: website.text.isBlank == true ? null : asUrlLink(website.text),
       city: city.text.isBlank == true ? null : city.text,
       employeesCount: employeesCount.text.isBlank == true
           ? null
@@ -197,6 +198,11 @@ class ProfileCompanyEditState {
       establishmentDate:
           establishedDate.text.isBlank == true ? null : establishedDate.text,
     );
+  }
+
+  String asUrlLink(String value) {
+    if (value.startsWith("https://")) return value;
+    return "https://$value";
   }
 
   void disposeTextControllers() {

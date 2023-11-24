@@ -19,6 +19,7 @@ import 'package:jobspot/sippo_custom_widget/top_description_info_company.dart';
 import 'package:jobspot/sippo_custom_widget/top_job_details_header.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/utils/helper.dart';
+import 'package:jobspot/utils/validating_input.dart';
 
 class SippoApplyJob extends StatefulWidget {
   const SippoApplyJob({Key? key}) : super(key: key);
@@ -122,9 +123,13 @@ class _SippoApplyJobState extends State<SippoApplyJob> {
             children: [
               CustomButton(
                 onTapped: () {
+                  final id =
+                      _controller.applyJobsState.jopDetails.specialization?.id;
+                  Get.until((route) {
+                    return Get.currentRoute == SippoRoutes.userDashboard;
+                  });
                   Get.toNamed(SippoRoutes.sippoJobFilterSearch, arguments: {
-                    'specialization_id':
-                        _controller.applyJobsState.jopDetails.specialization?.id
+                    'specialization_id': id,
                   });
                 },
                 text: "find_another_job".tr,
@@ -192,12 +197,15 @@ class _SippoApplyJobState extends State<SippoApplyJob> {
         ),
         SizedBox(height: context.fromHeight(CustomStyle.xxl)),
         InputBorderedField(
+          maxLength: 256,
+          showCounter: true,
           controller: _controller.applyJobsState.description,
           hintText: "hint_text_application_description".tr,
           maxLine: 5,
           verticalPaddingValue: context.fromWidth(
             CustomStyle.paddingValue,
           ),
+          validator: ValidatingInput.validateDescription,
         )
       ],
     );
@@ -283,7 +291,9 @@ class _SippoApplyJobState extends State<SippoApplyJob> {
             return TopDescriptionInfoCompanyWidget(
               startText: job.company?.name,
               middleText: job.locationAddress?.name,
-              endText: calculateElapsedTimeFromStringDate(job.createdAt),
+              endText: job.createdAt != null
+                  ? calculateElapsedTimeFromStringDate(job.createdAt)
+                  : null,
             );
           }),
         ],

@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:jobspot/custom_app_controller/switch_status_controller.dart';
 import 'package:jobspot/sippo_controller/dashboards_controller/user_dashboard_controller.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/profile_edit_model.dart';
 import 'package:jobspot/sippo_data/notification_repo/notifications_repo.dart';
@@ -49,6 +50,12 @@ class UserNotificationApplicationController extends GetxController {
       onValidateError: (validateError, _) {},
       onError: (message, _) {},
     );
+  }
+
+  final showNotificationReadAllButton = SwitchStatusController();
+
+  bool get hasNotificationsToRead {
+    return showNotificationReadAllButton.status;
   }
 
   final _selectedNotification = (-1).obs;

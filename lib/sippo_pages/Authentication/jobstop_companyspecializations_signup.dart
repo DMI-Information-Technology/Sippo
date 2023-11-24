@@ -32,84 +32,99 @@ class _CompanySignUpSpecializationsState
       appBar: AppBar(
         automaticallyImplyLeading: true,
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: width / 26,
-                  vertical: height / 50,
-                ),
-                child: Column(
-                  children: [
-                    AutoSizeText(
-                      "company_specializations".tr,
-                      style: dmsbold.copyWith(
-                        fontSize: FontSize.title2(context),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          _controller.fetchSpecializations();
+        },
+        child: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: width / 26,
+                    vertical: height / 50,
+                  ),
+                  child: Column(
+                    children: [
+                      AutoSizeText(
+                        "company_specializations".tr,
+                        style: dmsbold.copyWith(
+                          fontSize: FontSize.title2(context),
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
-                    ),
-                    SizedBox(height: height / 50),
-                    AutoSizeText(
-                      "choose_few_specialties".tr,
-                      style: dmsregular.copyWith(
-                        fontSize: FontSize.paragraph2(context),
+                      SizedBox(height: height / 50),
+                      AutoSizeText(
+                        "choose_few_specialties".tr,
+                        style: dmsregular.copyWith(
+                          fontSize: FontSize.paragraph2(context),
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      textAlign: TextAlign.center,
-                    ),
-                    SizedBox(height: height / 50),
-                    Obx(
-                      () {
-                        if (!_controller.isNetworkConnected) {
-                          return SizedBox.shrink();
-                        }
-                        final state = _controller.states;
-                        if (state.isError)
-                          return _buildErrorSpecialMessage(
-                            state.message.toString(),
-                          );
-                        if (state.isSuccess)
-                          return ListView.separated(
-                            itemCount:
-                                _controller.companySpecializationsName.length,
-                            itemBuilder: (context, index) {
-                              return Obx(
-                                () => _buildCheckboxListTile(
-                                  index,
-                                  _controller.companySpecializationsName[index],
-                                  _controller.isSpecialSelected(index),
+                      SizedBox(height: height / 50),
+                      Obx(
+                        () {
+                          if (!_controller.isNetworkConnected) {
+                            return Center(
+                              child: AutoSizeText(
+                                'connection_lost_message_1'.tr,
+                                textAlign: TextAlign.center,
+                                style: dmsmedium.copyWith(
+                                  fontSize: FontSize.title3(context),
+                                  color: SippoColor.primarycolor,
                                 ),
-                              );
-                            },
-                            separatorBuilder: (context, index) => SizedBox(
-                              height: height / 36,
-                            ),
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                          );
-                        return _buildLoadingSpecialMessage(context);
-                      },
-                    ),
-                  ],
+                              ),
+                            );
+                          }
+                          final state = _controller.states;
+                          if (state.isError)
+                            return _buildErrorSpecialMessage(
+                              state.message.toString(),
+                            );
+                          if (state.isSuccess)
+                            return ListView.separated(
+                              itemCount:
+                                  _controller.companySpecializationsName.length,
+                              itemBuilder: (context, index) {
+                                return Obx(
+                                  () => _buildCheckboxListTile(
+                                    index,
+                                    _controller
+                                        .companySpecializationsName[index],
+                                    _controller.isSpecialSelected(index),
+                                  ),
+                                );
+                              },
+                              separatorBuilder: (context, index) => SizedBox(
+                                height: height / 36,
+                              ),
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                            );
+                          return _buildLoadingSpecialMessage(context);
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: height / 50),
-              child: CustomButton(
-                onTapped: () {
-                  if (!_controller.isConnectionLostWithDialog)
-                    _onConfirmButtonClicked();
-                },
-                text: "confirm".tr,
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: height / 50),
+                child: CustomButton(
+                  onTapped: () {
+                    if (!_controller.isConnectionLostWithDialog)
+                      _onConfirmButtonClicked();
+                  },
+                  text: "Confirm".tr,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -173,9 +188,7 @@ class _CompanySignUpSpecializationsState
           title: "chooce_specialization".tr,
           description: "select_one_three_maximum_special".tr,
           confirmBtnTitle: "ok".tr,
-          onConfirm: () {
-            Get.back();
-          },
+          onConfirm: () => Get.back(),
         ),
       );
       return;

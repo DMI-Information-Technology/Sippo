@@ -188,6 +188,11 @@ class SearchJobsController extends GetxController {
 }
 
 class SearchJobsState {
+  final _isHeightOverAppBar = false.obs;
+
+  bool get isHeightOverAppBar => _isHeightOverAppBar.isTrue;
+
+  set isHeightOverAppBar(bool value) => _isHeightOverAppBar.value = value;
   var _pageNumber = 1;
 
   int get pageNumber => _pageNumber.toInt();

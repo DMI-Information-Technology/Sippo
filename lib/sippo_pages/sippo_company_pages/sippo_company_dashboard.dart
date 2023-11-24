@@ -85,7 +85,7 @@ class _SippoCompanyDashboardState extends State<SippoCompanyDashboard> {
                 height: context.height / 36,
                 color: Colors.grey,
               ),
-              activeIcon: Image.asset(JobstopPngImg.message,
+              activeIcon: Image.asset(JobstopPngImg.notifiBell,
                   height: context.height / 36, color: SippoColor.primarycolor),
               label: "",
             ),

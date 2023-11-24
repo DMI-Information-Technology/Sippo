@@ -9,6 +9,7 @@ import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/sippo_controller/company_profile_controller/edit_copmany_profile_information_controller.dart';
 import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
 import 'package:jobspot/sippo_custom_widget/body_widget.dart';
+import 'package:jobspot/sippo_custom_widget/network_bordered_circular_image_widget.dart';
 import 'package:jobspot/sippo_custom_widget/save_image_profle_page_widget.dart';
 import 'package:jobspot/sippo_custom_widget/success_message_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
@@ -16,8 +17,6 @@ import 'package:jobspot/utils/getx_text_editing_controller.dart';
 import 'package:jobspot/utils/helper.dart';
 import 'package:jobspot/utils/image_picker_service.dart';
 import 'package:jobspot/utils/validating_input.dart';
-
-import 'package:jobspot/sippo_custom_widget/network_bordered_circular_image_widget.dart';
 
 class EditCompanyProfilePage extends StatefulWidget {
   const EditCompanyProfilePage({Key? key}) : super(key: key);
@@ -266,9 +265,13 @@ class _EditCompanyProfilePageState extends State<EditCompanyProfilePage> {
           context.fromWidth(CustomStyle.paddingValue),
         ),
         bottomScreen: CustomButton(
-          onTapped: () async {
+          onTapped: () {
             if (_controller.formKey.currentState?.validate() == true) {
-              await _controller.onSaveSubmitted();
+              _controller.onSaveSubmitted().then((_) {
+                if (_controller.states.isSuccess) {
+                  Get.back();
+                }
+              });
             }
           },
           text: "save".tr,
@@ -387,16 +390,9 @@ class _EditCompanyProfilePageState extends State<EditCompanyProfilePage> {
   }
 
   Widget _buildLoadingProgress(BuildContext context) {
-    double height = MediaQuery.sizeOf(context).height;
     return Obx(() => ConditionalWidget(
           _controller.states.isLoading,
-          guaranteedBuilder: (__, _) => Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SizedBox(height: height / 36),
-              const CircularProgressIndicator(),
-            ],
-          ),
+          isLoading: _controller.states.isLoading,
         ));
   }
 

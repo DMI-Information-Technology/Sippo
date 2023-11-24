@@ -172,23 +172,23 @@ class _SippoUserNotificationState extends State<SippoUserNotification> {
               contentPadding: context.fromWidth(CustomStyle.xs),
               // isSelected: _controller.isMatchOptionOfIndex(0),
             ),
+            // SettingItemWidget(
+            //   title: 'option_turn_off_notification'.tr,
+            //   icon: Icon(
+            //     Icons.notifications_off_outlined,
+            //     // color: _controller.isMatchOptionOfIndex(1) ? Colors.white : null,
+            //   ),
+            //   onTap: () {
+            //     // _controller.selectedBottomOption = 1;
+            //     Get.back();
+            //   },
+            //   isHavingTrailingIcon: false,
+            //   isBordered: false,
+            //   contentPadding: context.fromWidth(CustomStyle.xs),
+            //   // isSelected: _controller.isMatchOptionOfIndex(1),
+            // ),
             SettingItemWidget(
-              title: 'option_turn_off_notification'.tr,
-              icon: Icon(
-                Icons.notifications_off_outlined,
-                // color: _controller.isMatchOptionOfIndex(1) ? Colors.white : null,
-              ),
-              onTap: () {
-                // _controller.selectedBottomOption = 1;
-                Get.back();
-              },
-              isHavingTrailingIcon: false,
-              isBordered: false,
-              contentPadding: context.fromWidth(CustomStyle.xs),
-              // isSelected: _controller.isMatchOptionOfIndex(1),
-            ),
-            SettingItemWidget(
-              title: 'setting'.tr,
+              title: 'settings'.tr,
               icon: Icon(
                 Icons.settings_rounded,
                 // color: _controller.isMatchOptionOfIndex(2) ? Colors.white : null,

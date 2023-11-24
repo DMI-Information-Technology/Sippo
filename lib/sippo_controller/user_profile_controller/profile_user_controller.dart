@@ -1,12 +1,10 @@
 import 'dart:async';
-import 'dart:io';
 
-import 'package:device_info_plus/device_info_plus.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
-import 'package:jobspot/sippo_controller/dashboards_controller/user_dashboard_controller.dart';
 import 'package:jobspot/core/Refresh.dart';
 import 'package:jobspot/custom_app_controller/switch_status_controller.dart';
+import 'package:jobspot/sippo_controller/dashboards_controller/user_dashboard_controller.dart';
 import 'package:jobspot/sippo_custom_widget/profile_completion_widget.dart';
 import 'package:jobspot/sippo_data/model/custom_file_model/custom_file_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_user_profile_view_model.dart';
@@ -24,9 +22,6 @@ import 'package:jobspot/sippo_data/user_repos/user_projects_repo.dart';
 import 'package:jobspot/sippo_data/user_repos/work_experiences_repo.dart';
 import 'package:jobspot/utils/file_downloader_service.dart';
 import 'package:jobspot/utils/states.dart';
-import 'package:jobspot/utils/storage_permission_service.dart';
-import 'package:open_file/open_file.dart';
-import 'package:path_provider/path_provider.dart';
 
 class ProfileUserController extends GetxController {
   final netController = InternetConnectionService.instance;
@@ -182,50 +177,16 @@ class ProfileUserController extends GetxController {
     fetchResources();
   }
 
-  Future<void> openFile(String? fileUrl) async {
+  Future<void> openFile(String? fileUrl, {String? size}) async {
     if (fileUrl == null) return;
-    if (!netController.isConnected) return;
-    final hasPermission = await StoragePermissionsService.storageRequested(
-      DeviceInfoPlugin(),
-    );
-    if (!hasPermission) return;
-
-    final String fileName = fileUrl.split('/').last;
-    Directory downloadDirectory;
-    if (Platform.isIOS) {
-      downloadDirectory = await getApplicationDocumentsDirectory();
-    } else {
-      downloadDirectory = Directory('/storage/emulated/0/Download');
-      if (!downloadDirectory.existsSync())
-        downloadDirectory = (await getExternalStorageDirectory())!;
-    }
-    final filePathName = "${downloadDirectory.path}/$fileName";
-    final savedFile = File(filePathName);
-    if (savedFile.existsSync()) {
-      OpenFile.open(savedFile.path);
-      return;
-    }
-    final fileDownloader = FileDownloader();
-    final response = await fileDownloader.downloadFile(
-      url: fileUrl,
-    );
-    await response?.checkStatusResponse(
-      onSuccess: (data, _) async {
-        final bytes = data?.bytesToList;
-        if (bytes != null) {
-          final raf = savedFile.openSync(mode: FileMode.write);
-          print(savedFile.path);
-          raf.writeFromSync(bytes);
-          raf.closeSync();
-          OpenFile.open(savedFile.path);
-        }
-      },
-      onValidateError: (validateError, _) {},
-      onError: (message, _) {},
-      onDone: (_) {
-        fileDownloader.close();
+    await FileDownloader.openFile(
+      fileUrl,
+      size: size,
+      fn: (value) {
+        loadingOverlayController.status = value;
       },
     );
+    return;
   }
 
   @override

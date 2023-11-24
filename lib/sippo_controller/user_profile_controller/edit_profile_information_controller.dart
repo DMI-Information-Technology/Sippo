@@ -2,19 +2,18 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jobspot/custom_app_controller/switch_status_controller.dart';
 import 'package:jobspot/sippo_controller/dashboards_controller/user_dashboard_controller.dart';
 import 'package:jobspot/sippo_controller/user_profile_controller/profile_user_controller.dart';
-import 'package:jobspot/custom_app_controller/switch_status_controller.dart';
 import 'package:jobspot/sippo_custom_widget/gender_picker_widget.dart';
+import 'package:jobspot/sippo_data/locations/locationsRepo.dart';
 import 'package:jobspot/sippo_data/model/custom_file_model/custom_file_model.dart';
+import 'package:jobspot/sippo_data/model/locations_model/location_address_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/profile_edit_model.dart';
 import 'package:jobspot/sippo_data/update_image_profile_repo/update_image_profile_repo.dart';
 import 'package:jobspot/sippo_data/user_repos/edit_profile_repo.dart';
 import 'package:jobspot/utils/getx_text_editing_controller.dart';
 import 'package:jobspot/utils/states.dart';
-
-import 'package:jobspot/sippo_data/locations/locationsRepo.dart';
-import 'package:jobspot/sippo_data/model/locations_model/location_address_model.dart';
 
 class EditProfileInfoController extends GetxController {
   final _profileImagePath = "".obs;
@@ -26,6 +25,13 @@ class EditProfileInfoController extends GetxController {
   final _states = States().obs;
 
   States get states => _states.value;
+
+  void set states(States value) => _states.value = value;
+  final _locationStates = States().obs;
+
+  States get locationStates => _locationStates.value;
+
+  void set locationStates(States value) => _locationStates.value = value;
   final GlobalKey<FormState> formKey = GlobalKey();
 
   bool get isEmailVerified => userDetails.isEmailVerified == true;
@@ -40,24 +46,35 @@ class EditProfileInfoController extends GetxController {
 
   Future<void> updateProfileInfo() async {
     final user = profileEditState.form;
+    final loc = profileEditState.selectedLocationAddress;
+
     print("is user profile true ${user == userDetails}");
     if (user == userDetails) {
+      if (loc == userDetails.locationAddress)
+        states = states.copyWith(
+          isWarning: true,
+          message: 'no changes to profile info for user',
+        );
       print('no changes to profile info for user ');
       return;
     }
     final response = await ProfileInfoRepo.updateProfile(profileEditState.form);
     await response.checkStatusResponse(
-      onSuccess: (data, _) async {
+      onSuccess: (data, _) {
         if (data != null) {
           _profileController.dashboard.user = data;
-
           profileEditState.setAll(userDetails);
-          successState(true, 'profile_updated'.tr);
-
+        } else {
+          UserDashBoardController.instance.userInformationRefresh();
         }
+        states = States(isSuccess: true);
       },
-      onValidateError: (validateError, _) {},
-      onError: (message, _) {},
+      onValidateError: (validateError, _) {
+        states = States(isError: true, message: validateError?.message);
+      },
+      onError: (message, _) {
+        states = States(isError: true, message: message);
+      },
     );
   }
 
@@ -75,16 +92,22 @@ class EditProfileInfoController extends GetxController {
       "latitude": 0,
     });
     await response?.checkStatusResponse(
-      onSuccess: (data, _) async {
+      onSuccess: (data, _) {
         final locationAddress = data?.locationAddress;
         if (data != null && locationAddress != null) {
           _profileController.dashboard.user = data;
           profileEditState.selectedLocationAddress = locationAddress;
-          successState(true, 'profile_updated'.tr);
+        } else {
+          UserDashBoardController.instance.userInformationRefresh();
         }
+        locationStates = States(isSuccess: true);
       },
-      onValidateError: (validateError, _) {},
-      onError: (message, _) {},
+      onValidateError: (validateError, _) {
+        locationStates = States(isError: true, message: validateError?.message);
+      },
+      onError: (message, _) {
+        locationStates = States(isError: true, message: message);
+      },
     );
   }
 
@@ -133,13 +156,15 @@ class EditProfileInfoController extends GetxController {
         "connection_lost_message_1".tr,
       );
     }
-    _states.value = States(isLoading: true);
+    states = States(isLoading: true);
+    locationStates = States(isLoading: true);
     await Future.wait([
       updateProfileInfo(),
       updateLocationAddress(),
     ]);
 
-    _states.value = states.copyWith(isLoading: false);
+    states = states.copyWith(isLoading: false);
+    locationStates = locationStates.copyWith(isLoading: false);
   }
 
   Future<void> onImageUpdatedSubmitted() async {
@@ -194,6 +219,7 @@ class ProfileEditState {
   void resetStates() => states.value = States();
 
   final _locationsAddress = <LocationAddress>[].obs;
+
   List<LocationAddress> get locationsAddressList => _locationsAddress.toList();
 
   List<String> get locationsAddressNameList => locationsAddressList

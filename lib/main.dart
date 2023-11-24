@@ -9,9 +9,9 @@ import 'package:jobspot/JobServices/ConnectivityController/internet_connection_c
 import 'package:jobspot/JobServices/app_local_language_services/app_local_language_service.dart';
 import 'package:jobspot/JobServices/fire_base_push_notifications.dart';
 import 'package:jobspot/JobStringtranslation/traslationstring.dart';
+import 'package:jobspot/sippo_custom_widget/gallery_image_widget_components.dart';
 import 'package:jobspot/sippo_themes/theme.dart';
 import 'package:jobspot/utils/exception_handler_utils.dart';
-
 import 'JobGlobalclass/routes.dart';
 import 'firebase_options.dart';
 import 'sippo_controller/AuthenticationController/sippo_auth_controller.dart';
@@ -45,6 +45,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ImageProviderType;
     // ScreenUtil.init(context, designSize: Size(360.0, 690.0));
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,

@@ -39,6 +39,8 @@ class SignUpCompanyController extends GetxController {
 
   CoordLocation get cordLocation => _cordLocation.value;
 
+  void set cordLocation(CoordLocation value) => _cordLocation.value = value;
+
   void setCordLocation({double? long, double? lat}) {
     _cordLocation.value = CoordLocation(
       longitude: long.toString(),

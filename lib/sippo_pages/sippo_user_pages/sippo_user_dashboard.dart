@@ -90,7 +90,7 @@ class _SippoUserDashboardState extends State<SippoUserDashboard> {
           onPressed: () {},
           backgroundColor: SippoColor.primarycolor,
           child: const Icon(
-            Icons.add,
+            Icons.facebook,
             size: 20,
             color: SippoColor.white,
           ),

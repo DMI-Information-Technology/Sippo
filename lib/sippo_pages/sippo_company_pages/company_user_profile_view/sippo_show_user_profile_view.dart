@@ -47,6 +47,7 @@ class _SippoCompanyUserProfileViewState
   @override
   Widget build(BuildContext context) {
     return LoadingScaffold(
+      canPopOnLoading: false,
       extendBodyBehindAppBar: true,
       controller: _controller.loadingOverlay,
       appBar: PreferredSize(
@@ -65,7 +66,7 @@ class _SippoCompanyUserProfileViewState
               return false;
             },
             leading: IconButton(
-              onPressed: () {},
+              onPressed: () => Get.back(),
               icon: Icon(
                 Icons.arrow_back_rounded,
                 color: isHeightOverAppBar ? Colors.black : Colors.white,

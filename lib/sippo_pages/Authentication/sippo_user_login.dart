@@ -66,7 +66,7 @@ class _SippoUserLoginState extends State<SippoUserLogin> {
                     ),
                     SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
                     AutoSizeText(
-                      "lorem ipsum dolor sit amet, consectetur adipiscing elit n elementum",
+                      "welcome_back_user_message".tr,
                       style: dmsregular.copyWith(
                         color: SippoColor.textColor,
                         fontSize: FontSize.paragraph3(context),
@@ -80,6 +80,7 @@ class _SippoUserLoginState extends State<SippoUserLogin> {
                       ),
                       child: InputField(
                         hintText: "phone_number".tr,
+                        maxLength: 10,
                         keyboardType: TextInputType.phone,
                         icon: const Icon(
                           Icons.phone_outlined,
@@ -253,7 +254,8 @@ class _SippoUserLoginState extends State<SippoUserLogin> {
                     CustomButton(
                       onTapped: () {
                         _controller.authController.resetStates();
-                        Get.offAllNamed(SippoRoutes.userDashboard);
+                        Get.offAllNamed(SippoRoutes.sippoGuest);
+
                       },
                       text: "Guest_login.".tr,
                       backgroundColor: SippoColor.white,
