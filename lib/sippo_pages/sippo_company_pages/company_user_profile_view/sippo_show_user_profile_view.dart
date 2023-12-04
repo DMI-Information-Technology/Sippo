@@ -116,6 +116,8 @@ class _SippoCompanyUserProfileViewState
 
   Widget _buildUserProfileHeader(BuildContext context) {
     return Obx(() => UserProfileHeaderWidget(
+          gender: _controller.profileState.profileInfo.gender,
+          nationality: _controller.profileState.profileInfo.nationality?.name,
           profileInfo: _controller.profileState.profileInfo,
           profileImage:
               _controller.profileState.profileInfo.profileImage?.url ?? '',

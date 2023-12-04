@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
+
 import '../JobGlobalclass/jobstopcolor.dart';
 import '../JobGlobalclass/jobstopfontstyle.dart';
 
@@ -39,17 +40,20 @@ class ConfirmationBottomSheet extends StatelessWidget {
               color: SippoColor.primarycolor,
             ),
           ),
-          SizedBox(height: height / 100),
-          Text(
-            description,
-            style:
-                dmsregular.copyWith(fontSize: 12, color: SippoColor.darkgrey),
-            textAlign: TextAlign.center,
-          ),
-          SizedBox(height: height / 26),
+          SizedBox(height: height / 32),
+          if (description.trim().isNotEmpty) ...[
+            Text(
+              description,
+              style:
+                  dmsregular.copyWith(fontSize: 12, color: SippoColor.darkgrey),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: height / 26),
+          ],
           CustomButton(
             onTapped: onConfirm,
             text: confirmTitle ?? "yes".tr,
+            backgroundColor: SippoColor.primarycolor,
           ),
           SizedBox(
             height: height / 56,

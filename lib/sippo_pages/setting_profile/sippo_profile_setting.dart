@@ -109,7 +109,7 @@ class _SippoProfileSettingState extends State<SippoProfileSetting> {
                   color: SippoColor.primarycolor,
                 ),
                 onTap: () {
-                  _showbottomsheet(context);
+                  LocalLanguageService.showChangeLanguageBottomSheet(context);
                 },
               ),
               SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
@@ -129,135 +129,6 @@ class _SippoProfileSettingState extends State<SippoProfileSetting> {
         ),
       ),
       backgroundColor: Colors.white,
-    );
-  }
-
-  void _showbottomsheet(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    double height = size.height;
-    showModalBottomSheet(
-      backgroundColor: SippoColor.white,
-      context: context,
-      builder: (BuildContext context) {
-        return StatefulBuilder(
-          builder: (BuildContext context, StateSetter setState) {
-            return Container(
-              decoration: BoxDecoration(
-                // color: Colors.white,
-                borderRadius: BorderRadius.circular(7),
-              ),
-              height: height / 4,
-              child: Column(
-                children: [
-                  Container(
-                    margin: EdgeInsets.only(
-                      top: height / 96,
-                      bottom: height / 76,
-                    ),
-                    child: Text(
-                      'select_view_language'.tr,
-                      style: dmsbold.copyWith(
-                        fontSize: 18,
-                        color: SippoColor.grey,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    height: 0.8,
-                    width: MediaQuery.of(context).size.width,
-                    color: SippoColor.grey,
-                  ),
-                  SizedBox(
-                    height: context.fromHeight(CustomStyle.xs),
-                    child: InkWell(
-                      highlightColor: SippoColor.transparent,
-                      splashColor: SippoColor.transparent,
-                      onTap: () async {
-                        Navigator.pop(context);
-
-                        await LocalLanguageService.changeLocale(
-                          LocaleLanguageType.english,
-                        );
-                        await GlobalStorageService.changeLanguage(
-                            LocaleLanguageType.english);
-                      },
-                      child: Center(
-                        child: Text(
-                          'english_lang'.tr,
-                          style: dmsregular.copyWith(
-                            fontSize: 15,
-                            color: SippoColor.black,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                  ColoredBox(
-                    color: Colors.grey,
-                    child: SizedBox(
-                      height: 0.8,
-                      width: MediaQuery.of(context).size.width,
-                    ),
-                  ),
-                  SizedBox(
-                    height: context.fromHeight(CustomStyle.xs),
-                    child: InkWell(
-                      highlightColor: SippoColor.transparent,
-                      splashColor: SippoColor.transparent,
-                      onTap: () async {
-                        Navigator.pop(context);
-                        await LocalLanguageService.changeLocale(
-                          LocaleLanguageType.arabic,
-                        );
-                        await GlobalStorageService.changeLanguage(
-                          LocaleLanguageType.arabic,
-                        );
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'arabic_lang'.tr,
-                            style: dmsregular.copyWith(
-                                fontSize: 15, color: SippoColor.black),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  ColoredBox(
-                    color: SippoColor.grey,
-                    child: SizedBox(
-                      height: 0.8,
-                      width: MediaQuery.of(context).size.width,
-                    ),
-                  ),
-                  SizedBox(
-                    height: context.fromHeight(CustomStyle.xs),
-                    child: InkWell(
-                      highlightColor: SippoColor.transparent,
-                      splashColor: SippoColor.transparent,
-                      onTap: () => Navigator.pop(context),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'cancel'.tr,
-                            style: dmsregular.copyWith(
-                              fontSize: FontSize.title5(context),
-                              color: SippoColor.black,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            );
-          },
-        );
-      },
     );
   }
 

@@ -84,7 +84,6 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
                   padding: EdgeInsets.all(context.fromHeight(CustomStyle.xxl)),
                   child: Image.asset(
                     JobstopPngImg.setting,
-
                     color: isHeightOverAppBar
                         ? Colors.black
                         : Colors.white, // Change this to your desired color
@@ -117,6 +116,8 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
             _buildEducationInfo(context),
             SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
             _buildSkillsInfo(context),
+            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+            _buildProfessions(context),
             SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
             _buildLanguagesInfo(context),
             SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
@@ -157,6 +158,7 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
   Widget _buildUserProfileHeader() {
     return Obx(() => UserProfileHeaderWidget(
           gender: _controller.user.gender,
+          nationality: _controller.user.nationality?.name,
           profileInfo: _controller.user,
           onEditProfilePressed: () => Get.toNamed(SippoRoutes.editUserProfile),
           profileImage: _controller.user.profileImage?.url ?? "",
@@ -361,6 +363,48 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
             SippoRoutes.skillsaddedit,
             arguments: {skillsListArg: _controller.profileState.skillsList},
           );
+        },
+      ),
+    );
+  }
+
+  Obx _buildProfessions(BuildContext context) {
+    return Obx(
+      () => AddInfoProfileCard(
+        title: 'profession_title'.tr,
+        hasNotInfoProfile: _controller.user.professions?.isEmpty == true,
+        leading: Image.asset(
+          JobstopPngImg.find_jobLog,
+          height: context.fromHeight(CustomStyle.l),
+          color: SippoColor.primarycolor,
+          colorBlendMode: BlendMode.srcIn,
+        ),
+        iconAction: _controller.user.professions?.isNotEmpty == true
+            ? Icon(
+                Icons.mode_edit_outline_outlined,
+                size: context.fromHeight(CustomStyle.l),
+                color: SippoColor.primarycolor,
+              )
+            : null,
+        profileInfo: [
+          ExpandableItemList.wrapBuilder(
+            isExpandable: (_controller.user.professions?.length ?? 0) > 1,
+            expandItems: _controller.profileState.showAllProfessions,
+            spacing: context.height / 220,
+            itemCount: _controller.user.professions?.length ?? 0,
+            itemBuilder: (BuildContext context, int index) {
+              final item = _controller.user.professions?[index];
+              return _buildChips(context, item?.name ?? '');
+            },
+            onExpandClicked: () {
+              _controller.profileState.showAllProfessions =
+                  !_controller.profileState.showAllProfessions;
+            },
+          ),
+        ],
+        onAddClicked: () {
+          if (_controller.netController.isNotConnected) return;
+          Get.toNamed(SippoRoutes.sippoProfessions);
         },
       ),
     );

@@ -9,7 +9,6 @@ import '../utils/app_use.dart';
 
 class NavigationAppRoute {
   static const selectedNavIndex = 'selected_nav_index';
-
   static void gotoRoute(String route) {
     switch (route) {
       case SippoRoutes.userDashboard:

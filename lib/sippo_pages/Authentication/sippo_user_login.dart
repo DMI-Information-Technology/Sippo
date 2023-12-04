@@ -4,12 +4,12 @@ import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
-import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
-import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
-
 import 'package:jobspot/JobGlobalclass/jobstopprefname.dart';
+import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
+import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
+import 'package:jobspot/JobServices/app_local_language_services/app_local_language_service.dart';
 import 'package:jobspot/sippo_controller/AuthenticationController/sippo_user_login_controller.dart';
 import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
 import 'package:jobspot/sippo_custom_widget/loading_view_widgets/overly_loading.dart';
@@ -45,7 +45,17 @@ class _SippoUserLoginState extends State<SippoUserLogin> {
     return Stack(
       children: [
         Scaffold(
-          appBar: AppBar(automaticallyImplyLeading: true),
+          appBar: AppBar(
+            automaticallyImplyLeading: true,
+            centerTitle: true,
+            title: TextButton(
+              onPressed: () {
+                Get.focusScope?.unfocus();
+                LocalLanguageService.showChangeLanguageBottomSheet(context);
+              },
+              child: Text("language".tr),
+            ),
+          ),
           body: SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.symmetric(
@@ -153,6 +163,7 @@ class _SippoUserLoginState extends State<SippoUserLogin> {
                         ),
                         TextButton(
                           onPressed: () {
+                            Get.focusScope?.unfocus();
                             if (_controller.phoneNumber.trim().isNotEmpty) {
                               Get.toNamed(
                                 SippoRoutes.forgetPassword,
@@ -188,7 +199,7 @@ class _SippoUserLoginState extends State<SippoUserLogin> {
                       text: "Login".tr,
                       backgroundColor: SippoColor.primarycolor,
                       textColor: SippoColor.white,
-                      onTapped: ()  {
+                      onTapped: () {
                         _controller.onSubmittedLogin();
                       },
                     ),
@@ -219,6 +230,7 @@ class _SippoUserLoginState extends State<SippoUserLogin> {
                         ),
                         TextButton(
                           onPressed: () {
+                            Get.focusScope?.unfocus();
                             Get.offAndToNamed(SippoRoutes.userSignupPage);
                           },
                           child: Text(
@@ -240,6 +252,7 @@ class _SippoUserLoginState extends State<SippoUserLogin> {
                     ),
                     CustomButton(
                       onTapped: () {
+                        Get.focusScope?.unfocus();
                         _controller.authController.resetStates();
                         Get.offAndToNamed(SippoRoutes.sippoCompanyLogin);
                       },
@@ -253,9 +266,9 @@ class _SippoUserLoginState extends State<SippoUserLogin> {
                     ),
                     CustomButton(
                       onTapped: () {
+                        Get.focusScope?.unfocus();
                         _controller.authController.resetStates();
                         Get.offAllNamed(SippoRoutes.sippoGuest);
-
                       },
                       text: "Guest_login.".tr,
                       backgroundColor: SippoColor.white,

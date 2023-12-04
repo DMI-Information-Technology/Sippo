@@ -32,22 +32,19 @@ class _SippoGuestDashboardState extends State<SippoGuestDashboard> {
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: _controller.selectedItemIndex == 0,
+      onPopInvoked: (pop) async {
         if (_controller.selectedItemIndex != 0) {
           _controller.selectedItemIndex = 0;
-          return false;
         }
-        return true;
       },
       child: Scaffold(
         body: Obx(() => _controller.pages[_controller.selectedItemIndex]),
-        floatingActionButtonLocation:
-            FloatingActionButtonLocation.endFloat,
+        floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
         floatingActionButton: FloatingActionButton(
           onPressed: () {
             Get.offAndToNamed(SippoRoutes.userLoginPage);
-
           },
           backgroundColor: SippoColor.primarycolor,
           child: const Icon(

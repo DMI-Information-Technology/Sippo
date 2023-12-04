@@ -39,6 +39,8 @@ class _ShowGeneralSearchCompaniesListState
           vertical: context.fromHeight(CustomStyle.paddingValue),
           horizontal: context.fromWidth(CustomStyle.paddingValue),
         ),
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+
         pagingController: _controller.pagingController,
         builderDelegate: PagedChildBuilderDelegate(
           firstPageErrorIndicatorBuilder: (context) =>
@@ -68,7 +70,9 @@ class _ShowGeneralSearchCompaniesListState
                   size: context.fromHeight(21),
                   outerBorderColor: Colors.grey[300],
                   outerBorderWidth: context.fromWidth(CustomStyle.huge2),
-                  errorWidget: (_, __, ___) => const CircleAvatar(),
+                  errorWidget: (_, __, ___) => Image.asset(JobstopPngImg.companysignup),
+                  placeholder: (_, __) => Image.asset(JobstopPngImg.companysignup),
+
                 ),
                 title: AutoSizeText(
                   item.name ?? '',
@@ -124,7 +128,10 @@ class _ShowGeneralSearchCompaniesListState
     return Obx(() => Align(
           alignment: Alignment.center,
           child: _controller.states.isLoading
-              ? const CircularProgressIndicator()
+              ? Lottie.asset(
+            JobstopPngImg.loadingProgress,
+            height: context.height / 9,
+          )
               : SizedBox(
                   width: context.width / 2,
                   child: CustomButton(

@@ -12,6 +12,7 @@ import 'package:jobspot/JobStringtranslation/traslationstring.dart';
 import 'package:jobspot/sippo_custom_widget/gallery_image_widget_components.dart';
 import 'package:jobspot/sippo_themes/theme.dart';
 import 'package:jobspot/utils/exception_handler_utils.dart';
+
 import 'JobGlobalclass/routes.dart';
 import 'firebase_options.dart';
 import 'sippo_controller/AuthenticationController/sippo_auth_controller.dart';
@@ -64,8 +65,8 @@ class MyApp extends StatelessWidget {
       locale: GlobalStorageService.savedLanguage.languageLocale,
       initialRoute:
           kIsWeb ? SippoRoutes.userSignupPage : SippoRoutes.splashScreen,
-      // initialRoute: SippoRoutes.identityverification,
-      // home: const JobNotification(),
+      // initialRoute: ,
+      // home: const SippoUserProfessions(),
       getPages: SippoRoutes.routes,
     );
   }

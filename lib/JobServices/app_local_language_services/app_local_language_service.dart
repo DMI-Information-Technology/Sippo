@@ -1,6 +1,8 @@
-import 'dart:ui';
-
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jobspot/JobGlobalclass/global_storage.dart';
+import 'package:jobspot/sippo_custom_widget/confirmation_bottom_sheet.dart';
+import 'package:jobspot/sippo_custom_widget/container_bottom_sheet_widget.dart';
 
 enum LocaleLanguageType {
   arabic('ar'),
@@ -63,5 +65,44 @@ class LocalLanguageService extends GetxService {
 
   static LocaleLanguageType get deviceLocaleType {
     return LocaleLanguageType.fromCode(Get.deviceLocale?.languageCode);
+  }
+
+  static void showChangeLanguageBottomSheet(BuildContext context) {
+    Get.bottomSheet(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(25),
+        ),
+      ),
+      backgroundColor: Colors.white,
+      isScrollControlled: true,
+      ContainerBottomSheetWidget(
+        children: [
+          ConfirmationBottomSheet(
+            title: "select_view_language".tr,
+            description: "",
+            confirmTitle: "english_lang".tr,
+            undoTitle: "arabic_lang".tr,
+            onConfirm: () async {
+              Navigator.pop(context);
+              await LocalLanguageService.changeLocale(
+                LocaleLanguageType.english,
+              );
+              await GlobalStorageService.changeLanguage(
+                  LocaleLanguageType.english);
+            },
+            onUndo: () async {
+              Navigator.pop(context);
+              await LocalLanguageService.changeLocale(
+                LocaleLanguageType.arabic,
+              );
+              await GlobalStorageService.changeLanguage(
+                LocaleLanguageType.arabic,
+              );
+            },
+          ),
+        ],
+      ),
+    );
   }
 }

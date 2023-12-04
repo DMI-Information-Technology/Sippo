@@ -5,6 +5,7 @@ import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/jobstopprefname.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
+import 'package:jobspot/JobServices/app_local_language_services/app_local_language_service.dart';
 import 'package:jobspot/sippo_controller/AuthenticationController/sippo_company_login_controller.dart';
 import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
 import 'package:jobspot/sippo_custom_widget/loading_view_widgets/overly_loading.dart';
@@ -45,7 +46,17 @@ class SippoCompanyLogin extends StatelessWidget {
     return Stack(
       children: [
         Scaffold(
-          appBar: AppBar(automaticallyImplyLeading: true),
+          appBar: AppBar(
+            automaticallyImplyLeading: true,
+            centerTitle: true,
+            title: TextButton(
+              onPressed: () {
+                Get.focusScope?.unfocus();
+                LocalLanguageService.showChangeLanguageBottomSheet(context);
+              },
+              child: Text("language".tr),
+            ),
+          ),
           body: SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.symmetric(
@@ -168,6 +179,7 @@ class SippoCompanyLogin extends StatelessWidget {
                       backgroundColor: SippoColor.primarycolor,
                       textColor: SippoColor.white,
                       onTapped: () {
+                        Get.focusScope?.unfocus();
                         controller.onSubmittedLogin();
                       },
                     ),
@@ -237,6 +249,7 @@ class SippoCompanyLogin extends StatelessWidget {
   }
 
   void _onPressedForgetPassword() {
+    Get.focusScope?.unfocus();
     final controller = CompanyLoginController.instance;
     Get.deviceLocale;
     if (controller.phoneNumber.isNotEmpty) {

@@ -25,7 +25,8 @@ const String userPostsAboutsCompanies = "posts";
 const String applyCompanyParam = "apply";
 const String userJobsSavedParam = "toggle-save";
 const String userJobsStatisticsEndpoint = "jobs-statistics";
-
+const String professionsEndpoint = "professions";
+const String nationalitiesEndpoint = "nationalities";
 /////////////////////////////////////////////////////////////
 ///////////// profile resource endpoints ///////////////////
 const String workExperiencesEndpoint = "user/work-experiences";
@@ -36,6 +37,7 @@ const String userSkillsEndpoint = "user/skills";
 const String userProjectsEndpoint = "user/projects";
 
 const String userLanguageEndpoint = "user/languages";
+const String userProfessionEndpoint = "user/profile/professions";
 const String userCvEndpoint = "user/cv";
 
 /////////////////////////////////////////////////////////

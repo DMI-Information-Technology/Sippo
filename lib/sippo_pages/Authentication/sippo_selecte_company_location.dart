@@ -8,6 +8,7 @@ import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
+import 'package:jobspot/JobServices/app_local_language_services/app_local_language_service.dart';
 import 'package:jobspot/custom_app_controller/google_map_view_controller.dart';
 import 'package:jobspot/sippo_controller/AuthenticationController/sippo_signup_company_controller.dart';
 import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
@@ -51,10 +52,9 @@ class _SippoLocationCompanySelectorState
     Size size = MediaQuery.of(context).size;
     double height = size.height;
     double width = size.width;
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      onPopInvoked: (pop) async {
         _signUpCompanyController.companyAddress = LocationAddress();
-        return true;
       },
       child: Scaffold(
         appBar: AppBar(
@@ -67,6 +67,14 @@ class _SippoLocationCompanySelectorState
             icon: Icon(Icons.arrow_back_rounded),
           ),
           title: Text("selecte_address".tr, style: dmsbold),
+          actions: [
+            TextButton(
+              onPressed: () {
+                LocalLanguageService.showChangeLanguageBottomSheet(context);
+              },
+              child: Text("language".tr),
+            ),
+          ],
         ),
         body: BodyWidget(
           isScrollable: true,

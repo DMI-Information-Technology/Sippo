@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
 import 'package:jobspot/custom_app_controller/switch_status_controller.dart';
 import 'package:jobspot/sippo_controller/dashboards_controller/user_dashboard_controller.dart';
 import 'package:jobspot/sippo_controller/user_profile_controller/profile_user_controller.dart';
@@ -9,9 +10,11 @@ import 'package:jobspot/sippo_custom_widget/gender_picker_widget.dart';
 import 'package:jobspot/sippo_data/locations/locationsRepo.dart';
 import 'package:jobspot/sippo_data/model/custom_file_model/custom_file_model.dart';
 import 'package:jobspot/sippo_data/model/locations_model/location_address_model.dart';
+import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/nationality_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/profile_edit_model.dart';
 import 'package:jobspot/sippo_data/update_image_profile_repo/update_image_profile_repo.dart';
 import 'package:jobspot/sippo_data/user_repos/edit_profile_repo.dart';
+import 'package:jobspot/sippo_data/user_repos/nationnality_repo.dart';
 import 'package:jobspot/utils/getx_text_editing_controller.dart';
 import 'package:jobspot/utils/states.dart';
 
@@ -147,6 +150,35 @@ class EditProfileInfoController extends GetxController {
     );
   }
 
+  final _fetchStates = States().obs;
+
+  States get fetchNationalityStates => _fetchStates.value;
+
+  void set fetchNationalityStates(States value) => _fetchStates.value = value;
+
+  Future<void> fetchNationalities() async {
+    if (InternetConnectionService.instance.isNotConnected) return;
+    if (fetchNationalityStates.isLoading) return;
+    fetchNationalityStates = States(isLoading: true);
+    final response = await NationalityRepo.fetchNationality();
+    fetchNationalityStates = States(isLoading: false);
+    await response.checkStatusResponse(
+      onSuccess: (data, statusType) {
+        if (data != null) {
+          profileEditState.nationalities = data;
+          fetchNationalityStates = States(isSuccess: true);
+        }
+      },
+      onValidateError: (validateError, statusType) {
+        fetchNationalityStates =
+            States(isError: true, message: validateError?.message);
+      },
+      onError: (message, statusType) {
+        fetchNationalityStates = States(isError: true, message: message);
+      },
+    );
+  }
+
   String get profileImagePath => _profileImagePath.toString().trim();
 
   Future<void> onSaveSubmitted() async {
@@ -222,13 +254,41 @@ class ProfileEditState {
 
   List<LocationAddress> get locationsAddressList => _locationsAddress.toList();
 
+  set locationsAddressList(List<LocationAddress> value) =>
+      _locationsAddress.value = value;
+
+  final _nationalities = <NationalityModel>[].obs;
+
+  List<NationalityModel> get nationalities => _nationalities.toList();
+
+  set nationalities(List<NationalityModel> value) =>
+      _nationalities.value = value;
+  final _selectedNationality = NationalityModel().obs;
+
+  NationalityModel get selectedNationality => _selectedNationality.value;
+
+  void set selectedNationality(NationalityModel value) {
+    _selectedNationality.value = value;
+  }
+
+  final _searchNationalityKey = "".obs;
+
+  String get searchNationalityKey => _searchNationalityKey.trim();
+
+  set searchNationalityKey(String value) => _searchNationalityKey.value = value;
+
+  List<NationalityModel> filteredNationalities(String searchKey) =>
+      _nationalities.where((e) {
+        final name = e.name;
+        if (name == null || name.isEmpty) return false;
+        return name.toLowerCase().contains(searchKey.trim().toLowerCase());
+      }).toList();
+
   List<String> get locationsAddressNameList => locationsAddressList
       .where((e) => e.name != null)
       .map((e) => e.name ?? '')
       .toList();
 
-  set locationsAddressList(List<LocationAddress> value) =>
-      _locationsAddress.value = value;
   final _selectedLocationAddressName = LocationAddress().obs;
 
   LocationAddress get selectedLocationAddress =>
@@ -277,6 +337,7 @@ class ProfileEditState {
     secondaryPhone.text = data?.secondaryPhone ?? "";
     gender.text = data?.gender ?? "";
     bio.text = data?.bio ?? '';
+    selectedNationality = data?.nationality ?? selectedNationality;
   }
 
   ProfileInfoModel get form {
@@ -287,6 +348,7 @@ class ProfileEditState {
       secondaryPhone: secondaryPhone.text,
       gender: gender.text,
       bio: bio.text,
+      nationality: selectedNationality,
     );
   }
 

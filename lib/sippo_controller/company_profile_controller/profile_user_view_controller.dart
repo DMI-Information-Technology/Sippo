@@ -59,6 +59,8 @@ class ProfileUserViewController extends GetxController {
     await response?.checkStatusResponse(
       onSuccess: (data, _) {
         if (data != null) {
+          print('ProfileUserViewController.fetchUserProfileResources: ${data.userInfo?.locationAddress
+          }');
           profileState.setAll(data);
         }
       },
@@ -129,9 +131,14 @@ class ProfileState {
   final _profileInfo = ProfileInfoModel().obs;
 
   void setAll(ProfileViewResourceModel data) {
-    profileInfo =
-        data.userInfo?.copyWith(profileImage: data.image, cv: data.cv) ??
-            profileInfo;
+    print('ProfileState.setAll:${data.userInfo?.locationAddress?.name}');
+    profileInfo = data.userInfo?.copyWith(
+          profileImage: data.image,
+          cv: data.cv,
+          nationality: data.nationality,
+
+        ) ??
+        profileInfo;
     aboutMeText = data.userInfo?.bio ?? '';
     skillsList = data.skills?.skills ?? skillsList;
     educationList = data.educations ?? educationList;

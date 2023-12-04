@@ -3,11 +3,12 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
 import 'package:jobspot/sippo_controller/sippo_search_controller/general_search_controller.dart';
 import 'package:jobspot/sippo_data/company_repos/compan_user_profile_view_repo.dart';
-import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_user_profile_view_model.dart';
-import 'package:jobspot/utils/states.dart';
-
 import 'package:jobspot/sippo_data/locations/locationsRepo.dart';
 import 'package:jobspot/sippo_data/model/locations_model/location_address_model.dart';
+import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_user_profile_view_model.dart';
+import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/profession_user_model.dart';
+import 'package:jobspot/sippo_data/user_repos/professions_repo.dart';
+import 'package:jobspot/utils/states.dart';
 
 class GeneralSearchProfilesViewController extends GetxController {
   final generalSearchController = GeneralSearchController.instance;
@@ -18,7 +19,9 @@ class GeneralSearchProfilesViewController extends GetxController {
   final searchProfilesViewState = GeneralSearchProfilesViewState();
 
   final _states = States().obs;
+
   States get states => _states.value;
+
   void changeStates({
     bool? isLoading,
     bool? isSuccess,
@@ -35,6 +38,7 @@ class GeneralSearchProfilesViewController extends GetxController {
         isWarning: isLoading == true ? false : isWarning,
         error: error,
       );
+
   Future<void> fetchSearchProfilesUsersPages(
     int pageKey,
   ) async {
@@ -84,6 +88,35 @@ class GeneralSearchProfilesViewController extends GetxController {
     );
   }
 
+  final _fetchStates = States().obs;
+
+  States get fetchProfessionsStates => _fetchStates.value;
+
+  void set fetchProfessionsStates(States value) => _fetchStates.value = value;
+
+  Future<void> fetchProfessions() async {
+    if (InternetConnectionService.instance.isNotConnected) return;
+    if (fetchProfessionsStates.isLoading) return;
+    fetchProfessionsStates = States(isLoading: true);
+    final response = await ProfessionsRepo.fetchProfessions();
+    fetchProfessionsStates = States(isLoading: false);
+    await response?.checkStatusResponse(
+      onSuccess: (data, statusType) {
+        if (data != null) {
+          searchProfilesViewState.professions = data;
+          fetchProfessionsStates = States(isSuccess: true);
+        }
+      },
+      onValidateError: (validateError, statusType) {
+        fetchProfessionsStates =
+            States(isError: true, message: validateError?.message);
+      },
+      onError: (message, statusType) {
+        fetchProfessionsStates = States(isError: true, message: message);
+      },
+    );
+  }
+
   void retryLastFailedRequest() {
     print("dd");
     if (InternetConnectionService.instance.isNotConnected) return;
@@ -123,6 +156,48 @@ class GeneralSearchProfilesViewController extends GetxController {
 
 class GeneralSearchProfilesViewState {
   final _locationsAddress = <LocationAddress>[].obs;
+  final _showFilterOptions = true.obs;
+  final _selectedProfession = ProfessionUserModel().obs;
+  final _professions = <ProfessionUserModel>[].obs;
+  final _searchProfessionKey = "".obs;
+  final _showUserFilteringSearch = false.obs;
+
+  bool get showUserFilteringSearch => _showUserFilteringSearch.isTrue;
+
+  void set showUserFilteringSearch(bool value) =>
+      _showUserFilteringSearch.value = value;
+
+  String get searchProfessionKey => _searchProfessionKey.trim();
+
+  set searchProfessionKey(String value) => _searchProfessionKey.value = value;
+
+  bool get professionsIsNotEmpty => _professions.isNotEmpty;
+
+  List<ProfessionUserModel> get professions => _professions.toList();
+
+  void set professions(List<ProfessionUserModel> value) =>
+      _professions.value = value;
+
+  ProfessionUserModel get selectedProfession => _selectedProfession.value;
+
+  void set selectedProfession(ProfessionUserModel value) {
+    if (selectedProfession == value) {
+      _selectedProfession.value = ProfessionUserModel();
+      return;
+    }
+    _selectedProfession.value = value;
+  }
+
+  List<ProfessionUserModel> filteredProfession(String searchKey) =>
+      _professions.where((e) {
+        final name = e.name;
+        if (name == null || name.isEmpty) return false;
+        return name.toLowerCase().contains(searchKey.trim().toLowerCase());
+      }).toList();
+
+  bool get showFilterOptions => _showFilterOptions.isTrue;
+
+  void set showFilterOptions(bool value) => _showFilterOptions.value = value;
 
   List<LocationAddress> get locationsAddressList => _locationsAddress.toList();
   final states = States().obs;
@@ -153,6 +228,7 @@ class GeneralSearchProfilesViewState {
         'page': '${pageNumber}',
         'per_page': "6",
         'location_id': (selectedLocationAddress.id ?? "").toString(),
+        'profession_id': (selectedProfession.id ?? "").toString(),
         'name': GeneralSearchController
             .instance.generalSearchState.searchController.text
             .split(" ")

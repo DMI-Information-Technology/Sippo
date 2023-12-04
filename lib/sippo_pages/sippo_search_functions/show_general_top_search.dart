@@ -32,9 +32,10 @@ class _SippoGeneralTopSearchState extends State<SippoGeneralTopSearch> {
     return RefreshIndicator(
       onRefresh: refreshTop,
       child: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: context.fromWidth(CustomStyle.paddingValue),
-          vertical: context.fromHeight(CustomStyle.paddingValue),
+        padding: EdgeInsets.only(
+          left: context.fromWidth(CustomStyle.paddingValue),
+          right: context.fromWidth(CustomStyle.paddingValue),
+          top: context.fromHeight(CustomStyle.paddingValue),
         ),
         child: CustomScrollView(
           slivers: [

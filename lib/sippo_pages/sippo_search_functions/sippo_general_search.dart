@@ -80,6 +80,9 @@ class _SippoGeneralSearchState extends State<SippoGeneralSearch>
 
   AppBar _buildAppBar(BuildContext context) {
     return AppBar(
+      notificationPredicate: (notification) {
+        return false;
+      },
       toolbarHeight:
           kToolbarHeight + context.fromHeight(CustomStyle.paddingValue),
       leading: Obx(

@@ -37,7 +37,7 @@ class _ShowGeneralTopSearchJobsListState
         newPageErrorIndicatorBuilder: (context) => _buildErrorNewLoad(context),
         newPageProgressIndicatorBuilder: (context) =>
             _buildNewPageProgress(context),
-        firstPageProgressIndicatorBuilder: (context) =>  const SizedBox.shrink(),
+        firstPageProgressIndicatorBuilder: (context) => const SizedBox.shrink(),
         itemBuilder: (context, item, index) {
           return InkWell(
             onTap: () {
@@ -75,27 +75,35 @@ class _ShowGeneralTopSearchJobsListState
   }
 
   Widget _buildNewPageProgress(BuildContext context) {
-    return Obx(() => Align(
-          alignment: Alignment.center,
-          child: _controller.states.isLoading
-              ? const CircularProgressIndicator()
-              : SizedBox(
-                  width: context.width / 2,
-                  child: CustomButton(
-                    onTapped: () {
-                      _controller.generalSearchController.tabController.index =
-                          2;
-                      if (Get.isRegistered<GeneralSearchJobsController>()) {
-                        GeneralSearchJobsController.instance.refreshPage();
-                      }
-                    },
-                    text: '${'load_more'.tr}...',
-                    backgroundColor: Colors.transparent,
-                    textColor: SippoColor.primarycolor,
-                    borderColor: SippoColor.primarycolor,
-                  ),
-                ),
-        ));
+    return Center(
+      child:
+          // _controller.states.isLoading
+          //     ? Lottie.asset(
+          //         JobstopPngImg.loadingProgress,
+          //         height: context.height / 9,
+          //       )
+          //     :
+          Padding(
+        padding: EdgeInsets.only(
+          bottom: context.fromHeight(CustomStyle.paddingValue),
+        ),
+        child: SizedBox(
+          width: context.width / 2,
+          child: CustomButton(
+            onTapped: () {
+              _controller.generalSearchController.tabController.index = 2;
+              if (Get.isRegistered<GeneralSearchJobsController>()) {
+                GeneralSearchJobsController.instance.refreshPage();
+              }
+            },
+            text: '${'load_more'.tr}...',
+            backgroundColor: Colors.transparent,
+            textColor: SippoColor.primarycolor,
+            borderColor: SippoColor.primarycolor,
+          ),
+        ),
+      ),
+    );
   }
 
   Widget _buildErrorNewLoad(BuildContext context) {

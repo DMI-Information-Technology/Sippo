@@ -255,6 +255,7 @@ class ProfileState {
   final _showAllProjects = false.obs;
   final _showAllEdui = false.obs;
   final _showAllSkills = false.obs;
+  final _showAllProfessions = false.obs;
   final _showAllLangs = false.obs;
   final _wei = <WorkExperiencesModel>[].obs;
   final _projectsList = <UserProjectsModel>[].obs;
@@ -297,6 +298,7 @@ class ProfileState {
   bool get showAllProjects => _showAllProjects.isTrue;
 
   bool get showAllEdui => _showAllEdui.isTrue;
+  bool get showAllProfessions => _showAllProfessions.isTrue;
 
   bool get showAllSkills => _showAllSkills.isTrue;
 
@@ -311,6 +313,7 @@ class ProfileState {
   void set showAllSkills(bool value) => _showAllSkills.value = value;
 
   void set showAllLangs(bool value) => _showAllLangs.value = value;
+  void set showAllProfessions(bool value) => _showAllProfessions.value = value;
 
   CustomFileModel get cvFile => _cvFile.value;
 

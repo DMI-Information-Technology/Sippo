@@ -28,6 +28,7 @@ import 'package:jobspot/SippoControllerBinding/profile_binding/user_job_descript
 import 'package:jobspot/SippoControllerBinding/profile_binding/user_profile_controller_binding.dart';
 import 'package:jobspot/SippoControllerBinding/profile_binding/user_search_jobs_filter_controller_binding.dart';
 import 'package:jobspot/SippoControllerBinding/profile_binding/user_upload_cv_controller_binding.dart';
+import 'package:jobspot/sippo_controller/user_profile_controller/professions_user_controller.dart';
 import 'package:jobspot/sippo_pages/Authentication/jobstop_check_resetpass_otp_msg.dart';
 import 'package:jobspot/sippo_pages/Authentication/jobstop_companyspecializations_signup.dart';
 import 'package:jobspot/sippo_pages/Authentication/jobstop_forget.dart';
@@ -69,6 +70,7 @@ import 'package:jobspot/sippo_pages/sippo_user_pages/job_editprofile.dart';
 import 'package:jobspot/sippo_pages/sippo_user_pages/jobstop_upload_cv.dart';
 import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_user_dashboard.dart';
 import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_user_notification_application/sippo_user_notification_application.dart';
+import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_user_professions.dart';
 import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_user_profile.dart';
 
 import '../SippoControllerBinding/profile_binding/edit_add_projects_controller_binding.dart';
@@ -110,6 +112,7 @@ class SippoRoutes {
   static const String otpresetpassmsgpage = "/reset-pass-otp";
   static const String sippoJobFilterSearch = "/sippo-job-search";
   static const String sippoFilterOptionJobSearch = "/sippo-filter-job-search";
+  static const String sippoProfessions = "/sippo-user-professions";
   static const String filterSpecializationsJobsSearch =
       "/sippo-filter-specializations-job-search";
   static const String sippoGeneralSearchPage = "/sippo-general-search";
@@ -134,6 +137,13 @@ class SippoRoutes {
   static List<GetPage> routes = [
     GetPage(name: splashScreen, page: () => const SippoSplash()),
     GetPage(name: onboarding, page: () => const SippoOnboarding()),
+    GetPage(
+      name: sippoProfessions,
+      page: () => const SippoUserProfessions(),
+      binding: BindingsBuilder.put(
+        () => ProfessionsUserController(),
+      ),
+    ),
     GetPage(
       name: userLoginPage,
       page: () => const SippoUserLogin(),

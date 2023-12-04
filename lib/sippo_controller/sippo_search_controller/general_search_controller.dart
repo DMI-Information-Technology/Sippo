@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
 import 'package:jobspot/sippo_controller/sippo_search_controller/general_search_users_view_controller.dart';
 import 'package:jobspot/utils/getx_text_editing_controller.dart';
-
 import 'general_search_companies_controller.dart';
 import 'genral_search_jobs_controller.dart';
 
@@ -84,6 +83,7 @@ class GeneralSearchState {
   var _tabsIndex = 0;
   final searchController = GetXTextEditingController();
   bool isSearchFiledCleared = true;
+
 
   int get tabsIndex => _tabsIndex;
 

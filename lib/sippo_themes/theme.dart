@@ -6,6 +6,7 @@ class JobstopMyThemes {
   static final lightTheme = ThemeData(
     primaryColor: SippoColor.black,
     primarySwatch: SippoColor.primarycolorSwatch,
+    useMaterial3: false,
     textTheme: const TextTheme(),
     fontFamily: 'TajawalRegular',
     scaffoldBackgroundColor: SippoColor.backgroudHome,
@@ -21,7 +22,7 @@ class JobstopMyThemes {
   );
 
   static final darkTheme = ThemeData(
-    fontFamily: 'DMSansRegular',
+    fontFamily: 'TajawalRegular',
     brightness: Brightness.dark,
     scaffoldBackgroundColor: SippoColor.black,
     appBarTheme: AppBarTheme(

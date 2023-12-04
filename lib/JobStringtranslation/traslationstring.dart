@@ -35,11 +35,12 @@ class AppTranslation extends Translations {
           'hint_text_search_skills': "search skills",
           'select_your_gender': "Select your Gender",
           'location_address': "Location Address",
-          'select_location_address': "Select your location place",
+          'select_location_address': "Select your location place...",
           'phone_number_required': "Phone number field is required.",
           'invalid_url': "Invalid URL",
           'label_add_cv': "Add Resume",
           'title_upload_cv': "Upload your CV",
+          'no_professions_found': "No Professions found",
           'Full_name': "Full Name",
           'email_verification': "Email Verification",
           'check_email_verification_dialog_desc':
@@ -176,6 +177,8 @@ class AppTranslation extends Translations {
           'password_changed': "Password changed",
           'message_no_specializations_found':
               "No specializations is found, Reload the page.",
+          'message_no_profession_found':
+              "No Professions is found, Reload the page.",
           'message_password_changed':
               "Your password has been changed successfully.",
           'message_send_secret_code': "Secret code message will be sent after ",
@@ -289,7 +292,7 @@ class AppTranslation extends Translations {
           'talking': "Talking",
           'written': "Written",
           'search_language': "Search Language",
-          'search': "Search",
+          'search': "Search...",
           'top': "Top",
           'companies': "Companies",
           'jobs': "Jobs",
@@ -388,6 +391,9 @@ class AppTranslation extends Translations {
           'apply_now': "Apply Now",
           'title_apply': "Apply",
           'back_to_home': "Back to home",
+          'Nationality': "Nationality",
+          'select_nationality': "Select nationality...",
+
           'find_another_job': "Find Another Job",
           'title_workplace_type': "Workplace Type",
           'upload_cv': "Upload CV",
@@ -464,10 +470,15 @@ class AppTranslation extends Translations {
               "you must remove the old image from the post before upload new one.",
           'pick_specialization_message':
               'You have pick one specialization at least and maximum 3.',
+          'pick_professions_message':
+              'You have pick one profession at least and maximum 3.',
           'nothing_changed_specializations':
               'Nothing is Changed in Specializations.',
           'specializations_company_title': 'Specializations Company',
+          'profession_title': 'Professions',
+          'selected_profession': 'Select professions...',
           'specializations_added ': 'Specializations is Added ',
+          'professions_added': 'Professions is Added ',
           'nothing_changed_profile_info':
               'Nothing is Changed in Profile Information.',
           'company_profile_updated': 'company Profile is updated',
@@ -530,6 +541,8 @@ class AppTranslation extends Translations {
               'Please complete your company account information to attract the most job applicants.',
           'reload_page_message': 'Reload the page or try again later.',
           'no_items_found_title': 'No items found',
+          "users_search_filter_panel": "User search filtering",
+
           'saved_job_empty_message': "You don't have any jobs saved",
           'select_location': "Select your location place.",
           'no_posts_found_title': 'No posts found',
@@ -542,6 +555,11 @@ class AppTranslation extends Translations {
           'saved_job_empty': 'Saved Job List is Empty',
           'show_cv': 'Show CV',
           'is_hq_label': 'is HQ',
+          "Skip": "Skip",
+          "select_professions": "Select professions",
+          "select_professions_message":
+              'Select your interests that you want so that the opportunity of your being shortlisted for corporate jobs is higher.',
+
           'confirm_delete_saved_jobs_message':
               "are you sure you want remove all saved jobs?",
           'welcome_back_user_message':
@@ -554,6 +572,7 @@ class AppTranslation extends Translations {
           "Email": "البريد الإلكتروني",
           "Password": "كلمة المرور",
           "Confirm_Password": "تأكيد كلمة المرور",
+          'selected_profession': 'أختر اهتمامك...',
           "Remember_me": "تذكرني",
           "Forget_Password": "نسيت كلمة المرور؟",
           "Forget_Password_Title": "استعادة كلمة المرور",
@@ -579,8 +598,10 @@ class AppTranslation extends Translations {
           "label_add_skills": "إضافة مهارات",
           "hint_text_search_skills": "البحث عن المهارات",
           "select_your_gender": "اختر جنسك",
+          "select_professions_message":
+              'اختر اهتماماتك التي ترغب فيها حتى تزيد من فرص ترشيحك للوظائف',
           "location_address": "عنوان الموقع",
-          "select_location_address": "اختر مكان موقعك",
+          "select_location_address": "اختر مكان موقعك...",
           "phone_number_required": "حقل رقم الهاتف مطلوب",
           "invalid_url": "رابط غير صالح",
           "label_add_cv": "إضافة سيرة ذاتية",
@@ -597,6 +618,7 @@ class AppTranslation extends Translations {
           "Informations": "المعلومات",
           "Position": "المنصب",
           "Qualification": "المؤهل",
+          "Skip": "تخطي",
           "hint_text_enter_email": "أدخل بريدك الإلكتروني",
           "Experience": "الخبرة",
           "Job_Type": "نوع الوظيفة",
@@ -609,6 +631,7 @@ class AppTranslation extends Translations {
           "Head_office": "المكتب الرئيسي",
           "Type": "النوع",
           "Since": "منذ",
+          "select_professions": "أختر اهتماماتك",
           "Company_Gallery": "معرض الشركة",
           "Filter": "تصفية",
           "Category": "التصنيف",
@@ -635,8 +658,8 @@ class AppTranslation extends Translations {
           "RTL": "من اليمين إلى اليسار",
           "LTR": "من اليسار إلى اليمين",
           "select_view_language": "اختر لغة عرض التطبيق",
-          "Chooce_specialization": "اختر التخصص",
-          "Select_one_three_maximum_special":
+          "chooce_specialization": "اختر التخصص",
+          "select_one_three_maximum_special":
               "الرجاء اختيار تخصص واحد أو ثلاثة في الحد الأقصى.",
           "Choose_App_Using_Page": "اختر كيف تريد استخدام التطبيق",
           "Company_Login": "تسجيل دخول الشركة",
@@ -715,6 +738,8 @@ class AppTranslation extends Translations {
           "password_changed": "تم تغيير كلمة المرور",
           "message_no_specializations_found":
               "لم يتم العثور على تخصصات، أعد تحميل الصفحة.",
+          "message_no_profession_found":
+              "لم يتم العثور على أهتمامات، أعد تحميل الصفحة.",
           "message_password_changed": "تم تغيير كلمة المرور بنجاح.",
           "message_send_secret_code": "سيتم إرسال رسالة الرمز السري بعد ",
           "change_language": "تغيير اللغة",
@@ -735,7 +760,9 @@ class AppTranslation extends Translations {
           "Edit_profile": "تعديل الملف الشخصي",
           "delete": "حذف",
           "no_cv_title": "لا يوجد سيرة ذاتية",
+          "Nationality": "الجنسية",
           "label_about_me": "عني",
+          'no_professions_found': "لم يتم العثور على اهتمامات",
           "hint_text_enter_name": "أدخل اسمك",
           "label_name": "الاسم",
           "hint_text_about_me": "أخبرني عن نفسك",
@@ -764,7 +791,7 @@ class AppTranslation extends Translations {
           "work_experience": "خبرة العمل",
           "education": "التعليم",
           "skill": "المهارة",
-          "language": "لغة",
+          "language": "اللغة",
           "appreciation": "التقدير",
           "resume": "السيرة الذاتية",
           "Upload your CV": "ارفع سيرتك الذاتية",
@@ -827,7 +854,8 @@ class AppTranslation extends Translations {
           "talking": "تكلم",
           "written": "مكتوب",
           "search_language": "البحث عن لغة",
-          "search": "بحث",
+          "search": "بحث...",
+          "users_search_filter_panel": "فلترة بحث المستخدمين",
           "top": "الأعلى",
           "companies": "شركات",
           "jobs": "وظائف",
@@ -965,6 +993,7 @@ class AppTranslation extends Translations {
           'cancel': 'إلغاء',
           'title_update_profile_image': 'تحديث صورة الحساب',
           'message_new_profile_image': 'صورة الحساب الجديدة',
+          'select_nationality': "أختر الجنسية",
           'update': 'تحديث',
           'logout_field_message': 'فشل تسجيل الخروج',
           'title_company_album_images': 'معرض صور الشركة',
@@ -993,9 +1022,13 @@ class AppTranslation extends Translations {
               "يجب إزالة الصورة القديمة من المنشور قبل تحميل صورة جديدة.",
           "pick_specialization_message":
               "يجب اختيار تخصص واحد على الأقل وثلاثة تخصصات كحد أقصى.",
+          "pick_professions_message":
+              "يجب اختيار أهتمام واحد على الأقل وثلاثة أهتمامات كحد أقصى.",
           "nothing_changed_specializations": "لم يتغير شيء في التخصصات.",
           "specializations_company_title": "تخصصات الشركة",
+          'profession_title': 'الاهتمامات',
           "specializations_added": "تمت إضافة التخصصات",
+          'professions_added': 'تمت إضافة الاهتمامات',
           "nothing_changed_profile_info":
               "لم يتغير شيء في معلومات الملف الشخصي.",
           "company_profile_updated": "تم تحديث ملف الشركة الشخصي",

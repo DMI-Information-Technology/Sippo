@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
+import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
@@ -13,6 +14,7 @@ import 'package:jobspot/sippo_custom_widget/custom_drop_down_button.dart';
 import 'package:jobspot/sippo_custom_widget/gender_picker_widget.dart';
 import 'package:jobspot/sippo_custom_widget/loading_view_widgets/loading_scaffold.dart';
 import 'package:jobspot/sippo_custom_widget/network_bordered_circular_image_widget.dart';
+import 'package:jobspot/sippo_custom_widget/rounded_border_radius_card_widget.dart';
 import 'package:jobspot/sippo_custom_widget/save_image_profle_page_widget.dart';
 import 'package:jobspot/sippo_custom_widget/success_message_widget.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
@@ -20,6 +22,7 @@ import 'package:jobspot/utils/getx_text_editing_controller.dart';
 import 'package:jobspot/utils/image_picker_service.dart';
 import 'package:jobspot/utils/states.dart';
 import 'package:jobspot/utils/validating_input.dart';
+import 'package:lottie/lottie.dart';
 
 class EditUserProfilePage extends StatefulWidget {
   const EditUserProfilePage({Key? key}) : super(key: key);
@@ -229,6 +232,35 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
                     },
                   ),
                   SizedBox(
+                    height: context.fromHeight(CustomStyle.huge),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: context.fromWidth(CustomStyle.paddingValue),
+                    ),
+                    child: Text(
+                      'Nationality'.tr,
+                      style:
+                          dmsmedium.copyWith(fontSize: FontSize.label(context)),
+                    ),
+                  ),
+                  InkWell(
+                    onTap: () => _showNationalityList(context),
+                    child: SizedBox(
+                      width: context.width,
+                      child: RoundedBorderRadiusCardWidget(
+                          radiusValue: 12.0,
+                          color: Colors.white,
+                          child: Obx(() {
+                            final selected = _controller
+                                .profileEditState.selectedNationality.name;
+                            return Text(
+                              selected ?? 'select_nationality'.tr,
+                            );
+                          })),
+                    ),
+                  ),
+                  SizedBox(
                     height: context.fromHeight(CustomStyle.spaceBetween),
                   ),
                   Padding(
@@ -387,5 +419,128 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
             : null,
       ),
     );
+  }
+
+  void _showNationalityList(BuildContext context) {
+    final nationalities = _controller.profileEditState.nationalities;
+    if (nationalities.isEmpty) {
+      _controller.fetchNationalities();
+    }
+    Get.dialog(Dialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
+      child: SizedBox(
+        height: context.fromHeight(1.3),
+        child: Padding(
+          padding: EdgeInsets.symmetric(
+            vertical: context.fromWidth(CustomStyle.s),
+            horizontal: context.fromWidth(CustomStyle.s),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              InputBorderedField(
+                fillColor: SippoColor.backgroudHome,
+                hintText: 'search'.tr,
+                prefixIcon: Icon(Icons.search_rounded),
+                onTextChanged: (value) {
+                  _controller.profileEditState.searchNationalityKey = value;
+                },
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                  top: context.fromHeight(CustomStyle.paddingValue),
+                  bottom: context.fromHeight(CustomStyle.huge),
+                ),
+                child: SizedBox(
+                  width: context.width,
+                  child: Text(
+                    'profession_title'.tr,
+                    style: dmsbold.copyWith(
+                        fontSize: FontSize.title5(context),
+                        color: SippoColor.primarycolor),
+                  ),
+                ),
+              ),
+              Obx(() {
+                final searchKey =
+                    _controller.profileEditState.searchNationalityKey;
+                final professionsItems = _controller.profileEditState
+                    .filteredNationalities(searchKey);
+                if (professionsItems.isNotEmpty) {
+                  return Expanded(
+                    child: ListView.builder(
+                      itemCount: professionsItems.length,
+                      itemBuilder: (context, index) {
+                        final item = professionsItems[index];
+                        return ListTile(
+                          tileColor: item ==
+                                  _controller
+                                      .profileEditState.selectedNationality
+                              ? SippoColor.backgroudHome
+                              : null,
+                          onTap: () {
+                            _controller.profileEditState.selectedNationality =
+                                item;
+                            if (Get.isOverlaysOpen) Navigator.pop(context);
+                          },
+                          titleAlignment: ListTileTitleAlignment.center,
+                          title: Text(
+                            item.name ?? "",
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: dmsmedium,
+                          ),
+                        );
+                      },
+                    ),
+                  );
+                } else if (_controller.fetchNationalityStates.isError) {
+                  final msg = _controller.fetchNationalityStates.message;
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
+                        msg ?? "",
+                        textAlign: TextAlign.center,
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          _controller.fetchNationalities();
+                        },
+                        icon: Icon(Icons.refresh),
+                      )
+                    ],
+                  );
+                } else if (_controller.fetchNationalityStates.isLoading) {
+                  return Center(
+                    child: Lottie.asset(
+                      JobstopPngImg.loadingProgress,
+                      height: context.height / 9,
+                    ),
+                  );
+                }
+                return Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      "no_professions_found".tr,
+                      textAlign: TextAlign.center,
+                    ),
+                    IconButton(
+                      onPressed: () => _controller.fetchNationalities(),
+                      icon: Icon(Icons.refresh),
+                    ),
+                  ],
+                );
+              }),
+            ],
+          ),
+        ),
+      ),
+    )).then((value) {
+      _controller.profileEditState.searchNationalityKey = "";
+    });
   }
 }

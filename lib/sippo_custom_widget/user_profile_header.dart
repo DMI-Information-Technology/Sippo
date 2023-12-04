@@ -21,6 +21,7 @@ class UserProfileHeaderWidget extends StatelessWidget {
   final bool isCompanyView;
   final bool hasDrawer;
   final String? gender;
+  final String? nationality;
 
   UserProfileHeaderWidget({
     super.key,
@@ -32,6 +33,7 @@ class UserProfileHeaderWidget extends StatelessWidget {
     this.showConnectionLostBar = false,
     this.isCompanyView = false,
     this.hasDrawer = false,
+    this.nationality,
   });
 
   @override
@@ -72,11 +74,7 @@ class UserProfileHeaderWidget extends StatelessWidget {
                     _buildEmailText(context),
                     SizedBox(height: context.fromHeight(CustomStyle.huge2)),
                   ],
-                  if (profileInfo.locationCity != null &&
-                      profileInfo.locationCity!.trim().isNotEmpty) ...[
-                    _buildPersonalDetailsRowText(context),
-                    SizedBox(height: context.fromHeight(CustomStyle.huge2)),
-                  ],
+                  _buildPersonalDetailsRowText(context),
                   _buildPhoneNumberLabels(
                     context,
                     profileInfo.phone,
@@ -136,20 +134,6 @@ class UserProfileHeaderWidget extends StatelessWidget {
               color: Colors.white, // Change this to your desired color
             ),
           ),
-        if (hasDrawer) ...[
-          SizedBox(
-            width: context.fromWidth(CustomStyle.spaceBetween),
-          ),
-          InkWell(
-            onTap: () {
-              Scaffold.of(context).openDrawer();
-            },
-            child: Icon(
-              Icons.menu,
-              color: Colors.white,
-            ),
-          ),
-        ],
       ],
     );
   }
@@ -165,26 +149,45 @@ class UserProfileHeaderWidget extends StatelessWidget {
   }
 
   Widget _buildPersonalDetailsRowText(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.center,
-      mainAxisAlignment: MainAxisAlignment.start,
+    print('UserProfileHeaderWidget._buildPersonalDetailsRowText:gender');
+    return Column(
       children: [
-        Text(
-          profileInfo.locationCity ?? "",
-          style: dmsregular.copyWith(
-            fontSize: FontSize.label(context),
-            color: SippoColor.white,
-          ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            if (profileInfo.locationCity != null &&
+                profileInfo.locationCity!.trim().isNotEmpty) ...[
+              Text(
+                profileInfo.locationCity ?? "",
+                style: dmsregular.copyWith(
+                  fontSize: FontSize.label(context),
+                  color: SippoColor.white,
+                ),
+              ),
+              SizedBox(width: context.fromWidth(CustomStyle.spaceBetween)),
+            ],
+            if (gender != null && gender?.trim().isNotEmpty == true) ...[
+              Text(
+                gender ?? "",
+                style: dmsregular.copyWith(
+                  fontSize: FontSize.label(context),
+                  color: SippoColor.white,
+                ),
+              ),
+              SizedBox(width: context.fromWidth(CustomStyle.spaceBetween)),
+            ],
+            if (nationality != null && nationality?.trim().isNotEmpty == true)
+              Text(
+                nationality ?? "",
+                style: dmsregular.copyWith(
+                  fontSize: FontSize.label(context),
+                  color: SippoColor.white,
+                ),
+              ),
+          ],
         ),
-        SizedBox(width: context.fromWidth(CustomStyle.spaceBetween)),
-        if (gender != null && gender?.trim().isNotEmpty == true)
-          Text(
-            gender ?? "",
-            style: dmsregular.copyWith(
-              fontSize: FontSize.label(context),
-              color: SippoColor.white,
-            ),
-          ),
+        SizedBox(width: context.fromWidth(CustomStyle.huge2)),
       ],
     );
   }

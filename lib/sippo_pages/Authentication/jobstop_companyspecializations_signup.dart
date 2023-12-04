@@ -6,6 +6,7 @@ import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
+import 'package:jobspot/JobServices/app_local_language_services/app_local_language_service.dart';
 import 'package:jobspot/sippo_controller/AuthenticationController/sippo_signup_company_controller.dart';
 import 'package:jobspot/sippo_controller/AuthenticationController/specialization_list_controller.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
@@ -31,6 +32,13 @@ class _CompanySignUpSpecializationsState
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: true,
+        centerTitle: true,
+        title: TextButton(
+          onPressed: () {
+            LocalLanguageService.showChangeLanguageBottomSheet(context);
+          },
+          child: Text("language".tr),
+        ),
       ),
       body: RefreshIndicator(
         onRefresh: () async {
@@ -182,11 +190,13 @@ class _CompanySignUpSpecializationsState
   void _onConfirmButtonClicked() {
     if (_controller.selectedIndices.length == 0 ||
         _controller.selectedIndices.length > 3) {
+      final title = "chooce_specialization".tr;
+      final desc = "select_one_three_maximum_special".tr;
       Get.dialog(
         CustomAlertDialog(
           imageAsset: JobstopPngImg.policyaccepted,
-          title: "chooce_specialization".tr,
-          description: "select_one_three_maximum_special".tr,
+          title:title,
+          description: desc,
           confirmBtnTitle: "ok".tr,
           onConfirm: () => Get.back(),
         ),

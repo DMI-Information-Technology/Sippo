@@ -4,6 +4,7 @@ import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
+import 'package:jobspot/JobServices/app_local_language_services/app_local_language_service.dart';
 import 'package:jobspot/sippo_controller/AuthenticationController/sippo_auth_controller.dart';
 import 'package:jobspot/sippo_controller/AuthenticationController/sippo_signup_company_controller.dart';
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
@@ -19,7 +20,17 @@ class SippoCompanySignup extends StatelessWidget {
     double height = size.height;
     double width = size.width;
     return Scaffold(
-      appBar: AppBar(automaticallyImplyLeading: true),
+      appBar: AppBar(
+        automaticallyImplyLeading: true,
+        centerTitle: true,
+        title: TextButton(
+          onPressed: () {
+            Get.focusScope?.unfocus();
+            LocalLanguageService.showChangeLanguageBottomSheet(context);
+          },
+          child: Text("language".tr),
+        ),
+      ),
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(
@@ -144,7 +155,10 @@ class SippoCompanySignup extends StatelessWidget {
                   text: "Sign_up".tr,
                   backgroundColor: SippoColor.primarycolor,
                   textColor: SippoColor.white,
-                  onTapped: () => controller.onSubmitSignup(),
+                  onTapped: () {
+                    Get.focusScope?.unfocus();
+                    controller.onSubmitSignup();
+                  },
                 ),
                 SizedBox(
                   height: height / 40,
@@ -161,6 +175,7 @@ class SippoCompanySignup extends StatelessWidget {
                     ),
                     TextButton(
                       onPressed: () {
+                        Get.focusScope?.unfocus();
                         AuthController.instance.resetStates();
                         Get.offAndToNamed(SippoRoutes.sippoCompanyLogin);
                       },
@@ -186,6 +201,7 @@ class SippoCompanySignup extends StatelessWidget {
                 ),
                 CustomButton(
                   onTapped: () {
+                    Get.focusScope?.unfocus();
                     AuthController.instance.resetStates();
                     Get.offAndToNamed(SippoRoutes.userSignupPage);
                   },

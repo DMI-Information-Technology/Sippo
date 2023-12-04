@@ -3,6 +3,7 @@ import 'package:jobspot/sippo_data/model/image_resource_model/image_resource_mod
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/cv_file_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/education_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/language_model.dart';
+import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/nationality_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/profile_edit_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/skills_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/user_projects_model.dart';
@@ -19,6 +20,7 @@ class ProfileViewResourceModel {
   final SkillsModel? skills;
   final List<LanguageModel>? languages;
   final List<UserProjectsModel>? projects;
+  final NationalityModel? nationality;
 
   const ProfileViewResourceModel({
     this.userInfo,
@@ -29,6 +31,7 @@ class ProfileViewResourceModel {
     this.skills,
     this.languages,
     this.projects,
+    this.nationality,
   });
 
   Map<String, String> blankProfileMessages() {
@@ -96,6 +99,9 @@ class ProfileViewResourceModel {
               .map((e) => LanguageModel.fromJson(e))
               .toList()
           : null,
+      nationality: json?['nationality'] != null
+          ? NationalityModel.fromJson(json?['nationality'])
+          : null,
     );
   }
 
@@ -108,6 +114,7 @@ class ProfileViewResourceModel {
     SkillsModel? skills,
     List<LanguageModel>? languages,
     List<UserProjectsModel>? projects,
+    NationalityModel? nationality,
   }) {
     return ProfileViewResourceModel(
       userInfo: userInfo ?? this.userInfo,
@@ -118,6 +125,7 @@ class ProfileViewResourceModel {
       skills: skills ?? this.skills,
       languages: languages ?? this.languages,
       projects: projects ?? this.projects,
+      nationality: nationality ?? this.nationality,
     );
   }
 
@@ -132,6 +140,7 @@ class ProfileViewResourceModel {
           listEquality(workExperiences, other.workExperiences) &&
           listEquality(educations, other.educations) &&
           skills == other.skills &&
+          nationality == other.nationality &&
           listEquality(languages, other.languages) &&
           listEquality(projects, other.projects);
 
@@ -144,5 +153,6 @@ class ProfileViewResourceModel {
       educations.hashCode ^
       skills.hashCode ^
       languages.hashCode ^
+      nationality.hashCode ^
       projects.hashCode;
 }

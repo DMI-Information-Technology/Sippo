@@ -9,6 +9,7 @@ import 'package:jobspot/sippo_controller/AuthenticationController/sippo_auth_con
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/sippo_data/locations/locationsRepo.dart';
 import 'package:jobspot/sippo_data/model/auth_model/user_model.dart';
+import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_user_dashboard.dart';
 import 'package:jobspot/utils/states.dart';
 
 import '../../sippo_data/model/locations_model/location_address_model.dart';
@@ -84,10 +85,18 @@ class SignUpUserController extends GetxController {
         confirmBtnColor: SippoColor.primarycolor,
         confirmBtnTitle: "ok".tr,
         onConfirm: () {
-          Get.offAllNamed(SippoRoutes.userDashboard);
+          Get.offAllNamed(
+            SippoRoutes.userDashboard,
+            arguments: {SippoUserDashboard.userProfession: true},
+          );
         },
       ),
-    ).then((value) => Get.offAllNamed(SippoRoutes.userDashboard));
+    ).then((value) {
+      Get.offAllNamed(
+        SippoRoutes.userDashboard,
+        arguments: {SippoUserDashboard.userProfession: true},
+      );
+    });
   }
 
   void _showRegisterErrorAlert(String? message) {

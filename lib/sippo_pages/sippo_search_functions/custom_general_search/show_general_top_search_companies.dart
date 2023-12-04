@@ -61,7 +61,9 @@ class _ShowGeneralTopSearchCompaniesListState
                 size: context.fromHeight(21),
                 outerBorderColor: Colors.grey[300],
                 outerBorderWidth: context.fromWidth(CustomStyle.huge2),
-                errorWidget: (_, __, ___) => const CircleAvatar(),
+
+                errorWidget: (_, __, ___) => Image.asset(JobstopPngImg.companysignup),
+                placeholder: (_, __) => Image.asset(JobstopPngImg.companysignup),
               ),
               title: AutoSizeText(
                 item.name ?? '',

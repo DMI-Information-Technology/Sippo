@@ -98,32 +98,32 @@ class _SippoCompanyDashboardState extends State<SippoCompanyDashboard> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        if (_controller.selectedItemIndex != 0) {
-          _controller.selectedItemIndex = 0;
-          return false;
-        }
-        return true;
-      },
-      child: Scaffold(
-        bottomNavigationBar: _bottomTabBar(context),
-        body: Obx(() => _pages[_controller.selectedItemIndex]),
-        floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
-        floatingActionButton: FloatingActionButton(
-          mini: true,
-          onPressed: _chooseAddNewBottomSheet,
-          backgroundColor: SippoColor.primarycolor,
-          child: const Icon(
-            Icons.add,
-            size: 20,
-            color: SippoColor.white,
+  Widget build(BuildContext context) => Obx(
+        () => PopScope(
+          canPop: _controller.selectedItemIndex == 0,
+          onPopInvoked: (pop) async {
+            if (_controller.selectedItemIndex != 0) {
+              _controller.selectedItemIndex = 0;
+            }
+          },
+          child: Scaffold(
+            bottomNavigationBar: _bottomTabBar(context),
+            body: Obx(() => _pages[_controller.selectedItemIndex]),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.miniEndFloat,
+            floatingActionButton: FloatingActionButton(
+              mini: true,
+              onPressed: _chooseAddNewBottomSheet,
+              backgroundColor: SippoColor.primarycolor,
+              child: const Icon(
+                Icons.add,
+                size: 20,
+                color: SippoColor.white,
+              ),
+            ),
           ),
         ),
-      ),
-    );
-  }
+      );
 
   void _chooseAddNewBottomSheet() {
     Get.bottomSheet(

@@ -40,6 +40,8 @@ class _ShowGeneralSearchJobsListState extends State<ShowGeneralSearchJobsList> {
           vertical: context.fromHeight(CustomStyle.paddingValue),
           horizontal: context.fromWidth(CustomStyle.paddingValue),
         ),
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+
         pagingController: _controller.pagingController,
         builderDelegate: PagedChildBuilderDelegate(
           firstPageErrorIndicatorBuilder: (context) =>
@@ -97,7 +99,10 @@ class _ShowGeneralSearchJobsListState extends State<ShowGeneralSearchJobsList> {
     return Obx(() => Align(
           alignment: Alignment.center,
           child: _controller.states.isLoading
-              ? const CircularProgressIndicator()
+              ?Lottie.asset(
+            JobstopPngImg.loadingProgress,
+            height: context.height / 9,
+          )
               : SizedBox(
                   width: context.width / 2,
                   child: CustomButton(

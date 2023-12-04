@@ -301,7 +301,7 @@ class _SippoJobSearchState extends State<SippoJobSearch> {
                 },
                 gController: _controller.searchJobsState.textSearch,
                 height: context.fromHeight(13.5),
-                hintText: "Design".tr,
+                hintText: "search".tr,
                 fontSize: FontSize.paragraph2(context),
                 prefixIcon: Padding(
                   padding: EdgeInsets.all(
@@ -314,6 +314,9 @@ class _SippoJobSearchState extends State<SippoJobSearch> {
                   ),
                 ),
                 textInputAction: TextInputAction.next,
+                onTextChanged: (value) {
+                  _controller.refreshPage();
+                },
               ),
             ],
           ),

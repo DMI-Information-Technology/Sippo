@@ -2,7 +2,10 @@ import 'package:jobspot/sippo_data/model/auth_model/entity_model.dart';
 import 'package:jobspot/sippo_data/model/image_resource_model/image_resource_model.dart';
 import 'package:jobspot/sippo_data/model/locations_model/location_address_model.dart';
 import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/work_location_model.dart';
+import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/nationality_model.dart';
+import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/profession_user_model.dart';
 import 'package:jobspot/utils/app_use.dart';
+import 'package:jobspot/utils/helper.dart';
 
 import 'cv_file_model.dart';
 
@@ -20,6 +23,8 @@ class ProfileInfoModel extends EntityModel {
     this.isEmailVerified,
     this.pendingEmail,
     this.myLocation,
+    this.professions,
+    this.nationality,
   });
 
   factory ProfileInfoModel.fromJson(Map<String, dynamic>? json) =>
@@ -32,6 +37,9 @@ class ProfileInfoModel extends EntityModel {
         gender: json?['gender'],
         isEmailVerified: json?['is_email_verified'],
         pendingEmail: json?['pending_email'],
+        nationality: json?['nationality'] != null
+            ? NationalityModel.fromJson(json?['nationality'])
+            : null,
         bio: json?['bio'],
         myLocation: json?['location'] != null
             ? WorkLocationModel.fromJson(json?["location"])
@@ -39,6 +47,11 @@ class ProfileInfoModel extends EntityModel {
         cv: json?['cv'] != null ? CvModel.fromJson(json?['cv']) : null,
         profileImage: json?['profile_image'] != null
             ? ImageResourceModel.fromJson(json?['profile_image'])
+            : null,
+        professions: json?['professions'] != null
+            ? List.of(json?['professions'])
+                .map((e) => ProfessionUserModel.fromJson(e))
+                .toList()
             : null,
       );
 
@@ -49,6 +62,8 @@ class ProfileInfoModel extends EntityModel {
   final bool? isEmailVerified;
   final String? pendingEmail;
   final WorkLocationModel? myLocation;
+  final NationalityModel? nationality;
+  final List<ProfessionUserModel>? professions;
 
   ProfileInfoModel copyWith({
     int? id,
@@ -62,7 +77,9 @@ class ProfileInfoModel extends EntityModel {
     String? pendingEmail,
     CvModel? cv,
     ImageResourceModel? profileImage,
+    NationalityModel? nationality,
     WorkLocationModel? locationAddress,
+    List<ProfessionUserModel>? professions,
   }) =>
       ProfileInfoModel(
         id: id ?? this.id,
@@ -76,7 +93,9 @@ class ProfileInfoModel extends EntityModel {
         profileImage: profileImage ?? this.profileImage,
         isEmailVerified: isEmailVerified ?? this.isEmailVerified,
         pendingEmail: pendingEmail ?? this.pendingEmail,
-        myLocation: myLocation ?? this.myLocation,
+        nationality: nationality ?? this.nationality,
+        myLocation: locationAddress ?? this.myLocation,
+        professions: professions ?? this.professions,
       );
 
   bool get pendingEmailIsNotEmpty => pendingEmail?.isNotEmpty == true;
@@ -93,8 +112,10 @@ class ProfileInfoModel extends EntityModel {
     String? bio,
     ImageResourceModel? profileImage,
     bool? isEmailVerified,
+    NationalityModel? nationality,
     String? pendingEmail,
     WorkLocationModel? locationAddress,
+    List<ProfessionUserModel>? professions,
   }) =>
       ProfileInfoModel(
         id: id ?? this.id,
@@ -107,7 +128,9 @@ class ProfileInfoModel extends EntityModel {
         profileImage: profileImage ?? this.profileImage,
         isEmailVerified: isEmailVerified ?? this.isEmailVerified,
         pendingEmail: pendingEmail ?? this.pendingEmail,
-        myLocation: myLocation ?? this.myLocation,
+        myLocation: locationAddress ?? this.myLocation,
+        nationality: nationality ?? this.nationality,
+        professions: professions ?? this.professions,
       );
 
   Map<String, dynamic> toJson() => {
@@ -115,6 +138,7 @@ class ProfileInfoModel extends EntityModel {
         'name': name,
         'gender': gender,
         'email': email,
+        'nationality_id': (nationality?.id ?? "").toString(),
         'phone': phone,
         'secondary_phone': secondaryPhone,
         'bio': bio,
@@ -127,15 +151,12 @@ class ProfileInfoModel extends EntityModel {
   @override
   String? get locationCity => myLocation?.locationAddress?.name;
 
-  LocationAddress? get locationAddress => myLocation?.locationAddress?.copyWith();
+  LocationAddress? get locationAddress =>
+      myLocation?.locationAddress?.copyWith();
 
   @override
   AppUsingType get userType => AppUsingType.user;
 
-  @override
-  String toString() {
-    return 'ProfileInfoModel{id: $id, name: $name, phone: $phone, secondaryPhone: $secondaryPhone, email: $email, gender: $gender, cv: $cv, profileImage: $profileImage, bio: $bio}';
-  }
 
   @override
   bool operator ==(Object other) =>
@@ -147,12 +168,14 @@ class ProfileInfoModel extends EntityModel {
           super.email == other.email &&
           super.phone == other.phone &&
           super.secondaryPhone == other.secondaryPhone &&
-          profileImage == other.profileImage &&
           cv == other.cv &&
+          nationality == other.nationality &&
+          profileImage == other.profileImage &&
           gender == other.gender &&
           isEmailVerified == other.isEmailVerified &&
           pendingEmail == other.pendingEmail &&
           locationAddress == other.locationAddress &&
+          listEquality(professions, other.professions) &&
           bio == other.bio;
 
   @override
@@ -163,10 +186,17 @@ class ProfileInfoModel extends EntityModel {
       super.phone.hashCode ^
       super.secondaryPhone.hashCode ^
       cv.hashCode ^
+      nationality.hashCode ^
       profileImage.hashCode ^
       gender.hashCode ^
       isEmailVerified.hashCode ^
       pendingEmail.hashCode ^
       locationAddress.hashCode ^
+      professions.hashCode ^
       bio.hashCode;
+
+  @override
+  String toString() {
+    return 'ProfileInfoModel{id: $id, name: $name, phone: $phone, secondaryPhone: $secondaryPhone, email: $email, gender: $gender, myLocation: $myLocation, nationality: $nationality, professions: $professions, profileImage: $profileImage, isEmailVerified: $isEmailVerified, pendingEmail: $pendingEmail, cv: $cv, bio: $bio}';
+  }
 }
