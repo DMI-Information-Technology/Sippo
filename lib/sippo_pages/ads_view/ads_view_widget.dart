@@ -56,6 +56,7 @@ class _AdsViewWidgetState extends State<AdsViewWidget> {
         if (adItems.isNotEmpty) {
           return CarouselSlider(
             options: CarouselOptions(
+              viewportFraction: 0.95,
               clipBehavior: Clip.antiAlias,
               autoPlay: true,
               aspectRatio: 2.0,
@@ -137,9 +138,7 @@ class AdsWidgetItem extends StatelessWidget {
       onTap: () => onAdTapped(item),
       child: Container(
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(
-            context.fromWidth(CustomStyle.xs),
-          ),
+         borderRadius: BorderRadius.circular(25),
           image: DecorationImage(
             fit: BoxFit.cover,
             image: CachedNetworkImageProvider(

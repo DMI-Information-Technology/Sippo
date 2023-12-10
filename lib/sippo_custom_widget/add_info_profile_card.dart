@@ -39,7 +39,8 @@ class AddInfoProfileCard extends StatelessWidget {
             ? CrossAxisAlignment.start
             : CrossAxisAlignment.center,
         children: [
-          InkWell(onTap: onAddClicked,
+          InkWell(
+            onTap: onAddClicked,
             child: Row(
               children: [
                 if (leading != null) leading!,
@@ -49,20 +50,23 @@ class AddInfoProfileCard extends StatelessWidget {
                 Text(
                   title,
                   style: dmsbold.copyWith(
-                      fontSize: FontSize.title5(context), color: SippoColor.primarycolor),
+                      fontSize: FontSize.title5(context),
+                      color: SippoColor.primarycolor),
                 ),
                 if (!isCompanyView) ...[
                   const Spacer(),
-                  iconAction ??
-                      CircleAvatar(
-                        radius: 10,
-                        backgroundColor: SippoColor.lightprimary2,
-                        child: Icon(
-                          Icons.add,
-                          size: 15,
-                          color: SippoColor.primarycolor,
-                        ),
-                      )
+                  if (!hasNotInfoProfile)
+                    iconAction ?? const SizedBox.shrink()
+                  else
+                    CircleAvatar(
+                      radius: 10,
+                      backgroundColor: SippoColor.lightprimary2,
+                      child: Icon(
+                        Icons.add,
+                        size: 15,
+                        color: SippoColor.primarycolor,
+                      ),
+                    )
                 ]
               ],
             ),

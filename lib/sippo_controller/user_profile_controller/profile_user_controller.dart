@@ -37,7 +37,7 @@ class ProfileUserController extends GetxController {
   late final StreamSubscription<bool>? _connectionSubscription;
   final dashboard = UserDashBoardController.instance;
 
-  ProfileInfoModel get user => dashboard.user;
+  ProfileInfoModel get user => UserDashBoardController.instance.user;
 
   static ProfileUserController get instance => Get.find();
   final profileState = ProfileState();

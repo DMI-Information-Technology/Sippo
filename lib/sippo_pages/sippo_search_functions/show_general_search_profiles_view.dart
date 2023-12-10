@@ -113,7 +113,7 @@ class _ShowGeneralSearchProfilesViewListState
                               underLineBorder: true,
                               textHint: 'select_location_address'.tr,
                               labelList: location.locationsAddressNameList,
-                              values: location.locationsAddressList,
+                              values: location.locationsAddressList,hintTextColor: Colors.black,
                               fillColor: SippoColor.backgroudHome,
                               onItemSelected: (value) async {
                                 if (value == null ||
@@ -149,7 +149,7 @@ class _ShowGeneralSearchProfilesViewListState
                                           .selectedProfession
                                           .name;
                                       return Text(
-                                        selected ?? 'selected_profession'.tr,
+                                        selected ?? 'selected_profession'.tr,style: dmsmedium,
                                       );
                                     })),
                               ),

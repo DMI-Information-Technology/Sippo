@@ -98,7 +98,7 @@ class UserProfileHeaderWidget extends StatelessWidget {
       children: [
         NetworkBorderedCircularImage(
           imageUrl: profileImage,
-          size: context.fromHeight(CustomStyle.imageSize2),
+          size: context.fromHeight(CustomStyle.imageSize1),
           errorWidget: (_, __, ___) {
             return CircleAvatar(
               backgroundColor: Colors.white,
@@ -142,8 +142,8 @@ class UserProfileHeaderWidget extends StatelessWidget {
     return Text(
       profileInfo.name ?? "",
       style: dmsmedium.copyWith(
-        fontSize: FontSize.title5(context),
-        color: SippoColor.white,
+        fontSize: FontSize.title4(context),
+        color: SippoColor.white,overflow: TextOverflow.ellipsis
       ),
     );
   }
@@ -161,7 +161,7 @@ class UserProfileHeaderWidget extends StatelessWidget {
               Text(
                 profileInfo.locationCity ?? "",
                 style: dmsregular.copyWith(
-                  fontSize: FontSize.label(context),
+                  fontSize: FontSize.title6(context),
                   color: SippoColor.white,
                 ),
               ),
@@ -171,7 +171,7 @@ class UserProfileHeaderWidget extends StatelessWidget {
               Text(
                 gender ?? "",
                 style: dmsregular.copyWith(
-                  fontSize: FontSize.label(context),
+                  fontSize: FontSize.title5(context),
                   color: SippoColor.white,
                 ),
               ),
@@ -181,7 +181,7 @@ class UserProfileHeaderWidget extends StatelessWidget {
               Text(
                 nationality ?? "",
                 style: dmsregular.copyWith(
-                  fontSize: FontSize.label(context),
+                  fontSize: FontSize.title5(context),
                   color: SippoColor.white,
                 ),
               ),

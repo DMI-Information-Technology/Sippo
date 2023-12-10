@@ -35,7 +35,7 @@ class _SippoCompanyUserProfileViewState
     super.initState();
     Future.delayed(
       const Duration(seconds: 3),
-      () {
+          () {
         if (CompanyDashBoardController.instance.company.isNotSubscribed) {
           showNotSubscriptionAlert('');
           return;
@@ -95,6 +95,8 @@ class _SippoCompanyUserProfileViewState
               SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
               _buildAboutMeInfo(context),
               SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+              _buildNationality(context),
+              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
               _buildWorkExperienceInfo(context),
               SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
               _buildEducationInfo(context),
@@ -115,17 +117,46 @@ class _SippoCompanyUserProfileViewState
   }
 
   Widget _buildUserProfileHeader(BuildContext context) {
-    return Obx(() => UserProfileHeaderWidget(
+    return Obx(() =>
+        UserProfileHeaderWidget(
           gender: _controller.profileState.profileInfo.gender,
-          nationality: _controller.profileState.profileInfo.nationality?.name,
           profileInfo: _controller.profileState.profileInfo,
           profileImage:
-              _controller.profileState.profileInfo.profileImage?.url ?? '',
+          _controller.profileState.profileInfo.profileImage?.url ?? '',
         ));
   }
 
+  Widget _buildNationality(BuildContext context) {
+    return Obx(() {
+      return AddInfoProfileCard(
+        isCompanyView: true,
+        title: 'Nationality'.tr,
+        hasNotInfoProfile:
+        _controller.profileState.profileInfo.nationality?.name?.isEmpty ==
+            true,
+        leading: Image.asset(
+          JobstopPngImg.language,
+          height: context.fromHeight(CustomStyle.l),
+          color: SippoColor.primarycolor,
+          colorBlendMode: BlendMode.srcIn,
+        ),
+        alignmentFromStart: true,
+        profileInfo: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              _controller.profileState.profileInfo.nationality?.name ?? "",
+              style: dmsmedium.copyWith(fontSize: FontSize.title4(context)),
+            ),
+          )
+        ],
+      );
+    });
+  }
+
   Widget _buildResumeInfo(BuildContext context) {
-    return Obx(() => AddInfoProfileCard(
+    return Obx(() =>
+        AddInfoProfileCard(
           isCompanyView: true,
           title: 'resume'.tr,
           leading: Image.asset(
@@ -135,8 +166,8 @@ class _SippoCompanyUserProfileViewState
             colorBlendMode: BlendMode.srcIn,
           ),
           hasNotInfoProfile:
-              CompanyDashBoardController.instance.company.isNotSubscribed ||
-                  _controller.profileState.cv == null,
+          CompanyDashBoardController.instance.company.isNotSubscribed ||
+              _controller.profileState.cv == null,
           profileInfo: [
             CvCardWidget.fromRemote(
               remoteCv: _controller.profileState.cv,
@@ -156,114 +187,120 @@ class _SippoCompanyUserProfileViewState
 
   Widget _buildAppreciationInfo(BuildContext context) {
     return Obx(
-      () => AddInfoProfileCard(
-        isCompanyView: true,
-        title: 'projects'.tr,
-        hasNotInfoProfile: _controller.profileState.projects.isEmpty,
-        leading: Image.asset(
-          JobstopPngImg.appreciation,
-          height: context.fromHeight(CustomStyle.l),
-          color: SippoColor.primarycolor,
-          colorBlendMode: BlendMode.srcIn,
-        ),
-        profileInfo: [
-          ExpandableItemList(
-            isExpandable: _controller.profileState.projects.length > 1,
-            expandItems: _controller.profileState.showAllProjects,
-            spacing: context.fromHeight(CustomStyle.xxxl),
-            itemCount: _controller.profileState.projects.length,
-            itemBuilder: (BuildContext context, int index) {
-              final item = _controller.profileState.projects[index];
-              return _buildTextDescriptionInfo(
-                context,
-                item.name,
-                '',
-                item.date,
-              );
-            },
-            onExpandClicked: () {
-              _controller.profileState.showAllProjects =
+          () =>
+          AddInfoProfileCard(
+            isCompanyView: true,
+            title: 'projects'.tr,
+            hasNotInfoProfile: _controller.profileState.projects.isEmpty,
+            leading: Image.asset(
+              JobstopPngImg.appreciation,
+              height: context.fromHeight(CustomStyle.l),
+              color: SippoColor.primarycolor,
+              colorBlendMode: BlendMode.srcIn,
+            ),
+            profileInfo: [
+              ExpandableItemList(
+                isExpandable: _controller.profileState.projects.length > 1,
+                expandItems: _controller.profileState.showAllProjects,
+                spacing: context.fromHeight(CustomStyle.xxxl),
+                itemCount: _controller.profileState.projects.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final item = _controller.profileState.projects[index];
+                  return _buildTextDescriptionInfo(
+                    context,
+                    item.name,
+                    '',
+                    item.date,
+                  );
+                },
+                onExpandClicked: () {
+                  _controller.profileState.showAllProjects =
                   !_controller.profileState.showAllProjects;
-            },
+                },
+              ),
+            ],
           ),
-        ],
-      ),
     );
   }
 
   Widget _buildLanguagesInfo(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery
+        .of(context)
+        .size;
     double height = size.height;
     return Obx(
-      () => AddInfoProfileCard(
-        isCompanyView: true,
-        title: 'language'.tr,
-        hasNotInfoProfile: _controller.profileState.languages.isEmpty,
-        leading: Image.asset(
-          JobstopPngImg.language,
-          height: context.fromHeight(CustomStyle.l),
-          color: SippoColor.primarycolor,
-          colorBlendMode: BlendMode.srcIn,
-        ),
-        profileInfo: [
-          ExpandableItemList.wrapBuilder(
-            isExpandable: _controller.profileState.languages.length > 1,
-            expandItems: _controller.profileState.showAllLangs,
-            spacing: height / 220,
-            itemCount: _controller.profileState.showAllLangs
-                ? _controller.profileState.languages.length
-                : 1,
-            itemBuilder: (BuildContext context, int index) {
-              final item = _controller.profileState.languages[index];
-              return _buildChips(
-                context,
-                item.name ?? "",
-              );
-            },
-            onExpandClicked: () {
-              _controller.profileState.showAllLangs =
+          () =>
+          AddInfoProfileCard(
+            isCompanyView: true,
+            title: 'language'.tr,
+            hasNotInfoProfile: _controller.profileState.languages.isEmpty,
+            leading: Image.asset(
+              JobstopPngImg.language,
+              height: context.fromHeight(CustomStyle.l),
+              color: SippoColor.primarycolor,
+              colorBlendMode: BlendMode.srcIn,
+            ),
+            profileInfo: [
+              ExpandableItemList.wrapBuilder(
+                isExpandable: _controller.profileState.languages.length > 1,
+                expandItems: _controller.profileState.showAllLangs,
+                spacing: height / 220,
+                itemCount: _controller.profileState.showAllLangs
+                    ? _controller.profileState.languages.length
+                    : 1,
+                itemBuilder: (BuildContext context, int index) {
+                  final item = _controller.profileState.languages[index];
+                  return _buildChips(
+                    context,
+                    item.name ?? "",
+                  );
+                },
+                onExpandClicked: () {
+                  _controller.profileState.showAllLangs =
                   !_controller.profileState.showAllLangs;
-            },
+                },
+              ),
+            ],
           ),
-        ],
-      ),
     );
   }
 
   Obx _buildSkillsInfo(BuildContext context) {
     return Obx(
-      () => AddInfoProfileCard(
-        isCompanyView: true,
-        title: 'skill'.tr,
-        hasNotInfoProfile: _controller.profileState.skillsList.isEmpty,
-        leading: Image.asset(
-          JobstopPngImg.skil,
-          height: context.fromHeight(CustomStyle.l),
-          color: SippoColor.primarycolor,
-          colorBlendMode: BlendMode.srcIn,
-        ),
-        profileInfo: [
-          ExpandableItemList.wrapBuilder(
-            isExpandable: _controller.profileState.skillsList.length > 1,
-            expandItems: _controller.profileState.showAllSkills,
-            spacing: context.height / 220,
-            itemCount: _controller.profileState.skillsList.length,
-            itemBuilder: (BuildContext context, int index) {
-              final item = _controller.profileState.skillsList[index];
-              return _buildChips(context, item);
-            },
-            onExpandClicked: () {
-              _controller.profileState.showAllSkills =
+          () =>
+          AddInfoProfileCard(
+            isCompanyView: true,
+            title: 'skill'.tr,
+            hasNotInfoProfile: _controller.profileState.skillsList.isEmpty,
+            leading: Image.asset(
+              JobstopPngImg.skil,
+              height: context.fromHeight(CustomStyle.l),
+              color: SippoColor.primarycolor,
+              colorBlendMode: BlendMode.srcIn,
+            ),
+            profileInfo: [
+              ExpandableItemList.wrapBuilder(
+                isExpandable: _controller.profileState.skillsList.length > 1,
+                expandItems: _controller.profileState.showAllSkills,
+                spacing: context.height / 220,
+                itemCount: _controller.profileState.skillsList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final item = _controller.profileState.skillsList[index];
+                  return _buildChips(context, item);
+                },
+                onExpandClicked: () {
+                  _controller.profileState.showAllSkills =
                   !_controller.profileState.showAllSkills;
-            },
+                },
+              ),
+            ],
           ),
-        ],
-      ),
     );
   }
 
   Obx _buildEducationInfo(BuildContext context) {
-    return Obx(() => AddInfoProfileCard(
+    return Obx(() =>
+        AddInfoProfileCard(
           isCompanyView: true,
           title: 'education'.tr,
           hasNotInfoProfile: _controller.profileState.educationList.isEmpty,
@@ -290,7 +327,7 @@ class _SippoCompanyUserProfileViewState
               },
               onExpandClicked: () {
                 _controller.profileState.showAllEdui =
-                    !_controller.profileState.showAllEdui;
+                !_controller.profileState.showAllEdui;
               },
             ),
           ],
@@ -299,78 +336,78 @@ class _SippoCompanyUserProfileViewState
 
   Widget _buildWorkExperienceInfo(BuildContext context) {
     return Obx(
-      () => AddInfoProfileCard(
-        isCompanyView: true,
-        title: 'work_experience'.tr,
-        hasNotInfoProfile: _controller.profileState.workExList.isEmpty,
-        leading: Image.asset(
-          JobstopPngImg.bag,
-          height: context.fromHeight(CustomStyle.l),
-          color: SippoColor.primarycolor,
-          colorBlendMode: BlendMode.srcIn,
-        ),
-        alignmentFromStart: true,
-        profileInfo: [
-          ExpandableItemList(
-            isExpandable: _controller.profileState.workExList.length > 1,
-            expandItems: _controller.profileState.showAllWei,
-            spacing: context.fromHeight(CustomStyle.xxxl),
-            itemCount: _controller.profileState.workExList.length,
-            itemBuilder: (BuildContext context, int index) {
-              final item = _controller.profileState.workExList[index];
-              return _buildTextDescriptionInfo(
-                context,
-                item.jobTitle,
-                item.company,
-                item.periodic,
-              );
-            },
-            onExpandClicked: () {
-              _controller.profileState.showAllWei =
+          () =>
+          AddInfoProfileCard(
+            isCompanyView: true,
+            title: 'work_experience'.tr,
+            hasNotInfoProfile: _controller.profileState.workExList.isEmpty,
+            leading: Image.asset(
+              JobstopPngImg.bag,
+              height: context.fromHeight(CustomStyle.l),
+              color: SippoColor.primarycolor,
+              colorBlendMode: BlendMode.srcIn,
+            ),
+            alignmentFromStart: true,
+            profileInfo: [
+              ExpandableItemList(
+                isExpandable: _controller.profileState.workExList.length > 1,
+                expandItems: _controller.profileState.showAllWei,
+                spacing: context.fromHeight(CustomStyle.xxxl),
+                itemCount: _controller.profileState.workExList.length,
+                itemBuilder: (BuildContext context, int index) {
+                  final item = _controller.profileState.workExList[index];
+                  return _buildTextDescriptionInfo(
+                    context,
+                    item.jobTitle,
+                    item.company,
+                    item.periodic,
+                  );
+                },
+                onExpandClicked: () {
+                  _controller.profileState.showAllWei =
                   !_controller.profileState.showAllWei;
-            },
+                },
+              ),
+            ],
           ),
-        ],
-      ),
     );
   }
 
   Widget _buildAboutMeInfo(BuildContext context) {
     return Obx(
-      () => AddInfoProfileCard(
-        isCompanyView: true,
-        title: 'about_me'.tr,
-        hasNotInfoProfile: _controller.profileState.aboutMeText.isEmpty,
-        leading: Image.asset(
-          JobstopPngImg.aboutme,
-          height: context.fromHeight(CustomStyle.l),
-          color: SippoColor.primarycolor,
-          colorBlendMode: BlendMode.srcIn,
-        ),
-        profileInfo: [
-          _controller.profileState.aboutMeText.isNotEmpty
-              ? ReadMoreText(
-                  _controller.profileState.aboutMeText,
-                  style: dmsregular.copyWith(
-                    fontSize: context.fromHeight(CustomStyle.xxxl),
-                    color: SippoColor.textColor,
-                  ),
-                  colorClickableText: SippoColor.primarycolor,
-                  trimLines: 2,
-                  trimMode: TrimMode.Line,
-                  trimCollapsedText: 'show_more'.tr,
-                  trimExpandedText: 'show_less'.tr,
-                )
-              : const SizedBox.shrink(),
-        ],
-      ),
+          () =>
+          AddInfoProfileCard(
+            isCompanyView: true,
+            title: 'about_me'.tr,
+            hasNotInfoProfile: _controller.profileState.aboutMeText.isEmpty,
+            leading: Image.asset(
+              JobstopPngImg.aboutme,
+              height: context.fromHeight(CustomStyle.l),
+              color: SippoColor.primarycolor,
+              colorBlendMode: BlendMode.srcIn,
+            ),
+            profileInfo: [
+              _controller.profileState.aboutMeText.isNotEmpty
+                  ? ReadMoreText(
+                _controller.profileState.aboutMeText,
+                style: dmsregular.copyWith(
+                  fontSize: context.fromHeight(CustomStyle.xxxl),
+                  color: SippoColor.textColor,
+                ),
+                colorClickableText: SippoColor.primarycolor,
+                trimLines: 2,
+                trimMode: TrimMode.Line,
+                trimCollapsedText: 'show_more'.tr,
+                trimExpandedText: 'show_less'.tr,
+              )
+                  : const SizedBox.shrink(),
+            ],
+          ),
     );
   }
 
-  Widget _buildChips(
-    BuildContext context,
-    String value,
-  ) {
+  Widget _buildChips(BuildContext context,
+      String value,) {
     return Chip(
       backgroundColor: SippoColor.grey2,
       label: Text(
@@ -382,12 +419,10 @@ class _SippoCompanyUserProfileViewState
     );
   }
 
-  Widget _buildTextDescriptionInfo(
-    BuildContext context,
-    String? title,
-    String? from,
-    String? periodic,
-  ) {
+  Widget _buildTextDescriptionInfo(BuildContext context,
+      String? title,
+      String? from,
+      String? periodic,) {
     return Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
       SizedBox(
         width: context.width,

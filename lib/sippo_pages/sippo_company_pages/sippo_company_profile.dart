@@ -77,20 +77,17 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
               ),
             ),
             actions: [
-              InkWell(
-                onTap: () {
+              IconButton(
+                onPressed: () {
                   if (_controller.netController.isNotConnected) return;
                   Get.toNamed(SippoRoutes.sippoprofilesetting);
                 },
-                child: Padding(
-                  padding: EdgeInsets.all(context.fromHeight(CustomStyle.xxl)),
-                  child: Image.asset(
-                    JobstopPngImg.setting,
+                icon: Image.asset(
+                  JobstopPngImg.setting,
 
-                    color: _controller.profileState.isHeightOverAppBar
-                        ? Colors.black
-                        : Colors.white, // Change this to your desired color
-                  ),
+                  color: _controller.profileState.isHeightOverAppBar
+                      ? Colors.black
+                      : Colors.white, // Change this to your desired color
                 ),
               ),
             ],
@@ -329,7 +326,9 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
   }
 
   Widget _buildWorkPlacesCompany(BuildContext context) {
-    print(_controller.company.locations?.map((e) => e.locationAddress?.name).toList());
+    print(_controller.company.locations
+        ?.map((e) => e.locationAddress?.name)
+        .toList());
     return Obx(() {
       final profileState = _controller.profileState;
       return AddInfoProfileCard(

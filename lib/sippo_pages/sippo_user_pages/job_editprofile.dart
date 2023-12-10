@@ -249,15 +249,17 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
                     child: SizedBox(
                       width: context.width,
                       child: RoundedBorderRadiusCardWidget(
-                          radiusValue: 12.0,
-                          color: Colors.white,
-                          child: Obx(() {
-                            final selected = _controller
-                                .profileEditState.selectedNationality.name;
-                            return Text(
-                              selected ?? 'select_nationality'.tr,
-                            );
-                          })),
+                        radiusValue: 12.0,
+                        color: Colors.white,
+                        child: Obx(
+                          () {
+                            final selected = _controller.profileEditState
+                                    .selectedNationality.name ??
+                                'select_nationality'.tr;
+                            return Text(selected);
+                          },
+                        ),
+                      ),
                     ),
                   ),
                   SizedBox(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
+import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/core/navigation_app_route.dart';
 import 'package:jobspot/sippo_controller/NotificationController/user_notification_application/user_notification_controller.dart';
@@ -42,12 +43,13 @@ class _SippoGuestDashboardState extends State<SippoGuestDashboard> {
       child: Scaffold(
         body: Obx(() => _controller.pages[_controller.selectedItemIndex]),
         floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-        floatingActionButton: FloatingActionButton(
+        floatingActionButton: FloatingActionButton.extended(
           onPressed: () {
             Get.offAndToNamed(SippoRoutes.userLoginPage);
           },
           backgroundColor: SippoColor.primarycolor,
-          child: const Icon(
+          label: Text('Login'.tr,style: dmsmedium,),
+          icon: const Icon(
             Icons.login,
             size: 20,
             color: SippoColor.white,

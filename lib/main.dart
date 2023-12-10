@@ -46,7 +46,7 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ImageProviderType;
+
     // ScreenUtil.init(context, designSize: Size(360.0, 690.0));
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,

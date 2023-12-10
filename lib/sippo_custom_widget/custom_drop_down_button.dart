@@ -97,7 +97,7 @@ class CustomDropdownButton<T> extends StatelessWidget {
         validator: validator,
         hint: Text(
           textHint ?? "",
-          style: dmsregular.copyWith(
+          style: dmsmedium.copyWith(
             fontSize: FontSize.title6(context),
             color: hintTextColor,
           ),

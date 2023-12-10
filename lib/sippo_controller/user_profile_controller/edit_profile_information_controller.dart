@@ -64,13 +64,17 @@ class EditProfileInfoController extends GetxController {
     final response = await ProfileInfoRepo.updateProfile(profileEditState.form);
     await response.checkStatusResponse(
       onSuccess: (data, _) {
-        if (data != null) {
-          _profileController.dashboard.user = data;
-          profileEditState.setAll(userDetails);
-        } else {
-          UserDashBoardController.instance.userInformationRefresh();
-        }
-        states = States(isSuccess: true);
+        // if (data != null) {
+        //   _profileController.dashboard.user = data;
+        //   profileEditState.setAll(userDetails);
+        // } else {
+          UserDashBoardController.instance.userInformationRefresh().then((value) {
+
+            Get.back();
+
+          });
+        // }
+
       },
       onValidateError: (validateError, _) {
         states = States(isError: true, message: validateError?.message);

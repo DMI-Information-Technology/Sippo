@@ -72,9 +72,7 @@ class _SippoUserAboutState extends State<SippoUserAbout> {
             onTapped: () {
               if (_formKey.currentState == null) return;
               if (_formKey.currentState!.validate()) {
-                _controller.onSaveSubmitted().then((_) {
-                  Get.back();
-                });
+                _controller.onSaveSubmitted();
               }
             },
             text: "save".tr,
