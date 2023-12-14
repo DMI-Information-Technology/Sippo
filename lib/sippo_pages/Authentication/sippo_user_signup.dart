@@ -43,7 +43,7 @@ class SippoUserSignup extends StatelessWidget {
                 child: Column(
                   children: [
                     Image.asset(
-                      JobstopPngImg.signup,
+                      JobstopPngImg.sign_up_image,
                       height: height / 7,
                     ),
                     SizedBox(

@@ -32,7 +32,7 @@ class JobstopPngImg {
   static const String successful =
       "Assets/jobstop_assets/jobpngimg/successful.png";
   static const String successful1 =
-      "Assets/jobstop_assets/jobpngimg/successful1.png";
+      "Assets/jobstop_assets/jobpngimg/successful_1.json";
   static const String noconnection =
       "Assets/jobstop_assets/jobpngimg/noConnection.png";
   static const String passwordimg =
@@ -161,6 +161,7 @@ class JobstopPngImg {
   static const String lock = "Assets/jobstop_assets/jobpngimg/lock.png";
   static const String logout = "Assets/jobstop_assets/jobpngimg/logout.png";
   static const String signup = "Assets/jobstop_assets/jobpngimg/signup.png";
+  static const String sign_up_image ="Assets/jobstop_assets/jobpngimg/sign_up_photo.png";
   static const String enddateimg =
       "Assets/jobstop_assets/jobpngimg/enddateimg.png";
 }

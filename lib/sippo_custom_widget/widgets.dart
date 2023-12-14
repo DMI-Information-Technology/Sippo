@@ -6,6 +6,7 @@ import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/custom_app_controller/switch_status_controller.dart';
 import 'package:jobspot/utils/getx_text_editing_controller.dart';
+import 'package:lottie/lottie.dart';
 
 import '../JobGlobalclass/jobstopfontstyle.dart';
 import '../JobGlobalclass/jobstopimges.dart';
@@ -15,6 +16,7 @@ import '../JobGlobalclass/sippo_customstyle.dart' as customStyles;
 class CustomAlertDialog extends StatelessWidget {
   final String? imageAsset;
   final String title;
+  final bool? isLottie;
   final String? description;
   final String? confirmBtnTitle;
   final Color? confirmBtnColor;
@@ -35,6 +37,7 @@ class CustomAlertDialog extends StatelessWidget {
     this.cancelBtnTitle,
     this.cancelBtnColor = SippoColor.lightprimary,
     this.onCancel,
+    this.isLottie = false,
   }) : _vertical = false;
 
   const CustomAlertDialog.verticalButtons({
@@ -48,6 +51,7 @@ class CustomAlertDialog extends StatelessWidget {
     this.cancelBtnTitle,
     this.cancelBtnColor = SippoColor.lightprimary,
     this.onCancel,
+    this.isLottie = false,
   }) : _vertical = true;
 
   Widget _buildButtonsLayout(BuildContext context) {
@@ -145,7 +149,10 @@ class CustomAlertDialog extends StatelessWidget {
                 padding: EdgeInsets.all(context.fromHeight(
                   CustomStyle.paddingValue,
                 )),
-                child: Image.asset(imageAsset!, height: height / 5),
+                child: (isLottie != null && isLottie!)
+                    ? Lottie.asset(
+                    imageAsset!, height: height / 5, frameRate: FrameRate.max,fit: BoxFit.contain)
+                    : Image.asset(imageAsset!, height: height / 5),
               ),
             AutoSizeText(
               title,
@@ -290,7 +297,7 @@ class _PasswordInputFieldState extends State<PasswordInputField> {
         prefixIcon: widget.icon,
         suffixIcon: IconButton(
           icon: Icon(
-            _obscureText ? Icons.visibility_off : Icons.visibility,
+            _obscureText ? Icons.visibility_off_outlined : Icons.visibility_outlined,
           ),
           onPressed: _togglePasswordStatus,
           color: widget.suffixIconColor != null

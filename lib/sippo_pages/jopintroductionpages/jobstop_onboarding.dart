@@ -34,7 +34,7 @@ class _SippoOnboardingState extends State<SippoOnboarding>
           "based on your interest and study major.",
     ),
     OnBoardSlides(
-      imageAssests: JobstopPngImg.onboard2,
+      imageAssests: JobstopPngImg.onboard1,
       titleList: const [
         "Find Your",
         "Dream Job",
@@ -44,7 +44,7 @@ class _SippoOnboardingState extends State<SippoOnboarding>
           "based on your interest and study major.",
     ),
     OnBoardSlides(
-      imageAssests: JobstopPngImg.onboard1,
+      imageAssests: JobstopPngImg.onboard2,
       titleList: const [
         "Lets start now!",
       ],
@@ -107,7 +107,7 @@ class _SippoOnboardingState extends State<SippoOnboarding>
               },
               backgroundColor: SippoColor.primarycolor,
               child: const Icon(
-                Icons.arrow_right_alt_sharp,
+                Icons.arrow_circle_right_outlined,
                 color: SippoColor.white,
                 size: 30,
               ),
@@ -137,23 +137,18 @@ class OnBoardSlides extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // Obx(
-        //   () => onBoardingController.index == 0
-        //       ? SizedBox(
-        //           height: height / 12,
-        //         )
-        //       : SizedBox(
-        //           height: height / 150,
-        //         ),
-        // ),
+
         SizedBox(
           height: height / 12,
         ),
         Center(
             child :Lottie.asset(
           imageAssests,
-          height: height / 3,
-        )),
+          height: height/3,
+              fit: BoxFit.fill,
+              frameRate: FrameRate.max,
+
+            )),
         SizedBox(
           height: height / 21,
         ),

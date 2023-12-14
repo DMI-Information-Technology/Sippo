@@ -8,7 +8,6 @@ import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
 import 'package:jobspot/JobGlobalclass/text_font_size.dart';
-import 'package:jobspot/sippo_controller/dashboards_controller/user_dashboard_controller.dart';
 import 'package:jobspot/sippo_controller/user_profile_controller/profile_user_controller.dart';
 import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
 import 'package:jobspot/sippo_custom_widget/add_info_profile_card.dart';
