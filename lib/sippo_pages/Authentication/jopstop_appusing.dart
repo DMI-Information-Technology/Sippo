@@ -16,7 +16,7 @@ class SippoAppUsing extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AppUsingController appUsingController = Get.put(AppUsingController());
-    Size? size = MediaQuery.of(context).size;
+    Size? size = Get.size;
     double height = size.height;
     double width = size.width;
     return Scaffold(
@@ -36,7 +36,9 @@ class SippoAppUsing extends StatelessWidget {
                 child: AutoSizeText(
                   "Choose_App_Using_Page".tr,
                   style: dmsbold.copyWith(
-                    fontSize: FontSize.title2(context),
+                    fontSize: Get.width < 600
+                        ? FontSize.title2(context)
+                        : FontSize.title3(context),
                     color: SippoColor.primarycolor,
                   ),
                   textAlign: TextAlign.center,
@@ -48,7 +50,9 @@ class SippoAppUsing extends StatelessWidget {
               AutoSizeText(
                 'find_desc'.tr,
                 style: dmsregular.copyWith(
-                  fontSize: FontSize.paragraph(context),
+                  fontSize: Get.width < 600
+                      ? FontSize.paragraph(context)
+                      : FontSize.paragraph3(context),
                 ),
                 maxLines: 4,
                 textAlign: TextAlign.center,
@@ -62,21 +66,23 @@ class SippoAppUsing extends StatelessWidget {
                     Row(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Expanded(
-                          child: Obx(
-                            () {
-                              return JopSelctedUsingAppCard(
-                                color: SippoColor.primarycolor,
-                                isSelected: appUsingController.findEmployee,
-                                image: JobstopPngImg.find_empLogo,
-                                backGroundIconColor: SippoColor.lightprimary,
-                                title: "find_employees_title".tr,
-                                description: 'find_employees_desc'.tr,
-                                onTapped: () {
-                                  appUsingController.findOnEmployee();
-                                },
-                              );
-                            },
+                        Flexible(
+                          child: Expanded(
+                            child: Obx(
+                                  () {
+                                return JopSelctedUsingAppCard(
+                                  color: SippoColor.primarycolor,
+                                  isSelected: appUsingController.findEmployee,
+                                  image: JobstopPngImg.find_empLogo,
+                                  backGroundIconColor: SippoColor.lightprimary,
+                                  title: "find_employees_title".tr,
+                                  description: 'find_employees_desc'.tr,
+                                  onTapped: () {
+                                    appUsingController.findOnEmployee();
+                                  },
+                                );
+                              },
+                            ),
                           ),
                         ),
                         SizedBox(
@@ -110,7 +116,7 @@ class SippoAppUsing extends StatelessWidget {
         onPressed: _onConfirmButtonClicked,
         backgroundColor: SippoColor.primarycolor,
         child: const Icon(
-          Icons.arrow_right_alt_sharp,
+          Icons.arrow_circle_right_outlined,
           color: SippoColor.white,
           size: 30,
         ),
@@ -118,28 +124,25 @@ class SippoAppUsing extends StatelessWidget {
     );
   }
 
-  void _onConfirmButtonClicked() {
-    AppUsingController controller = Get.find();
-    if (!controller.findEmployee && !controller.findJop) {
-      Get.dialog(
-        CustomAlertDialog(
-          imageAsset: JobstopPngImg.appuse,
-          title: 'select_find_dialog'.tr,
-          confirmBtnTitle: "ok".tr,
-          onConfirm: () {
-            Get.back();
-          },
-        ),
-      );
-      return;
-    }
-    if (controller.findJop)
-      Get.toNamed(SippoRoutes.userSignupPage);
-    else
-      Get.toNamed(SippoRoutes.companysignup);
-  }
-}
 
+void _onConfirmButtonClicked() {
+  AppUsingController controller = Get.find();
+  if (!controller.findEmployee && !controller.findJop) {
+    Get.snackbar(
+        "No App Use Selected",
+        'select_find_dialog',
+        duration: Duration(seconds: 3),
+        backgroundColor: SippoColor.secondary,
+        colorText:Colors.white
+    );
+    return;
+  }
+  if (controller.findJop)
+    Get.toNamed(SippoRoutes.userSignupPage);
+  else
+    Get.toNamed(SippoRoutes.companysignup);
+}
+}
 class JopSelctedUsingAppCard extends StatelessWidget {
   const JopSelctedUsingAppCard({
     super.key,
@@ -162,7 +165,7 @@ class JopSelctedUsingAppCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size? size = MediaQuery.of(context).size;
+    Size? size = Get.size;
     double height = size.height;
     double width = size.width;
     return SizedBox(
@@ -186,20 +189,23 @@ class JopSelctedUsingAppCard extends StatelessWidget {
                 height: height / 32,
               ),
               Container(
-                width: (kIsWeb ? height : width) / 5,
-                height: (kIsWeb ? height : width) / 5,
+                width: (kIsWeb ? height : width) / 7,
+                height: (kIsWeb ? height : width) / 7,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: backGroundIconColor,
                 ),
                 child: CircleAvatar(
                   backgroundColor: Colors.transparent,
-                  child: Image.asset(
-                    image,
-                    height: height,
-                    width: width,
-                    //color: color,
-                    //size: (kIsWeb ? height : width) / 8.0,
+                  child: Flexible(
+                    child: Image.asset(
+                      image,
+                      height: Get.width < 600 ? height : height /2,
+                      width: Get.width < 600 ? width : width /2,
+                      fit: BoxFit.contain,
+                      //color: color,
+                      //size: (kIsWeb ? height : width) / 8.0,
+                    ),
                   ),
                 ),
               ),
@@ -212,7 +218,7 @@ class JopSelctedUsingAppCard extends StatelessWidget {
                   title,
                   style: dmsbold.copyWith(
                     color: SippoColor.black,
-                    fontSize: FontSize.title3(context),
+                    fontSize: FontSize.title4(context),
                   ),
                   textAlign: TextAlign.center,
                 ),
@@ -220,15 +226,17 @@ class JopSelctedUsingAppCard extends StatelessWidget {
               SizedBox(
                 height: height / 128,
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: width / 25),
-                child: AutoSizeText(
-                  description,
-                  style: dmsregular.copyWith(
-                    color: SippoColor.textColor,
-                    fontSize: FontSize.paragraph2(context),
+              Flexible(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: width / 25),
+                  child: AutoSizeText(
+                    description,
+                    style: dmsregular.copyWith(
+                      color: SippoColor.textColor,
+                      fontSize: FontSize.paragraph3(context),
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                  textAlign: TextAlign.center,
                 ),
               ),
             ],

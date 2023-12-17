@@ -62,6 +62,7 @@ class CompanyLoginController extends GetxController {
   void _showSuccessAlert() {
     Get.dialog(CustomAlertDialog(
       imageAsset: JobstopPngImg.successful1,
+      isLottie: true,
       title: "Success".tr,
       description: "login_success".tr,
       confirmBtnColor: SippoColor.primarycolor,

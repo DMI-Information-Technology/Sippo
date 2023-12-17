@@ -31,6 +31,63 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
   final jobsHomeView = const JobHomeViewWidget();
   final adsView = const AdsViewWidget();
   final jobStatisticBoard = const JobStatisticBoardViewWidget();
+  Widget _buildWelcomeUser(BuildContext context) {
+    final dashboardController = CompanyDashBoardController.instance;
+    Image image;
+    if (getTimeOfDay() == 'Good Morning') {
+      image = Image.asset(
+        JobstopPngImg.morning,
+        height: 30,
+      );
+    } else if (getTimeOfDay() == 'Good Afternoon') {
+      image = Image.asset(
+        JobstopPngImg.afternoon,
+        height: 30,
+      );
+    } else {
+      image = Image.asset(
+        JobstopPngImg.night,
+        height: 30,
+      );
+    }
+    return Padding(
+      padding: EdgeInsets.symmetric(
+        horizontal: context.fromWidth(CustomStyle.s),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Row(
+            children: [
+              Text(
+                getTimeOfDay(),
+                style: dmsbold.copyWith(
+                  fontSize: FontSize.title3(context),
+                  color: SippoColor.primarycolor,
+                ),
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              image,
+            ],
+          ),
+          Obx(
+                () => dashboardController.company.name != null
+                ? Text(
+              "${dashboardController.company.name}.",
+              style: dmsbold.copyWith(
+                fontSize: FontSize.title3(context),
+                color: SippoColor.primarycolor,
+              ),
+            )
+                : const SizedBox.shrink(),
+          ),
+        ],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -149,6 +206,23 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
       }),
     );
   }
+  String getTimeOfDay() {
+    final time = DateTime.now();
+    // Get the hour of the day.
+    final hour = time.hour;
+
+    // Determine if it is morning, noon, or evening.
+    String timeOfDay;
+    if (hour < 12) {
+      timeOfDay = 'good_morning'.tr;
+    } else if (hour < 18) {
+      timeOfDay = 'good_afternoon'.tr;
+    } else {
+      timeOfDay = 'good_evening'.tr;
+    }
+
+    return timeOfDay;
+  }
 
   AppBar _buildHomeAppBar(BuildContext context) {
     final dashboardController = CompanyDashBoardController.instance;
@@ -199,7 +273,7 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
     );
   }
 
-  Padding _buildWelcomeUser(BuildContext context) {
+  Padding _buildWelcomeCompany(BuildContext context) {
     final dashboardController = CompanyDashBoardController.instance;
     return Padding(
       padding: EdgeInsets.symmetric(

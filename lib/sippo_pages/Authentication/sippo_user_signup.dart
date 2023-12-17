@@ -31,7 +31,9 @@ class SippoUserSignup extends StatelessWidget {
                 Get.focusScope?.unfocus();
                 LocalLanguageService.showChangeLanguageBottomSheet(context);
               },
-              child: Text("language".tr),
+              child: Text("language".tr , style: TextStyle(
+                fontSize: 18
+              ),),
             ),
           ),
           body: SingleChildScrollView(

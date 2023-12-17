@@ -32,13 +32,13 @@ class _JobHomeViewWidgetState extends State<JobHomeViewWidget> {
       padding: const EdgeInsets.all(8.0),
       child: Obx(() {
         final iconDir = switch (GlobalStorageService.savedLanguage) {
-          LocaleLanguageType.arabic => Icons.arrow_circle_left_rounded,
-          LocaleLanguageType.english => Icons.arrow_circle_right_rounded,
+          LocaleLanguageType.arabic => Icons.arrow_circle_left_outlined,
+          LocaleLanguageType.english => Icons.arrow_circle_right_outlined,
         };
         return Icon(
           iconDir,
           color: SippoColor.secondary,
-          size: 75,
+          size: 50,
         );
       }),
     ),

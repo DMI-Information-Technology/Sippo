@@ -134,6 +134,10 @@ class JobStatisticBoardCards extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(5),
               color: SippoColor.lightsky,
+              image: DecorationImage(
+                image: AssetImage(JobstopPngImg.remote_Image),
+                fit: BoxFit.cover, // Adjust fit as needed (fill, contain)
+              ),
             ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -149,12 +153,12 @@ class JobStatisticBoardCards extends StatelessWidget {
                 Text(
                   jobStatistics?.remoteJobs?.countString ?? "",
                   style:
-                      dmsbold.copyWith(fontSize: 16, color: SippoColor.black),
+                      dmsbold.copyWith(fontSize: 16, color: SippoColor.white),
                 ),
                 Text(
                   firstCardSubtitle ?? '',
                   style: dmsregular.copyWith(
-                      fontSize: 14, color: SippoColor.black),
+                      fontSize: 14, color: SippoColor.white),
                 ),
               ],
             ),
@@ -166,6 +170,7 @@ class JobStatisticBoardCards extends StatelessWidget {
               onTap: onSecondTap,
               height: height / 9.5,
               width: width / 2.3,
+              image: JobstopPngImg.fullTime_image,
               color: SippoColor.lightprimary,
               title: jobStatistics?.fullTimeJobs?.countString ?? "",
               subtitle: secondCardSubtitle ?? '',
@@ -177,6 +182,7 @@ class JobStatisticBoardCards extends StatelessWidget {
               onTap: onThirdTap,
               height: height / 9.5,
               width: width / 2.3,
+              image: JobstopPngImg.partTime_Image,
               color: SippoColor.lightorenge,
               title: jobStatistics?.partTimeJobs?.countString ?? "",
               subtitle: thirdCardSubtitle ?? '',
@@ -195,6 +201,7 @@ class CustomCard extends StatelessWidget {
   final String title;
   final String subtitle;
   final VoidCallback? onTap;
+  final String image;
 
   const CustomCard({
     required this.height,
@@ -203,6 +210,7 @@ class CustomCard extends StatelessWidget {
     required this.title,
     required this.subtitle,
     this.onTap,
+    required this.image,
   });
 
   @override
@@ -215,6 +223,11 @@ class CustomCard extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5),
           color: color,
+          image: DecorationImage(
+            image: AssetImage(image),
+            fit: BoxFit.cover, // Adjust fit as needed (fill, contain)
+          ),
+
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -222,12 +235,12 @@ class CustomCard extends StatelessWidget {
           children: [
             Text(
               title,
-              style: dmsbold.copyWith(fontSize: 16, color: SippoColor.black),
+              style: dmsbold.copyWith(fontSize: 16, color: SippoColor.white),
             ),
             Text(
               subtitle,
               style:
-                  dmsregular.copyWith(fontSize: 14, color: SippoColor.black),
+                  dmsregular.copyWith(fontSize: 14, color: SippoColor.white),
             ),
           ],
         ),

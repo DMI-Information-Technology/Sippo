@@ -106,10 +106,10 @@ class _SippoOnboardingState extends State<SippoOnboarding>
                 return;
               },
               backgroundColor: SippoColor.primarycolor,
-              child: const Icon(
+              child:  Icon(
                 Icons.arrow_circle_right_outlined,
                 color: SippoColor.white,
-                size: 30,
+                size: MediaQuery.of(context).size.width < 600 ? 30 : 40,
               ),
             )
           : const SizedBox()),
@@ -160,7 +160,7 @@ class OnBoardSlides extends StatelessWidget {
                   .map((title) => AutoSizeText(
                         title,
                         style: dmsbold.copyWith(
-                          fontSize: FontSize.title(context),
+                          fontSize: FontSize.title2(context),
                           color: SippoColor.primarycolor,
                         ),
                         maxLines: 2,

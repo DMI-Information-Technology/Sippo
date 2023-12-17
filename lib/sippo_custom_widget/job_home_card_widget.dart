@@ -52,6 +52,7 @@ class JobHomeCard extends StatelessWidget {
       child: Padding(
         padding: padding ?? EdgeInsets.zero,
         child: RoundedBorderRadiusCardWidget(
+          radiusValue: 10,
           paddingType: PaddingType.all,
           child: SizedBox(
             width: width,

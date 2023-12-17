@@ -593,6 +593,7 @@ class CustomChip extends StatelessWidget {
             paddingValue != null ? EdgeInsets.all(paddingValue ?? 0.0) : null,
         alignment: Alignment.center,
         decoration: BoxDecoration(
+          border: Border.all(color: SippoColor.primarycolor),
           borderRadius: BorderRadius.circular(borderRadius),
           color: backgroundColor,
         ),

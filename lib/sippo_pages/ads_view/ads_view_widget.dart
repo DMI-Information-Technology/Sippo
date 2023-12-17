@@ -60,6 +60,7 @@ class _AdsViewWidgetState extends State<AdsViewWidget> {
               clipBehavior: Clip.antiAlias,
               autoPlay: true,
               aspectRatio: 2.0,
+
               enlargeCenterPage: true,
               height: context.height / 4.5,
             ),
