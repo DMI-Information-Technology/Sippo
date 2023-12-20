@@ -226,21 +226,38 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
 
   AppBar _buildHomeAppBar(BuildContext context) {
     final dashboardController = CompanyDashBoardController.instance;
-    Size size = MediaQuery.of(context).size;
+    Size size = Get.size;
     double height = size.height;
     double width = size.width;
     return AppBar(
+      leadingWidth: width,
+
+      leading: Padding(
+        padding:  EdgeInsets.symmetric(horizontal: width/20 , vertical: 5),
+        child: Expanded(
+          child: Row(
+            children: [
+              Image.asset(JobstopPngImg.sippoLogo , height: height),
+              SizedBox(width: 10,),
+              Image.asset(JobstopPngImg.sponserLogo , height:  height,),
+            ],
+          ),
+        ),
+      ),
       actions: [
         Padding(
           padding: EdgeInsets.symmetric(horizontal: width / 28),
           child: Row(
             children: [
+
               IconButton(
                   onPressed: () {
                     Get.toNamed(SippoRoutes.sippoGeneralSearchPage);
                   },
                   icon: Icon(
                     Icons.search_sharp,
+                    color: SippoColor.primarycolor
+                    ,
                     size: height / 25,
                   )),
               SizedBox(

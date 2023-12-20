@@ -11,6 +11,8 @@ import 'package:jobspot/sippo_custom_widget/loading_view_widgets/overly_loading.
 import 'package:jobspot/sippo_custom_widget/widgets.dart';
 import 'package:jobspot/utils/validating_input.dart';
 
+import '../../JobGlobalclass/text_font_size.dart';
+
 class SippoUserSignup extends StatelessWidget {
   const SippoUserSignup({Key? key}) : super(key: key);
 
@@ -31,8 +33,8 @@ class SippoUserSignup extends StatelessWidget {
                 Get.focusScope?.unfocus();
                 LocalLanguageService.showChangeLanguageBottomSheet(context);
               },
-              child: Text("language".tr , style: TextStyle(
-                fontSize: 18
+              child: Text("language".tr, style: TextStyle(
+                fontSize: FontSize.paragraph(context),
               ),),
             ),
           ),

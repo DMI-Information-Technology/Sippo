@@ -97,8 +97,8 @@ class _SippoGeneralSearchState extends State<SippoGeneralSearch>
         focusNode: _controller.generalSearchState.focusNode,
         hintText: '${'search'.tr}...',
         hintStyle: dmsregular.copyWith(
-          fontSize: FontSize.title6(context),
-          color: Colors.black87
+          fontSize: FontSize.paragraph(context) - 1,
+          color: Colors.grey
         ),
         onTextChanged: (_) {
           _controller.onSearchSubmitted();

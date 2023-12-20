@@ -244,10 +244,16 @@ class _SippoUserHomeState extends State<SippoUserHome> {
     double height = size.height;
     double width = size.width;
     return AppBar(
-      leadingWidth: width/4,
+      leadingWidth: width,
       leading: Padding(
-        padding:  EdgeInsets.symmetric(horizontal: width/28 , vertical: 5),
-        child: Image.asset(JobstopPngImg.sippoLogo),
+        padding:  EdgeInsets.symmetric(horizontal: width/20 , vertical: 5),
+        child: Row(
+          children: [
+            Image.asset(JobstopPngImg.sippoLogo),
+            SizedBox(width: 10,),
+            Image.asset(JobstopPngImg.sponserLogo),
+          ],
+        ),
       ),
       actions: [
         Padding(
@@ -273,11 +279,11 @@ class _SippoUserHomeState extends State<SippoUserHome> {
                   imageUrl: _controller.user.profileImage?.url ?? '',
                       errorWidget: (___, __, _) => CircleAvatar(
                         backgroundColor: Colors.white,
-                        child: Image.asset(JobstopPngImg.signup, fit: BoxFit.cover,),
+                        child: Image.asset(JobstopPngImg.sign_up_image, fit: BoxFit.cover,),
                       ),
                       placeholder: (_, __) => CircleAvatar(
                         backgroundColor: Colors.white,
-                        child: Image.asset(JobstopPngImg.signup,  fit: BoxFit.cover,),
+                        child: Image.asset(JobstopPngImg.sign_up_image,  fit: BoxFit.cover,),
                       ),
                       size: context.fromHeight(24),
                       outerBorderColor: SippoColor.backgroudHome,

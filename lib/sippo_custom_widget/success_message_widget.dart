@@ -130,10 +130,13 @@ class CardNotifyMessage extends StatelessWidget {
                             ),
                           ),
                         ),
+                        //!TO DO
                         if (onCancelTap != null)
                           IconButton(
                             onPressed: onCancelTap,
-                            icon: Icon(Icons.close),
+
+                            icon: Icon(Icons.close,
+                            size: 12,),
                           ),
                       ],
                     ),

@@ -11,6 +11,7 @@ class JobstopPngImg {
   static const String forget = "Assets/jobstop_assets/jobpngimg/forget.png";
   static const String sippoLogo =
       "Assets/jobstop_assets/jobpngimg/SippoLogo.png";
+  static const String sponserLogo = "Assets/jobstop_assets/jobpngimg/sponser_logo.png";
   static const String notification = "Assets/jobstop_assets/jobpngimg/notification_logo.png";
   static const String done = "Assets/jobstop_assets/jobpngimg/done.png";
   static const String emailV = "Assets/jobstop_assets/jobpngimg/emailV.png";

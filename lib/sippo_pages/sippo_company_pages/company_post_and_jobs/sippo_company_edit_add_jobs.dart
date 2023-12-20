@@ -108,15 +108,13 @@ class _SippoCompanyEditAddJobsState extends State<SippoCompanyEditAddJobs> {
           onTap: () => Get.back(),
           child: const Icon(
             Icons.close,
-            size: 20,
+            size: 30,
           )),
       actions: [
         InkWell(
           onTap: _controller.onSavedSubmitted,
           child: Padding(
-            padding: EdgeInsets.all(context.fromWidth(
-              CustomStyle.paddingValue,
-            )),
+            padding: EdgeInsets.symmetric(horizontal: CustomStyle.paddingValue2, vertical: 12),
             child: Text(
               "posted".tr,
               style: dmsbold.copyWith(
@@ -646,7 +644,7 @@ class _AddJobOptionsCardState extends State<AddJobOptionsCard> {
               backgroundColor: SippoColor.lightprimary3,
               child: Icon(
                 Icons.add,
-                size: context.fromHeight(CustomStyle.xl),
+               // size: context.fromHeight(CustomStyle.xl),
                 color: SippoColor.primarycolor,
               ))
           : Image.asset(

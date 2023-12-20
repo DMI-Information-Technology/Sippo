@@ -42,10 +42,14 @@ class _SippoCompanyEditAddPostState extends State<SippoCompanyEditAddPost> {
         appBar: AppBar(
           actions: [
             Padding(
-              padding: EdgeInsets.all(
-                context.fromWidth(
-                  CustomStyle.paddingValue,
-                ),
+              // padding: EdgeInsets.all(
+              //   context.fromWidth(
+              //     CustomStyle.paddingValue,
+              //   ),
+              // ),
+              padding: EdgeInsets.symmetric(
+                horizontal: CustomStyle.paddingValue2,
+                vertical: 10
               ),
               child: InkWell(
                 onTap: () {

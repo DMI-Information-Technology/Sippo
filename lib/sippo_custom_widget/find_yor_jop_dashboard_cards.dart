@@ -143,10 +143,10 @@ class JobStatisticBoardCards extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset(
-                  JobstopPngImg.headhunting,
-                  height: height / 20,
-                ),
+                // Image.asset(
+                //   JobstopPngImg.headhunting,
+                //   height: height / 20,
+                // ),
                 SizedBox(
                   height: height / 96,
                 ),
