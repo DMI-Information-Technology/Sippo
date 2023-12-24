@@ -77,41 +77,43 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
             _buildButtonTaps(context),
             SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
             Obx(
-              () => _controller.jobDetailsState.selectedPageView == 0
+                  () =>
+              _controller.jobDetailsState.selectedPageView == 0
                   ? _buildJobDetails(context)
                   : ShowAboutCompaniesDetails(
-                      company: _controller.jobDetailsState.jopDetails.company,
-                    ),
+                company: _controller.jobDetailsState.jopDetails.company,
+              ),
             ),
           ],
         ),
         paddingBottom:
-            EdgeInsets.all(context.fromWidth(CustomStyle.paddingValue)),
+        EdgeInsets.all(context.fromWidth(CustomStyle.paddingValue)),
         bottomScreen: GlobalStorageService.appUse == AppUsingType.user
             ? Obx(
-                () {
-                  final isSaved =
-                      _controller.jobDetailsState.jopDetails.isSaved == true;
-                  return [
-                    BottomCompanyDetailsButtons(
-                      onApplyClicked: _controller.applyTapped,
-                      onFavClicked: () => _controller.onToggleSavedJobs(),
-                      isSaved: isSaved,
-                    ),
-                    CustomButton(
-                      onTapped: _controller.applyTapped,
-                      text: "apply_now".tr,
-                    ),
-                  ][_controller.jobDetailsState.selectedPageView];
-                },
-              )
+              () {
+            final isSaved =
+                _controller.jobDetailsState.jopDetails.isSaved == true;
+            return [
+              BottomCompanyDetailsButtons(
+                onApplyClicked: _controller.applyTapped,
+                onFavClicked: () => _controller.onToggleSavedJobs(),
+                isSaved: isSaved,
+              ),
+              CustomButton(
+                onTapped: _controller.applyTapped,
+                text: "apply_now".tr,
+              ),
+            ][_controller.jobDetailsState.selectedPageView];
+          },
+        )
             : null,
       ),
     );
   }
 
   Widget _buildTopJobDetailsHeader(BuildContext context) {
-    return Obx(() => Column(
+    return Obx(() =>
+        Column(
           children: [
             TopJobDetailsHeader(
               coverHeight: context.height / 4.5,
@@ -134,7 +136,8 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Obx(() => Text(
+          Obx(() =>
+              Text(
                 _controller.jobDetailsState.jopDetails.title ?? '',
                 style: dmsbold.copyWith(
                   fontSize: FontSize.title2(context),
@@ -161,45 +164,51 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
   }
 
   Widget _buildButtonTaps(BuildContext) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery
+        .of(context)
+        .size;
     double width = size.width;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Obx(
-          () => SizedBox(
-            width: width / 2.3,
-            child: CustomButton(
-              borderRadiusValue: 12,
-              onTapped: () {
-                _controller.jobDetailsState.switchPageView();
-              },
-              text: "description".tr,
-              backgroundColor:
+              () =>
+              SizedBox(
+                width: width / 2.3,
+                child: CustomButton(
+                  borderRadiusValue: 12,
+                  onTapped: () {
+                    _controller.jobDetailsState.switchPageView();
+                  },
+                  text: "description".tr,
+                  backgroundColor:
                   _controller.jobDetailsState.changeDescriptionButtonColor(),
-            ),
-          ),
+                ),
+              ),
         ),
         Obx(
-          () => SizedBox(
-            width: width / 2.3,
-            child: CustomButton(
-              borderRadiusValue: 12,
-              onTapped: () {
-                _controller.jobDetailsState.switchPageView();
-              },
-              text: "company".tr,
-              backgroundColor:
+              () =>
+              SizedBox(
+                width: width / 2.3,
+                child: CustomButton(
+                  borderRadiusValue: 12,
+                  onTapped: () {
+                    _controller.jobDetailsState.switchPageView();
+                  },
+                  text: "company".tr,
+                  backgroundColor:
                   _controller.jobDetailsState.changeCompanyButtonColor(),
-            ),
-          ),
+                ),
+              ),
         ),
       ],
     );
   }
 
   Widget _buildJobDetails(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery
+        .of(context)
+        .size;
     double height = size.height;
     final job = _controller.jobDetailsState.jopDetails;
     return Column(
@@ -370,7 +379,9 @@ class BottomCompanyDetailsButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery
+        .of(context)
+        .size;
     final double height = size.height;
     final double width = size.width;
     return Row(
@@ -397,7 +408,7 @@ class BottomCompanyDetailsButtons extends StatelessWidget {
         Flexible(
           child: CustomButton(
             onTapped: () => onApplyClicked(),
-            text: "Apply Now".tr,
+            text: "apply_now".tr,
           ),
         ),
       ],

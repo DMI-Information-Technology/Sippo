@@ -134,35 +134,35 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
 
   Widget _buildNationality(BuildContext context) {
     return Obx(() {
-            return AddInfoProfileCard(
-              title: 'Nationality'.tr,
-              hasNotInfoProfile:
-              _controller.user.nationality?.name?.isEmpty == true,
-              leading: Image.asset(
-                JobstopPngImg.language,
-                height: context.fromHeight(CustomStyle.l),
-                color: SippoColor.primarycolor,
-                colorBlendMode: BlendMode.srcIn,
-              ),
-              iconAction: Icon(
-                Icons.mode_edit_outline_outlined,
-                size: context.fromHeight(CustomStyle.l),
-                color: SippoColor.primarycolor,
-              ),
-              alignmentFromStart: true,
-              onAddClicked: () => Get.toNamed(SippoRoutes.editUserProfile),
-              profileInfo: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    _controller.user.nationality?.name ?? "",
-                    style:
-                    dmsmedium.copyWith(fontSize: FontSize.title4(context)),
-                  ),
-                )
-              ],
-            );
-          });
+      return AddInfoProfileCard(
+        title: 'Nationality'.tr,
+        hasNotInfoProfile:
+        _controller.user.nationality?.name?.isEmpty == true,
+        leading: Image.asset(
+          JobstopPngImg.language,
+          height: context.fromHeight(CustomStyle.l),
+          color: SippoColor.primarycolor,
+          colorBlendMode: BlendMode.srcIn,
+        ),
+        iconAction: Icon(
+          Icons.mode_edit_outline_outlined,
+          size: context.fromHeight(CustomStyle.l),
+          color: SippoColor.primarycolor,
+        ),
+        alignmentFromStart: true,
+        onAddClicked: () => Get.toNamed(SippoRoutes.editUserProfile),
+        profileInfo: [
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              _controller.user.nationality?.name ?? "",
+              style:
+              dmsmedium.copyWith(fontSize: FontSize.title4(context)),
+            ),
+          )
+        ],
+      );
+    });
   }
 
   Widget _buildProfileCompletion(BuildContext context) {
@@ -564,9 +564,10 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
             )
                 : null,
             onAddClicked: () {
-              Get.to(() => const SippoUserAbout())?.then((value){
+              Get.to(() => const SippoUserAbout())?.then((value) {
                 print(_controller.user.bio);
-                _controller.profileState.aboutMeText = _controller.user.bio??'';
+                _controller.profileState.aboutMeText =
+                    _controller.user.bio ?? '';
 
                 // UserDashBoardController.instance.userInformationRefresh().then((value) {
                 // });

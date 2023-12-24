@@ -45,11 +45,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     // ScreenUtil.init(context, designSize: Size(360.0, 690.0));
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       theme: JobstopMyThemes.lightTheme,
+      darkTheme: JobstopMyThemes.lightTheme,
       fallbackLocale: GlobalStorageService.savedLanguage.languageLocale,
       // textDirection: TextDirection.rtl,
       initialBinding: BindingsBuilder(() {

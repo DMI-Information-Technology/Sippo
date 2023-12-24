@@ -312,7 +312,7 @@ class CustomSliverAppBarDelegate extends SliverPersistentHeaderDelegate {
                       : 0.0),
               child: Padding(
                 padding: shrinkOffset <= minExtent
-                    ? const EdgeInsets.only(top: 25)
+                    ? const EdgeInsets.only(top: 50)
                     : EdgeInsets.zero,
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,

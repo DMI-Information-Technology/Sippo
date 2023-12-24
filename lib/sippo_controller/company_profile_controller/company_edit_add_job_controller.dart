@@ -234,11 +234,9 @@ class CompanyEditAddJobState {
     bool? hasApplied,
     bool? isActive
   })? extraInfo;
-  static const MAX_SALARY_RANGE = 20000.0;
-  static const MIN_SALARY_RANGE = 1000.0;
-  static const DIVISION = (CompanyEditAddJobState.MAX_SALARY_RANGE -
-          CompanyEditAddJobState.MIN_SALARY_RANGE) ~/
-      100;
+  static const MAX_SALARY_RANGE = 100000.0;
+  static const MIN_SALARY_RANGE = 0.0;
+  static const DIVISION = (MAX_SALARY_RANGE - MIN_SALARY_RANGE) ~/ 100;
   final _position = "".obs;
   final _showActionPosition = true.obs;
   final _requirements = "".obs;

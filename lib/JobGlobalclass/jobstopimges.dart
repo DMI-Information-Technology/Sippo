@@ -7,10 +7,9 @@ class JobstopPngImg {
       "Assets/jobstop_assets/json_animation/loadingApp.json";
   static const String onboarding =
       "Assets/jobstop_assets/json_animation/onBoarding1.json";
-  static const String google = "Assets/jobstop_assets/jobpngimg/google.png";
   static const String forget = "Assets/jobstop_assets/jobpngimg/forget.png";
   static const String sippoLogo =
-      "Assets/jobstop_assets/jobpngimg/SippoLogo.png";
+      "Assets/jobstop_assets/jobpngimg/sippoLogo.png";
   static const String sponserLogo = "Assets/jobstop_assets/jobpngimg/sponser_logo.png";
   static const String notification = "Assets/jobstop_assets/jobpngimg/notification_logo.png";
   static const String done = "Assets/jobstop_assets/jobpngimg/done.png";
@@ -79,7 +78,6 @@ class JobstopPngImg {
   static const String banner = "Assets/jobstop_assets/jobpngimg/banner.png";
   static const String headhunting =
       "Assets/jobstop_assets/jobpngimg/headhunting.png";
-  static const String apple = "Assets/jobstop_assets/jobpngimg/apple.png";
   static const String dot = "Assets/jobstop_assets/jobpngimg/dot.png";
   static const String dots = "Assets/jobstop_assets/jobpngimg/dots.png";
   static const String locationmap =
@@ -94,6 +92,7 @@ class JobstopPngImg {
   static const String dribbble = "Assets/jobstop_assets/jobpngimg/dribbble.png";
   static const String design = "Assets/jobstop_assets/jobpngimg/design.png";
   static const String finance = "Assets/jobstop_assets/jobpngimg/finance.png";
+  static const String comp = "Assets/jobstop_assets/jobpngimg/comp.png";
   static const String education =
       "Assets/jobstop_assets/jobpngimg/education.png";
   static const String restaurant =
@@ -104,8 +103,6 @@ class JobstopPngImg {
   static const String nofound = "Assets/jobstop_assets/jobpngimg/nofound.png";
   static const String union = "Assets/jobstop_assets/jobpngimg/union.png";
   static const String watch = "Assets/jobstop_assets/jobpngimg/watch.png";
-  static const String googlelogo =
-      "Assets/jobstop_assets/jobpngimg/googlelogo.png";
   static const String dribbblelogo =
       "Assets/jobstop_assets/jobpngimg/dribbblelogo.png";
   static const String twitterlogo =
@@ -121,8 +118,6 @@ class JobstopPngImg {
   static const String post = "Assets/jobstop_assets/jobpngimg/post.png";
   static const String galleryicon =
       "Assets/jobstop_assets/jobpngimg/galleryicon.png";
-  static const String amazonlogo =
-      "Assets/jobstop_assets/jobpngimg/amazonlogo.png";
   static const String allianzlogo =
       "Assets/jobstop_assets/jobpngimg/allianzlogo.png";
   static const String adobelogo =
@@ -169,7 +164,7 @@ class JobstopPngImg {
   static const String lock = "Assets/jobstop_assets/jobpngimg/lock.png";
   static const String logout = "Assets/jobstop_assets/jobpngimg/logout.png";
   static const String signup = "Assets/jobstop_assets/jobpngimg/signup.png";
-  static const String sign_up_image ="Assets/jobstop_assets/jobpngimg/sign_up_photo.png";
+  static const String sign_up_image ="Assets/jobstop_assets/jobpngimg/signup.png";
   static const String enddateimg =
       "Assets/jobstop_assets/jobpngimg/enddateimg.png";
 }

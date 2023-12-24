@@ -246,11 +246,13 @@ class _SippoUserHomeState extends State<SippoUserHome> {
     return AppBar(
       leadingWidth: width,
       leading: Padding(
-        padding:  EdgeInsets.symmetric(horizontal: width/20 , vertical: 5),
+        padding: EdgeInsets.symmetric(horizontal: width / 20, vertical: 5),
         child: Row(
           children: [
             Image.asset(JobstopPngImg.sippoLogo),
-            SizedBox(width: 10,),
+            SizedBox(
+              width: 10,
+            ),
             Image.asset(JobstopPngImg.sponserLogo),
           ],
         ),
@@ -260,35 +262,38 @@ class _SippoUserHomeState extends State<SippoUserHome> {
           padding: EdgeInsets.symmetric(horizontal: width / 28),
           child: Row(
             children: [
-            IconButton(
-            onPressed: () {
-    Get.toNamed(SippoRoutes.sippoGeneralSearchPage);
-    },
-    icon: Icon(
-    Icons.search,
-    color: SippoColor.primarycolor,
-    size: height / 30,
-    ),
-    ),
-
-
+              IconButton(
+                onPressed: () {
+                  Get.toNamed(SippoRoutes.sippoGeneralSearchPage);
+                },
+                icon: Icon(
+                  Icons.search,
+                  color: SippoColor.primarycolor,
+                  size: height / 30,
+                ),
+              ),
               SizedBox(width: width / 52),
               InkWell(
                 onTap: () => Get.toNamed(SippoRoutes.sippoUserProfile),
                 child: Obx(() => NetworkBorderedCircularImage(
-                  imageUrl: _controller.user.profileImage?.url ?? '',
+                      imageUrl: _controller.user.profileImage?.url ?? '',
                       errorWidget: (___, __, _) => CircleAvatar(
                         backgroundColor: Colors.white,
-                        child: Image.asset(JobstopPngImg.sign_up_image, fit: BoxFit.cover,),
+                        child: Image.asset(
+                          JobstopPngImg.sign_up_image,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                       placeholder: (_, __) => CircleAvatar(
                         backgroundColor: Colors.white,
-                        child: Image.asset(JobstopPngImg.sign_up_image,  fit: BoxFit.cover,),
+                        child: Image.asset(
+                          JobstopPngImg.sign_up_image,
+                          fit: BoxFit.cover,
+                        ),
                       ),
                       size: context.fromHeight(24),
                       outerBorderColor: SippoColor.backgroudHome,
-                    )
-                ),
+                    )),
               ),
             ],
           ),

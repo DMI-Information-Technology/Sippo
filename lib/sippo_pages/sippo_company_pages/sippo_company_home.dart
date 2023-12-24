@@ -273,11 +273,11 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
                           dashboardController.company.profileImage?.url ?? '',
                       errorWidget: (___, __, _) => CircleAvatar(
                         backgroundColor: Colors.white,
-                        child: Image.asset(JobstopPngImg.companysignup),
+                        child: Image.asset(JobstopPngImg.comp),
                       ),
                       placeholder: (__, _) => CircleAvatar(
                         backgroundColor: Colors.white,
-                        child: Image.asset(JobstopPngImg.companysignup),
+                        child: Image.asset(JobstopPngImg.comp),
                       ),
                       size: context.fromHeight(24),
                       outerBorderColor: SippoColor.backgroudHome,

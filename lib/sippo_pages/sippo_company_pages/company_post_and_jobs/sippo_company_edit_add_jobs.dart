@@ -37,7 +37,9 @@ class _SippoCompanyEditAddJobsState extends State<SippoCompanyEditAddJobs> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery
+        .of(context)
+        .size;
     double height = size.height;
 
     return Scaffold(
@@ -108,13 +110,15 @@ class _SippoCompanyEditAddJobsState extends State<SippoCompanyEditAddJobs> {
           onTap: () => Get.back(),
           child: const Icon(
             Icons.close,
-            size: 30,
+            size: 20,
           )),
       actions: [
         InkWell(
           onTap: _controller.onSavedSubmitted,
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: CustomStyle.paddingValue2, vertical: 12),
+            padding: EdgeInsets.all(context.fromWidth(
+              CustomStyle.paddingValue,
+            )),
             child: Text(
               "posted".tr,
               style: dmsbold.copyWith(
@@ -644,7 +648,7 @@ class _AddJobOptionsCardState extends State<AddJobOptionsCard> {
               backgroundColor: SippoColor.lightprimary3,
               child: Icon(
                 Icons.add,
-               // size: context.fromHeight(CustomStyle.xl),
+                size: context.fromHeight(CustomStyle.xl),
                 color: SippoColor.primarycolor,
               ))
           : Image.asset(

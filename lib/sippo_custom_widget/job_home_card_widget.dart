@@ -93,7 +93,7 @@ class JobHomeCard extends StatelessWidget {
             outerBorderColor: Colors.grey[300],
             outerBorderWidth: context.fromWidth(CustomStyle.huge2),
             errorWidget: (context, url, error) => Image.asset(
-              JobstopPngImg.google,
+              JobstopPngImg.companysignup,
             ),
           ),
         ),
