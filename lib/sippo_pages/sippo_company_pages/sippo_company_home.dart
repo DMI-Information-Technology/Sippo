@@ -233,12 +233,12 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
       leadingWidth: width,
 
       leading: Padding(
-        padding:  EdgeInsets.symmetric(horizontal: width/20 , vertical: 5),
+        padding:  EdgeInsets.symmetric(horizontal: width/40 , vertical: 5),
         child: Expanded(
           child: Row(
             children: [
-              Image.asset(JobstopPngImg.sippoLogo , height: height),
-              SizedBox(width: 10,),
+              // Image.asset(JobstopPngImg.sippoLogo , height: height),
+              // SizedBox(width: 10,),
               Image.asset(JobstopPngImg.sponserLogo , height:  height,),
             ],
           ),
@@ -289,37 +289,37 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
       ],
     );
   }
-
-  Padding _buildWelcomeCompany(BuildContext context) {
-    final dashboardController = CompanyDashBoardController.instance;
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: context.fromWidth(CustomStyle.s),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "hello".tr,
-            style: dmsbold.copyWith(
-              fontSize: FontSize.title3(context),
-              color: SippoColor.primarycolor,
-            ),
-          ),
-          Obx(
-            () => dashboardController.company.name != null
-                ? Text(
-                    "${dashboardController.company.name}",
-                    style: dmsbold.copyWith(
-                      fontSize: FontSize.title3(context),
-                      color: SippoColor.primarycolor,
-                    ),
-                  )
-                : const SizedBox.shrink(),
-          ),
-        ],
-      ),
-    );
-  }
+  //
+  // Padding _buildWelcomeCompany(BuildContext context) {
+  //   final dashboardController = CompanyDashBoardController.instance;
+  //   return Padding(
+  //     padding: EdgeInsets.symmetric(
+  //       horizontal: context.fromWidth(CustomStyle.s),
+  //     ),
+  //     child: Column(
+  //       mainAxisAlignment: MainAxisAlignment.start,
+  //       crossAxisAlignment: CrossAxisAlignment.start,
+  //       children: [
+  //         Text(
+  //           "hello".tr,
+  //           style: dmsbold.copyWith(
+  //             fontSize: FontSize.title3(context),
+  //             color: SippoColor.primarycolor,
+  //           ),
+  //         ),
+  //         Obx(
+  //           () => dashboardController.company.name != null
+  //               ? Text(
+  //                   "${dashboardController.company.name}",
+  //                   style: dmsbold.copyWith(
+  //                     fontSize: FontSize.title3(context),
+  //                     color: SippoColor.primarycolor,
+  //                   ),
+  //                 )
+  //               : const SizedBox.shrink(),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 }

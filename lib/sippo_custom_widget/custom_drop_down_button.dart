@@ -1,12 +1,11 @@
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 
 import '../JobGlobalclass/jobstopcolor.dart';
 import '../JobGlobalclass/jobstopfontstyle.dart';
 import '../JobGlobalclass/sippo_customstyle.dart';
-import '../JobGlobalclass/text_font_size.dart';
 
 class CustomDropdownButton<T> extends StatelessWidget {
   const CustomDropdownButton({

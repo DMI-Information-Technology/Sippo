@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
@@ -7,6 +8,7 @@ import 'package:jobspot/JobGlobalclass/text_font_size.dart';
 import 'package:jobspot/custom_app_controller/switch_status_controller.dart';
 import 'package:jobspot/utils/getx_text_editing_controller.dart';
 import 'package:lottie/lottie.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../JobGlobalclass/jobstopfontstyle.dart';
 import '../JobGlobalclass/jobstopimges.dart';
@@ -939,3 +941,34 @@ class FilterButtonWidget extends StatelessWidget {
 //     return Obx(() => this);
 //   }
 // }
+
+class CustomDialogRow extends StatelessWidget {
+  final IconData iconData;
+  final String text;
+  final String url;
+
+  const CustomDialogRow({
+    required this.iconData,
+    required
+
+    this.text,
+    required
+
+    this.url,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: () => launchUrl(url as Uri),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          FaIcon(iconData , color: SippoColor.primarycolor,), // Use Image.network for online images
+          SizedBox(height: 10),
+          Text(text),
+        ],
+      ),
+    );
+  }
+}

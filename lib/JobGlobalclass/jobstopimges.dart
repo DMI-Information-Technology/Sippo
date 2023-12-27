@@ -1,6 +1,7 @@
 class JobstopPngImg {
   static const String splashlogo =
       "Assets/jobstop_assets/jobpngimg/splashlogo.png";
+  static const String welcomeImage = "Assets/jobstop_assets/jobpngimg/welcome_image.png";
   static const String loadingProgress =
       "Assets/jobstop_assets/json_animation/loadingProgress.json";
   static const String loadingApp =
@@ -53,9 +54,9 @@ class JobstopPngImg {
       "Assets/jobstop_assets/json_animation/onBoarding3.json";
 
   //Work type images
-  static const String remote_Image = "Assets/jobstop_assets/jobpngimg/remote_image.jpg";
-  static const String fullTime_image = "Assets/jobstop_assets/jobpngimg/fulltime_image.jpg";
-  static const String partTime_Image = "Assets/jobstop_assets/jobpngimg/parttime_image.jpg";
+  static const String remote_Image = "Assets/jobstop_assets/jobpngimg/remote_work.jpg";
+  static const String fullTime_image = "Assets/jobstop_assets/jobpngimg/fulltime_work.jpg";
+  static const String partTime_Image = "Assets/jobstop_assets/jobpngimg/parttime_work.jpg";
 
 
   static const String companysignup =

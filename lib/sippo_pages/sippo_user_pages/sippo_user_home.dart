@@ -199,14 +199,14 @@ class _SippoUserHomeState extends State<SippoUserHome> {
                     color: _controller.userHomeState.selectedSpecialization ==
                             special
                         ? Colors.white
-                        : SippoColor.black,
+                        : SippoColor.black.withAlpha(200),
                     fontSize: FontSize.label(context) + 3,
                   ),
                 ),
                 backgroundColor:
                     _controller.userHomeState.selectedSpecialization == special
                         ? SippoColor.primarycolor
-                        : SippoColor.grey2,
+                        : SippoColor.transparent,
                 borderRadius: width / 32,
                 paddingValue: context.fromHeight(CustomStyle.xxxl),
               );
@@ -246,13 +246,13 @@ class _SippoUserHomeState extends State<SippoUserHome> {
     return AppBar(
       leadingWidth: width,
       leading: Padding(
-        padding: EdgeInsets.symmetric(horizontal: width / 20, vertical: 5),
+        padding: EdgeInsets.symmetric(horizontal: width/40, vertical: 5),
         child: Row(
           children: [
-            Image.asset(JobstopPngImg.sippoLogo),
-            SizedBox(
-              width: 10,
-            ),
+           // Image.asset(JobstopPngImg.sippoLogo),
+           //  SizedBox(
+           //    width: 10,
+           //  ),
             Image.asset(JobstopPngImg.sponserLogo),
           ],
         ),
@@ -277,19 +277,43 @@ class _SippoUserHomeState extends State<SippoUserHome> {
                 onTap: () => Get.toNamed(SippoRoutes.sippoUserProfile),
                 child: Obx(() => NetworkBorderedCircularImage(
                       imageUrl: _controller.user.profileImage?.url ?? '',
-                      errorWidget: (___, __, _) => CircleAvatar(
-                        backgroundColor: Colors.white,
-                        child: Image.asset(
-                          JobstopPngImg.sign_up_image,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      placeholder: (_, __) => CircleAvatar(
-                        backgroundColor: Colors.white,
-                        child: Image.asset(
-                          JobstopPngImg.sign_up_image,
-                          fit: BoxFit.cover,
-                        ),
+                      errorWidget: (___, __, _) =>Stack(
+    children: [
+    CircleAvatar(
+    backgroundColor: Colors.white,
+    child: Image.asset(
+    JobstopPngImg.sign_up_image,
+    fit: BoxFit.cover,
+    ),
+    ),
+    Positioned.fill(
+    child: Container(
+    decoration: BoxDecoration(
+    shape: BoxShape.circle,
+    border: Border.all(color: SippoColor.primarycolor, width: 1.5), // Customize as needed
+    ),
+    ),
+    ),
+    ],
+    ),
+                      placeholder: (_, __) => Stack(
+                        children: [
+                          CircleAvatar(
+                            backgroundColor: Colors.white,
+                            child: Image.asset(
+                              JobstopPngImg.sign_up_image,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          Positioned.fill(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(color: SippoColor.primarycolor, width: 1.5), // Customize as needed
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                       size: context.fromHeight(24),
                       outerBorderColor: SippoColor.backgroudHome,

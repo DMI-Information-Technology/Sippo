@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
 import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
 import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
 import 'package:jobspot/JobGlobalclass/routes.dart';
 import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
+
 import 'package:jobspot/core/navigation_app_route.dart';
 import 'package:jobspot/sippo_controller/NotificationController/user_notification_application/user_notification_controller.dart';
 import 'package:jobspot/sippo_controller/dashboards_controller/user_dashboard_controller.dart';
 
+import '../../sippo_custom_widget/widgets.dart';
+
 class SippoUserDashboard extends StatefulWidget {
   const SippoUserDashboard({Key? key}) : super(key: key);
+
   static const userProfession = 'PROFESSIONS';
 
   @override
@@ -19,6 +24,8 @@ class SippoUserDashboard extends StatefulWidget {
 
 class _SippoUserDashboardState extends State<SippoUserDashboard> {
   final _controller = UserDashBoardController.instance;
+  GlobalKey _widgetKey = GlobalKey();
+
   static const assets = [
     JobstopPngImg.home,
     JobstopPngImg.posting,
@@ -108,13 +115,58 @@ class _SippoUserDashboardState extends State<SippoUserDashboard> {
               mini: true,
               onPressed: () {},
               backgroundColor: SippoColor.primarycolor,
-              child: const Icon(
-                Icons.facebook,
-                size: 20,
-                color: SippoColor.white,
-              ),
+              child:  IconButton(
+                key: _widgetKey,
+                onPressed: (){
+                  _scaleDialog();
+                },
+                icon: Icon(Icons.view_headline_sharp, color: Colors.white,),
+                color: SippoColor.primarycolor,
+              )
             ),
           ),
         ),
       );
+  Widget _dialog(BuildContext context) {
+    return AlertDialog(
+      title: const Text("SIPPO"),
+      actions: [
+        Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            CustomDialogRow( iconData: FontAwesomeIcons.whatsapp, text: 'Call us', url: 'tel:+218919639191',),
+            CustomDialogRow( iconData: FontAwesomeIcons.facebook, text: 'Add us on Facebook', url: 'https://www.facebook.com/profile.php?id=61554101903737&mibextid=LQQJ4d',),
+            CustomDialogRow( iconData: FontAwesomeIcons.tiktok, text: 'Follow us on Tik Tok', url: 'https://www.tiktok.com/@sippoiplunl?_t=8iX5s8tPWSL&_r=1',),
+            CustomDialogRow( iconData: FontAwesomeIcons.instagram, text: 'Follow us on Instagram', url: 'https://www.instagram.com/sippo.job?igsh=a3c1eHRmaTl0dWZy',),
+            CustomDialogRow( iconData: FontAwesomeIcons.xTwitter, text: 'Follow us on Twitter', url: 'https://x.com/SIPPO2024?t=bmPoBHyKStG5dbmdJctZTA&s=09',),
+
+          ],
+        ),
+
+      ],
+    );
+  }
+
+  void _scaleDialog() {
+    showGeneralDialog(
+      context: context,
+      pageBuilder: (ctx, a1, a2) {
+        return Container();
+      },
+      transitionBuilder: (ctx, a1, a2, child) {
+        var curve = Curves.easeInOut.transform(a1.value);
+        RenderBox? boxs =
+        _widgetKey.currentContext!.findRenderObject() as RenderBox?;
+        Offset posit = boxs!.localToGlobal(Offset.zero);
+
+        return Transform.scale(
+            scale: curve,
+            child: _dialog(ctx),
+            origin: posit,
+            alignment: AlignmentGeometry.lerp(null, null, 2));
+      },
+      transitionDuration: const Duration(milliseconds: 400),
+    );
+  }
 }
+
