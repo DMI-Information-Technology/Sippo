@@ -50,12 +50,12 @@ dependencies:
   connectivity_plus: ^4.0.1
   cached_network_image: ^3.2.3
   readmore: ^2.2.0
-  image_picker: ^1.0.1
-  file_picker: ^5.3.3
+  image_picker: ^1.0.5
+  file_picker: ^6.1.1
   http: ^1.1.0
   get_storage: ^2.1.1
-  firebase_core: ^2.15.1
-  firebase_auth: ^4.9.0
+  firebase_core: ^2.24.2
+  firebase_auth: ^4.15.3
   auto_size_text: ^3.0.0
   dropdown_button2: ^2.3.9
   font_awesome_flutter: ^10.6.0
@@ -67,7 +67,7 @@ dependencies:
   device_info_plus: ^9.0.3
   google_maps_flutter: ^2.5.0
   location: ^5.0.3
-  firebase_messaging: ^14.7.1
+  firebase_messaging: ^14.7.9
   flutter_local_notifications: ^16.1.0
   carousel_slider: ^4.2.1
 dev_dependencies:
