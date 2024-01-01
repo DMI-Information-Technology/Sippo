@@ -29,6 +29,48 @@
       "api_key": [
         {
           "current_key": "AIzaSyDUXMfqrZyVGTfzX2XjkwRrBvUZnTapEdY"
+        },
+        {
+          "current_key": "AIzaSyD2rE81fSRmL2XjUnwWG4ozbKriITVaJog"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "856202568320-036t1g9sjmei95k7m4qhh3gc6cccpvqi.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "856202568320-2hkmdbcfeq485ijqjhqollgj659n42gf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.jobspot"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:856202568320:android:2c2401d5007386abf13c65",
+        "android_client_info": {
+          "package_name": "ly.dmi.sippo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "856202568320-036t1g9sjmei95k7m4qhh3gc6cccpvqi.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUXMfqrZyVGTfzX2XjkwRrBvUZnTapEdY"
+        },
+        {
+          "current_key": "AIzaSyD2rE81fSRmL2XjUnwWG4ozbKriITVaJog"
         }
       ],
       "services": {

@@ -1,13 +1,13 @@
 import 'package:get/get.dart';
-import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
-import 'package:jobspot/custom_app_controller/google_map_view_controller.dart';
-import 'package:jobspot/sippo_controller/company_profile_controller/profile_company_controller.dart';
-import 'package:jobspot/sippo_custom_widget/widgets.dart';
-import 'package:jobspot/sippo_data/company_repos/company_locations_repo.dart';
-import 'package:jobspot/sippo_data/locations/locationsRepo.dart';
-import 'package:jobspot/sippo_data/model/locations_model/location_address_model.dart';
-import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/work_location_model.dart';
-import 'package:jobspot/utils/states.dart';
+import 'package:sippo/JobServices/ConnectivityController/internet_connection_controller.dart';
+import 'package:sippo/custom_app_controller/google_map_view_controller.dart';
+import 'package:sippo/sippo_controller/company_profile_controller/profile_company_controller.dart';
+import 'package:sippo/sippo_custom_widget/widgets.dart';
+import 'package:sippo/sippo_data/company_repos/company_locations_repo.dart';
+import 'package:sippo/sippo_data/locations/locationsRepo.dart';
+import 'package:sippo/sippo_data/model/locations_model/location_address_model.dart';
+import 'package:sippo/sippo_data/model/profile_model/company_profile_resource_model/work_location_model.dart';
+import 'package:sippo/utils/states.dart';
 
 import '../dashboards_controller/company_dashboard_controller.dart';
 

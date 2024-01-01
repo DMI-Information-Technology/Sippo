@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
+import 'package:sippo/JobGlobalclass/jobstopimges.dart';
 import 'package:lottie/lottie.dart';
 
 class LoadingOverlay extends StatelessWidget {

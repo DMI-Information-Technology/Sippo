@@ -1,5 +1,5 @@
-import 'package:jobspot/JobGlobalclass/global_storage.dart';
-import 'package:jobspot/utils/app_use.dart';
+import 'package:sippo/JobGlobalclass/global_storage.dart';
+import 'package:sippo/utils/app_use.dart';
 
 class ProfileCompletionManager {
   static const TOTAL_USER_COMPLETION = 130.0;

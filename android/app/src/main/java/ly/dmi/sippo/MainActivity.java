@@ -1,4 +1,4 @@
-package com.example.jobspot;
+package ly.dmi.sippo;
 
 import io.flutter.embedding.android.FlutterActivity;
 

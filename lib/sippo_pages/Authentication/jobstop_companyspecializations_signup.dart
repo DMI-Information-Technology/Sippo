@@ -1,15 +1,15 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
-import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
-import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
-import 'package:jobspot/JobGlobalclass/routes.dart';
-import 'package:jobspot/JobGlobalclass/text_font_size.dart';
-import 'package:jobspot/JobServices/app_local_language_services/app_local_language_service.dart';
-import 'package:jobspot/sippo_controller/AuthenticationController/sippo_signup_company_controller.dart';
-import 'package:jobspot/sippo_controller/AuthenticationController/specialization_list_controller.dart';
-import 'package:jobspot/sippo_custom_widget/widgets.dart';
+import 'package:sippo/JobGlobalclass/jobstopcolor.dart';
+import 'package:sippo/JobGlobalclass/jobstopfontstyle.dart';
+import 'package:sippo/JobGlobalclass/jobstopimges.dart';
+import 'package:sippo/JobGlobalclass/routes.dart';
+import 'package:sippo/JobGlobalclass/text_font_size.dart';
+import 'package:sippo/JobServices/app_local_language_services/app_local_language_service.dart';
+import 'package:sippo/sippo_controller/AuthenticationController/sippo_signup_company_controller.dart';
+import 'package:sippo/sippo_controller/AuthenticationController/specialization_list_controller.dart';
+import 'package:sippo/sippo_custom_widget/widgets.dart';
 
 class CompanySignUpSpecializations extends StatefulWidget {
   const CompanySignUpSpecializations({super.key});

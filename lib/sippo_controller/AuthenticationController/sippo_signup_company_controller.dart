@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JobGlobalclass/global_storage.dart';
-import 'package:jobspot/JobGlobalclass/routes.dart';
-import 'package:jobspot/sippo_controller/AuthenticationController/sippo_auth_controller.dart';
-import 'package:jobspot/sippo_data/model/auth_model/company_model.dart';
-import 'package:jobspot/sippo_data/model/locations_model/location_address_model.dart';
-import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/cord_location.dart';
-import 'package:jobspot/utils/states.dart';
+import 'package:sippo/JobGlobalclass/global_storage.dart';
+import 'package:sippo/JobGlobalclass/routes.dart';
+import 'package:sippo/sippo_controller/AuthenticationController/sippo_auth_controller.dart';
+import 'package:sippo/sippo_data/model/auth_model/company_model.dart';
+import 'package:sippo/sippo_data/model/locations_model/location_address_model.dart';
+import 'package:sippo/sippo_data/model/profile_model/company_profile_resource_model/cord_location.dart';
+import 'package:sippo/utils/states.dart';
 
 import '../../sippo_data/locations/locationsRepo.dart';
 

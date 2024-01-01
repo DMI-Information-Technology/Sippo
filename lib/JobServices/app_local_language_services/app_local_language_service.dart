@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JobGlobalclass/global_storage.dart';
-import 'package:jobspot/sippo_custom_widget/confirmation_bottom_sheet.dart';
-import 'package:jobspot/sippo_custom_widget/container_bottom_sheet_widget.dart';
+import 'package:sippo/JobGlobalclass/global_storage.dart';
+import 'package:sippo/sippo_custom_widget/confirmation_bottom_sheet.dart';
+import 'package:sippo/sippo_custom_widget/container_bottom_sheet_widget.dart';
 
 enum LocaleLanguageType {
   arabic('ar'),

@@ -1,16 +1,16 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
-import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
-import 'package:jobspot/custom_app_controller/switch_status_controller.dart';
-import 'package:jobspot/sippo_controller/dashboards_controller/company_dashboard_controller.dart';
-import 'package:jobspot/sippo_custom_widget/widgets.dart';
-import 'package:jobspot/sippo_data/company_repos/company_profile_info_repo.dart';
-import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
-import 'package:jobspot/sippo_data/model/specializations_model/specializations_model.dart';
-import 'package:jobspot/sippo_data/specializations/specializations_repo.dart';
-import 'package:jobspot/utils/helper.dart';
-import 'package:jobspot/utils/states.dart';
+import 'package:sippo/JobServices/ConnectivityController/internet_connection_controller.dart';
+import 'package:sippo/custom_app_controller/switch_status_controller.dart';
+import 'package:sippo/sippo_controller/dashboards_controller/company_dashboard_controller.dart';
+import 'package:sippo/sippo_custom_widget/widgets.dart';
+import 'package:sippo/sippo_data/company_repos/company_profile_info_repo.dart';
+import 'package:sippo/sippo_data/model/auth_model/company_response_details.dart';
+import 'package:sippo/sippo_data/model/specializations_model/specializations_model.dart';
+import 'package:sippo/sippo_data/specializations/specializations_repo.dart';
+import 'package:sippo/utils/helper.dart';
+import 'package:sippo/utils/states.dart';
 
 class EditAddSpecializationCompanyController extends GetxController {
   static EditAddSpecializationCompanyController get instance => Get.find();

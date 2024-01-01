@@ -3,13 +3,13 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JobGlobalclass/global_storage.dart';
-import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
-import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
-import 'package:jobspot/JobGlobalclass/routes.dart';
-import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
-import 'package:jobspot/sippo_custom_widget/widgets.dart';
-import 'package:jobspot/utils/app_use.dart';
+import 'package:sippo/JobGlobalclass/global_storage.dart';
+import 'package:sippo/JobGlobalclass/jobstopcolor.dart';
+import 'package:sippo/JobGlobalclass/jobstopimges.dart';
+import 'package:sippo/JobGlobalclass/routes.dart';
+import 'package:sippo/JobServices/ConnectivityController/internet_connection_controller.dart';
+import 'package:sippo/sippo_custom_widget/widgets.dart';
+import 'package:sippo/utils/app_use.dart';
 
 class SippoSplash extends StatefulWidget {
   const SippoSplash({Key? key}) : super(key: key);

@@ -1,12 +1,12 @@
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
-import 'package:jobspot/sippo_controller/user_community_controller/user_about_companies_controllers.dart';
-import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
-import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_post_model.dart';
-import 'package:jobspot/sippo_data/user_repos/user_companies_abouts_repo.dart';
+import 'package:sippo/JobServices/ConnectivityController/internet_connection_controller.dart';
+import 'package:sippo/sippo_controller/user_community_controller/user_about_companies_controllers.dart';
+import 'package:sippo/sippo_data/model/auth_model/company_response_details.dart';
+import 'package:sippo/sippo_data/model/profile_model/company_profile_resource_model/company_post_model.dart';
+import 'package:sippo/sippo_data/user_repos/user_companies_abouts_repo.dart';
 
-import 'package:jobspot/utils/states.dart';
+import 'package:sippo/utils/states.dart';
 
 class ShowAboutsCompaniesPostsController extends GetxController {
   final _aboutCompaniesController = UserAboutCompaniesController.instance;

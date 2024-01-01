@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
-import 'package:jobspot/utils/helper.dart';
+import 'package:sippo/JobGlobalclass/jobstopimges.dart';
+import 'package:sippo/utils/helper.dart';
 
 import '../../JobGlobalclass/jobstopcolor.dart';
 import '../../JobGlobalclass/sippo_customstyle.dart';

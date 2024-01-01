@@ -1,21 +1,21 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
-import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
-import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
-import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
-import 'package:jobspot/JobGlobalclass/routes.dart';
-import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
-import 'package:jobspot/JobGlobalclass/text_font_size.dart';
-import 'package:jobspot/sippo_controller/home_controllers/job_home_view_controller.dart';
-import 'package:jobspot/sippo_controller/home_controllers/user_home_controllers.dart';
-import 'package:jobspot/sippo_custom_widget/body_widget.dart';
-import 'package:jobspot/sippo_custom_widget/find_yor_jop_dashboard_cards.dart';
-import 'package:jobspot/sippo_custom_widget/network_bordered_circular_image_widget.dart';
-import 'package:jobspot/sippo_custom_widget/widgets.dart';
-import 'package:jobspot/sippo_pages/ads_view/ads_view_widget.dart';
-import 'package:jobspot/sippo_pages/home_component_widget/job_home_view_widget.dart';
+import 'package:sippo/JobGlobalclass/jobstopcolor.dart';
+import 'package:sippo/JobGlobalclass/jobstopfontstyle.dart';
+import 'package:sippo/JobGlobalclass/jobstopimges.dart';
+import 'package:sippo/JobGlobalclass/media_query_sizes.dart';
+import 'package:sippo/JobGlobalclass/routes.dart';
+import 'package:sippo/JobGlobalclass/sippo_customstyle.dart';
+import 'package:sippo/JobGlobalclass/text_font_size.dart';
+import 'package:sippo/sippo_controller/home_controllers/job_home_view_controller.dart';
+import 'package:sippo/sippo_controller/home_controllers/user_home_controllers.dart';
+import 'package:sippo/sippo_custom_widget/body_widget.dart';
+import 'package:sippo/sippo_custom_widget/find_yor_jop_dashboard_cards.dart';
+import 'package:sippo/sippo_custom_widget/network_bordered_circular_image_widget.dart';
+import 'package:sippo/sippo_custom_widget/widgets.dart';
+import 'package:sippo/sippo_pages/ads_view/ads_view_widget.dart';
+import 'package:sippo/sippo_pages/home_component_widget/job_home_view_widget.dart';
 
 class SippoGuestHome extends StatefulWidget {
   const SippoGuestHome({Key? key}) : super(key: key);

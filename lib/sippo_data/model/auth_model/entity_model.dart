@@ -1,4 +1,4 @@
-import 'package:jobspot/utils/app_use.dart';
+import 'package:sippo/utils/app_use.dart';
 
 abstract class EntityModel {
   int? id;

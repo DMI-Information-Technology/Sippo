@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
+import 'package:sippo/JobGlobalclass/jobstopimges.dart';
 import 'package:lottie/lottie.dart';
 
 class ConditionalWidget<T> extends StatelessWidget {

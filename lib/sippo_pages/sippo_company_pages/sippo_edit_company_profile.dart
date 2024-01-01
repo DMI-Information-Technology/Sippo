@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
-import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
-import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
-import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
-import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
-import 'package:jobspot/JobGlobalclass/text_font_size.dart';
-import 'package:jobspot/sippo_controller/company_profile_controller/edit_copmany_profile_information_controller.dart';
-import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
-import 'package:jobspot/sippo_custom_widget/body_widget.dart';
-import 'package:jobspot/sippo_custom_widget/network_bordered_circular_image_widget.dart';
-import 'package:jobspot/sippo_custom_widget/save_image_profle_page_widget.dart';
-import 'package:jobspot/sippo_custom_widget/success_message_widget.dart';
-import 'package:jobspot/sippo_custom_widget/widgets.dart';
-import 'package:jobspot/utils/getx_text_editing_controller.dart';
-import 'package:jobspot/utils/helper.dart';
-import 'package:jobspot/utils/image_picker_service.dart';
-import 'package:jobspot/utils/validating_input.dart';
+import 'package:sippo/JobGlobalclass/jobstopcolor.dart';
+import 'package:sippo/JobGlobalclass/jobstopfontstyle.dart';
+import 'package:sippo/JobGlobalclass/media_query_sizes.dart';
+import 'package:sippo/JobGlobalclass/sippo_customstyle.dart';
+import 'package:sippo/JobGlobalclass/text_font_size.dart';
+import 'package:sippo/sippo_controller/company_profile_controller/edit_copmany_profile_information_controller.dart';
+import 'package:sippo/sippo_custom_widget/ConditionalWidget.dart';
+import 'package:sippo/sippo_custom_widget/body_widget.dart';
+import 'package:sippo/sippo_custom_widget/network_bordered_circular_image_widget.dart';
+import 'package:sippo/sippo_custom_widget/save_image_profle_page_widget.dart';
+import 'package:sippo/sippo_custom_widget/success_message_widget.dart';
+import 'package:sippo/sippo_custom_widget/widgets.dart';
+import 'package:sippo/utils/getx_text_editing_controller.dart';
+import 'package:sippo/utils/helper.dart';
+import 'package:sippo/utils/image_picker_service.dart';
+import 'package:sippo/utils/validating_input.dart';
 
 class EditCompanyProfilePage extends StatefulWidget {
   const EditCompanyProfilePage({Key? key}) : super(key: key);

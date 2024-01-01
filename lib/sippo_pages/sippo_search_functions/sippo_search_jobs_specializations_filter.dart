@@ -1,15 +1,15 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
-import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
-import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
-import 'package:jobspot/JobGlobalclass/text_font_size.dart';
-import 'package:jobspot/sippo_controller/sippo_search_controller/user_filter_search.dart';
-import 'package:jobspot/sippo_custom_widget/body_widget.dart';
-import 'package:jobspot/sippo_custom_widget/network_bordered_circular_image_widget.dart';
-import 'package:jobspot/sippo_custom_widget/rounded_border_radius_card_widget.dart';
-import 'package:jobspot/sippo_custom_widget/widgets.dart';
+import 'package:sippo/JobGlobalclass/jobstopcolor.dart';
+import 'package:sippo/JobGlobalclass/media_query_sizes.dart';
+import 'package:sippo/JobGlobalclass/sippo_customstyle.dart';
+import 'package:sippo/JobGlobalclass/text_font_size.dart';
+import 'package:sippo/sippo_controller/sippo_search_controller/user_filter_search.dart';
+import 'package:sippo/sippo_custom_widget/body_widget.dart';
+import 'package:sippo/sippo_custom_widget/network_bordered_circular_image_widget.dart';
+import 'package:sippo/sippo_custom_widget/rounded_border_radius_card_widget.dart';
+import 'package:sippo/sippo_custom_widget/widgets.dart';
 
 class SippoSearchJobsSpecializationsFilter extends StatefulWidget {
   const SippoSearchJobsSpecializationsFilter({super.key});
@@ -25,10 +25,10 @@ class _SippoSearchJobsSpecializationsFilterState
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      canPop: true,
+      onPopInvoked: (didPop) {
         _controller.filterSearchState.specializationsSearch = '';
-        return true;
       },
       child: Scaffold(
         appBar: AppBar(),

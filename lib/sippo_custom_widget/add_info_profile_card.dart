@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:jobspot/JobGlobalclass/text_font_size.dart';
-import 'package:jobspot/sippo_custom_widget/rounded_border_radius_card_widget.dart';
+import 'package:sippo/JobGlobalclass/text_font_size.dart';
+import 'package:sippo/sippo_custom_widget/rounded_border_radius_card_widget.dart';
 
 import '../JobGlobalclass/jobstopcolor.dart';
 import '../JobGlobalclass/jobstopfontstyle.dart';

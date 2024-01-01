@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 
-import 'package:jobspot/utils/states.dart';
-import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
+import 'package:sippo/utils/states.dart';
+import 'package:sippo/JobServices/ConnectivityController/internet_connection_controller.dart';
 
 class UserCommunityController extends GetxController {
   static UserCommunityController get instance => Get.find();

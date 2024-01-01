@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
-import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
-import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
-import 'package:jobspot/JobGlobalclass/routes.dart';
-import 'package:jobspot/JobServices/app_local_language_services/app_local_language_service.dart';
-import 'package:jobspot/sippo_controller/AuthenticationController/sippo_signup_user_controller.dart';
-import 'package:jobspot/sippo_custom_widget/custom_drop_down_button.dart';
-import 'package:jobspot/sippo_custom_widget/loading_view_widgets/overly_loading.dart';
-import 'package:jobspot/sippo_custom_widget/widgets.dart';
-import 'package:jobspot/utils/validating_input.dart';
+import 'package:sippo/JobGlobalclass/jobstopcolor.dart';
+import 'package:sippo/JobGlobalclass/jobstopfontstyle.dart';
+import 'package:sippo/JobGlobalclass/jobstopimges.dart';
+import 'package:sippo/JobGlobalclass/routes.dart';
+import 'package:sippo/JobServices/app_local_language_services/app_local_language_service.dart';
+import 'package:sippo/sippo_controller/AuthenticationController/sippo_signup_user_controller.dart';
+import 'package:sippo/sippo_custom_widget/custom_drop_down_button.dart';
+import 'package:sippo/sippo_custom_widget/loading_view_widgets/overly_loading.dart';
+import 'package:sippo/sippo_custom_widget/widgets.dart';
+import 'package:sippo/utils/validating_input.dart';
 
 import '../../JobGlobalclass/text_font_size.dart';
 

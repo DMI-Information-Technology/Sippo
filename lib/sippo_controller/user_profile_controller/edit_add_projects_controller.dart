@@ -2,14 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/sippo_controller/user_profile_controller/profile_user_controller.dart';
-import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/user_projects_model.dart';
-import 'package:jobspot/sippo_data/user_repos/user_projects_repo.dart';
-import 'package:jobspot/utils/getx_text_editing_controller.dart';
-import 'package:jobspot/utils/helper.dart' as helper;
-import 'package:jobspot/utils/states.dart';
+import 'package:sippo/sippo_controller/user_profile_controller/profile_user_controller.dart';
+import 'package:sippo/sippo_data/model/profile_model/profile_resource_model/user_projects_model.dart';
+import 'package:sippo/sippo_data/user_repos/user_projects_repo.dart';
+import 'package:sippo/utils/getx_text_editing_controller.dart';
+import 'package:sippo/utils/helper.dart' as helper;
+import 'package:sippo/utils/states.dart';
 
-import 'package:jobspot/custom_app_controller/switch_status_controller.dart';
+import 'package:sippo/custom_app_controller/switch_status_controller.dart';
 
 class EditAddProjectsController extends GetxController {
   EditAddProjectsState projectState = EditAddProjectsState();

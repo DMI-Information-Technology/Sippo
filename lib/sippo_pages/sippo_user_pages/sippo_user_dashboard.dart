@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
-import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
-import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
-import 'package:jobspot/JobGlobalclass/routes.dart';
-import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
-
-import 'package:jobspot/core/navigation_app_route.dart';
-import 'package:jobspot/sippo_controller/NotificationController/user_notification_application/user_notification_controller.dart';
-import 'package:jobspot/sippo_controller/dashboards_controller/user_dashboard_controller.dart';
+import 'package:sippo/JobGlobalclass/jobstopcolor.dart';
+import 'package:sippo/JobGlobalclass/jobstopimges.dart';
+import 'package:sippo/JobGlobalclass/media_query_sizes.dart';
+import 'package:sippo/JobGlobalclass/routes.dart';
+import 'package:sippo/JobGlobalclass/sippo_customstyle.dart';
+import 'package:sippo/core/navigation_app_route.dart';
+import 'package:sippo/sippo_controller/NotificationController/user_notification_application/user_notification_controller.dart';
+import 'package:sippo/sippo_controller/dashboards_controller/user_dashboard_controller.dart';
 
 import '../../sippo_custom_widget/widgets.dart';
 
@@ -112,37 +111,65 @@ class _SippoUserDashboardState extends State<SippoUserDashboard> {
             floatingActionButtonLocation:
                 FloatingActionButtonLocation.miniCenterDocked,
             floatingActionButton: FloatingActionButton(
-              mini: true,
-              onPressed: () {},
-              backgroundColor: SippoColor.primarycolor,
-              child:  IconButton(
-                key: _widgetKey,
-                onPressed: (){
-                  _scaleDialog();
-                },
-                icon: Icon(Icons.view_headline_sharp, color: Colors.white,),
-                color: SippoColor.primarycolor,
-              )
-            ),
+                mini: true,
+                onPressed: () {},
+                backgroundColor: SippoColor.primarycolor,
+                child: IconButton(
+                  key: _widgetKey,
+                  onPressed: () {
+                    _scaleDialog();
+                  },
+                  icon: Icon(
+                    Icons.view_headline_sharp,
+                    color: Colors.white,
+                  ),
+                  color: SippoColor.primarycolor,
+                )),
           ),
         ),
       );
+
   Widget _dialog(BuildContext context) {
     return AlertDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
       title: const Text("SIPPO"),
       actions: [
         Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            CustomDialogRow( iconData: FontAwesomeIcons.whatsapp, text: 'Call us', url: 'tel:+218919639191',),
-            CustomDialogRow( iconData: FontAwesomeIcons.facebook, text: 'Add us on Facebook', url: 'https://www.facebook.com/profile.php?id=61554101903737&mibextid=LQQJ4d',),
-            CustomDialogRow( iconData: FontAwesomeIcons.tiktok, text: 'Follow us on Tik Tok', url: 'https://www.tiktok.com/@sippoiplunl?_t=8iX5s8tPWSL&_r=1',),
-            CustomDialogRow( iconData: FontAwesomeIcons.instagram, text: 'Follow us on Instagram', url: 'https://www.instagram.com/sippo.job?igsh=a3c1eHRmaTl0dWZy',),
-            CustomDialogRow( iconData: FontAwesomeIcons.xTwitter, text: 'Follow us on Twitter', url: 'https://x.com/SIPPO2024?t=bmPoBHyKStG5dbmdJctZTA&s=09',),
-
+            CustomDialogRow(
+              iconData: FontAwesomeIcons.whatsapp,
+              text: 'Call us',
+              url: 'tel:+218919639191',
+            ),
+            CustomDialogRow(
+              iconData: FontAwesomeIcons.facebook,
+              text: 'Add us on Facebook',
+              url:
+                  'https://www.facebook.com/profile.php?id=61554101903737&mibextid=LQQJ4d',
+            ),
+            CustomDialogRow(
+              iconData: FontAwesomeIcons.tiktok,
+              text: 'Follow us on Tik Tok',
+              url: 'https://www.tiktok.com/@sippoiplunl?_t=8iX5s8tPWSL&_r=1',
+            ),
+            CustomDialogRow(
+              iconData: FontAwesomeIcons.instagram,
+              text: 'Follow us on Instagram',
+              url: 'https://www.instagram.com/sippo.job?igsh=a3c1eHRmaTl0dWZy',
+            ),
+            CustomDialogRow(
+              iconData: FontAwesomeIcons.xTwitter,
+              text: 'Follow us on Twitter',
+              url: 'https://x.com/SIPPO2024?t=bmPoBHyKStG5dbmdJctZTA&s=09',
+            ),
           ],
         ),
-
+        SizedBox(height: context.height / 128),
+        CustomButton(
+          onTapped: () => Navigator.pop(context),
+          text: 'BACK',
+        )
       ],
     );
   }
@@ -151,13 +178,13 @@ class _SippoUserDashboardState extends State<SippoUserDashboard> {
     showGeneralDialog(
       context: context,
       pageBuilder: (ctx, a1, a2) {
-        return Container();
+        return SizedBox.shrink();
       },
       transitionBuilder: (ctx, a1, a2, child) {
         var curve = Curves.easeInOut.transform(a1.value);
-        RenderBox? boxs =
-        _widgetKey.currentContext!.findRenderObject() as RenderBox?;
-        Offset posit = boxs!.localToGlobal(Offset.zero);
+        final boxs =
+            _widgetKey.currentContext!.findRenderObject() as RenderBox?;
+        final posit = boxs?.localToGlobal(Offset.zero);
 
         return Transform.scale(
             scale: curve,
@@ -169,4 +196,3 @@ class _SippoUserDashboardState extends State<SippoUserDashboard> {
     );
   }
 }
-

@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
-import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
-import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
-import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
-import 'package:jobspot/JobGlobalclass/text_font_size.dart';
-import 'package:jobspot/sippo_controller/company_profile_controller/selected_company_work_place_controller.dart';
-import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
-import 'package:jobspot/sippo_custom_widget/confirmation_bottom_sheet.dart';
-import 'package:jobspot/sippo_custom_widget/container_bottom_sheet_widget.dart';
-import 'package:jobspot/sippo_custom_widget/custom_drop_down_button.dart';
-import 'package:jobspot/sippo_custom_widget/google_map_view_widget.dart';
-import 'package:jobspot/sippo_custom_widget/success_message_widget.dart';
-import 'package:jobspot/sippo_custom_widget/widgets.dart';
+import 'package:sippo/JobGlobalclass/jobstopcolor.dart';
+import 'package:sippo/JobGlobalclass/jobstopfontstyle.dart';
+import 'package:sippo/JobGlobalclass/media_query_sizes.dart';
+import 'package:sippo/JobGlobalclass/sippo_customstyle.dart';
+import 'package:sippo/JobGlobalclass/text_font_size.dart';
+import 'package:sippo/sippo_controller/company_profile_controller/selected_company_work_place_controller.dart';
+import 'package:sippo/sippo_custom_widget/ConditionalWidget.dart';
+import 'package:sippo/sippo_custom_widget/confirmation_bottom_sheet.dart';
+import 'package:sippo/sippo_custom_widget/container_bottom_sheet_widget.dart';
+import 'package:sippo/sippo_custom_widget/custom_drop_down_button.dart';
+import 'package:sippo/sippo_custom_widget/google_map_view_widget.dart';
+import 'package:sippo/sippo_custom_widget/success_message_widget.dart';
+import 'package:sippo/sippo_custom_widget/widgets.dart';
 
 class SippoSelectCompanyWorkPlaces extends StatefulWidget {
   const SippoSelectCompanyWorkPlaces({super.key});

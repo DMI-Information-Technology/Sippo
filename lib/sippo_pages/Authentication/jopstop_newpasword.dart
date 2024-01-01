@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
-import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
-import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
-import 'package:jobspot/JobGlobalclass/routes.dart';
-import 'package:jobspot/sippo_custom_widget/widgets.dart';
+import 'package:sippo/JobGlobalclass/jobstopcolor.dart';
+import 'package:sippo/JobGlobalclass/jobstopfontstyle.dart';
+import 'package:sippo/JobGlobalclass/jobstopimges.dart';
+import 'package:sippo/JobGlobalclass/routes.dart';
+import 'package:sippo/sippo_custom_widget/widgets.dart';
 
-import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
-import 'package:jobspot/sippo_controller/AuthenticationController/sippo_auth_controller.dart';
+import 'package:sippo/JobServices/ConnectivityController/internet_connection_controller.dart';
+import 'package:sippo/sippo_controller/AuthenticationController/sippo_auth_controller.dart';
 
 class UpdatePasswordAfterVerification extends StatefulWidget {
   const UpdatePasswordAfterVerification({Key? key}) : super(key: key);

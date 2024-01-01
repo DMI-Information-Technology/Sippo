@@ -1,14 +1,14 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
-import 'package:jobspot/JobServices/shared_global_data_service.dart';
-import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
-import 'package:jobspot/sippo_data/model/custom_file_model/custom_file_model.dart';
-import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/user_job_application_model.dart';
-import 'package:jobspot/sippo_data/user_repos/user_companies_abouts_repo.dart';
-import 'package:jobspot/utils/file_picker_service.dart';
-import 'package:jobspot/utils/states.dart';
+import 'package:sippo/JobServices/ConnectivityController/internet_connection_controller.dart';
+import 'package:sippo/JobServices/shared_global_data_service.dart';
+import 'package:sippo/sippo_data/model/auth_model/company_response_details.dart';
+import 'package:sippo/sippo_data/model/custom_file_model/custom_file_model.dart';
+import 'package:sippo/sippo_data/model/profile_model/profile_resource_model/user_job_application_model.dart';
+import 'package:sippo/sippo_data/user_repos/user_companies_abouts_repo.dart';
+import 'package:sippo/utils/file_picker_service.dart';
+import 'package:sippo/utils/states.dart';
 
 class ApplyCompanyController extends GetxController {
   final applyCompanyState = ApplyCompanyState();

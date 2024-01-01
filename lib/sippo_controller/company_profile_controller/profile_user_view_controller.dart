@@ -1,20 +1,20 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
-import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
-import 'package:jobspot/JobServices/shared_global_data_service.dart';
-import 'package:jobspot/custom_app_controller/switch_status_controller.dart';
-import 'package:jobspot/sippo_data/company_repos/compan_user_profile_view_repo.dart';
-import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_user_profile_view_model.dart';
-import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/cv_file_model.dart';
-import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/education_model.dart';
-import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/language_model.dart';
-import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/profile_edit_model.dart';
-import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/user_projects_model.dart';
-import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/work_experiences_model.dart';
-import 'package:jobspot/sippo_data/model/profile_model/profile_widget_model/jobstop_resume_file_info.dart';
-import 'package:jobspot/utils/file_downloader_service.dart';
-import 'package:jobspot/utils/states.dart';
+import 'package:sippo/JobServices/ConnectivityController/internet_connection_controller.dart';
+import 'package:sippo/JobServices/shared_global_data_service.dart';
+import 'package:sippo/custom_app_controller/switch_status_controller.dart';
+import 'package:sippo/sippo_data/company_repos/compan_user_profile_view_repo.dart';
+import 'package:sippo/sippo_data/model/profile_model/company_profile_resource_model/company_user_profile_view_model.dart';
+import 'package:sippo/sippo_data/model/profile_model/profile_resource_model/cv_file_model.dart';
+import 'package:sippo/sippo_data/model/profile_model/profile_resource_model/education_model.dart';
+import 'package:sippo/sippo_data/model/profile_model/profile_resource_model/language_model.dart';
+import 'package:sippo/sippo_data/model/profile_model/profile_resource_model/profile_edit_model.dart';
+import 'package:sippo/sippo_data/model/profile_model/profile_resource_model/user_projects_model.dart';
+import 'package:sippo/sippo_data/model/profile_model/profile_resource_model/work_experiences_model.dart';
+import 'package:sippo/sippo_data/model/profile_model/profile_widget_model/jobstop_resume_file_info.dart';
+import 'package:sippo/utils/file_downloader_service.dart';
+import 'package:sippo/utils/states.dart';
 
 class ProfileUserViewController extends GetxController {
   final netController = InternetConnectionService.instance;

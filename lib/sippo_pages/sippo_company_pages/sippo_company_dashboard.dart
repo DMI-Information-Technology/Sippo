@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
-import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
-import 'package:jobspot/JobGlobalclass/routes.dart';
-import 'package:jobspot/core/navigation_app_route.dart';
-import 'package:jobspot/sippo_controller/NotificationController/company_notification_application/company_notification_controller.dart';
-import 'package:jobspot/sippo_controller/dashboards_controller/company_dashboard_controller.dart';
-import 'package:jobspot/sippo_custom_widget/confirmation_bottom_sheet.dart';
-import 'package:jobspot/sippo_custom_widget/container_bottom_sheet_widget.dart';
-import 'package:jobspot/sippo_pages/sippo_company_pages/company_notification_application/sippo_company_notifications_applications.dart';
-import 'package:jobspot/sippo_pages/sippo_company_pages/sippo_company_home.dart';
-import 'package:jobspot/sippo_pages/sippo_company_pages/sippo_jobs_posts_company_wrapper.dart';
+import 'package:sippo/JobGlobalclass/jobstopcolor.dart';
+import 'package:sippo/JobGlobalclass/jobstopimges.dart';
+import 'package:sippo/JobGlobalclass/routes.dart';
+import 'package:sippo/core/navigation_app_route.dart';
+import 'package:sippo/sippo_controller/NotificationController/company_notification_application/company_notification_controller.dart';
+import 'package:sippo/sippo_controller/dashboards_controller/company_dashboard_controller.dart';
+import 'package:sippo/sippo_custom_widget/confirmation_bottom_sheet.dart';
+import 'package:sippo/sippo_custom_widget/container_bottom_sheet_widget.dart';
+import 'package:sippo/sippo_pages/sippo_company_pages/company_notification_application/sippo_company_notifications_applications.dart';
+import 'package:sippo/sippo_pages/sippo_company_pages/sippo_company_home.dart';
+import 'package:sippo/sippo_pages/sippo_company_pages/sippo_jobs_posts_company_wrapper.dart';
 
 class SippoCompanyDashboard extends StatefulWidget {
   const SippoCompanyDashboard({Key? key}) : super(key: key);

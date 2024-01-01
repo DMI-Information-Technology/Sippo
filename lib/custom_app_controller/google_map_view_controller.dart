@@ -2,9 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:jobspot/JobServices/location_services.dart';
-import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/cord_location.dart';
-import 'package:jobspot/utils/states.dart';
+import 'package:sippo/JobServices/location_services.dart';
+import 'package:sippo/sippo_data/model/profile_model/company_profile_resource_model/cord_location.dart';
+import 'package:sippo/utils/states.dart';
 
 class GoogleMapViewController extends ChangeNotifier {
   static const SELECTED_MARKER = "selected_marker";

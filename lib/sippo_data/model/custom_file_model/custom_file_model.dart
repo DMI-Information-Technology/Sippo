@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart';
 import 'package:http_parser/http_parser.dart';
-import 'package:jobspot/utils/helper.dart';
+import 'package:sippo/utils/helper.dart';
 import 'package:path/path.dart';
 
 class CustomFileModel {

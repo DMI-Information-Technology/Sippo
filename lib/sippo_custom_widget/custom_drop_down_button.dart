@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
+import 'package:sippo/JobGlobalclass/media_query_sizes.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 
 import '../JobGlobalclass/jobstopcolor.dart';

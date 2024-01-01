@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
+import 'package:sippo/JobGlobalclass/jobstopcolor.dart';
 
 import '../JobGlobalclass/jobstopfontstyle.dart';
 import '../JobGlobalclass/text_font_size.dart';

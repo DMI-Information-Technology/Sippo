@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/sippo_controller/user_profile_controller/profile_user_controller.dart';
-import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/work_experiences_model.dart';
-import 'package:jobspot/sippo_data/user_repos/work_experiences_repo.dart';
+import 'package:sippo/sippo_controller/user_profile_controller/profile_user_controller.dart';
+import 'package:sippo/sippo_data/model/profile_model/profile_resource_model/work_experiences_model.dart';
+import 'package:sippo/sippo_data/user_repos/work_experiences_repo.dart';
 
-import 'package:jobspot/utils/getx_text_editing_controller.dart';
-import 'package:jobspot/utils/helper.dart' as helper;
-import 'package:jobspot/utils/states.dart';
+import 'package:sippo/utils/getx_text_editing_controller.dart';
+import 'package:sippo/utils/helper.dart' as helper;
+import 'package:sippo/utils/states.dart';
 
 class EditAddWorkExperienceController extends GetxController {
   EditAddWorkExperienceState workExState = EditAddWorkExperienceState();

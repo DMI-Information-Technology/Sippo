@@ -2,11 +2,11 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:jobspot/sippo_controller/company_display_posts_job_controller/company_show_job_post_wrapper_controller.dart';
-import 'package:jobspot/sippo_data/company_repos/company_posts_repo.dart';
-import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
-import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_post_model.dart';
-import 'package:jobspot/utils/states.dart';
+import 'package:sippo/sippo_controller/company_display_posts_job_controller/company_show_job_post_wrapper_controller.dart';
+import 'package:sippo/sippo_data/company_repos/company_posts_repo.dart';
+import 'package:sippo/sippo_data/model/auth_model/company_response_details.dart';
+import 'package:sippo/sippo_data/model/profile_model/company_profile_resource_model/company_post_model.dart';
+import 'package:sippo/utils/states.dart';
 
 class CompanyShowPostsController extends GetxController {
   final pagingController =

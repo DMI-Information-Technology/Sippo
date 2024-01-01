@@ -1,11 +1,11 @@
-import 'package:jobspot/sippo_data/model/auth_model/entity_model.dart';
-import 'package:jobspot/sippo_data/model/image_resource_model/image_resource_model.dart';
-import 'package:jobspot/sippo_data/model/locations_model/location_address_model.dart';
-import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/work_location_model.dart';
-import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/nationality_model.dart';
-import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/profession_user_model.dart';
-import 'package:jobspot/utils/app_use.dart';
-import 'package:jobspot/utils/helper.dart';
+import 'package:sippo/sippo_data/model/auth_model/entity_model.dart';
+import 'package:sippo/sippo_data/model/image_resource_model/image_resource_model.dart';
+import 'package:sippo/sippo_data/model/locations_model/location_address_model.dart';
+import 'package:sippo/sippo_data/model/profile_model/company_profile_resource_model/work_location_model.dart';
+import 'package:sippo/sippo_data/model/profile_model/profile_resource_model/nationality_model.dart';
+import 'package:sippo/sippo_data/model/profile_model/profile_resource_model/profession_user_model.dart';
+import 'package:sippo/utils/app_use.dart';
+import 'package:sippo/utils/helper.dart';
 
 import 'cv_file_model.dart';
 

@@ -2,13 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/custom_app_controller/switch_status_controller.dart';
-import 'package:jobspot/sippo_controller/company_profile_controller/profile_company_controller.dart';
-import 'package:jobspot/sippo_data/company_repos/company_profile_info_repo.dart';
-import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
-import 'package:jobspot/sippo_data/model/custom_file_model/custom_file_model.dart';
-import 'package:jobspot/utils/getx_text_editing_controller.dart';
-import 'package:jobspot/utils/states.dart';
+import 'package:sippo/custom_app_controller/switch_status_controller.dart';
+import 'package:sippo/sippo_controller/company_profile_controller/profile_company_controller.dart';
+import 'package:sippo/sippo_data/company_repos/company_profile_info_repo.dart';
+import 'package:sippo/sippo_data/model/auth_model/company_response_details.dart';
+import 'package:sippo/sippo_data/model/custom_file_model/custom_file_model.dart';
+import 'package:sippo/utils/getx_text_editing_controller.dart';
+import 'package:sippo/utils/states.dart';
 
 class EditCompanyProfileInfoController extends GetxController {
   final profileController = ProfileCompanyController.instance;

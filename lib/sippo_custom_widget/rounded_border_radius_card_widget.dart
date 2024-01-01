@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
-import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
+import 'package:sippo/JobGlobalclass/media_query_sizes.dart';
+import 'package:sippo/JobGlobalclass/sippo_customstyle.dart';
 
 enum PaddingType { vertical, horizontal, all }
 

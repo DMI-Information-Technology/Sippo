@@ -2,14 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
-import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/profile_edit_model.dart';
-import 'package:jobspot/sippo_data/user_repos/edit_profile_repo.dart';
-import 'package:jobspot/sippo_pages/sippo_geust_pages/sippo_guest_home.dart';
-import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_user_community/sippo_user_community.dart';
-import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_user_home.dart';
-import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_user_notification_application/sippo_user_notification_application.dart';
-import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_user_saved_jobs.dart';
+import 'package:sippo/JobServices/ConnectivityController/internet_connection_controller.dart';
+import 'package:sippo/sippo_data/model/profile_model/profile_resource_model/profile_edit_model.dart';
+import 'package:sippo/sippo_data/user_repos/edit_profile_repo.dart';
+import 'package:sippo/sippo_pages/sippo_geust_pages/sippo_guest_home.dart';
+import 'package:sippo/sippo_pages/sippo_user_pages/sippo_user_community/sippo_user_community.dart';
+import 'package:sippo/sippo_pages/sippo_user_pages/sippo_user_home.dart';
+import 'package:sippo/sippo_pages/sippo_user_pages/sippo_user_notification_application/sippo_user_notification_application.dart';
+import 'package:sippo/sippo_pages/sippo_user_pages/sippo_user_saved_jobs.dart';
 
 class UserDashBoardController extends GetxController {
   // final _httpClientController = Get.put(HttpClientController());

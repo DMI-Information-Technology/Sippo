@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:jobspot/sippo_controller/company_profile_controller/selected_company_work_place_controller.dart';
+import 'package:sippo/sippo_controller/company_profile_controller/selected_company_work_place_controller.dart';
 
 
 class SelectedCompanyWorkPlaceBindingController implements Bindings {

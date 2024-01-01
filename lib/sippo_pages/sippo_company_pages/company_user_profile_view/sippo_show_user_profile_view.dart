@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
-import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
-import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
-import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
-import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
-import 'package:jobspot/JobGlobalclass/text_font_size.dart';
-import 'package:jobspot/sippo_controller/company_profile_controller/profile_user_view_controller.dart';
-import 'package:jobspot/sippo_controller/dashboards_controller/company_dashboard_controller.dart';
-import 'package:jobspot/sippo_custom_widget/add_info_profile_card.dart';
-import 'package:jobspot/sippo_custom_widget/body_widget.dart';
-import 'package:jobspot/sippo_custom_widget/error_messages_dialog_snackbar/error_messages.dart';
-import 'package:jobspot/sippo_custom_widget/expandable_item_list_widget.dart';
-import 'package:jobspot/sippo_custom_widget/loading_view_widgets/loading_scaffold.dart';
-import 'package:jobspot/sippo_custom_widget/resume_card_widget.dart';
-import 'package:jobspot/sippo_custom_widget/user_profile_header.dart';
+import 'package:sippo/JobGlobalclass/jobstopcolor.dart';
+import 'package:sippo/JobGlobalclass/jobstopfontstyle.dart';
+import 'package:sippo/JobGlobalclass/jobstopimges.dart';
+import 'package:sippo/JobGlobalclass/media_query_sizes.dart';
+import 'package:sippo/JobGlobalclass/sippo_customstyle.dart';
+import 'package:sippo/JobGlobalclass/text_font_size.dart';
+import 'package:sippo/sippo_controller/company_profile_controller/profile_user_view_controller.dart';
+import 'package:sippo/sippo_controller/dashboards_controller/company_dashboard_controller.dart';
+import 'package:sippo/sippo_custom_widget/add_info_profile_card.dart';
+import 'package:sippo/sippo_custom_widget/body_widget.dart';
+import 'package:sippo/sippo_custom_widget/error_messages_dialog_snackbar/error_messages.dart';
+import 'package:sippo/sippo_custom_widget/expandable_item_list_widget.dart';
+import 'package:sippo/sippo_custom_widget/loading_view_widgets/loading_scaffold.dart';
+import 'package:sippo/sippo_custom_widget/resume_card_widget.dart';
+import 'package:sippo/sippo_custom_widget/user_profile_header.dart';
 import 'package:readmore/readmore.dart';
 
 class SippoCompanyUserProfileView extends StatefulWidget {

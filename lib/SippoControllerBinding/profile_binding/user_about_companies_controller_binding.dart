@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import 'package:jobspot/sippo_controller/user_community_controller/user_about_companies_controllers.dart';
+import 'package:sippo/sippo_controller/user_community_controller/user_about_companies_controllers.dart';
 
 class UserAboutCompaniesBindingController implements Bindings {
   @override

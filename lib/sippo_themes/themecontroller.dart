@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:jobspot/sippo_themes/theme.dart';
+import 'package:sippo/sippo_themes/theme.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../JobGlobalclass/jobstopprefname.dart';

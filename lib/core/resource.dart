@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:jobspot/core/validate_error.dart';
+import 'package:sippo/core/validate_error.dart';
 
 import '../sippo_excepstions/resource_exception/invalid_response_exception.dart';
 

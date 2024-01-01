@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.jobspot">
+    package="ly.dmi.sippo">
 
     <application
         android:networkSecurityConfig="@xml/network_security_config"

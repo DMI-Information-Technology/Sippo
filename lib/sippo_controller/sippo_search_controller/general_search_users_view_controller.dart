@@ -1,14 +1,14 @@
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
-import 'package:jobspot/sippo_controller/sippo_search_controller/general_search_controller.dart';
-import 'package:jobspot/sippo_data/company_repos/compan_user_profile_view_repo.dart';
-import 'package:jobspot/sippo_data/locations/locationsRepo.dart';
-import 'package:jobspot/sippo_data/model/locations_model/location_address_model.dart';
-import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_user_profile_view_model.dart';
-import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/profession_user_model.dart';
-import 'package:jobspot/sippo_data/user_repos/professions_repo.dart';
-import 'package:jobspot/utils/states.dart';
+import 'package:sippo/JobServices/ConnectivityController/internet_connection_controller.dart';
+import 'package:sippo/sippo_controller/sippo_search_controller/general_search_controller.dart';
+import 'package:sippo/sippo_data/company_repos/compan_user_profile_view_repo.dart';
+import 'package:sippo/sippo_data/locations/locationsRepo.dart';
+import 'package:sippo/sippo_data/model/locations_model/location_address_model.dart';
+import 'package:sippo/sippo_data/model/profile_model/company_profile_resource_model/company_user_profile_view_model.dart';
+import 'package:sippo/sippo_data/model/profile_model/profile_resource_model/profession_user_model.dart';
+import 'package:sippo/sippo_data/user_repos/professions_repo.dart';
+import 'package:sippo/utils/states.dart';
 
 class GeneralSearchProfilesViewController extends GetxController {
   final generalSearchController = GeneralSearchController.instance;

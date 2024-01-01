@@ -1,12 +1,12 @@
 import 'dart:convert';
 
-import 'package:jobspot/sippo_controller/HttpClientController/http_client_controller.dart';
-import 'package:jobspot/core/api_endpoints.dart' as endpoints;
-import 'package:jobspot/core/resource.dart';
-import 'package:jobspot/core/status_response_code_checker.dart';
+import 'package:sippo/sippo_controller/HttpClientController/http_client_controller.dart';
+import 'package:sippo/core/api_endpoints.dart' as endpoints;
+import 'package:sippo/core/resource.dart';
+import 'package:sippo/core/status_response_code_checker.dart';
 import '../model/pagination_company_models/posts_pagination_model.dart';
 import '../model/application_model/application_change_status_model.dart';
-import 'package:jobspot/sippo_data/model/application_model/application_job_company_model.dart';
+import 'package:sippo/sippo_data/model/application_model/application_job_company_model.dart';
 
 import '../model/status_message_model/status_message_model.dart';
 

@@ -4,7 +4,7 @@ import 'dart:convert';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/core/navigation_app_route.dart';
+import 'package:sippo/core/navigation_app_route.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import '../JobGlobalclass/global_storage.dart';

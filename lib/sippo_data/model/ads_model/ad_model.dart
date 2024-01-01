@@ -1,4 +1,4 @@
-import 'package:jobspot/sippo_data/model/image_resource_model/image_resource_model.dart';
+import 'package:sippo/sippo_data/model/image_resource_model/image_resource_model.dart';
 
 class AdModel {
   final String? url;

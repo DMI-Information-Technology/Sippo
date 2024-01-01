@@ -1,2 +1,2 @@
-#include "package:jobspot/Flutter/Flutter-Debug.xcconfig"
+#include "package:sippo/Flutter/Flutter-Debug.xcconfig"
 #include "Warnings.xcconfig"

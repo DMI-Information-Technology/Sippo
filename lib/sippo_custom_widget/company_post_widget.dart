@@ -1,14 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
-import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
-import 'package:jobspot/JobGlobalclass/text_font_size.dart';
-import 'package:jobspot/sippo_custom_widget/notification_widget.dart';
-import 'package:jobspot/sippo_custom_widget/rounded_border_radius_card_widget.dart';
-import 'package:jobspot/sippo_data/model/application_model/application_job_company_model.dart';
-import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
-import 'package:jobspot/utils/helper.dart';
+import 'package:sippo/JobGlobalclass/jobstopfontstyle.dart';
+import 'package:sippo/JobGlobalclass/media_query_sizes.dart';
+import 'package:sippo/JobGlobalclass/text_font_size.dart';
+import 'package:sippo/sippo_custom_widget/notification_widget.dart';
+import 'package:sippo/sippo_custom_widget/rounded_border_radius_card_widget.dart';
+import 'package:sippo/sippo_data/model/application_model/application_job_company_model.dart';
+import 'package:sippo/sippo_data/model/auth_model/company_response_details.dart';
+import 'package:sippo/utils/helper.dart';
 import 'package:lottie/lottie.dart';
 import 'package:readmore/readmore.dart';
 

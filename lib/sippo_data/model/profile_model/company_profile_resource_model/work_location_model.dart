@@ -1,4 +1,4 @@
-import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/cord_location.dart';
+import 'package:sippo/sippo_data/model/profile_model/company_profile_resource_model/cord_location.dart';
 
 import '../../locations_model/location_address_model.dart';
 

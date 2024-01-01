@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
-import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
-import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
-import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
-import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
-import 'package:jobspot/JobGlobalclass/text_font_size.dart';
-import 'package:jobspot/sippo_controller/NotificationController/company_notification_application/company_notification_application_controller.dart';
-import 'package:jobspot/sippo_custom_widget/loading_view_widgets/loading_scaffold.dart';
-import 'package:jobspot/sippo_pages/sippo_company_pages/company_notification_application/sippo_company_application.dart';
-import 'package:jobspot/sippo_pages/sippo_company_pages/company_notification_application/sippo_company_notification.dart';
-import 'package:jobspot/sippo_pages/sippo_message_pages/no_resource_screen.dart';
+import 'package:sippo/JobGlobalclass/jobstopcolor.dart';
+import 'package:sippo/JobGlobalclass/jobstopfontstyle.dart';
+import 'package:sippo/JobGlobalclass/jobstopimges.dart';
+import 'package:sippo/JobGlobalclass/media_query_sizes.dart';
+import 'package:sippo/JobGlobalclass/sippo_customstyle.dart';
+import 'package:sippo/JobGlobalclass/text_font_size.dart';
+import 'package:sippo/sippo_controller/NotificationController/company_notification_application/company_notification_application_controller.dart';
+import 'package:sippo/sippo_custom_widget/loading_view_widgets/loading_scaffold.dart';
+import 'package:sippo/sippo_pages/sippo_company_pages/company_notification_application/sippo_company_application.dart';
+import 'package:sippo/sippo_pages/sippo_company_pages/company_notification_application/sippo_company_notification.dart';
+import 'package:sippo/sippo_pages/sippo_message_pages/no_resource_screen.dart';
 
 class SippoCompanyNotificationApplication extends StatefulWidget {
   const SippoCompanyNotificationApplication({Key? key}) : super(key: key);

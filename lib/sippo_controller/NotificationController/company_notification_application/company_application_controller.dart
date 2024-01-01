@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
-import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
-import 'package:jobspot/sippo_controller/NotificationController/company_notification_application/company_notification_application_controller.dart';
-import 'package:jobspot/sippo_controller/dashboards_controller/company_dashboard_controller.dart';
-import 'package:jobspot/sippo_data/company_repos/compnay_applications_repo.dart';
-import 'package:jobspot/sippo_data/model/application_model/application_change_status_model.dart';
-import 'package:jobspot/sippo_data/model/application_model/application_job_company_model.dart';
-import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
-import 'package:jobspot/sippo_data/model/notification/job_application_model.dart';
-import 'package:jobspot/utils/file_downloader_service.dart';
-import 'package:jobspot/utils/states.dart';
+import 'package:sippo/JobGlobalclass/jobstopcolor.dart';
+import 'package:sippo/JobGlobalclass/sippo_customstyle.dart';
+import 'package:sippo/sippo_controller/NotificationController/company_notification_application/company_notification_application_controller.dart';
+import 'package:sippo/sippo_controller/dashboards_controller/company_dashboard_controller.dart';
+import 'package:sippo/sippo_data/company_repos/compnay_applications_repo.dart';
+import 'package:sippo/sippo_data/model/application_model/application_change_status_model.dart';
+import 'package:sippo/sippo_data/model/application_model/application_job_company_model.dart';
+import 'package:sippo/sippo_data/model/auth_model/company_response_details.dart';
+import 'package:sippo/sippo_data/model/notification/job_application_model.dart';
+import 'package:sippo/utils/file_downloader_service.dart';
+import 'package:sippo/utils/states.dart';
 
 class CompanyApplicationController extends GetxController {
   final pagingController =

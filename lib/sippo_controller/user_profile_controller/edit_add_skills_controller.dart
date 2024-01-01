@@ -1,12 +1,12 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
-import 'package:jobspot/core/Refresh.dart';
-import 'package:jobspot/custom_app_controller/switch_status_controller.dart';
-import 'package:jobspot/sippo_controller/user_profile_controller/profile_user_controller.dart';
-import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/skills_model.dart';
-import 'package:jobspot/sippo_data/user_repos/skills_repo.dart';
-import 'package:jobspot/utils/states.dart';
+import 'package:sippo/core/Refresh.dart';
+import 'package:sippo/custom_app_controller/switch_status_controller.dart';
+import 'package:sippo/sippo_controller/user_profile_controller/profile_user_controller.dart';
+import 'package:sippo/sippo_data/model/profile_model/profile_resource_model/skills_model.dart';
+import 'package:sippo/sippo_data/user_repos/skills_repo.dart';
+import 'package:sippo/utils/states.dart';
 
 class EditAddSkillsController extends GetxController {
   static EditAddSkillsController get instance => Get.find();

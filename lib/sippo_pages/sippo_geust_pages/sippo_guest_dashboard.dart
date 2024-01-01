@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
-import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
-import 'package:jobspot/JobGlobalclass/routes.dart';
-import 'package:jobspot/core/navigation_app_route.dart';
-import 'package:jobspot/sippo_controller/NotificationController/user_notification_application/user_notification_controller.dart';
-import 'package:jobspot/sippo_controller/dashboards_controller/user_dashboard_controller.dart';
+import 'package:sippo/JobGlobalclass/jobstopcolor.dart';
+import 'package:sippo/JobGlobalclass/jobstopfontstyle.dart';
+import 'package:sippo/JobGlobalclass/routes.dart';
+import 'package:sippo/core/navigation_app_route.dart';
+import 'package:sippo/sippo_controller/NotificationController/user_notification_application/user_notification_controller.dart';
+import 'package:sippo/sippo_controller/dashboards_controller/user_dashboard_controller.dart';
 
 class SippoGuestDashboard extends StatefulWidget {
   const SippoGuestDashboard({Key? key}) : super(key: key);

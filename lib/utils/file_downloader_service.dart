@@ -2,11 +2,11 @@ import 'dart:io';
 
 import 'package:device_info_plus/device_info_plus.dart';
 import 'package:get/get_connect/http/src/request/request.dart';
-import 'package:jobspot/core/resource.dart';
-import 'package:jobspot/core/status_response_code_checker.dart';
-import 'package:jobspot/sippo_data/model/custom_file_model/custom_file_model.dart';
-import 'package:jobspot/utils/helper.dart';
-import 'package:jobspot/utils/storage_permission_service.dart';
+import 'package:sippo/core/resource.dart';
+import 'package:sippo/core/status_response_code_checker.dart';
+import 'package:sippo/sippo_data/model/custom_file_model/custom_file_model.dart';
+import 'package:sippo/utils/helper.dart';
+import 'package:sippo/utils/storage_permission_service.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 

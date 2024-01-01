@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jobspot/JobGlobalclass/text_font_size.dart';
+import 'package:sippo/JobGlobalclass/text_font_size.dart';
 
 import '../JobGlobalclass/jobstopfontstyle.dart';
 

@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/sippo_controller/company_profile_controller/company_edit_add_job_controller.dart';
-import 'package:jobspot/sippo_controller/sippo_search_controller/user_search_jobs.dart';
-import 'package:jobspot/sippo_data/company_repos/company_job_repo.dart';
-import 'package:jobspot/sippo_data/model/locations_model/location_address_model.dart';
-import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
-import 'package:jobspot/sippo_data/model/salary_model/range_salary_model.dart';
-import 'package:jobspot/sippo_data/model/specializations_model/specializations_model.dart';
-import 'package:jobspot/sippo_data/specializations/specializations_repo.dart';
+import 'package:sippo/sippo_controller/company_profile_controller/company_edit_add_job_controller.dart';
+import 'package:sippo/sippo_controller/sippo_search_controller/user_search_jobs.dart';
+import 'package:sippo/sippo_data/company_repos/company_job_repo.dart';
+import 'package:sippo/sippo_data/model/locations_model/location_address_model.dart';
+import 'package:sippo/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
+import 'package:sippo/sippo_data/model/salary_model/range_salary_model.dart';
+import 'package:sippo/sippo_data/model/specializations_model/specializations_model.dart';
+import 'package:sippo/sippo_data/specializations/specializations_repo.dart';
 
 import '../../sippo_data/locations/locationsRepo.dart';
 

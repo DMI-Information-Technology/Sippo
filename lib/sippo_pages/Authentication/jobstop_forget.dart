@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
-import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
-import 'package:jobspot/JobGlobalclass/jobstopprefname.dart';
-import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
-import 'package:jobspot/JobGlobalclass/routes.dart';
-import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
-import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
-import 'package:jobspot/sippo_controller/AuthenticationController/sippo_auth_controller.dart';
-import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
-import 'package:jobspot/sippo_custom_widget/widgets.dart';
-import 'package:jobspot/sippo_themes/themecontroller.dart';
-import 'package:jobspot/utils/validating_input.dart';
+import 'package:sippo/JobGlobalclass/jobstopfontstyle.dart';
+import 'package:sippo/JobGlobalclass/jobstopimges.dart';
+import 'package:sippo/JobGlobalclass/jobstopprefname.dart';
+import 'package:sippo/JobGlobalclass/media_query_sizes.dart';
+import 'package:sippo/JobGlobalclass/routes.dart';
+import 'package:sippo/JobGlobalclass/sippo_customstyle.dart';
+import 'package:sippo/JobServices/ConnectivityController/internet_connection_controller.dart';
+import 'package:sippo/sippo_controller/AuthenticationController/sippo_auth_controller.dart';
+import 'package:sippo/sippo_custom_widget/ConditionalWidget.dart';
+import 'package:sippo/sippo_custom_widget/widgets.dart';
+import 'package:sippo/sippo_themes/themecontroller.dart';
+import 'package:sippo/utils/validating_input.dart';
 
 class JobstopForget extends StatefulWidget {
   const JobstopForget({Key? key}) : super(key: key);

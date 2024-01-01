@@ -1,11 +1,11 @@
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
-import 'package:jobspot/sippo_controller/NotificationController/company_notification_application/company_notification_application_controller.dart';
-import 'package:jobspot/core/Refresh.dart';
-import 'package:jobspot/sippo_data/model/notification/notification_model.dart';
-import 'package:jobspot/sippo_data/notification_repo/notifications_repo.dart';
-import 'package:jobspot/utils/states.dart';
+import 'package:sippo/JobServices/ConnectivityController/internet_connection_controller.dart';
+import 'package:sippo/sippo_controller/NotificationController/company_notification_application/company_notification_application_controller.dart';
+import 'package:sippo/core/Refresh.dart';
+import 'package:sippo/sippo_data/model/notification/notification_model.dart';
+import 'package:sippo/sippo_data/notification_repo/notifications_repo.dart';
+import 'package:sippo/utils/states.dart';
 
 
 class CompanyNotificationController extends GetxController {

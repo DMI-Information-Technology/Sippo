@@ -2,18 +2,18 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
-import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
-import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
-import 'package:jobspot/sippo_data/company_repos/company_job_repo.dart';
-import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
-import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
-import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/cord_location.dart';
-import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/work_location_model.dart';
-import 'package:jobspot/sippo_data/model/salary_model/range_salary_model.dart';
-import 'package:jobspot/sippo_data/model/specializations_model/specializations_model.dart';
-import 'package:jobspot/utils/states.dart';
-import 'package:jobspot/utils/string_formtter.dart';
+import 'package:sippo/JobGlobalclass/jobstopcolor.dart';
+import 'package:sippo/JobGlobalclass/sippo_customstyle.dart';
+import 'package:sippo/JobServices/ConnectivityController/internet_connection_controller.dart';
+import 'package:sippo/sippo_data/company_repos/company_job_repo.dart';
+import 'package:sippo/sippo_data/model/auth_model/company_response_details.dart';
+import 'package:sippo/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
+import 'package:sippo/sippo_data/model/profile_model/company_profile_resource_model/cord_location.dart';
+import 'package:sippo/sippo_data/model/profile_model/company_profile_resource_model/work_location_model.dart';
+import 'package:sippo/sippo_data/model/salary_model/range_salary_model.dart';
+import 'package:sippo/sippo_data/model/specializations_model/specializations_model.dart';
+import 'package:sippo/utils/states.dart';
+import 'package:sippo/utils/string_formtter.dart';
 
 import '../dashboards_controller/company_dashboard_controller.dart';
 

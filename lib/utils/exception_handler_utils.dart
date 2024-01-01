@@ -2,10 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JobGlobalclass/global_storage.dart';
-import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
-import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
-import 'package:jobspot/sippo_custom_widget/error_messages_dialog_snackbar/error_messages.dart';
+import 'package:sippo/JobGlobalclass/global_storage.dart';
+import 'package:sippo/JobGlobalclass/jobstopcolor.dart';
+import 'package:sippo/JobGlobalclass/sippo_customstyle.dart';
+import 'package:sippo/sippo_custom_widget/error_messages_dialog_snackbar/error_messages.dart';
 
 class ExceptionHandlerUtils {
   static var socketExceptionCounter = 0;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
+import 'package:sippo/JobGlobalclass/sippo_customstyle.dart';
 
 import 'error_messages_dialog_snackbar/network_connnection_lost_widget.dart';
 

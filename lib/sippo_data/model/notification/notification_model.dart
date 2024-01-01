@@ -1,8 +1,8 @@
-import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
-import 'package:jobspot/sippo_data/model/image_resource_model/image_resource_model.dart';
-import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
-import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_post_model.dart';
-import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/profile_edit_model.dart';
+import 'package:sippo/sippo_data/model/auth_model/company_response_details.dart';
+import 'package:sippo/sippo_data/model/image_resource_model/image_resource_model.dart';
+import 'package:sippo/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
+import 'package:sippo/sippo_data/model/profile_model/company_profile_resource_model/company_post_model.dart';
+import 'package:sippo/sippo_data/model/profile_model/profile_resource_model/profile_edit_model.dart';
 
 import 'notifications_types.dart';
 

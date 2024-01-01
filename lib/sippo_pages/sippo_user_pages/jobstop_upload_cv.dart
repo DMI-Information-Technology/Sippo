@@ -1,16 +1,16 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
-import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
-import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
-import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
-import 'package:jobspot/JobGlobalclass/text_font_size.dart';
-import 'package:jobspot/sippo_controller/user_profile_controller/upload_cv_controller.dart';
-import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
-import 'package:jobspot/sippo_custom_widget/file_upload_widget.dart';
-import 'package:jobspot/sippo_custom_widget/loading_view_widgets/loading_scaffold.dart';
-import 'package:jobspot/sippo_custom_widget/resume_card_widget.dart';
+import 'package:sippo/JobGlobalclass/jobstopcolor.dart';
+import 'package:sippo/JobGlobalclass/jobstopfontstyle.dart';
+import 'package:sippo/JobGlobalclass/media_query_sizes.dart';
+import 'package:sippo/JobGlobalclass/sippo_customstyle.dart';
+import 'package:sippo/JobGlobalclass/text_font_size.dart';
+import 'package:sippo/sippo_controller/user_profile_controller/upload_cv_controller.dart';
+import 'package:sippo/sippo_custom_widget/ConditionalWidget.dart';
+import 'package:sippo/sippo_custom_widget/file_upload_widget.dart';
+import 'package:sippo/sippo_custom_widget/loading_view_widgets/loading_scaffold.dart';
+import 'package:sippo/sippo_custom_widget/resume_card_widget.dart';
 
 class SippoUploadCV extends StatefulWidget {
   const SippoUploadCV({Key? key}) : super(key: key);

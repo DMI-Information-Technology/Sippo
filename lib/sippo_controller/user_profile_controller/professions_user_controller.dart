@@ -1,16 +1,16 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
-import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
-import 'package:jobspot/custom_app_controller/switch_status_controller.dart';
-import 'package:jobspot/sippo_controller/dashboards_controller/user_dashboard_controller.dart';
-import 'package:jobspot/sippo_custom_widget/widgets.dart';
-import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/profession_user_model.dart';
-import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/professions_user_model.dart';
-import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/profile_edit_model.dart';
-import 'package:jobspot/sippo_data/user_repos/professions_repo.dart';
-import 'package:jobspot/utils/helper.dart';
-import 'package:jobspot/utils/states.dart';
+import 'package:sippo/JobServices/ConnectivityController/internet_connection_controller.dart';
+import 'package:sippo/custom_app_controller/switch_status_controller.dart';
+import 'package:sippo/sippo_controller/dashboards_controller/user_dashboard_controller.dart';
+import 'package:sippo/sippo_custom_widget/widgets.dart';
+import 'package:sippo/sippo_data/model/profile_model/profile_resource_model/profession_user_model.dart';
+import 'package:sippo/sippo_data/model/profile_model/profile_resource_model/professions_user_model.dart';
+import 'package:sippo/sippo_data/model/profile_model/profile_resource_model/profile_edit_model.dart';
+import 'package:sippo/sippo_data/user_repos/professions_repo.dart';
+import 'package:sippo/utils/helper.dart';
+import 'package:sippo/utils/states.dart';
 
 class ProfessionsUserController extends GetxController {
   static ProfessionsUserController get instance => Get.find();

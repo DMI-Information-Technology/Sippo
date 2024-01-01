@@ -1,12 +1,12 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
-import 'package:jobspot/core/Refresh.dart';
-import 'package:jobspot/custom_app_controller/switch_status_controller.dart';
-import 'package:jobspot/sippo_controller/user_profile_controller/profile_user_controller.dart';
-import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/language_model.dart';
-import 'package:jobspot/sippo_data/user_repos/language_repo.dart';
-import 'package:jobspot/utils/states.dart';
+import 'package:sippo/core/Refresh.dart';
+import 'package:sippo/custom_app_controller/switch_status_controller.dart';
+import 'package:sippo/sippo_controller/user_profile_controller/profile_user_controller.dart';
+import 'package:sippo/sippo_data/model/profile_model/profile_resource_model/language_model.dart';
+import 'package:sippo/sippo_data/user_repos/language_repo.dart';
+import 'package:sippo/utils/states.dart';
 
 class LanguageEditAddController extends GetxController {
   final _profileController = ProfileUserController.instance;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
-import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
+import 'package:sippo/JobGlobalclass/jobstopcolor.dart';
+import 'package:sippo/JobGlobalclass/jobstopfontstyle.dart';
 
 class JobstopMyThemes {
   static final lightTheme = ThemeData(

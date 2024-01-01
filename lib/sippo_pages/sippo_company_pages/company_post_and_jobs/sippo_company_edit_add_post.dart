@@ -1,19 +1,19 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
-import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
-import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
-import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
-import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
-import 'package:jobspot/JobGlobalclass/text_font_size.dart';
-import 'package:jobspot/sippo_controller/company_profile_controller/company_edit_add_post_controller.dart';
-import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
-import 'package:jobspot/sippo_custom_widget/body_widget.dart';
-import 'package:jobspot/sippo_custom_widget/network_bordered_circular_image_widget.dart';
-import 'package:jobspot/sippo_custom_widget/success_message_widget.dart';
-import 'package:jobspot/sippo_custom_widget/widgets.dart';
-import 'package:jobspot/utils/validating_input.dart';
+import 'package:sippo/JobGlobalclass/jobstopcolor.dart';
+import 'package:sippo/JobGlobalclass/jobstopfontstyle.dart';
+import 'package:sippo/JobGlobalclass/jobstopimges.dart';
+import 'package:sippo/JobGlobalclass/media_query_sizes.dart';
+import 'package:sippo/JobGlobalclass/sippo_customstyle.dart';
+import 'package:sippo/JobGlobalclass/text_font_size.dart';
+import 'package:sippo/sippo_controller/company_profile_controller/company_edit_add_post_controller.dart';
+import 'package:sippo/sippo_custom_widget/ConditionalWidget.dart';
+import 'package:sippo/sippo_custom_widget/body_widget.dart';
+import 'package:sippo/sippo_custom_widget/network_bordered_circular_image_widget.dart';
+import 'package:sippo/sippo_custom_widget/success_message_widget.dart';
+import 'package:sippo/sippo_custom_widget/widgets.dart';
+import 'package:sippo/utils/validating_input.dart';
 
 class SippoCompanyEditAddPost extends StatefulWidget {
   const SippoCompanyEditAddPost({Key? key}) : super(key: key);
@@ -31,12 +31,11 @@ class _SippoCompanyEditAddPostState extends State<SippoCompanyEditAddPost> {
     final height = MediaQuery.sizeOf(context).height;
 
     final newPostState = _controller.newPostState;
-    return WillPopScope(
-      onWillPop: () async {
+    return PopScope(
+      onPopInvoked: (_) async {
         // Get.back(result: newPostState.isUpdated ? _controller.post : null);
         Get.back(result: newPostState.isUpdated);
         // return false;
-        return true;
       },
       child: Scaffold(
         appBar: AppBar(
@@ -48,9 +47,7 @@ class _SippoCompanyEditAddPostState extends State<SippoCompanyEditAddPost> {
               //   ),
               // ),
               padding: EdgeInsets.symmetric(
-                horizontal: CustomStyle.paddingValue2,
-                vertical: 10
-              ),
+                  horizontal: CustomStyle.paddingValue2, vertical: 10),
               child: InkWell(
                 onTap: () {
                   if (_controller.formKey.currentState?.validate() == true) {

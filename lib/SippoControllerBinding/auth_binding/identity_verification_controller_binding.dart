@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import 'package:jobspot/sippo_controller/AuthenticationController/sippo_identity_verification_controller.dart';
+import 'package:sippo/sippo_controller/AuthenticationController/sippo_identity_verification_controller.dart';
 
 class IdentityVerificationBindingController implements Bindings {
   @override

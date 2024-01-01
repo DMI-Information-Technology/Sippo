@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
-import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
-import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
-import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
-import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
-import 'package:jobspot/JobGlobalclass/text_font_size.dart';
-import 'package:jobspot/sippo_controller/company_profile_controller/company_edit_add_job_controller.dart';
-import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
-import 'package:jobspot/sippo_custom_widget/body_widget.dart';
-import 'package:jobspot/sippo_custom_widget/container_bottom_sheet_widget.dart';
-import 'package:jobspot/sippo_custom_widget/custom_drop_down_button.dart';
-import 'package:jobspot/sippo_custom_widget/rounded_border_radius_card_widget.dart';
-import 'package:jobspot/sippo_custom_widget/success_message_widget.dart';
-import 'package:jobspot/sippo_custom_widget/widgets.dart';
-import 'package:jobspot/sippo_pages/sippo_message_pages/min_max_salary_message_text_wiedgt.dart';
+import 'package:sippo/JobGlobalclass/jobstopcolor.dart';
+import 'package:sippo/JobGlobalclass/jobstopfontstyle.dart';
+import 'package:sippo/JobGlobalclass/jobstopimges.dart';
+import 'package:sippo/JobGlobalclass/media_query_sizes.dart';
+import 'package:sippo/JobGlobalclass/sippo_customstyle.dart';
+import 'package:sippo/JobGlobalclass/text_font_size.dart';
+import 'package:sippo/sippo_controller/company_profile_controller/company_edit_add_job_controller.dart';
+import 'package:sippo/sippo_custom_widget/ConditionalWidget.dart';
+import 'package:sippo/sippo_custom_widget/body_widget.dart';
+import 'package:sippo/sippo_custom_widget/container_bottom_sheet_widget.dart';
+import 'package:sippo/sippo_custom_widget/custom_drop_down_button.dart';
+import 'package:sippo/sippo_custom_widget/rounded_border_radius_card_widget.dart';
+import 'package:sippo/sippo_custom_widget/success_message_widget.dart';
+import 'package:sippo/sippo_custom_widget/widgets.dart';
+import 'package:sippo/sippo_pages/sippo_message_pages/min_max_salary_message_text_wiedgt.dart';
 
 class SippoCompanyEditAddJobs extends StatefulWidget {
   const SippoCompanyEditAddJobs({Key? key}) : super(key: key);

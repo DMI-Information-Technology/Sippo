@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
-import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
-import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
-import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
-import 'package:jobspot/JobGlobalclass/text_font_size.dart';
-import 'package:jobspot/core/profile_completion_manager.dart';
-import 'package:jobspot/sippo_custom_widget/list_item_text.dart';
-import 'package:jobspot/sippo_custom_widget/widgets.dart';
+import 'package:sippo/JobGlobalclass/jobstopfontstyle.dart';
+import 'package:sippo/JobGlobalclass/jobstopimges.dart';
+import 'package:sippo/JobGlobalclass/media_query_sizes.dart';
+import 'package:sippo/JobGlobalclass/sippo_customstyle.dart';
+import 'package:sippo/JobGlobalclass/text_font_size.dart';
+import 'package:sippo/core/profile_completion_manager.dart';
+import 'package:sippo/sippo_custom_widget/list_item_text.dart';
+import 'package:sippo/sippo_custom_widget/widgets.dart';
 
 class ProfileCompletionController extends ChangeNotifier {
   var _percentage = 0.0;

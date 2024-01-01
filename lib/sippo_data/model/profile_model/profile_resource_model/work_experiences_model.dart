@@ -1,4 +1,4 @@
-import 'package:jobspot/utils/helper.dart';
+import 'package:sippo/utils/helper.dart';
 
 class WorkExperiencesModel {
   WorkExperiencesModel({

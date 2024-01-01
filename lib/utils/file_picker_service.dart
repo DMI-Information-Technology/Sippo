@@ -1,5 +1,5 @@
 import 'package:file_picker/file_picker.dart';
-import 'package:jobspot/sippo_data/model/custom_file_model/custom_file_model.dart';
+import 'package:sippo/sippo_data/model/custom_file_model/custom_file_model.dart';
 
 import '../sippo_data/model/profile_model/profile_widget_model/jobstop_resume_file_info.dart';
 import 'helper.dart';

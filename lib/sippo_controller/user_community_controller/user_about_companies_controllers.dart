@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
-import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
-import 'package:jobspot/JobServices/shared_global_data_service.dart';
-import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
-import 'package:jobspot/sippo_data/user_repos/user_companies_abouts_repo.dart';
-import 'package:jobspot/utils/states.dart';
+import 'package:sippo/JobServices/ConnectivityController/internet_connection_controller.dart';
+import 'package:sippo/JobServices/shared_global_data_service.dart';
+import 'package:sippo/sippo_data/model/auth_model/company_response_details.dart';
+import 'package:sippo/sippo_data/user_repos/user_companies_abouts_repo.dart';
+import 'package:sippo/utils/states.dart';
 
 import 'show_about_companies_jobs_controller.dart';
 import 'show_about_companies_posts_controller.dart';

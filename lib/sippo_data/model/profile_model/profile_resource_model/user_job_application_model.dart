@@ -1,5 +1,5 @@
 import 'package:http/src/multipart_file.dart';
-import 'package:jobspot/sippo_data/model/custom_file_model/custom_file_model.dart';
+import 'package:sippo/sippo_data/model/custom_file_model/custom_file_model.dart';
 
 
 class UserSendApplicationModel {

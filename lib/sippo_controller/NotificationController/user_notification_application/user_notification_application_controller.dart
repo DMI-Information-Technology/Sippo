@@ -1,9 +1,9 @@
 import 'package:get/get.dart';
-import 'package:jobspot/custom_app_controller/switch_status_controller.dart';
-import 'package:jobspot/sippo_controller/dashboards_controller/user_dashboard_controller.dart';
-import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/profile_edit_model.dart';
-import 'package:jobspot/sippo_data/notification_repo/notifications_repo.dart';
-import 'package:jobspot/utils/states.dart';
+import 'package:sippo/custom_app_controller/switch_status_controller.dart';
+import 'package:sippo/sippo_controller/dashboards_controller/user_dashboard_controller.dart';
+import 'package:sippo/sippo_data/model/profile_model/profile_resource_model/profile_edit_model.dart';
+import 'package:sippo/sippo_data/notification_repo/notifications_repo.dart';
+import 'package:sippo/utils/states.dart';
 
 import 'user_notification_controller.dart';
 

@@ -2,13 +2,12 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
-import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
-import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
-import 'package:jobspot/JobGlobalclass/routes.dart';
-import 'package:jobspot/JobGlobalclass/text_font_size.dart';
-import 'package:jobspot/sippo_controller/AuthenticationController/sippo_appusing_controller.dart';
-import 'package:jobspot/sippo_custom_widget/widgets.dart';
+import 'package:sippo/JobGlobalclass/jobstopcolor.dart';
+import 'package:sippo/JobGlobalclass/jobstopfontstyle.dart';
+import 'package:sippo/JobGlobalclass/jobstopimges.dart';
+import 'package:sippo/JobGlobalclass/routes.dart';
+import 'package:sippo/JobGlobalclass/text_font_size.dart';
+import 'package:sippo/sippo_controller/AuthenticationController/sippo_appusing_controller.dart';
 
 class SippoAppUsing extends StatelessWidget {
   const SippoAppUsing({Key? key}) : super(key: key);
@@ -69,7 +68,7 @@ class SippoAppUsing extends StatelessWidget {
                         Flexible(
                           child: Expanded(
                             child: Obx(
-                                  () {
+                              () {
                                 return JopSelctedUsingAppCard(
                                   color: SippoColor.primarycolor,
                                   isSelected: appUsingController.findEmployee,
@@ -124,25 +123,22 @@ class SippoAppUsing extends StatelessWidget {
     );
   }
 
-
-void _onConfirmButtonClicked() {
-  AppUsingController controller = Get.find();
-  if (!controller.findEmployee && !controller.findJop) {
-    Get.snackbar(
-        "No App Use Selected",
-        'select_find_dialog',
-        duration: Duration(seconds: 3),
-        backgroundColor: SippoColor.secondary,
-        colorText:Colors.white
-    );
-    return;
+  void _onConfirmButtonClicked() {
+    AppUsingController controller = Get.find();
+    if (!controller.findEmployee && !controller.findJop) {
+      Get.snackbar("No App Use Selected", 'select_find_dialog',
+          duration: Duration(seconds: 3),
+          backgroundColor: SippoColor.secondary,
+          colorText: Colors.white);
+      return;
+    }
+    if (controller.findJop)
+      Get.toNamed(SippoRoutes.userSignupPage);
+    else
+      Get.toNamed(SippoRoutes.companysignup);
   }
-  if (controller.findJop)
-    Get.toNamed(SippoRoutes.userSignupPage);
-  else
-    Get.toNamed(SippoRoutes.companysignup);
 }
-}
+
 class JopSelctedUsingAppCard extends StatelessWidget {
   const JopSelctedUsingAppCard({
     super.key,
@@ -200,8 +196,8 @@ class JopSelctedUsingAppCard extends StatelessWidget {
                   child: Flexible(
                     child: Image.asset(
                       image,
-                      height: Get.width < 600 ? height : height /2,
-                      width: Get.width < 600 ? width : width /2,
+                      height: Get.width < 600 ? height : height / 2,
+                      width: Get.width < 600 ? width : width / 2,
                       fit: BoxFit.contain,
                       //color: color,
                       //size: (kIsWeb ? height : width) / 8.0,

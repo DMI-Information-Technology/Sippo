@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:jobspot/JobServices/app_local_language_services/app_local_language_service.dart';
-import 'package:jobspot/utils/app_use.dart';
+import 'package:sippo/JobServices/app_local_language_services/app_local_language_service.dart';
+import 'package:sippo/utils/app_use.dart';
 
 import 'jobstopprefname.dart' as global;
 

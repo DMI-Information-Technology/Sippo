@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import 'package:jobspot/sippo_controller/user_profile_controller/edit_add_skills_controller.dart';
+import 'package:sippo/sippo_controller/user_profile_controller/edit_add_skills_controller.dart';
 
 
 class EditAddSkillsBindingController implements Bindings {

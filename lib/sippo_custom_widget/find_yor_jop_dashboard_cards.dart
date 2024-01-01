@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
-import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
-import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
-import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
-import 'package:jobspot/JobGlobalclass/routes.dart';
-import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
-import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
-import 'package:jobspot/JobServices/shared_global_data_service.dart';
-import 'package:jobspot/sippo_data/job_statistics_repo/job_statistics_repo.dart';
-import 'package:jobspot/sippo_data/model/job_statistics_model/job_statistics_model.dart';
-import 'package:jobspot/utils/states.dart';
+import 'package:sippo/JobGlobalclass/jobstopcolor.dart';
+import 'package:sippo/JobGlobalclass/jobstopfontstyle.dart';
+import 'package:sippo/JobGlobalclass/jobstopimges.dart';
+import 'package:sippo/JobGlobalclass/media_query_sizes.dart';
+import 'package:sippo/JobGlobalclass/routes.dart';
+import 'package:sippo/JobGlobalclass/sippo_customstyle.dart';
+import 'package:sippo/JobServices/ConnectivityController/internet_connection_controller.dart';
+import 'package:sippo/JobServices/shared_global_data_service.dart';
+import 'package:sippo/sippo_data/job_statistics_repo/job_statistics_repo.dart';
+import 'package:sippo/sippo_data/model/job_statistics_model/job_statistics_model.dart';
+import 'package:sippo/utils/states.dart';
 
 class JobStatisticBoardController extends GetxController {
   static JobStatisticBoardController get instance => Get.find();

@@ -1,4 +1,4 @@
-import 'package:jobspot/sippo_data/model/notification/job_application_model.dart';
+import 'package:sippo/sippo_data/model/notification/job_application_model.dart';
 
 class ApplicationStatusModel {
   final ApplicationStatusType? status;

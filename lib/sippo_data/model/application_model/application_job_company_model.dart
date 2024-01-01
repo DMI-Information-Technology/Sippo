@@ -1,5 +1,5 @@
-import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
-import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
+import 'package:sippo/sippo_data/model/auth_model/company_response_details.dart';
+import 'package:sippo/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
 
 import '../profile_model/profile_resource_model/cv_file_model.dart';
 import '../profile_model/profile_resource_model/profile_edit_model.dart';

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
+import 'package:sippo/JobGlobalclass/media_query_sizes.dart';
 
 import '../JobGlobalclass/jobstopfontstyle.dart';
 import '../JobGlobalclass/sippo_customstyle.dart';

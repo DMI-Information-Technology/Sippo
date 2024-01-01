@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:jobspot/core/api_endpoints.dart' as endpoints;
-import 'package:jobspot/core/resource.dart';
-import 'package:jobspot/core/status_response_code_checker.dart';
+import 'package:sippo/core/api_endpoints.dart' as endpoints;
+import 'package:sippo/core/resource.dart';
+import 'package:sippo/core/status_response_code_checker.dart';
 
 import '../model/specializations_model/specializations_model.dart';
 

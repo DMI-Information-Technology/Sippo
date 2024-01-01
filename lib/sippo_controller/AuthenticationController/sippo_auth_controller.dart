@@ -2,17 +2,17 @@ import 'dart:async';
 
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:jobspot/JobGlobalclass/global_storage.dart';
-import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
-import 'package:jobspot/sippo_data/auth/auth_repo.dart';
-import 'package:jobspot/sippo_data/model/auth_model/auth_response.dart';
-import 'package:jobspot/sippo_data/model/auth_model/company_model.dart';
-import 'package:jobspot/sippo_data/model/auth_model/entity_model.dart';
-import 'package:jobspot/sippo_data/model/auth_model/user_model.dart';
-import 'package:jobspot/sippo_data/model/auth_model/user_register_type_response.dart';
-import 'package:jobspot/utils/app_use.dart';
-import 'package:jobspot/utils/getx_text_editing_controller.dart';
-import 'package:jobspot/utils/states.dart';
+import 'package:sippo/JobGlobalclass/global_storage.dart';
+import 'package:sippo/JobServices/ConnectivityController/internet_connection_controller.dart';
+import 'package:sippo/sippo_data/auth/auth_repo.dart';
+import 'package:sippo/sippo_data/model/auth_model/auth_response.dart';
+import 'package:sippo/sippo_data/model/auth_model/company_model.dart';
+import 'package:sippo/sippo_data/model/auth_model/entity_model.dart';
+import 'package:sippo/sippo_data/model/auth_model/user_model.dart';
+import 'package:sippo/sippo_data/model/auth_model/user_register_type_response.dart';
+import 'package:sippo/utils/app_use.dart';
+import 'package:sippo/utils/getx_text_editing_controller.dart';
+import 'package:sippo/utils/states.dart';
 
 class AuthController extends GetxController {
   static AuthController get instance => Get.find();

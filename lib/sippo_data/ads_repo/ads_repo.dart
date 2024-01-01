@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:jobspot/core/resource.dart';
-import 'package:jobspot/core/status_response_code_checker.dart';
-import 'package:jobspot/sippo_controller/HttpClientController/http_client_controller.dart';
-import 'package:jobspot/sippo_data/model/ads_model/ad_model.dart';
+import 'package:sippo/core/resource.dart';
+import 'package:sippo/core/status_response_code_checker.dart';
+import 'package:sippo/sippo_controller/HttpClientController/http_client_controller.dart';
+import 'package:sippo/sippo_data/model/ads_model/ad_model.dart';
 
 class AdsRepo {
   static Future<Resource<List<AdModel>?, dynamic>> fetchAds() async {

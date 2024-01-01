@@ -2,21 +2,21 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
-import 'package:jobspot/custom_app_controller/switch_status_controller.dart';
-import 'package:jobspot/sippo_controller/dashboards_controller/user_dashboard_controller.dart';
-import 'package:jobspot/sippo_controller/user_profile_controller/profile_user_controller.dart';
-import 'package:jobspot/sippo_custom_widget/gender_picker_widget.dart';
-import 'package:jobspot/sippo_data/locations/locationsRepo.dart';
-import 'package:jobspot/sippo_data/model/custom_file_model/custom_file_model.dart';
-import 'package:jobspot/sippo_data/model/locations_model/location_address_model.dart';
-import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/nationality_model.dart';
-import 'package:jobspot/sippo_data/model/profile_model/profile_resource_model/profile_edit_model.dart';
-import 'package:jobspot/sippo_data/update_image_profile_repo/update_image_profile_repo.dart';
-import 'package:jobspot/sippo_data/user_repos/edit_profile_repo.dart';
-import 'package:jobspot/sippo_data/user_repos/nationnality_repo.dart';
-import 'package:jobspot/utils/getx_text_editing_controller.dart';
-import 'package:jobspot/utils/states.dart';
+import 'package:sippo/JobServices/ConnectivityController/internet_connection_controller.dart';
+import 'package:sippo/custom_app_controller/switch_status_controller.dart';
+import 'package:sippo/sippo_controller/dashboards_controller/user_dashboard_controller.dart';
+import 'package:sippo/sippo_controller/user_profile_controller/profile_user_controller.dart';
+import 'package:sippo/sippo_custom_widget/gender_picker_widget.dart';
+import 'package:sippo/sippo_data/locations/locationsRepo.dart';
+import 'package:sippo/sippo_data/model/custom_file_model/custom_file_model.dart';
+import 'package:sippo/sippo_data/model/locations_model/location_address_model.dart';
+import 'package:sippo/sippo_data/model/profile_model/profile_resource_model/nationality_model.dart';
+import 'package:sippo/sippo_data/model/profile_model/profile_resource_model/profile_edit_model.dart';
+import 'package:sippo/sippo_data/update_image_profile_repo/update_image_profile_repo.dart';
+import 'package:sippo/sippo_data/user_repos/edit_profile_repo.dart';
+import 'package:sippo/sippo_data/user_repos/nationnality_repo.dart';
+import 'package:sippo/utils/getx_text_editing_controller.dart';
+import 'package:sippo/utils/states.dart';
 
 class EditProfileInfoController extends GetxController {
   final _profileImagePath = "".obs;

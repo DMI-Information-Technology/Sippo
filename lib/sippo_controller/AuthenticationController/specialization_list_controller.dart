@@ -1,11 +1,11 @@
 import 'dart:async';
 
 import 'package:get/get.dart';
-import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
-import 'package:jobspot/sippo_data/model/specializations_model/specializations_model.dart';
-import 'package:jobspot/sippo_data/specializations/specializations_repo.dart';
-import 'package:jobspot/sippo_excepstions/specialization_exception/specialization_exception.dart';
-import 'package:jobspot/utils/states.dart';
+import 'package:sippo/JobServices/ConnectivityController/internet_connection_controller.dart';
+import 'package:sippo/sippo_data/model/specializations_model/specializations_model.dart';
+import 'package:sippo/sippo_data/specializations/specializations_repo.dart';
+import 'package:sippo/sippo_excepstions/specialization_exception/specialization_exception.dart';
+import 'package:sippo/utils/states.dart';
 
 class SpecializationCompanyController extends GetxController {
   final _netController = InternetConnectionService.instance;

@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
-import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
-import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
-import 'package:jobspot/sippo_controller/user_community_controller/user_community_controller.dart';
-import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
-import 'package:jobspot/sippo_custom_widget/body_widget.dart';
-import 'package:jobspot/sippo_custom_widget/error_messages_dialog_snackbar/network_connnection_lost_widget.dart';
-import 'package:jobspot/sippo_custom_widget/widgets.dart';
-import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_user_community/show_community_company_companies.dart';
-import 'package:jobspot/sippo_pages/sippo_user_pages/sippo_user_community/show_community_company_posts.dart';
+import 'package:sippo/JobGlobalclass/jobstopcolor.dart';
+import 'package:sippo/JobGlobalclass/media_query_sizes.dart';
+import 'package:sippo/JobGlobalclass/sippo_customstyle.dart';
+import 'package:sippo/sippo_controller/user_community_controller/user_community_controller.dart';
+import 'package:sippo/sippo_custom_widget/ConditionalWidget.dart';
+import 'package:sippo/sippo_custom_widget/body_widget.dart';
+import 'package:sippo/sippo_custom_widget/error_messages_dialog_snackbar/network_connnection_lost_widget.dart';
+import 'package:sippo/sippo_custom_widget/widgets.dart';
+import 'package:sippo/sippo_pages/sippo_user_pages/sippo_user_community/show_community_company_companies.dart';
+import 'package:sippo/sippo_pages/sippo_user_pages/sippo_user_community/show_community_company_posts.dart';
 
 class SippoUserCommunity extends StatefulWidget {
   const SippoUserCommunity({Key? key}) : super(key: key);

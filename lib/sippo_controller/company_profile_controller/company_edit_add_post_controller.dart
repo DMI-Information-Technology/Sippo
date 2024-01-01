@@ -2,17 +2,17 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
-import 'package:jobspot/sippo_controller/dashboards_controller/company_dashboard_controller.dart';
-import 'package:jobspot/sippo_data/company_repos/company_posts_repo.dart';
-import 'package:jobspot/sippo_data/model/custom_file_model/custom_file_model.dart';
-import 'package:jobspot/sippo_data/model/profile_model/company_profile_resource_model/company_post_model.dart';
-import 'package:jobspot/utils/getx_text_editing_controller.dart';
-import 'package:jobspot/utils/image_picker_service.dart';
-import 'package:jobspot/utils/states.dart';
+import 'package:sippo/JobServices/ConnectivityController/internet_connection_controller.dart';
+import 'package:sippo/sippo_controller/dashboards_controller/company_dashboard_controller.dart';
+import 'package:sippo/sippo_data/company_repos/company_posts_repo.dart';
+import 'package:sippo/sippo_data/model/custom_file_model/custom_file_model.dart';
+import 'package:sippo/sippo_data/model/profile_model/company_profile_resource_model/company_post_model.dart';
+import 'package:sippo/utils/getx_text_editing_controller.dart';
+import 'package:sippo/utils/image_picker_service.dart';
+import 'package:sippo/utils/states.dart';
 
-import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
-import 'package:jobspot/sippo_data/model/image_resource_model/image_resource_model.dart';
+import 'package:sippo/sippo_data/model/auth_model/company_response_details.dart';
+import 'package:sippo/sippo_data/model/image_resource_model/image_resource_model.dart';
 
 import '../../JobGlobalclass/jobstopcolor.dart';
 import '../../JobGlobalclass/sippo_customstyle.dart';

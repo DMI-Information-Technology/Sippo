@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JobGlobalclass/global_storage.dart';
-import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
-import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
-import 'package:jobspot/JobGlobalclass/jobstopimges.dart';
-import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
-import 'package:jobspot/JobGlobalclass/routes.dart';
-import 'package:jobspot/JobGlobalclass/sippo_customstyle.dart';
-import 'package:jobspot/JobGlobalclass/text_font_size.dart';
-import 'package:jobspot/JobServices/app_local_language_services/app_local_language_service.dart';
-import 'package:jobspot/JobServices/shared_global_data_service.dart';
-import 'package:jobspot/sippo_controller/home_controllers/job_home_view_controller.dart';
-import 'package:jobspot/sippo_custom_widget/job_home_card_widget.dart';
-import 'package:jobspot/sippo_custom_widget/widgets.dart';
-import 'package:jobspot/utils/helper.dart';
-import 'package:jobspot/utils/states.dart';
+import 'package:sippo/JobGlobalclass/global_storage.dart';
+import 'package:sippo/JobGlobalclass/jobstopcolor.dart';
+import 'package:sippo/JobGlobalclass/jobstopfontstyle.dart';
+import 'package:sippo/JobGlobalclass/jobstopimges.dart';
+import 'package:sippo/JobGlobalclass/media_query_sizes.dart';
+import 'package:sippo/JobGlobalclass/routes.dart';
+import 'package:sippo/JobGlobalclass/sippo_customstyle.dart';
+import 'package:sippo/JobGlobalclass/text_font_size.dart';
+import 'package:sippo/JobServices/app_local_language_services/app_local_language_service.dart';
+import 'package:sippo/JobServices/shared_global_data_service.dart';
+import 'package:sippo/sippo_controller/home_controllers/job_home_view_controller.dart';
+import 'package:sippo/sippo_custom_widget/job_home_card_widget.dart';
+import 'package:sippo/sippo_custom_widget/widgets.dart';
+import 'package:sippo/utils/helper.dart';
+import 'package:sippo/utils/states.dart';
 import 'package:lottie/lottie.dart';
 
 class JobHomeViewWidget extends StatefulWidget {

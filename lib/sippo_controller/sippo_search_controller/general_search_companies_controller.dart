@@ -1,10 +1,10 @@
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
-import 'package:jobspot/sippo_controller/sippo_search_controller/general_search_controller.dart';
-import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
-import 'package:jobspot/sippo_data/user_repos/user_companies_abouts_repo.dart';
-import 'package:jobspot/utils/states.dart';
+import 'package:sippo/JobServices/ConnectivityController/internet_connection_controller.dart';
+import 'package:sippo/sippo_controller/sippo_search_controller/general_search_controller.dart';
+import 'package:sippo/sippo_data/model/auth_model/company_response_details.dart';
+import 'package:sippo/sippo_data/user_repos/user_companies_abouts_repo.dart';
+import 'package:sippo/utils/states.dart';
 
 class GeneralSearchCompaniesController extends GetxController {
   final generalSearchController = GeneralSearchController.instance;

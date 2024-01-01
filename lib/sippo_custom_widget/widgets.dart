@@ -2,18 +2,18 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
-import 'package:jobspot/JobGlobalclass/media_query_sizes.dart';
-import 'package:jobspot/JobGlobalclass/text_font_size.dart';
-import 'package:jobspot/custom_app_controller/switch_status_controller.dart';
-import 'package:jobspot/utils/getx_text_editing_controller.dart';
 import 'package:lottie/lottie.dart';
+import 'package:sippo/JobGlobalclass/jobstopcolor.dart';
+import 'package:sippo/JobGlobalclass/media_query_sizes.dart';
+import 'package:sippo/JobGlobalclass/text_font_size.dart';
+import 'package:sippo/custom_app_controller/switch_status_controller.dart';
+import 'package:sippo/utils/getx_text_editing_controller.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../JobGlobalclass/jobstopfontstyle.dart';
 import '../JobGlobalclass/jobstopimges.dart';
-import '../JobGlobalclass/sippo_customstyle.dart';
 import '../JobGlobalclass/sippo_customstyle.dart' as customStyles;
+import '../JobGlobalclass/sippo_customstyle.dart';
 
 class CustomAlertDialog extends StatelessWidget {
   final String? imageAsset;
@@ -152,8 +152,10 @@ class CustomAlertDialog extends StatelessWidget {
                   CustomStyle.paddingValue,
                 )),
                 child: (isLottie != null && isLottie!)
-                    ? Lottie.asset(
-                    imageAsset!, height: height / 5, frameRate: FrameRate.max,fit: BoxFit.contain)
+                    ? Lottie.asset(imageAsset!,
+                        height: height / 5,
+                        frameRate: FrameRate.max,
+                        fit: BoxFit.contain)
                     : Image.asset(imageAsset!, height: height / 5),
               ),
             AutoSizeText(
@@ -299,7 +301,9 @@ class _PasswordInputFieldState extends State<PasswordInputField> {
         prefixIcon: widget.icon,
         suffixIcon: IconButton(
           icon: Icon(
-            _obscureText ? Icons.visibility_off_outlined : Icons.visibility_outlined,
+            _obscureText
+                ? Icons.visibility_off_outlined
+                : Icons.visibility_outlined,
           ),
           onPressed: _togglePasswordStatus,
           color: widget.suffixIconColor != null
@@ -949,25 +953,27 @@ class CustomDialogRow extends StatelessWidget {
 
   const CustomDialogRow({
     required this.iconData,
-    required
-
-    this.text,
-    required
-
-    this.url,
+    required this.text,
+    required this.url,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => launchUrl(url as Uri),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          FaIcon(iconData , color: SippoColor.primarycolor,), // Use Image.network for online images
-          SizedBox(height: 10),
-          Text(text),
-        ],
+      onTap: () {
+        try {
+          launchUrl(Uri.parse(url));
+        } catch (e, s) {
+          print(e);
+          print(s);
+        }
+      },
+      child: ListTile(
+        leading: FaIcon(
+          iconData,
+          color: SippoColor.primarycolor,
+        ), // Use Image.network for online images
+        title: Text(text), minVerticalPadding: 0.0,
       ),
     );
   }

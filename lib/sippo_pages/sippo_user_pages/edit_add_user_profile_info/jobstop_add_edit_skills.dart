@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JobGlobalclass/jobstopcolor.dart';
-import 'package:jobspot/JobGlobalclass/jobstopfontstyle.dart';
-import 'package:jobspot/sippo_controller/user_profile_controller/edit_add_skills_controller.dart';
-import 'package:jobspot/sippo_custom_widget/ConditionalWidget.dart';
-import 'package:jobspot/sippo_custom_widget/SearchDelegteImpl.dart';
-import 'package:jobspot/sippo_custom_widget/body_widget.dart';
-import 'package:jobspot/sippo_custom_widget/confirmation_bottom_sheet.dart';
-import 'package:jobspot/sippo_custom_widget/container_bottom_sheet_widget.dart';
-import 'package:jobspot/sippo_custom_widget/loading_view_widgets/loading_scaffold.dart';
-import 'package:jobspot/sippo_custom_widget/success_message_widget.dart';
-import 'package:jobspot/sippo_custom_widget/widgets.dart';
+import 'package:sippo/JobGlobalclass/jobstopcolor.dart';
+import 'package:sippo/JobGlobalclass/jobstopfontstyle.dart';
+import 'package:sippo/sippo_controller/user_profile_controller/edit_add_skills_controller.dart';
+import 'package:sippo/sippo_custom_widget/ConditionalWidget.dart';
+import 'package:sippo/sippo_custom_widget/SearchDelegteImpl.dart';
+import 'package:sippo/sippo_custom_widget/body_widget.dart';
+import 'package:sippo/sippo_custom_widget/confirmation_bottom_sheet.dart';
+import 'package:sippo/sippo_custom_widget/container_bottom_sheet_widget.dart';
+import 'package:sippo/sippo_custom_widget/loading_view_widgets/loading_scaffold.dart';
+import 'package:sippo/sippo_custom_widget/success_message_widget.dart';
+import 'package:sippo/sippo_custom_widget/widgets.dart';
 
 class JobSkillsAddEdit extends StatefulWidget {
   const JobSkillsAddEdit({Key? key}) : super(key: key);

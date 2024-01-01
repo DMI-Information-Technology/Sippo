@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:jobspot/custom_app_controller/switch_status_controller.dart';
+import 'package:sippo/custom_app_controller/switch_status_controller.dart';
 
 import 'overly_loading.dart';
 

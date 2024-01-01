@@ -1,7 +1,7 @@
-import 'package:jobspot/core/validate_error.dart';
-import 'package:jobspot/sippo_data/model/auth_model/entity_model.dart';
-import 'package:jobspot/sippo_data/model/auth_model/register_model.dart';
-import 'package:jobspot/sippo_data/model/auth_model/user_register_type_response.dart';
+import 'package:sippo/core/validate_error.dart';
+import 'package:sippo/sippo_data/model/auth_model/entity_model.dart';
+import 'package:sippo/sippo_data/model/auth_model/register_model.dart';
+import 'package:sippo/sippo_data/model/auth_model/user_register_type_response.dart';
 
 class AuthResponse<T extends EntityModel, E> {
   RegisterModel<T>? data;

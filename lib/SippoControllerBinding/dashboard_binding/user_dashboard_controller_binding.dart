@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
-import 'package:jobspot/sippo_controller/dashboards_controller/user_dashboard_controller.dart';
+import 'package:sippo/sippo_controller/dashboards_controller/user_dashboard_controller.dart';
 
-import 'package:jobspot/JobServices/shared_global_data_service.dart';
+import 'package:sippo/JobServices/shared_global_data_service.dart';
 
 class UserDashboardControllerBinding implements Bindings {
   @override

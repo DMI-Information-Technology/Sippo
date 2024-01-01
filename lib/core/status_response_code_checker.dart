@@ -1,9 +1,9 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:jobspot/core/resource.dart';
-import 'package:jobspot/core/validate_error.dart';
-import 'package:jobspot/sippo_data/model/auth_model/entity_model.dart';
+import 'package:sippo/core/resource.dart';
+import 'package:sippo/core/validate_error.dart';
+import 'package:sippo/sippo_data/model/auth_model/entity_model.dart';
 
 import '../sippo_data/model/auth_model/auth_response.dart';
 import '../sippo_data/model/auth_model/register_model.dart';

@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
-import 'package:jobspot/core/header_api.dart';
+import 'package:sippo/core/header_api.dart';
 
 class MyHttpClient {
   final http.Client _client;

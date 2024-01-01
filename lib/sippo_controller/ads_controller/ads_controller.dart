@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
-import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
-import 'package:jobspot/sippo_data/ads_repo/ads_repo.dart';
-import 'package:jobspot/sippo_data/model/ads_model/ad_model.dart';
-import 'package:jobspot/utils/states.dart';
+import 'package:sippo/JobServices/ConnectivityController/internet_connection_controller.dart';
+import 'package:sippo/sippo_data/ads_repo/ads_repo.dart';
+import 'package:sippo/sippo_data/model/ads_model/ad_model.dart';
+import 'package:sippo/utils/states.dart';
 
 class AdsViewController extends GetxController {
   static AdsViewController get instance => Get.find();

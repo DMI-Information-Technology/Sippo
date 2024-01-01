@@ -1,7 +1,7 @@
-import 'package:jobspot/sippo_data/model/application_model/application_job_company_model.dart';
-import 'package:jobspot/sippo_data/model/auth_model/company_response_details.dart';
-import 'package:jobspot/sippo_data/model/salary_model/range_salary_model.dart';
-import 'package:jobspot/sippo_data/model/specializations_model/specializations_model.dart';
+import 'package:sippo/sippo_data/model/application_model/application_job_company_model.dart';
+import 'package:sippo/sippo_data/model/auth_model/company_response_details.dart';
+import 'package:sippo/sippo_data/model/salary_model/range_salary_model.dart';
+import 'package:sippo/sippo_data/model/specializations_model/specializations_model.dart';
 
 import '../../locations_model/location_address_model.dart';
 

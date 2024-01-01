@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'package:jobspot/sippo_custom_widget/error_messages_dialog_snackbar/error_messages.dart'
+import 'package:sippo/sippo_custom_widget/error_messages_dialog_snackbar/error_messages.dart'
     as errorMessage;
 
 class InternetConnectionService extends GetxService {

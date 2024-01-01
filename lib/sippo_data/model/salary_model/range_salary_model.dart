@@ -1,4 +1,4 @@
-import 'package:jobspot/utils/string_formtter.dart';
+import 'package:sippo/utils/string_formtter.dart';
 
 class RangeSalaryModel {
   final double? from;

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:jobspot/JobServices/ConnectivityController/internet_connection_controller.dart';
-import 'package:jobspot/sippo_data/auth/auth_repo.dart';
-import 'package:jobspot/sippo_data/model/settings_model/change_password_model.dart';
-import 'package:jobspot/utils/states.dart';
+import 'package:sippo/JobServices/ConnectivityController/internet_connection_controller.dart';
+import 'package:sippo/sippo_data/auth/auth_repo.dart';
+import 'package:sippo/sippo_data/model/settings_model/change_password_model.dart';
+import 'package:sippo/utils/states.dart';
 
 class ChangePasswordController extends GetxController {
   final currentPassword = TextEditingController();
