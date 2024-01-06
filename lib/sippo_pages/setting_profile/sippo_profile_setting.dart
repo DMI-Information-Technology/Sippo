@@ -16,10 +16,13 @@ import 'package:sippo/sippo_controller/AuthenticationController/sippo_auth_contr
 import 'package:sippo/sippo_custom_widget/confirmation_bottom_sheet.dart';
 import 'package:sippo/sippo_custom_widget/container_bottom_sheet_widget.dart';
 import 'package:sippo/sippo_custom_widget/loading_view_widgets/loading_scaffold.dart';
+import 'package:sippo/sippo_custom_widget/rounded_border_radius_card_widget.dart';
 import 'package:sippo/sippo_custom_widget/setting_item_widget.dart';
 import 'package:sippo/sippo_pages/setting_profile/job_updatepassword.dart';
 import 'package:sippo/utils/app_use.dart';
 import 'package:sippo/utils/states.dart';
+
+import 'sippo_delete_account_confirmation.dart';
 
 class SippoProfileSetting extends StatefulWidget {
   const SippoProfileSetting({Key? key}) : super(key: key);
@@ -124,10 +127,29 @@ class _SippoProfileSettingState extends State<SippoProfileSetting> {
                   _showLogoutBottomSheet(context);
                 },
               ),
+              SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
             ],
           ),
         ),
       ),
+      bottomNavigationBar: Container(
+          height: context.height / 12,
+          width: context.width,
+          padding: EdgeInsets.all(context.width / 36),
+          child: InkWell(
+            onTap: () {
+              Get.to(() => const SipppoDeleteAccountConfirmation());
+            },
+            child: RoundedBorderRadiusCardWidget(
+              child: Center(
+                child: Text(
+                  'Delete Account',
+                  style: dmsbold.copyWith(color: Colors.white),
+                ),
+              ),
+              color: Colors.redAccent,
+            ),
+          )),
       backgroundColor: Colors.white,
     );
   }

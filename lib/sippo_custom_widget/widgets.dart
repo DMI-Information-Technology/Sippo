@@ -27,6 +27,7 @@ class CustomAlertDialog extends StatelessWidget {
   final Color? cancelBtnColor;
   final VoidCallback? onCancel;
   final bool _vertical;
+  final Color? titleColor;
 
   const CustomAlertDialog({
     super.key,
@@ -39,6 +40,7 @@ class CustomAlertDialog extends StatelessWidget {
     this.cancelBtnTitle,
     this.cancelBtnColor = SippoColor.lightprimary,
     this.onCancel,
+    this.titleColor,
     this.isLottie = false,
   }) : _vertical = false;
 
@@ -53,6 +55,7 @@ class CustomAlertDialog extends StatelessWidget {
     this.cancelBtnTitle,
     this.cancelBtnColor = SippoColor.lightprimary,
     this.onCancel,
+    this.titleColor,
     this.isLottie = false,
   }) : _vertical = true;
 
@@ -162,7 +165,7 @@ class CustomAlertDialog extends StatelessWidget {
               title,
               style: dmsbold.copyWith(
                 fontSize: FontSize.title3(context),
-                color: SippoColor.primarycolor,
+                color: titleColor ?? SippoColor.primarycolor,
               ),
               textAlign: TextAlign.center,
             ),

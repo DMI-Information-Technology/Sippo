@@ -101,4 +101,7 @@ class EditCompanyProfileInfoRepo {
       );
     }
   }
+  // Future<Resource<>> deleteUserProfile()async{
+  //
+  // }
 }

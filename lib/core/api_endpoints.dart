@@ -52,7 +52,7 @@ const String companyApplicationEndpoint = "company/applications";
 const String companyGalleryImagesEndpoint = "company/profile/images";
 const String removeCompanyImageEndpoint = "company/profile/images";
 
-const String companyUserProfileViewEndpoint = "customers";
+const String  companyUserProfileViewEndpoint = "customers";
 
 /////////////////////////////////////////////////////////
 /////////////////// user core functions endpoints ///////////////////
