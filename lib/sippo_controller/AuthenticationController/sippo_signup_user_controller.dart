@@ -18,6 +18,11 @@ class SignUpUserController extends GetxController {
   static SignUpUserController get instance => Get.find();
   final AuthController authController = AuthController.instance;
   final GlobalKey<FormState> formKey = GlobalKey();
+  final _acceptTerms = false.obs;
+
+  bool get acceptTerms => _acceptTerms.isTrue;
+
+  set acceptTerms(bool value) => _acceptTerms.value = value;
 
   bool get isConnectionLostWithDialog =>
       InternetConnectionService.instance.isConnectionLostWithDialog();
@@ -63,6 +68,10 @@ class SignUpUserController extends GetxController {
   }
 
   Future<void> onSubmittedSignup() async {
+    if (!acceptTerms) {
+      _showBadConfirmDialog();
+      return;
+    }
     if (formKey.currentState!.validate()) {
       await authController.userRegister(userForm);
     }
@@ -74,6 +83,20 @@ class SignUpUserController extends GetxController {
       _showRegisterErrorAlert(authState.message);
       authController.resetStates();
     }
+  }
+
+  void _showBadConfirmDialog() {
+    Get.dialog(
+      CustomAlertDialog(
+        imageAsset: JobstopPngImg.policyaccepted,
+        title: "accept_terms_msg".tr,
+        description: "accept_terms_desc".tr,
+        confirmBtnTitle: "ok".tr,
+        onConfirm: () {
+          Get.back();
+        },
+      ),
+    );
   }
 
   void _showRegisterSuccessAlert() {

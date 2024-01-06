@@ -75,7 +75,7 @@ class _SipppoDeleteAccountConfirmationState
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Profile Deletion'),
+        title: Text('Profile_Deletion'.tr),
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(
@@ -86,7 +86,7 @@ class _SipppoDeleteAccountConfirmationState
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Please enter your password to confirm the account deletion.',
+              'delete_profile_label'.tr,
               style: dmsmedium.copyWith(
                 fontSize: FontSize.paragraph2(context),
                 overflow: TextOverflow.ellipsis,
@@ -95,7 +95,7 @@ class _SipppoDeleteAccountConfirmationState
             ),
             SizedBox(height: context.fromHeight(64)),
             PasswordInputBorderedField(
-              hintText: 'Enter Your Password Here...',
+              hintText: 'enter_your_password_here'.tr,
               controller: controller.password,
             ),
             SizedBox(height: context.fromHeight(64)),
@@ -115,8 +115,7 @@ class _SipppoDeleteAccountConfirmationState
                 )),
             SizedBox(height: context.fromHeight(64)),
             Text(
-              'After confirming the deletion of your account,'
-              ' you will lose all your data, and retrieval will not be possible.',
+              'delete_profile_warning'.tr,
               style: dmsmedium.copyWith(
                 fontSize: FontSize.paragraph(context),
                 color: Colors.redAccent,
@@ -132,9 +131,9 @@ class _SipppoDeleteAccountConfirmationState
             onTapped: () {
               Get.dialog(CustomAlertDialog(
                 titleColor: Colors.redAccent,
-                title: 'Account Deletion',
+                title: 'warning'.tr,
                 confirmBtnColor: Colors.redAccent,
-                description: 'Are you sure you want continue the deletion',
+                description: 'ask_profile_deletion'.tr,
                 confirmBtnTitle: 'yes'.tr,
                 onConfirm: () async {
                   if (Get.isOverlaysOpen) Navigator.pop(context);

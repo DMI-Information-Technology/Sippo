@@ -15,6 +15,7 @@ import 'package:sippo/sippo_custom_widget/ConditionalWidget.dart';
 import 'package:sippo/sippo_custom_widget/body_widget.dart';
 import 'package:sippo/sippo_custom_widget/custom_drop_down_button.dart';
 import 'package:sippo/sippo_custom_widget/google_map_view_widget.dart';
+import 'package:sippo/sippo_custom_widget/terms_conditions_privacy_policy.dart';
 import 'package:sippo/sippo_custom_widget/widgets.dart';
 import 'package:sippo/sippo_data/model/locations_model/location_address_model.dart';
 
@@ -140,7 +141,9 @@ class _SippoLocationCompanySelectorState
                   title: Text(
                     "terms_policy_title".tr,
                     textAlign: TextAlign.start,
-                    style: dmsbold.copyWith(fontSize: height / 42),
+                    style: dmsbold.copyWith(
+                      fontSize: height / 42,
+                    ),
                   ),
                   subtitle: Text(
                     "accept_terms".tr,
@@ -153,6 +156,36 @@ class _SippoLocationCompanySelectorState
                   activeColor: SippoColor.primarycolor,
                 ),
               ),
+              InkWell(
+                onTap: () {
+                  Get.dialog(
+                    Dialog(
+                      insetPadding: EdgeInsets.all(
+                        context.fromWidth(CustomStyle.paddingValue),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: const TermsConditionsWidget(),
+                      ),
+                    ),
+                  );
+                },
+                child: Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: context.fromWidth(CustomStyle.paddingValue),
+                  ),
+                  child: Text(
+                    'read_policy_terms'.tr,
+                    style: dmsmedium.copyWith(
+                      decoration: TextDecoration.underline,
+                      decorationColor: Colors.blueAccent,
+                      // Optional: set underline color
+                      decorationThickness: 25,
+                      color: Colors.blueAccent,
+                    ),
+                  ),
+                ),
+              )
             ],
           ),
           paddingBottom: EdgeInsets.all(
