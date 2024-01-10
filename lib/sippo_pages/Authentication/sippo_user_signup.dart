@@ -3,11 +3,14 @@ import 'package:get/get.dart';
 import 'package:sippo/JobGlobalclass/jobstopcolor.dart';
 import 'package:sippo/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:sippo/JobGlobalclass/jobstopimges.dart';
+import 'package:sippo/JobGlobalclass/media_query_sizes.dart';
 import 'package:sippo/JobGlobalclass/routes.dart';
+import 'package:sippo/JobGlobalclass/sippo_customstyle.dart';
 import 'package:sippo/JobServices/app_local_language_services/app_local_language_service.dart';
 import 'package:sippo/sippo_controller/AuthenticationController/sippo_signup_user_controller.dart';
 import 'package:sippo/sippo_custom_widget/custom_drop_down_button.dart';
 import 'package:sippo/sippo_custom_widget/loading_view_widgets/overly_loading.dart';
+import 'package:sippo/sippo_custom_widget/terms_conditions_privacy_policy.dart';
 import 'package:sippo/sippo_custom_widget/widgets.dart';
 import 'package:sippo/utils/validating_input.dart';
 
@@ -33,9 +36,12 @@ class SippoUserSignup extends StatelessWidget {
                 Get.focusScope?.unfocus();
                 LocalLanguageService.showChangeLanguageBottomSheet(context);
               },
-              child: Text("language".tr, style: TextStyle(
-                fontSize: FontSize.paragraph(context),
-              ),),
+              child: Text(
+                "language".tr,
+                style: TextStyle(
+                  fontSize: FontSize.paragraph(context),
+                ),
+              ),
             ),
           ),
           body: SingleChildScrollView(
@@ -48,7 +54,7 @@ class SippoUserSignup extends StatelessWidget {
                   children: [
                     Image.asset(
                       JobstopPngImg.welcomeImage,
-                      height: height/7,
+                      height: height / 7,
                     ),
                     SizedBox(
                       height: height / 30,
@@ -176,6 +182,61 @@ class SippoUserSignup extends StatelessWidget {
                         ),
                       );
                     }),
+                    SizedBox(
+                      height: height / 46,
+                    ),
+                    Obx(() => CheckboxListTile(
+                          title: Text(
+                            "terms_policy_title".tr,
+                            textAlign: TextAlign.start,
+                            style: dmsbold.copyWith(
+                              fontSize: height / 42,
+                            ),
+                          ),
+                          subtitle: Text(
+                            "accept_terms".tr,
+                            style: dmsregular.copyWith(fontSize: height / 52),
+                          ),
+                          value: controller.acceptTerms,
+                          onChanged: (value) {
+                            controller.acceptTerms = value ?? false;
+                          },
+                        )),
+                    InkWell(
+                      onTap: () {
+                        Get.dialog(
+                          Dialog(
+                            insetPadding: EdgeInsets.all(
+                              context.fromWidth(CustomStyle.paddingValue),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: const TermsConditionsWidget(),
+                            ),
+                          ),
+                        );
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(
+                          horizontal:
+                              context.fromWidth(CustomStyle.paddingValue),
+                        ),
+                        child: Align(
+                          alignment: AlignmentDirectional.centerStart,
+                          child: Text(
+                            textAlign: TextAlign.start,
+                            'read_policy_terms'.tr,
+                            style: dmsmedium.copyWith(
+                              decoration: TextDecoration.underline,
+                              decorationColor: Colors.blueAccent,
+                              // Optional: set underline color
+                              decorationThickness: 25,
+                              color: Colors.blueAccent,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                     SizedBox(
                       height: height / 46,
                     ),

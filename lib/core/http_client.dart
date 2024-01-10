@@ -220,10 +220,15 @@ class MyHttpClient {
   Future<http.Response> delete(
     String endpoint, {
     Map<String, dynamic>? queryParameter,
+    Map<String, dynamic>? data,
     String? resourceId,
   }) async {
+    String? body;
+    if (!(data?.values.where((e) => e != null).length == 0))
+      body = jsonEncode(data);
     final response = await _client.delete(
       _buildUri(endpoint, resourceId: resourceId, parameters: queryParameter),
+      body: body,
       headers: _buildHeaders(),
     );
     return response;

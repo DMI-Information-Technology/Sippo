@@ -565,10 +565,36 @@ class AppTranslation extends Translations {
           'welcome_back_user_message':
               "Welcome back again, please login to your account to find new jobs",
           'delete_all': "Delete all",
+          'delete_profile_label':
+              "Please enter your password to confirm the account deletion.",
+          'delete_profile_warning':
+              "After confirming the deletion of your account, you will lose all your data, and retrieval will not be possible.",
+          'enter_your_password_here': "Enter your password Here...",
+          'Profile_Deletion': "Profile Deletion",
+          'ask_profile_deletion':
+              'Are you sure you want continue the deletion?',
+          'warning': "Warning",
+          'Delete_Account': 'Delete Account',
+          'read_policy_terms': 'Reade Policy and Terms',
+          'Policy Privacy': 'Policy Privacy',
+          'Terms And Conditions': 'Terms And Conditions',
+
           'welcome_back_company_message':
               "Welcome back again, please login to your company account for sharing new jobs"
         },
         'ar_AB': {
+          'Policy Privacy': 'سياسة الخصوصية',
+          'Terms And Conditions': 'الشروط والاحكام',
+          'delete_profile_label': "الرجاء إدخال كلمة المرور لتأكيد حذف الحساب.",
+          'delete_profile_warning':
+              "بمجرد تأكيد حذف حسابك، ستفقد جميع بياناتك ولن تكون قادرًا على استرجاعها مرة أخرى.",
+          'enter_your_password_here': "أدخل كلمة مرورك هنا...",
+          'Profile_Deletion': "حذف الحساب",
+          'ask_profile_deletion':
+              'هل انت متأكد من انك تريد الاستمرار في حذف حسابك؟',
+          'read_policy_terms': 'قراءة الشروط والاحكام',
+          'warning': "تحذير",
+          'Delete_Account': 'حذف الحساب',
           "Email": "البريد الإلكتروني",
           "Password": "كلمة المرور",
           "Confirm_Password": "تأكيد كلمة المرور",

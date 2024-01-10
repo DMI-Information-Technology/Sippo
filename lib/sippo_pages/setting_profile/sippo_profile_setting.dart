@@ -16,10 +16,14 @@ import 'package:sippo/sippo_controller/AuthenticationController/sippo_auth_contr
 import 'package:sippo/sippo_custom_widget/confirmation_bottom_sheet.dart';
 import 'package:sippo/sippo_custom_widget/container_bottom_sheet_widget.dart';
 import 'package:sippo/sippo_custom_widget/loading_view_widgets/loading_scaffold.dart';
+import 'package:sippo/sippo_custom_widget/rounded_border_radius_card_widget.dart';
 import 'package:sippo/sippo_custom_widget/setting_item_widget.dart';
+import 'package:sippo/sippo_custom_widget/terms_conditions_privacy_policy.dart';
 import 'package:sippo/sippo_pages/setting_profile/job_updatepassword.dart';
 import 'package:sippo/utils/app_use.dart';
 import 'package:sippo/utils/states.dart';
+
+import 'sippo_delete_account_confirmation.dart';
 
 class SippoProfileSetting extends StatefulWidget {
   const SippoProfileSetting({Key? key}) : super(key: key);
@@ -115,6 +119,50 @@ class _SippoProfileSettingState extends State<SippoProfileSetting> {
               SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
               SettingItemWidget(
                 contentPadding: context.fromHeight(CustomStyle.paddingValue2),
+                title: "Terms And Conditions".tr,
+                icon: Icon(
+                  Icons.rule,
+                  color: SippoColor.primarycolor,
+                ),
+                onTap: () {
+                  Get.dialog(
+                    Dialog(
+                      insetPadding: EdgeInsets.all(
+                        context.fromWidth(CustomStyle.paddingValue),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: const TermsConditionsWidget(),
+                      ),
+                    ),
+                  );
+                },
+              ),
+              SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
+              SettingItemWidget(
+                contentPadding: context.fromHeight(CustomStyle.paddingValue2),
+                title: "Policy Privacy".tr,
+                icon: Icon(
+                  Icons.policy_outlined,
+                  color: SippoColor.primarycolor,
+                ),
+                onTap: () {
+                  Get.dialog(
+                    Dialog(
+                      insetPadding: EdgeInsets.all(
+                        context.fromWidth(CustomStyle.paddingValue),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: const PrivacyPolicyWidget(),
+                      ),
+                    ),
+                  );
+                },
+              ),
+              SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
+              SettingItemWidget(
+                contentPadding: context.fromHeight(CustomStyle.paddingValue2),
                 title: "Logout".tr,
                 icon: Icon(
                   Icons.logout,
@@ -124,10 +172,29 @@ class _SippoProfileSettingState extends State<SippoProfileSetting> {
                   _showLogoutBottomSheet(context);
                 },
               ),
+              SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
             ],
           ),
         ),
       ),
+      bottomNavigationBar: Container(
+          height: context.height / 12,
+          width: context.width,
+          padding: EdgeInsets.all(context.width / 36),
+          child: InkWell(
+            onTap: () {
+              Get.to(() => const SipppoDeleteAccountConfirmation());
+            },
+            child: RoundedBorderRadiusCardWidget(
+              child: Center(
+                child: Text(
+                  'Delete_Account'.tr,
+                  style: dmsbold.copyWith(color: Colors.white),
+                ),
+              ),
+              color: Colors.redAccent,
+            ),
+          )),
       backgroundColor: Colors.white,
     );
   }

@@ -4,16 +4,16 @@ import 'package:sippo/custom_app_controller/switch_status_controller.dart';
 import 'overly_loading.dart';
 
 class LoadingScaffold extends StatelessWidget {
-  const LoadingScaffold({
-    super.key,
-    this.controller,
-    this.appBar,
-    this.body,
-    this.backgroundColor,
-    this.extendBodyBehindAppBar = false,
-    this.canPopOnLoading = true,
-    this.floatingActionButton,
-  });
+  const LoadingScaffold(
+      {super.key,
+      this.controller,
+      this.appBar,
+      this.body,
+      this.backgroundColor,
+      this.extendBodyBehindAppBar = false,
+      this.canPopOnLoading = true,
+      this.floatingActionButton,
+      this.bottomNavigationBar});
 
   final FloatingActionButton? floatingActionButton;
   final PreferredSizeWidget? appBar;
@@ -22,6 +22,7 @@ class LoadingScaffold extends StatelessWidget {
   final SwitchStatusController? controller;
   final bool extendBodyBehindAppBar;
   final bool canPopOnLoading;
+  final Widget? bottomNavigationBar;
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +44,7 @@ class LoadingScaffold extends StatelessWidget {
             appBar: appBar,
             body: body,
             backgroundColor: backgroundColor,
+            bottomNavigationBar: bottomNavigationBar,
           ),
           if (controller != null)
             ListenableBuilder(
