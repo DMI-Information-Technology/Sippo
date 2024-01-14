@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sippo/JobGlobalclass/jobstopimges.dart';
+import 'package:sippo/sippo_custom_widget/terms_conditions_privacy_policy.dart';
 import 'package:sippo/utils/helper.dart';
 
 import '../../JobGlobalclass/jobstopcolor.dart';
@@ -16,7 +17,19 @@ void showNoConnectionSnackbar() {
     boxShadows: [boxShadow],
   );
 }
-
+void showNotAcceptedTermsAndConditionsDialog(double paddingValue){
+  Get.dialog(
+    Dialog(
+      insetPadding: EdgeInsets.all(
+        paddingValue
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: const TermsConditionsWidget(),
+      ),
+    ),
+  );
+}
 void showNotSubscriptionAlert(phoneNumber) {
   Get.dialog(
     CustomAlertDialog.verticalButtons(

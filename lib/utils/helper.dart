@@ -5,15 +5,6 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-void showAlert(BuildContext context, Widget widget) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return widget;
-    },
-  );
-}
-
 String calculateElapsedTime(DateTime dateTime) {
   final startTimeMillis = dateTime.millisecondsSinceEpoch;
   int currentTimeMillis = DateTime.now().millisecondsSinceEpoch;
@@ -90,25 +81,28 @@ String? convertFileSize(int? bytes) {
     return '${mb.toStringAsFixed(2)} MB';
   }
 }
-void openWhatsapp(String phoneNumber){
+
+void openWhatsapp(String phoneNumber) {
   try {
     String url = 'https://wa.me/$phoneNumber';
     launchUrl(Uri.parse(url));
   } catch (e, s) {
     print(e);
     print(s);
-
   }
 }
+
 int convertStringFileSizeToNumber(String? fileSizeStr) {
   try {
-    if(fileSizeStr == null) throw Exception('fileSizeStr is null');
+    if (fileSizeStr == null) throw Exception('fileSizeStr is null');
     // Remove the file size unit from the string.
-   final fileSizeStrNum = fileSizeStr.substring(0, fileSizeStr.length - 2).trim();
+    final fileSizeStrNum =
+        fileSizeStr.substring(0, fileSizeStr.length - 2).trim();
 
     // Convert the file size string to a number.
     double fileSizeNum = double.parse(fileSizeStrNum);
-    String sizeType = fileSizeStr.substring(fileSizeStr.length - 2).toLowerCase();
+    String sizeType =
+        fileSizeStr.substring(fileSizeStr.length - 2).toLowerCase();
     print(sizeType);
     // Convert the file size number to bytes based on the file size unit.
     switch (sizeType) {
@@ -131,9 +125,11 @@ int convertStringFileSizeToNumber(String? fileSizeStr) {
     return 1;
   }
 }
-int calculateDownloadProgressFile(int downloadedBytes, int totalBytes){
+
+int calculateDownloadProgressFile(int downloadedBytes, int totalBytes) {
   return ((downloadedBytes / totalBytes) * 100).round();
 }
+
 String otpPhoneNumberFormat(String phoneNumber, {String countryCode = "218"}) {
   return "+$countryCode${phoneNumber.substring(1)}";
 }

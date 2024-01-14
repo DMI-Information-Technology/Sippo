@@ -9,8 +9,8 @@ import 'package:sippo/JobGlobalclass/sippo_customstyle.dart';
 import 'package:sippo/JobServices/app_local_language_services/app_local_language_service.dart';
 import 'package:sippo/sippo_controller/AuthenticationController/sippo_signup_user_controller.dart';
 import 'package:sippo/sippo_custom_widget/custom_drop_down_button.dart';
+import 'package:sippo/sippo_custom_widget/error_messages_dialog_snackbar/error_messages.dart';
 import 'package:sippo/sippo_custom_widget/loading_view_widgets/overly_loading.dart';
-import 'package:sippo/sippo_custom_widget/terms_conditions_privacy_policy.dart';
 import 'package:sippo/sippo_custom_widget/widgets.dart';
 import 'package:sippo/utils/validating_input.dart';
 
@@ -203,19 +203,9 @@ class SippoUserSignup extends StatelessWidget {
                           },
                         )),
                     InkWell(
-                      onTap: () {
-                        Get.dialog(
-                          Dialog(
-                            insetPadding: EdgeInsets.all(
-                              context.fromWidth(CustomStyle.paddingValue),
-                            ),
-                            child: Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: const TermsConditionsWidget(),
-                            ),
-                          ),
-                        );
-                      },
+                      onTap: () => showNotAcceptedTermsAndConditionsDialog(
+                        context.fromWidth(CustomStyle.paddingValue),
+                      ),
                       child: Padding(
                         padding: EdgeInsets.symmetric(
                           horizontal:

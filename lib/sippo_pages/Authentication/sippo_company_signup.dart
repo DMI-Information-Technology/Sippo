@@ -3,10 +3,13 @@ import 'package:get/get.dart';
 import 'package:sippo/JobGlobalclass/jobstopcolor.dart';
 import 'package:sippo/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:sippo/JobGlobalclass/jobstopimges.dart';
+import 'package:sippo/JobGlobalclass/media_query_sizes.dart';
 import 'package:sippo/JobGlobalclass/routes.dart';
+import 'package:sippo/JobGlobalclass/sippo_customstyle.dart';
 import 'package:sippo/JobServices/app_local_language_services/app_local_language_service.dart';
 import 'package:sippo/sippo_controller/AuthenticationController/sippo_auth_controller.dart';
 import 'package:sippo/sippo_controller/AuthenticationController/sippo_signup_company_controller.dart';
+import 'package:sippo/sippo_custom_widget/error_messages_dialog_snackbar/error_messages.dart';
 import 'package:sippo/sippo_custom_widget/widgets.dart';
 import 'package:sippo/utils/validating_input.dart';
 
@@ -147,6 +150,50 @@ class SippoCompanySignup extends StatelessWidget {
                     }
                     return null;
                   },
+                ),
+                SizedBox(height: height / 64),
+                Obx(
+                  () => CheckboxListTile(
+                    title: Text(
+                      "terms_policy_title".tr,
+                      textAlign: TextAlign.start,
+                      style: dmsbold.copyWith(
+                        fontSize: height / 42,
+                      ),
+                    ),
+                    subtitle: Text(
+                      "accept_terms".tr,
+                      style: dmsregular.copyWith(fontSize: height / 52),
+                    ),
+                    value: controller.confirmOnPolicy,
+                    onChanged: (value) {
+                      controller.toggleConfirmPolicy();
+                    },
+                    activeColor: SippoColor.primarycolor,
+                  ),
+                ),
+                Align(
+                  alignment: AlignmentDirectional.centerStart,
+                  child: InkWell(
+                    onTap: () => showNotAcceptedTermsAndConditionsDialog(
+                      context.fromWidth(CustomStyle.paddingValue),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: context.fromWidth(CustomStyle.paddingValue),
+                      ),
+                      child: Text(
+                        'read_policy_terms'.tr,
+                        style: dmsmedium.copyWith(
+                          decoration: TextDecoration.underline,
+                          decorationColor: Colors.blueAccent,
+                          // Optional: set underline color
+                          decorationThickness: 25,
+                          color: Colors.blueAccent,
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
                 SizedBox(
                   height: height / 46,

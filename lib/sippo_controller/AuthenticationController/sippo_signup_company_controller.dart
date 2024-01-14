@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sippo/JobGlobalclass/global_storage.dart';
+import 'package:sippo/JobGlobalclass/jobstopimges.dart';
 import 'package:sippo/JobGlobalclass/routes.dart';
 import 'package:sippo/sippo_controller/AuthenticationController/sippo_auth_controller.dart';
+import 'package:sippo/sippo_custom_widget/widgets.dart';
 import 'package:sippo/sippo_data/model/auth_model/company_model.dart';
 import 'package:sippo/sippo_data/model/locations_model/location_address_model.dart';
 import 'package:sippo/sippo_data/model/profile_model/company_profile_resource_model/cord_location.dart';
@@ -136,8 +138,26 @@ class SignUpCompanyController extends GetxController {
   }
 
   void onSubmitSignup() {
+    if (!confirmOnPolicy) {
+      _showBadConfirmDialog();
+      return;
+    }
     if (formKey.currentState!.validate()) {
       Get.toNamed(SippoRoutes.companySignupSpecializations);
     }
   }
+  void _showBadConfirmDialog() {
+    Get.dialog(
+      CustomAlertDialog(
+        imageAsset: JobstopPngImg.policyaccepted,
+        title: "accept_terms_msg".tr,
+        description: "accept_terms_desc".tr,
+        confirmBtnTitle: "ok".tr,
+        onConfirm: () {
+          Get.back();
+        },
+      ),
+    );
+  }
+
 }

@@ -53,9 +53,9 @@ class StatusResponseCodeChecker {
   }
 
   static Future<Resource<T, E?>> checkStatusResponseCode<T, E>(
-    Map<String, dynamic> responseData,
-    int statusCode,
-    T Function(Map<String, dynamic> data) dataModel,
+      Map<String, dynamic> responseData,
+      int statusCode,
+      T Function(Map<String, dynamic> data) dataModel,
     E? Function(Map<String, dynamic> errors) errorsModel,
   ) async {
     print(
