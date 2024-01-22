@@ -143,6 +143,7 @@ class JobHomeCard extends StatelessWidget {
     return Icon(
       isSaved == true ? Icons.bookmark : Icons.bookmark_border_rounded,
       color: isSaved == true ? Colors.yellow : null,
+      size: Get.height / 26,
     );
   }
 

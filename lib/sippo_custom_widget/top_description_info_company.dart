@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:sippo/JobGlobalclass/media_query_sizes.dart';
+import 'package:sippo/JobGlobalclass/text_font_size.dart';
 
 import '../JobGlobalclass/jobstopcolor.dart';
 import '../JobGlobalclass/jobstopfontstyle.dart';
@@ -14,17 +15,29 @@ class TopDescriptionInfoCompanyWidget extends StatelessWidget {
   final String? middleText;
   final String? endText;
 
-  bool isTextBlank(String? text) => text == null || text.trim().isEmpty;
+  bool isTextBlank(String? text) =>
+      text == null || text
+          .trim()
+          .isEmpty;
 
   bool isTextNotBlank(String? text) => !isTextBlank(text);
 
   int _calculateTextFlexibility(String text, List<String> textList) {
-    if ([startText, middleText, endText].where((e) => e != null).length >=3)
+    if ([startText, middleText, endText]
+        .where((e) => e != null)
+        .length >= 3)
       return 1;
     // if (textList.where((e) => e.trim().isNotEmpty).length == 0) return 1;
-    if (textList.where((e) => e.trim().isNotEmpty).every((e) {
-      final l1 = text.trim().length;
-      final l2 = e.trim().length;
+    if (textList.where((e) =>
+    e
+        .trim()
+        .isNotEmpty).every((e) {
+      final l1 = text
+          .trim()
+          .length;
+      final l2 = e
+          .trim()
+          .length;
 
       return ((l1 / 2).floor() > l2);
     })) {
@@ -50,7 +63,10 @@ class TopDescriptionInfoCompanyWidget extends StatelessWidget {
               this.startText ?? "",
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: dmsmedium.copyWith(color: SippoColor.secondary),
+              style: dmsmedium.copyWith(
+                color: SippoColor.secondary,
+                fontSize: FontSize.title4(context),
+              ),
             ),
           ),
         if (isTextNotBlank(startText) && isTextNotBlank(middleText))
@@ -66,11 +82,15 @@ class TopDescriptionInfoCompanyWidget extends StatelessWidget {
               middleText ?? "Libya, Tripoli, Ain-zara, El-sedra",
               overflow: TextOverflow.ellipsis,
               maxLines: 2,
-              style: dmsmedium.copyWith(color: SippoColor.secondary),
+              style: dmsmedium.copyWith(
+                color: SippoColor.secondary,
+                fontSize: FontSize.title4(context),
+              ),
             ),
           )
-        else if (isTextNotBlank(startText) && isTextNotBlank(endText))
-          DotWith.noneSpace,
+        else
+          if (isTextNotBlank(startText) && isTextNotBlank(endText))
+            DotWith.noneSpace,
         if (isTextNotBlank(middleText) && isTextNotBlank(endText))
           DotWith.startSpace,
         if (isTextNotBlank(endText))
@@ -81,10 +101,13 @@ class TopDescriptionInfoCompanyWidget extends StatelessWidget {
             ]),
             child: AutoSizeText(
               textAlign: TextAlign.center,
-              endText ?? "99999999 days ago",
+              endText ?? "0 days ago",
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
-              style: dmsmedium.copyWith(color: SippoColor.secondary),
+              style: dmsmedium.copyWith(
+                color: SippoColor.secondary,
+                fontSize: FontSize.title4(context),
+              ),
             ),
           ),
       ],
@@ -112,28 +135,31 @@ class DotWith extends StatelessWidget {
 
   Widget _buildDotLayout(BuildContext context) {
     return switch (dir) {
-      Direction.none => CircleAvatar(
-          backgroundColor: SippoColor.primarycolor,
-          radius: context.fromHeight(CustomStyle.huge2),
-        ),
-      Direction.start => Row(children: [
-          SizedBox(
-            width: context.fromWidth(CustomStyle.paddingValue),
-          ),
+      Direction.none =>
           CircleAvatar(
             backgroundColor: SippoColor.primarycolor,
             radius: context.fromHeight(CustomStyle.huge2),
           ),
-        ]),
-      Direction.end => Row(children: [
-          CircleAvatar(
-            backgroundColor: SippoColor.primarycolor,
-            radius: context.fromHeight(CustomStyle.huge2),
-          ),
-          SizedBox(
-            width: context.fromWidth(CustomStyle.paddingValue),
-          ),
-        ]),
+      Direction.start =>
+          Row(children: [
+            SizedBox(
+              width: context.fromWidth(CustomStyle.paddingValue),
+            ),
+            CircleAvatar(
+              backgroundColor: SippoColor.primarycolor,
+              radius: context.fromHeight(CustomStyle.huge2),
+            ),
+          ]),
+      Direction.end =>
+          Row(children: [
+            CircleAvatar(
+              backgroundColor: SippoColor.primarycolor,
+              radius: context.fromHeight(CustomStyle.huge2),
+            ),
+            SizedBox(
+              width: context.fromWidth(CustomStyle.paddingValue),
+            ),
+          ]),
       Direction.top => Column(),
       Direction.bottom => Column(),
     };

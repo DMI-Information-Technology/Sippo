@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
 //
 // class FontSize {
 //   static const double _labelSize = 32;
@@ -110,14 +111,18 @@ class FontSize {
   static const double _buttonFontSize = 18;
 
   static double _targetPlatformFontSize(BuildContext context, double fSize) {
+    final size = MediaQuery.sizeOf(context);
     if (kIsWeb) {
-      print("from web");
+      // print("from web");
+      if (size.height > 630) return size.height /( fSize * 2);
       return context.height / (fSize + 3);
     }
+
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
       case TargetPlatform.fuchsia:
       case TargetPlatform.iOS:
+        if (size.height > 630) return size.height / fSize * 2;
         return context.width / fSize;
       case TargetPlatform.linux:
       case TargetPlatform.macOS:

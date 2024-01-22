@@ -38,7 +38,8 @@ class _JobHomeViewWidgetState extends State<JobHomeViewWidget> {
         return Icon(
           iconDir,
           color: SippoColor.secondary,
-          size: 50,
+          size: Get.height / 26,
+
         );
       }),
     ),

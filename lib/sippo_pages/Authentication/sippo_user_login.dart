@@ -53,7 +53,11 @@ class _SippoUserLoginState extends State<SippoUserLogin> {
                 Get.focusScope?.unfocus();
                 LocalLanguageService.showChangeLanguageBottomSheet(context);
               },
-              child: Text("language".tr),
+              child: Text("language".tr,
+                style: TextStyle(
+                  fontSize: FontSize.paragraph(context),
+                ),
+              ),
             ),
           ),
           body: SingleChildScrollView(

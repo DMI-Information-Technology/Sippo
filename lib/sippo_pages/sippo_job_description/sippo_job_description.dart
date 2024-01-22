@@ -53,6 +53,7 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
               icon: Icon(
                 Icons.arrow_back_rounded,
                 color: isHeightOverAppBar ? Colors.black : Colors.white,
+                size: context.height / 24,
               ),
             ),
             backgroundColor: isHeightOverAppBar
@@ -140,7 +141,7 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
               Text(
                 _controller.jobDetailsState.jopDetails.title ?? '',
                 style: dmsbold.copyWith(
-                  fontSize: FontSize.title2(context),
+                  fontSize: FontSize.title3(context),
                   color: SippoColor.secondary,
                 ),
                 overflow: TextOverflow.clip,
