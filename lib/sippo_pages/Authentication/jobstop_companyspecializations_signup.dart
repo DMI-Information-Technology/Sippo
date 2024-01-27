@@ -194,7 +194,8 @@ class _CompanySignUpSpecializationsState
       final desc = "select_one_three_maximum_special".tr;
       Get.dialog(
         CustomAlertDialog(
-          imageAsset: JobstopPngImg.policyaccepted,
+          imageAsset: JobstopPngImg.successful1,
+          isLottie: true,
           title:title,
           description: desc,
           confirmBtnTitle: "ok".tr,

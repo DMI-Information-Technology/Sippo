@@ -122,7 +122,7 @@ class FontSize {
       case TargetPlatform.android:
       case TargetPlatform.fuchsia:
       case TargetPlatform.iOS:
-        if (size.height > 630) return size.height / fSize * 2;
+        if (size.height > 630) return size.height / (fSize * 2);
         return context.width / fSize;
       case TargetPlatform.linux:
       case TargetPlatform.macOS:
