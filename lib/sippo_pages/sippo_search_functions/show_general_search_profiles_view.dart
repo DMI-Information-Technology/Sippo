@@ -356,7 +356,7 @@ class _ShowGeneralSearchProfilesViewListState
                   ),
                 ),
               ),
-              Obx(() {
+              Obx(()  {
                 final searchKey =
                     _controller.searchProfilesViewState.searchProfessionKey;
                 final professionsItems = _controller.searchProfilesViewState
