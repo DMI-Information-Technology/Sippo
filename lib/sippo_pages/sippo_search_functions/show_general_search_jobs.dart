@@ -52,12 +52,13 @@ class _ShowGeneralSearchJobsListState extends State<ShowGeneralSearchJobsList> {
               _buildNewPageProgress(context),
           noItemsFoundIndicatorBuilder: (context) =>
               NoItemsFoundMessageWidget.jobs(alignmentFromStart: true),
-          firstPageProgressIndicatorBuilder: (context) => Center(
-            child: Lottie.asset(
-              JobstopPngImg.loadingProgress,
-              height: context.height / 6,
-            ),
-          ),
+          firstPageProgressIndicatorBuilder: (context) =>
+              Center(
+                child: Lottie.asset(
+                  JobstopPngImg.loadingProgress,
+                  height: context.height / 6,
+                ),
+              ),
           itemBuilder: (context, item, index) {
             return InkWell(
               onTap: () {
@@ -75,8 +76,8 @@ class _ShowGeneralSearchJobsListState extends State<ShowGeneralSearchJobsList> {
                 isSaved: item.isSaved == true,
                 onActionTap: GlobalStorageService.isUser
                     ? () {
-                        _controller.onToggleSavedJobsSubmitted(item.id);
-                      }
+                  _controller.onToggleSavedJobsSubmitted(item.id);
+                }
                     : null,
                 onAddressTextTap: (location) {
                   lunchMapWithLocation(
@@ -88,31 +89,33 @@ class _ShowGeneralSearchJobsListState extends State<ShowGeneralSearchJobsList> {
             );
           },
         ),
-        separatorBuilder: (_, __) => SizedBox(
-          height: context.fromHeight(CustomStyle.huge2),
-        ),
+        separatorBuilder: (_, __) =>
+            SizedBox(
+              height: context.fromHeight(CustomStyle.huge2),
+            ),
       ),
     );
   }
 
   Widget _buildNewPageProgress(BuildContext context) {
-    return Obx(() => Align(
+    return Obx(() =>
+        Align(
           alignment: Alignment.center,
           child: _controller.states.isLoading
-              ?Lottie.asset(
+              ? Lottie.asset(
             JobstopPngImg.loadingProgress,
             height: context.height / 9,
           )
               : SizedBox(
-                  width: context.width / 2,
-                  child: CustomButton(
-                    onTapped: () => _controller.onLoadMoreJobsSubmitted(),
-                    text: '${'load_more'.tr}...',
-                    backgroundColor: Colors.transparent,
-                    textColor: SippoColor.primarycolor,
-                    borderColor: SippoColor.primarycolor,
-                  ),
-                ),
+            width: context.width / 2,
+            child: CustomButton(
+              onTapped: () => _controller.onLoadMoreJobsSubmitted(),
+              text: '${'load_more'.tr}...',
+              backgroundColor: Colors.transparent,
+              textColor: SippoColor.primarycolor,
+              borderColor: SippoColor.primarycolor,
+            ),
+          ),
         ));
   }
 
