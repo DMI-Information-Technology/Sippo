@@ -94,9 +94,7 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
     return Scaffold(
       appBar: _buildHomeAppBar(context),
       body: RefreshIndicator(
-        onRefresh: () async {
-          _controller.refreshPage();
-        },
+        onRefresh: () async => _controller.refreshPage(),
         child: BodyWidget(
           paddingContent: EdgeInsets.only(
               bottom: context.fromHeight(CustomStyle.paddingValue)),

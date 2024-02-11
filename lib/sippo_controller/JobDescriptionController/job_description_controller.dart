@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:sippo/JobGlobalclass/jobstopcolor.dart';
 import 'package:sippo/JobServices/ConnectivityController/internet_connection_controller.dart';
@@ -125,6 +126,8 @@ class JobCompanyDetailsController extends GetxController {
 }
 
 class JobCompanyDetailsState {
+  final reportReason = TextEditingController();
+
   final _isHeightOverAppBar = false.obs;
 
   bool get isHeightOverAppBar => _isHeightOverAppBar.isTrue;

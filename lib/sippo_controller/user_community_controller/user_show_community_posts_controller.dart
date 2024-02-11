@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:sippo/sippo_controller/user_community_controller/user_community_controller.dart';
@@ -85,4 +86,5 @@ class UserShowCommunityPostsState {
   void set pageNumber(int value) => _pageNumber = value;
 
   void incrementPageNumber() => _pageNumber++;
+  final reportReason = TextEditingController();
 }

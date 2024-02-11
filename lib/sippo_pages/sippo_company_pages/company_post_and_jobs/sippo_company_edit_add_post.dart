@@ -228,6 +228,14 @@ class _SippoCompanyEditAddPostState extends State<SippoCompanyEditAddPost> {
           imageUrl: _controller.company.profileImage?.url ?? '',
           size: context.fromWidth(8),
           outerBorderWidth: context.fromWidth(CustomStyle.huge2),
+          errorWidget: (___, __, _) => CircleAvatar(
+            backgroundColor: Colors.white,
+            child: Image.asset(JobstopPngImg.comp),
+          ),
+          placeholder: (__, _) => CircleAvatar(
+            backgroundColor: Colors.white,
+            child: Image.asset(JobstopPngImg.comp),
+          ),
         ),
         SizedBox(width: context.width / 36),
         Column(

@@ -39,6 +39,7 @@ const String userProjectsEndpoint = "user/projects";
 const String userLanguageEndpoint = "user/languages";
 const String userProfessionEndpoint = "user/profile/professions";
 const String userCvEndpoint = "user/cv";
+const String reportEndpoint = "report";
 
 /////////////////////////////////////////////////////////
 // /////////// company profile resource endpoints ///////////////////

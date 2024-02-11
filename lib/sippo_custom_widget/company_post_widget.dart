@@ -120,7 +120,14 @@ class PostWidget extends StatelessWidget {
           imageUrl: imageProfileUrl ?? "",
           outerBorderWidth: context.fromWidth(CustomStyle.huge),
           size: context.fromWidth(8),
-          outerBorderColor: Colors.grey[300],
+          errorWidget: (___, __, _) => CircleAvatar(
+            backgroundColor: Colors.white,
+            child: Image.asset(JobstopPngImg.comp),
+          ),
+          placeholder: (__, _) => CircleAvatar(
+            backgroundColor: Colors.white,
+            child: Image.asset(JobstopPngImg.comp),
+          ),
         ),
         SizedBox(
           width: width / 46,
@@ -162,7 +169,11 @@ class PostWidget extends StatelessWidget {
             ],
           ),
         ),
-        _buildShowCompanyMenuOptionsButton()
+        // _buildShowCompanyMenuOptionsButton()
+        InkWell(
+          onTap: onActionButtonPresses,
+          child: Icon(Icons.more_vert_rounded),
+        )
       ],
     );
   }

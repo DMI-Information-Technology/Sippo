@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:lottie/lottie.dart';
 import 'package:sippo/JobGlobalclass/jobstopcolor.dart';
 import 'package:sippo/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:sippo/JobGlobalclass/jobstopimges.dart';
@@ -9,11 +10,12 @@ import 'package:sippo/JobGlobalclass/sippo_customstyle.dart';
 import 'package:sippo/JobGlobalclass/text_font_size.dart';
 import 'package:sippo/sippo_controller/user_community_controller/user_show_community_posts_controller.dart';
 import 'package:sippo/sippo_custom_widget/company_post_widget.dart';
+import 'package:sippo/sippo_custom_widget/container_bottom_sheet_widget.dart';
 import 'package:sippo/sippo_custom_widget/widgets.dart';
 import 'package:sippo/sippo_data/model/profile_model/company_profile_resource_model/company_post_model.dart';
+import 'package:sippo/sippo_data/repot_repo.dart';
 import 'package:sippo/sippo_pages/sippo_message_pages/no_items_found_message.dart';
 import 'package:sippo/utils/helper.dart';
-import 'package:lottie/lottie.dart';
 
 class ShowCommunityCompanyPostsList extends StatefulWidget {
   const ShowCommunityCompanyPostsList({super.key});
@@ -57,13 +59,88 @@ class _ShowCommunityCompanyPostsListState
               postContent: item.body ?? "",
               imageUrl: item.image?.url,
               isCompany: false,
-              onActionButtonPresses: () {},
+              onActionButtonPresses: () {
+                print('heloo');
+                Get.bottomSheet(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(25),
+                    ),
+                  ),
+                  backgroundColor: Colors.white,
+                  isScrollControlled: true,
+                  ContainerBottomSheetWidget(
+                    children: [
+                      ListTile(
+                        title: Text(
+                          'report'.tr,
+                          style: dmsmedium.copyWith(
+                              fontSize: FontSize.title5(context)),
+                        ),
+                        onTap: () {
+                          Get.back();
+                          _showSubmitReportDialog(item);
+                        },
+                      )
+                    ],
+                  ),
+                );
+              },
             );
           },
         ),
         separatorBuilder: (_, __) => SizedBox(
           height: context.fromHeight(CustomStyle.spaceBetween),
         ),
+      ),
+    );
+  }
+
+  void _showSubmitReportDialog(CompanyDetailsPostModel post) {
+    Get.dialog(
+      AlertDialog(
+        title: Text('Your report reason'),
+        content: InputBorderedField(
+          controller: _controller.postsState.reportReason,
+          fillColor: SippoColor.backgroudHome,
+          hintText: 'enter your report reason...',
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(25),
+        ),
+        contentPadding: EdgeInsets.all(context.width / 16),
+
+        actionsAlignment: MainAxisAlignment.center,
+        actions: [
+          CustomButton(
+            onTapped: () {
+              Get.back();
+              ReportRepo.report({
+                "reason": _controller.postsState.reportReason.text,
+                "reportable_type": "company",
+                "reportable_id": post.id
+              }).then((_) {
+                _controller.postsState.reportReason.clear();
+                Get.dialog(
+                  AlertDialog(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                    contentPadding: EdgeInsets.all(context.width / 16),
+                    title: Text('Your report is submitted.'),
+                    actions: [
+                      CustomButton(
+                        onTapped: () => Get.back(),
+                        text: 'ok'.tr,
+                      ),
+                    ],
+                  ),
+                );
+              });
+            },
+            text: 'ok'.tr,
+          )
+        ],
       ),
     );
   }

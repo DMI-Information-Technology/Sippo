@@ -10,10 +10,13 @@ import 'package:sippo/JobGlobalclass/sippo_customstyle.dart';
 import 'package:sippo/JobGlobalclass/text_font_size.dart';
 import 'package:sippo/sippo_controller/JobDescriptionController/job_description_controller.dart';
 import 'package:sippo/sippo_custom_widget/body_widget.dart';
+import 'package:sippo/sippo_custom_widget/container_bottom_sheet_widget.dart';
 import 'package:sippo/sippo_custom_widget/list_item_text.dart';
 import 'package:sippo/sippo_custom_widget/top_description_info_company.dart';
 import 'package:sippo/sippo_custom_widget/top_job_details_header.dart';
 import 'package:sippo/sippo_custom_widget/widgets.dart';
+import 'package:sippo/sippo_data/model/profile_model/company_profile_resource_model/company_job_model.dart';
+import 'package:sippo/sippo_data/repot_repo.dart';
 import 'package:sippo/sippo_pages/sippo_abouts_companies/show_about_companies_details.dart';
 import 'package:sippo/utils/app_use.dart';
 import 'package:sippo/utils/helper.dart';
@@ -48,6 +51,42 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
               }
               return false;
             },
+            actions: [
+              IconButton(
+                  onPressed: () {
+                    Get.bottomSheet(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(25),
+                        ),
+                      ),
+                      backgroundColor: Colors.white,
+                      isScrollControlled: true,
+                      ContainerBottomSheetWidget(
+                        children: [
+                          ListTile(
+                            title: Text(
+                              'report'.tr,
+                              style: dmsmedium.copyWith(
+                                  fontSize: FontSize.title5(context)),
+                            ),
+                            onTap: () {
+                              Get.back();
+                              _showSubmitReportDialog(
+                                _controller
+                                    .sharedDataService.jobGlobalState.details,
+                              );
+                            },
+                          )
+                        ],
+                      ),
+                    );
+                  },
+                  icon: Icon(
+                    Icons.more_vert_rounded,
+                    color: Colors.white,
+                  ))
+            ],
             leading: IconButton(
               onPressed: () => Get.back(),
               icon: Icon(
@@ -78,43 +117,41 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
             _buildButtonTaps(context),
             SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
             Obx(
-                  () =>
-              _controller.jobDetailsState.selectedPageView == 0
+              () => _controller.jobDetailsState.selectedPageView == 0
                   ? _buildJobDetails(context)
                   : ShowAboutCompaniesDetails(
-                company: _controller.jobDetailsState.jopDetails.company,
-              ),
+                      company: _controller.jobDetailsState.jopDetails.company,
+                    ),
             ),
           ],
         ),
         paddingBottom:
-        EdgeInsets.all(context.fromWidth(CustomStyle.paddingValue)),
+            EdgeInsets.all(context.fromWidth(CustomStyle.paddingValue)),
         bottomScreen: GlobalStorageService.appUse == AppUsingType.user
             ? Obx(
-              () {
-            final isSaved =
-                _controller.jobDetailsState.jopDetails.isSaved == true;
-            return [
-              BottomCompanyDetailsButtons(
-                onApplyClicked: _controller.applyTapped,
-                onFavClicked: () => _controller.onToggleSavedJobs(),
-                isSaved: isSaved,
-              ),
-              CustomButton(
-                onTapped: _controller.applyTapped,
-                text: "apply_now".tr,
-              ),
-            ][_controller.jobDetailsState.selectedPageView];
-          },
-        )
+                () {
+                  final isSaved =
+                      _controller.jobDetailsState.jopDetails.isSaved == true;
+                  return [
+                    BottomCompanyDetailsButtons(
+                      onApplyClicked: _controller.applyTapped,
+                      onFavClicked: () => _controller.onToggleSavedJobs(),
+                      isSaved: isSaved,
+                    ),
+                    CustomButton(
+                      onTapped: _controller.applyTapped,
+                      text: "apply_now".tr,
+                    ),
+                  ][_controller.jobDetailsState.selectedPageView];
+                },
+              )
             : null,
       ),
     );
   }
 
   Widget _buildTopJobDetailsHeader(BuildContext context) {
-    return Obx(() =>
-        Column(
+    return Obx(() => Column(
           children: [
             TopJobDetailsHeader(
               coverHeight: context.height / 4.5,
@@ -137,8 +174,7 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Obx(() =>
-              Text(
+          Obx(() => Text(
                 _controller.jobDetailsState.jopDetails.title ?? '',
                 style: dmsbold.copyWith(
                   fontSize: FontSize.title3(context),
@@ -165,51 +201,45 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
   }
 
   Widget _buildButtonTaps(BuildContext) {
-    Size size = MediaQuery
-        .of(context)
-        .size;
+    Size size = MediaQuery.of(context).size;
     double width = size.width;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Obx(
-              () =>
-              SizedBox(
-                width: width / 2.3,
-                child: CustomButton(
-                  borderRadiusValue: 12,
-                  onTapped: () {
-                    _controller.jobDetailsState.switchPageView();
-                  },
-                  text: "description".tr,
-                  backgroundColor:
+          () => SizedBox(
+            width: width / 2.3,
+            child: CustomButton(
+              borderRadiusValue: 12,
+              onTapped: () {
+                _controller.jobDetailsState.switchPageView();
+              },
+              text: "description".tr,
+              backgroundColor:
                   _controller.jobDetailsState.changeDescriptionButtonColor(),
-                ),
-              ),
+            ),
+          ),
         ),
         Obx(
-              () =>
-              SizedBox(
-                width: width / 2.3,
-                child: CustomButton(
-                  borderRadiusValue: 12,
-                  onTapped: () {
-                    _controller.jobDetailsState.switchPageView();
-                  },
-                  text: "company".tr,
-                  backgroundColor:
+          () => SizedBox(
+            width: width / 2.3,
+            child: CustomButton(
+              borderRadiusValue: 12,
+              onTapped: () {
+                _controller.jobDetailsState.switchPageView();
+              },
+              text: "company".tr,
+              backgroundColor:
                   _controller.jobDetailsState.changeCompanyButtonColor(),
-                ),
-              ),
+            ),
+          ),
         ),
       ],
     );
   }
 
   Widget _buildJobDetails(BuildContext context) {
-    Size size = MediaQuery
-        .of(context)
-        .size;
+    Size size = MediaQuery.of(context).size;
     double height = size.height;
     final job = _controller.jobDetailsState.jopDetails;
     return Column(
@@ -316,6 +346,54 @@ class _SippoJobDescriptionState extends State<SippoJobDescription> {
       ],
     );
   }
+
+  void _showSubmitReportDialog(CompanyJobModel? job) {
+    Get.dialog(
+      AlertDialog(
+        title: Text('Your report reason'),
+        content: InputBorderedField(
+          controller: _controller.jobDetailsState.reportReason,
+          fillColor: SippoColor.backgroudHome,
+          hintText: 'enter your report reason...',
+        ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(25),
+        ),
+        contentPadding: EdgeInsets.all(context.width / 16),
+        actionsAlignment: MainAxisAlignment.center,
+        actions: [
+          CustomButton(
+            onTapped: () {
+              Get.back();
+              ReportRepo.report({
+                "reason": _controller.jobDetailsState.reportReason.text,
+                "reportable_type": "company",
+                "reportable_id": job?.id
+              }).then((_) {
+                _controller.jobDetailsState.reportReason.clear();
+                Get.dialog(
+                  AlertDialog(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                    contentPadding: EdgeInsets.all(context.width / 16),
+                    title: Text('Your report is submitted.'),
+                    actions: [
+                      CustomButton(
+                        onTapped: () => Get.back(),
+                        text: 'ok'.tr,
+                      ),
+                    ],
+                  ),
+                );
+              });
+            },
+            text: 'ok'.tr,
+          )
+        ],
+      ),
+    );
+  }
 }
 
 class TextBoldedLabelItem extends StatelessWidget {
@@ -380,9 +458,7 @@ class BottomCompanyDetailsButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery
-        .of(context)
-        .size;
+    Size size = MediaQuery.of(context).size;
     final double height = size.height;
     final double width = size.width;
     return Row(
