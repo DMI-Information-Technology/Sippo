@@ -106,9 +106,7 @@ class _SippoLocationCompanySelectorState
                       setInitialValue: false,
                     )),
               ),
-              SizedBox(
-                height: height / 42,
-              ),
+              SizedBox(height: height / 42),
               Obx(
                 () => !netConnController.isConnected
                     ? _buildMessageNoConnectionToGetAddress(height)

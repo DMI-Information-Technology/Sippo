@@ -79,7 +79,7 @@ class GeneralSearchController extends GetxController {
   }
 }
 
-class GeneralSearchState {
+class   GeneralSearchState {
   var _tabsIndex = 0;
   final searchController = GetXTextEditingController();
   bool isSearchFiledCleared = true;

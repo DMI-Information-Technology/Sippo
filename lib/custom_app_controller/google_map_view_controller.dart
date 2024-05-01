@@ -10,7 +10,7 @@ class GoogleMapViewController extends ChangeNotifier {
   static const SELECTED_MARKER = "selected_marker";
 
   GoogleMapViewController() {
-    markers.add(_markerPlace);
+    // markers.add(_markerPlace);
   }
 
   GoogleMapController? _mapController;
@@ -31,7 +31,7 @@ class GoogleMapViewController extends ChangeNotifier {
   var _isCurrentLocationTapped = false;
 
   var _states = States();
-  final markers = <Marker>{};
+  // final markers = <Marker>{};
 
   GoogleMapController? get mapController => _mapController;
 
