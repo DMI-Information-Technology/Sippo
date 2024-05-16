@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,7 +12,6 @@ import 'package:sippo/sippo_controller/AuthenticationController/sippo_appusing_c
 
 class SippoAppUsing extends StatelessWidget {
   const SippoAppUsing({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     final AppUsingController appUsingController = Get.put(AppUsingController());
@@ -59,69 +59,70 @@ class SippoAppUsing extends StatelessWidget {
               SizedBox(
                 height: height / 32,
               ),
-              SizedBox(
-                child: Column(
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Flexible(
-                          child: Expanded(
-                            child: Obx(
-                              () {
-                                return JopSelctedUsingAppCard(
-                                  color: SippoColor.primarycolor,
-                                  isSelected: appUsingController.findEmployee,
-                                  image: JobstopPngImg.find_empLogo,
-                                  backGroundIconColor: SippoColor.lightprimary,
-                                  title: "find_employees_title".tr,
-                                  description: 'find_employees_desc'.tr,
-                                  onTapped: () {
-                                    appUsingController.findOnEmployee();
-                                  },
-                                );
-                              },
+              Stack(
+                children: [
+                  // Existing content of the page
+                  Positioned(
+                    bottom: MediaQuery.of(context).size.height * 0.1, // Adjust dynamically
+                    left: MediaQuery.of(context).size.width * 0.1, // Adjust dynamically
+                    child: SizedBox(
+                      child: Column(
+                        children: [
+                          Flexible(
+                            child: Expanded(
+                              child: Obx(
+                                    () {
+                                  return JopSelctedUsingAppCard(
+                                    color: SippoColor.primarycolor,
+                                    isSelected: appUsingController.findEmployee,
+                                    image: JobstopPngImg.find_empLogo,
+                                    backGroundIconColor: SippoColor.lightprimary,
+                                    title: "find_employees_title".tr,
+                                    description: 'find_employees_desc'.tr,
+                                    onTapped: () {
+                                      appUsingController.findOnEmployee();
+                                    },
+                                  );
+                                },
+                              ),
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          width: width / 25,
-                        ),
-                        Expanded(
-                          child: Obx(() {
-                            return JopSelctedUsingAppCard(
-                              color: SippoColor.secondary,
-                              isSelected: appUsingController.findJop,
-                              image: JobstopPngImg.find_jobLog,
-                              backGroundIconColor: SippoColor.lightsecondary,
-                              title: "find_job_title".tr,
-                              description: "find_job_desc".tr,
-                              onTapped: () {
-                                appUsingController.findOnJop();
-                              },
-                            );
-                          }),
-                        ),
-                      ],
+                          SizedBox(
+                            height: height / 30, // Adjust spacing between cards
+                          ),
+                          Flexible(
+                            child: Expanded(
+                              child: Obx(
+                                    () {
+                                  return JopSelctedUsingAppCard(
+                                    color: SippoColor.secondary,
+                                    isSelected: appUsingController.findJop,
+                                    image: JobstopPngImg.find_jobLog,
+                                    backGroundIconColor: SippoColor.lightsecondary,
+                                    title: "find_job_title".tr,
+                                    description: "find_job_desc".tr,
+                                    onTapped: () {
+                                      appUsingController.findOnJop();
+                                    },
+                                  );
+                                },
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ],
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _onConfirmButtonClicked,
-        backgroundColor: SippoColor.primarycolor,
-        child: const Icon(
-          Icons.arrow_circle_right_outlined,
-          color: SippoColor.white,
-          size: 30,
-        ),
-      ),
+    )
     );
   }
+
 
   void _onConfirmButtonClicked() {
     AppUsingController controller = Get.find();

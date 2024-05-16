@@ -55,64 +55,91 @@ class _SippoOnboardingState extends State<SippoOnboarding>
   final PageController _pageController = PageController();
 
   OnBoardingController onBoardingController = Get.put(OnBoardingController());
-
   @override
   Widget build(BuildContext context) {
     size = MediaQuery.of(context).size;
     height = size.height;
     width = size.width;
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Padding(
         padding:
-            EdgeInsets.symmetric(horizontal: width / 26, vertical: height / 26),
+        EdgeInsets.symmetric(horizontal: width / 26, vertical: height / 26),
         child: Stack(
           children: [
             PageView(
               onPageChanged: (index) {
                 onBoardingController
                     .setHideNextButton(index != onBoardPagesSlides.length - 1);
-              },
+                // New logic: Hide dots on the last page
+                onBoardingController.setShowDots(index != onBoardPagesSlides.length - 1);              },
               controller: _pageController,
               children: onBoardPagesSlides,
             ),
-            Align(
-              alignment: const Alignment(0, 0.85),
+            Obx(() => Align(
+              alignment: Alignment.bottomCenter, // Top alignment for dots
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              
                 children: [
-                  SmoothPageIndicator(
-                    controller: _pageController,
-                    count: onBoardPagesSlides.length,
-                    effect: const ColorTransitionEffect(
-                      activeDotColor: SippoColor.secondary,
-                      dotColor: SippoColor.white,
+                  Opacity(
+                    opacity: onBoardingController.showDots ? 1.0 : 0.0, // Fully visible or completely transparent
+                    child: SmoothPageIndicator(
+                      controller: _pageController,
+                      count: onBoardPagesSlides.length,
+                      effect: const ExpandingDotsEffect(
+                        activeDotColor: SippoColor.primarycolor,
+                        dotColor: SippoColor.secondary,
+                      ),
                     ),
                   ),
-                
                 ],
               ),
+            )),
+            Positioned(
+              bottom: 20.0, // Adjust bottom padding as needed
+              left: 0.0,
+              right: 0.0, // Ensures button spans the entire width
+              child: Obx(() => !onBoardingController.hideNextButton
+                  ? FloatingActionButton.extended(
+                heroTag: "go",
+                onPressed: () {
+                  Get.toNamed(SippoRoutes.appUsingPage);
+                  return;
+                },
+                backgroundColor: SippoColor.primarycolor,
+                //TODO
+                // fix this font size with something better
+                label: Text(
+                  "Continue",
+                  style: TextStyle(
+                    color: Colors.white, // Use theme's button color
+                    fontSize: 18, // Convert to double
+                  ),
+                ),
+              )
+                  : const SizedBox()),
             ),
-           
+
           ],
         ),
       ),
-      
-      floatingActionButton: Obx(() => !onBoardingController.hideNextButton
-          ? FloatingActionButton(
-              heroTag: "go",
-              onPressed: () {
-                Get.toNamed(SippoRoutes.appUsingPage);
-                return;
-              },
-              backgroundColor: SippoColor.primarycolor,
-              child:  Icon(
-                Icons.arrow_circle_right_outlined,
-                color: SippoColor.white,
-                size: MediaQuery.of(context).size.width < 600 ? 30 : 40,
-              ),
-            )
-          : const SizedBox()),
+      // floatingActionButton: Obx(() => !onBoardingController.hideNextButton
+      //     ? SizedBox( // Wrap in a SizedBox for width control
+      //   width: width *0.8, // Make the button as wide as the screen
+      //   child: FloatingActionButton.extended(
+      //     heroTag: "go",
+      //     onPressed: () {
+      //       Get.toNamed(SippoRoutes.appUsingPage);
+      //       return;
+      //     },
+      //     backgroundColor: SippoColor.primarycolor,
+      //     label: Text(
+      //       "Continue",
+      //       style: TextStyle(color: Colors.white),
+      //     ),
+      //   ),
+      // )
+      //     : const SizedBox()),
     );
   }
 }
