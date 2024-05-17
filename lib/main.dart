@@ -56,14 +56,14 @@ class MyApp extends StatelessWidget {
         Get.put<InternetConnectionService>(InternetConnectionService());
         Get.lazyPut<AuthController>(() => AuthController(), fenix: true);
         Get.lazyPut<HttpClientController>(
-              () => HttpClientController(),
+          () => HttpClientController(),
           fenix: true,
         );
       }),
       translations: AppTranslation(),
       locale: GlobalStorageService.savedLanguage.languageLocale,
       initialRoute:
-      kIsWeb ? SippoRoutes.userSignupPage : SippoRoutes.splashScreen,
+          kIsWeb ? SippoRoutes.userSignupPage : SippoRoutes.splashScreen,
       // initialRoute: ,
       // home: const SippoUserProfessions(),
       getPages: SippoRoutes.routes,

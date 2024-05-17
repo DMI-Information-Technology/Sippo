@@ -99,8 +99,7 @@ class AppTranslation extends Translations {
           'chooce_specialization': "Choose Specialization",
           'select_one_three_maximum_special':
               "Please select one or three in maximum specialization.",
-          'Choose_App_Using_Page':
-              "Choose how you would like to use the application",
+          'Choose_App_Using_Page': "Continue as",
           'Company_Login': "Company login",
           'company_signup': "Company Sign Up",
           'User_Login': "User Login",
@@ -380,13 +379,14 @@ class AppTranslation extends Translations {
               "Please choose a few specialties for the company\n(maximum 3)",
           'enter_email_to_reset_password':
               "Enter your email address to receive the password reset code.",
+          'find_employees_title': 'Company',
           'find_desc':
-              'If you are a user and you want to find a job, please choose "Job Search." If you want to search for employees, please choose "Employee Search."',
-          'find_employees_title': "Find Employees",
-          'find_employees_desc': "I want to search for a job seekers",
-          'find_job_title': "Find Job",
-          'find_job_desc': "I want to search for a job.",
-          'select_find_dialog': "Choose how you would to use the app",
+              'Are you looking for a job? or are you looking to hire the best employees for your company?',
+          'find_employees_desc':
+              "Let’s recruit your great candidate faster here",
+          'find_job_title': "Job Seeker",
+          'find_job_desc': "Finding a job here never been easier than before.",
+          'select_find_dialog': "Continue as",
           'confirm_password': "Confirm Password",
           'apply_now': "Apply Now",
           'title_apply': "Apply",

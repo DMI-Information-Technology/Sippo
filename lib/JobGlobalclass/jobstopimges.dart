@@ -1,7 +1,8 @@
 class JobstopPngImg {
   static const String splashlogo =
       "Assets/jobstop_assets/jobpngimg/splashlogo.png";
-  static const String welcomeImage = "Assets/jobstop_assets/jobpngimg/welcome_image.png";
+  static const String welcomeImage =
+      "Assets/jobstop_assets/jobpngimg/welcome_image.png";
   static const String loadingProgress =
       "Assets/jobstop_assets/json_animation/loadingProgress.json";
   static const String loadingApp =
@@ -11,8 +12,10 @@ class JobstopPngImg {
   static const String forget = "Assets/jobstop_assets/jobpngimg/forget.png";
   static const String sippoLogo =
       "Assets/jobstop_assets/jobpngimg/sippoLogo.png";
-  static const String sponserLogo = "Assets/jobstop_assets/jobpngimg/sponser_logo.png";
-  static const String notification = "Assets/jobstop_assets/jobpngimg/notification_logo.png";
+  static const String sponserLogo =
+      "Assets/jobstop_assets/jobpngimg/sponser_logo.png";
+  static const String notification =
+      "Assets/jobstop_assets/jobpngimg/notification_logo.png";
   static const String done = "Assets/jobstop_assets/jobpngimg/done.png";
   static const String emailV = "Assets/jobstop_assets/jobpngimg/emailV.png";
   static const String noSubs = "Assets/jobstop_assets/jobpngimg/noSubs.png";
@@ -26,9 +29,8 @@ class JobstopPngImg {
   static const String profileComp =
       "Assets/jobstop_assets/jobpngimg/profileComp.png";
   static const String find_empLogo =
-      "Assets/jobstop_assets/jobpngimg/find_emp.png";
-  static const String find_jobLog =
-      "Assets/jobstop_assets/jobpngimg/find_job.png";
+      "Assets/jobstop_assets/jobpngimg/company.svg";
+  static const String find_jobLog = "Assets/jobstop_assets/jobpngimg/user.svg";
   static const String phonenymberempty =
       "Assets/jobstop_assets/jobpngimg/phonenymberempty.png";
   static const String successful =
@@ -54,10 +56,12 @@ class JobstopPngImg {
       "Assets/jobstop_assets/json_animation/onBoarding3.json";
 
   //Work type images
-  static const String remote_Image = "Assets/jobstop_assets/jobpngimg/remote_work.jpg";
-  static const String fullTime_image = "Assets/jobstop_assets/jobpngimg/fulltime_work.jpg";
-  static const String partTime_Image = "Assets/jobstop_assets/jobpngimg/parttime_work.jpg";
-
+  static const String remote_Image =
+      "Assets/jobstop_assets/jobpngimg/remote_work.jpg";
+  static const String fullTime_image =
+      "Assets/jobstop_assets/jobpngimg/fulltime_work.jpg";
+  static const String partTime_Image =
+      "Assets/jobstop_assets/jobpngimg/parttime_work.jpg";
 
   static const String companysignup =
       "Assets/jobstop_assets/jobpngimg/comp.png";
@@ -165,7 +169,8 @@ class JobstopPngImg {
   static const String lock = "Assets/jobstop_assets/jobpngimg/lock.png";
   static const String logout = "Assets/jobstop_assets/jobpngimg/logout.png";
   static const String signup = "Assets/jobstop_assets/jobpngimg/signup.png";
-  static const String sign_up_image ="Assets/jobstop_assets/jobpngimg/signup.png";
+  static const String sign_up_image =
+      "Assets/jobstop_assets/jobpngimg/signup.png";
   static const String enddateimg =
       "Assets/jobstop_assets/jobpngimg/enddateimg.png";
 }
