@@ -20,106 +20,112 @@ class SippoAppUsing extends StatelessWidget {
     double width = size.width;
     return Scaffold(
       appBar: AppBar(automaticallyImplyLeading: false),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: width / 26,
-            vertical: height / 26,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              // Row(mainAxisAlignment: MainAxisAlignment.end, children: []),
+      body: Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: width / 26,
+          vertical: height / 26,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            // Row(mainAxisAlignment: MainAxisAlignment.end, children: []),
 
-              Center(
-                child: AutoSizeText(
-                  "Choose_App_Using_Page".tr,
-                  style: dmsbold.copyWith(
-                    fontSize: Get.width < 600
-                        ? FontSize.title2(context)
-                        : FontSize.title3(context),
-                    color: SippoColor.primarycolor,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              SizedBox(
-                height: height / 32,
-              ),
-              AutoSizeText(
-                'find_desc'.tr,
-                style: dmsregular.copyWith(
+            Center(
+              child: AutoSizeText(
+                "Choose_App_Using_Page".tr,
+                style: dmsbold.copyWith(
                   fontSize: Get.width < 600
-                      ? FontSize.paragraph(context)
-                      : FontSize.paragraph3(context),
+                      ? FontSize.title2(context)
+                      : FontSize.title3(context),
+                  color: SippoColor.primarycolor,
                 ),
-                maxLines: 4,
                 textAlign: TextAlign.center,
               ),
-              SizedBox(
-                height: height / 32,
+            ),
+            SizedBox(
+              height: height / 32,
+            ),
+            AutoSizeText(
+              'find_desc'.tr,
+              style: dmsregular.copyWith(
+                fontSize: Get.width < 600
+                    ? FontSize.paragraph(context)
+                    : FontSize.paragraph3(context),
               ),
-              SizedBox(
-                child: Column(
-                  children: [
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Flexible(
-                          child: Expanded(
-                            child: Obx(
-                              () {
-                                return JopSelctedUsingAppCard(
-                                  color: SippoColor.primarycolor,
-                                  isSelected: appUsingController.findEmployee,
-                                  image: JobstopPngImg.find_empLogo,
-                                  backGroundIconColor: SippoColor.lightprimary,
-                                  title: "find_employees_title".tr,
-                                  description: 'find_employees_desc'.tr,
-                                  onTapped: () {
-                                    appUsingController.findOnEmployee();
-                                  },
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          width: width / 25,
-                        ),
-                        Expanded(
-                          child: Obx(() {
-                            return JopSelctedUsingAppCard(
-                              color: SippoColor.secondary,
-                              isSelected: appUsingController.findJop,
-                              image: JobstopPngImg.find_jobLog,
-                              backGroundIconColor: SippoColor.lightsecondary,
-                              title: "find_job_title".tr,
-                              description: "find_job_desc".tr,
-                              onTapped: () {
-                                appUsingController.findOnJop();
-                              },
-                            );
-                          }),
-                        ),
-                      ],
-                    ),
-                  ],
+              maxLines: 4,
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(
+              height: height / 32,
+            ),
+            SizedBox(
+              child: Column(
+                children: [
+                  // The Row is now a Column to stack items vertically
+                  Column(
+                    children: [
+                      Obx(
+                            () {
+                          return JopSelctedUsingAppCard(
+                            color: SippoColor.primarycolor,
+                            isSelected: appUsingController.findEmployee,
+                            image: JobstopPngImg.find_empLogo,
+                            backGroundIconColor: SippoColor.lightprimary,
+                            title: "find_employees_title".tr,
+                            description: 'find_employees_desc'.tr,
+                            onTapped: () {
+                              appUsingController.findOnEmployee();
+                            },
+                          );
+                        },
+                      ),
+                      SizedBox(
+                        height: 16, // Add some spacing betweenthe cards
+                      ),
+                      Obx(() {
+                        return JopSelctedUsingAppCard(
+                          color: SippoColor.secondary,
+                          isSelected: appUsingController.findJop,
+                          image: JobstopPngImg.find_jobLog,
+                          backGroundIconColor: SippoColor.lightsecondary,
+                          title: "find_job_title".tr,
+                          description: "find_job_desc".tr,
+                          onTapped: () {
+                            appUsingController.findOnJop();
+                          },
+                        );
+                      }),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 30,),
+            ElevatedButton(
+              onPressed: _onConfirmButtonClicked,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: SippoColor.primarycolor,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25)
+                )
+              ),
+              child: Container(
+                width: width/1.2,
+                height: 50,
+                child: Text(
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 28
+                  ),
+                  "Continue"
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _onConfirmButtonClicked,
-        backgroundColor: SippoColor.primarycolor,
-        child: const Icon(
-          Icons.arrow_circle_right_outlined,
-          color: SippoColor.white,
-          size: 30,
-        ),
-      ),
+
     );
   }
 
@@ -165,80 +171,107 @@ class JopSelctedUsingAppCard extends StatelessWidget {
     double height = size.height;
     double width = size.width;
     return SizedBox(
-      height: height / 3,
-      child: InkWell(
+      height: height / 7, // Adjust the height as needed
+      width: double.infinity,
+      child:InkWell(
         onTap: () {
           onTapped();
         },
+        child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(25),
+        boxShadow: [
+        BoxShadow(
+        color: isSelected ? color.withOpacity(0.5) : Colors.grey.withOpacity(0.3), // Adjust color and opacity as needed
+        spreadRadius: 1.5, // Spread of the shadow
+        blurRadius: 8, // Blur of the shadow
+        offset: Offset(0, 5), // Offset in the vertical direction (y-axis)
+        ),
+        ],
+        ),
         child: Card(
-          elevation: isSelected ? 4.0 : 2.0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(25.0),
-            side: BorderSide(
-              width: 2,
-              color: isSelected ? color : Colors.grey,
+        elevation: 0, // Remove default Cardelevation
+        shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(25.0),
+        side: BorderSide(
+        width: 0.25,
+        color: isSelected ? color : Colors.grey,
+        ),
+        ),
+          // Add Padding here
+          child: Padding(
+            padding: const EdgeInsets.all(12.0), // Adjust padding as needed
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        width: (kIsWeb ? height : width) / 7,
+                        height: (kIsWeb ? height : width) / 7,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: backGroundIconColor,
+                        ),
+                        child: CircleAvatar(
+                          backgroundColor: Colors.transparent,
+                          child: Flexible(
+                            child: Image.asset(
+                              image,
+                              height: Get.width < 600 ? height : height / 2,
+                              width: Get.width < 600 ? width : width / 2,
+                              fit: BoxFit.contain,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: height / 32,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: width / 25),
+                      child: AutoSizeText(
+                        title,style: dmsbold.copyWith(
+                        color: SippoColor.black,
+                        fontSize: FontSize.title4(context),
+                      ),
+                        textAlign: TextAlign.start,
+                      ),
+                    ),
+                    SizedBox(
+                      height: height / 128,
+                    ),
+                    Flexible(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: width / 25),
+                        child: AutoSizeText(
+                          description,
+                          style: dmsregular.copyWith(
+                            color: SippoColor.textColor,
+                            fontSize: FontSize.paragraph3(context),
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
-          ),
-          child: Column(
-            children: [
-              SizedBox(
-                height: height / 32,
-              ),
-              Container(
-                width: (kIsWeb ? height : width) / 7,
-                height: (kIsWeb ? height : width) / 7,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: backGroundIconColor,
-                ),
-                child: CircleAvatar(
-                  backgroundColor: Colors.transparent,
-                  child: Flexible(
-                    child: Image.asset(
-                      image,
-                      height: Get.width < 600 ? height : height / 2,
-                      width: Get.width < 600 ? width : width / 2,
-                      fit: BoxFit.contain,
-                      //color: color,
-                      //size: (kIsWeb ? height : width) / 8.0,
-                    ),
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: height / 32,
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                child: AutoSizeText(
-                  title,
-                  style: dmsbold.copyWith(
-                    color: SippoColor.black,
-                    fontSize: FontSize.title4(context),
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              SizedBox(
-                height: height / 128,
-              ),
-              Flexible(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: width / 25),
-                  child: AutoSizeText(
-                    description,
-                    style: dmsregular.copyWith(
-                      color: SippoColor.textColor,
-                      fontSize: FontSize.paragraph3(context),
-                    ),
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-              ),
-            ],
           ),
         ),
       ),
+      )
     );
   }
 }
