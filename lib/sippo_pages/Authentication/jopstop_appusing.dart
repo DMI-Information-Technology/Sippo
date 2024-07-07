@@ -18,21 +18,30 @@ class SippoAppUsing extends StatelessWidget {
     Size? size = Get.size;
     double height = size.height;
     double width = size.width;
-    return Scaffold(
-      appBar: AppBar(automaticallyImplyLeading: false),
-      body: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: width / 26,
-          vertical: height / 26,
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            // Row(mainAxisAlignment: MainAxisAlignment.end, children: []),
-
-            Center(
-              child: AutoSizeText(
+    return Flexible(
+      child: Scaffold(
+        appBar: AppBar(automaticallyImplyLeading: false),
+        body: Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: width / 26,
+            vertical: height / 26,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              // Row(mainAxisAlignment: MainAxisAlignment.end, children: []),
+              Center(
+                child: Image.asset(
+                JobstopPngImg.appUsingLogo,
+                  height: height * 0.25,
+                ),
+              ),
+              SizedBox(
+                height: height *0.02,
+              ),
+      
+              AutoSizeText(
                 "Choose_App_Using_Page".tr,
                 style: dmsbold.copyWith(
                   fontSize: Get.width < 600
@@ -40,92 +49,94 @@ class SippoAppUsing extends StatelessWidget {
                       : FontSize.title3(context),
                   color: SippoColor.primarycolor,
                 ),
-                textAlign: TextAlign.center,
+                textAlign: TextAlign.start,
               ),
-            ),
-            SizedBox(
-              height: height / 32,
-            ),
-            AutoSizeText(
-              'find_desc'.tr,
-              style: dmsregular.copyWith(
-                fontSize: Get.width < 600
-                    ? FontSize.paragraph(context)
-                    : FontSize.paragraph3(context),
+              SizedBox(
+                height: height * 0.01,
               ),
-              maxLines: 4,
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(
-              height: height / 32,
-            ),
-            SizedBox(
-              child: Column(
-                children: [
-                  // The Row is now a Column to stack items vertically
-                  Column(
-                    children: [
-                      Obx(
-                            () {
+              AutoSizeText(
+                'find_desc'.tr,
+                style: dmsregular.copyWith(
+                  fontSize: Get.width < 600
+                      ? FontSize.paragraph(context)
+                      : FontSize.paragraph3(context),
+                ),
+                maxLines: 4,
+                textAlign: TextAlign.start,
+              ),
+              SizedBox(
+                height: height / 32,
+              ),
+              SizedBox(
+                child: Column(
+                  children: [
+                    // The Row is now a Column to stack items vertically
+                    Column(
+                      children: [
+                        Obx(
+                              () {
+                            return JopSelctedUsingAppCard(
+                              color: SippoColor.primarycolor,
+                              isSelected: appUsingController.findEmployee,
+                              image: JobstopPngImg.find_empLogo,
+                              //backGroundIconColor: SippoColor.lightprimary,
+                              title: "find_employees_title".tr,
+                              description: 'find_employees_desc'.tr,
+                              onTapped: () {
+                                appUsingController.findOnEmployee();
+                              },
+                            );
+                          },
+                        ),
+                        SizedBox(
+                          height: 16, // Add some spacing betweenthe cards
+                        ),
+                        Obx(() {
                           return JopSelctedUsingAppCard(
-                            color: SippoColor.primarycolor,
-                            isSelected: appUsingController.findEmployee,
-                            image: JobstopPngImg.find_empLogo,
-                            backGroundIconColor: SippoColor.lightprimary,
-                            title: "find_employees_title".tr,
-                            description: 'find_employees_desc'.tr,
+                            color: SippoColor.secondary,
+                            isSelected: appUsingController.findJop,
+                            image: JobstopPngImg.find_jobLog,
+                           // backGroundIconColor: SippoColor.lightsecondary,
+                            title: "find_job_title".tr,
+                            description: "find_job_desc".tr,
                             onTapped: () {
-                              appUsingController.findOnEmployee();
+                              appUsingController.findOnJop();
                             },
                           );
-                        },
-                      ),
-                      SizedBox(
-                        height: 16, // Add some spacing betweenthe cards
-                      ),
-                      Obx(() {
-                        return JopSelctedUsingAppCard(
-                          color: SippoColor.secondary,
-                          isSelected: appUsingController.findJop,
-                          image: JobstopPngImg.find_jobLog,
-                          backGroundIconColor: SippoColor.lightsecondary,
-                          title: "find_job_title".tr,
-                          description: "find_job_desc".tr,
-                          onTapped: () {
-                            appUsingController.findOnJop();
-                          },
-                        );
-                      }),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-            SizedBox(height: 30,),
-            ElevatedButton(
-              onPressed: _onConfirmButtonClicked,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: SippoColor.primarycolor,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(25)
-                )
-              ),
-              child: Container(
-                width: width/1.2,
-                height: 50,
-                child: Text(
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 28
-                  ),
-                  "Continue"
+                        }),
+                      ],
+                    ),
+                  ],
                 ),
               ),
-            ),
-          ],
+              SizedBox(height: 30,),
+              ElevatedButton(
+                onPressed: _onConfirmButtonClicked,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: SippoColor.primarycolor,
+      
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25),
+                  )
+                ),
+                child: Container(
+                  width: width/1.2,
+                  alignment: Alignment.center,
+                                  height: 50,
+                  child: Text(
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontSize: 28
+                    ),
+                    "Continue"
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
+      
       ),
-
     );
   }
 
@@ -152,7 +163,7 @@ class JopSelctedUsingAppCard extends StatelessWidget {
     required this.isSelected,
     required this.onTapped,
     required this.image,
-    this.backGroundIconColor = DefaultSelectionStyle.defaultColor,
+    //this.backGroundIconColor = DefaultSelectionStyle.defaultColor,
     this.title = "",
     this.description = "",
   });
@@ -161,7 +172,7 @@ class JopSelctedUsingAppCard extends StatelessWidget {
   final bool isSelected;
   final Color color;
   final String image;
-  final Color backGroundIconColor;
+  //final Color backGroundIconColor;
   final String title;
   final String description;
 
@@ -215,7 +226,7 @@ class JopSelctedUsingAppCard extends StatelessWidget {
                         height: (kIsWeb ? height : width) / 7,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: backGroundIconColor,
+                         /// color: backGroundIconColor,
                         ),
                         child: CircleAvatar(
                           backgroundColor: Colors.transparent,
