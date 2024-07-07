@@ -50,6 +50,7 @@ class CustomDropdownButton<T> extends StatelessWidget {
         value: setInitialValue ? initialValue ?? labelList?.first : null,
         isExpanded: true,
         decoration: InputDecoration(
+
           contentPadding: EdgeInsets.symmetric(
             vertical: 16,
             horizontal: hPaddingValue ?? 0.0,

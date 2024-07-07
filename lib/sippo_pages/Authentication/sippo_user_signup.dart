@@ -13,9 +13,6 @@ import 'package:sippo/sippo_custom_widget/error_messages_dialog_snackbar/error_m
 import 'package:sippo/sippo_custom_widget/loading_view_widgets/overly_loading.dart';
 import 'package:sippo/sippo_custom_widget/widgets.dart';
 import 'package:sippo/utils/validating_input.dart';
-
-import '../../JobGlobalclass/text_font_size.dart';
-
 class SippoUserSignup extends StatelessWidget {
   const SippoUserSignup({Key? key}) : super(key: key);
 
@@ -29,20 +26,34 @@ class SippoUserSignup extends StatelessWidget {
       children: [
         Scaffold(
           appBar: AppBar(
-            automaticallyImplyLeading: true,
-            centerTitle: true,
-            title: TextButton(
-              onPressed: () {
-                Get.focusScope?.unfocus();
-                LocalLanguageService.showChangeLanguageBottomSheet(context);
-              },
-              child: Text(
-                "language".tr,
-                style: TextStyle(
-                  fontSize: FontSize.paragraph(context),
+            backgroundColor: Colors.white, // Set AppBar color to red
+            toolbarHeight: 80, // Increase AppBar height (adjust as needed)
+            leading: Padding(
+              padding:  EdgeInsets.symmetric(horizontal: width * 0.014),
+              child: Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle, // Make the container a circle
+                  color: Colors.grey[300], // Optional: Add a background color
+                ),
+                child: IconButton(
+                  icon: Icon(Icons.arrow_back_ios_new),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                 ),
               ),
             ),
+            title: Text("Find A Job"),
+            centerTitle: true,
+            actions: [
+              IconButton(
+                icon: Icon(Icons.language, color: Colors.grey[800],),
+                onPressed: () {
+                  Get.focusScope?.unfocus();
+                  LocalLanguageService.showChangeLanguageBottomSheet(context);
+                },
+              ),
+            ],
           ),
           body: SingleChildScrollView(
             child: Padding(
@@ -51,21 +62,34 @@ class SippoUserSignup extends StatelessWidget {
               child: Form(
                 key: controller.formKey,
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Image.asset(
-                      JobstopPngImg.welcomeImage,
-                      height: height / 7,
+                    Center(
+                      child: Image.asset(
+                        JobstopPngImg.welcomeImage,
+                        height: height / 7,
+                        width: width * 0.75,
+                      ),
                     ),
                     SizedBox(
                       height: height / 30,
                     ),
+
                     Text(
                       "Create_an_Account".tr,
                       style: dmsbold.copyWith(
                         fontSize: height / 30,
-                        color: SippoColor.primarycolor,
+                        color: SippoColor.textColor,
                       ),
-                      textAlign: TextAlign.center,
+                      textAlign: TextAlign.start,
+                    ),
+                    Text(
+                      "Create_an_Account_description".tr,
+                      style: dmsregular.copyWith(
+                        fontSize: height / 45,
+                        color: SippoColor.textColor,
+                      ),
+                      textAlign: TextAlign.start,
                     ),
                     SizedBox(
                       height: height / 30,
@@ -300,7 +324,7 @@ class SippoUserSignup extends StatelessWidget {
               ),
             ),
           ),
-          backgroundColor: SippoColor.white,
+          backgroundColor: Color(0xffFBF6FF),
         ),
         Obx(
           () => controller.authState.isLoading

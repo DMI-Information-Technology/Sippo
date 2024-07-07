@@ -24,15 +24,34 @@ class SippoCompanySignup extends StatelessWidget {
     double width = size.width;
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading: true,
-        centerTitle: true,
-        title: TextButton(
-          onPressed: () {
-            Get.focusScope?.unfocus();
-            LocalLanguageService.showChangeLanguageBottomSheet(context);
-          },
-          child: Text("language".tr),
+        backgroundColor: Colors.white, // Set AppBar color to red
+        toolbarHeight: 80, // Increase AppBar height (adjust as needed)
+        leading: Padding(
+          padding:  EdgeInsets.symmetric(horizontal: width * 0.014),
+          child: Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle, // Make the container a circle
+              color: Colors.grey[300], // Optional: Add a background color
+            ),
+            child: IconButton(
+              icon: Icon(Icons.arrow_back_ios_new),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ),
         ),
+        title: Text("Find Employees"),
+        centerTitle: true,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.language, color: Colors.grey[800],),
+            onPressed: () {
+              Get.focusScope?.unfocus();
+              LocalLanguageService.showChangeLanguageBottomSheet(context);
+            },
+          ),
+        ],
       ),
       body: SingleChildScrollView(
         child: Padding(

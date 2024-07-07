@@ -119,6 +119,7 @@ class AppTranslation extends Translations {
               "Password should contain at least one digit number.",
           'Guest_login.': "Guest login",
           'Create_an_Account': "Create a new account",
+          'Create_an_Account_description' :"Please fill the following information",
           'welcome_back_login_title': "Welcome back!",
           'OTP_CODE_TITLE': "OTP code verification",
           'new_password_title': "New password",
