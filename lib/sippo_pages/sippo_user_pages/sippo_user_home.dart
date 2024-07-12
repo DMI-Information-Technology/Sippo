@@ -117,54 +117,118 @@ class _SippoUserHomeState extends State<SippoUserHome> {
     if (getTimeOfDay() == 'Good Morning') {
       image = Image.asset(
         JobstopPngImg.morning,
-        height: 30,
+        height: 40,
       );
     } else if (getTimeOfDay() == 'Good Afternoon') {
       image = Image.asset(
         JobstopPngImg.afternoon,
-        height: 30,
+        height: 40,
       );
     } else {
       image = Image.asset(
         JobstopPngImg.night,
-        height: 30,
+        height: 40,
       );
     }
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: context.fromWidth(CustomStyle.s),
+    return Container(
+      width: double.infinity,
+      height: context.height * 0.09,
+      decoration: BoxDecoration(
+        color: SippoColor.primarycolor,
+          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(60),bottomRight: Radius.circular(60))
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Text(
-                getTimeOfDay(),
-                style: dmsbold.copyWith(
-                  fontSize: FontSize.title3(context),
-                  color: SippoColor.primarycolor,
-                ),
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              image,
-            ],
-          ),
-          Obx(
-            () => dashboardController.user.name != null
-                ? Text(
-                    "${dashboardController.user.name}.",
-                    style: dmsbold.copyWith(
-                      fontSize: FontSize.title3(context),
-                      color: SippoColor.primarycolor,
+      child: Padding(
+        padding:  EdgeInsets.symmetric(horizontal: context.fromWidth(CustomStyle.s),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+
+                Row(children: [
+                  image,
+                  SizedBox(width: context.width * 0.05,),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        getTimeOfDay(),
+                        style: dmsregular.copyWith(
+                          fontSize: FontSize.button3(context),
+                          color: SippoColor.white,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      Obx(
+                            () => dashboardController.user.name != null
+                            ? Text(
+                          "${dashboardController.user.name}.",
+                          style: dmsbold.copyWith(
+                              fontSize: FontSize.title2(context),
+                              color: SippoColor.white,
+                              overflow: TextOverflow.ellipsis
+                          ),
+                        )
+                            : const SizedBox.shrink(),
+                      ),
+                    ],
+                  ),
+                ],),
+                InkWell(
+                  onTap: () => Get.toNamed(SippoRoutes.sippoUserProfile),
+                  child: Obx(() => NetworkBorderedCircularImage(
+                    imageUrl: _controller.user.profileImage?.url ?? '',
+                    errorWidget: (___, __, _) =>Stack(
+                      children: [
+                        CircleAvatar(
+                          backgroundColor: Colors.white,
+                          child: Image.asset(
+                            JobstopPngImg.sign_up_image,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      ],
                     ),
-                  )
-                : const SizedBox.shrink(),
-          ),
-        ],
+                    placeholder: (_, __) => Stack(
+                      children: [
+                        CircleAvatar(
+                          backgroundColor: Colors.white,
+                          child: Image.asset(
+                            JobstopPngImg.sign_up_image,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        Positioned.fill(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              border: Border.all(color: SippoColor.primarycolor, width: 1.5), // Customize as needed
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    size: context.fromHeight(24),
+                    outerBorderColor: SippoColor.backgroudHome,
+                  )),
+                ),
+
+
+
+
+
+
+
+              ],
+            ),
+
+
+          ],
+        ),
       ),
     );
   }
@@ -245,6 +309,7 @@ class _SippoUserHomeState extends State<SippoUserHome> {
     double width = size.width;
     return AppBar(
       leadingWidth: width,
+      backgroundColor: SippoColor.primarycolor,
       leading: Padding(
         padding: EdgeInsets.symmetric(horizontal: width/40, vertical: 5),
         child: Row(
@@ -268,57 +333,11 @@ class _SippoUserHomeState extends State<SippoUserHome> {
                 },
                 icon: Icon(
                   Icons.search,
-                  color: SippoColor.primarycolor,
+                  color: SippoColor.white,
                   size: height / 30,
                 ),
               ),
-              SizedBox(width: width / 52),
-              InkWell(
-                onTap: () => Get.toNamed(SippoRoutes.sippoUserProfile),
-                child: Obx(() => NetworkBorderedCircularImage(
-                      imageUrl: _controller.user.profileImage?.url ?? '',
-                      errorWidget: (___, __, _) =>Stack(
-    children: [
-    CircleAvatar(
-    backgroundColor: Colors.white,
-    child: Image.asset(
-    JobstopPngImg.sign_up_image,
-    fit: BoxFit.cover,
-    ),
-    ),
-    Positioned.fill(
-    child: Container(
-    decoration: BoxDecoration(
-    shape: BoxShape.circle,
-    border: Border.all(color: SippoColor.primarycolor, width: 1.5), // Customize as needed
-    ),
-    ),
-    ),
-    ],
-    ),
-                      placeholder: (_, __) => Stack(
-                        children: [
-                          CircleAvatar(
-                            backgroundColor: Colors.white,
-                            child: Image.asset(
-                              JobstopPngImg.sign_up_image,
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                          Positioned.fill(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(color: SippoColor.primarycolor, width: 1.5), // Customize as needed
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      size: context.fromHeight(24),
-                      outerBorderColor: SippoColor.backgroudHome,
-                    )),
-              ),
+
             ],
           ),
         )

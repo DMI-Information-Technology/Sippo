@@ -185,3 +185,4 @@ class _JobHomeViewWidgetState extends State<JobHomeViewWidget> {
     );
   }
 }
+
