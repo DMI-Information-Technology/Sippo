@@ -568,6 +568,7 @@ class PhoneResetPasswordCard extends StatelessWidget {
   }
 }
 
+
 class CustomChip extends StatelessWidget {
   const CustomChip({
     super.key,
@@ -575,10 +576,11 @@ class CustomChip extends StatelessWidget {
     this.width,
     this.borderRadius = 0,
     this.onTap,
-    this.backgroundColor = SippoColor.greyyy,
+    this.backgroundColor = SippoColor.secondary,
     this.paddingValue,
     this.margin,
     required this.child,
+    this.icon, // Added icon property
   });
 
   final EdgeInsets? margin;
@@ -589,29 +591,33 @@ class CustomChip extends StatelessWidget {
   final Widget child;
   final Color? backgroundColor;
   final double? paddingValue;
+  final IconData? icon; // Icon to display
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: onTap,
-      child: Container(
-        margin: margin,
-        height: height,
-        width: width,
-        padding:
-            paddingValue != null ? EdgeInsets.all(paddingValue ?? 0.0) : null,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          border: Border.all(color: SippoColor.primarycolor),
-          borderRadius: BorderRadius.circular(borderRadius),
-          color: backgroundColor,
-        ),
-        child: child,
+      child: Column( // Use Column for vertical layout
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (icon != null) // Conditionally show icon
+            Container(
+              padding:  EdgeInsets.all(8.0), // Adjust padding as needed
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white, // Customize circle color
+              ),
+              child: Icon(
+                icon,
+                color: backgroundColor, // Customize icon color
+              ),
+            ),
+          child, // Your existing text/content widget
+        ],
       ),
     );
   }
 }
-
 class InputBorderedField extends StatelessWidget {
   const InputBorderedField(
       {super.key,
@@ -641,7 +647,7 @@ class InputBorderedField extends StatelessWidget {
       this.focusNode,
       this.fontColor,
       this.prefixIconColor,
-      this.showCounter = false
+      this.showCounter = false, this.icon
 
       // this.isLoading = false,
       });
@@ -651,6 +657,7 @@ class InputBorderedField extends StatelessWidget {
   final String? Function(String? value)? validator;
   final GetXTextEditingController? gController;
   final String? initialValue;
+  final IconData? icon;
   final String? hintText;
   final TextStyle? hintStyle;
   final double? height;

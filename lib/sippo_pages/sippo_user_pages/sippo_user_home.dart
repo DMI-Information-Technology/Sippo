@@ -13,7 +13,6 @@ import 'package:sippo/sippo_controller/home_controllers/job_home_view_controller
 import 'package:sippo/sippo_controller/home_controllers/user_home_controllers.dart';
 import 'package:sippo/sippo_custom_widget/body_widget.dart';
 import 'package:sippo/sippo_custom_widget/find_yor_jop_dashboard_cards.dart';
-import 'package:sippo/sippo_custom_widget/network_bordered_circular_image_widget.dart';
 import 'package:sippo/sippo_custom_widget/widgets.dart';
 import 'package:sippo/sippo_pages/ads_view/ads_view_widget.dart';
 import 'package:sippo/sippo_pages/home_component_widget/job_home_view_widget.dart';
@@ -42,6 +41,7 @@ class _SippoUserHomeState extends State<SippoUserHome> {
   Widget build(BuildContext context) {
     print('_SippoUserHomeState.build');
     return Scaffold(
+
       appBar: _buildHomeAppBar(),
       body: RefreshIndicator(
         onRefresh: () async {
@@ -58,50 +58,65 @@ class _SippoUserHomeState extends State<SippoUserHome> {
             children: [
               _buildWelcomeUser(context),
               SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-              _buildShowAdsBoard(),
-              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: context.fromWidth(CustomStyle.s),
+              Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(topLeft: Radius.circular(30),topRight: Radius.circular(30))
                 ),
-                child: Text(
-                  "Category".tr,
-                  style: dmsbold.copyWith(fontSize: FontSize.title5(context)),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 15,),
+                    _buildShowAdsBoard(),
+                    SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+                    // Padding(
+                    //   padding: EdgeInsets.symmetric(
+                    //     horizontal: context.fromWidth(CustomStyle.s),
+                    //   ),
+                    //   child: Text(
+                    //     "Category".tr,
+                    //     style: dmsbold.copyWith(fontSize: FontSize.title5(context)),
+                    //   ),
+                    // ),
+                    // SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+                    // _buildSpecialListView(context),
+                    // SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: context.fromWidth(CustomStyle.s),
+                      ),
+                      child: Text(
+                        "Find_Your_Job".tr,
+                        style: dmsbold.copyWith(fontSize: FontSize.title5(context)),
+                      ),
+                    ),
+                    SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+                    _buildShowJobStatisticBoard(),
+                    SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: context.fromWidth(CustomStyle.s),
+                      ),
+                      child: Text(
+                        "Recent_Job_List".tr,
+                        style: dmsbold.copyWith(fontSize: FontSize.title5(context)),
+                      ),
+                    ),
+                    SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+                    // _buildShowHomeJobPagination(context),
+                    _buildShowHomeJobsList(),
+                    SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+                  ],
                 ),
-              ),
-              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-              _buildSpecialListView(context),
-              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: context.fromWidth(CustomStyle.s),
-                ),
-                child: Text(
-                  "Find_Your_Job".tr,
-                  style: dmsbold.copyWith(fontSize: FontSize.title5(context)),
-                ),
-              ),
-              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-              _buildShowJobStatisticBoard(),
-              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: context.fromWidth(CustomStyle.s),
-                ),
-                child: Text(
-                  "Recent_Job_List".tr,
-                  style: dmsbold.copyWith(fontSize: FontSize.title5(context)),
-                ),
-              ),
-              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-              // _buildShowHomeJobPagination(context),
-              _buildShowHomeJobsList(),
-              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+              )
+
+
             ],
           ),
         ),
       ),
-      backgroundColor: SippoColor.backgroudHome,
+      backgroundColor: SippoColor.primarycolor,
     );
   }
 
@@ -112,119 +127,51 @@ class _SippoUserHomeState extends State<SippoUserHome> {
   Widget _buildShowJobStatisticBoard() => jobStatisticBoard;
 
   Widget _buildWelcomeUser(BuildContext context) {
-    final dashboardController = UserDashBoardController.instance;
-    Image image;
-    if (getTimeOfDay() == 'Good Morning') {
-      image = Image.asset(
-        JobstopPngImg.morning,
-        height: 40,
-      );
-    } else if (getTimeOfDay() == 'Good Afternoon') {
-      image = Image.asset(
-        JobstopPngImg.afternoon,
-        height: 40,
-      );
-    } else {
-      image = Image.asset(
-        JobstopPngImg.night,
-        height: 40,
-      );
-    }
     return Container(
       width: double.infinity,
-      height: context.height * 0.09,
+      height: context.height * 0.26,
       decoration: BoxDecoration(
-        color: SippoColor.primarycolor,
-          borderRadius: BorderRadius.only(bottomLeft: Radius.circular(60),bottomRight: Radius.circular(60))
+        color: SippoColor.transparent,
       ),
       child: Padding(
-        padding:  EdgeInsets.symmetric(horizontal: context.fromWidth(CustomStyle.s),
+        padding:  EdgeInsets.symmetric(horizontal: context.fromWidth(CustomStyle.s), vertical: context.fromHeight(CustomStyle.s)
         ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-
-                Row(children: [
-                  image,
-                  SizedBox(width: context.width * 0.05,),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        getTimeOfDay(),
-                        style: dmsregular.copyWith(
-                          fontSize: FontSize.button3(context),
-                          color: SippoColor.white,
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                      Obx(
-                            () => dashboardController.user.name != null
-                            ? Text(
-                          "${dashboardController.user.name}.",
-                          style: dmsbold.copyWith(
-                              fontSize: FontSize.title2(context),
-                              color: SippoColor.white,
-                              overflow: TextOverflow.ellipsis
-                          ),
-                        )
-                            : const SizedBox.shrink(),
-                      ),
-                    ],
-                  ),
-                ],),
-                InkWell(
-                  onTap: () => Get.toNamed(SippoRoutes.sippoUserProfile),
-                  child: Obx(() => NetworkBorderedCircularImage(
-                    imageUrl: _controller.user.profileImage?.url ?? '',
-                    errorWidget: (___, __, _) =>Stack(
-                      children: [
-                        CircleAvatar(
-                          backgroundColor: Colors.white,
-                          child: Image.asset(
-                            JobstopPngImg.sign_up_image,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ],
-                    ),
-                    placeholder: (_, __) => Stack(
-                      children: [
-                        CircleAvatar(
-                          backgroundColor: Colors.white,
-                          child: Image.asset(
-                            JobstopPngImg.sign_up_image,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        Positioned.fill(
-                          child: Container(
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: Border.all(color: SippoColor.primarycolor, width: 1.5), // Customize as needed
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    size: context.fromHeight(24),
-                    outerBorderColor: SippoColor.backgroudHome,
-                  )),
-                ),
-
-
-
-
-
-
-
-              ],
+            GestureDetector(
+            onTap: () {
+              Get.toNamed(SippoRoutes.sippoGeneralSearchPage);
+      },child: Container(
+        decoration: BoxDecoration(
+          color: Colors.grey[200], // Customize background color
+          borderRadius: BorderRadius.circular(8),
+        ),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const Icon(Icons.search, color: Colors.grey),
+            const SizedBox(width: 8),
+            Text(
+              'Search...',
+              style: TextStyle(
+                color: Colors.grey[600], // Customize text color
+              ),
             ),
+          ],
+        ),),
+      ),
+            SizedBox(height: 15,),
+            Text(
+              "Category".tr,
+              style: dmsbold.copyWith(fontSize: FontSize.title5(context), color: Colors.white),
+            ),
+            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+            Expanded(child: _buildSpecialListView(context)),
+
 
 
           ],
@@ -250,6 +197,7 @@ class _SippoUserHomeState extends State<SippoUserHome> {
             return Obx(() {
               final special = specializations[index];
               return CustomChip(
+                icon: Icons.star,
                 onTap: () {
                   _controller.userHomeState.selectedSpecialization = special;
                   if (Get.isRegistered<JobsHomeViewController>())
@@ -262,15 +210,16 @@ class _SippoUserHomeState extends State<SippoUserHome> {
                   style: dmsregular.copyWith(
                     color: _controller.userHomeState.selectedSpecialization ==
                             special
-                        ? Colors.white
-                        : SippoColor.black.withAlpha(200),
-                    fontSize: FontSize.label(context) + 3,
-                  ),
+                        ? SippoColor.white
+                        : SippoColor.white.withAlpha(200),
+              fontSize: FontSize.label(context) + 3 +
+              (_controller.userHomeState.selectedSpecialization == special? 1 : 0), // Increase font size if selected                  ),
+                )
                 ),
                 backgroundColor:
                     _controller.userHomeState.selectedSpecialization == special
-                        ? SippoColor.primarycolor
-                        : SippoColor.transparent,
+                        ? SippoColor.secondary
+                        : SippoColor.black.withAlpha(700),
                 borderRadius: width / 32,
                 paddingValue: context.fromHeight(CustomStyle.xxxl),
               );
@@ -303,43 +252,85 @@ class _SippoUserHomeState extends State<SippoUserHome> {
   }
 
   AppBar _buildHomeAppBar() {
+    final dashboardController = UserDashBoardController.instance;
+    Image image;
+    if (getTimeOfDay() == 'Good Morning') {
+      image = Image.asset(
+        JobstopPngImg.morning,
+        height: kToolbarHeight * 0.80,
+      );
+    } else if (getTimeOfDay() == 'Good Afternoon') {
+      image = Image.asset(
+        JobstopPngImg.afternoon,
+        height: kToolbarHeight * 0.80,
+      );
+    } else {
+      image = Image.asset(
+        JobstopPngImg.night,
+        height: kToolbarHeight * 0.80,
+      );
+    }
     Size size = Get.mediaQuery.size;
     //Size size = MediaQuery.sizeOf(context);
-    double height = size.height;
     double width = size.width;
     return AppBar(
       leadingWidth: width,
-      backgroundColor: SippoColor.primarycolor,
-      leading: Padding(
-        padding: EdgeInsets.symmetric(horizontal: width/40, vertical: 5),
-        child: Row(
+      backgroundColor: SippoColor.transparent,
+      leading: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+
+        Row(children: [
+         SizedBox(width: 5,),
+        image,
+        SizedBox(width: context.width * 0.05,),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-           // Image.asset(JobstopPngImg.sippoLogo),
-           //  SizedBox(
-           //    width: 10,
-           //  ),
-            Image.asset(JobstopPngImg.sponserLogo),
+            Text(
+              getTimeOfDay(),
+              style: dmsregular.copyWith(
+                fontSize: FontSize.label(context),
+                color: SippoColor.white,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            Obx(
+                  () => dashboardController.user.name != null
+                  ? Text(
+                "${dashboardController.user.name}.",
+                style: dmsbold.copyWith(
+                    fontSize: FontSize.title4(context),
+                    color: SippoColor.white,
+                    overflow: TextOverflow.ellipsis
+                ),
+              )
+                  : const SizedBox.shrink(),
+            ),
           ],
         ),
-      ),
+        ],),
+
+      // leading: Padding(
+      //   padding: EdgeInsets.symmetric(horizontal: width/40, vertical: 5),
+      //   child: Row(
+      //     children: [
+      //      // Image.asset(JobstopPngImg.sippoLogo),
+      //      //  SizedBox(
+      //      //    width: 10,
+      //      //  ),
+      //       Image.asset(JobstopPngImg.sponserLogo),
+      //     ],
+      //   ),
+      // ),
+      ]
+    ),
       actions: [
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: width / 28),
-          child: Row(
-            children: [
-              IconButton(
-                onPressed: () {
-                  Get.toNamed(SippoRoutes.sippoGeneralSearchPage);
-                },
-                icon: Icon(
-                  Icons.search,
-                  color: SippoColor.white,
-                  size: height / 30,
-                ),
-              ),
-
-            ],
-          ),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Icon(Icons.notifications_active_outlined, color: Colors.white,),
         )
       ],
     );

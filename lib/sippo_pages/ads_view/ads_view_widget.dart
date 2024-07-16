@@ -10,8 +10,8 @@ import 'package:sippo/JobGlobalclass/text_font_size.dart';
 import 'package:sippo/sippo_controller/ads_controller/ads_controller.dart';
 import 'package:sippo/sippo_data/model/ads_model/ad_model.dart';
 import 'package:lottie/lottie.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 class AdsViewWidget extends StatefulWidget {
   const AdsViewWidget({super.key});
 
@@ -19,8 +19,13 @@ class AdsViewWidget extends StatefulWidget {
   State<AdsViewWidget> createState() => _AdsViewWidgetState();
 }
 
+
+
+// ... your other imports (JobstopPngImg, CustomStyle, dmsbold, FontSize, etc.)
+
 class _AdsViewWidgetState extends State<AdsViewWidget> {
   final _controller = Get.put(AdsViewController());
+  final _pageController = PageController(); // Use PageController
 
   @override
   Widget build(BuildContext context) {
@@ -33,8 +38,7 @@ class _AdsViewWidgetState extends State<AdsViewWidget> {
           ),
           child: Center(
             child: Lottie.asset(
-              JobstopPngImg.loadingProgress,
-              height: context.height / 6,
+              JobstopPngImg.loadingProgress,height: context.height / 6,
             ),
           ),
         );
@@ -54,24 +58,39 @@ class _AdsViewWidgetState extends State<AdsViewWidget> {
         );
       if (_controller.states.isSuccess) {
         if (adItems.isNotEmpty) {
-          return CarouselSlider(
-            options: CarouselOptions(
-              viewportFraction: 0.95,
-              clipBehavior: Clip.antiAlias,
-              autoPlay: true,
-              aspectRatio: 2.0,
-
-              enlargeCenterPage: true,
-              height: context.height / 4.5,
-            ),
-            items: adItems.map(
-              (e) {
-                return AdsWidgetItem(
-                  item: e,
-                  onAdTapped: onAdItemTapped,
-                );
-              },
-            ).toList(),
+          return Column(
+            children: [
+              CarouselSlider(
+                options: CarouselOptions(
+                  viewportFraction: 0.95,
+                  clipBehavior: Clip.antiAlias,
+                  autoPlay: true,
+                  aspectRatio: 2.0,
+                  enlargeCenterPage: true,
+                  height: context.height / 4.5,
+                  onPageChanged: (index, reason) {
+                    _pageController.animateToPage(
+                      index,
+                      duration:const Duration(milliseconds: 300),
+                      curve: Curves.easeInOut,
+                    );
+                  },
+                ),
+                items: adItems.map(
+                      (e) {
+                    return AdsWidgetItem(
+                      item: e,
+                      onAdTapped: onAdItemTapped,
+                    );
+                  },
+                ).toList(),
+              ),
+              SmoothPageIndicator(
+                controller: _pageController,
+                count: adItems.length,
+                effect: WormEffect(), // Choose your desired effect
+              ),
+            ],
           );
         } else {
           return Padding(
@@ -105,6 +124,11 @@ class _AdsViewWidgetState extends State<AdsViewWidget> {
     });
   }
 
+  // Make sure you have the onAdItemTapped function defined if it's being used
+  void onAdItemTapped(item) {
+    // Handle ad item tap
+  }
+}
   void onAdItemTapped(AdModel e) async {
     final url = e.url;
     if (url == null || !url.isURL) {
@@ -121,7 +145,7 @@ class _AdsViewWidgetState extends State<AdsViewWidget> {
       print(s);
     }
   }
-}
+
 
 class AdsWidgetItem extends StatelessWidget {
   const AdsWidgetItem({
