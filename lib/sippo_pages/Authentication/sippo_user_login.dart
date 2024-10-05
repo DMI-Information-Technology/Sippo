@@ -24,11 +24,11 @@ class SippoUserLogin extends StatefulWidget {
 }
 
 class _SippoUserLoginState extends State<SippoUserLogin> {
-  Color getColor(Set<MaterialState> states) {
-    const Set<MaterialState> interactiveStates = <MaterialState>{
-      MaterialState.pressed,
-      MaterialState.hovered,
-      MaterialState.focused,
+  Color getColor(Set<WidgetState> states) {
+    const Set<WidgetState> interactiveStates = <WidgetState>{
+      WidgetState.pressed,
+      WidgetState.hovered,
+      WidgetState.focused,
     };
     if (states.any(interactiveStates.contains)) {
       return SippoColor.grey;
@@ -162,7 +162,7 @@ class _SippoUserLoginState extends State<SippoUserLogin> {
                                   color: SippoColor.grey,
                                   width: 1.5,
                                 ),
-                                fillColor: MaterialStateProperty.resolveWith(
+                                fillColor: WidgetStateProperty.resolveWith(
                                   getColor,
                                 ),
                                 value: _controller.isRememberMeChecked,

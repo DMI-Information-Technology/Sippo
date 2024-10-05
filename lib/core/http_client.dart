@@ -80,7 +80,7 @@ class MyHttpClient {
       request.headers.addAll(_buildHeaders(isMultipart: true));
       if (fields != null) {
         final data = <String, String>{};
-        fields.forEach((k, v) => {if (v != null) data[k] = v});
+        fields.forEach((k, v) {if (v != null) data[k] = v;});
         request.fields.addAll(data);
         print("HttpClient.postMultipartRequest: fields: $data");
       }
@@ -120,7 +120,7 @@ class MyHttpClient {
       request.headers.addAll(_buildHeaders(isMultipart: true));
       if (fields != null) {
         final data = <String, String>{};
-        fields.forEach((k, v) => {if (v != null) data[k] = v});
+        fields.forEach((k, v) {if (v != null) data[k] = v;});
         request.fields.addAll(data);
         print("HttpClient.postMultipartRequest: fields: $data");
       }
@@ -161,7 +161,7 @@ class MyHttpClient {
       request.headers.addAll(_buildHeaders(isMultipart: true));
       if (fields != null) {
         final data = <String, String>{};
-        fields.forEach((k, v) => {if (v != null) data[k] = v});
+        fields.forEach((k, v) {if (v != null) data[k] = v;});
         request.fields.addAll(data);
         print("HttpClient.postMultipartRequest: fields: $data");
       }

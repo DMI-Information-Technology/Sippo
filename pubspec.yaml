@@ -71,6 +71,10 @@ dependencies:
   firebase_messaging: ^14.7.9
   flutter_local_notifications: ^16.1.0
   carousel_slider: ^4.2.1
+  collection: any
+  http_parser: any
+  path: any
+  path_provider: any
 dev_dependencies:
   flutter_test:
     sdk: flutter

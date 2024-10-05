@@ -60,7 +60,6 @@ class _ShowCommunityCompanyPostsListState
               imageUrl: item.image?.url,
               isCompany: false,
               onActionButtonPresses: () {
-                print('heloo');
                 Get.bottomSheet(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.vertical(

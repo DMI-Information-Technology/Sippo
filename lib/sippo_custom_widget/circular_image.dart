@@ -57,7 +57,7 @@ class CircularImage extends StatelessWidget {
     // return Center(child: _buildImage());
     return Container(
       decoration: BoxDecoration(
-        shape: BoxShape.circle,
+        shape: BoxShape.rectangle,
         color: backgroundColor,
         image: DecorationImage(
           alignment: AlignmentDirectional.center,

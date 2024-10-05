@@ -276,57 +276,60 @@ class _SippoUserHomeState extends State<SippoUserHome> {
     return AppBar(
       leadingWidth: width,
       backgroundColor: SippoColor.transparent,
-      leading: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-
-        Row(children: [
-         SizedBox(width: 5,),
-        image,
-        SizedBox(width: context.width * 0.05,),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.center,
+      leading: Padding(
+        padding:  EdgeInsets.symmetric(horizontal: width * 0.040 ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              getTimeOfDay(),
-              style: dmsregular.copyWith(
-                fontSize: FontSize.label(context),
-                color: SippoColor.white,
-                overflow: TextOverflow.ellipsis,
-              ),
-            ),
-            Obx(
-                  () => dashboardController.user.name != null
-                  ? Text(
-                "${dashboardController.user.name}.",
-                style: dmsbold.copyWith(
-                    fontSize: FontSize.title4(context),
-                    color: SippoColor.white,
-                    overflow: TextOverflow.ellipsis
-                ),
-              )
-                  : const SizedBox.shrink(),
-            ),
-          ],
-        ),
-        ],),
 
-      // leading: Padding(
-      //   padding: EdgeInsets.symmetric(horizontal: width/40, vertical: 5),
-      //   child: Row(
-      //     children: [
-      //      // Image.asset(JobstopPngImg.sippoLogo),
-      //      //  SizedBox(
-      //      //    width: 10,
-      //      //  ),
-      //       Image.asset(JobstopPngImg.sponserLogo),
-      //     ],
-      //   ),
-      // ),
-      ]
-    ),
+          Row(children: [
+           SizedBox(width: 5,),
+          image,
+          SizedBox(width: context.width * 0.05,),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text(
+                getTimeOfDay(),
+                style: dmsregular.copyWith(
+                  fontSize: FontSize.label(context),
+                  color: SippoColor.white,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              Obx(
+                    () => dashboardController.user.name != null
+                    ? Text(
+                  "${dashboardController.user.name}.",
+                  style: dmsbold.copyWith(
+                      fontSize: FontSize.title4(context),
+                      color: SippoColor.white,
+                      overflow: TextOverflow.ellipsis
+                  ),
+                )
+                    : const SizedBox.shrink(),
+              ),
+            ],
+          ),
+          ],),
+
+        // leading: Padding(
+        //   padding: EdgeInsets.symmetric(horizontal: width/40, vertical: 5),
+        //   child: Row(
+        //     children: [
+        //      // Image.asset(JobstopPngImg.sippoLogo),
+        //      //  SizedBox(
+        //      //    width: 10,
+        //      //  ),
+        //       Image.asset(JobstopPngImg.sponserLogo),
+        //     ],
+        //   ),
+        // ),
+        ]
+            ),
+      ),
       actions: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),

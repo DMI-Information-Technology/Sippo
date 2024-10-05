@@ -351,9 +351,7 @@ class TermsConditionsWidget extends StatelessWidget {
 
 class _TextItemList extends StatelessWidget {
   const _TextItemList(
-    this.text, {
-    super.key,
-  });
+    this.text);
 
   final String text;
 

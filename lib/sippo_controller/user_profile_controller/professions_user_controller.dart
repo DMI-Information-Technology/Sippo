@@ -78,7 +78,7 @@ class ProfessionsUserController extends GetxController {
 
   List<int> get professionsId {
     final result = <int>[];
-    selectedProfessions.forEach((e) => {if (e.id case int id) result.add(id)});
+    selectedProfessions.forEach((e) {if (e.id case int id) result.add(id);});
     return result;
   }
 
