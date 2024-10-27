@@ -53,7 +53,7 @@ class AppTranslation extends Translations {
           'Informations': "Informations",
           'Position': "Position",
           'Qualification': "Qualification",
-          'hint_text_enter_email"': "enter your email",
+          'hint_text_enter_email': "enter your email",
           'invalid_full_name"': "invalid full name",
           'Experience': "Experience",
           'Job_Type': "Job Type",

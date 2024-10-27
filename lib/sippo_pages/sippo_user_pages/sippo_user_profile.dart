@@ -406,7 +406,7 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
         title: 'profession_title'.tr,
         hasNotInfoProfile: _controller.user.professions?.isEmpty == true,
         leading: Image.asset(
-          JobstopPngImg.find_jobLog,
+          JobstopPngImg.skills,
           height: context.fromHeight(CustomStyle.l),
           color: SippoColor.primarycolor,
           colorBlendMode: BlendMode.srcIn,

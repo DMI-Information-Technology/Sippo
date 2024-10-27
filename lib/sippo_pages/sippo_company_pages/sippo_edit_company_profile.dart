@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:sippo/JobGlobalclass/jobstopcolor.dart';
 import 'package:sippo/JobGlobalclass/jobstopfontstyle.dart';
+import 'package:sippo/JobGlobalclass/jobstopimges.dart';
 import 'package:sippo/JobGlobalclass/media_query_sizes.dart';
 import 'package:sippo/JobGlobalclass/sippo_customstyle.dart';
 import 'package:sippo/JobGlobalclass/text_font_size.dart';
@@ -285,12 +286,15 @@ class _EditCompanyProfilePageState extends State<EditCompanyProfilePage> {
     return Stack(
       alignment: AlignmentDirectional.bottomEnd,
       children: [
-        Obx(() => NetworkBorderedCircularImage(
-              imageUrl: _controller.companyDetails.profileImage?.url ?? '',
-              outerBorderColor: Colors.grey[400],
-              size: context.height / 6,
-              errorWidget: (_, __, ___) => const CircleAvatar(),
-            )),
+        Obx(() {
+      print('Image URL: ${_controller.companyDetails.profileImage?.url}');
+      return NetworkBorderedCircularImage(
+        imageUrl: _controller.companyDetails.profileImage?.url ?? '',
+        outerBorderColor: Colors.grey[400],
+        size: context.height / 6,
+        errorWidget: errorWidgetBuilder,
+      );
+    }),
         ElevatedButton(
             style: ElevatedButton.styleFrom(
               shape: CircleBorder(),
@@ -322,7 +326,12 @@ class _EditCompanyProfilePageState extends State<EditCompanyProfilePage> {
       ],
     );
   }
-
+  Widget errorWidgetBuilder(_, __, ___) {
+    return CircleAvatar(
+      backgroundColor: Colors.grey,
+      child: Image.asset(JobstopPngImg.sippoLogo),
+    );
+  }
   Container _buildInputPhoneNumberField(
     BuildContext context,
     GetXTextEditingController gTxtController,

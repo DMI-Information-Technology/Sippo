@@ -319,12 +319,21 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
     return Stack(
       alignment: AlignmentDirectional.bottomEnd,
       children: [
-        Obx(() => NetworkBorderedCircularImage(
-              imageUrl: _controller.userDetails.profileImage?.url ?? '',
-              outerBorderColor: Colors.grey[400],
-              size: context.height / 6,
-              errorWidget: (_, __, ___) => const CircleAvatar(),
-            )),
+        // Obx(() => NetworkBorderedCircularImage(
+        //       imageUrl: _controller.userDetails.profileImage?.url ?? '',
+        //       outerBorderColor: Colors.grey[400],
+        //       size: context.height / 6,
+        //       errorWidget: (_, __, ___) => const CircleAvatar(),
+        //     )),
+        Obx(() {
+          print('Image URL: ${_controller.userDetails.profileImage?.url}');
+          return NetworkBorderedCircularImage(
+            imageUrl: _controller.userDetails.profileImage?.url ?? '',
+            outerBorderColor: Colors.grey[400],
+            size: context.height / 6,
+            errorWidget: errorWidgetBuilder,
+          );
+        }),
         ElevatedButton(
             style: ElevatedButton.styleFrom(
               shape: CircleBorder(),
@@ -356,7 +365,12 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
       ],
     );
   }
-
+  Widget errorWidgetBuilder(_, __, ___) {
+    return CircleAvatar(
+      backgroundColor: Colors.grey,
+      child: Image.asset(JobstopPngImg.sippoLogo),
+    );
+  }
   Container _buildInputPhoneNumberField(
     BuildContext context,
     GetXTextEditingController gTxtController,
@@ -456,7 +470,7 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
                 child: SizedBox(
                   width: context.width,
                   child: Text(
-                    'profession_title'.tr,
+                    'Nationality'.tr,
                     style: dmsbold.copyWith(
                         fontSize: FontSize.title5(context),
                         color: SippoColor.primarycolor),

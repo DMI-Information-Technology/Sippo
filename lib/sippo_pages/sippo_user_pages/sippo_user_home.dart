@@ -17,6 +17,8 @@ import 'package:sippo/sippo_custom_widget/widgets.dart';
 import 'package:sippo/sippo_pages/ads_view/ads_view_widget.dart';
 import 'package:sippo/sippo_pages/home_component_widget/job_home_view_widget.dart';
 
+import '../../JobServices/ConnectivityController/internet_connection_controller.dart';
+
 class SippoUserHome extends StatefulWidget {
   const SippoUserHome({Key? key}) : super(key: key);
 
@@ -274,6 +276,7 @@ class _SippoUserHomeState extends State<SippoUserHome> {
     //Size size = MediaQuery.sizeOf(context);
     double width = size.width;
     return AppBar(
+
       leadingWidth: width,
       backgroundColor: SippoColor.transparent,
       leading: Padding(
@@ -330,10 +333,38 @@ class _SippoUserHomeState extends State<SippoUserHome> {
         ]
             ),
       ),
+
       actions: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Icon(Icons.notifications_active_outlined, color: Colors.white,),
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+          // child: Icon(Icons.notifications_active_outlined, color: Colors.white,),
+          child: InkWell(
+            onTap: () {
+              if (InternetConnectionService.instance.isNotConnected) return;
+              Get.toNamed(SippoRoutes.sippoUserProfile);
+            },
+            child: Obx(() {
+              final imageUrl = dashboardController.user.profileImage?.url;
+
+              return ClipOval(
+                child: imageUrl != null
+                    ? Image.network(
+                  imageUrl,
+                  fit: BoxFit.cover,
+                  width: context.width * 0.1, // Adjust the size as needed
+                  height: context.width * 0.1,
+                  errorBuilder: (context, error, stackTrace) => CircleAvatar(
+                    backgroundColor: Colors.white,
+                    child: Image.asset(JobstopPngImg.comp),
+                  ),
+                )
+                    : CircleAvatar(
+                  backgroundColor: Colors.white,
+                  child: Image.asset(JobstopPngImg.comp),
+                ),
+              );
+            }),
+          )
         )
       ],
     );

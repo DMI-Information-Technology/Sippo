@@ -30,6 +30,7 @@ class JobstopPngImg {
       "Assets/jobstop_assets/jobpngimg/find_emp.png";
   static const String find_jobLog =
       "Assets/jobstop_assets/jobpngimg/find_job.png";
+  static const String skills = "Assets/jobstop_assets/jobpngimg/skills.png";
   static const String phonenymberempty =
       "Assets/jobstop_assets/jobpngimg/phonenymberempty.png";
   static const String successful =
@@ -96,7 +97,7 @@ class JobstopPngImg {
   static const String finance = "Assets/jobstop_assets/jobpngimg/finance.png";
   static const String comp = "Assets/jobstop_assets/jobpngimg/comp.png";
   static const String education =
-      "Assets/jobstop_assets/jobpngimg/education.png";
+      "Assets/jobstop_assets/jobpngimg/eduction.png";
   static const String restaurant =
       "Assets/jobstop_assets/jobpngimg/restaurant.png";
   static const String health = "Assets/jobstop_assets/jobpngimg/health.png";
