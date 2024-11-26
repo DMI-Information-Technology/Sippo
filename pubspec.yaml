@@ -75,6 +75,7 @@ dependencies:
   http_parser: any
   path: any
   path_provider: any
+  image_cropper: ^8.0.2
 dev_dependencies:
   flutter_test:
     sdk: flutter

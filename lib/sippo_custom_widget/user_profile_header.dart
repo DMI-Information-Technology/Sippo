@@ -103,10 +103,10 @@ class UserProfileHeaderWidget extends StatelessWidget {
             return CircleAvatar(
               backgroundColor: Colors.white,
               child: switch (GlobalStorageService.appUse) {
-                AppUsingType.user => Image.asset(JobstopPngImg.signup),
-                AppUsingType.guest => Image.asset(JobstopPngImg.signup),
+                AppUsingType.user => Image.asset(JobstopPngImg.defaultLogo),
+                AppUsingType.guest => Image.asset(JobstopPngImg.defaultLogo),
                 AppUsingType.company =>
-                  Image.asset(JobstopPngImg.companysignup),
+                  Image.asset(JobstopPngImg.defaultLogo),
               },
             );
           },
@@ -114,10 +114,10 @@ class UserProfileHeaderWidget extends StatelessWidget {
             return CircleAvatar(
               backgroundColor: Colors.white,
               child: switch (GlobalStorageService.appUse) {
-                AppUsingType.user => Image.asset(JobstopPngImg.signup),
-                AppUsingType.guest => Image.asset(JobstopPngImg.signup),
+                AppUsingType.user => Image.asset(JobstopPngImg.defaultLogo),
+                AppUsingType.guest => Image.asset(JobstopPngImg.defaultLogo),
                 AppUsingType.company =>
-                  Image.asset(JobstopPngImg.companysignup),
+                  Image.asset(JobstopPngImg.defaultLogo),
               },
             );
           },

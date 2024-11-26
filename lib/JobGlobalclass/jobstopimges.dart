@@ -15,6 +15,7 @@ class JobstopPngImg {
   static const String sponserLogo = "Assets/jobstop_assets/jobpngimg/sponser_logo.png";
   static const String notification = "Assets/jobstop_assets/jobpngimg/notification_logo.png";
   static const String done = "Assets/jobstop_assets/jobpngimg/done.png";
+  static const String defaultLogo =  "Assets/jobstop_assets/jobpngimg/defaultLogo.png";
   static const String emailV = "Assets/jobstop_assets/jobpngimg/emailV.png";
   static const String noSubs = "Assets/jobstop_assets/jobpngimg/noSubs.png";
   static const String morning = "Assets/jobstop_assets/jobpngimg/morning.png";

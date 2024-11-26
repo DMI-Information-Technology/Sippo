@@ -31,6 +31,7 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
   final jobsHomeView = const JobHomeViewWidget();
   final adsView = const AdsViewWidget();
   final jobStatisticBoard = const JobStatisticBoardViewWidget();
+
   Widget _buildWelcomeUser(BuildContext context) {
     final dashboardController = CompanyDashBoardController.instance;
     Image image;
@@ -50,99 +51,131 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
         height: 30,
       );
     }
-    return Padding(
-      padding: EdgeInsets.symmetric(
-        horizontal: context.fromWidth(CustomStyle.s),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Text(
-                getTimeOfDay(),
+    return
+
+      Padding(
+        padding: EdgeInsets.symmetric(
+          horizontal: context.fromWidth(CustomStyle.s),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Text(
+                  getTimeOfDay(),
+                  style: dmsbold.copyWith(
+                    fontSize: FontSize.title3(context),
+                    color: SippoColor.primarycolor,
+                  ),
+                ),
+                SizedBox(
+                  width: 10,
+                ),
+                image,
+              ],
+            ),
+            Obx(
+                  () =>
+              dashboardController.company.name != null
+                  ? Text(
+                "${dashboardController.company.name}.",
                 style: dmsbold.copyWith(
                   fontSize: FontSize.title3(context),
                   color: SippoColor.primarycolor,
                 ),
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              image,
-            ],
-          ),
-          Obx(
-                () => dashboardController.company.name != null
-                ? Text(
-              "${dashboardController.company.name}.",
-              style: dmsbold.copyWith(
-                fontSize: FontSize.title3(context),
-                color: SippoColor.primarycolor,
-              ),
-            )
-                : const SizedBox.shrink(),
-          ),
-        ],
-      ),
-    );
+              )
+                  : const SizedBox.shrink(),
+            ),
+          ],
+        ),
+      );
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _buildHomeAppBar(context),
+
+      appBar: _buildHomeAppBar(),
       body: RefreshIndicator(
-        onRefresh: () async => _controller.refreshPage(),
+        onRefresh: () async {
+          _controller.refreshPage();
+        },
         child: BodyWidget(
           paddingContent: EdgeInsets.only(
-              bottom: context.fromHeight(CustomStyle.paddingValue)),
+            bottom: context.fromHeight(CustomStyle.paddingValue),
+          ),
           isScrollable: true,
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _buildWelcomeUser(context),
-              SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
-              _buildShowAdsBoard(),
+              _buildWelcomeCompany(context),
               SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: context.fromWidth(CustomStyle.s),
+              Container(
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(30),
+                        topRight: Radius.circular(30))
                 ),
-                child: Text(
-                  "Category".tr,
-                  style: dmsbold.copyWith(fontSize: FontSize.title5(context)),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(height: 15,),
+                    _buildShowAdsBoard(),
+                    SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+                    // Padding(
+                    //   padding: EdgeInsets.symmetric(
+                    //     horizontal: context.fromWidth(CustomStyle.s),
+                    //   ),
+                    //   child: Text(
+                    //     "Category".tr,
+                    //     style: dmsbold.copyWith(fontSize: FontSize.title5(context)),
+                    //   ),
+                    // ),
+                    // SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+                    // _buildSpecialListView(context),
+                    // SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: context.fromWidth(CustomStyle.s),
+                      ),
+                      child: Text(
+                        "Find_Your_Job".tr,
+                        style: dmsbold.copyWith(fontSize: FontSize.title5(
+                            context)),
+                      ),
+                    ),
+                    SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+                    _buildShowJobStatisticBoard(),
+                    SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+                    Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: context.fromWidth(CustomStyle.s),
+                      ),
+                      child: Text(
+                        "Recent_Job_List".tr,
+                        style: dmsbold.copyWith(fontSize: FontSize.title5(
+                            context)),
+                      ),
+                    ),
+                    SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+                    // _buildShowHomeJobPagination(context),
+                    _buildShowHomeJobsList(),
+                    SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+                  ],
                 ),
-              ),
-              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-              _buildSpecialListView(context),
-              SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: context.fromWidth(CustomStyle.paddingValue),
-                ),
-                child: Text("Find_Your_Job".tr,
-                    style: dmsbold.copyWith(fontSize: 16)),
-              ),
-              SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
-              _buildShowJobStatisticBoard(),
-              SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: context.fromWidth(CustomStyle.paddingValue),
-                ),
-                child: Text("Recent_Job_List".tr,
-                    style: dmsbold.copyWith(fontSize: 16)),
-              ),
-              SizedBox(height: context.fromHeight(CustomStyle.spaceBetween)),
-              _buildShowHomeJobsList()
+              )
+
+
             ],
           ),
         ),
       ),
-      backgroundColor: SippoColor.backgroudHome,
+      backgroundColor: SippoColor.primarycolor,
     );
   }
 
@@ -152,58 +185,6 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
 
   Widget _buildShowJobStatisticBoard() => jobStatisticBoard;
 
-  SizedBox _buildSpecialListView(BuildContext context) {
-    Size size = MediaQuery.sizeOf(context);
-    double width = size.width;
-    return SizedBox(
-      height: context.fromHeight(CustomStyle.xs),
-      child: Obx(() {
-        final specializations = _controller.companyHomeState.specializationList;
-        return ListView.separated(
-          padding: EdgeInsets.symmetric(
-            horizontal: context.fromWidth(CustomStyle.s),
-          ),
-          scrollDirection: Axis.horizontal,
-          itemCount: specializations.length,
-          itemBuilder: (context, index) {
-            return Obx(() {
-              final special = specializations[index];
-              return CustomChip(
-                onTap: () {
-                  _controller.companyHomeState.selectedSpecialization = special;
-                  if (Get.isRegistered<JobsHomeViewController>())
-                    JobsHomeViewController.instance.refreshJobs(
-                      _controller.companyHomeState.selectedSpecialization,
-                    );
-                },
-                child: AutoSizeText(
-                  specializations[index].name ?? '',
-                  style: dmsregular.copyWith(
-                    color:
-                        _controller.companyHomeState.selectedSpecialization ==
-                                special
-                            ? Colors.white
-                            : SippoColor.black,
-                    fontSize: FontSize.label(context),
-                  ),
-                ),
-                backgroundColor:
-                    _controller.companyHomeState.selectedSpecialization ==
-                            special
-                        ? SippoColor.primarycolor
-                        : SippoColor.grey2,
-                borderRadius: width / 32,
-                paddingValue: context.fromHeight(CustomStyle.xxxl),
-              );
-            });
-          },
-          separatorBuilder: (context, index) => SizedBox(
-            width: context.fromWidth(CustomStyle.s),
-          ),
-        );
-      }),
-    );
-  }
   String getTimeOfDay() {
     final time = DateTime.now();
     // Get the hour of the day.
@@ -222,71 +203,181 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
     return timeOfDay;
   }
 
-  AppBar _buildHomeAppBar(BuildContext context) {
+  AppBar _buildHomeAppBar() {
     final dashboardController = CompanyDashBoardController.instance;
-    Size size = Get.size;
-    double height = size.height;
+    Image image;
+    if (getTimeOfDay() == 'Good Morning') {
+      image = Image.asset(
+        JobstopPngImg.morning,
+        height: kToolbarHeight * 0.80,
+      );
+    } else if (getTimeOfDay() == 'Good Afternoon') {
+      image = Image.asset(
+        JobstopPngImg.afternoon,
+        height: kToolbarHeight * 0.80,
+      );
+    } else {
+      image = Image.asset(
+        JobstopPngImg.night,
+        height: kToolbarHeight * 0.80,
+      );
+    }
+    Size size = Get.mediaQuery.size;
+    //Size size = MediaQuery.sizeOf(context);
     double width = size.width;
     return AppBar(
-      leadingWidth: width,
 
+      leadingWidth: width,
+      backgroundColor: SippoColor.transparent,
       leading: Padding(
-        padding:  EdgeInsets.symmetric(horizontal: width/40 , vertical: 5),
-        child: Expanded(
-          child: Row(
+        padding: EdgeInsets.symmetric(horizontal: width * 0.040),
+        child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              // Image.asset(JobstopPngImg.sippoLogo , height: height),
-              // SizedBox(width: 10,),
-              Image.asset(JobstopPngImg.sponserLogo , height:  height,),
-            ],
-          ),
+
+              Row(children: [
+                SizedBox(width: 5,),
+                image,
+                SizedBox(width: context.width * 0.05,),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      getTimeOfDay(),
+                      style: dmsregular.copyWith(
+                        fontSize: FontSize.label(context),
+                        color: SippoColor.white,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                    Obx(
+                          () =>
+                      dashboardController.company.name != null
+                          ? Text(
+                        "${dashboardController.company.name}.",
+                        style: dmsbold.copyWith(
+                            fontSize: FontSize.title4(context),
+                            color: SippoColor.white,
+                            overflow: TextOverflow.ellipsis
+                        ),
+                      )
+                          : const SizedBox.shrink(),
+                    ),
+                  ],
+                ),
+              ],),
+
+              // leading: Padding(
+              //   padding: EdgeInsets.symmetric(horizontal: width/40, vertical: 5),
+              //   child: Row(
+              //     children: [
+              //      // Image.asset(JobstopPngImg.sippoLogo),
+              //      //  SizedBox(
+              //      //    width: 10,
+              //      //  ),
+              //       Image.asset(JobstopPngImg.sponserLogo),
+              //     ],
+              //   ),
+              // ),
+            ]
         ),
       ),
+
       actions: [
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: width / 28),
-          child: Row(
-            children: [
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+          child: InkWell(
+            onTap: () {
+              if (InternetConnectionService.instance.isNotConnected) return;
+              Get.toNamed(SippoRoutes.sippocompanyprofile);
+            },
+            child: Obx(() {
+              final imageUrl = dashboardController.company.profileImage?.url;
 
-              IconButton(
-                  onPressed: () {
-                    Get.toNamed(SippoRoutes.sippoGeneralSearchPage);
-                  },
-                  icon: Icon(
-                    Icons.search_sharp,
-                    color: SippoColor.primarycolor
-                    ,
-                    size: height / 25,
-                  )),
-              SizedBox(
-                width: width / 52,
-              ),
-              InkWell(
-                onTap: () {
-                  if (InternetConnectionService.instance.isNotConnected) return;
-                  Get.toNamed(SippoRoutes.sippocompanyprofile);
-                },
-                child: Obx(() => NetworkBorderedCircularImage(
-                      imageUrl:
-                          dashboardController.company.profileImage?.url ?? '',
-                      errorWidget: (___, __, _) => CircleAvatar(
-                        backgroundColor: Colors.white,
-                        child: Image.asset(JobstopPngImg.comp),
-                      ),
-                      placeholder: (__, _) => CircleAvatar(
-                        backgroundColor: Colors.white,
-                        child: Image.asset(JobstopPngImg.comp),
-                      ),
-                      size: context.fromHeight(24),
-                      outerBorderColor: SippoColor.backgroudHome,
-                    )),
-              ),
-            ],
+              return CircleAvatar( // Use CircleAvatar directly
+                backgroundColor: Colors.white,
+                backgroundImage: imageUrl != null
+                    ? NetworkImage(imageUrl)
+                    : null,
+                radius: context.width * 0.05, // Set the radius as needed
+                child: imageUrl == null
+                    ? Image.asset(JobstopPngImg.defaultLogo)
+                    : null,
+              );
+            }),
           ),
-        )
+        ),
       ],
     );
   }
+
+  // AppBar _buildHomeAppBar(BuildContext context) {
+  //   final dashboardController = CompanyDashBoardController.instance;
+  //   Size size = Get.size;
+  //   double height = size.height;
+  //   double width = size.width;
+  //   return AppBar(
+  //     leadingWidth: width,
+  //
+  //     leading: Padding(
+  //       padding:  EdgeInsets.symmetric(horizontal: width/40 , vertical: 5),
+  //       child: Expanded(
+  //         child: Row(
+  //           children: [
+  //             // Image.asset(JobstopPngImg.sippoLogo , height: height),
+  //             // SizedBox(width: 10,),
+  //             Image.asset(JobstopPngImg.sponserLogo , height:  height,),
+  //           ],
+  //         ),
+  //       ),
+  //     ),
+  //     actions: [
+  //       Padding(
+  //         padding: EdgeInsets.symmetric(horizontal: width / 28),
+  //         child: Row(
+  //           children: [
+  //
+  //             IconButton(
+  //                 onPressed: () {
+  //                   Get.toNamed(SippoRoutes.sippoGeneralSearchPage);
+  //                 },
+  //                 icon: Icon(
+  //                   Icons.search_sharp,
+  //                   color: SippoColor.primarycolor
+  //                   ,
+  //                   size: height / 25,
+  //                 )),
+  //             SizedBox(
+  //               width: width / 52,
+  //             ),
+  //             InkWell(
+  //               onTap: () {
+  //                 if (InternetConnectionService.instance.isNotConnected) return;
+  //                 Get.toNamed(SippoRoutes.sippocompanyprofile);
+  //               },
+  //               child: Obx(() => NetworkBorderedCircularImage(
+  //                     imageUrl:
+  //                         dashboardController.company.profileImage?.url ?? '',
+  //                     errorWidget: (___, __, _) => CircleAvatar(
+  //                       backgroundColor: Colors.white,
+  //                       child: Image.asset(JobstopPngImg.comp),
+  //                     ),
+  //                     placeholder: (__, _) => CircleAvatar(
+  //                       backgroundColor: Colors.white,
+  //                       child: Image.asset(JobstopPngImg.comp),
+  //                     ),
+  //                     size: context.fromHeight(24),
+  //                     outerBorderColor: SippoColor.backgroudHome,
+  //                   )),
+  //             ),
+  //           ],
+  //         ),
+  //       )
+  //     ],
+  //   );
+  // }
   //
   // Padding _buildWelcomeCompany(BuildContext context) {
   //   final dashboardController = CompanyDashBoardController.instance;
@@ -320,4 +411,119 @@ class _SippoCompanyHomePageState extends State<SippoCompanyHomePage> {
   //     ),
   //   );
   // }
+  SizedBox _buildSpecialListView(BuildContext context) {
+    Size size = MediaQuery.sizeOf(context);
+    double width = size.width;
+    return SizedBox(
+      height: context.fromHeight(CustomStyle.xs),
+      child: Obx(() {
+        final specializations = _controller.companyHomeState.specializationList;
+        return ListView.separated(
+          padding: EdgeInsets.symmetric(
+            horizontal: context.fromWidth(CustomStyle.s),
+          ),
+          scrollDirection: Axis.horizontal,
+          itemCount: specializations.length,
+          itemBuilder: (context, index) {
+            return Obx(() {
+              final special = specializations[index];
+              return CustomChip(
+                icon: Icons.star,
+                onTap: () {
+                  _controller.companyHomeState.selectedSpecialization = special;
+                  if (Get.isRegistered<JobsHomeViewController>())
+                    JobsHomeViewController.instance.refreshJobs(
+                      _controller.companyHomeState.selectedSpecialization,
+                    );
+                },
+                child: AutoSizeText(
+                    specializations[index].name ?? '',
+                    style: dmsregular.copyWith(
+                      color: _controller.companyHomeState
+                          .selectedSpecialization ==
+                          special
+                          ? SippoColor.white
+                          : SippoColor.white.withAlpha(200),
+                      fontSize: FontSize.label(context) + 3 +
+                          (_controller.companyHomeState
+                              .selectedSpecialization == special
+                              ? 1
+                              : 0), // Increase font size if selected                  ),
+                    )
+                ),
+                backgroundColor:
+                _controller.companyHomeState.selectedSpecialization == special
+                    ? SippoColor.secondary
+                    : SippoColor.black.withAlpha(700),
+                borderRadius: width / 32,
+                paddingValue: context.fromHeight(CustomStyle.xxxl),
+              );
+            });
+          },
+          separatorBuilder: (context, index) =>
+              SizedBox(
+                width: context.fromWidth(CustomStyle.xxxl),
+              ),
+        );
+      }),
+    );
+  }
+
+
+  Widget _buildWelcomeCompany(BuildContext context) {
+    return Container(
+      width: double.infinity,
+      height: context.height * 0.30,
+      decoration: BoxDecoration(
+        color: SippoColor.transparent,
+      ),
+      child: Padding(
+        padding: EdgeInsets.symmetric(
+            horizontal: context.fromWidth(CustomStyle.s),
+            vertical: context.fromHeight(CustomStyle.s)
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            GestureDetector(
+              onTap: () {
+                Get.toNamed(SippoRoutes.sippoGeneralSearchPage);
+              }, child: Container(
+              decoration: BoxDecoration(
+                color: Colors.grey[200], // Customize background color
+                borderRadius: BorderRadius.circular(8),
+              ),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  const Icon(Icons.search, color: Colors.grey),
+                  const SizedBox(width: 8),
+                  Text(
+                    'Search...',
+                    style: TextStyle(
+                      color: Colors.grey[600], // Customize text color
+                    ),
+                  ),
+                ],
+              ),),
+            ),
+            SizedBox(height: 10,),
+            Text(
+              "Category".tr,
+              style: dmsbold.copyWith(
+                  fontSize: FontSize.title5(context), color: Colors.white),
+            ),
+            SizedBox(height: context.fromHeight(CustomStyle.xxxl)),
+            Expanded(child: _buildSpecialListView(context)),
+
+
+          ],
+        ),
+      ),
+    );
+  }
+
 }

@@ -1,28 +1,36 @@
+
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:image_cropper/image_cropper.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
-import 'package:sippo/JobGlobalclass/jobstopcolor.dart';
-import 'package:sippo/JobGlobalclass/jobstopfontstyle.dart';
-import 'package:sippo/JobGlobalclass/jobstopimges.dart';
-import 'package:sippo/JobGlobalclass/media_query_sizes.dart';
-import 'package:sippo/JobGlobalclass/sippo_customstyle.dart';
-import 'package:sippo/JobGlobalclass/text_font_size.dart';
-import 'package:sippo/sippo_controller/user_profile_controller/edit_profile_information_controller.dart';
-import 'package:sippo/sippo_custom_widget/ConditionalWidget.dart';
-import 'package:sippo/sippo_custom_widget/body_widget.dart';
-import 'package:sippo/sippo_custom_widget/custom_drop_down_button.dart';
-import 'package:sippo/sippo_custom_widget/gender_picker_widget.dart';
-import 'package:sippo/sippo_custom_widget/loading_view_widgets/loading_scaffold.dart';
-import 'package:sippo/sippo_custom_widget/network_bordered_circular_image_widget.dart';
-import 'package:sippo/sippo_custom_widget/rounded_border_radius_card_widget.dart';
-import 'package:sippo/sippo_custom_widget/save_image_profle_page_widget.dart';
-import 'package:sippo/sippo_custom_widget/success_message_widget.dart';
-import 'package:sippo/sippo_custom_widget/widgets.dart';
-import 'package:sippo/utils/getx_text_editing_controller.dart';
-import 'package:sippo/utils/image_picker_service.dart';
-import 'package:sippo/utils/states.dart';
-import 'package:sippo/utils/validating_input.dart';
 import 'package:lottie/lottie.dart';
+import 'package:sippo/JobGlobalclass/media_query_sizes.dart';
+
+import '../../JobGlobalclass/jobstopcolor.dart';
+import '../../JobGlobalclass/jobstopfontstyle.dart';
+import '../../JobGlobalclass/jobstopimges.dart';
+import '../../JobGlobalclass/sippo_customstyle.dart';
+import '../../JobGlobalclass/text_font_size.dart';
+import '../../sippo_controller/user_profile_controller/edit_profile_information_controller.dart';
+import '../../sippo_custom_widget/ConditionalWidget.dart';
+import '../../sippo_custom_widget/body_widget.dart';
+import '../../sippo_custom_widget/custom_drop_down_button.dart';
+import '../../sippo_custom_widget/gender_picker_widget.dart';
+import '../../sippo_custom_widget/loading_view_widgets/loading_scaffold.dart';
+import '../../sippo_custom_widget/network_bordered_circular_image_widget.dart';
+import '../../sippo_custom_widget/rounded_border_radius_card_widget.dart';
+import '../../sippo_custom_widget/save_image_profle_page_widget.dart';
+import '../../sippo_custom_widget/success_message_widget.dart';
+import '../../sippo_custom_widget/widgets.dart';
+import '../../sippo_data/model/custom_file_model/custom_file_model.dart';
+import '../../utils/getx_text_editing_controller.dart';
+import '../../utils/image_picker_service.dart';
+import '../../utils/states.dart';
+import '../../utils/validating_input.dart';
 
 class EditUserProfilePage extends StatefulWidget {
   const EditUserProfilePage({Key? key}) : super(key: key);
@@ -361,14 +369,16 @@ class _EditUserProfilePageState extends State<EditUserProfilePage> {
               Icons.edit,
               color: SippoColor.white,
               size: context.fromHeight(CustomStyle.m),
-            ))
+            )
+        )
       ],
     );
   }
+
   Widget errorWidgetBuilder(_, __, ___) {
     return CircleAvatar(
-      backgroundColor: Colors.grey,
-      child: Image.asset(JobstopPngImg.sippoLogo),
+      backgroundColor: Colors.transparent,
+      child: Image.asset(JobstopPngImg.defaultLogo),
     );
   }
   Container _buildInputPhoneNumberField(

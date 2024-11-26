@@ -129,7 +129,7 @@ class AppTranslation extends Translations {
           'undo': "Undo",
           'Secret_code_hint_text': "Secret Code",
           'selecte_address': "Address",
-          'login_success': "You Login successfully",
+          'login_success': "Welcome Back!",
           'success': "Success",
           'account_created_successfully':
               "the account has been created successfully, want continue to dashboard?",

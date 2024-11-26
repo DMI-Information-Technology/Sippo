@@ -112,21 +112,26 @@ class SippoAppUsing extends StatelessWidget {
               SizedBox(height: 30,),
               ElevatedButton(
                 onPressed: _onConfirmButtonClicked,
+
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: SippoColor.primarycolor,
-      
+                  backgroundColor: SippoColor.white,
+
                   shape: RoundedRectangleBorder(
+                    side: BorderSide(color: SippoColor.primarycolor),
                     borderRadius: BorderRadius.circular(25),
                   )
                 ),
                 child: Container(
+
+
                   width: width/1.2,
                   alignment: Alignment.center,
                                   height: 50,
                   child: Text(
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      fontSize: 28
+                      fontSize: 20,
+                      color: SippoColor.primarycolor
                     ),
                     "Continue"
                   ),

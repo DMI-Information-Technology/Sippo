@@ -209,7 +209,6 @@ class _SippoAboutCompaniesState extends State<SippoAboutCompanies> {
                           ? SippoColor.secondary.withOpacity(0.8)
                           : Colors.red[100],
                   onTapped: () async {
-                    print("hello world");
                     _controller.onToggleSubmitted();
                   },
                   text: _controller.aboutState.company.isFollowed == true

@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:sippo/JobGlobalclass/jobstopcolor.dart';
 import 'package:sippo/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:sippo/JobGlobalclass/jobstopimges.dart';
 import 'package:sippo/JobGlobalclass/media_query_sizes.dart';
@@ -62,6 +63,7 @@ class _AdsViewWidgetState extends State<AdsViewWidget> {
             children: [
               CarouselSlider(
                 options: CarouselOptions(
+
                   viewportFraction: 0.95,
                   clipBehavior: Clip.antiAlias,
                   autoPlay: true,
@@ -88,7 +90,11 @@ class _AdsViewWidgetState extends State<AdsViewWidget> {
               SmoothPageIndicator(
                 controller: _pageController,
                 count: adItems.length,
-                effect: WormEffect(), // Choose your desired effect
+                effect: WormEffect(
+                  activeDotColor: SippoColor.primarycolor,
+                  dotHeight: 10,
+
+                ), // Choose your desired effect
               ),
             ],
           );

@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:sippo/JobGlobalclass/jobstopcolor.dart';
 import 'package:sippo/JobGlobalclass/jobstopfontstyle.dart';
 import 'package:sippo/JobGlobalclass/jobstopimges.dart';
@@ -261,6 +262,14 @@ class _SippoApplyCompanyState extends State<SippoApplyCompany> {
           ],
         ));
   }
+  String formatDate(String dateStr) {
+    try {
+      DateTime dateTime = DateTime.parse(dateStr.replaceAll('/', '-')); // Replace / with - for parsing
+      return DateFormat('yyyy/MM/dd').format(dateTime);
+    } catch (e) {
+      return dateStr; // Return the original string if parsing fails
+    }
+  }
 
   Widget _buildTopJobInfo(BuildContext context) {
     return Padding(
@@ -281,11 +290,12 @@ class _SippoApplyCompanyState extends State<SippoApplyCompany> {
                 'Work place',
                 _controller.applyCompanyState.company.city ?? '',
               )),
+          // Use this function in your widget
           Obx(() => _buildTopInfoJobText(
-                context,
-                'invented_date',
-                _controller.applyCompanyState.company.establishmentDate ?? "",
-              )),
+            context,
+            'Invented Date',
+            formatDate(_controller.applyCompanyState.company.establishmentDate ?? ''),
+          )),
         ],
       ),
     );
@@ -327,4 +337,5 @@ class _SippoApplyCompanyState extends State<SippoApplyCompany> {
           )
         : const SizedBox.shrink();
   }
+
 }

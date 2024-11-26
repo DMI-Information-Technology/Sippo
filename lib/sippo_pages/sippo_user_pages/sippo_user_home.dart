@@ -131,7 +131,7 @@ class _SippoUserHomeState extends State<SippoUserHome> {
   Widget _buildWelcomeUser(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: context.height * 0.26,
+      height: context.height * 0.30,
       decoration: BoxDecoration(
         color: SippoColor.transparent,
       ),
@@ -166,7 +166,7 @@ class _SippoUserHomeState extends State<SippoUserHome> {
           ],
         ),),
       ),
-            SizedBox(height: 15,),
+            SizedBox(height: 10,),
             Text(
               "Category".tr,
               style: dmsbold.copyWith(fontSize: FontSize.title5(context), color: Colors.white),
@@ -228,7 +228,7 @@ class _SippoUserHomeState extends State<SippoUserHome> {
             });
           },
           separatorBuilder: (context, index) => SizedBox(
-            width: context.fromWidth(CustomStyle.s),
+            width: context.fromWidth(CustomStyle.xxxl),
           ),
         );
       }),
@@ -334,39 +334,27 @@ class _SippoUserHomeState extends State<SippoUserHome> {
             ),
       ),
 
-      actions: [
-        Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-          // child: Icon(Icons.notifications_active_outlined, color: Colors.white,),
-          child: InkWell(
-            onTap: () {
-              if (InternetConnectionService.instance.isNotConnected) return;
-              Get.toNamed(SippoRoutes.sippoUserProfile);
-            },
-            child: Obx(() {
-              final imageUrl = dashboardController.user.profileImage?.url;
+        actions: [
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+            child: InkWell(
+              onTap: () {
+                if (InternetConnectionService.instance.isNotConnected) return;
+                Get.toNamed(SippoRoutes.sippoUserProfile);
+              },
+              child: Obx(() {
+                final imageUrl = dashboardController.user.profileImage?.url;
 
-              return ClipOval(
-                child: imageUrl != null
-                    ? Image.network(
-                  imageUrl,
-                  fit: BoxFit.cover,
-                  width: context.width * 0.1, // Adjust the size as needed
-                  height: context.width * 0.1,
-                  errorBuilder: (context, error, stackTrace) => CircleAvatar(
-                    backgroundColor: Colors.white,
-                    child: Image.asset(JobstopPngImg.comp),
-                  ),
-                )
-                    : CircleAvatar(
+                return CircleAvatar( // Use CircleAvatar directly
                   backgroundColor: Colors.white,
-                  child: Image.asset(JobstopPngImg.comp),
-                ),
-              );
-            }),
-          )
-        )
-      ],
+                  backgroundImage: imageUrl != null ? NetworkImage(imageUrl) : null,
+                  radius: context.width * 0.05, // Set the radius as needed
+                  child: imageUrl == null ? Image.asset(JobstopPngImg.defaultLogo) : null,
+                );
+              }),
+            ),
+          ),
+        ],
     );
   }
 }

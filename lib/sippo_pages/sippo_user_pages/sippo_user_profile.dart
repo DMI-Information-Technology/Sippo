@@ -50,6 +50,8 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
 
   @override
   Widget build(BuildContext context) {
+    double height = Get.height;
+    double width = Get.width;
     return LoadingScaffold(
       controller: _controller.loadingOverlayController,
       extendBodyBehindAppBar: true,
@@ -59,6 +61,7 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
           final isHeightOverAppBar =
               _controller.profileState.isHeightOverAppBar;
           return AppBar(
+
             // toolbarHeight: 0,
             notificationPredicate: (notification) {
               if (notification.metrics.pixels > kToolbarHeight) {
@@ -72,7 +75,7 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
               onPressed: () => Get.back(),
               icon: Icon(
                 Icons.arrow_back_rounded,
-                color: isHeightOverAppBar ? Colors.black : Colors.white,
+                color: isHeightOverAppBar ? Colors.white : Colors.white,
               ),
             ),
             actions: [
@@ -83,15 +86,16 @@ class _SippoUserProfileState extends State<SippoUserProfile> {
                 },
                 icon: Image.asset(
                   JobstopPngImg.setting,
+                  height: 20,
 
                   color: _controller.profileState.isHeightOverAppBar
-                      ? Colors.black
+                      ? Colors.white
                       : Colors.white, // Change this to your desired color
                 ),
               ),
             ],
             backgroundColor: isHeightOverAppBar
-                ? SippoColor.backgroudHome
+                ? SippoColor.primarycolor
                 : Colors.transparent,
           );
         }),

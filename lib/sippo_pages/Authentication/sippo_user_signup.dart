@@ -25,6 +25,7 @@ class SippoUserSignup extends StatelessWidget {
     return Stack(
       children: [
         Scaffold(
+
           appBar: AppBar(
             backgroundColor: Colors.white, // Set AppBar color to red
             toolbarHeight: 80, // Increase AppBar height (adjust as needed)
@@ -324,7 +325,7 @@ class SippoUserSignup extends StatelessWidget {
               ),
             ),
           ),
-          backgroundColor: Color(0xffFBF6FF),
+          backgroundColor: Colors.white,
         ),
         Obx(
           () => controller.authState.isLoading
