@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sippo/JobGlobalclass/jobstopcolor.dart';
@@ -169,12 +170,7 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
           hasNotInfoProfile:
               _controller.company.establishmentDate?.isEmpty == true ||
                   _controller.company.establishmentDate?.isEmpty == null,
-          leading: Image.asset(
-            JobstopPngImg.aboutme,
-            height: context.fromHeight(CustomStyle.l),
-            color: SippoColor.primarycolor,
-            colorBlendMode: BlendMode.srcIn,
-          ),
+          leading: Icon(CupertinoIcons.pencil_outline, color: SippoColor.primarycolor,),
           iconAction: _controller.company.establishmentDate != null
               ? Icon(
                   Icons.mode_edit_outline_outlined,
@@ -200,12 +196,7 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
     return Obx(() => AddInfoProfileCard(
           title: 'label_employee_count'.tr,
           hasNotInfoProfile: _controller.company.employeesCount == null,
-          leading: Image.asset(
-            JobstopPngImg.aboutme,
-            height: context.fromHeight(CustomStyle.l),
-            color: SippoColor.primarycolor,
-            colorBlendMode: BlendMode.srcIn,
-          ),
+          leading: Icon(CupertinoIcons.rectangle_stack_person_crop, color: SippoColor.primarycolor,),
           iconAction: _controller.company.employeesCount != null
               ? Icon(
                   Icons.mode_edit_outline_outlined,
@@ -246,12 +237,7 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
           title: 'company_specializations'.tr,
           hasNotInfoProfile:
               _controller.company.specializations?.isEmpty == true,
-          leading: Image.asset(
-            JobstopPngImg.aboutme,
-            height: context.fromHeight(CustomStyle.l),
-            color: SippoColor.primarycolor,
-            colorBlendMode: BlendMode.srcIn,
-          ),
+          leading: Icon(CupertinoIcons.sparkles, color: SippoColor.primarycolor,),
           iconAction: _controller.company.specializations?.isNotEmpty == true
               ? Icon(
                   Icons.mode_edit_outline_outlined,
@@ -292,12 +278,7 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
           title: 'label_website_company'.tr,
           hasNotInfoProfile: _controller.company.website?.isEmpty == true ||
               _controller.company.website?.isEmpty == null,
-          leading: Image.asset(
-            JobstopPngImg.aboutme,
-            height: context.fromHeight(CustomStyle.l),
-            color: SippoColor.primarycolor,
-            colorBlendMode: BlendMode.srcIn,
-          ),
+          leading: Icon(CupertinoIcons.link_circle, color: SippoColor.primarycolor,),
           onAddClicked: () {
             if (_controller.netController.isNotConnected) return;
             Get.toNamed(SippoRoutes.editCompanyProfile);
@@ -335,12 +316,7 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
         title: 'label_work_places'.tr,
         hasNotInfoProfile: _controller.company.locations?.isEmpty == true ||
             _controller.company.locations?.isEmpty == null,
-        leading: Image.asset(
-          JobstopPngImg.aboutme,
-          height: context.fromHeight(CustomStyle.l),
-          color: SippoColor.primarycolor,
-          colorBlendMode: BlendMode.srcIn,
-        ),
+        leading: Icon(CupertinoIcons.bag, color: SippoColor.primarycolor,),
         onAddClicked: () {
           if (_controller.netController.isNotConnected) return;
           Get.toNamed(SippoRoutes.sippoSelectedCompanyWorkPlace);
@@ -390,12 +366,7 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
           title: 'personal_information'.tr,
           hasNotInfoProfile: _controller.company.bio?.isEmpty == true ||
               _controller.company.bio?.isEmpty == null,
-          leading: Image.asset(
-            JobstopPngImg.companysignup,
-            height: context.fromHeight(CustomStyle.l),
-            color: SippoColor.primarycolor,
-            colorBlendMode: BlendMode.srcIn,
-          ),
+          leading: Icon(CupertinoIcons.info_circle , color: SippoColor.primarycolor,),
           iconAction: _controller.company.bio != null
               ? Icon(
                   Icons.mode_edit_outline_outlined,
@@ -424,7 +395,7 @@ class _SippoCompanyProfileState extends State<SippoCompanyProfile> {
         contentPadding: EdgeInsets.zero,
         horizontalTitleGap: 0.0,
         leading: Icon(
-          Icons.image,
+          CupertinoIcons.app_badge,
           color: SippoColor.primarycolor,
           size: context.fromHeight(CustomStyle.l),
         ),

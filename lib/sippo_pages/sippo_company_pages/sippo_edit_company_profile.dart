@@ -329,7 +329,7 @@ class _EditCompanyProfilePageState extends State<EditCompanyProfilePage> {
   Widget errorWidgetBuilder(_, __, ___) {
     return CircleAvatar(
       backgroundColor: Colors.grey,
-      child: Image.asset(JobstopPngImg.sippoLogo),
+      child: Image.asset(JobstopPngImg.defaultLogo),
     );
   }
   Container _buildInputPhoneNumberField(
